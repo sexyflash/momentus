@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dokdo Korea 3D Viewer - Advanced Controls with Weather and Seasons</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <style>
+        body { 
+            margin: 0; 
+            overflow: hidden;
+        }
+        
+        canvas { 
+            display: block; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        /* dat.gui 컨트롤러를 위한 스타일 */
+        .dg.ac {
+            z-index: 1000 !important;
+        }
+        
+        #stats {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+        
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+    
+        body, html {
+          width: 100%;
+          height: 100%;
+          font-family: 'Pretendard', sans-serif;
+        }
+    
+        .Page {
+          position: fixed;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          overflow: hidden;
+          z-index: 10;
+          pointer-events: none; /* 전체 Page는 이벤트를 통과시킴 */
+        }
+    
+        .Content {
+          width: 90%;
+          max-width: 1486px;
+          height: 976px;
+          position: relative;
+          display: flex;
+          padding: 229px 79px;
+          flex-direction: column;
+          align-items: left;
+        }
+    
+        .LeftContent {
+          width: 512px;
+          display: flex;
+          flex-direction: column;
+          gap: 70px;
+          margin-bottom: 70px;
+          pointer-events: auto; /* LeftContent만 이벤트 활성화 */
+          padding: 20px;
+          border-radius: 15px;
+        }
+    
+        .RightContent {
+          width: 249px;
+          display: flex;
+          flex-direction: column;
+          gap: 19px;
+          align-items: center;
+          pointer-events: auto; /* RightContent만 이벤트 활성화 */
+        }
+    
+        .CtaButton {
+          width: 100%;
+          background: #262626;
+          border-radius: 20px;
+          padding: 20px 30px;
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          cursor: pointer;
+          justify-content: center;
+          transition: transform 0.2s ease;
+        }
+
+
+        .CtaButton:hover {
+          transform: scale(1.05);
+        }
+    
+        .Icon {
+          width: 32px;
+          height: 32px;
+        }
+    
+        .Count {
+          color: white;
+          font-size: 32px;
+        }
+    
+        .Count span:first-child {
+          font-weight: 700;
+        }
+    
+        .Current {
+          width: 100%;
+          display: flex;
+          gap: 13px;
+          justify-content: center;
+          padding: 10px;
+          border-radius: 10px;
+        }
+    
+        .Weather, .Time {
+          color: white;
+          font-size: 20px;
+          font-weight: 700;
+        }
+    
+        @media (max-width: 768px) {
+            .Content {
+                width: 100%;
+                height: 976px;
+                padding: 62px 20px;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+        
+            .LeftContent {
+                width: 100%;
+                max-width: 387px;
+                gap: 62px;
+                align-items: center;
+                margin: 0 auto;
+            }
+        
+            .LogoContainer {
+                width: 178.72px;  /* 모바일에서의 로고 너비 */
+                height: 71.49px;  /* 모바일에서의 로고 높이 (비율 유지) */
+            }
+        
+            .LogoSvg {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        
+            .TextContent {
+                gap: 12px;
+                text-align: center;
+            }
+        
+            .Subtitle {
+                font-size: 20px;
+            }
+        
+            .Description {
+                font-size: 16px;
+            }
+        
+            .RightContent {
+                margin: 0 auto;
+                gap: 24px;
+                width: 100%;
+                max-width: 249px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+        
+            .CtaButton {
+                width: 100%;
+                justify-content: center;
+            }
+        
+            .Current {
+                width: auto;
+                justify-content: center;
+            }
+        
+            .Weather, .Time {
+                font-size: 16px;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/dat.gui@0.7.7/build/dat.gui.min.js"></script>
+    <script src="https://mrdoob.github.io/stats.js/build/stats.min.js"></script>
+</head>
+<body>
+    <div class="Page">
+        <div class="Content">
+          <div class="LeftContent">
+            <div class="LogoContainer">
+              <img src="assets/logo_svg_b.svg" alt="Logo" class="LogoSvg" id="LogoSvg">
+            </div>
+            <div class="TextContent">
+              <div class="Subtitle">
+                Korea's Proud Island, United by the World
+              </div>
+              <div class="Description">
+                Together, we declare: Dokdo is Korea.<br/>
+                Show your support for Korea's cherished island by liking the Instagram post & making your voice heard
+              </div>
+            </div>
+          </div>
+          <div class="RightContent">
+            <div class="CtaButton">
+              <img src="assets/icon.svg" alt="Like Icon" class="Icon">
+              <div class="Count">
+                <span>12K </span><span>Likes</span>
+              </div>
+            </div>
+            <div class="Current">
+              <div class="Weather">⛅️ 18°C</div>
+              <div class="Time">10:30 AM KST</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          const logo = document.getElementById("LogoSvg");
+          const currentHour = new Date().getHours();
+    
+          // 오후 6시부터 새벽 6시까지는 logo_svg_w, 나머지는 logo_svg_b
+          if (currentHour >= 18 || currentHour < 6) {
+            logo.src = "assets/logo_svg_w.svg";
+          } else {
+            logo.src = "assets/logo_svg_b.svg";
+          }
+        });
+    
+      </script>
+    <div id="stats"></div>
+
+    <script>
+        const API_KEY = 'BNHzGqO0Fhq0jir2CDA7BKZtO8Lktd/fcE+XKOWNEV8hly7z0tOkRNlOYJc4i24nQFlTGZjVwCer1f3Ck3ErNA==';
+        const NX = 99;
+        const NY = 146;
+        const WEATHER_API_URL = `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=${API_KEY}&numOfRows=10&pageNo=1&dataType=JSON&nx=${NX}&ny=${NY}`;
+        const TIME_API_URL = 'http://worldtimeapi.org/api/timezone/Asia/Seoul';
+
+        let currentWeather = {};
+        let lastWeatherUpdate = null;
+    
+        async function getKoreanTime() {
+            try {
+                const timeResponse = await axios.get(TIME_API_URL);
+                currentTime = new Date(timeResponse.data.datetime);
+                const hours = currentTime.getHours();
+                let base_time = '';
+        
+                if (hours >= 2 && hours < 5) base_time = '0200';
+                else if (hours >= 5 && hours < 8) base_time = '0500';
+                else if (hours >= 8 && hours < 11) base_time = '0800';
+                else if (hours >= 11 && hours < 14) base_time = '1100';
+                else if (hours >= 14 && hours < 17) base_time = '1400';
+                else if (hours >= 17 && hours < 20) base_time = '1700';
+                else if (hours >= 20 && hours < 23) base_time = '2000';
+                else base_time = '2300';
+        
+                const base_date = currentTime.getFullYear() +
+                                  String(currentTime.getMonth() + 1).padStart(2, '0') +
+                                  String(currentTime.getDate()).padStart(2, '0');
+        
+                console.log('Current Time:', base_time)
+                return {
+                    currentTime: currentTime.toISOString(),
+                    base_time,
+                    base_date
+                };
+            } catch (error) {
+                console.error('Error fetching Korean time:', error);
+                return null;
+            }
+        }
+    
+        async function getWeatherData() {
+            try {
+                const timeData = await getKoreanTime();
+                if (!timeData) throw new Error('Failed to get Korean time');
+        
+                const params = new URLSearchParams({
+                    serviceKey: API_KEY,
+                    numOfRows: '10',
+                    pageNo: '1',
+                    dataType: 'JSON',
+                    nx: NX.toString(),
+                    ny: NY.toString(),
+                    base_date: timeData.base_date,
+                    base_time: timeData.base_time
+                });
+        
+                const url = `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?${params.toString()}`;
+                console.log(url);
+        
+                const response = await axios.get(url);
+                const body = response.data?.response?.body;
+        
+                if (!body || !body.items || !body.items.item) {
+                    console.error('Invalid response structure:', response.data);
+                    return null;
+                }
+        
+                const items = body.items.item;
+        
+                const windSpeedItem = items.find(item => item.category === 'WSD');
+                const windSpeed = windSpeedItem ? parseFloat(windSpeedItem.fcstValue) : null;
+        
+                const precipitationItem = items.find(item => item.category === 'PTY');
+                const precipitation = precipitationItem ? precipitationItem.fcstValue : null;
+        
+                const skyItem = items.find(item => item.category === 'SKY');
+                const sky = skyItem ? skyItem.fcstValue : null;
+        
+                console.log(`Base Time: ${timeData.base_time}`);
+                console.log(`Wind Speed: ${windSpeed} m/s`);
+                console.log(`Precipitation (0: No, 1: Rain, 2: Sleet, 3: Snow): ${precipitation}`);
+                console.log(`Sky Condition (1: Clear, 3: Partly Cloudy, 4: Cloudy): ${sky}`);
+        
+                return {
+                    windSpeed,
+                    precipitation,
+                    sky
+                };
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                return null;
+            }
+        }
+    </script>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.151.3/build/three.module.js",
+                "three/examples/jsm/loaders/STLLoader": "https://unpkg.com/three@0.151.3/examples/jsm/loaders/STLLoader.js",
+                "three/examples/jsm/controls/OrbitControls": "https://unpkg.com/three@0.151.3/examples/jsm/controls/OrbitControls.js",
+                "three/examples/jsm/objects/Water": "https://unpkg.com/three@0.151.3/examples/jsm/objects/Water.js",
+                "three/examples/jsm/objects/Lensflare": "https://unpkg.com/three@0.151.3/examples/jsm/objects/Lensflare.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
+        import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+        import { Water } from 'three/examples/jsm/objects/Water';
+        import { Lensflare, LensflareElement } from 'three/examples/jsm/objects/Lensflare';
+        import { GUI } from 'https://unpkg.com/dat.gui@0.7.7/build/dat.gui.module.js';
+
+        let camera, scene, renderer, controls, water;
+        let landMesh, seaFloorMesh, boundingBox, center, size;
+        let startTime, endTime;
+        let minY, maxY, seaLevel;
+        let gui, directionalLight;
+        let clock = new THREE.Clock();
+        let pointLights = [];
+        let clouds = [];
+        let isDroneViewActive = false;
+        let droneCamera;
+        let droneZoomDirection = 1;
+        let droneZoomValue = 1.0;
+        let droneAngle = 0;
+        let verticesPoints;
+        const LIGHT_COUNT = 50;
+
+        let currentTime = new Date();
+        let stats;
+        let raindrops, snowflakes;
+
+        let cloudTextures = [];
+
+        let isDebugMode = false;
+        let showVertices = false;
+        let maxVerticesCount = 10000;
+
+        const params = {
+            waveSpeed: 1,
+            waveHeight: 20,
+            timeOfDay: 1,
+            pointLightIntensity: 1,
+            pointLightRadius: 0.5,
+            fogDensity: 0.01,
+            terrainRoughness: 1,
+            waterOpacity: 0.9,
+            skyHue: 0.6,
+            skySaturation: 1,
+            skyLightness: 0.5,
+            terrainHue: 0.3,
+            terrainSaturation: 0.7,
+            terrainLightness: 0.5,
+            waterHue: 0.6,
+            waterSaturation: 0.8,
+            waterLightness: 0.5,
+            cloudCount: 50,
+            cloudSize: 15,
+            cloudSpeed: 0.01,
+            isDroneView: false,
+            droneZoomMin: 0.5,
+            droneZoomMax: 2.0,
+            droneZoomSpeed: 0.01,
+            weather: 'Clear',
+            season: 'Summer',
+            raindropCount: 5000,
+            snowflakeCount: 3000,
+            raindropSize: 0.1,
+            snowflakeSize: 0.05,
+            rainfallSpeed: 1,
+            snowfallSpeed: 0.2,
+            weatherHeight: 300,
+            showVertices: true,
+            maxVerticesCount: 50000,
+            rainEnabled: false,
+            rainCount: 1500,
+            rainSpeed: 0.1,
+            rainSpread: 60,
+            rainSize: 0.05,
+            splashEnabled: true,
+            splashLifetime: 400,
+            splashScale: 0.5,
+        };
+
+        const RIPPLE_TEXTURE = new THREE.TextureLoader().load('./assets/ripple.png');
+        const RAIN_DROP_TEXTURE = new THREE.TextureLoader().load('./assets/raindrop.png');
+
+        const cameraInfoDiv = document.createElement('div');
+        cameraInfoDiv.id = 'cameraInfo';
+        cameraInfoDiv.style.cssText = `
+            position: absolute;
+            left: 10px;
+            top: 80px;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 100;
+        `;
+        document.body.appendChild(cameraInfoDiv);
+
+        function updateCameraInfo() {
+            const cameraPos = camera.position;
+            const cameraRot = camera.rotation;
+            
+            document.getElementById('cameraInfo').innerHTML = `
+                Camera Position:<br>
+                X: ${cameraPos.x.toFixed(2)}<br>
+                Y: ${cameraPos.y.toFixed(2)}<br>
+                Z: ${cameraPos.z.toFixed(2)}<br>
+                Rotation:<br>
+                X: ${(cameraRot.x * 180/Math.PI).toFixed(2)}°<br>
+                Y: ${(cameraRot.y * 180/Math.PI).toFixed(2)}°<br>
+                Z: ${(cameraRot.z * 180/Math.PI).toFixed(2)}°
+            `;
+        }
+
+        init();
+
+        function init() {
+            document.getElementById('stats').style.display = 'none';
+            document.getElementById('cameraInfo').style.display = 'none';
+            
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x87CEEB);
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.minPolarAngle = Math.PI / 9;
+            controls.maxPolarAngle = Math.PI / 2.5;
+            controls.minDistance = 30;
+            controls.maxDistance = 100;
+
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
+
+            directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(100, 100, 100);
+            scene.add(directionalLight);
+
+            /*
+            stats = new Stats();
+            document.body.appendChild(stats.dom);
+            */
+
+            // 현재 시간으로 timeOfDay 업데이트
+            const hours = currentTime.getHours();
+            const minutes = currentTime.getMinutes();
+            params.timeOfDay = parseInt(String(hours + minutes / 60));
+            console.log('Current time:', params.timeOfDay);
+
+            setupGUI();
+
+            startTime = performance.now();
+
+            const loader = new STLLoader();
+            loader.load('assets/Dokdo_Korea.stl', function (geometry) {
+                geometry.rotateX(-Math.PI / 2);
+                geometry.computeVertexNormals();
+
+                const positions = geometry.attributes.position.array;
+                const normals = geometry.attributes.normal.array;
+                const vertexCount = positions.length / 3;
+
+                minY = Infinity;
+                maxY = -Infinity;
+
+                for (let i = 0; i < vertexCount; i++) {
+                    const y = positions[i * 3 + 1];
+                    if (y < minY) minY = y;
+                    if (y > maxY) maxY = y;
+                }
+
+                seaLevel = minY + (maxY - minY) * 0.1;
+
+                const landPositions = [];
+                const landNormals = [];
+                const landColors = [];
+
+                const seaFloorPositions = [];
+                const seaFloorNormals = [];
+                const seaFloorColors = [];
+
+                const lowColor = new THREE.Color(0x008800);
+                const highColor = new THREE.Color(0xFFFFFF);
+
+                for (let i = 0; i < vertexCount; i++) {
+                    const x = positions[i * 3];
+                    const y = positions[i * 3 + 1];
+                    const z = positions[i * 3 + 2];
+
+                    const nx = normals[i * 3];
+                    const ny = normals[i * 3 + 1];
+                    const nz = normals[i * 3 + 2];
+
+                    const t = (y - minY) / (maxY - minY);
+                    const color = new THREE.Color().lerpColors(lowColor, highColor, t);
+
+                    landPositions.push(x, y, z);
+                    landNormals.push(nx, ny, nz);
+                    landColors.push(color.r, color.g, color.b);
+
+                    if (y < seaLevel) {
+                        seaFloorPositions.push(x, y, z);
+                        seaFloorNormals.push(nx, ny, nz);
+                        seaFloorColors.push(color.r, color.g, color.b);
+                    }
+                }
+
+                const landGeometry = new THREE.BufferGeometry();
+                landGeometry.setAttribute('position', new THREE.Float32BufferAttribute(landPositions, 3));
+                landGeometry.setAttribute('normal', new THREE.Float32BufferAttribute(landNormals, 3));
+                landGeometry.setAttribute('color', new THREE.Float32BufferAttribute(landColors, 3));
+
+                const seaFloorGeometry = new THREE.BufferGeometry();
+                seaFloorGeometry.setAttribute('position', new THREE.Float32BufferAttribute(seaFloorPositions, 3));
+                seaFloorGeometry.setAttribute('normal', new THREE.Float32BufferAttribute(seaFloorNormals, 3));
+                seaFloorGeometry.setAttribute('color', new THREE.Float32BufferAttribute(seaFloorColors, 3));
+
+                const landMaterial = new THREE.MeshPhongMaterial({
+                    vertexColors: true,
+                    shininess: 50,
+                });
+
+                const seaFloorMaterial = new THREE.MeshPhongMaterial({
+                    vertexColors: true,
+                    shininess: 50,
+                });
+
+                landMesh = new THREE.Mesh(landGeometry, landMaterial);
+                seaFloorMesh = new THREE.Mesh(seaFloorGeometry, seaFloorMaterial);
+
+                boundingBox = new THREE.Box3().setFromObject(landMesh);
+                center = boundingBox.getCenter(new THREE.Vector3());
+                size = boundingBox.getSize(new THREE.Vector3());
+
+                const maxDim = Math.max(size.x, size.y, size.z);
+                const scale = 50 / maxDim;
+                landMesh.scale.set(scale, scale, scale);
+                seaFloorMesh.scale.set(scale, scale, scale);
+
+                landMesh.position.sub(center.clone().multiplyScalar(scale));
+                seaFloorMesh.position.copy(landMesh.position);
+
+                scene.add(landMesh);
+                scene.add(seaFloorMesh);
+
+                addWaterPlane(scale, seaLevel, minY, landMesh.position);
+                addPointLights();
+                setupDroneCamera();
+                setupVerticesPoints();
+                createWeatherEffects();
+                addClouds();
+                initRain();
+
+                /*
+                camera.position.set(0, maxDim * scale, maxDim * scale * 2);
+                controls.target.copy(landMesh.position);
+                controls.update();
+                */
+
+                // 카메라 위치 설정
+                camera.position.set(0, 46.92, 43.10);
+                controls.target.copy(landMesh.position);
+                controls.update();
+
+                endTime = performance.now();
+                const loadTime = (endTime - startTime) / 1000;
+                document.getElementById('stats').innerHTML = `Load time: ${loadTime.toFixed(2)} seconds<br>Triangles: ${(landGeometry.attributes.position.count + seaFloorGeometry.attributes.position.count) / 3}`;
+                
+                updateLighting();
+
+                startWeatherUpdates();
+                animate();
+            }, undefined, function (error) {
+                console.error('An error happened during loading the STL file:', error);
+            });
+
+            window.addEventListener('resize', onWindowResize);
+
+            function loadCloudTextures() {
+                const textureLoader = new THREE.TextureLoader();
+                for (let i = 1; i <= 5; i++) {
+                    textureLoader.load(`assets/cloud_${i}.png`, function(texture) {
+                        cloudTextures.push(texture);
+                        if (cloudTextures.length === 5) {
+                            addClouds();
+                        }
+                    });
+                }
+            }
+
+            loadCloudTextures();
+        }
+
+        function addPointLights() {
+            for (let i = 0; i < LIGHT_COUNT; i++) {
+                const light = new THREE.PointLight(0xffff00, params.pointLightIntensity, params.pointLightRadius);
+                const x = (Math.random() - 0.5) * size.x;
+                const z = (Math.random() - 0.5) * size.z;
+                const y = seaLevel + Math.random() * (maxY - seaLevel);
+                light.position.set(x, y, z);
+                scene.add(light);
+                pointLights.push(light);
+            }
+        }
+
+        function addClouds() {
+            if (!size) return;
+            clouds.forEach(cloud => scene.remove(cloud));
+            clouds = [];
+        
+            for (let i = 0; i < params.cloudCount; i++) {
+                const randomTextureIndex = Math.floor(Math.random() * cloudTextures.length);
+                const cloudTexture = cloudTextures[randomTextureIndex];
+                const cloudMaterial = new THREE.SpriteMaterial({ 
+                    map: cloudTexture, 
+                    color: 0xffffff, 
+                    transparent: true, 
+                    opacity: 0.8 
+                });
+        
+                const cloud = new THREE.Sprite(cloudMaterial);
+                const scale = params.cloudSize * (0.5 + Math.random() * 0.5);
+                cloud.scale.set(scale, scale, 1);
+        
+                const x = Math.random() * size.x - size.x / 2;
+                const y = maxY + 20 + Math.random() * 30;
+                const z = Math.random() * size.z - size.z / 2;
+        
+                cloud.position.set(x, y, z);
+                cloud.rotation.z = Math.random() * Math.PI * 2;
+                cloud.speed = params.cloudSpeed * (0.5 + Math.random());
+                cloud.frustumCulled = false;
+                scene.add(cloud);
+                clouds.push(cloud);
+            }
+        }
+
+        function setupVerticesPoints() {
+            if (verticesPoints) scene.remove(verticesPoints);
+        
+            const verticesGeometry = new THREE.BufferGeometry();
+            const positions = landMesh.geometry.attributes.position.array;
+            const vertices = [];
+            const colors = [];
+            const sizes = [];
+        
+            const totalVertices = positions.length / 3;
+            const selectedIndices = new Set();
+            while (selectedIndices.size < params.maxVerticesCount && selectedIndices.size < totalVertices) {
+                selectedIndices.add(Math.floor(Math.random() * totalVertices));
+            }
+        
+            selectedIndices.forEach(index => {
+                vertices.push(positions[index * 3], positions[index * 3 + 1], positions[index * 3 + 2]);
+                
+                colors.push(0.2 + Math.random() * 0.3, 0.7 + Math.random() * 0.3, 0.2 + Math.random() * 0.3);
+                
+                sizes.push(0.1 + Math.random() * 0.2);
+            });
+        
+            verticesGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+            verticesGeometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+            verticesGeometry.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
+        
+            const verticesMaterial = new THREE.ShaderMaterial({
+                uniforms: {
+                    time: { value: 0 },
+                    pointTexture: { value: new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/spark1.png') }
+                },
+                vertexShader: `
+                    attribute float size;
+                    varying vec3 vColor;
+                    uniform float time;
+                    void main() {
+                        vColor = color;
+                        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                        gl_PointSize = size * (300.0 / -mvPosition.z) * (sin(time + position.x * 100.0) * 0.5 + 1.5);
+                        gl_Position = projectionMatrix * mvPosition;
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D pointTexture;
+                    varying vec3 vColor;
+                    void main() {
+                        gl_FragColor = vec4(vColor, 1.0) * texture2D(pointTexture, gl_PointCoord);
+                    }
+                `,
+                blending: THREE.AdditiveBlending,
+                depthTest: false,
+                transparent: true,
+                vertexColors: true
+            });
+        
+            verticesPoints = new THREE.Points(verticesGeometry, verticesMaterial);
+            verticesPoints.visible = params.showVertices;
+            verticesPoints.scale.copy(landMesh.scale);
+            verticesPoints.position.copy(landMesh.position);
+            scene.add(verticesPoints);
+        }
+
+        function setupDroneCamera() {
+            droneCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            droneCamera.position.copy(camera.position);
+        }
+
+        function setupGUI() {
+            gui = new GUI();
+
+            const timeFolder = gui.addFolder('Time Control');
+            timeFolder.add(params, 'timeOfDay', 0, 24).name('Current Time').onChange(updateLighting);
+
+            const droneFolder = gui.addFolder('Drone View');
+            droneFolder.add(params, 'isDroneView').name('Activate Drone View').onChange(toggleDroneView);
+            droneFolder.add(params, 'droneZoomMin', 0.1, 5.0).name('Drone Zoom Min');
+            droneFolder.add(params, 'droneZoomMax', 0.1, 5.0).name('Drone Zoom Max');
+            droneFolder.add(params, 'droneZoomSpeed', 0.001, 0.1).name('Drone Zoom Speed');
+
+            const weatherFolder = gui.addFolder('Weather Control');
+            weatherFolder.add(params, 'weather', ['Clear', 'Rainy', 'Snowy', 'Windy']).name('Weather').onChange(updateWeather);
+            weatherFolder.add(params, 'raindropCount', 1000, 10000).step(1000).name('Raindrop Count').onChange(createWeatherEffects);
+            weatherFolder.add(params, 'snowflakeCount', 1000, 5000).step(500).name('Snowflake Count').onChange(createWeatherEffects);
+            weatherFolder.add(params, 'raindropSize', 0.05, 0.2).name('Raindrop Size').onChange(createWeatherEffects);
+            weatherFolder.add(params, 'snowflakeSize', 0.02, 0.1).name('Snowflake Size').onChange(createWeatherEffects);
+            weatherFolder.add(params, 'rainfallSpeed', 0.5, 2).name('Rainfall Speed');
+            weatherFolder.add(params, 'snowfallSpeed', 0.1, 1).name('Snowfall Speed');
+            weatherFolder.add(params, 'weatherHeight', 200, 500).name('Weather Height').onChange(createWeatherEffects);
+
+            //Object.values(gui.__folders).forEach(folder => folder.open());
+        }
+
+        function addWaterPlane(scale, seaLevel, minY, landPosition) {
+            const waterGeometry = new THREE.PlaneGeometry(size.x * scale * 1.5, size.z * scale * 1.5);
+
+            const waterNormalsTexture = new THREE.TextureLoader().load(
+                'https://threejs.org/examples/textures/waternormals.jpg',
+                function (texture) {
+                    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+                }
+            );
+
+            water = new Water(waterGeometry, {
+                textureWidth: 512,
+                textureHeight: 512,
+                waterNormals: waterNormalsTexture,
+                sunDirection: new THREE.Vector3(0, 1, 0),
+                sunColor: 0xffffff,
+                waterColor: 0x001e0f,
+                distortionScale: params.waveHeight,
+                fog: scene.fog !== undefined,
+                alpha: params.waterOpacity
+            });
+
+            water.rotation.x = -Math.PI / 2;
+
+            const waterLevel = (seaLevel - minY) * scale + landPosition.y;
+            water.position.set(landPosition.x, waterLevel, landPosition.z);
+
+            scene.add(water);
+        }
+
+        function updateWater() {
+            if (water) {
+                water.material.uniforms['distortionScale'].value = params.waveHeight;
+            }
+        }
+
+        function updatePointLights() {
+            pointLights.forEach(light => {
+                light.intensity = params.pointLightIntensity;
+                light.distance = params.pointLightRadius;
+            });
+        }
+
+        function updateFog() {
+            scene.fog = new THREE.FogExp2(scene.background, params.fogDensity);
+        }
+
+        function updateTerrainRoughness() {
+            const scale = 1 + params.terrainRoughness;
+            landMesh.scale.set(scale, scale, scale);
+            seaFloorMesh.scale.set(scale, scale, scale);
+            if (verticesPoints) {
+                verticesPoints.scale.copy(landMesh.scale);
+            }
+        }
+
+        function updateTerrainColor() {
+            const color = new THREE.Color().setHSL(params.terrainHue, params.terrainSaturation, params.terrainLightness);
+            landMesh.material.color.copy(color);
+            seaFloorMesh.material.color.copy(color);
+        }
+
+        function updateWaterOpacity() {
+            water.material.uniforms['alpha'].value = params.waterOpacity;
+        }
+
+        function updateWaterColor() {
+            water.material.uniforms['waterColor'].value.setHSL(params.waterHue, params.waterSaturation, params.waterLightness);
+        }
+
+        function updateSkyColor() {
+            scene.background.setHSL(params.skyHue, params.skySaturation, params.skyLightness);
+        }
+
+        function toggleDroneView(value) {
+            isDroneViewActive = value;
+            if (isDroneViewActive) {
+                droneCamera.position.copy(camera.position);
+                droneCamera.rotation.copy(camera.rotation);
+                controls.enabled = false;
+            } else {
+                controls.enabled = true;
+                camera.position.copy(droneCamera.position);
+                camera.rotation.copy(droneCamera.rotation);
+                controls.update();
+            }
+        }
+
+        function updateLighting() {
+            const time = params.timeOfDay;
+            const intensity = Math.sin((time / 24) * Math.PI);
+
+            directionalLight.intensity = Math.max(0.1, intensity);
+
+            const angle = (time / 24) * Math.PI * 2 - Math.PI / 2;
+            directionalLight.position.set(
+                Math.cos(angle) * 100,
+                Math.sin(angle) * 100,
+                0
+            );
+
+            const skyColor = new THREE.Color().setHSL(params.skyHue, params.skySaturation, intensity * 0.5 + 0.1);
+            scene.background = skyColor;
+
+            if (water) {
+                water.material.uniforms['waterColor'].value.setHSL(params.waterHue, params.waterSaturation, intensity * 0.4 + 0.1);
+            }
+
+            const nightIntensity = 1 - intensity;
+            pointLights.forEach(light => {
+                light.intensity = params.pointLightIntensity * nightIntensity;
+            });
+        }
+
+        function animateClouds() {
+            clouds.forEach(cloud => {
+                cloud.position.x += cloud.speed;
+                if (cloud.position.x > size.x / 2) {
+                    cloud.position.x = -size.x / 2;
+                }
+                cloud.rotation.z += 0.001 * cloud.speed;
+            });
+        }
+
+        function animateDroneView() {
+            if (isDroneViewActive) {
+                const time = Date.now() * 0.001;
+                const radius = size.x / 2;
+
+                droneAngle += 0.005;
+                const angle = droneAngle;
+                const height = seaLevel + Math.sin(time * 0.5) * (maxY - seaLevel) + 50;
+
+                droneCamera.position.x = Math.cos(angle) * radius;
+                droneCamera.position.z = Math.sin(angle) * radius;
+                droneCamera.position.y = height;
+
+                droneCamera.lookAt(scene.position);
+
+                droneZoomValue += params.droneZoomSpeed * droneZoomDirection;
+                if (droneZoomValue >= params.droneZoomMax || droneZoomValue <= params.droneZoomMin) {
+                    droneZoomDirection *= -1;
+                }
+                droneCamera.zoom = droneZoomValue;
+                droneCamera.updateProjectionMatrix();
+            }
+        }
+
+        function createWeatherEffects() {
+            if (!size) return;
+
+            if (raindrops) scene.remove(raindrops);
+            if (snowflakes) scene.remove(snowflakes);
+        
+            const raindropGeometry = new THREE.BufferGeometry();
+            const raindropMaterial = new THREE.PointsMaterial({ 
+                color: 0xaaaaff, 
+                size: params.raindropSize, 
+                transparent: true,
+                opacity: 0.6,
+                vertexColors: true
+            });
+            
+            const snowflakeGeometry = new THREE.BufferGeometry();
+            const snowflakeTexture = new THREE.TextureLoader().load('assets/snowflake_texture.png');
+            const snowflakeMaterial = new THREE.PointsMaterial({ 
+                color: 0xffffff, 
+                size: params.snowflakeSize, 
+                transparent: true,
+                opacity: 0.8,
+                map: snowflakeTexture,
+                vertexColors: true
+            });
+        
+            const raindropPositions = new Float32Array(params.raindropCount * 3);
+            const raindropColors = new Float32Array(params.raindropCount * 3);
+            const snowflakePositions = new Float32Array(params.snowflakeCount * 3);
+            const snowflakeColors = new Float32Array(params.snowflakeCount * 3);
+        
+            for (let i = 0; i < params.raindropCount; i++) {
+                raindropPositions[i * 3] = Math.random() * size.x - size.x / 2;
+                raindropPositions[i * 3 + 1] = Math.random() * params.weatherHeight;
+                raindropPositions[i * 3 + 2] = Math.random() * size.z - size.z / 2;
+                
+                const shade = Math.random() * 0.2 + 0.8;
+                raindropColors[i * 3] = shade;
+                raindropColors[i * 3 + 1] = shade;
+                raindropColors[i * 3 + 2] = 1;
+            }
+        
+            for (let i = 0; i < params.snowflakeCount; i++) {
+                snowflakePositions[i * 3] = Math.random() * size.x - size.x / 2;
+                snowflakePositions[i * 3 + 1] = Math.random() * params.weatherHeight;
+                snowflakePositions[i * 3 + 2] = Math.random() * size.z - size.z / 2;
+                
+                const shade = Math.random() * 0.2 + 0.8;
+                snowflakeColors[i * 3] = shade;
+                snowflakeColors[i * 3 + 1] = shade;
+                snowflakeColors[i * 3 + 2] = shade;
+            }
+        
+            raindropGeometry.setAttribute('position', new THREE.BufferAttribute(raindropPositions, 3));
+            raindropGeometry.setAttribute('color', new THREE.BufferAttribute(raindropColors, 3));
+            snowflakeGeometry.setAttribute('position', new THREE.BufferAttribute(snowflakePositions, 3));
+            snowflakeGeometry.setAttribute('color', new THREE.BufferAttribute(snowflakeColors, 3));
+        
+            raindrops = new THREE.Points(raindropGeometry, raindropMaterial);
+            snowflakes = new THREE.Points(snowflakeGeometry, snowflakeMaterial);
+        
+            scene.add(raindrops);
+            scene.add(snowflakes);
+        
+            updateWeatherEffects();
+        }
+
+        function updateWeatherEffects() {
+            if (params.weather === 'Rainy' && raindrops) {
+                const positions = raindrops.geometry.attributes.position.array;
+                for (let i = 0; i < params.raindropCount; i++) {
+                    positions[i * 3 + 1] -= params.rainfallSpeed;
+                    if (positions[i * 3 + 1] < 0) {
+                        positions[i * 3] = Math.random() * size.x - size.x / 2;
+                        positions[i * 3 + 1] = params.weatherHeight;
+                        positions[i * 3 + 2] = Math.random() * size.z - size.z / 2;
+                    }
+                }
+                raindrops.geometry.attributes.position.needsUpdate = true;
+            }
+        
+            if (params.weather === 'Snowy' && snowflakes) {
+                const positions = snowflakes.geometry.attributes.position.array;
+                for (let i = 0; i < params.snowflakeCount; i++) {
+                    positions[i * 3 + 1] -= params.snowfallSpeed;
+                    positions[i * 3] += Math.sin(Date.now() * 0.001 + i) * 0.05;
+                    if (positions[i * 3 + 1] < 0) {
+                        positions[i * 3] = Math.random() * size.x - size.x / 2;
+                        positions[i * 3 + 1] = params.weatherHeight;
+                        positions[i * 3 + 2] = Math.random() * size.z - size.z / 2;
+                    }
+                }
+                snowflakes.geometry.attributes.position.needsUpdate = true;
+            }
+        }
+
+        function updateWeather(manualWeather = null) {
+            console.log('Updating weather:', manualWeather || params.weather);
+            if (manualWeather) {
+                params.weather = manualWeather;
+            }
+        
+            if (params.weather === 'Rainy') {
+                scene.fog = new THREE.FogExp2(0x666666, 0.005);
+                raindrops.visible = true;
+                snowflakes.visible = false;
+            } else if (params.weather === 'Snowy') {
+                scene.fog = new THREE.FogExp2(0xcccccc, 0.003);
+                raindrops.visible = false;
+                snowflakes.visible = true;
+            } else {
+                scene.fog = null;
+                raindrops.visible = false;
+                snowflakes.visible = false;
+            }
+
+            updateWeatherEffects();
+            updateLighting();
+        }
+        
+        function startWeatherUpdates() {
+            updateWeather();
+        
+            // 시간 업데이트 함수
+            function updateTime() {
+                getKoreanTime().then(timeData => {
+                    if (timeData) {
+                        const currentTime = new Date(timeData.currentTime);
+                        const timeDiv = document.querySelector('.Time');
+                        
+                        const hours = currentTime.getHours();
+                        const minutes = currentTime.getMinutes();
+                        const ampm = hours >= 12 ? 'PM' : 'AM';
+                        const formattedHours = hours % 12 || 12;
+                        const formattedMinutes = minutes.toString().padStart(2, '0');
+                        
+                        timeDiv.textContent = `${formattedHours}:${formattedMinutes} ${ampm} KST`;
+        
+                        // 로고 업데이트도 함께 처리
+                        const logo = document.getElementById("LogoSvg");
+                        if (hours >= 18 || hours < 6) {
+                            logo.src = "assets/logo_svg_w.svg";
+                        } else {
+                            logo.src = "assets/logo_svg_b.svg";
+                        }
+                    }
+                });
+            }
+        
+            // 초기 시간 업데이트
+            updateTime();
+        
+            // 매 분마다 시간 업데이트
+            setInterval(updateTime, 60000);
+        
+            // 매 시간 정각에 날씨 업데이트
+            setInterval(() => {
+                const now = new Date();
+                if (now.getMinutes() === 0) {
+                    getWeatherData().then(weatherData => {
+                        if (weatherData) {
+                            updateSceneWeather(weatherData);
+                        }
+                    });
+                }
+            }, 60000);
+        }
+
+        function updateSceneWeather(weatherData) {       
+            if (water) {
+                water.material.uniforms['distortionScale'].value = weatherData.windSpeed * 20;
+            }
+        
+            clouds.forEach(cloud => {
+                cloud.speed = weatherData.windSpeed * 0.01;
+            });
+        
+            if (weatherData.precipitation === '1' || weatherData.precipitation === '2') {
+                params.weather = 'Rainy';
+            } else if (weatherData.precipitation === '3') {
+                params.weather = 'Snowy';
+            } else {
+                params.weather = 'Clear';
+            }
+        
+            const cloudCount = Math.min(50, Math.max(10, Math.floor(weatherData.sky * 12.5)));
+            if (params.cloudCount !== cloudCount) {
+                params.cloudCount = cloudCount;
+                addClouds();
+            }
+        
+            // Weather UI 업데이트
+            const weatherDiv = document.querySelector('.Weather');
+            let weatherEmoji = '⛅️';
+            
+            if (weatherData.sky === '1') {
+                weatherEmoji = '☀️';
+            } else if (weatherData.sky === '3') {
+                weatherEmoji = '⛅️';
+            } else if (weatherData.sky === '4') {
+                weatherEmoji = '☁️';
+            }
+            
+            if (weatherData.precipitation === '1' || weatherData.precipitation === '4') {
+                weatherEmoji = '🌧️';
+            } else if (weatherData.precipitation === '2') {
+                weatherEmoji = '🌨️';
+            } else if (weatherData.precipitation === '3') {
+                weatherEmoji = '❄️';
+            }
+        
+            const temperature = weatherData.temperature || '18';
+            console.log('Weather updated:', weatherData.sky, weatherData.temperature);
+            weatherDiv.textContent = `${weatherEmoji} ${temperature}°C`;
+        
+            updateWeather();
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            droneCamera.aspect = window.innerWidth / window.innerHeight;
+            droneCamera.updateProjectionMatrix();
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        let rainDrops, rainGeo, splashGeo;
+        let splashes = [];
+
+        
+        function initRain() {
+            const waterSize = water.geometry.parameters;
+            const waterPosition = water.position;
+
+            currentTime = new Date();
+
+            rainGeo = new THREE.BufferGeometry();
+            const rainPositions = new Float32Array(params.rainCount * 3);
+            const rainVelocities = new Float32Array(params.rainCount * 3);
+
+            for (let i = 0; i < params.rainCount; i++) {
+                rainPositions[i * 3] = Math.random() * waterSize.width - waterSize.width / 2 + waterPosition.x;
+                rainPositions[i * 3 + 1] = Math.random() * 50 + waterPosition.y + 50; // 물 위 50 유닛에서 시작
+                rainPositions[i * 3 + 2] = Math.random() * waterSize.height - waterSize.height / 2 + waterPosition.z;
+
+                rainVelocities[i * 3] = 0;
+                rainVelocities[i * 3 + 1] = -9.81 * params.rainSpeed;
+                rainVelocities[i * 3 + 2] = 0;
+            }
+
+            rainGeo.setAttribute('position', new THREE.Float32BufferAttribute(rainPositions, 3));
+            rainGeo.setAttribute('velocity', new THREE.Float32BufferAttribute(rainVelocities, 3));
+
+            const rainMaterial = new THREE.PointsMaterial({
+                color: 0xaaaaff,
+                size: params.rainSize,
+                transparent: true,
+                opacity: 0.6,
+                map: RAIN_DROP_TEXTURE
+            });
+
+            rainDrops = new THREE.Points(rainGeo, rainMaterial);
+            scene.add(rainDrops);
+
+            // Splash 효과 초기화
+            splashGeo = new THREE.BufferGeometry();
+            const splashPositions = new Float32Array(params.rainCount * 3);
+            const splashScales = new Float32Array(params.rainCount);
+            const splashOpacities = new Float32Array(params.rainCount);
+
+            for (let i = 0; i < params.rainCount; i++) {
+                splashPositions[i * 3] = 0;
+                splashPositions[i * 3 + 1] = waterPosition.y;
+                splashPositions[i * 3 + 2] = 0;
+                splashScales[i] = 0;
+                splashOpacities[i] = 0;
+            }
+
+            splashGeo.setAttribute('position', new THREE.Float32BufferAttribute(splashPositions, 3));
+            splashGeo.setAttribute('scale', new THREE.Float32BufferAttribute(splashScales, 1));
+            splashGeo.setAttribute('opacity', new THREE.Float32BufferAttribute(splashOpacities, 1));
+
+            const splashMaterial = new THREE.ShaderMaterial({
+                uniforms: {
+                    pointTexture: { value: RIPPLE_TEXTURE }
+                },
+                vertexShader: `
+                    attribute float scale;
+                    attribute float opacity;
+                    varying float vOpacity;
+                    void main() {
+                        vOpacity = opacity;
+                        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                        gl_PointSize = scale * (300.0 / -mvPosition.z);
+                        gl_Position = projectionMatrix * mvPosition;
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D pointTexture;
+                    varying float vOpacity;
+                    void main() {
+                        gl_FragColor = texture2D(pointTexture, gl_PointCoord) * vec4(1.0, 1.0, 1.0, vOpacity);
+                    }
+                `,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false,
+                transparent: true
+            });
+
+            splashes = new THREE.Points(splashGeo, splashMaterial);
+            scene.add(splashes);
+        }
+
+        function updateRain() {
+            if (!params.rainEnabled) {
+                if (rainDrops) rainDrops.visible = false;
+                if (splashes) splashes.visible = false;
+                return;
+            }
+
+            if (!rainDrops) {
+                initRain();
+            } else {
+                rainDrops.visible = true;
+                splashes.visible = true;
+            }
+
+            const positions = rainGeo.attributes.position.array;
+            const velocities = rainGeo.attributes.velocity.array;
+            const splashPositions = splashGeo.attributes.position.array;
+            const splashScales = splashGeo.attributes.scale.array;
+            const splashOpacities = splashGeo.attributes.opacity.array;
+
+            const waterPosition = water.position;
+
+            for (let i = 0; i < params.rainCount; i++) {
+                positions[i * 3 + 1] += velocities[i * 3 + 1];
+
+                if (positions[i * 3 + 1] <= waterPosition.y) {
+                    // Reset raindrop
+                    positions[i * 3] = Math.random() * water.geometry.parameters.width - water.geometry.parameters.width / 2 + waterPosition.x;
+                    positions[i * 3 + 1] = Math.random() * 50 + waterPosition.y + 50;
+                    positions[i * 3 + 2] = Math.random() * water.geometry.parameters.height - water.geometry.parameters.height / 2 + waterPosition.z;
+
+                    // Create splash
+                    if (params.splashEnabled) {
+                        splashPositions[i * 3] = positions[i * 3];
+                        splashPositions[i * 3 + 1] = waterPosition.y + 0.1;
+                        splashPositions[i * 3 + 2] = positions[i * 3 + 2];
+                        splashScales[i] = params.splashScale;
+                        splashOpacities[i] = 1.0;
+                    }
+                }
+
+                // Update splash
+                if (params.splashEnabled) {
+                    splashScales[i] *= 1.02;
+                    splashOpacities[i] *= 0.98;
+                }
+            }
+
+            rainGeo.attributes.position.needsUpdate = true;
+            splashGeo.attributes.position.needsUpdate = true;
+            splashGeo.attributes.scale.needsUpdate = true;
+            splashGeo.attributes.opacity.needsUpdate = true;
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+        
+            //stats.begin();
+        
+            if (!isDroneViewActive) {
+                controls.update();
+                updateCameraInfo(); // 카메라 정보 업데이트
+            }
+        
+            if (water) {
+                water.material.uniforms['time'].value += clock.getDelta() * params.waveSpeed;
+            }
+        
+            if (verticesPoints && verticesPoints.material.uniforms) {
+                verticesPoints.material.uniforms.time.value = performance.now() / 1000;
+            }
+        
+            updateLighting();
+            animateClouds();
+            animateDroneView();
+            updateWeatherEffects();
+            updateRain(); // 여기에 updateRain 추가
+        
+            if (isDroneViewActive) {
+                renderer.render(scene, droneCamera);
+            } else {
+                renderer.render(scene, camera);
+            }
+        
+            //stats.end();
+        }
+    </script>
+</body>
+</html>
