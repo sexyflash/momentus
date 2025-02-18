@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>날짜 & 예약 URL 입력</title>
 
-    <!-- Tailwind CSS -->
+    <!-- 0327 Tailwind CSS (테스트용이므로 CDN 사용 - 경고 무시 가능) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Flatpickr (달력 라이브러리) -->
@@ -20,7 +20,7 @@
     <div class="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
         <h1 class="text-2xl font-semibold text-gray-900 mb-6">예약 정보를 입력하세요</h1>
 
-        <!-- 사용자 ID 표시 -->
+        <!-- 사용자 ID 표시 (길면 ... 처리) -->
         <div class="mb-4 text-gray-700 break-all">
             <span class="font-medium">사용자 ID:</span> <span id="userId" class="text-blue-600"></span>
         </div>
@@ -53,34 +53,29 @@
         var botUserKey          = urlParams.get("botUserKey") || "";
         var plusfriendUserKey   = urlParams.get("plusfriendUserKey") || "";
 
-        // 너무 긴 userId는 일부만 보이도록 처리
+        // userId가 너무 길면 ... 처리
         function shortenId(id) {
             if (id.length <= 15) return id;
             return id.slice(0, 10) + "..." + id.slice(-5);
         }
 
-        // 사용자 ID 표시 (짧게)
+        // 사용자 ID 표시
         var userIdSpan = document.getElementById("userId");
         userIdSpan.textContent = shortenId(userId);
-
-        // 날짜, 예약 URL을 테스트용으로 미리 채워놓기
-        var datePicker = document.getElementById("datepicker");
-        var bookingUrlInput = document.getElementById("bookingUrl");
 
         // Flatpickr 달력 설정
         flatpickr("#datepicker", {
             dateFormat: "Y-m-d",
-            // 예: 오늘 날짜가 기본값으로
             defaultDate: new Date(),
             minDate: "today"
         });
 
-        // 테스트용 기본값
+        // 예약 URL 기본값 (테스트용)
+        var bookingUrlInput = document.getElementById("bookingUrl");
         bookingUrlInput.value = "https://booking.ddnayo.com/sample";
 
-        // "선택 완료" 버튼 클릭 시
         document.getElementById("confirmBtn").addEventListener("click", function() {
-            var selectedDate = datePicker.value;
+            var selectedDate = document.getElementById("datepicker").value;
             var bookingUrl   = bookingUrlInput.value;
 
             var dateError = document.getElementById("dateError");
@@ -89,14 +84,14 @@
             dateError.classList.add("hidden");
             urlError.classList.add("hidden");
 
-            // 날짜 필수 확인
+            // 날짜 필수
             if (!selectedDate) {
                 dateError.classList.remove("hidden");
                 return;
             }
 
             // ddnayo.com 주소만 체크
-            var urlPattern = /^https:\\/\\/booking\\.ddnayo\\.com\\/.+/;
+            var urlPattern = /^https:\/\/booking\.ddnayo\.com\/.+/;
             if (!urlPattern.test(bookingUrl)) {
                 urlError.classList.remove("hidden");
                 return;
@@ -111,11 +106,10 @@
                 plusfriendUserKey: plusfriendUserKey
             };
 
-            // 전송 전에 어떤 데이터가 나가는지 확인 (디버그용)
+            // 전송 전에 확인
             console.log("Sending payload to Lambda:", payload);
             alert("전송할 데이터:\n" + JSON.stringify(payload, null, 2));
 
-            // Lambda로 POST
             fetch('https://dp56rnbwf9.execute-api.ap-northeast-2.amazonaws.com/prod/booking', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -127,9 +121,8 @@
                 alert("응답 받음:\n" + JSON.stringify(data, null, 2));
 
                 if (data.success) {
-                    // 성공 시 메시지
                     alert("예약 완료! 창을 닫습니다.");
-                    // 카톡 인앱브라우저 닫기
+                    // 카카오 인앱 브라우저에서는 아래 링크로 닫힘
                     window.location.href = "kakaotalk://inappbrowser/close";
                 } else {
                     alert('예약 실패: ' + (data.message || '알 수 없는 오류'));
