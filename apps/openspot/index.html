@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>예약 정보 입력</title>
 
-    <!-- 0356 Tailwind CSS (CDN) -->
+    <!-- 0401 Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Flatpickr (날짜 선택 라이브러리) -->
@@ -125,7 +125,7 @@
                 .then(data => {
                     console.log("Lambda 응답:", data);
                 
-                    // JSON.parse()를 추가하여 body 내용 확인
+                    // JSON 문자열인지 확인 후 파싱
                     let responseBody = typeof data.body === "string" ? JSON.parse(data.body) : data.body;
                 
                     if (responseBody.success) {
@@ -139,6 +139,7 @@
                     console.error('❌ 서버 오류 발생:', error);
                     alert('❌ 서버 오류 발생: ' + error);
                 });
+
 
             });
         };
