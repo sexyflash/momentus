@@ -3,84 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>날짜 선택</title>
-    
-    <!-- 구글 폰트 적용 -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <title>날짜 & 예약 URL 입력</title>
 
-    <!-- jQuery 및 Datepicker 라이브러리 (CDN) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #f7f9fc;
-        }
-        .container {
-            text-align: center;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        input {
-            padding: 10px;
-            font-size: 16px;
-            width: 200px;
-            margin: 10px 0;
-            text-align: center;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <!-- Flatpickr (달력 라이브러리) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 </head>
-<body>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
 
-    <div class="container">
-        <h2>날짜를 선택하세요</h2>
-        <input type="text" id="datepicker" placeholder="날짜 선택">
-        <br>
-        <button id="confirmBtn">선택 완료</button>
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
+        <h1 class="text-2xl font-semibold text-gray-900 mb-6">예약 정보를 입력하세요</h1>
+
+        <!-- 사용자 ID 표시 -->
+        <div class="mb-4 text-gray-700">
+            <span class="font-medium">사용자 ID:</span> <span id="userId" class="text-blue-600"></span>
+        </div>
+
+        <!-- 날짜 입력 -->
+        <div class="mb-4">
+            <label class="block text-gray-700 font-medium mb-2">날짜 선택</label>
+            <input type="text" id="datepicker" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="날짜를 선택하세요">
+            <p id="dateError" class="text-red-500 text-sm mt-2 hidden">날짜를 선택해주세요.</p>
+        </div>
+
+        <!-- URL 입력 -->
+        <div class="mb-6">
+            <label class="block text-gray-700 font-medium mb-2">펜션 예약 URL</label>
+            <input type="text" id="bookingUrl" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="https://booking.ddnayo.com/~~~">
+            <p id="urlError" class="text-red-500 text-sm mt-2 hidden">올바른 주소를 입력해주세요. 현재 <strong>ddnayo.com</strong>만 지원합니다.</p>
+        </div>
+
+        <!-- 확인 버튼 -->
+        <button id="confirmBtn" class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition">선택 완료</button>
     </div>
 
     <script>
-        $(document).ready(function() {
-            $("#datepicker").datepicker({
-                dateFormat: "yy-mm-dd", // 날짜 형식 지정
-                minDate: 0, // 오늘 이후만 선택 가능
-            });
+        // URL에서 user_id 가져오기
+        var urlParams = new URLSearchParams(window.location.search);
+        var userId = urlParams.get('user_id') || "없음"; // user_id 없을 경우 '없음' 표시
+        document.getElementById("userId").innerText = userId;
 
-            $("#confirmBtn").click(function() {
-                var selectedDate = $("#datepicker").val();
-                if (!selectedDate) {
-                    alert("날짜를 선택해주세요!");
-                    return;
-                }
+        // Flatpickr 달력 설정
+        flatpickr("#datepicker", {
+            dateFormat: "Y-m-d",
+            minDate: "today", // 오늘 이전 날짜 선택 불가
+            defaultDate: "today",
+        });
 
-                // URL에서 user_id 가져오기 (챗봇에서 넘긴 값)
-                var urlParams = new URLSearchParams(window.location.search);
-                var userId = urlParams.get('user_id');
+        document.getElementById("confirmBtn").addEventListener("click", function() {
+            var selectedDate = document.getElementById("datepicker").value;
+            var bookingUrl = document.getElementById("bookingUrl").value;
+            var dateError = document.getElementById("dateError");
+            var urlError = document.getElementById("urlError");
 
-                // 카카오톡 챗봇으로 리디렉션
-                window.location.href = `kakaotalk://inappbrowser/close?date=${selectedDate}&user_id=${userId}`;
-            });
+            dateError.classList.add("hidden");
+            urlError.classList.add("hidden");
+
+            // 날짜 선택 필수
+            if (!selectedDate) {
+                dateError.classList.remove("hidden");
+                return;
+            }
+
+            // URL 검증 (ddnayo.com 만 허용)
+            var urlPattern = /^https:\/\/booking\.ddnayo\.com\/.+/;
+            if (!urlPattern.test(bookingUrl)) {
+                urlError.classList.remove("hidden");
+                return;
+            }
+
+            // 챗봇으로 리턴 (카카오톡 스킴 사용)
+            window.location.href = `kakaotalk://inappbrowser/close?date=${selectedDate}&url=${encodeURIComponent(bookingUrl)}&user_id=${userId}`;
         });
     </script>
 
