@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>예약 정보 입력</title>
 
-    <!-- 0334 Tailwind CSS (CDN) -->
+    <!-- 0356 Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Flatpickr (날짜 선택 라이브러리) -->
@@ -121,20 +121,25 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 })
-                .then(response => response.json())
+                .then(response => response.json())  // Lambda에서 JSON 응답 받기
                 .then(data => {
                     console.log("Lambda 응답:", data);
-                    if (data.success) {
-                        alert("예약 완료! 창을 닫습니다.");
+                
+                    // JSON.parse()를 추가하여 body 내용 확인
+                    let responseBody = typeof data.body === "string" ? JSON.parse(data.body) : data.body;
+                
+                    if (responseBody.success) {
+                        alert("✅ 예약 완료! 창을 닫습니다.");
                         window.location.href = "kakaotalk://inappbrowser/close";
                     } else {
-                        alert('예약 실패: ' + (data.message || '알 수 없는 오류'));
+                        alert('❌ 예약 실패: ' + (responseBody.message || '알 수 없는 오류'));
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
-                    alert('서버 오류 발생: ' + error);
+                    console.error('❌ 서버 오류 발생:', error);
+                    alert('❌ 서버 오류 발생: ' + error);
                 });
+
             });
         };
     </script>
