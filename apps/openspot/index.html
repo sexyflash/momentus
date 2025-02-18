@@ -45,39 +45,44 @@
 
     <script>
         Kakao.init('4e75fc983042984d1af886aad148d76c'); // 카카오 키 설정
-
+    
         // URL에서 user_id 가져오기
         var urlParams = new URLSearchParams(window.location.search);
-        var userId = urlParams.get("user_id") || "없음"; 
-        document.getElementById("userId").innerText = userId;
-
+        var userId = urlParams.get("user_id") || "";  // 빈 문자열로 설정
+        document.getElementById("userId").innerText = userId ? userId : "사용자 ID 없음";
+    
         // Flatpickr 달력 설정
         flatpickr("#datepicker", {
             dateFormat: "Y-m-d",
             minDate: "today", 
             defaultDate: "today",
         });
-
+    
         document.getElementById("confirmBtn").addEventListener("click", function() {
             var selectedDate = document.getElementById("datepicker").value;
             var bookingUrl = document.getElementById("bookingUrl").value;
             var dateError = document.getElementById("dateError");
             var urlError = document.getElementById("urlError");
-
+    
             dateError.classList.add("hidden");
             urlError.classList.add("hidden");
-
+    
             if (!selectedDate) {
                 dateError.classList.remove("hidden");
                 return;
             }
-
+    
             var urlPattern = /^https:\/\/booking\.ddnayo\.com\/.+/;
             if (!urlPattern.test(bookingUrl)) {
                 urlError.classList.remove("hidden");
                 return;
             }
-
+    
+            if (!userId) {
+                alert("사용자 ID가 없습니다. 카카오톡에서 다시 시도해주세요.");
+                return;
+            }
+    
             fetch('https://dp56rnbwf9.execute-api.ap-northeast-2.amazonaws.com/prod/booking', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -100,6 +105,7 @@
             .catch(error => { console.error('Error:', error); alert('서버 오류 발생'); });
         });
     </script>
+
 
 </body>
 </html>
