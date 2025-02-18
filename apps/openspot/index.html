@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>예약 정보 입력</title>
 
-    <!-- 0414 Tailwind CSS (CDN) -->
+    <!-- 0431 Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Flatpickr (날짜 선택 라이브러리) -->
@@ -48,7 +48,7 @@
             console.log("페이지 로딩 완료 ✅");
 
             // 카카오 SDK 초기화
-            Kakao.init('YOUR_KAKAO_APP_KEY');
+            Kakao.init('4e75fc983042984d1af886aad148d76c'); // ✅ 실제 발급받은 Kakao App Key
 
             // URL 파라미터에서 값 가져오기
             var urlParams = new URLSearchParams(window.location.search);
@@ -83,7 +83,7 @@
 
                 var urlPattern = new RegExp("^https:\\/\\/booking\\.ddnayo\\.com\\/.+");
                 if (!urlPattern.test(bookingUrl)) {
-                    alert("예약 URL이 올바르지 않습니다.");
+                    console.error("❌ 예약 URL 형식 오류:", bookingUrl);
                     return;
                 }
 
@@ -97,7 +97,7 @@
 
                 console.log("전송할 데이터:", payload);
 
-                fetch('https://YOUR_LAMBDA_ENDPOINT/booking', {
+                fetch('https://dp56rnbwf9.execute-api.ap-northeast-2.amazonaws.com/prod/booking', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -106,9 +106,10 @@
                 .then(data => {
                     let responseBody = typeof data.body === "string" ? JSON.parse(data.body) : data.body;
                     if (responseBody.success) {
+                        console.log("✅ 예약 성공:", responseBody);
                         window.location.href = "kakaotalk://inappbrowser/close";
                     } else {
-                        alert('❌ 예약 실패: ' + (responseBody.message || '알 수 없는 오류'));
+                        console.error('❌ 예약 실패:', responseBody.message);
                     }
                 })
                 .catch(error => {
