@@ -78,7 +78,7 @@
                 return;
             }
 
-            fetch('https://YOUR_API_GATEWAY_URL/submit', {
+            fetch('https://dp56rnbwf9.execute-api.ap-northeast-2.amazonaws.com/prod/booking', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ date: selectedDate, url: bookingUrl, user_id: userId })
