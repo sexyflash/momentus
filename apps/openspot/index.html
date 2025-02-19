@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>빈방 알리미 등록 0353</title>
+    <title>빈방 알리미 등록 0508</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -100,8 +100,8 @@
             
             function updateRoomSelect(rooms) {
                 const select = document.getElementById('roomSelect');
-                select.innerHTML = '<option value="">객실을 선택해주세요</option>';
-                
+                select.innerHTML = '';  // 초기화
+            
                 availableRooms = rooms;
                 
                 rooms.forEach(room => {
@@ -112,6 +112,7 @@
                     select.appendChild(option);
                 });
             }
+
 
 
             
@@ -149,40 +150,41 @@
 
             document.getElementById("confirmBtn").addEventListener("click", async function() {
                 const selectedDate = document.getElementById("datepicker").value;
-                const selectedRoomId = document.getElementById("roomSelect").value;
+                const selectedRoomOptions = document.getElementById("roomSelect").selectedOptions;
                 
-                if (!accommodationId || !selectedDate || !selectedRoomId) {
+                if (!accommodationId || !selectedDate || selectedRoomOptions.length === 0) {
                     alert("모든 필드를 입력해주세요.");
                     return;
                 }
-                
-                const selectedRoom = availableRooms.find(room => room.roomId.toString() === selectedRoomId);
-                if (!selectedRoom) {
+            
+                const selectedRooms = Array.from(selectedRoomOptions).map(option => {
+                    return availableRooms.find(room => room.roomId.toString() === option.value);
+                });
+            
+                if (!selectedRooms.length) {
                     alert("객실 정보를 찾을 수 없습니다.");
                     return;
                 }
-                
+            
                 const payload = {
                     user_id: userId,
                     date: selectedDate,
                     accommodation_id: accommodationId,
-                    room_id: selectedRoomId,
-                    room_info: selectedRoom,
+                    rooms: selectedRooms,  // 🔹 복수 객실 저장
                     bot_user_key: botUserKey
                 };
-                
+            
                 try {
                     const response = await fetch('https://yg26qlwe8i.execute-api.ap-northeast-2.amazonaws.com/prod/booking', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-                    
+            
                     if (!response.ok) {
                         throw new Error('알리미 등록에 실패했습니다.');
                     }
-                    
-                    // 서버 응답을 기다린 후 창 닫기
+            
                     const data = await response.json();
                     if (data.status === 'success') {
                         alert("알리미가 정상적으로 등록되었습니다!");
@@ -195,6 +197,7 @@
                     alert(error.message || '알리미 등록에 실패했습니다. 다시 시도해주세요.');
                 }
             });
+
         };
     </script>
 </body>
