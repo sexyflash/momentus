@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>빈방 알리미 등록 0508</title>
+    <title>빈방 알리미 등록 0514</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -33,10 +33,10 @@
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">객실 선택</label>
-                            <select id="roomSelect" multiple class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            </select>
-                            <small class="text-gray-500">※ Ctrl(⌘) + 클릭으로 여러 개 선택 가능</small>
+                            <div id="roomSelectContainer" class="grid grid-cols-2 gap-2"></div>
+                            <p id="selectedCount" class="mt-2 text-sm text-gray-600">선택된 객실: 0개</p>
                         </div>
+
 
 
                         <button id="confirmBtn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-medium hover:bg-blue-700 transition duration-200">
@@ -99,22 +99,40 @@
             }
             
             function updateRoomSelect(rooms) {
-                const select = document.getElementById('roomSelect');
-                select.innerHTML = '';  // 초기화
+                const container = document.getElementById('roomSelectContainer');
+                container.innerHTML = '';  // 초기화
             
                 availableRooms = rooms;
-                
+                let selectedRooms = [];
+            
                 rooms.forEach(room => {
-                    const status = room.isReservable ? '예약가능' : '예약완료';
-                    const option = document.createElement('option');
-                    option.value = room.roomId;
-                    option.textContent = `${room.roomName} / ${status}`;
-                    select.appendChild(option);
+                    const btn = document.createElement('button');
+                    btn.classList.add('px-4', 'py-2', 'rounded-lg', 'border', 'border-gray-300', 'bg-white', 'hover:bg-blue-100', 'transition', 'duration-200');
+                    btn.textContent = `${room.roomName} (${room.isReservable ? '예약가능' : '예약완료'})`;
+                    btn.dataset.roomId = room.roomId;
+                    btn.dataset.selected = 'false';
+            
+                    btn.addEventListener('click', function() {
+                        const isSelected = this.dataset.selected === 'true';
+                        this.dataset.selected = isSelected ? 'false' : 'true';
+                        this.classList.toggle('bg-blue-500', !isSelected);
+                        this.classList.toggle('text-white', !isSelected);
+                        this.classList.toggle('border-blue-500', !isSelected);
+            
+                        if (!isSelected) {
+                            selectedRooms.push(room);
+                        } else {
+                            selectedRooms = selectedRooms.filter(r => r.roomId !== room.roomId);
+                        }
+            
+                        document.getElementById('selectedCount').textContent = `선택된 객실: ${selectedRooms.length}개`;
+                    });
+            
+                    container.appendChild(btn);
                 });
+            
+                return selectedRooms;
             }
-
-
-
             
             
             bookingUrlInput.addEventListener('change', function() {
