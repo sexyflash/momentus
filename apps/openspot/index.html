@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>빈방 알리미 등록 0329</title>
+    <title>빈방 알리미 등록 0353</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -181,8 +181,14 @@
                         throw new Error('알리미 등록에 실패했습니다.');
                     }
                     
-                    alert("알리미가 정상적으로 등록되었습니다!");
-                    window.close();
+                    // 서버 응답을 기다린 후 창 닫기
+                    const data = await response.json();
+                    if (data.status === 'success') {
+                        alert("알리미가 정상적으로 등록되었습니다!");
+                        window.close();
+                    } else {
+                        throw new Error(data.message || '알리미 등록에 실패했습니다.');
+                    }
                 } catch (error) {
                     console.error('등록 실패:', error);
                     alert(error.message || '알리미 등록에 실패했습니다. 다시 시도해주세요.');
