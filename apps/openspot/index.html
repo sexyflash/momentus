@@ -1,64 +1,24 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <!-- 1044 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>예약하기</title>
+    <title>빈방 알리미 등록 1139</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body class="bg-gray-50">
-    <!-- 인증 페이지 -->
-    <div id="authPage" class="min-h-screen flex flex-col">
+    <div class="min-h-screen flex flex-col">
         <div class="flex-1 flex flex-col justify-center items-center p-6">
             <div class="w-full max-w-md space-y-8">
                 <div class="text-center">
-                    <h2 class="text-2xl font-bold text-gray-900">펜션 예약을 위한 준비</h2>
-                    <p class="mt-2 text-gray-600">예약 관련 안내를 받기 위해 카카오톡 알림 권한이 필요해요</p>
+                    <h2 class="text-2xl font-bold text-gray-900">빈방 알리미 등록</h2>
+                    <p class="mt-2 text-gray-600">원하시는 날짜와 펜션을 등록해주세요</p>
                 </div>
+
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <div class="space-y-4">
-                        <div class="flex items-center space-x-4 p-4 bg-yellow-50 rounded-xl">
-                            <span class="text-yellow-600">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                            </span>
-                            <p class="text-sm text-gray-700">예약 확정과 안내를 카카오톡으로 받을 수 있어요</p>
-                        </div>
-                        <button id="kakaoAuthBtn" class="w-full bg-[#FEE500] text-gray-900 py-3 px-4 rounded-xl font-medium hover:bg-[#FDD800] transition duration-200 flex items-center justify-center space-x-2">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 3C6.48 3 2 6.48 2 12c0 5.52 4.48 10 10 10s10-4.48 10-10c0-5.52-4.48-10-10-10zm1 15h-2v-2h2v2zm0-4h-2V7h2v7z"/>
-                            </svg>
-                            <span>카카오톡으로 시작하기</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 예약 페이지 -->
-    <div id="bookingPage" class="hidden min-h-screen bg-gray-50">
-        <div class="max-w-4xl mx-auto p-6">
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-                <div class="space-y-8">
-                    <div>
-                        <h1 class="text-2xl font-bold text-gray-900">펜션 예약하기</h1>
-                        <p class="mt-2 text-gray-600">원하시는 날짜를 선택해 주세요</p>
-                    </div>
-
                     <div class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">예약자 정보</label>
-                            <div class="p-4 bg-gray-50 rounded-xl">
-                                <p class="text-sm text-gray-600">카카오톡 사용자 ID: <span id="userId" class="font-medium text-gray-900"></span></p>
-                            </div>
-                        </div>
-
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">날짜 선택</label>
                             <input type="text" id="datepicker" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="날짜를 선택해주세요">
@@ -67,12 +27,13 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">예약 URL</label>
                             <input type="text" id="bookingUrl" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="booking.ddnayo.com 주소를 입력해주세요">
+                            <p class="mt-2 text-sm text-gray-500">예약하고 싶은 펜션/캠핑장의 예약 페이지 주소를 입력해주세요</p>
                         </div>
-                    </div>
 
-                    <button id="confirmBtn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-medium hover:bg-blue-700 transition duration-200">
-                        예약 완료하기
-                    </button>
+                        <button id="confirmBtn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-medium hover:bg-blue-700 transition duration-200">
+                            알리미 등록하기
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,101 +41,71 @@
 
     <script>
         window.onload = function () {
-            console.log("페이지 로딩 완료 ✅");
-
-            // 카카오 SDK 초기화
-            Kakao.init('4e75fc983042984d1af886aad148d76c');
-
             // URL 파라미터 가져오기
             var urlParams = new URLSearchParams(window.location.search);
             var userId = urlParams.get("user_id") || "";
             var botUserKey = urlParams.get("botUserKey") || "";
             var plusfriendUserKey = urlParams.get("plusfriendUserKey") || "";
 
-            console.log("user_id:", userId);
-            console.log("botUserKey:", botUserKey);
-            console.log("plusfriendUserKey:", plusfriendUserKey);
+            console.log("URL 파라미터:", { userId, botUserKey, plusfriendUserKey });
 
-            // 카카오 인증 버튼 이벤트
-            document.getElementById("kakaoAuthBtn").addEventListener("click", function() {
-                Kakao.Auth.login({
-                    scope: 'talk_message',
-                    success: function(response) {
-                        console.log("카카오 인증 성공:", response);
-                        document.getElementById("authPage").classList.add("hidden");
-                        document.getElementById("bookingPage").classList.remove("hidden");
-                        initializeBookingPage();
-                    },
-                    fail: function(error) {
-                        console.error("카카오 인증 실패:", error);
-                        alert("카카오톡 인증에 실패했습니다. 다시 시도해주세요.");
-                    }
-                });
+            // Flatpickr 초기화
+            flatpickr("#datepicker", {
+                dateFormat: "Y-m-d",
+                defaultDate: new Date(),
+                minDate: "today"
             });
 
-            function initializeBookingPage() {
-                // userId 표시
-                document.getElementById("userId").textContent = userId;
+            // 예약 URL 기본값
+            document.getElementById("bookingUrl").value = "https://booking.ddnayo.com/sample";
 
-                // Flatpickr 초기화
-                flatpickr("#datepicker", {
-                    dateFormat: "Y-m-d",
-                    defaultDate: new Date(),
-                    minDate: "today"
-                });
+            // 등록 버튼 이벤트
+            document.getElementById("confirmBtn").addEventListener("click", function () {
+                var selectedDate = document.getElementById("datepicker").value;
+                var bookingUrl = document.getElementById("bookingUrl").value;
 
-                // 예약 URL 기본값
-                document.getElementById("bookingUrl").value = "https://booking.ddnayo.com/sample";
+                if (!selectedDate) {
+                    alert("날짜를 선택해주세요.");
+                    return;
+                }
 
-                // 예약 완료 버튼 이벤트
-                document.getElementById("confirmBtn").addEventListener("click", function () {
-                    var selectedDate = document.getElementById("datepicker").value;
-                    var bookingUrl = document.getElementById("bookingUrl").value;
+                var urlPattern = new RegExp("^https:\\/\\/booking\\.ddnayo\\.com\\/.+");
+                if (!urlPattern.test(bookingUrl)) {
+                    alert("올바른 예약 URL을 입력해주세요.");
+                    return;
+                }
 
-                    if (!selectedDate) {
-                        alert("날짜를 선택해주세요.");
-                        return;
+                var payload = {
+                    user_id: userId,
+                    date: selectedDate,
+                    url: bookingUrl,
+                    botUserKey: botUserKey,
+                    plusfriendUserKey: plusfriendUserKey
+                };
+
+                console.log("전송할 데이터:", payload);
+
+                fetch('https://dp56rnbwf9.execute-api.ap-northeast-2.amazonaws.com/prod/booking', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    let responseBody = typeof data.body === "string" ? JSON.parse(data.body) : data.body;
+                    if (responseBody.success) {
+                        alert("알리미가 정상적으로 등록되었습니다!");
+                        window.location.href = "kakaotalk://inappbrowser/close";
+                    } else {
+                        alert(responseBody.message || "등록에 실패했습니다. 다시 시도해주세요.");
                     }
-
-                    var urlPattern = new RegExp("^https:\\/\\/booking\\.ddnayo\\.com\\/.+");
-                    if (!urlPattern.test(bookingUrl)) {
-                        alert("올바른 예약 URL을 입력해주세요.");
-                        return;
-                    }
-
-                    var payload = {
-                        user_id: userId,
-                        date: selectedDate,
-                        url: bookingUrl,
-                        botUserKey: botUserKey,
-                        plusfriendUserKey: plusfriendUserKey
-                    };
-
-                    console.log("전송할 데이터:", payload);
-
-                    fetch('https://dp56rnbwf9.execute-api.ap-northeast-2.amazonaws.com/prod/booking', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        let responseBody = typeof data.body === "string" ? JSON.parse(data.body) : data.body;
-                        if (responseBody.success) {
-                            console.log("✅ 예약 성공:", responseBody);
-                            alert("예약이 완료되었습니다!");
-                            window.location.href = "kakaotalk://inappbrowser/close";
-                        } else {
-                            console.error('❌ 예약 실패:', responseBody.message);
-                            alert("예약에 실패했습니다. 다시 시도해주세요.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error('❌ 서버 오류:', error);
-                        alert("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-                    });
+                })
+                .catch(error => {
+                    console.error('서버 오류:', error);
+                    alert("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
                 });
-            }
+            });
         };
     </script>
 </body>
+</html>
