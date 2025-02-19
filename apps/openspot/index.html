@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>빈방 알리미 등록 0151</title>
+    <title>빈방 알리미 등록 0153</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -96,7 +96,7 @@
             async function fetchRoomStatus(date) {
                 try {
                     const yearMonth = date.substring(0, 7).replace("-", "");
-                    const url = `https://dp56rnbwf9.execute-api.ap-northeast-2.amazonaws.com/prod/room-status?accommodationId=${accommodationId}&month=${yearMonth}`;
+                    const url = `https://yg26qlwe8i.execute-api.ap-northeast-2.amazonaws.com/prod/room-status?accommodationId=${accommodationId}&month=${yearMonth}`;
                     
                     const response = await fetch(url);
                     const data = await response.json();
