@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>빈방 알리미 등록 1139</title>
+    <title>빈방 알리미 등록</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -14,7 +14,7 @@
             <div class="w-full max-w-md space-y-8">
                 <div class="text-center">
                     <h2 class="text-2xl font-bold text-gray-900">빈방 알리미 등록</h2>
-                    <p class="mt-2 text-gray-600">원하시는 날짜와 펜션을 등록해주세요</p>
+                    <p class="mt-2 text-gray-600">원하시는 날짜와 객실을 선택해주세요</p>
                 </div>
 
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
@@ -26,8 +26,14 @@
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">예약 URL</label>
-                            <input type="text" id="bookingUrl" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="booking.ddnayo.com 주소를 입력해주세요">
-                            <p class="mt-2 text-sm text-gray-500">예약하고 싶은 펜션/캠핑장의 예약 페이지 주소를 입력해주세요</p>
+                            <input type="text" id="bookingUrl" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" value="https://booking.ddnayo.com/booking-calendar-status?accommodationId=100030" readonly>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">객실 선택</label>
+                            <select id="roomSelect" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">객실을 선택해주세요</option>
+                            </select>
                         </div>
 
                         <button id="confirmBtn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-medium hover:bg-blue-700 transition duration-200">
@@ -40,70 +46,111 @@
     </div>
 
     <script>
-        window.onload = function () {
-            // URL 파라미터 가져오기
-            var urlParams = new URLSearchParams(window.location.search);
-            var userId = urlParams.get("user_id") || "";
-            var botUserKey = urlParams.get("botUserKey") || "";
-            var plusfriendUserKey = urlParams.get("plusfriendUserKey") || "";
+        let availableRooms = [];
 
-            console.log("URL 파라미터:", { userId, botUserKey, plusfriendUserKey });
+        window.onload = function() {
+            // URL 파라미터 가져오기
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get("user_id") || "";
+            const botUserKey = urlParams.get("botUserKey") || "";
 
             // Flatpickr 초기화
-            flatpickr("#datepicker", {
+            const datePicker = flatpickr("#datepicker", {
                 dateFormat: "Y-m-d",
-                defaultDate: new Date(),
-                minDate: "today"
+                minDate: "today",
+                onChange: function(selectedDates, dateStr) {
+                    fetchRoomStatus(dateStr);
+                }
             });
 
-            // 예약 URL 기본값
-            document.getElementById("bookingUrl").value = "https://booking.ddnayo.com/sample";
+            // 객실 정보 조회 함수
+            async function fetchRoomStatus(date) {
+                try {
+                    const yearMonth = date.substring(0, 7).replace("-", "");
+                    const url = `https://booking.ddnayo.com/booking-calendar-api/calendar/accommodation/100030/reservation-calendar?month=${yearMonth}&calendarTypeCode=RESERVATION_CALENDAR&zoneIds=`;
+                    
+                    const response = await fetch(url);
+                    const data = await response.json();
+
+                    // 선택된 날짜의 객실 정보 찾기
+                    const selectedDate = data.data.rowDtos
+                        .flatMap(row => row.columnDtos)
+                        .find(col => col.date === date);
+
+                    if (selectedDate && selectedDate.detailDtos) {
+                        updateRoomSelect(selectedDate.detailDtos);
+                    }
+                } catch (error) {
+                    console.error('객실 정보 조회 실패:', error);
+                    alert('객실 정보를 불러오는데 실패했습니다.');
+                }
+            }
+
+            // 객실 선택 업데이트
+            function updateRoomSelect(rooms) {
+                const select = document.getElementById('roomSelect');
+                select.innerHTML = '<option value="">객실을 선택해주세요</option>';
+                
+                availableRooms = rooms;
+                
+                rooms.forEach(room => {
+                    const status = room.isReservable ? '예약가능' : '예약완료';
+                    const option = document.createElement('option');
+                    option.value = room.roomId;
+                    option.textContent = `${room.roomName} / ${status}`;
+                    option.disabled = !room.isReservable;
+                    select.appendChild(option);
+                });
+            }
 
             // 등록 버튼 이벤트
-            document.getElementById("confirmBtn").addEventListener("click", function () {
-                var selectedDate = document.getElementById("datepicker").value;
-                var bookingUrl = document.getElementById("bookingUrl").value;
+            document.getElementById("confirmBtn").addEventListener("click", async function() {
+                const selectedDate = document.getElementById("datepicker").value;
+                const selectedRoomId = document.getElementById("roomSelect").value;
 
                 if (!selectedDate) {
                     alert("날짜를 선택해주세요.");
                     return;
                 }
 
-                var urlPattern = new RegExp("^https:\\/\\/booking\\.ddnayo\\.com\\/.+");
-                if (!urlPattern.test(bookingUrl)) {
-                    alert("올바른 예약 URL을 입력해주세요.");
+                if (!selectedRoomId) {
+                    alert("객실을 선택해주세요.");
                     return;
                 }
 
-                var payload = {
+                const selectedRoom = availableRooms.find(room => room.roomId.toString() === selectedRoomId);
+                
+                if (selectedRoom.isReservable && !confirm('선택하신 객실은 현재 예약 가능합니다. 지금 바로 예약하시겠습니까?')) {
+                    return;
+                }
+
+                const payload = {
                     user_id: userId,
                     date: selectedDate,
-                    url: bookingUrl,
-                    botUserKey: botUserKey,
-                    plusfriendUserKey: plusfriendUserKey
+                    room_id: selectedRoomId,
+                    room_info: selectedRoom,
+                    botUserKey: botUserKey
                 };
 
-                console.log("전송할 데이터:", payload);
+                try {
+                    const response = await fetch('https://dp56rnbwf9.execute-api.ap-northeast-2.amazonaws.com/prod/booking', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
 
-                fetch('https://dp56rnbwf9.execute-api.ap-northeast-2.amazonaws.com/prod/booking', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    let responseBody = typeof data.body === "string" ? JSON.parse(data.body) : data.body;
-                    if (responseBody.success) {
+                    const data = await response.json();
+                    
+                    if (data.success) {
                         alert("알리미가 정상적으로 등록되었습니다!");
                         window.location.href = "kakaotalk://inappbrowser/close";
                     } else {
-                        alert(responseBody.message || "등록에 실패했습니다. 다시 시도해주세요.");
+                        alert(data.message || "등록에 실패했습니다. 다시 시도해주세요.");
                     }
-                })
-                .catch(error => {
+                } catch (error) {
                     console.error('서버 오류:', error);
                     alert("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-                });
+                }
             });
         };
     </script>
