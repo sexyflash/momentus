@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Momentus</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.css">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #F9F9F9;
+            color: #1D1D1F;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        
+        .hero {
+            position: relative;
+            width: 100%;
+            max-height: 493px;
+            overflow: hidden;
+        }
+        
+        .hero img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        
+        .hero-content {
+            padding: 50px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 30px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .subtitle {
+            color: #86868B;
+            font-size: 16px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        
+        .title {
+            color: #1D1D1F;
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            word-break: keep-all;
+        }
+        
+        .description {
+            color: #1D1D1F;
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.5;
+            word-break: keep-all;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+        
+        .cta {
+            color: #0066CC;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 15px;
+            padding: 12px 24px;
+            border: 2px solid #0066CC;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .cta:hover {
+            background-color: #0066CC;
+            color: white;
+            text-decoration: none !important;
+        }
+        
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+            padding: 0 20px;
+            margin: 30px auto 60px;
+            max-width: 1200px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 323px;
+            height: auto;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+        }
+        
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+        }
+        
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 15px;
+            word-break: keep-all;
+        }
+        
+        .card-description {
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex-grow: 1;
+            word-break: keep-all;
+        }
+        
+        .card-link {
+            color: #0066CC;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 20px;
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.2s ease;
+            padding-bottom: 2px;
+            border-bottom: 1px solid transparent;
+        }
+        
+        .card-link:hover {
+            transform: translateX(3px);
+            border-bottom: 1px solid #0066CC;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #6E6E73;
+            font-size: 12px;
+        }
+        
+        .footer-links {
+            margin: 10px 0;
+        }
+        
+        .footer-link {
+            font-weight: 700;
+            cursor: pointer;
+        }
+        
+        .footer-divider {
+            margin: 0 10px;
+        }
+        
+        .footer-tagline {
+            margin-top: 10px;
+        }
+        
+        /* 오버레이 스타일 */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            width: 90%;
+            max-width: 380px;
+            background-color: white;
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        .overlay.active .modal {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #86868B;
+            font-size: 24px;
+            transition: all 0.2s ease;
+        }
+        
+        .modal-close:hover {
+            color: #1D1D1F;
+        }
+        
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #1D1D1F;
+            text-align: center;
+            line-height: 1.3;
+            word-break: keep-all;
+        }
+        
+        .modal-description {
+            font-size: 16px;
+            line-height: 1.4;
+            color: #86868B;
+            margin-bottom: 25px;
+            text-align: center;
+            word-break: keep-all;
+        }
+        
+        .date-input-container {
+            margin-bottom: 25px;
+        }
+        
+        .date-input-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #1D1D1F;
+        }
+        
+        .date-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #E5E5EA;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Pretendard', sans-serif;
+            color: #1D1D1F;
+            background-color: #F9F9F9;
+            transition: border-color 0.2s ease;
+        }
+        
+        .date-input:focus {
+            outline: none;
+            border-color: #0066CC;
+        }
+        
+        .form-submit {
+            width: 100%;
+            padding: 15px;
+            background-color: #0066CC;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-family: 'Pretendard', sans-serif;
+        }
+        
+        .form-submit:hover {
+            background-color: #0055B3;
+        }
+        
+        /* 플랫피커 커스텀 스타일 */
+        .flatpickr-calendar {
+            font-family: 'Pretendard', sans-serif;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            border: none;
+            width: 100%;
+        }
+        
+        .flatpickr-day.selected, 
+        .flatpickr-day.startRange, 
+        .flatpickr-day.endRange, 
+        .flatpickr-day.selected.inRange, 
+        .flatpickr-day.startRange.inRange, 
+        .flatpickr-day.endRange.inRange, 
+        .flatpickr-day.selected:focus, 
+        .flatpickr-day.startRange:focus, 
+        .flatpickr-day.endRange:focus, 
+        .flatpickr-day.selected:hover, 
+        .flatpickr-day.startRange:hover, 
+        .flatpickr-day.endRange:hover, 
+        .flatpickr-day.selected.prevMonthDay, 
+        .flatpickr-day.startRange.prevMonthDay, 
+        .flatpickr-day.endRange.prevMonthDay, 
+        .flatpickr-day.selected.nextMonthDay, 
+        .flatpickr-day.startRange.nextMonthDay, 
+        .flatpickr-day.endRange.nextMonthDay {
+            background: #0066CC;
+            border-color: #0066CC;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .card-container {
+                gap: 20px;
+                padding: 0 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 40px 24px;
+            }
+            
+            .title {
+                font-size: 32px;
+            }
+            
+            .description {
+                font-size: 16px;
+            }
+            
+            .card {
+                max-width: 100%;
+                margin: 0 auto;
+                width: calc(100% - 30px);
+            }
+            
+            .card-container {
+                gap: 30px;
+            }
+            
+            .modal {
+                padding: 25px 20px;
+            }
+            
+            .modal-title {
+                font-size: 20px;
+            }
+            
+            .modal-description {
+                font-size: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-content {
+                padding: 40px 20px;
+            }
+            
+            .title {
+                font-size: 28px;
+            }
+            
+            .subtitle {
+                font-size: 15px;
+            }
+            
+            .description {
+                font-size: 15px;
+                line-height: 1.4;
+            }
+            
+            .card {
+                padding: 30px 25px;
+                border-radius: 12px;
+                margin: 0 auto;
+                width: 90%;
+            }
+            
+            .card-container {
+                padding: 0 10px;
+            }
+            
+            .card-title {
+                font-size: 19px;
+                line-height: 1.3;
+            }
+            
+            .cta {
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+            
+            .modal {
+                padding: 20px 15px;
+            }
+            
+            .modal-title {
+                font-size: 18px;
+            }
+            
+            .modal-description {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            
+            .date-input {
+                padding: 12px;
+                font-size: 15px;
+            }
+            
+            .form-submit {
+                padding: 12px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <img src="assets/placeholder.png" alt="Hero Image">
+        </div>
+        
+        <div class="hero-content">
+            <div>
+                <div class="subtitle">놓치기 쉬운 우리 아이</div>
+                <h1 class="title">영유아 건강검진, 일정만 등록하세요</h1>
+                <p class="description">바쁘게 지내다 보면 검진 시기가 훌쩍 지나버리죠?<br>
+                    예약하려고 하면 병원도 이미 꽉 차 있고요.<br>
+                    날짜만 등록하면 검진 시기가 다가올 때 자연스럽게 알려드릴게요.</p>
+            </div>
+            <div class="cta" id="babyAlertBtn">우리아이 알림받기</div>
+        </div>
+        
+        <div class="card-container">
+            <div class="card">
+                <div class="card-content">
+                    <img class="card-icon" src="assets/icon_1.png" alt="Icon">
+                    <div>
+                        <h2 class="card-title">아이 성장도,<br>내 삶도 아름답게 기록하기</h2>
+                        <p class="card-description">아이 사진만 남기는 것도 좋지만,<br>
+                            오늘의 생각과 순간을 남겨보는 건 어떨까요?<br>
+                            몇 줄만 적어도 AI가 정리해 주고,<br>
+                            바쁜 일상에서도 놓치지 않게 도와줄 거예요.</p>
+                        <div class="card-link">내 플래너 만들기 →</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-content">
+                    <img class="card-icon" src="assets/icon_2.png" alt="Icon">
+                    <div>
+                        <h2 class="card-title">목동·대치동 엄마들은<br>쿠팡도 다르게 쓴다?</h2>
+                        <p class="card-description">우린 왜 하나씩 눌러봐야 하는데,<br>
+                            대치동 엄마들은 옵션, 재고, 사이즈를 한눈에?<br>
+                            우리도 쓸 수 있어요. 어렵지 않아요.</p>
+                        <div class="card-link">대치동 쿠팡 비밀 확인하기 →</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-content">
+                    <img class="card-icon" src="assets/icon_3.png" alt="Icon">
+                    <div>
+                        <h2 class="card-title">훈육, 수면교육, 유아식…<br>30분, 1시간 영상 언제 다 보죠?</h2>
+                        <p class="card-description">검색하면 좋은 영상은 많은데,<br>
+                            정작 볼 시간이 없고 봐도 답이 안 나올 때.<br>
+                            딱 핵심만 뽑아서 요약해 주고,<br>
+                            추가로 궁금한 것도 바로 답해 줍니다.</p>
+                        <div class="card-link">빠르게 요약 받기 →</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-content">
+                    <img class="card-icon" src="assets/icon_4.png" alt="Icon">
+                    <div>
+                        <h2 class="card-title">이미 팔린 호텔, 펜션, 캠핑장?<br>우리도 갈 수 있어요.</h2>
+                        <p class="card-description">연휴, 공휴일엔 이미 예약 끝?<br>
+                            여행 인플루언서들이 아는 예약 비법,<br>
+                            곧 공개됩니다. 놓치지 말고 미리 챙겨보세요.</p>
+                        <div class="card-link">미리 구독하기 →</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div>© 2025 <strong>momentus</strong>. All rights reserved.</div>
+            <div class="footer-links">
+                <span class="footer-link">이용약관</span>
+                <span class="footer-divider">|</span>
+                <span class="footer-link">개인정보처리방침</span>
+                <span class="footer-divider">|</span>
+                <span class="footer-link">문의하기</span>
+            </div>
+            <div class="footer-tagline">We're here to support your journey. Always remember, momentus starts with you. 🚀</div>
+        </div>
+    </div>
+    
+    <!-- 날짜 입력 오버레이 -->
+    <div class="overlay" id="babyDateOverlay">
+        <div class="modal">
+            <div class="modal-close" id="modalClose">×</div>
+            <h2 class="modal-title">우리 아이 정보 등록하기</h2>
+            <p class="modal-description">아이의 출생일을 등록하시면 건강검진 일정에 맞춰 알림을 보내드립니다. 입력하신 정보는 알림 서비스를 위해서만 사용됩니다.</p>
+            
+            <div class="date-input-container">
+                <label for="babyBirthDate" class="date-input-label">우리 아이 출생일</label>
+                <input type="text" id="babyBirthDate" class="date-input" placeholder="날짜를 선택해주세요" readonly>
+            </div>
+            
+            <button type="button" class="form-submit" id="submitBabyDate">알림 받기</button>
+        </div>
+    </div>
+
+    <!-- JavaScript 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ko.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 요소 선택
+            const babyAlertBtn = document.getElementById('babyAlertBtn');
+            const babyDateOverlay = document.getElementById('babyDateOverlay');
+            const modalClose = document.getElementById('modalClose');
+            const submitBabyDate = document.getElementById('submitBabyDate');
+            const babyBirthDate = document.getElementById('babyBirthDate');
+            
+            // 날짜 선택기 초기화
+            const fpInstance = flatpickr(babyBirthDate, {
+                locale: 'ko',
+                dateFormat: 'Y년 m월 d일',
+                disableMobile: false, // 모바일에서 네이티브 캘린더 대신 flatpickr 사용
+                maxDate: new Date(), // 오늘 이후 날짜 선택 불가
+                position: 'auto',
+                static: true, // 모바일에서 더 잘 작동하도록
+                monthSelectorType: 'static',
+                animate: true
+            });
+            
+            // 알림받기 버튼 클릭 이벤트
+            babyAlertBtn.addEventListener('click', function() {
+                babyDateOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // 배경 스크롤 방지
+            });
+            
+            // 모달 닫기 이벤트
+            modalClose.addEventListener('click', closeModal);
+            
+            // 오버레이 배경 클릭 시 모달 닫기
+            babyDateOverlay.addEventListener('click', function(e) {
+                if (e.target === babyDateOverlay) {
+                    closeModal();
+                }
+            });
+            
+            // 등록 완료 이벤트
+            submitBabyDate.addEventListener('click', function() {
+                // 날짜가 선택되었는지 확인
+                if (!babyBirthDate.value) {
+                    // 토스트 메시지로 알림
+                    showToast('아이의 출생일을 선택해주세요', 'error');
+                    return;
+                }
+                
+                // 여기에 날짜 저장 및 처리 로직 추가 (예: localStorage, 서버 API 호출 등)
+                localStorage.setItem('babyBirthDate', babyBirthDate.value);
+                
+                // 성공 토스트 메시지 표시
+                showToast('알림 서비스가 등록되었습니다!', 'success');
+                
+                // 모달 닫기
+                closeModal();
+                
+                // 스크롤 위치 조정 (카드 컨테이너로 스크롤)
+                setTimeout(() => {
+                    const cardContainer = document.querySelector('.card-container');
+                    cardContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            });
+            
+            // 토스트 메시지 함수
+            function showToast(message, type) {
+                const bgColor = type === 'success' ? '#0066CC' : '#FF3B30';
+                
+                Toastify({
+                    text: message,
+                    duration: 3000,
+                    gravity: "bottom",
+                    position: "center",
+                    stopOnFocus: true,
+                    style: {
+                        background: bgColor,
+                        borderRadius: "30px",
+                        fontFamily: "'Pretendard', sans-serif",
+                        fontSize: "15px",
+                        fontWeight: "600",
+                        padding: "12px 20px",
+                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)"
+                    }
+                }).showToast();
+            }
+            
+            // 모달 닫기 함수
+            function closeModal() {
+                babyDateOverlay.classList.remove('active');
+                document.body.style.overflow = ''; // 배경 스크롤 복구
+            }
+            
+            // 푸터 링크에 호버 효과 추가
+            const footerLinks = document.querySelectorAll('.footer-link');
+            
+            footerLinks.forEach(element => {
+                element.addEventListener('mouseover', function() {
+                    this.style.textDecoration = 'underline';
+                });
+                
+                element.addEventListener('mouseout', function() {
+                    this.style.textDecoration = 'none';
+                });
+            });
+            
+            // 카드 및 링크에 클릭 효과 추가
+            const interactiveElements = document.querySelectorAll('.card-link, .footer-link');
+            interactiveElements.forEach(element => {
+                element.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // 애니메이션 효과
+                    this.style.opacity = '0.7';
+                    setTimeout(() => {
+                        this.style.opacity = '1';
+                        // 클릭 액션 플레이스홀더
+                        console.log('Clicked: ' + this.textContent.trim());
+                    }, 200);
+                });
+            });
+            
+            // 반응형 레이아웃 처리
+            function handleResponsiveLayout() {
+                const windowWidth = window.innerWidth;
+                const cards = document.querySelectorAll('.card');
+                
+                // 화면 크기에 따른 카드 애니메이션 조정
+                if (windowWidth <= 480) {
+                    // 모바일 기기용
+                    cards.forEach(card => {
+                        card.style.animation = 'fadeInUp 0.6s ease-out';
+                    });
+                } else if (windowWidth <= 768) {
+                    // 태블릿용
+                    cards.forEach(card => {
+                        card.style.animation = 'fadeInUp 0.5s ease-out';
+                    });
+                } else {
+                    // 데스크톱용
+                    cards.forEach(card => {
+                        card.style.animation = 'fadeInUp 0.4s ease-out';
+                    });
+                }
+            }
+            
+            // 기본 애니메이션 스타일 추가
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                
+                .hero-content {
+                    animation: fadeInUp 0.8s ease-out;
+                }
+                
+                .card {
+                    animation: fadeInUp 0.6s ease-out;
+                }
+                
+                .card:nth-child(2) {
+                    animation-delay: 0.1s;
+                }
+                
+                .card:nth-child(3) {
+                    animation-delay: 0.2s;
+                }
+                
+                .card:nth-child(4) {
+                    animation-delay: 0.3s;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // 초기 호출 및 리사이즈 리스너
+            handleResponsiveLayout();
+            window.addEventListener('resize', handleResponsiveLayout);
+            
+            // 스크롤 애니메이션을 위한 인터섹션 옵저버
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

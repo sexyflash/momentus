@@ -1,0 +1,74 @@
+/* styles.css */
+body {
+    font-family: 'Pretendard', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F9F9F9;
+}
+.container {
+    width: 90%;
+    max-width: 747px;
+    margin: auto;
+}
+.hero {
+    position: relative;
+    text-align: center;
+}
+.hero img {
+    width: 100%;
+    height: auto;
+}
+.hero-content {
+    padding: 20px;
+    background: #FFF;
+    border-radius: 10px;
+    margin-top: -50px;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.cta-button {
+    background-color: #0066CC;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+}
+.feature {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 45%;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.feature img {
+    width: 44px;
+    height: 44px;
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #6E6E73;
+}
+footer nav a {
+    color: #0066CC;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 600px) {
+    .feature {
+        width: 100%;
+    }
+}
+
