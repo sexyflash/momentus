@@ -318,6 +318,30 @@
             background-color: #0055B3;
         }
         
+        /* 로딩 스피너 스타일 */
+        .loading-spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading .loading-spinner {
+            display: inline-block;
+        }
+        
+        .loading .button-text {
+            display: none;
+        }
+        
         /* 플랫피커 커스텀 스타일 */
         .flatpickr-calendar {
             font-family: 'Pretendard', sans-serif;
@@ -474,7 +498,7 @@
             <div class="cta" id="babyAlertBtn">우리 아이 알림받기</div>
         </div>
         
-        <div class="card-container">
+        <div class="card-container" id="cardContainer">
             <div class="card">
                 <div class="card-content">
                     <img class="card-icon" src="assets/icon_1.png" alt="Icon">
@@ -564,7 +588,10 @@
                 <input type="text" id="babyBirthDate" class="date-input" placeholder="날짜를 선택해주세요" readonly>
             </div>
             
-            <button type="button" class="form-submit" id="submitBabyDate">알림받기</button>
+            <button type="button" class="form-submit" id="submitBabyDate">
+                <span class="button-text">알림받기</span>
+                <span class="loading-spinner"></span>
+            </button>
         </div>
     </div>
 
@@ -581,6 +608,7 @@
             const modalClose = document.getElementById('modalClose');
             const submitBabyDate = document.getElementById('submitBabyDate');
             const babyBirthDate = document.getElementById('babyBirthDate');
+            const cardContainer = document.getElementById('cardContainer');
             
             // 네이버톡톡 사용자 ID (URL 파라미터에서 가져오기)
             const urlParams = new URLSearchParams(window.location.search);
@@ -606,8 +634,13 @@
             
             // 알림받기 버튼 클릭 이벤트
             babyAlertBtn.addEventListener('click', function() {
-                babyDateOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden'; // 배경 스크롤 방지
+                // 페이지 로드 시 사용자 상태 확인
+                if (userId) {
+                    checkExistingRegistration(userId);
+                } else {
+                    babyDateOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // 배경 스크롤 방지
+                }
             });
             
             // 모달 닫기 이벤트
@@ -635,9 +668,21 @@
                     return;
                 }
                 
+                // 버튼 로딩 상태 활성화
+                submitBabyDate.classList.add('loading');
+                
                 try {
-                    // API 호출을 통해 영유아 검진 알리미 등록
+                    // 이미 등록되어 있는지 확인
+                    const checkResult = await checkExistingRegistration(userId, true);
                     
+                    if (checkResult && checkResult.exists) {
+                        submitBabyDate.classList.remove('loading');
+                        showToast(checkResult.message || '이미 등록된 알림이 있습니다.', 'info');
+                        closeModal();
+                        return;
+                    }
+                    
+                    // API 호출을 통해 영유아 검진 알리미 등록
                     const response = await fetch('https://arpzgawn3f.execute-api.ap-northeast-2.amazonaws.com/prod/kidup/register', {
                         method: 'POST',
                         headers: {
@@ -653,19 +698,21 @@
                     
                     const data = await response.json();
                     
+                    // 버튼 로딩 상태 비활성화
+                    submitBabyDate.classList.remove('loading');
+                    
                     if (data.status === 'success') {
+                        // 모달 닫기 (성공 응답을 받은 후에 닫기)
+                        closeModal();
+                        
                         // 성공 토스트 메시지 표시
                         showToast('영유아 검진 알림 서비스가 등록되었습니다!', 'success');
                         
                         // 기존 코드처럼 localStorage에도 저장
                         localStorage.setItem('babyBirthDate', babyBirthDate.value);
                         
-                        // 모달 닫기
-                        closeModal();
-                        
                         // 스크롤 위치 조정 (카드 컨테이너로 스크롤)
                         setTimeout(() => {
-                            const cardContainer = document.querySelector('.card-container');
                             cardContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }, 300);
                     } else {
@@ -674,161 +721,187 @@
                     }
                 } catch (error) {
                     console.error('API 호출 오류:', error);
+                    submitBabyDate.classList.remove('loading');
                     showToast('서버 통신 중 오류가 발생했습니다. 다시 시도해주세요.', 'error');
                 }
             });
             
-            // 토스트 메시지 함수
-            function showToast(message, type) {
-                const bgColor = type === 'success' ? '#0066CC' : '#FF3B30';
-                
-                Toastify({
-                    text: message,
-                    duration: 3000,
-                    gravity: "bottom",
-                    position: "center",
-                    stopOnFocus: true,
-                    style: {
-                        background: bgColor,
-                        borderRadius: "30px",
-                        fontFamily: "'Pretendard', sans-serif",
-                        fontSize: "15px",
-                        fontWeight: "600",
-                        padding: "12px 20px",
-                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)"
-                    }
-                }).showToast();
-            }
-            
-            // 모달 닫기 함수
-            function closeModal() {
-                babyDateOverlay.classList.remove('active');
-                document.body.style.overflow = ''; // 배경 스크롤 복구
-            }
-            
-            // 영유아 검진 정보 가져오기 (등록 후 표시용)
-            async function fetchBabyCheckupSchedule(birthDate) {
+            // 이미 등록된 알림이 있는지 확인
+            async function checkExistingRegistration(userId, silent = false) {
                 try {
-                    const response = await fetch(`https://arpzgawn3f.execute-api.ap-northeast-2.amazonaws.com/kidup/schedule?birthDate=${encodeURIComponent(birthDate)}`);
+                    const response = await fetch(`https://arpzgawn3f.execute-api.ap-northeast-2.amazonaws.com/prod/kidup/status?user_id=${encodeURIComponent(userId)}`);
                     const data = await response.json();
-                    return data.checkups;
+                    
+                    if (data.status === 'success' && data.data) {
+                        if (!silent) {
+                            // 이미 등록된 알림이 있다면 알림창 표시
+                            showToast('이미 등록된 영유아 검진 알림이 있습니다.', 'info');
+                        }
+                        return { 
+                            exists: true, 
+                            message: '이미 등록된 영유아 검진 알림이 있습니다.',
+                            data: data.data
+                        };
+                    }
+                    return { exists: false };
                 } catch (error) {
-                    console.error('검진 일정 조회 오류:', error);
-                    return null;
+                    console.error('상태 조회 오류:', error);
+                    return { exists: false };
                 }
             }
             
-            // 푸터 링크에 호버 효과 추가
-            const footerLinks = document.querySelectorAll('.footer-link');
-            
-            footerLinks.forEach(element => {
-                element.addEventListener('mouseover', function() {
-                    this.style.textDecoration = 'underline';
+            // 토스트 메시지 함수
+                function showToast(message, type) {
+                    const bgColor = type === 'success' ? '#0066CC' : 
+                                    type === 'info' ? '#34C759' : '#FF3B30';
+                    
+                    Toastify({
+                        text: message,
+                        duration: 3000,
+                        gravity: "bottom",
+                        position: "center",
+                        stopOnFocus: true,
+                        style: {
+                            background: bgColor,
+                            borderRadius: "30px",
+                            fontFamily: "'Pretendard', sans-serif",
+                            fontSize: "15px",
+                            fontWeight: "600",
+                            padding: "12px 20px",
+                            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)"
+                        }
+                    }).showToast();
+                }
+                
+                // 모달 닫기 함수
+                function closeModal() {
+                    babyDateOverlay.classList.remove('active');
+                    document.body.style.overflow = ''; // 배경 스크롤 복구
+                }
+                
+                // 영유아 검진 정보 가져오기 (등록 후 표시용)
+                async function fetchBabyCheckupSchedule(birthDate) {
+                    try {
+                        const response = await fetch(`https://arpzgawn3f.execute-api.ap-northeast-2.amazonaws.com/prod/kidup/schedule?birthDate=${encodeURIComponent(birthDate)}`);
+                        const data = await response.json();
+                        return data.checkups;
+                    } catch (error) {
+                        console.error('검진 일정 조회 오류:', error);
+                        return null;
+                    }
+                }
+                
+                // 푸터 링크에 호버 효과 추가
+                const footerLinks = document.querySelectorAll('.footer-link');
+                
+                footerLinks.forEach(element => {
+                    element.addEventListener('mouseover', function() {
+                        this.style.textDecoration = 'underline';
+                    });
+                    
+                    element.addEventListener('mouseout', function() {
+                        this.style.textDecoration = 'none';
+                    });
                 });
                 
-                element.addEventListener('mouseout', function() {
-                    this.style.textDecoration = 'none';
+                // 카드 및 링크에 클릭 효과 추가
+                const interactiveElements = document.querySelectorAll('.card-link, .footer-link');
+                interactiveElements.forEach(element => {
+                    element.addEventListener('click', function(e) {
+                        // <a> 태그의 기본 동작은 유지
+                        if (this.tagName.toLowerCase() !== 'a' || !this.getAttribute('href')) {
+                            e.preventDefault();
+                        }
+                        
+                        // 애니메이션 효과
+                        this.style.opacity = '0.7';
+                        setTimeout(() => {
+                            this.style.opacity = '1';
+                        }, 200);
+                    });
                 });
-            });
-            
-            // 카드 및 링크에 클릭 효과 추가
-            const interactiveElements = document.querySelectorAll('.card-link, .footer-link');
-            interactiveElements.forEach(element => {
-                element.addEventListener('click', function(e) {
-                    // <a> 태그의 기본 동작은 유지
-                    if (this.tagName.toLowerCase() !== 'a' || !this.getAttribute('href')) {
-                        e.preventDefault();
+                
+                // 반응형 레이아웃 처리
+                function handleResponsiveLayout() {
+                    const windowWidth = window.innerWidth;
+                    const cards = document.querySelectorAll('.card');
+                    
+                    // 화면 크기에 따른 카드 애니메이션 조정
+                    if (windowWidth <= 480) {
+                        // 모바일 기기용
+                        cards.forEach(card => {
+                            card.style.animation = 'fadeInUp 0.6s ease-out';
+                        });
+                    } else if (windowWidth <= 768) {
+                        // 태블릿용
+                        cards.forEach(card => {
+                            card.style.animation = 'fadeInUp 0.5s ease-out';
+                        });
+                    } else {
+                        // 데스크톱용
+                        cards.forEach(card => {
+                            card.style.animation = 'fadeInUp 0.4s ease-out';
+                        });
+                    }
+                }
+                
+                // 기본 애니메이션 스타일 추가
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes fadeInUp {
+                        from {
+                            opacity: 0;
+                            transform: translateY(20px);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
                     }
                     
-                    // 애니메이션 효과
-                    this.style.opacity = '0.7';
-                    setTimeout(() => {
-                        this.style.opacity = '1';
-                    }, 200);
-                });
+                    .hero-content {
+                        animation: fadeInUp 0.8s ease-out;
+                    }
+                    
+                    .card {
+                        animation: fadeInUp 0.6s ease-out;
+                    }
+                    
+                    .card:nth-child(2) {
+                        animation-delay: 0.1s;
+                    }
+                    
+                    .card:nth-child(3) {
+                        animation-delay: 0.2s;
+                    }
+                    
+                    .card:nth-child(4) {
+                        animation-delay: 0.3s;
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                // 초기 호출 및 리사이즈 리스너
+                handleResponsiveLayout();
+                window.addEventListener('resize', handleResponsiveLayout);
+                
+                // 스크롤 애니메이션을 위한 인터섹션 옵저버
+                if ('IntersectionObserver' in window) {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('visible');
+                            }
+                        });
+                    }, {
+                        threshold: 0.1
+                    });
+                    
+                    document.querySelectorAll('.card').forEach(card => {
+                        observer.observe(card);
+                    });
+                }
             });
-            
-            // 반응형 레이아웃 처리
-            function handleResponsiveLayout() {
-                const windowWidth = window.innerWidth;
-                const cards = document.querySelectorAll('.card');
-                
-                // 화면 크기에 따른 카드 애니메이션 조정
-                if (windowWidth <= 480) {
-                    // 모바일 기기용
-                    cards.forEach(card => {
-                        card.style.animation = 'fadeInUp 0.6s ease-out';
-                    });
-                } else if (windowWidth <= 768) {
-                    // 태블릿용
-                    cards.forEach(card => {
-                        card.style.animation = 'fadeInUp 0.5s ease-out';
-                    });
-                } else {
-                    // 데스크톱용
-                    cards.forEach(card => {
-                        card.style.animation = 'fadeInUp 0.4s ease-out';
-                    });
-                }
-            }
-            
-            // 기본 애니메이션 스타일 추가
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes fadeInUp {
-                    from {
-                        opacity: 0;
-                        transform: translateY(20px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-                
-                .hero-content {
-                    animation: fadeInUp 0.8s ease-out;
-                }
-                
-                .card {
-                    animation: fadeInUp 0.6s ease-out;
-                }
-                
-                .card:nth-child(2) {
-                    animation-delay: 0.1s;
-                }
-                
-                .card:nth-child(3) {
-                    animation-delay: 0.2s;
-                }
-                
-                .card:nth-child(4) {
-                    animation-delay: 0.3s;
-                }
-            `;
-            document.head.appendChild(style);
-            
-            // 초기 호출 및 리사이즈 리스너
-            handleResponsiveLayout();
-            window.addEventListener('resize', handleResponsiveLayout);
-            
-            // 스크롤 애니메이션을 위한 인터섹션 옵저버
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                        }
-                    });
-                }, {
-                    threshold: 0.1
-                });
-                
-                document.querySelectorAll('.card').forEach(card => {
-                    observer.observe(card);
-                });
-            }
-        });
-    </script>
-</body>
+        </script>
+    </body>
 </html>
