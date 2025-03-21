@@ -582,6 +582,16 @@
             const submitBabyDate = document.getElementById('submitBabyDate');
             const babyBirthDate = document.getElementById('babyBirthDate');
             
+            // 네이버톡톡 사용자 ID (URL 파라미터에서 가져오기)
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('user_id') || '';
+            const botUserKey = urlParams.get('botUserKey') || '';
+            
+            // 사용자 ID 확인
+            if (!userId) {
+                console.warn('사용자 ID가 없습니다. 알림 서비스 이용이 제한될 수 있습니다.');
+            }
+            
             // 날짜 선택기 초기화
             const fpInstance = flatpickr(babyBirthDate, {
                 locale: 'ko',
@@ -611,7 +621,7 @@
             });
             
             // 등록 완료 이벤트
-            submitBabyDate.addEventListener('click', function() {
+            submitBabyDate.addEventListener('click', async function() {
                 // 날짜가 선택되었는지 확인
                 if (!babyBirthDate.value) {
                     // 토스트 메시지로 알림
@@ -619,20 +629,51 @@
                     return;
                 }
                 
-                // 여기에 날짜 저장 및 처리 로직 추가 (예: localStorage, 서버 API 호출 등)
-                localStorage.setItem('babyBirthDate', babyBirthDate.value);
+                // 사용자 ID 확인
+                if (!userId) {
+                    showToast('사용자 정보가 없습니다. 알림 서비스 이용이 제한됩니다.', 'error');
+                    return;
+                }
                 
-                // 성공 토스트 메시지 표시
-                showToast('알림 서비스가 등록되었습니다!', 'success');
-                
-                // 모달 닫기
-                closeModal();
-                
-                // 스크롤 위치 조정 (카드 컨테이너로 스크롤)
-                setTimeout(() => {
-                    const cardContainer = document.querySelector('.card-container');
-                    cardContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 300);
+                try {
+                    // API 호출을 통해 영유아 검진 알리미 등록
+                    const response = await fetch('https://arpzgawn3f.execute-api.ap-northeast-2.amazonaws.com/kidup/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            user_id: userId,
+                            birth_date: babyBirthDate.value,
+                            bot_user_key: botUserKey
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.status === 'success') {
+                        // 성공 토스트 메시지 표시
+                        showToast('영유아 검진 알림 서비스가 등록되었습니다!', 'success');
+                        
+                        // 기존 코드처럼 localStorage에도 저장
+                        localStorage.setItem('babyBirthDate', babyBirthDate.value);
+                        
+                        // 모달 닫기
+                        closeModal();
+                        
+                        // 스크롤 위치 조정 (카드 컨테이너로 스크롤)
+                        setTimeout(() => {
+                            const cardContainer = document.querySelector('.card-container');
+                            cardContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 300);
+                    } else {
+                        // 에러 메시지 표시
+                        showToast(data.message || '알림 서비스 등록에 실패했습니다.', 'error');
+                    }
+                } catch (error) {
+                    console.error('API 호출 오류:', error);
+                    showToast('서버 통신 중 오류가 발생했습니다. 다시 시도해주세요.', 'error');
+                }
             });
             
             // 토스트 메시지 함수
@@ -663,6 +704,18 @@
                 document.body.style.overflow = ''; // 배경 스크롤 복구
             }
             
+            // 영유아 검진 정보 가져오기 (등록 후 표시용)
+            async function fetchBabyCheckupSchedule(birthDate) {
+                try {
+                    const response = await fetch(`https://arpzgawn3f.execute-api.ap-northeast-2.amazonaws.com/kidup/schedule?birthDate=${encodeURIComponent(birthDate)}`);
+                    const data = await response.json();
+                    return data.checkups;
+                } catch (error) {
+                    console.error('검진 일정 조회 오류:', error);
+                    return null;
+                }
+            }
+            
             // 푸터 링크에 호버 효과 추가
             const footerLinks = document.querySelectorAll('.footer-link');
             
@@ -680,13 +733,15 @@
             const interactiveElements = document.querySelectorAll('.card-link, .footer-link');
             interactiveElements.forEach(element => {
                 element.addEventListener('click', function(e) {
-                    e.preventDefault();
+                    // <a> 태그의 기본 동작은 유지
+                    if (this.tagName.toLowerCase() !== 'a' || !this.getAttribute('href')) {
+                        e.preventDefault();
+                    }
+                    
                     // 애니메이션 효과
                     this.style.opacity = '0.7';
                     setTimeout(() => {
                         this.style.opacity = '1';
-                        // 클릭 액션 플레이스홀더
-                        console.log('Clicked: ' + this.textContent.trim());
                     }, 200);
                 });
             });
@@ -756,19 +811,21 @@
             window.addEventListener('resize', handleResponsiveLayout);
             
             // 스크롤 애니메이션을 위한 인터섹션 옵저버
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, {
+                    threshold: 0.1
                 });
-            }, {
-                threshold: 0.1
-            });
-            
-            document.querySelectorAll('.card').forEach(card => {
-                observer.observe(card);
-            });
+                
+                document.querySelectorAll('.card').forEach(card => {
+                    observer.observe(card);
+                });
+            }
         });
     </script>
 </body>
