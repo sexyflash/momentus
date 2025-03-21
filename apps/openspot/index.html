@@ -68,7 +68,7 @@
             async function fetchRoomStatus(date) {
                 try {
                     const yearMonth = date.substring(0, 7).replace("-", "");
-                    const url = `https://yg26qlwe8i.execute-api.ap-northeast-2.amazonaws.com/prod/room-status?accommodationId=${accommodationId}&month=${yearMonth}`;
+                    const url = `https://arpzgawn3f.execute-api.ap-northeast-2.amazonaws.com/accommodation/status?accommodationId=${accommodationId}&month=${yearMonth}`;
         
                     const response = await fetch(url);
                     if (!response.ok) {
@@ -178,7 +178,7 @@
                 };
             
                 try {
-                    const response = await fetch('https://yg26qlwe8i.execute-api.ap-northeast-2.amazonaws.com/prod/booking', {
+                    const response = await fetch('https://arpzgawn3f.execute-api.ap-northeast-2.amazonaws.com/accommodation/register', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
