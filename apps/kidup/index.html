@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 2025.03.27 08:24 -->
+<!-- 2025.03.27 08:29 -->
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -729,7 +729,174 @@
                     };
                 }
             });
+        })();
+        
+        // 페이지 로드 완료 후 나머지 스크립트 실행을 보장
+        window.addEventListener('load', function() {
+            console.log('페이지 완전히 로드됨, 스크립트 초기화 시작');
 
+            // 요소 선택
+            const babyAlertBtn = document.getElementById('babyAlertBtn');
+            const babyDateOverlay = document.getElementById('babyDateOverlay');
+            const modalClose = document.getElementById('modalClose');
+            const submitBabyDate = document.getElementById('submitBabyDate');
+            const babyBirthDate = document.getElementById('babyBirthDate');
+            const cardContainer = document.getElementById('cardContainer');
+            
+            // 날짜 선택 관련 요소
+            const yearSelect = document.getElementById('year-select');
+            const monthSelect = document.getElementById('month-select');
+            const daySelect = document.getElementById('day-select');
+            const numericDateInput = document.getElementById('numeric-date-input');
+            const dateSelectContainer = document.getElementById('dateSelectContainer');
+            const toggleDateInput = document.getElementById('toggleDateInput');
+            const dateError = document.getElementById('dateError');
+            
+            // 네이버톡톡 사용자 ID (URL 파라미터에서 가져오기)
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('user_id') || '';
+            const botUserKey = urlParams.get('botUserKey') || '';
+            
+            // 사용자 ID 확인
+            if (!userId) {
+                console.warn('사용자 ID가 없습니다. 알림 서비스 이용이 제한될 수 있습니다.');
+            }
+            
+            // 연도, 월, 일 옵션 초기화
+            function initDateSelectors() {
+                // 현재 연도 구하기
+                const currentYear = new Date().getFullYear();
+                
+                // 연도 옵션 추가 (현재부터 10년 전까지)
+                for (let year = currentYear; year >= currentYear - 10; year--) {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = year + '년';
+                    yearSelect.appendChild(option);
+                }
+                
+                // 월 옵션 추가
+                for (let month = 1; month <= 12; month++) {
+                    const option = document.createElement('option');
+                    option.value = month;
+                    option.textContent = month + '월';
+                    monthSelect.appendChild(option);
+                }
+                
+                // 일 옵션은 월이 선택되면 동적으로 추가
+                updateDayOptions();
+            }
+            
+            // 선택된 연도와 월에 따라 일 옵션 업데이트
+            function updateDayOptions() {
+                // 기존 옵션 제거
+                daySelect.innerHTML = '<option value="" disabled selected>일</option>';
+                
+                const year = parseInt(yearSelect.value) || new Date().getFullYear();
+                const month = parseInt(monthSelect.value);
+                
+                // 월이 선택되지 않았으면 업데이트 중단
+                if (!month) return;
+                
+                // 해당 월의 마지막 날짜 계산
+                const lastDay = new Date(year, month, 0).getDate();
+                
+                // 일 옵션 추가
+                for (let day = 1; day <= lastDay; day++) {
+                    const option = document.createElement('option');
+                    option.value = day;
+                    option.textContent = day + '일';
+                    daySelect.appendChild(option);
+                }
+            }
+            
+            // 선택된 날짜를 형식화된 문자열로 변환
+            function formatSelectedDate() {
+                const year = yearSelect.value;
+                const month = monthSelect.value;
+                const day = daySelect.value;
+                
+                if (!year || !month || !day) {
+                    return ''; // 하나라도 선택되지 않았으면 빈 문자열 반환
+                }
+                
+                // 월과 일을 두 자리로 패딩
+                const paddedMonth = month.toString().padStart(2, '0');
+                const paddedDay = day.toString().padStart(2, '0');
+                
+                // YYYY년 MM월 DD일 형식으로 반환
+                return `${year}년 ${paddedMonth}월 ${paddedDay}일`;
+            }
+            
+            // 숫자 입력을 날짜 형식으로 변환
+            function formatNumericDate(input) {
+                if (input.length !== 8) return null;
+                
+                const year = input.substring(0, 4);
+                const month = input.substring(4, 6);
+                const day = input.substring(6, 8);
+                
+                // 유효성 검사
+                const date = new Date(year, month - 1, day);
+                if (
+                    date.getFullYear() !== parseInt(year) ||
+                    date.getMonth() + 1 !== parseInt(month) ||
+                    date.getDate() !== parseInt(day) ||
+                    parseInt(year) < 1900 ||
+                    parseInt(year) > new Date().getFullYear()
+                ) {
+                    return null; // 유효하지 않은 날짜
+                }
+                
+                return `${year}년 ${month}월 ${day}일`;
+            }
+            
+            // 날짜 입력 모드 전환
+            toggleDateInput.addEventListener('click', function() {
+                const isSelectMode = dateSelectContainer.style.display !== 'none';
+                
+                if (isSelectMode) {
+                    // 선택 모드에서 직접 입력 모드로 전환
+                    dateSelectContainer.style.display = 'none';
+                    numericDateInput.style.display = 'block';
+                    toggleDateInput.textContent = '달력으로 선택하기';
+                    
+                    // 이미 선택된 날짜가 있으면 숫자 입력 필드에 반영
+                    if (babyBirthDate.value) {
+                        const selectedDate = new Date(babyBirthDate.value.replace(/년|월|일/g, '').replace(/\s/g, ''));
+                        if (!isNaN(selectedDate)) {
+                            const year = selectedDate.getFullYear();
+                            const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+                            const day = selectedDate.getDate().toString().padStart(2, '0');
+                            numericDateInput.value = `${year}${month}${day}`;
+                        }
+                    }
+                } else {
+                    // 직접 입력 모드에서 선택 모드로 전환
+                    dateSelectContainer.style.display = 'flex';
+                    numericDateInput.style.display = 'none';
+                    toggleDateInput.textContent = '직접 입력하기';
+                    
+                    // 이미 입력된 숫자가 있고 유효한 날짜이면 선택 필드에 반영
+                    if (numericDateInput.value.length === 8) {
+                        const formattedDate = formatNumericDate(numericDateInput.value);
+                        if (formattedDate) {
+                            const year = numericDateInput.value.substring(0, 4);
+                            const month = numericDateInput.value.substring(4, 6);
+                            const day = numericDateInput.value.substring(6, 8);
+                            
+                            yearSelect.value = parseInt(year);
+                            monthSelect.value = parseInt(month);
+                            updateDayOptions();
+                            daySelect.value = parseInt(day);
+                        }
+                    }
+                }
+                
+                // 에러 메시지 숨기기
+                dateError.style.display = 'none';
+            });
+            
             // 연도 또는 월 선택 변경 시 일 옵션 업데이트
             yearSelect.addEventListener('change', updateDayOptions);
             monthSelect.addEventListener('change', updateDayOptions);
@@ -1050,175 +1217,6 @@
             // 날짜 선택기 초기화
             initDateSelectors();
         });
-        })();
-        
-        // 페이지 로드 완료 후 나머지 스크립트 실행을 보장
-        window.addEventListener('load', function() {
-            console.log('페이지 완전히 로드됨, 스크립트 초기화 시작');
-
-            // 요소 선택
-            const babyAlertBtn = document.getElementById('babyAlertBtn');
-            const babyDateOverlay = document.getElementById('babyDateOverlay');
-            const modalClose = document.getElementById('modalClose');
-            const submitBabyDate = document.getElementById('submitBabyDate');
-            const babyBirthDate = document.getElementById('babyBirthDate');
-            const cardContainer = document.getElementById('cardContainer');
-            
-            // 날짜 선택 관련 요소
-            const yearSelect = document.getElementById('year-select');
-            const monthSelect = document.getElementById('month-select');
-            const daySelect = document.getElementById('day-select');
-            const numericDateInput = document.getElementById('numeric-date-input');
-            const dateSelectContainer = document.getElementById('dateSelectContainer');
-            const toggleDateInput = document.getElementById('toggleDateInput');
-            const dateError = document.getElementById('dateError');
-            
-            // 네이버톡톡 사용자 ID (URL 파라미터에서 가져오기)
-            const urlParams = new URLSearchParams(window.location.search);
-            const userId = urlParams.get('user_id') || '';
-            const botUserKey = urlParams.get('botUserKey') || '';
-            
-            // 사용자 ID 확인
-            if (!userId) {
-                console.warn('사용자 ID가 없습니다. 알림 서비스 이용이 제한될 수 있습니다.');
-            }
-            
-            // 연도, 월, 일 옵션 초기화
-            function initDateSelectors() {
-                // 현재 연도 구하기
-                const currentYear = new Date().getFullYear();
-                
-                // 연도 옵션 추가 (현재부터 10년 전까지)
-                for (let year = currentYear; year >= currentYear - 10; year--) {
-                    const option = document.createElement('option');
-                    option.value = year;
-                    option.textContent = year + '년';
-                    yearSelect.appendChild(option);
-                }
-                
-                // 월 옵션 추가
-                for (let month = 1; month <= 12; month++) {
-                    const option = document.createElement('option');
-                    option.value = month;
-                    option.textContent = month + '월';
-                    monthSelect.appendChild(option);
-                }
-                
-                // 일 옵션은 월이 선택되면 동적으로 추가
-                updateDayOptions();
-            }
-            
-            // 선택된 연도와 월에 따라 일 옵션 업데이트
-            function updateDayOptions() {
-                // 기존 옵션 제거
-                daySelect.innerHTML = '<option value="" disabled selected>일</option>';
-                
-                const year = parseInt(yearSelect.value) || new Date().getFullYear();
-                const month = parseInt(monthSelect.value);
-                
-                // 월이 선택되지 않았으면 업데이트 중단
-                if (!month) return;
-                
-                // 해당 월의 마지막 날짜 계산
-                const lastDay = new Date(year, month, 0).getDate();
-                
-                // 일 옵션 추가
-                for (let day = 1; day <= lastDay; day++) {
-                    const option = document.createElement('option');
-                    option.value = day;
-                    option.textContent = day + '일';
-                    daySelect.appendChild(option);
-                }
-            }
-            
-            // 선택된 날짜를 형식화된 문자열로 변환
-            function formatSelectedDate() {
-                const year = yearSelect.value;
-                const month = monthSelect.value;
-                const day = daySelect.value;
-                
-                if (!year || !month || !day) {
-                    return ''; // 하나라도 선택되지 않았으면 빈 문자열 반환
-                }
-                
-                // 월과 일을 두 자리로 패딩
-                const paddedMonth = month.toString().padStart(2, '0');
-                const paddedDay = day.toString().padStart(2, '0');
-                
-                // YYYY년 MM월 DD일 형식으로 반환
-                return `${year}년 ${paddedMonth}월 ${paddedDay}일`;
-            }
-            
-            // 숫자 입력을 날짜 형식으로 변환
-            function formatNumericDate(input) {
-                if (input.length !== 8) return null;
-                
-                const year = input.substring(0, 4);
-                const month = input.substring(4, 6);
-                const day = input.substring(6, 8);
-                
-                // 유효성 검사
-                const date = new Date(year, month - 1, day);
-                if (
-                    date.getFullYear() !== parseInt(year) ||
-                    date.getMonth() + 1 !== parseInt(month) ||
-                    date.getDate() !== parseInt(day) ||
-                    parseInt(year) < 1900 ||
-                    parseInt(year) > new Date().getFullYear()
-                ) {
-                    return null; // 유효하지 않은 날짜
-                }
-                
-                return `${year}년 ${month}월 ${day}일`;
-            }
-            
-            // 날짜 입력 모드 전환
-            toggleDateInput.addEventListener('click', function() {
-                const isSelectMode = dateSelectContainer.style.display !== 'none';
-                
-                if (isSelectMode) {
-                    // 선택 모드에서 직접 입력 모드로 전환
-                    dateSelectContainer.style.display = 'none';
-                    numericDateInput.style.display = 'block';
-                    toggleDateInput.textContent = '달력으로 선택하기';
-                    
-                    // 이미 선택된 날짜가 있으면 숫자 입력 필드에 반영
-                    if (babyBirthDate.value) {
-                        const selectedDate = new Date(babyBirthDate.value.replace(/년|월|일/g, '').replace(/\s/g, ''));
-                        if (!isNaN(selectedDate)) {
-                            const year = selectedDate.getFullYear();
-                            const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
-                            const day = selectedDate.getDate().toString().padStart(2, '0');
-                            numericDateInput.value = `${year}${month}${day}`;
-                        }
-                    }
-                } else {
-                    // 직접 입력 모드에서 선택 모드로 전환
-                    dateSelectContainer.style.display = 'flex';
-                    numericDateInput.style.display = 'none';
-                    toggleDateInput.textContent = '직접 입력하기';
-                    
-                    // 이미 입력된 숫자가 있고 유효한 날짜이면 선택 필드에 반영
-                    if (numericDateInput.value.length === 8) {
-                        const formattedDate = formatNumericDate(numericDateInput.value);
-                        if (formattedDate) {
-                            const year = numericDateInput.value.substring(0, 4);
-                            const month = numericDateInput.value.substring(4, 6);
-                            const day = numericDateInput.value.substring(6, 8);
-                            
-                            yearSelect.value = parseInt(year);
-                            monthSelect.value = parseInt(month);
-                            updateDayOptions();
-                            daySelect.value = parseInt(day);
-                        }
-                    }
-                }
-                
-                // 에러 메시지 숨기기
-                dateError.style.display = 'none';
-            });
     </script>
 </body>
 </html>
-            
-            
