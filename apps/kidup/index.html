@@ -193,14 +193,14 @@
             margin-top: 10px;
         }
         
-        /* 오버레이 스타일 */
+        /* 오버레이 스타일 수정 - 전체화면으로 확장 */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: #F9F9F9; /* 배경색 변경 */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -216,16 +216,20 @@
         }
         
         .modal {
-            width: 90%;
-            max-width: 380px;
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
             background-color: white;
-            border-radius: 14px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            padding: 60px 30px;
             position: relative;
             transform: translateY(20px);
             opacity: 0;
             transition: transform 0.3s ease, opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
         }
         
         .overlay.active .modal {
@@ -235,27 +239,35 @@
         
         .modal-close {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 24px;
-            height: 24px;
+            top: 30px;
+            right: 30px;
+            width: 36px;
+            height: 36px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #86868B;
-            font-size: 24px;
+            font-size: 32px;
             transition: all 0.2s ease;
+            background-color: #F2F2F2;
+            border-radius: 50%;
         }
         
         .modal-close:hover {
             color: #1D1D1F;
+            background-color: #E5E5EA;
+        }
+        
+        .modal-content {
+            max-width: 500px;
+            width: 100%;
         }
         
         .modal-title {
-            font-size: 22px;
+            font-size: 28px;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: #1D1D1F;
             text-align: center;
             line-height: 1.3;
@@ -263,41 +275,56 @@
         }
         
         .modal-description {
-            font-size: 16px;
-            line-height: 1.4;
+            font-size: 18px;
+            line-height: 1.5;
             color: #86868B;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             text-align: center;
             word-break: keep-all;
         }
         
-        .date-input-container {
-            margin-bottom: 25px;
-        }
-        
-        .date-input-label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 15px;
-            font-weight: 700;
-            color: #1D1D1F;
-        }
-        
-        .date-input {
+        /* 날짜 피커 컨테이너 수정 */
+        .date-picker-container {
             width: 100%;
-            padding: 15px;
-            border: 1px solid #E5E5EA;
-            border-radius: 10px;
-            font-size: 16px;
-            font-family: 'Pretendard', sans-serif;
-            color: #1D1D1F;
-            background-color: #F9F9F9;
-            transition: border-color 0.2s ease;
+            margin-bottom: 40px;
         }
         
-        .date-input:focus {
-            outline: none;
-            border-color: #0066CC;
+        /* 인라인 캘린더 스타일 수정 */
+        .flatpickr-calendar {
+            width: 100% !important;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: none !important;
+            border: 1px solid #E5E5EA;
+            padding: 15px;
+            background-color: white;
+            border-radius: 12px;
+        }
+        
+        .flatpickr-calendar .flatpickr-months {
+            margin-bottom: 10px;
+        }
+        
+        .flatpickr-calendar .flatpickr-monthDropdown-months {
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .flatpickr-calendar .flatpickr-current-month {
+            padding-top: 10px;
+        }
+        
+        .flatpickr-calendar .flatpickr-weekday {
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        .flatpickr-calendar .flatpickr-day {
+            margin: 5px 2px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
+            font-size: 15px;
         }
         
         .form-submit {
@@ -348,14 +375,6 @@
         }
         
         /* 플랫피커 커스텀 스타일 */
-        .flatpickr-calendar {
-            font-family: 'Pretendard', sans-serif;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            border-radius: 10px;
-            border: none;
-            width: 100%;
-        }
-        
         .flatpickr-day.selected, 
         .flatpickr-day.startRange, 
         .flatpickr-day.endRange, 
@@ -410,15 +429,29 @@
             }
             
             .modal {
-                padding: 25px 20px;
+                padding: 50px 20px;
+            }
+            
+            .modal-content {
+                max-width: 100%;
             }
             
             .modal-title {
-                font-size: 20px;
+                font-size:
+                24px;
             }
             
             .modal-description {
-                font-size: 15px;
+                font-size: 16px;
+            }
+            
+            .flatpickr-calendar {
+                padding: 10px;
+            }
+            
+            .flatpickr-calendar .flatpickr-day {
+                height: 36px;
+                line-height: 36px;
             }
         }
         
@@ -461,10 +494,6 @@
                 padding: 10px 20px;
             }
             
-            .modal {
-                padding: 20px 15px;
-            }
-            
             .modal-title {
                 font-size: 18px;
             }
@@ -472,11 +501,6 @@
             .modal-description {
                 font-size: 14px;
                 margin-bottom: 20px;
-            }
-            
-            .date-input {
-                padding: 12px;
-                font-size: 15px;
             }
             
             .form-submit {
@@ -581,22 +605,25 @@
         </div>
     </div>
     
-    <!-- 날짜 입력 오버레이 -->
+    <!-- 날짜 입력 오버레이 - 전체화면 모달로 수정 -->
     <div class="overlay" id="babyDateOverlay">
         <div class="modal">
             <div class="modal-close" id="modalClose">×</div>
-            <h2 class="modal-title">네이버톡톡 알림받기</h2>
-            <p class="modal-description">아이의 출생일을 등록하시면 건강검진 일정에 맞춰 알림을 보내드립니다. 입력하신 정보는 알림 서비스를 위해서만 사용됩니다.</p>
-            
-            <div class="date-input-container">
-                <label for="babyBirthDate" class="date-input-label">우리 아이 출생일</label>
-                <input type="text" id="babyBirthDate" class="date-input" placeholder="날짜를 선택해주세요" readonly>
+            <div class="modal-content">
+                <h2 class="modal-title">네이버톡톡 알림받기</h2>
+                <p class="modal-description">아이의 출생일을 등록하시면 건강검진 일정에 맞춰 알림을 보내드립니다. 입력하신 정보는 알림 서비스를 위해서만 사용됩니다.</p>
+                
+                <div class="date-picker-container">
+                    <!-- 숨겨진 입력 필드 -->
+                    <input type="hidden" id="babyBirthDate" class="date-input">
+                    <!-- 인라인 캘린더가 여기에 렌더링됩니다 -->
+                </div>
+                
+                <button type="button" class="form-submit" id="submitBabyDate">
+                    <span class="button-text">알림받기</span>
+                    <span class="loading-spinner"></span>
+                </button>
             </div>
-            
-            <button type="button" class="form-submit" id="submitBabyDate">
-                <span class="button-text">알림받기</span>
-                <span class="loading-spinner"></span>
-            </button>
         </div>
     </div>
 
@@ -625,14 +652,14 @@
                 console.warn('사용자 ID가 없습니다. 알림 서비스 이용이 제한될 수 있습니다.');
             }
             
-            // 날짜 선택기 초기화
+            // 날짜 선택기 초기화 - 인라인 모드로 변경
             const fpInstance = flatpickr(babyBirthDate, {
                 locale: 'ko',
                 dateFormat: 'Y년 m월 d일',
-                disableMobile: false, // 모바일에서 네이티브 캘린더 대신 flatpickr 사용
+                disableMobile: true, // 모바일에서도 flatpickr 사용
                 maxDate: new Date(), // 오늘 이후 날짜 선택 불가
-                position: 'auto',
-                static: true, // 모바일에서 더 잘 작동하도록
+                inline: true, // 캘린더를 항상 표시
+                static: true,
                 monthSelectorType: 'static',
                 animate: true
             });
