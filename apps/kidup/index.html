@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- 2025.03.27 07:50 -->
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -283,48 +284,35 @@
             word-break: keep-all;
         }
         
-        /* 날짜 피커 컨테이너 수정 */
-        .date-picker-container {
+        /* 날짜 입력 필드 스타일 */
+        .date-input-container {
             width: 100%;
             margin-bottom: 40px;
         }
         
-        /* 인라인 캘린더 스타일 수정 */
-        .flatpickr-calendar {
-            width: 100% !important;
-            max-width: 500px;
-            margin: 0 auto;
-            box-shadow: none !important;
-            border: 1px solid #E5E5EA;
-            padding: 15px;
-            background-color: white;
-            border-radius: 12px;
-        }
-        
-        .flatpickr-calendar .flatpickr-months {
+        .date-input-label {
+            display: block;
             margin-bottom: 10px;
-        }
-        
-        .flatpickr-calendar .flatpickr-monthDropdown-months {
+            font-size: 16px;
             font-weight: 700;
-            font-size: 18px;
+            color: #1D1D1F;
         }
         
-        .flatpickr-calendar .flatpickr-current-month {
-            padding-top: 10px;
+        .date-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #E5E5EA;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Pretendard', sans-serif;
+            color: #1D1D1F;
+            background-color: #F9F9F9;
+            transition: border-color 0.2s ease;
         }
         
-        .flatpickr-calendar .flatpickr-weekday {
-            font-weight: 700;
-            font-size: 14px;
-        }
-        
-        .flatpickr-calendar .flatpickr-day {
-            margin: 5px 2px;
-            height: 40px;
-            line-height: 40px;
-            border-radius: 50%;
-            font-size: 15px;
+        .date-input:focus {
+            outline: none;
+            border-color: #0066CC;
         }
         
         .form-submit {
@@ -443,15 +431,6 @@
             
             .modal-description {
                 font-size: 16px;
-            }
-            
-            .flatpickr-calendar {
-                padding: 10px;
-            }
-            
-            .flatpickr-calendar .flatpickr-day {
-                height: 36px;
-                line-height: 36px;
             }
         }
         
@@ -613,10 +592,9 @@
                 <h2 class="modal-title">네이버톡톡 알림받기</h2>
                 <p class="modal-description">아이의 출생일을 등록하시면 건강검진 일정에 맞춰 알림을 보내드립니다. 입력하신 정보는 알림 서비스를 위해서만 사용됩니다.</p>
                 
-                <div class="date-picker-container">
-                    <!-- 숨겨진 입력 필드 -->
-                    <input type="hidden" id="babyBirthDate" class="date-input">
-                    <!-- 인라인 캘린더가 여기에 렌더링됩니다 -->
+                <div class="date-input-container">
+                    <label for="babyBirthDate" class="date-input-label">우리 아이 출생일</label>
+                    <input type="text" id="babyBirthDate" class="date-input" placeholder="날짜를 선택해주세요">
                 </div>
                 
                 <button type="button" class="form-submit" id="submitBabyDate">
@@ -652,21 +630,24 @@
                 console.warn('사용자 ID가 없습니다. 알림 서비스 이용이 제한될 수 있습니다.');
             }
             
-            // 날짜 선택기 초기화 - 인라인 모드로 변경
+            // 날짜 선택기 초기화 - 입력 필드 방식으로 변경
             const fpInstance = flatpickr(babyBirthDate, {
                 locale: 'ko',
                 dateFormat: 'Y년 m월 d일',
-                disableMobile: true, // 모바일에서도 flatpickr 사용
+                disableMobile: false, // 모바일에서 네이티브 캘린더 사용 허용
                 maxDate: new Date(), // 오늘 이후 날짜 선택 불가
-                inline: true, // 캘린더를 항상 표시
-                static: true,
-                monthSelectorType: 'static',
-                animate: true
+                allowInput: true, // 직접 입력 허용
+                monthSelectorType: 'static'
             });
             
-            // 알림받기 버튼 클릭 이벤트
+            // 알림받기 버튼 클릭 이벤트 (모바일 터치 이벤트 추가)
             babyAlertBtn.addEventListener('click', function() {
-                // 팝업을 바로 표시하고, 등록 시점에 중복 체크를 하는 방식으로 변경
+                showModal();
+            });
+            
+            // 모바일에서 터치 이벤트 추가
+            babyAlertBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault(); // 이중 실행 방지
                 showModal();
             });
             
@@ -678,6 +659,10 @@
             
             // 모달 닫기 이벤트
             modalClose.addEventListener('click', closeModal);
+            modalClose.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                closeModal();
+            });
             
             // 오버레이 배경 클릭 시 모달 닫기
             babyDateOverlay.addEventListener('click', function(e) {
