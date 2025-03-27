@@ -72,11 +72,9 @@
                     const url = `https://arpzgawn3f.execute-api.ap-northeast-2.amazonaws.com/prod/accommodation/room-status?accommodationId=${accommodationId}&month=${yearMonth}`;
         
                     const response = await fetch(url);
-                    if (!response.ok) {
-                        throw new Error('객실 정보를 가져오는데 실패했습니다.');
-                    }
         
                     const data = await response.json();
+                    console.log('data', data)
                     if (data.data && data.data.rowDtos) {
                         const selectedDate = data.data.rowDtos
                             .flatMap(row => row.columnDtos)
