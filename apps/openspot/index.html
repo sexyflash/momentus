@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 2025.03.27 15:00 -->
+<!-- 2025.03.27 15:48 -->
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -68,7 +68,8 @@
             
             async function fetchRoomStatus(date) {
                 try {
-                    const yearMonth = date.substring(0, 7).replace("-", "");
+                    // const yearMonth = date.substring(0, 7).replace("-", ""); // "202505" 형식
+                    const yearMonth = date.substring(0, 7); // "2025-05" 형식 유지
                     const url = `https://arpzgawn3f.execute-api.ap-northeast-2.amazonaws.com/prod/accommodation/room-status?accommodationId=${accommodationId}&month=${yearMonth}`;
         
                     const response = await fetch(url);
