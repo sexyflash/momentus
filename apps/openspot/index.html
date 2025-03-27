@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 2025.03.27 16:26 -->
+<!-- 2025.03.27 16:34 -->
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -70,16 +70,22 @@
                 try {
                     const yearMonth = date.substring(0, 7).replace("-", ""); // "202505" 형식
                     const url = `https://arpzgawn3f.execute-api.ap-northeast-2.amazonaws.com/prod/accommodation/room-status?accommodationId=${accommodationId}&month=${yearMonth}`;
-        
+            
                     const response = await fetch(url);
-        
-                    const data = await response.json();
-                    console.log('data', data)
+                    const rawData = await response.json();
+            
+                    // Lambda Proxy 응답이므로 body가 JSON 문자열일 수 있음 → 파싱 추가
+                    const data = typeof rawData.body === 'string' 
+                        ? JSON.parse(rawData.body) 
+                        : rawData.body;
+            
+                    console.log('data', data);
+            
                     if (data.data && data.data.rowDtos) {
                         const selectedDate = data.data.rowDtos
                             .flatMap(row => row.columnDtos)
                             .find(col => col.date === date);
-        
+            
                         if (selectedDate && selectedDate.detailDtos) {
                             updateRoomSelect(selectedDate.detailDtos);
                         } else {
@@ -93,6 +99,7 @@
                     alert(error.message || '객실 정보를 불러오는데 실패했습니다.');
                 }
             }
+
             
             function updateRoomSelect(rooms) {
                 const container = document.getElementById('roomSelectContainer');
