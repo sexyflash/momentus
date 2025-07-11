@@ -1,0 +1,420 @@
+{
+  "version": "2.1.0",
+  "lastUpdated": "2025-01-16T00:00:00Z",
+  "extractionMethods": {
+    "videoIdPatterns": [
+      "(?:youtube\\.com\\/watch\\?v=|youtu\\.be\\/|youtube\\.com\\/embed\\/|youtube\\.com\\/v\\/)([^&\\n?#]+)",
+      "youtube\\.com\\/watch\\?.*v=([^&\\n?#]+)",
+      "youtu\\.be\\/([^&\\n?#]+)"
+    ],
+    
+    "threeDotsMenuSelectors": [
+      "#menu #top-level-buttons-computed ytd-menu-renderer button",
+      "#menu button[aria-label*=\"More actions\" i]",
+      "#menu button[aria-label*=\"메뉴\" i]",
+      "#menu button[aria-label*=\"더 많은 작업\" i]",
+      "#menu button[aria-label*=\"옵션\" i]",
+      "#actions button[aria-haspopup=\"true\"]",
+      "#actions button[aria-expanded=\"false\"]",
+      "#top-level-buttons-computed ytd-menu-renderer button",
+      "#top-level-buttons ytd-menu-renderer button",
+      "ytd-menu-renderer button[aria-haspopup=\"true\"]",
+      "ytd-menu-renderer button[aria-expanded=\"false\"]",
+      "[role=\"button\"][aria-haspopup=\"true\"][aria-expanded=\"false\"]",
+      "button[aria-label*=\"More\" i]",
+      "button[title*=\"More\" i]",
+      "#actions .dropdown-trigger",
+      "#menu .dropdown-trigger"
+    ],
+    
+    "transcriptMenuItemSelectors": [
+      "#items [role=\"menuitem\"][aria-label*=\"transcript\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Show transcript\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Open transcript\" i]",
+      "#items ytd-menu-service-item-renderer[aria-label*=\"transcript\" i]",
+      "#items ytd-menu-service-item-renderer[aria-label*=\"Show transcript\" i]",
+      "#items .ytd-menu-service-item-renderer[aria-label*=\"transcript\" i]",
+      
+      "#items [role=\"menuitem\"][aria-label*=\"자막\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"대본\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"기록\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"스크립트\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Show transcript\" i]",
+      "#items ytd-menu-service-item-renderer[aria-label*=\"자막\" i]",
+      "#items ytd-menu-service-item-renderer[aria-label*=\"대본\" i]",
+      
+      "#items [role=\"menuitem\"][aria-label*=\"字幕\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"副标题\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"記錄\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"文字記錄\" i]",
+      
+      "#items [role=\"menuitem\"][aria-label*=\"字幕\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"文字起こし\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"転写\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"トランスクリプト\" i]",
+      
+      "#items [role=\"menuitem\"][aria-label*=\"Transkript\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Untertitel\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Abschrift\" i]",
+      
+      "#items [role=\"menuitem\"][aria-label*=\"Transcripción\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Subtítulos\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Transcripción de audio\" i]",
+      
+      "#items [role=\"menuitem\"][aria-label*=\"Transcription\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Sous-titres\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Transcript\" i]",
+      
+      "#items [role=\"menuitem\"][aria-label*=\"Trascrizione\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Sottotitoli\" i]",
+      
+      "#items [role=\"menuitem\"][aria-label*=\"Транскрипция\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Субтитры\" i]",
+      
+      "#items [role=\"menuitem\"][aria-label*=\"Transkription\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Undertexter\" i]",
+      
+      "#items [role=\"menuitem\"][aria-label*=\"Transkribering\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Undertekster\" i]",
+      
+      "#items [role=\"menuitem\"][aria-label*=\"Transcrição\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Legendas\" i]",
+      
+      "#items [role=\"menuitem\"][aria-label*=\"Transkrypcja\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Napisy\" i]",
+      
+      "#items [role=\"menuitem\"][aria-label*=\"Átirat\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Felirat\" i]"
+    ],
+
+    "expandButtonSelectors": [
+      "tp-yt-paper-button#expand",
+      "#expand",
+      "ytd-text-inline-expander tp-yt-paper-button",
+      "ytd-text-inline-expander button",
+      "ytd-expander button",
+      "#description-inline-expander button",
+      "ytd-expandable-text button",
+      ".ytd-text-inline-expander button",
+      ".ytd-expander button",
+      "[aria-expanded=\"false\"]",
+      "tp-yt-paper-button[role=\"button\"]",
+      
+      "button[aria-label*=\"더 보기\" i]",
+      "button[aria-label*=\"Show more\" i]",
+      "tp-yt-paper-button[aria-label*=\"더 보기\" i]",
+      "tp-yt-paper-button[aria-label*=\"Show more\" i]",
+      "button[aria-label*=\"もっと見る\" i]",
+      "button[aria-label*=\"显示更多\" i]",
+      "button[aria-label*=\"顯示更多\" i]",
+      "button[aria-label*=\"Mostrar más\" i]",
+      "button[aria-label*=\"Mehr anzeigen\" i]",
+      "button[aria-label*=\"Afficher plus\" i]",
+      "button[aria-label*=\"Mostra di più\" i]",
+      "button[aria-label*=\"Показать ещё\" i]",
+      "button[aria-label*=\"Visa mer\" i]",
+      "button[aria-label*=\"Vis mer\" i]",
+      "button[aria-label*=\"Mostrar mais\" i]",
+      "button[aria-label*=\"Pokaż więcej\" i]",
+      "button[aria-label*=\"Több megjelenítése\" i]",
+      
+      "*[role=\"button\"]:contains(\"...더보기\")",
+      "*[role=\"button\"]:contains(\"...Show more\")",
+      "*:contains(\"...더보기\")[role=\"button\"]",
+      "*:contains(\"...Show more\")[role=\"button\"]"
+    ],
+    
+    "captionActivationSelectors": [
+      "button[aria-label*=\"자막\"]",
+      "button[aria-label*=\"Captions\"]", 
+      "button[aria-label*=\"Caption\"]",
+      ".ytp-subtitles-button",
+      ".ytp-caption-button",
+      ".ytp-cc-button",
+      "button.ytp-subtitles-button",
+      "button.ytp-caption-button"
+    ],
+
+    "transcriptButtonSelectors": [
+      "button[aria-label*=\"transcript\" i]",
+      "button[aria-label*=\"Show transcript\" i]",
+      "button[aria-label*=\"captions\" i]", 
+      "button[aria-label*=\"subtitles\" i]",
+      "[data-target-id=\"engagement-panel-transcript\"]",
+      "button[data-target-id=\"engagement-panel-transcript\"]",
+      "yt-button-shape[aria-label*=\"transcript\" i]",
+      "yt-button-shape[data-target-id=\"engagement-panel-transcript\"]",
+      
+      "button[aria-label*=\"스크립트 표시\" i]",
+      "button[aria-label*=\"대본\" i]",
+      "button[aria-label*=\"기록\" i]",
+      "button[aria-label*=\"스크립트\" i]",
+      ".yt-spec-button-shape-next[aria-label*=\"스크립트 표시\" i]",
+      "button.yt-spec-button-shape-next[aria-label*=\"스크립트 표시\" i]",
+      "button[title*=\"스크립트 표시\" i]",
+      "[role=\"button\"][aria-label*=\"스크립트 표시\" i]",
+      "button[aria-label*=\"댓글과 실시간 채팅을 표시\" i]",
+      
+      "button[aria-label*=\"字幕\" i]",
+      "button[aria-label*=\"副标题\" i]",
+      "button[aria-label*=\"記錄\" i]",
+      "button[aria-label*=\"文字記錄\" i]",
+      
+      "button[aria-label*=\"字幕\" i]",
+      "button[aria-label*=\"文字起こし\" i]",
+      "button[aria-label*=\"転写\" i]",
+      "button[aria-label*=\"トランスクリプト\" i]",
+      
+      "button[aria-label*=\"Transkript\" i]",
+      "button[aria-label*=\"Untertitel\" i]",
+      "button[aria-label*=\"Abschrift\" i]",
+      
+      "button[aria-label*=\"Transcripción\" i]",
+      "button[aria-label*=\"Subtítulos\" i]",
+      "button[aria-label*=\"Transcripción de audio\" i]",
+      
+      "button[aria-label*=\"Transcription\" i]",
+      "button[aria-label*=\"Sous-titres\" i]",
+      "button[aria-label*=\"Transcript\" i]",
+      
+      "button[aria-label*=\"Trascrizione\" i]",
+      "button[aria-label*=\"Sottotitoli\" i]",
+      
+      "button[aria-label*=\"Транскрипция\" i]",
+      "button[aria-label*=\"Субтитры\" i]",
+      
+      "button[aria-label*=\"Transkription\" i]",
+      "button[aria-label*=\"Undertexter\" i]",
+      
+      "button[aria-label*=\"Transkribering\" i]",
+      "button[aria-label*=\"Undertekster\" i]",
+      
+      "button[aria-label*=\"Transcrição\" i]",
+      "button[aria-label*=\"Legendas\" i]",
+      
+      "button[aria-label*=\"Transkrypcja\" i]",
+      "button[aria-label*=\"Napisy\" i]",
+      
+      "button[aria-label*=\"Átirat\" i]",
+      "button[aria-label*=\"Felirat\" i]",
+      
+      "yt-button-shape[aria-label*=\"transcript\" i]",
+      "ytd-video-description-header-renderer button[aria-label*=\"transcript\" i]",
+      "[data-testid*=\"transcript\"]",
+      "[role=\"button\"][aria-label*=\"자막\"]",
+      "[role=\"button\"][aria-label*=\"transcript\"]",
+      "button[aria-controls*=\"transcript\"]",
+      "button[data-target=\"transcript\"]",
+      "[data-target-id=\"engagement-panel-transcript\"]"
+    ],
+    
+    "transcriptContainerSelectors": [
+      "ytd-transcript-segment-list-renderer",
+      "ytd-transcript-renderer", 
+      "ytd-transcript-body-renderer",
+      "#transcript",
+      ".transcript-container",
+      "[data-testid=\"transcript-container\"]",
+      "ytd-engagement-panel-section-list-renderer[target-id=\"engagement-panel-transcript\"]",
+      "ytd-engagement-panel-section-list-renderer[target-id*=\"transcript\"]",
+      "[role=\"main\"] ytd-transcript-segment-renderer",
+      "#engagement-panel-transcript",
+      ".engagement-panel-transcript",
+      "ytd-engagement-panel-section-list-renderer",
+      "#panels ytd-transcript-renderer",
+      "#panels .ytd-engagement-panel-section-list-renderer",
+      ".transcript-panel",
+      ".transcript-content",
+      "[id*=\"transcript\"]",
+      "[class*=\"transcript\"]",
+      ".transcript-wrapper",
+      ".captions-container",
+      "#structured-description",
+      "ytd-video-description-transcript-section-renderer"
+    ],
+    
+    "transcriptSegmentSelectors": [
+      "ytd-transcript-segment-renderer",
+      "ytd-transcript-segment-renderer.style-scope",
+      ".ytd-transcript-segment-renderer",
+      "[data-testid=\"transcript-segment\"]",
+      ".transcript-segment",
+      ".segment",
+      "div[role=\"button\"][tabindex=\"0\"][aria-label*=\"초\"]",
+      "div[role=\"button\"][tabindex=\"0\"]"
+    ],
+    
+    "timestampSelectors": [
+      ".segment-timestamp",
+      ".segment-start-offset .segment-timestamp",
+      "div.segment-timestamp",
+      "[data-start-ms]",
+      ".timestamp",
+      ".transcript-timestamp",
+      "[class*=\"timestamp\"]",
+      ".ytd-transcript-segment-renderer .segment-timestamp",
+      "ytd-transcript-segment-renderer .segment-timestamp",
+      "[class*=\"time\"]",
+      ".transcript-time"
+    ],
+    
+    "textSelectors": [
+      "yt-formatted-string.segment-text",
+      "yt-formatted-string[class*=\"segment-text\"]",
+      ".segment-text",
+      ".transcript-text",
+      ".ytd-transcript-segment-renderer yt-formatted-string",
+      "ytd-transcript-segment-renderer yt-formatted-string",
+      ".segment yt-formatted-string",
+      "[class*=\"text\"]",
+      ".transcript-content"
+    ],
+
+    "commentSectionSelectors": [
+      "ytd-comments-section-renderer",
+      "#comments",
+      ".comments-section",
+      "[data-testid=\"comments-section\"]",
+      "ytd-item-section-renderer:has(ytd-comment-thread-renderer)"
+    ],
+    
+    "commentSelectors": [
+      "ytd-comment-thread-renderer",
+      "ytd-comment-renderer",
+      ".comment",
+      "[data-testid=\"comment\"]",
+      ".ytd-comment-renderer"
+    ],
+    
+    "commentAuthorSelectors": [
+      "#author-text",
+      "#author-text span",
+      ".author-text",
+      "ytd-comment-renderer #author-text",
+      "[data-testid=\"comment-author\"]",
+      ".comment-author"
+    ],
+    
+    "commentContentSelectors": [
+      "#content-text",
+      ".content-text", 
+      "ytd-comment-renderer #content-text",
+      "[data-testid=\"comment-content\"]",
+      ".comment-content"
+    ],
+    
+    "commentTimeSelectors": [
+      ".published-time-text",
+      ".published-time-text a",
+      "#published-time-text",
+      "[data-testid=\"comment-time\"]",
+      ".comment-time"
+    ],
+    
+    "commentLikesSelectors": [
+      "#vote-count-middle",
+      ".vote-count-middle",
+      "[data-testid=\"comment-likes\"]",
+      ".comment-likes",
+      "#like-button .like-button-renderer-like-count"
+    ],
+    
+    "pageContentSelectors": {
+      "title": "title",
+      "youtubeTitle": "h1.ytd-video-primary-info-renderer",
+      "youtubeDescription": "#description-text",
+      "generalContent": [
+        "article",
+        "main",
+        "[role=\"main\"]",
+        ".content",
+        ".post",
+        ".entry"
+      ]
+    }
+  },
+  
+  "contentFiltering": {
+    "excludeKeywords": {
+      "ko": [
+        "검색", "나중에 시청하기", "공유", "링크 복사", "정보", "쇼핑",
+        "음소거", "재생", "시작", "기기", "다시", "구독", "좋아요",
+        "신고", "설정", "전체화면", "조회수", "댓글", "저장", "재생목록",
+        "알림", "채널", "동영상", "라이브", "프리미엄", "로그인", "로그아웃"
+      ],
+      "en": [
+        "Subscribe", "Like", "Share", "Save", "Search", "views", "Report", 
+        "Settings", "Fullscreen", "Watch later", "Copy link", "Shopping",
+        "Mute", "Play", "Pause", "Restart", "Comments", "Playlist", 
+        "Notifications", "Channel", "Video", "Live", "Premium", "Sign in", "Sign out"
+      ],
+      "zh": [
+        "订阅", "点赞", "分享", "保存", "搜索", "观看次数", "举报", 
+        "设置", "全屏", "稍后观看", "复制链接", "购物", "静音", "播放"
+      ],
+      "ja": [
+        "チャンネル登録", "高評価", "共有", "保存", "検索", "再生回数", 
+        "報告", "設定", "全画面", "後で見る", "リンクをコピー", "ショッピング"
+      ],
+      "es": [
+        "Suscribirse", "Me gusta", "Compartir", "Guardar", "Buscar", "visualizaciones",
+        "Denunciar", "Configuración", "Pantalla completa", "Ver más tarde"
+      ],
+      "de": [
+        "Abonnieren", "Gefällt mir", "Teilen", "Speichern", "Suchen", "Aufrufe",
+        "Melden", "Einstellungen", "Vollbild", "Später ansehen"
+      ],
+      "fr": [
+        "S'abonner", "J'aime", "Partager", "Enregistrer", "Rechercher", "vues",
+        "Signaler", "Paramètres", "Plein écran", "Regarder plus tard"
+      ],
+      "it": [
+        "Iscriviti", "Mi piace", "Condividi", "Salva", "Cerca", "visualizzazioni",
+        "Segnala", "Impostazioni", "Schermo intero", "Guarda più tardi"
+      ],
+      "ru": [
+        "Подписаться", "Нравится", "Поделиться", "Сохранить", "Поиск", "просмотров",
+        "Пожаловаться", "Настройки", "Полный экран", "Посмотреть позже"
+      ]
+    },
+    "textValidation": {
+      "minLength": 2,
+      "maxLength": 200,
+      "maxSentences": 3,
+      "allowedPattern": "^[\\u0000-\\u007F\\u0080-\\u00FF\\u0100-\\u017F\\u0180-\\u024F\\u1E00-\\u1EFF\\u2C60-\\u2C7F\\u4E00-\\u9FFF\\u3040-\\u309F\\u30A0-\\u30FF\\uAC00-\\uD7AF\\s.,!?\\-\"'()\\[\\]{}:;]+$"
+    }
+  },
+  
+  "extractionSettings": {
+    "maxWaitTime": 30000,
+    "buttonClickDelay": 3000,
+    "expandButtonDelay": 2000,
+    "menuClickDelay": 2000,
+    "menuItemClickDelay": 3000,
+    "domObserverTimeout": 15000,
+    "maxRetryAttempts": 3,
+    "retryDelay": 2000,
+    "cacheExpiration": 3600000,
+    "maxElementScanLimit": 100,
+    "mutationObserverDebounce": 500,
+    "transcriptLoadingThreshold": 1000,
+    "panelVerificationDelay": 1000,
+    "segmentExtractionDelay": 500
+  },
+  
+  "fallbackMethods": [
+    "dom_observation",
+    "page_extraction_with_expand",
+    "page_extraction_with_buttons",
+    "pattern_matching",
+    "manual_prompting"
+  ],
+  
+  "errorHandling": {
+    "logLevel": "error",
+    "reportToAnalytics": true,
+    "showUserMessages": true,
+    "fallbackToManual": true,
+    "maxConsecutiveFailures": 5
+  }
+} 

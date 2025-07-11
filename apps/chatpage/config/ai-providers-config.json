@@ -1,0 +1,106 @@
+{
+  "version": "2.0.0",
+  "lastUpdated": "2024-01-15T00:00:00Z",
+  "providers": {
+    "gpt4": {
+      "name": "ChatGPT",
+      "url": "https://chatgpt.com/",
+      "selectors": {
+        "textArea": [
+          "div[contenteditable='true'][data-testid='composer-text-input']",
+          "div[contenteditable='true']",
+          "textarea[data-id='root']"
+        ],
+        "sendButton": [
+          "button[data-testid='send-button']",
+          "button[aria-label*='Send']"
+        ]
+      }
+    },
+    "claude": {
+      "name": "Claude", 
+      "url": "https://claude.ai/new",
+      "selectors": {
+        "textArea": [
+          "div[contenteditable='true']",
+          "textarea[placeholder*='Message']"
+        ],
+        "sendButton": [
+          "button[aria-label*='Send']"
+        ]
+      }
+    },
+    "gemini": {
+      "name": "Gemini",
+      "url": "https://gemini.google.com/app", 
+      "selectors": {
+        "textArea": [
+          "div[contenteditable='true']",
+          "textarea[aria-label*='Enter a prompt']"
+        ],
+        "sendButton": [
+          "button[aria-label*='Send']"
+        ]
+      }
+    },
+    "deepseek": {
+      "name": "DeepSeek",
+      "url": "https://chat.deepseek.com/",
+      "selectors": {
+        "textArea": [
+          "textarea[placeholder*='Ask me anything']",
+          "div[contenteditable='true']"
+        ],
+        "sendButton": [
+          "button[aria-label*='Send']"
+        ]
+      }
+    },
+    "perplexity": {
+      "name": "Perplexity", 
+      "url": "https://www.perplexity.ai/",
+      "selectors": {
+        "textArea": [
+          "textarea[placeholder*='Ask anything']",
+          "div[contenteditable='true']"
+        ],
+        "sendButton": [
+          "button[aria-label*='Submit']"
+        ]
+      }
+    },
+    "grok": {
+      "name": "Grok",
+      "url": "https://x.com/i/grok",
+      "selectors": {
+        "textArea": [
+          "div[contenteditable='true']",
+          "textarea[placeholder*='Ask Grok']"
+        ],
+        "sendButton": [
+          "button[aria-label*='Send']"
+        ]
+      }
+    }
+  },
+  "commonSettings": {
+    "waitTimeout": 10000,
+    "retryAttempts": 3,
+    "retryDelay": 1000,
+    "injectionDelay": 500
+  },
+  "fallbackSelectors": {
+    "textArea": [
+      "textarea",
+      "div[contenteditable='true']",
+      "input[type='text']",
+      "[role='textbox']"
+    ],
+    "sendButton": [
+      "button[type='submit']",
+      "button[aria-label*='Send']",
+      "button[aria-label*='Submit']",
+      "input[type='submit']"
+    ]
+  }
+} 
