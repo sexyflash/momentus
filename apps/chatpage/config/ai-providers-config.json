@@ -125,7 +125,7 @@
         ],
         "sendButton": [
           "button[aria-label*='Search' i]",
-          "button[aria-label*='전송' i]", 
+          "button[aria-label*='전송' i]",
           "button[aria-label*='Send' i]",
           "button[data-testid='submit-button']",
           "button[aria-label*='Submit' i]",
@@ -167,7 +167,8 @@
       },
       "insertStrategy": "setValue",
       "sendDelay": 1000
-    },
+    }
+  },
   "fallbackConfig": {
     "providers": {
       "gpt4": {
@@ -269,33 +270,33 @@
             "textarea[placeholder*=\"Ask Grok\"]"
           ],
           "sendButton": [
-           "button[aria-label*=\"Send\"]",
-           "button[type=\"submit\"]"
-         ]
-       },
-       "insertStrategy": "execCommand",
-       "sendDelay": 0
-     }
-   }
- },
- "commonSettings": {
-   "waitTimeout": 10000,
-   "retryAttempts": 3,
-   "retryDelay": 1000,
-   "injectionDelay": 500
- },
- "fallbackSelectors": {
-   "textArea": [
-     "textarea",
-     "div[contenteditable='true']",
-     "input[type='text']",
-     "[role='textbox']"
-   ],
-   "sendButton": [
-     "button[type='submit']",
-     "button[aria-label*='Send']",
-     "button[aria-label*='Submit']",
-     "input[type='submit']"
-   ]
- }
+            "button[aria-label*=\"Send\"]",
+            "button[type=\"submit\"]"
+          ]
+        },
+        "insertStrategy": "execCommand",
+        "sendDelay": 0
+      }
+    }
+  },
+  "commonSettings": {
+    "waitTimeout": 10000,
+    "retryAttempts": 3,
+    "retryDelay": 1000,
+    "injectionDelay": 500
+  },
+  "fallbackSelectors": {
+    "textArea": [
+      "textarea",
+      "div[contenteditable='true']",
+      "input[type='text']",
+      "[role='textbox']"
+    ],
+    "sendButton": [
+      "button[type='submit']",
+      "button[aria-label*='Send']",
+      "button[aria-label*='Submit']",
+      "input[type='submit']"
+    ]
+  }
 }
