@@ -1,5 +1,5 @@
 {
-  "version": "2.0.8",
+  "version": "2.0.9",
   "lastUpdated": "2025-01-13T12:00:00Z",
   "providers": {
     "gpt4": {
@@ -143,16 +143,14 @@
       "sendDelay": 1000
     },
     "grok": {
-    "name": "Grok",
-    "url": "https://x.com/i/grok",
-    "selectors": {
+        "name": "Grok",
+        "url": "https://x.com/i/grok",
+        "selectors": {
       "textArea": [
-        "textarea[placeholder='무엇이든 물어보세요']",
-        "textarea[autocapitalize='sentences'][placeholder*='물어보']",
-        "textarea[dir='auto'][spellcheck='true']",
-        "#react-root textarea[placeholder*='무엇이든']",
-        "textarea[class*='r-30o5oe']",
-        "#react-root textarea",
+        "textarea[spellcheck][dir][class*='r-']",
+        "textarea[autocomplete][class*='r-']",
+        "textarea[autocapitalize][spellcheck][dir='auto']",
+        "textarea[class*='r-'][style*='height']",
         "textarea"
       ],
       "sendButton": [
@@ -166,7 +164,7 @@
       ]
     },
     "insertStrategy": "setValue",
-    "sendDelay": 2000
+    "sendDelay": 3200
   }
   },
   "fallbackConfig": {
