@@ -1,6 +1,6 @@
 {
-  "version": "2.0.10",
-  "lastUpdated": "2025-01-13T12:00:00Z",
+  "version": "2.0.11",
+  "lastUpdated": "2025-07-13T12:00:00Z",
   "providers": {
     "gpt4": {
       "name": "ChatGPT",
@@ -70,13 +70,17 @@
           ".ql-editor[contenteditable='true']",
           "div[aria-label*='여기에 프롬프트 입력']",
           "div[aria-label*='Enter a prompt']",
-          ".text-input-field .ql-editor"
+          ".text-input-field .ql-editor",
+          "textarea"
         ],
         "sendButton": [
+          "button.send-button[aria-label='메시지 보내기'][aria-disabled='false']",
           "button.send-button",
           "button[aria-label*='Send']",
           "button[aria-label*='보내기']",
-          "button[type='submit']"
+          "button[type='submit']",
+          "div[role='button']",
+          "button:has(svg)"
         ]
       },
       "insertStrategy": "execCommand",
@@ -91,7 +95,8 @@
           "textarea.c92459f0",
           "textarea[placeholder='Message DeepSeek']",
           "textarea[placeholder*='Ask me anything']",
-          "div[contenteditable='true']"
+          "div[contenteditable='true']",
+          "textarea"
         ],
         "sendButton": [
           "#chat-input ~ * div[role='button']",
@@ -121,7 +126,8 @@
           "div[aria-placeholder*='Ask anything' i]",
           "div[aria-placeholder*='물어보']",
           "div[contenteditable='true']:not([aria-hidden='true'])",
-          "#ask-input"
+          "#ask-input",
+          "textarea"
         ],
         "sendButton": [
           "button[aria-label*='Search' i]",
@@ -147,10 +153,7 @@
         "url": "https://x.com/i/grok",
         "selectors": {
           "textArea": [
-            "textarea[placeholder]",
-            "textarea[spellcheck][dir='auto']",
-            "textarea[class*='r-']",
-            "textarea"
+            "textarea[placeholder][spellcheck][dir][class*='r-']"
           ],
           "sendButton": [
             "button[aria-label='Grok에게 물어보세요']",
