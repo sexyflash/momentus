@@ -1,6 +1,6 @@
 {
-  "version": "2.0.4",
-  "lastUpdated": "2025-01-11T12:00:00Z",
+  "version": "2.0.5",
+  "lastUpdated": "2025-01-13T12:00:00Z",
   "providers": {
     "gpt4": {
       "name": "ChatGPT",
@@ -17,8 +17,10 @@
         ],
         "sendButton": [
           "button[data-testid='send-button']",
+          "button#composer-submit-button",
           "button[aria-label*='Send']",
-          "button[aria-label='Send message']",
+          "button[aria-label*='보내기']",
+          "button[aria-label*='프롬프트 보내기']",
           "button.absolute.bg-black",
           "button:has(svg path[d*='M.5 1.163A1'])",
           "button:has(svg)",
@@ -34,6 +36,8 @@
       "url": "https://claude.ai/new",
       "selectors": {
         "textArea": [
+          "div[contenteditable='true'][role='textbox'][aria-label*='Write your prompt to Claude']",
+          "div.ProseMirror[contenteditable='true']",
           "div[contenteditable='true']",
           ".ProseMirror",
           "textarea[placeholder*='Message']",
@@ -43,8 +47,8 @@
         ],
         "sendButton": [
           "button[aria-label*='Send']",
-          "button[aria-label='Send Message']",
-          "button[aria-label='Send message']",
+          "button[aria-label*='Send Message']",
+          "button[aria-label*='Send message']",
           "button:has(svg path[d*='M.5 1.163A1'])",
           "button:has(svg)",
           "button[type='submit']"
@@ -58,6 +62,8 @@
       "url": "https://gemini.google.com/app",
       "selectors": {
         "textArea": [
+          "rich-textarea .ql-editor[contenteditable='true']",
+          ".ql-editor[contenteditable='true'][aria-label*='여기에 프롬프트 입력']",
           "rich-textarea .ql-editor",
           "div[contenteditable='true']",
           "textarea[aria-label*='Enter a prompt']",
@@ -69,6 +75,7 @@
         "sendButton": [
           "button.send-button",
           "button[aria-label*='Send']",
+          "button[aria-label*='보내기']",
           "button[type='submit']"
         ]
       },
@@ -140,16 +147,19 @@
       "url": "https://x.com/i/grok",
       "selectors": {
         "textArea": [
+          "textarea[placeholder*='무엇이든 물어보세요']",
+          "textarea[placeholder*='Ask Grok']",
           "#react-root textarea",
+          "textarea.r-30o5oe",
           "textarea",
           "div[contenteditable='true']",
-          "textarea[placeholder*='Ask Grok']",
           "textarea[placeholder*='무엇이든 물어보세요']",
-          "textarea.r-30o5oe"
+          "textarea.r-1dz5y72"
         ],
         "sendButton": [
           "button[aria-label*='Grok에게 물어보세요']",
           "button[aria-label*='Send']",
+          "button[aria-label*='보내기']",
           "button[type='submit']"
         ]
       },
@@ -258,33 +268,33 @@
             "textarea[placeholder*=\"Ask Grok\"]"
           ],
           "sendButton": [
-            "button[aria-label*=\"Send\"]",
-            "button[type=\"submit\"]"
-          ]
-        },
-        "insertStrategy": "execCommand",
-        "sendDelay": 0
-      }
-    }
-  },
-  "commonSettings": {
-    "waitTimeout": 10000,
-    "retryAttempts": 3,
-    "retryDelay": 1000,
-    "injectionDelay": 500
-  },
-  "fallbackSelectors": {
-    "textArea": [
-      "textarea",
-      "div[contenteditable='true']",
-      "input[type='text']",
-      "[role='textbox']"
-    ],
-    "sendButton": [
-      "button[type='submit']",
-      "button[aria-label*='Send']",
-      "button[aria-label*='Submit']",
-      "input[type='submit']"
-    ]
-  }
+           "button[aria-label*=\"Send\"]",
+           "button[type=\"submit\"]"
+         ]
+       },
+       "insertStrategy": "execCommand",
+       "sendDelay": 0
+     }
+   }
+ },
+ "commonSettings": {
+   "waitTimeout": 10000,
+   "retryAttempts": 3,
+   "retryDelay": 1000,
+   "injectionDelay": 500
+ },
+ "fallbackSelectors": {
+   "textArea": [
+     "textarea",
+     "div[contenteditable='true']",
+     "input[type='text']",
+     "[role='textbox']"
+   ],
+   "sendButton": [
+     "button[type='submit']",
+     "button[aria-label*='Send']",
+     "button[aria-label*='Submit']",
+     "input[type='submit']"
+   ]
+ }
 }
