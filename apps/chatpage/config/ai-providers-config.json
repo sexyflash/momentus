@@ -1,5 +1,5 @@
 {
-  "version": "2.0.3",
+  "version": "2.0.4",
   "lastUpdated": "2025-01-11T12:00:00Z",
   "providers": {
     "gpt4": {
@@ -11,7 +11,9 @@
           "div[contenteditable='true']",
           "div[data-testid='composer']",
           "textarea[data-id='root']",
-          "textarea"
+          "textarea",
+          "#prompt-textarea",
+          ".ProseMirror[contenteditable='true']"
         ],
         "sendButton": [
           "button[data-testid='send-button']",
@@ -20,7 +22,8 @@
           "button.absolute.bg-black",
           "button:has(svg path[d*='M.5 1.163A1'])",
           "button:has(svg)",
-          "button.absolute"
+          "button.absolute",
+          "button[type='submit']"
         ]
       },
       "insertStrategy": "execCommand",
@@ -33,7 +36,10 @@
         "textArea": [
           "div[contenteditable='true']",
           ".ProseMirror",
-          "textarea[placeholder*='Message']"
+          "textarea[placeholder*='Message']",
+          ".ProseMirror[contenteditable='true']",
+          "div[aria-label*='Write your prompt to Claude']",
+          "div[contenteditable='true'][role='textbox']"
         ],
         "sendButton": [
           "button[aria-label*='Send']",
@@ -54,11 +60,16 @@
         "textArea": [
           "rich-textarea .ql-editor",
           "div[contenteditable='true']",
-          "textarea[aria-label*='Enter a prompt']"
+          "textarea[aria-label*='Enter a prompt']",
+          ".ql-editor[contenteditable='true']",
+          "div[aria-label*='여기에 프롬프트 입력']",
+          "div[aria-label*='Enter a prompt']",
+          ".text-input-field .ql-editor"
         ],
         "sendButton": [
           "button.send-button",
-          "button[aria-label*='Send']"
+          "button[aria-label*='Send']",
+          "button[type='submit']"
         ]
       },
       "insertStrategy": "execCommand",
@@ -106,20 +117,23 @@
           "#ask-input"
         ],
         "sendButton": [
+          "button[aria-label*='Search' i]",
+          "button[aria-label*='전송' i]", 
+          "button[aria-label*='Send' i]",
           "button[data-testid='submit-button']",
           "button[aria-label*='Submit' i]",
-          "button:has(svg path[d*='M5 12l14 0'])",
+          "button:has(svg path[d*='M8 2'])",
+          "button:has(svg path[d*='M12 2'])",
+          "button:has(svg path[d*='m8 2'])",
           "button.bg-super:not([disabled])",
-          "button[type='submit']"
+          "button[type='submit']",
+          "form button:not([aria-label*='새로운'])",
+          "div:has(#ask-input) ~ * button",
+          "button:has(svg):not([aria-label*='새로운']):not([aria-label*='thread'])"
         ]
       },
       "insertStrategy": "lexicalEditor",
-      "sendDelay": 1000,
-      "specialHandling": {
-        "clearMethod": "innerHTML",
-        "contentFormat": "lexical",
-        "eventSequence": ["focus", "input", "change", "keydown"]
-      }
+      "sendDelay": 1000
     },
     "grok": {
       "name": "Grok",
@@ -129,15 +143,18 @@
           "#react-root textarea",
           "textarea",
           "div[contenteditable='true']",
-          "textarea[placeholder*='Ask Grok']"
+          "textarea[placeholder*='Ask Grok']",
+          "textarea[placeholder*='무엇이든 물어보세요']",
+          "textarea.r-30o5oe"
         ],
         "sendButton": [
           "button[aria-label*='Grok에게 물어보세요']",
-          "button[aria-label*='Send']"
+          "button[aria-label*='Send']",
+          "button[type='submit']"
         ]
       },
       "insertStrategy": "setValue",
-      "sendDelay": 0
+      "sendDelay": 1000
     }
   },
   "fallbackConfig": {
