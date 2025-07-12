@@ -1,5 +1,5 @@
 {
-  "version": "2.0.2",
+  "version": "2.0.3",
   "lastUpdated": "2025-01-11T12:00:00Z",
   "providers": {
     "gpt4": {
@@ -97,22 +97,29 @@
       "url": "https://www.perplexity.ai/",
       "selectors": {
         "textArea": [
-          "#ask-input",
           "div[contenteditable='true'][data-lexical-editor='true']",
           "div[role='textbox'][contenteditable='true']",
+          "div[aria-label*='Ask anything' i]",
+          "div[aria-placeholder*='Ask anything' i]",
           "div[aria-placeholder*='물어보']",
-          "div[aria-placeholder*='Ask anything']"
+          "div[contenteditable='true']:not([aria-hidden='true'])",
+          "#ask-input"
         ],
         "sendButton": [
           "button[data-testid='submit-button']",
-          "button[aria-label='Submit']",
+          "button[aria-label*='Submit' i]",
           "button:has(svg path[d*='M5 12l14 0'])",
-          "button.bg-super",
+          "button.bg-super:not([disabled])",
           "button[type='submit']"
         ]
       },
-      "insertStrategy": "perplexityLexical",
-      "sendDelay": 1000
+      "insertStrategy": "lexicalEditor",
+      "sendDelay": 1000,
+      "specialHandling": {
+        "clearMethod": "innerHTML",
+        "contentFormat": "lexical",
+        "eventSequence": ["focus", "input", "change", "keydown"]
+      }
     },
     "grok": {
       "name": "Grok",
