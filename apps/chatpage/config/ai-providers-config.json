@@ -1,5 +1,5 @@
 {
-  "version": "2.0.9",
+  "version": "2.0.10",
   "lastUpdated": "2025-01-13T12:00:00Z",
   "providers": {
     "gpt4": {
@@ -146,23 +146,22 @@
         "name": "Grok",
         "url": "https://x.com/i/grok",
         "selectors": {
-      "textArea": [
-        "textarea[spellcheck][dir][class*='r-']",
-        "textarea[autocomplete][class*='r-']",
-        "textarea[autocapitalize][spellcheck][dir='auto']",
-        "textarea[class*='r-'][style*='height']",
-        "textarea"
-      ],
-      "sendButton": [
-        "button[aria-label='Grok에게 물어보세요']",
-        "button[aria-disabled='true'][aria-label*='Grok']",
-        "button[type='button'][aria-label*='물어보세요']",
-        "button:has(svg[viewBox='0 0 24 24'])",
-        "button[style*='background-color: rgb(231, 233, 234)']",
-        "button[tabindex='-1'][disabled]",
-        "button[aria-label*='Send']"
-      ]
-    },
+          "textArea": [
+            "textarea[placeholder]",
+            "textarea[spellcheck][dir='auto']",
+            "textarea[class*='r-']",
+            "textarea"
+          ],
+          "sendButton": [
+            "button[aria-label='Grok에게 물어보세요']",
+            "button[aria-disabled='true'][aria-label*='Grok']",
+            "button[type='button'][aria-label*='물어보세요']",
+            "button:has(svg[viewBox='0 0 24 24'])",
+            "button[style*='background-color: rgb(231, 233, 234)']",
+            "button[tabindex='-1'][disabled]",
+            "button[aria-label*='Send']"
+          ]
+        },
     "insertStrategy": "setValue",
     "sendDelay": 3200
   }
