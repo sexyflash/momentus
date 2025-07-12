@@ -149,24 +149,25 @@
         "textArea": [
           "textarea[placeholder*='무엇이든 물어보세요']",
           "textarea[placeholder*='Ask Grok']",
-          "#react-root textarea",
+          "textarea[autocapitalize='sentences']",
           "textarea.r-30o5oe",
+          "textarea[dir='auto']",
+          "#react-root textarea",
           "textarea",
-          "div[contenteditable='true']",
-          "textarea[placeholder*='무엇이든 물어보세요']",
-          "textarea.r-1dz5y72"
+          "div[contenteditable='true']"
         ],
         "sendButton": [
           "button[aria-label*='Grok에게 물어보세요']",
+          "button[aria-label*='Ask Grok']",
           "button[aria-label*='Send']",
-          "button[aria-label*='보내기']",
-          "button[type='submit']"
+          "button[type='submit']",
+          "[data-testid*='send']",
+          "button:has(svg)"
         ]
       },
       "insertStrategy": "setValue",
       "sendDelay": 1000
-    }
-  },
+    },
   "fallbackConfig": {
     "providers": {
       "gpt4": {
