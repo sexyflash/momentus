@@ -1,5 +1,5 @@
 {
-  "version": "2.0.7",
+  "version": "2.0.8",
   "lastUpdated": "2025-01-13T12:00:00Z",
   "providers": {
     "gpt4": {
@@ -143,31 +143,31 @@
       "sendDelay": 1000
     },
     "grok": {
-      "name": "Grok",
-      "url": "https://x.com/i/grok",
-      "selectors": {
-        "textArea": [
-          "textarea[placeholder*='무엇이든 물어보세요']",
-          "textarea[placeholder*='Ask Grok']",
-          "textarea[autocapitalize='sentences']",
-          "textarea.r-30o5oe",
-          "textarea[dir='auto']",
-          "#react-root textarea",
-          "textarea",
-          "div[contenteditable='true']"
-        ],
-        "sendButton": [
-          "button[aria-label*='Grok에게 물어보세요']",
-          "button[aria-label*='Ask Grok']",
-          "button[aria-label*='Send']",
-          "button[type='submit']",
-          "[data-testid*='send']",
-          "button:has(svg)"
-        ]
-      },
-      "insertStrategy": "setValue",
-      "sendDelay": 1000
-    }
+    "name": "Grok",
+    "url": "https://x.com/i/grok",
+    "selectors": {
+      "textArea": [
+        "textarea[placeholder='무엇이든 물어보세요']",
+        "textarea[autocapitalize='sentences'][placeholder*='물어보']",
+        "textarea[dir='auto'][spellcheck='true']",
+        "#react-root textarea[placeholder*='무엇이든']",
+        "textarea[class*='r-30o5oe']",
+        "#react-root textarea",
+        "textarea"
+      ],
+      "sendButton": [
+        "button[aria-label='Grok에게 물어보세요']",
+        "button[aria-disabled='true'][aria-label*='Grok']",
+        "button[type='button'][aria-label*='물어보세요']",
+        "button:has(svg[viewBox='0 0 24 24'])",
+        "button[style*='background-color: rgb(231, 233, 234)']",
+        "button[tabindex='-1'][disabled]",
+        "button[aria-label*='Send']"
+      ]
+    },
+    "insertStrategy": "setValue",
+    "sendDelay": 2000
+  }
   },
   "fallbackConfig": {
     "providers": {
