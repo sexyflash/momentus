@@ -1,5 +1,5 @@
 {
-  "version": "1.0.7",
+  "version": "1.0.8",
   "lastUpdated": "2024-01-15T00:00:00Z",
   "language": "en",
   "templates": [
@@ -17,10 +17,10 @@
       "order": 1
     },
     {
-      "id": "system_basic",
-      "name": "Easy Mode",
+      "id": "system_easy",
+      "name": "Soft Mode",
       "isSystem": true,
-      "nameKo": "이지 모드",
+      "nameKo": "Soft 프롬프트",
       "description": "Simplified explanations for young learners, using engaging storytelling.",
       "descriptionKo": "어린이 친구들도 이해할 수 있는 쉬운 설명",
       "category": "standard",
@@ -35,10 +35,10 @@
       "order": 2
     },
     {
-      "id": "system_lite",
-      "name": "Tutorial Mode",
+      "id": "system_tutorial",
+      "name": "Step Mode",
       "isSystem": true,
-      "nameKo": "튜토리얼 모드",
+      "nameKo": "Step 프롬프트",
       "description": "Step-by-step guidance for learning and applying concepts, filling in missing details.",
       "descriptionKo": "개념 학습 및 적용을 위한 단계별 안내, 누락된 세부 사항 보완",
       "category": "standard",
@@ -54,9 +54,9 @@
     },
     {
       "id": "system_creative",
-      "name": "Creative Insights",
+      "name": "Idea Mode",
       "isSystem": true,
-      "nameKo": "창의적 분석",
+      "nameKo": "Idea 프롬프트",
       "description": "Creative and innovative content analysis",
       "descriptionKo": "창의적이고 혁신적인 콘텐츠 분석",
       "category": "creative",
