@@ -1,5 +1,5 @@
 {
-  "version": "2.0.11",
+  "version": "2.0.12",
   "lastUpdated": "2025-07-13T12:00:00Z",
   "providers": {
     "gpt4": {
@@ -16,20 +16,20 @@
           ".ProseMirror[contenteditable='true']"
         ],
         "sendButton": [
-          "button[data-testid='send-button']",
-          "button#composer-submit-button",
-          "button[aria-label*='Send']",
-          "button[aria-label*='보내기']",
-          "button[aria-label*='프롬프트 보내기']",
-          "button.absolute.bg-black",
-          "button:has(svg path[d*='M.5 1.163A1'])",
-          "button:has(svg)",
-          "button.absolute",
-          "button[type='submit']"
+          "button[data-testid='send-button']:not([disabled])",
+          "button#composer-submit-button:not([disabled])",
+          "button[aria-label*='보내기']:not([aria-disabled='true'])",
+          "button[aria-label*='Send']:not([disabled])",
+          "button[aria-label*='프롬프트 보내기']:not([disabled])",
+          "button.absolute.bg-black:not([disabled])",
+          "button:has(svg path[d*='M.5 1.163A1']):not([disabled])",
+          "button:has(svg):not([disabled])",
+          "button.absolute:not([disabled])",
+          "button[type='submit']:not([disabled])"
         ]
       },
       "insertStrategy": "execCommand",
-      "sendDelay": 0
+      "sendDelay": 1000
     },
     "claude": {
       "name": "Claude",
@@ -113,7 +113,7 @@
         ]
       },
       "insertStrategy": "setValue",
-      "sendDelay": 0
+      "sendDelay": 1000
     },
     "perplexity": {
       "name": "Perplexity",
