@@ -1,5 +1,5 @@
 {
-  "version": "1.0.11",
+  "version": "1.0.12",
   "lastUpdated": "2024-01-15T00:00:00Z",
   "language": "en",
   "templates": [
@@ -76,7 +76,7 @@
       "order": 4
     },
     {
-      "id": "factCheck",
+      "id": "system_factCheck",
       "name": "Fact-Check",
       "badgeText": "Fact",
       "isSystem": true,
@@ -94,7 +94,7 @@
       "order": 5
     },
     {
-      "id": "trends",
+      "id": "system_trends",
       "name": "Trend",
       "badgeText": "Tre..",
       "isSystem": true,
