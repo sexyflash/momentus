@@ -24,7 +24,7 @@
     {
       "id": "system_easy",
       "name": "Simple",
-      "badgeText": "Simple",
+      "badgeText": "Sim..",
       "isSystem": true,
       "nameKo": "Simple",
       "description": "Simplified explanations for young learners, using engaging storytelling.",
@@ -41,8 +41,8 @@
     },
     {
       "id": "system_tutorial",
-      "name": "Tutorial",
-      "badgeText": "Tutorial",
+      "name": "Tut..",
+      "badgeText": "Tut..",
       "isSystem": true,
       "nameKo": "Tutorial",
       "description": "Step-by-step guidance for learning and applying concepts, filling in missing details.",
@@ -60,7 +60,7 @@
     {
       "id": "system_creative",
       "name": "Creative",
-      "badgeText": "Creative",
+      "badgeText": "Cre..",
       "isSystem": true,
       "nameKo": "Creative",
       "description": "Creative and innovative content analysis",
@@ -96,7 +96,7 @@
     {
       "id": "trends",
       "name": "Trend",
-      "badgeText": "Trends",
+      "badgeText": "Tre..",
       "isSystem": true,
       "nameKo": "Trend",
       "description": "Analysis of current trends, prediction of future developments, and strategic recommendations.",
