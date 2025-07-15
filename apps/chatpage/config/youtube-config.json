@@ -1,5 +1,5 @@
 {
-  "version": "2.1.2",
+  "version": "2.1.3",
   "lastUpdated": "2025-01-16T12:00:00Z",
   "extractionMethods": {
     "videoIdPatterns": [
@@ -8,7 +8,6 @@
       "youtu\\.be\\/([^&\\n?#]+)"
     ],
     "threeDotsMenuSelectors": [
-      // 더 구체적이고 "더보기" 메뉴와 관련된 셀렉터들을 상단에 배치 (유지)
       "#actions ytd-menu-renderer button[aria-label*='More actions' i]",
       "#actions ytd-menu-renderer button[aria-label*='메뉴' i]",
       "#actions ytd-menu-renderer button[aria-label*='その他の操作' i]",
@@ -19,8 +18,6 @@
       "#actions ytd-menu-renderer button[aria-label*='Outras ações' i]",
       "#actions ytd-menu-renderer button[aria-label*='Другие действия' i]",
       "#actions ytd-menu-renderer button[aria-label*='Diğer işlemler' i]",
-      
-      // 기존에 존재하던 #menu 내의 특정 ytd-menu-renderer 버튼 (유지, 상대적으로 구체적)
       "#menu #top-level-buttons-computed ytd-menu-renderer button[aria-haspopup='true']",
       "#menu ytd-menu-renderer button[aria-haspopup='true'][aria-expanded='false']",
       "ytd-menu-renderer button[aria-haspopup='true'][data-tooltip-target-id]"
@@ -170,7 +167,6 @@
       "button[aria-label*=\"Transcript\" i]",
       "button[aria-label*=\"Trascrizione\" i]",
       "button[aria-label*=\"Sottotitoli\" i]",
-      "button[aria-label*=\"Транскрипция\" i]",
       "button[aria-label*=\"Субтитры\" i]",
       "button[aria-label*=\"Transkription\" i]",
       "button[aria-label*=\"Undertexter\" i]",
@@ -319,7 +315,7 @@
       "zh": [
         "订阅", "点赞", "分享", "保存", "搜索", "观看次数", "举报",
         "设置", "全屏", "稍后观看", "复制链接", "购物", "静音", "播放",
-        "暂停", "重新开始", "评论", "播放列表", "通知", "频道", "视频",
+        "暂停", "重新开始", "评论", "播放列表",
         "直播", "尊享版", "登录", "退出"
       ],
       "ja": [
