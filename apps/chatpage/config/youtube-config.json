@@ -1,5 +1,5 @@
 {
-  "version": "2.1.1",
+  "version": "2.1.2",
   "lastUpdated": "2025-01-16T12:00:00Z",
   "extractionMethods": {
     "videoIdPatterns": [
@@ -8,8 +8,7 @@
       "youtu\\.be\\/([^&\\n?#]+)"
     ],
     "threeDotsMenuSelectors": [
-      "#menu #top-level-buttons-computed ytd-menu-renderer button[aria-haspopup='true']",
-      "#menu ytd-menu-renderer button[aria-haspopup='true'][aria-expanded='false']",
+      // 더 구체적이고 "더보기" 메뉴와 관련된 셀렉터들을 상단에 배치 (유지)
       "#actions ytd-menu-renderer button[aria-label*='More actions' i]",
       "#actions ytd-menu-renderer button[aria-label*='메뉴' i]",
       "#actions ytd-menu-renderer button[aria-label*='その他の操作' i]",
@@ -20,20 +19,11 @@
       "#actions ytd-menu-renderer button[aria-label*='Outras ações' i]",
       "#actions ytd-menu-renderer button[aria-label*='Другие действия' i]",
       "#actions ytd-menu-renderer button[aria-label*='Diğer işlemler' i]",
-      "ytd-menu-renderer button[aria-haspopup='true'][data-tooltip-target-id]",
-      "#menu button[aria-label*=\"더 많은 작업\" i]",
-      "#menu button[aria-label*=\"옵션\" i]",
-      "#actions button[aria-haspopup=\"true\"]",
-      "#actions button[aria-expanded=\"false\"]",
-      "#top-level-buttons-computed ytd-menu-renderer button",
-      "#top-level-buttons ytd-menu-renderer button",
-      "ytd-menu-renderer button[aria-haspopup=\"true\"]",
-      "ytd-menu-renderer button[aria-expanded=\"false\"]",
-      "[role=\"button\"][aria-haspopup=\"true\"][aria-expanded=\"false\"]",
-      "button[aria-label*=\"More\" i]",
-      "button[title*=\"More\" i]",
-      "#actions .dropdown-trigger",
-      "#menu .dropdown-trigger"
+      
+      // 기존에 존재하던 #menu 내의 특정 ytd-menu-renderer 버튼 (유지, 상대적으로 구체적)
+      "#menu #top-level-buttons-computed ytd-menu-renderer button[aria-haspopup='true']",
+      "#menu ytd-menu-renderer button[aria-haspopup='true'][aria-expanded='false']",
+      "ytd-menu-renderer button[aria-haspopup='true'][data-tooltip-target-id]"
     ],
     "transcriptMenuItemSelectors": [
       "#items [role=\"menuitem\"][aria-label*=\"Show transcript\" i]",
@@ -70,6 +60,7 @@
       "#items [role=\"menuitem\"][aria-label*=\"Transcripción de audio\" i]",
       "#items [role=\"menuitem\"][aria-label*=\"Transcription\" i]",
       "#items [role=\"menuitem\"][aria-label*=\"Sous-titres\" i]",
+      "#items [role=\"menuitem\"][aria-label*=\"Transcript\" i]",
       "#items [role=\"menuitem\"][aria-label*=\"Sottotitoli\" i]",
       "#items [role=\"menuitem\"][aria-label*=\"Субтитры\" i]",
       "#items [role=\"menuitem\"][aria-label*=\"Transkription\" i]",
@@ -88,7 +79,7 @@
       "button[aria-label*='もっと見る' i]:not([disabled])",
       "button[aria-label*='显示更多' i]:not([disabled])",
       "button[aria-label*='Mostrar más' i]:not([disabled])",
-      "button[aria-label*='Afficher plus' i]:not([disabled])",
+      "button[aria-label*='Afficher la transcription' i]:not([disabled])",
       "button[aria-label*='Mehr anzeigen' i]:not([disabled])",
       "button[aria-label*='Mostrar mais' i]:not([disabled])",
       "button[aria-label*='Показать ещё' i]:not([disabled])",
