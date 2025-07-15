@@ -1,6 +1,6 @@
 {
   "version": "2.1.5",
-  "lastUpdated": "2025-01-16T12:00:00Z",
+  "lastUpdated": "2025-07-15T12:00:00Z",
   "extractionMethods": {
     "videoIdPatterns": [
       "(?:youtube\\.com\\/watch\\?v=|youtu\\.be\\/|youtube\\.com\\/embed\\/|youtube\\.com\\/v\\/)([^&\\n?#]+)",
@@ -69,15 +69,31 @@
       "#items [role=\"menuitem\"][aria-label*=\"Felirat\" i]"
     ],
     "expandButtonSelectors": [
-      "ytd-text-inline-expander tp-yt-paper-button#expand:not([aria-disabled='true'])",
-      "ytd-text-inline-expander #expand:not([aria-disabled='true'])",
-      "#description-inline-expander tp-yt-paper-button#expand",
-      "#description-inline-expander #expand",
-      "ytd-video-secondary-info-renderer tp-yt-paper-button#expand",
-      "ytd-expandable-text tp-yt-paper-button#expand",
-      "tp-yt-paper-button#expand.ytd-text-inline-expander:not([aria-disabled='true'])",
-      "ytd-text-inline-expander button[id='expand']:not([disabled])",
-      "ytd-text-inline-expander [role='button'][id='expand']:not([aria-disabled='true'])"
+      "tp-yt-paper-button#expand:not([aria-disabled='true'])",
+      "#expand:not([aria-disabled='true'])",
+      "tp-yt-paper-button#expand",
+      "#expand",
+      "ytd-text-inline-expander tp-yt-paper-button:not([disabled])",
+      "button[aria-label*='더 보기' i]:not([disabled])",
+      "button[aria-label*='Show more' i]:not([disabled])",
+      "button[aria-label*='もっと見る' i]:not([disabled])",
+      "button[aria-label*='显示更多' i]:not([disabled])",
+      "button[aria-label*='Mostrar más' i]:not([disabled])",
+      "button[aria-label*='Afficher plus' i]:not([disabled])",
+      "button[aria-label*='Mehr anzeigen' i]:not([disabled])",
+      "button[aria-label*='Mostrar mais' i]:not([disabled])",
+      "button[aria-label*='Показать ещё' i]:not([disabled])",
+      "button[aria-label*='Daha fazla göster' i]:not([disabled])",
+      "ytd-text-inline-expander button",
+      "ytd-expander button",
+      "#description-inline-expander button",
+      "ytd-expandable-text button",
+      ".ytd-text-inline-expander button",
+      ".ytd-expander button",
+      "[aria-expanded=\"false\"]",
+      "tp-yt-paper-button[role=\"button\"]",
+      "tp-yt-paper-button[aria-label*=\"더 보기\" i]",
+      "tp-yt-paper-button[aria-label*=\"Show more\" i]"
     ],
     "captionActivationSelectors": [
       "button[aria-label*=\"자막\" i]",
