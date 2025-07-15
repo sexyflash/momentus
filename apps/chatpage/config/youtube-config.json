@@ -1,5 +1,5 @@
 {
-  "version": "2.1.4",
+  "version": "2.1.5",
   "lastUpdated": "2025-01-16T12:00:00Z",
   "extractionMethods": {
     "videoIdPatterns": [
@@ -69,15 +69,15 @@
       "#items [role=\"menuitem\"][aria-label*=\"Felirat\" i]"
     ],
     "expandButtonSelectors": [
+      "ytd-text-inline-expander tp-yt-paper-button#expand:not([aria-disabled='true'])",
+      "ytd-text-inline-expander #expand:not([aria-disabled='true'])",
+      "#description-inline-expander tp-yt-paper-button#expand",
       "#description-inline-expander #expand",
-      "#description-inline-expander > .button.ytd-text-inline-expander",
-      "ytd-text-inline-expander[id='description-inline-expander'] #expand",
-      "tp-yt-paper-button#expand.ytd-text-inline-expander",
-      "#description-inline-expander.ytd-video-secondary-info-renderer > ytd-text-inline-expander > #expand",
-      "button[aria-label*='더 보기' i]:not([disabled])",
-      "button[aria-label*='Show more' i]:not([disabled])",
-      "button[aria-label*='...mehr' i]:not([disabled])",
-      "button[aria-label*='...more' i]:not([disabled])"
+      "ytd-video-secondary-info-renderer tp-yt-paper-button#expand",
+      "ytd-expandable-text tp-yt-paper-button#expand",
+      "tp-yt-paper-button#expand.ytd-text-inline-expander:not([aria-disabled='true'])",
+      "ytd-text-inline-expander button[id='expand']:not([disabled])",
+      "ytd-text-inline-expander [role='button'][id='expand']:not([aria-disabled='true'])"
     ],
     "captionActivationSelectors": [
       "button[aria-label*=\"자막\" i]",
