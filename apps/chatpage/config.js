@@ -374,6 +374,21 @@ export const defaultSettings = {
           url: 'https://chatgpt.com/?model=gpt-4o'
         },
         {
+          id: 'gpt-5',
+          name: 'GPT-5',
+          url: 'https://chatgpt.com/?model=gpt-5'
+        },
+        {
+          id: 'gpt-5-thinking',
+          name: 'GPT-5 Thinking',
+          url: 'https://chatgpt.com/?model=gpt-5-thinking'
+        },
+        {
+          id: 'gpt-5-pro',
+          name: 'GPT-5 Pro',
+          url: 'https://chatgpt.com/?model=gpt-5-pro'
+        },
+        {
           id: 'gpt-4o-jawbone',
           name: 'GPT-4o Schedule Assistant',
           url: 'https://chatgpt.com/?model=gpt-4o-jawbone'
@@ -463,3 +478,4 @@ export const defaultSettings = {
   ],
   customPrompt: defaultPromptContent
 };
+
