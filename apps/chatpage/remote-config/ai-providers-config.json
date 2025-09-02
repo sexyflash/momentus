@@ -126,6 +126,10 @@
           "div[aria-placeholder*='Ask anything' i]",
           "div[aria-placeholder*='물어보']",
           "div[contenteditable='true']:not([aria-hidden='true'])",
+          "textarea[placeholder*='Ask anything']",
+          "textarea[placeholder*='물어보세요']",
+          "div[data-testid='copilot-input']",
+          "div[role='textbox']",
           "#ask-input",
           "textarea"
         ],
@@ -142,7 +146,9 @@
           "button[type='submit']",
           "form button:not([aria-label*='새로운'])",
           "div:has(#ask-input) ~ * button",
-          "button:has(svg):not([aria-label*='새로운']):not([aria-label*='thread'])"
+          "button:has(svg):not([aria-label*='새로운']):not([aria-label*='thread'])",
+          "button[data-testid='copilot-send-button']",
+          "div[role='button'][aria-label*='Send']"
         ]
       },
       "insertStrategy": "execCommand",
