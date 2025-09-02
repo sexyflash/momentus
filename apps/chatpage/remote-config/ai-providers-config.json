@@ -120,6 +120,9 @@
       "url": "https://www.perplexity.ai/",
       "selectors": {
         "textArea": [
+          "#ask-input[contenteditable='true'][data-lexical-editor='true']",
+          "div[id='ask-input'][contenteditable='true']",
+          "#ask-input",
           "div[contenteditable='true'][data-lexical-editor='true']",
           "div[role='textbox'][contenteditable='true']",
           "div[aria-label*='Ask anything' i]",
@@ -130,7 +133,6 @@
           "textarea[placeholder*='물어보세요']",
           "div[data-testid='copilot-input']",
           "div[role='textbox']",
-          "#ask-input",
           "textarea"
         ],
         "sendButton": [
