@@ -49,6 +49,7 @@
           "button[aria-label*='Send']",
           "button[aria-label*='Send Message']",
           "button[aria-label*='Send message']",
+          "button[aria-label*='메시지 보내기']",
           "button:has(svg path[d*='M.5 1.163A1'])",
           "button:has(svg)",
           "button[type='submit']"
@@ -120,10 +121,14 @@
       "url": "https://www.perplexity.ai/",
       "selectors": {
         "textArea": [
+          "div[contenteditable='true'][data-lexical-editor='true']",
+          "div[contenteditable='true'][id*='ask']",
+          "div[contenteditable='true'][role='textbox']",
+          "[data-testid='searchbox']",
+          "textarea[placeholder*='Ask']",
           "#ask-input[contenteditable='true'][data-lexical-editor='true']",
           "div[id='ask-input'][contenteditable='true']",
           "#ask-input",
-          "div[contenteditable='true'][data-lexical-editor='true']",
           "div[role='textbox'][contenteditable='true']",
           "div[aria-label*='Ask anything' i]",
           "div[aria-placeholder*='Ask anything' i]",
