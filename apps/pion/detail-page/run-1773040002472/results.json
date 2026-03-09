@@ -1,0 +1,293 @@
+{
+  "timestamp": "2026-03-09T07:08:18.330Z",
+  "runId": "run-1773040002472",
+  "product": {
+    "name": "메디힐 PDRN 리프팅 세럼",
+    "fullName": "메디힐 PDRN 모공 탄력 세럼 40+40ml 단독 기획",
+    "brand": "MEDIHEAL",
+    "category": "스킨케어/세럼",
+    "keyIngredient": "PDRN 8,902ppm + 스쿠알란 10,000ppm",
+    "benefits": [
+      "모공 케어",
+      "탄력 개선",
+      "피부 재생",
+      "깊은 보습"
+    ],
+    "price": "29,900원",
+    "originalPrice": "49,000원",
+    "discount": "39%",
+    "platform": "올리브영",
+    "colors": {
+      "primary": "#7B5EA7",
+      "secondary": "#9B7FCA",
+      "accent": "#FF4757",
+      "dark": "#2D1B4E",
+      "light": "#F3EEFF"
+    },
+    "heroText": {
+      "brand": "MEDIHEAL",
+      "nameEN": "PDRN",
+      "nameKR": "리프팅 세럼",
+      "sub": "피부를 당기듯 밀착!",
+      "promo": "40+40ml 단독 기획"
+    },
+    "localImagePath": "/Users/hyungmokang/Projects/Reci/tmp/detail-page-experiment/product-image.jpg"
+  },
+  "assets": {
+    "titleTreatment": {
+      "url": "https://v3b.fal.media/files/b/0a9171c0/C4B_aWpDEaP9YNoaQgmdn_nSMExlBE.png",
+      "elapsed": "46.0"
+    },
+    "designSheet": {
+      "url": "https://v3b.fal.media/files/b/0a9171c0/J5pVCUNDU0sIIeGjUmuRL_qOZKCMbs.png",
+      "elapsed": "43.2"
+    },
+    "productImage": "https://v3b.fal.media/files/b/0a9171c0/gKwXsB4qIWZJRW7TGo6jg_product-image.jpg"
+  },
+  "sections": [
+    {
+      "index": 1,
+      "id": "hero",
+      "name": "히어로 배너",
+      "status": "success",
+      "elapsed": "47.5",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/jy_mPixhbCB9yPLMBufUz_H4JwfxBn.png",
+      "prompt": "Korean skincare HERO BANNER for 메디힐 PDRN 모공 탄력 세럼 40+40ml 단독 기획.\n\nCRITICAL — TITLE TREATMENT OVERLAY:\nThe first reference image is a transparent PNG title treatment. You MUST incorporate this typography layout into the hero. Overlay or recreate these EXACT texts in the same style:\n- \"MEDIHEAL\" — white uppercase geometric sans-serif, wide tracking\n- \"PDRN\" — large gradient purple chrome metallic bevel letters\n- \"리프팅 세럼\" — Korean rounded gothic below PDRN\n- \"피부를 당기듯 밀착!\" — lavender subtitle\n- \"40+40ml 단독 기획\" — white promo with \"39% OFF\" in coral-red\n\nThe purple PDRN dropper bottle (third reference image) positioned center-right. Do NOT alter the product appearance.\nBackground: lavender-to-white gradient, subtle DNA helix at 5% opacity.\n\"39%\" circular coral-red badge floating.\nMatch the title treatment's typography style, colors, and layout as closely as possible. Fix any broken Korean characters.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 3
+    },
+    {
+      "index": 2,
+      "id": "product-overview",
+      "name": "제품 소개",
+      "status": "success",
+      "elapsed": "43.5",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/Dmqpx27SOn5N9m7InSOwo_ES6sAnpq.png",
+      "prompt": "Korean skincare PRODUCT OVERVIEW. 메디힐 PDRN 모공 탄력 세럼 40+40ml 단독 기획. EXACT purple PDRN dropper bottle centered on lavender gradient. Keep product as-is. Floating callouts: \"PDRN 8,902 ppm\", \"Squalane 10,000 ppm\", \"40ml × 2\". Clinical product photography.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 2
+    },
+    {
+      "index": 3,
+      "id": "key-benefits",
+      "name": "핵심 효능",
+      "status": "success",
+      "elapsed": "37.5",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/c28LsextMxolF6KN-gzWI_mv5wyyDa.png",
+      "prompt": "Korean skincare KEY BENEFITS infographic. \"PDRN의 4가지 핵심 효능\" title. 2×2 grid: \"모공 케어\" hexagon icon/\"넓어진 모공을 촘촘하게\", \"탄력 개선\" curve icon/\"처진 피부에 탄력 부여\", \"피부 재생\" circular icon/\"PDRN이 피부 재생 촉진\", \"깊은 보습\" water drop/\"스쿠알란 깊은 보습층\". Purple icons, white bg.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 4,
+      "id": "ingredient",
+      "name": "성분 하이라이트",
+      "status": "success",
+      "elapsed": "18.0",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/ehqWtv7lr1UuCfvCs_9EL_gjBm48f3.png",
+      "prompt": "Korean skincare KEY INGREDIENT. Large \"PDRN 8,902 ppm\" bold gradient purple centered. DNA helix behind at 15%. \"폴리데옥시리보뉴클레오티드\" below. Cards: \"연어 유래 PDRN\", \"피부 재생 촉진\", \"임상 시험 완료\". Molecular bg texture.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 5,
+      "id": "texture",
+      "name": "텍스처",
+      "status": "success",
+      "elapsed": "36.7",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/H2GJvIR9SZ94kM32VFfDB_UXqsjxGj.png",
+      "prompt": "Korean skincare TEXTURE. Split: Left — serum texture close-up, translucent purple-clear. Right — \"실리프팅 텍스처\" title, \"가볍게 밀착되는 워터 세럼\", \"끈적임 없이 빠르게 흡수\". Product bottle small corner, matching ref. Editorial skincare photography. Lavender bg.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 2
+    },
+    {
+      "index": 6,
+      "id": "before-after",
+      "name": "사용 전후",
+      "status": "success",
+      "elapsed": "16.7",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/x6yNOQPABsDIRTTqQg__R_gbUCUkyo.png",
+      "prompt": "Korean skincare BEFORE/AFTER. Left \"BEFORE\": stylized skin — visible pores, dull. Right \"AFTER 4주\": smooth, glowing, tight. Purple divider. Stats: \"모공 -32%\" \"탄력 +28%\" \"보습 +45%\" purple pills. \"*개인차\" gray. \"4주간의 변화\" title. Illustrated, not photos.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 7,
+      "id": "reviews",
+      "name": "리뷰",
+      "status": "success",
+      "elapsed": "16.9",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/2uuk4OpO51RJ_RZBfYeWg_eiTUy2kS.png",
+      "prompt": "Korean skincare REVIEWS. \"4.8\" + 5 gold stars + \"(2,847 리뷰)\". \"92% 재구매율\" purple heart. 3 review cards lavender bg: ★★★★★ \"모공이 확실히 줄어들었어요!\" 복합성 / ★★★★★ \"PDRN 세럼 중 가성비 최고\" 건성 / ★★★★☆ \"탄력감이 올라온 느낌\" 지성.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 8,
+      "id": "bundle",
+      "name": "기획 혜택",
+      "status": "success",
+      "elapsed": "31.3",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/3PqEk1DDyU4M0KRSi8ePO_6BcLfyy3.png",
+      "prompt": "Korean skincare BUNDLE. Two EXACT purple PDRN bottles + \"+\" between. Match ref. \"1+1\" 3D purple. \"40ml + 40ml = 80ml\". \"49,000원\" strikethrough → \"29,900원\" bold purple → \"1ml당 374원\" gray. \"올리브영 단독\" purple badge. \"한정 수량\" coral-red. Lavender bg.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 2
+    },
+    {
+      "index": 9,
+      "id": "how-to-use",
+      "name": "사용 방법",
+      "status": "success",
+      "elapsed": "19.9",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/Gf-aq9--YFttPCZEeDYgr_EglXWUaw.png",
+      "prompt": "Korean skincare HOW TO USE. 3 steps vertical: 01 \"세안 후 토너로 정돈\" toner illust / 02 \"세럼 2-3 펌프 도포\" dropper bottle ref / 03 \"두드려 흡수 후 크림 마무리\" patting face. Purple numbered circles. \"이렇게 사용하세요\" title.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 2
+    },
+    {
+      "index": 10,
+      "id": "science",
+      "name": "임상 데이터",
+      "status": "success",
+      "elapsed": "14.6",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/fYWw0vOvbsBh6DUSAFEOG_8enNIoEY.png",
+      "prompt": "Korean skincare CLINICAL DATA. \"임상으로 입증된 PDRN\" title. 4-week bar chart purple gradient. Circles: 87% \"탄력 개선\" / 92% \"재구매 의향\" / 85% \"모공 축소\". \"*자체 임상\" gray. Data-driven clinical.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 11,
+      "id": "routine",
+      "name": "루틴 가이드",
+      "status": "success",
+      "elapsed": "16.2",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/e-3uSP7wdSx12TT81ioO-_8hw9qECK.png",
+      "prompt": "Korean skincare ROUTINE. Flow: \"클렌저 → 토너 → [PDRN 세럼] → 크림 → 선크림\". PDRN step highlighted purple glow. Icons above each. \"당신의 루틴에 추가하세요\". \"토너 다음, 크림 전\". Clean diagram.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 12,
+      "id": "brand-trust",
+      "name": "브랜드 신뢰",
+      "status": "success",
+      "elapsed": "30.1",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/Sepo2yPJWZFC1A9HFDNzB_VBUfDYD5.png",
+      "prompt": "Korean skincare BRAND TRUST. \"MEDIHEAL\" silver/gray elegant. \"대한민국 마스크팩 1위\". Badges: \"피부과 테스트\" medical / \"비건 인증\" leaf / \"올리브영 베스트\" trophy. Purple pills. \"피부 과학 기반 더마코스메틱\" text.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 13,
+      "id": "ingredient-deep",
+      "name": "성분 상세",
+      "status": "success",
+      "elapsed": "47.2",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/WhcD9LYtBAlhMP2zdd2JC_aRmgu3Ia.png",
+      "prompt": "Korean skincare INGREDIENTS. \"전 성분 분석\" title. Cards: \"PDRN 8,902ppm\" star purple / \"스쿠알란 10,000ppm\" / \"나이아신아마이드\" / \"히알루론산\". Each: name + concentration + benefit. \"*EWG 그린\" note.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 14,
+      "id": "comparison",
+      "name": "제품 비교",
+      "status": "success",
+      "elapsed": "19.9",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/aWMlg3JJbD0UiiXCdKA5I_peOKqdmr.png",
+      "prompt": "Korean skincare COMPARISON. \"PDRN 세럼 비교\". 3 columns: \"일반\" vs \"PDRN\" vs \"메디힐 PDRN\" (purple bg). PDRN함량/보습지속/텍스처/가격. ✓ purple winners.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 15,
+      "id": "awards",
+      "name": "수상 내역",
+      "status": "success",
+      "elapsed": "44.6",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/aehXdquxaEdzhImUjsCJr_3n5Qu0Iu.png",
+      "prompt": "Korean skincare AWARDS. \"인증과 수상\". Badges: \"올리브영 어워즈\" trophy / \"글로우픽 1위\" medal / \"화해 9.0점\" star / \"더마 인증\" seal. Purple+gold. Institutional.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 16,
+      "id": "faq",
+      "name": "FAQ",
+      "status": "success",
+      "elapsed": "31.9",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/v_gYpyt7DnPe9nViYhbD-_RBslNA6l.png",
+      "prompt": "Korean skincare FAQ. \"자주 묻는 질문\". Cards: \"민감피부?\" \"피부과 테스트 저자극\" / \"아침저녁?\" \"네 모두 가능\" / \"다른 세럼과?\" \"PDRN 먼저\" / \"유통기한?\" \"개봉 후 12개월\" / \"임산부?\" \"전문의 상담\". Q purple, A gray.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 17,
+      "id": "texture-detail",
+      "name": "텍스처 상세",
+      "status": "success",
+      "elapsed": "23.0",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/KXNLBOEk5tHJjCKHfzdyD_MwDH2Rg6.png",
+      "prompt": "Korean skincare TEXTURE MACRO. Translucent serum drop on surface, light refracting. \"워터 세럼 제형\", \"가볍고 산뜻한 흡수력\". Rating tags: \"수분감 ●●●●○\" \"흡수력 ●●●●●\" \"끈적임 ●○○○○\". Luxurious macro. Lavender light.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 18,
+      "id": "lifestyle",
+      "name": "라이프스타일",
+      "status": "success",
+      "elapsed": "16.4",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/_-Mw-HIjm7AYlzIDnUGa3_fVDLgvee.png",
+      "prompt": "Korean skincare LIFESTYLE. Illustrated Korean woman at vanity, morning light, minimal apartment. Lavender color grading. \"매일 아침, 건강한 피부 루틴\". \"바쁜 일상 속 간편한 케어\". Not photo — illustration.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 19,
+      "id": "delivery",
+      "name": "배송 정보",
+      "status": "success",
+      "elapsed": "22.3",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/WVFMYjZ5gqfIDaQwf-6qc_3yf18MUP.png",
+      "prompt": "Korean skincare PACKAGING. Purple bottles in branded box. Match ref. Cards: \"안전 포장\" box / \"당일 발송\" clock / \"무료 배송\" truck. \"올리브영 공식 정품\" purple badge.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 2
+    },
+    {
+      "index": 20,
+      "id": "season-tip",
+      "name": "시즌 팁",
+      "status": "success",
+      "elapsed": "18.8",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/BnmfzZBDZVmMq6JzmgDdL_ZHxiwDKO.png",
+      "prompt": "Korean skincare SEASONAL. 4 seasons: 봄 \"환절기 PDRN 재생\" / 여름 \"자외선 후 회복\" / 가을 \"건조 피부 보습\" / 겨울 \"극건조 레이어링\". \"365일 관리 가이드\". Purple accents, season icons.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 21,
+      "id": "size-info",
+      "name": "용량 정보",
+      "status": "success",
+      "elapsed": "39.6",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/SAhdhub81zrlMIp2eQsYu_72rPu0fF.png",
+      "prompt": "Korean skincare SIZE. Purple PDRN bottle with annotations matching ref. \"40ml\" arrow. \"약 2개월 (아침저녁)\". Box: \"1+1 = 80ml\" \"1일 499원\" \"1펌프 62원\". Purple accents.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 2
+    },
+    {
+      "index": 22,
+      "id": "social",
+      "name": "SNS 반응",
+      "status": "success",
+      "elapsed": "35.8",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/jUjV0WkYPdbC1ev6IUe2Y_nU3S874T.png",
+      "prompt": "Korean skincare SOCIAL. \"SNS에서 화제!\" Simulated posts: \"올영세일 PDRN 💜\" hearts / \"PDRN 한 달 후기\" blog / \"세럼추천 1+1 역대급\" community. \"#PDRN세럼 #메디힐\" purple.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 23,
+      "id": "guarantee",
+      "name": "교환/반품",
+      "status": "success",
+      "elapsed": "16.4",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/b581bzUdPWxXu7vN_UV3j_vee7pFZi.png",
+      "prompt": "Korean skincare GUARANTEE. \"안심 구매 보장\". Cards: \"100% 정품\" shield / \"무료 교환\" exchange \"7일 이내\" / \"만족 보장\" smile \"전액 환불\". \"고객센터 1588-XXXX 평일 9-18\". Purple badges.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 1
+    },
+    {
+      "index": 24,
+      "id": "closing",
+      "name": "클로징",
+      "status": "success",
+      "elapsed": "21.6",
+      "imageUrl": "https://v3b.fal.media/files/b/0a9171c5/HcQ4aOMaSUwH96_dnvngB_A8YMlSHe.png",
+      "prompt": "Korean skincare CLOSING. Purple PDRN bottle matching ref. \"당신의 피부, PDRN으로 시작하세요\" large. \"메디힐 PDRN 리프팅 세럼 40+40ml\". \"29,900원\" purple \"49,000원\" strike. \"올리브영 단독 1+1\" badge. Lavender gradient.\nSTYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.",
+      "refImages": 2
+    }
+  ],
+  "summary": {
+    "total": 24,
+    "success": 24
+  }
+}

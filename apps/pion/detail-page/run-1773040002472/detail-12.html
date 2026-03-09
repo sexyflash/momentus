@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MEDIHEAL — 12P Detail Page</title>
+<style>
+:root{--p:#7B5EA7;--s:#9B7FCA;--d:#2D1B4E;--l:#F3EEFF;--a:#FF4757;--g:#999;--b:#E8E0F0;--bg:#F8F7FA}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(--bg);color:#1a1a2e;-webkit-font-smoothing:antialiased}
+
+/* Sticky Header with Nav */
+.header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--b)}
+.header-inner{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.header h1{font-size:14px;font-weight:700;color:var(--d);white-space:nowrap}
+.header .meta{font-size:11px;color:var(--g)}
+.nav{display:flex;gap:4px}
+.nav a{padding:6px 16px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;color:var(--p);border:1px solid var(--b);transition:all .15s}
+.nav a:hover{background:var(--l)}
+.nav a.active{background:var(--p);color:#fff;border-color:var(--p)}
+
+/* Thumbnail Overview */
+.overview{background:#fff;border-bottom:1px solid var(--b);padding:16px 20px;overflow-x:auto}
+.overview h2{font-size:11px;font-weight:600;color:var(--g);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.thumbs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scroll-snap-type:x mandatory}
+.thumb{flex:0 0 auto;width:80px;border-radius:6px;overflow:hidden;border:2px solid transparent;transition:all .15s;text-decoration:none;scroll-snap-align:start;position:relative}
+.thumb:hover{border-color:var(--s)}
+.thumb img{width:100%;display:block}
+.thumb span{position:absolute;bottom:0;left:0;right:0;background:rgba(45,27,78,.8);color:#fff;font-size:9px;text-align:center;padding:2px;font-weight:600}
+
+/* Input Section */
+.input-section{background:#fff;border-bottom:1px solid var(--b);padding:20px}
+.input-section h2{font-size:12px;font-weight:600;color:var(--d);margin-bottom:12px}
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.input-grid{grid-template-columns:1fr}}
+.input-card{padding:12px;border:1px solid var(--b);border-radius:8px;font-size:11px;line-height:1.6}
+.input-card h3{font-size:11px;font-weight:600;color:var(--p);margin-bottom:4px}
+.input-card b{color:var(--d)}
+.input-card s{color:var(--g)}
+.asset-row{display:flex;gap:8px;margin-top:6px}
+.asset-row>div{flex:1}
+.asset-row img{width:100%;border-radius:4px;border:1px solid var(--b)}
+.asset-row span{display:block;font-size:9px;color:var(--g);margin-top:3px;text-align:center}
+
+/* Detail Page — full width images */
+.page{background:#fff;border-bottom:1px solid var(--b)}
+.sec{position:relative;border-bottom:1px solid #f0ecf5}
+.sec:last-child{border-bottom:none}
+.sec img{width:100%;display:block}
+.sec-info{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--l);font-size:10px}
+.sec-num{font-weight:700;color:var(--p)}
+.sec-name{flex:1;font-weight:500;color:var(--d)}
+.sec-time{color:var(--g)}
+
+/* Prompt Log */
+.log-section{background:#fff;padding:20px;margin-top:1px}
+.log-section h2{font-size:12px;font-weight:600;color:var(--d);margin-bottom:10px}
+.log-entry{border:1px solid var(--b);border-radius:6px;margin-bottom:4px;overflow:hidden}
+.log-entry summary{padding:8px 10px;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:11px;background:var(--l);user-select:none}
+.log-entry summary:hover{background:#ede4ff}
+.log-entry summary b{color:var(--p);min-width:18px}
+.log-entry summary span{flex:1;font-weight:500}
+.log-entry summary em{font-style:normal;font-size:10px;color:var(--g)}
+.log-entry summary em.success{color:#22c55e}
+.log-entry summary em.failed{color:var(--a)}
+.log-body{padding:12px;border-top:1px solid var(--b)}
+.log-body h4{font-size:10px;font-weight:600;color:var(--p);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.5px}
+.log-body h4:first-child{margin-top:0}
+.log-body pre{font-size:10px;line-height:1.5;background:#f8f6fc;padding:10px;border-radius:4px;white-space:pre-wrap;word-break:break-word;color:#555;max-height:200px;overflow-y:auto;font-family:'SF Mono',Menlo,monospace;margin-bottom:8px}
+.ref-imgs{display:flex;gap:6px;margin-bottom:8px}
+.ref-imgs img{width:80px;height:80px;object-fit:cover;border-radius:4px;border:1px solid var(--b)}
+.result-img{width:100%;max-height:300px;object-fit:contain;border-radius:4px;border:1px solid var(--b)}
+
+/* Footer */
+.footer{text-align:center;padding:20px;font-size:10px;color:var(--g);background:#fff;margin-top:1px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <h1>MEDIHEAL 메디힐 PDRN 리프팅 세럼</h1>
+      <div class="meta">12P · run-1773040002472 · 2026. 3. 9.</div>
+    </div>
+    <div class="nav"><a href="detail-8.html" class="">8P</a><a href="detail-12.html" class="active">12P</a><a href="detail-24.html" class="">24P</a></div>
+  </div>
+</div>
+
+<div class="overview">
+  <h2>Section Overview (12/12)</h2>
+  <div class="thumbs">
+        <a href="#sec-1" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a9171c5/jy_mPixhbCB9yPLMBufUz_H4JwfxBn.png" alt="히어로 배너" loading="lazy" />
+          <span>01</span>
+        </a>
+        <a href="#sec-2" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a9171c5/Dmqpx27SOn5N9m7InSOwo_ES6sAnpq.png" alt="제품 소개" loading="lazy" />
+          <span>02</span>
+        </a>
+        <a href="#sec-3" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a9171c5/c28LsextMxolF6KN-gzWI_mv5wyyDa.png" alt="핵심 효능" loading="lazy" />
+          <span>03</span>
+        </a>
+        <a href="#sec-4" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a9171c5/ehqWtv7lr1UuCfvCs_9EL_gjBm48f3.png" alt="성분 하이라이트" loading="lazy" />
+          <span>04</span>
+        </a>
+        <a href="#sec-5" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a9171c5/H2GJvIR9SZ94kM32VFfDB_UXqsjxGj.png" alt="텍스처" loading="lazy" />
+          <span>05</span>
+        </a>
+        <a href="#sec-6" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a9171c5/x6yNOQPABsDIRTTqQg__R_gbUCUkyo.png" alt="사용 전후" loading="lazy" />
+          <span>06</span>
+        </a>
+        <a href="#sec-7" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a9171c5/2uuk4OpO51RJ_RZBfYeWg_eiTUy2kS.png" alt="리뷰" loading="lazy" />
+          <span>07</span>
+        </a>
+        <a href="#sec-8" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a9171c5/3PqEk1DDyU4M0KRSi8ePO_6BcLfyy3.png" alt="기획 혜택" loading="lazy" />
+          <span>08</span>
+        </a>
+        <a href="#sec-9" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a9171c5/Gf-aq9--YFttPCZEeDYgr_EglXWUaw.png" alt="사용 방법" loading="lazy" />
+          <span>09</span>
+        </a>
+        <a href="#sec-10" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a9171c5/fYWw0vOvbsBh6DUSAFEOG_8enNIoEY.png" alt="임상 데이터" loading="lazy" />
+          <span>10</span>
+        </a>
+        <a href="#sec-11" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a9171c5/e-3uSP7wdSx12TT81ioO-_8hw9qECK.png" alt="루틴 가이드" loading="lazy" />
+          <span>11</span>
+        </a>
+        <a href="#sec-12" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a9171c5/Sepo2yPJWZFC1A9HFDNzB_VBUfDYD5.png" alt="브랜드 신뢰" loading="lazy" />
+          <span>12</span>
+        </a></div>
+</div>
+
+
+    <div class="input-section">
+      <h2>입력 정보</h2>
+      <div class="input-grid">
+        <div class="input-card">
+          <h3>제품</h3>
+          <p><b>메디힐 PDRN 모공 탄력 세럼 40+40ml 단독 기획</b></p>
+          <p>MEDIHEAL · 스킨케어/세럼</p>
+          <p>핵심성분: PDRN 8,902ppm + 스쿠알란 10,000ppm</p>
+          <p>효능: 모공 케어, 탄력 개선, 피부 재생, 깊은 보습</p>
+        </div>
+        <div class="input-card">
+          <h3>가격/프로모</h3>
+          <p><b>29,900원</b> <s>49,000원</s> (39%)</p>
+          <p>플랫폼: 올리브영</p>
+        </div>
+        <div class="input-card">
+          <h3>생성 설정</h3>
+          <p>Title Treatment: GPT Image 1.5 (transparent PNG)</p>
+          <p>Design Sheet: GPT Image 1.5</p>
+          <p>섹션: Nano Banana 2 (1K, I2I)</p>
+          <p>색상: primary: #7B5EA7, secondary: #9B7FCA, accent: #FF4757, dark: #2D1B4E, light: #F3EEFF</p>
+        </div>
+        <div class="input-card">
+          <h3>에셋</h3>
+          <div class="asset-row">
+            <div><img src="https://v3b.fal.media/files/b/0a9171c0/C4B_aWpDEaP9YNoaQgmdn_nSMExlBE.png" /><span>Title Treatment (46.0s)</span></div>
+            <div><img src="https://v3b.fal.media/files/b/0a9171c0/J5pVCUNDU0sIIeGjUmuRL_qOZKCMbs.png" /><span>Design Sheet (43.2s)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="page">
+      <div class="sec" id="sec-1">
+        <img src="https://v3b.fal.media/files/b/0a9171c5/jy_mPixhbCB9yPLMBufUz_H4JwfxBn.png" alt="히어로 배너" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">01</span>
+          <span class="sec-name">히어로 배너</span>
+          <span class="sec-time">47.5s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-2">
+        <img src="https://v3b.fal.media/files/b/0a9171c5/Dmqpx27SOn5N9m7InSOwo_ES6sAnpq.png" alt="제품 소개" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">02</span>
+          <span class="sec-name">제품 소개</span>
+          <span class="sec-time">43.5s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-3">
+        <img src="https://v3b.fal.media/files/b/0a9171c5/c28LsextMxolF6KN-gzWI_mv5wyyDa.png" alt="핵심 효능" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">03</span>
+          <span class="sec-name">핵심 효능</span>
+          <span class="sec-time">37.5s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-4">
+        <img src="https://v3b.fal.media/files/b/0a9171c5/ehqWtv7lr1UuCfvCs_9EL_gjBm48f3.png" alt="성분 하이라이트" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">04</span>
+          <span class="sec-name">성분 하이라이트</span>
+          <span class="sec-time">18.0s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-5">
+        <img src="https://v3b.fal.media/files/b/0a9171c5/H2GJvIR9SZ94kM32VFfDB_UXqsjxGj.png" alt="텍스처" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">05</span>
+          <span class="sec-name">텍스처</span>
+          <span class="sec-time">36.7s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-6">
+        <img src="https://v3b.fal.media/files/b/0a9171c5/x6yNOQPABsDIRTTqQg__R_gbUCUkyo.png" alt="사용 전후" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">06</span>
+          <span class="sec-name">사용 전후</span>
+          <span class="sec-time">16.7s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-7">
+        <img src="https://v3b.fal.media/files/b/0a9171c5/2uuk4OpO51RJ_RZBfYeWg_eiTUy2kS.png" alt="리뷰" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">07</span>
+          <span class="sec-name">리뷰</span>
+          <span class="sec-time">16.9s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-8">
+        <img src="https://v3b.fal.media/files/b/0a9171c5/3PqEk1DDyU4M0KRSi8ePO_6BcLfyy3.png" alt="기획 혜택" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">08</span>
+          <span class="sec-name">기획 혜택</span>
+          <span class="sec-time">31.3s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-9">
+        <img src="https://v3b.fal.media/files/b/0a9171c5/Gf-aq9--YFttPCZEeDYgr_EglXWUaw.png" alt="사용 방법" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">09</span>
+          <span class="sec-name">사용 방법</span>
+          <span class="sec-time">19.9s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-10">
+        <img src="https://v3b.fal.media/files/b/0a9171c5/fYWw0vOvbsBh6DUSAFEOG_8enNIoEY.png" alt="임상 데이터" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">10</span>
+          <span class="sec-name">임상 데이터</span>
+          <span class="sec-time">14.6s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-11">
+        <img src="https://v3b.fal.media/files/b/0a9171c5/e-3uSP7wdSx12TT81ioO-_8hw9qECK.png" alt="루틴 가이드" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">11</span>
+          <span class="sec-name">루틴 가이드</span>
+          <span class="sec-time">16.2s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-12">
+        <img src="https://v3b.fal.media/files/b/0a9171c5/Sepo2yPJWZFC1A9HFDNzB_VBUfDYD5.png" alt="브랜드 신뢰" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">12</span>
+          <span class="sec-name">브랜드 신뢰</span>
+          <span class="sec-time">30.1s</span>
+        </div>
+      </div></div>
+
+<div class="log-section">
+  <h2>Prompt Log (12 sections)</h2>
+  
+        <details class="log-entry">
+          <summary>
+            <b>01</b>
+            <span>히어로 배너</span>
+            <em class="success">✓ 47.5s · ref:3</em>
+          </summary>
+          <div class="log-body">
+            <h4>Final Prompt</h4>
+            <pre>Korean skincare HERO BANNER for 메디힐 PDRN 모공 탄력 세럼 40+40ml 단독 기획.
+
+CRITICAL — TITLE TREATMENT OVERLAY:
+The first reference image is a transparent PNG title treatment. You MUST incorporate this typography layout into the hero. Overlay or recreate these EXACT texts in the same style:
+- "MEDIHEAL" — white uppercase geometric sans-serif, wide tracking
+- "PDRN" — large gradient purple chrome metallic bevel letters
+- "리프팅 세럼" — Korean rounded gothic below PDRN
+- "피부를 당기듯 밀착!" — lavender subtitle
+- "40+40ml 단독 기획" — white promo with "39% OFF" in coral-red
+
+The purple PDRN dropper bottle (third reference image) positioned center-right. Do NOT alter the product appearance.
+Background: lavender-to-white gradient, subtle DNA helix at 5% opacity.
+"39%" circular coral-red badge floating.
+Match the title treatment's typography style, colors, and layout as closely as possible. Fix any broken Korean characters.
+STYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.</pre>
+            <h4>Reference Images (3)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9171c0/C4B_aWpDEaP9YNoaQgmdn_nSMExlBE.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a9171c0/J5pVCUNDU0sIIeGjUmuRL_qOZKCMbs.png" alt="ref-1" /><img src="https://v3b.fal.media/files/b/0a9171c0/gKwXsB4qIWZJRW7TGo6jg_product-image.jpg" alt="ref-2" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a9171c5/jy_mPixhbCB9yPLMBufUz_H4JwfxBn.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>02</b>
+            <span>제품 소개</span>
+            <em class="success">✓ 43.5s · ref:2</em>
+          </summary>
+          <div class="log-body">
+            <h4>Final Prompt</h4>
+            <pre>Korean skincare PRODUCT OVERVIEW. 메디힐 PDRN 모공 탄력 세럼 40+40ml 단독 기획. EXACT purple PDRN dropper bottle centered on lavender gradient. Keep product as-is. Floating callouts: "PDRN 8,902 ppm", "Squalane 10,000 ppm", "40ml × 2". Clinical product photography.
+STYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9171c0/J5pVCUNDU0sIIeGjUmuRL_qOZKCMbs.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a9171c0/gKwXsB4qIWZJRW7TGo6jg_product-image.jpg" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a9171c5/Dmqpx27SOn5N9m7InSOwo_ES6sAnpq.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>03</b>
+            <span>핵심 효능</span>
+            <em class="success">✓ 37.5s · ref:1</em>
+          </summary>
+          <div class="log-body">
+            <h4>Final Prompt</h4>
+            <pre>Korean skincare KEY BENEFITS infographic. "PDRN의 4가지 핵심 효능" title. 2×2 grid: "모공 케어" hexagon icon/"넓어진 모공을 촘촘하게", "탄력 개선" curve icon/"처진 피부에 탄력 부여", "피부 재생" circular icon/"PDRN이 피부 재생 촉진", "깊은 보습" water drop/"스쿠알란 깊은 보습층". Purple icons, white bg.
+STYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9171c0/J5pVCUNDU0sIIeGjUmuRL_qOZKCMbs.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a9171c5/c28LsextMxolF6KN-gzWI_mv5wyyDa.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>04</b>
+            <span>성분 하이라이트</span>
+            <em class="success">✓ 18.0s · ref:1</em>
+          </summary>
+          <div class="log-body">
+            <h4>Final Prompt</h4>
+            <pre>Korean skincare KEY INGREDIENT. Large "PDRN 8,902 ppm" bold gradient purple centered. DNA helix behind at 15%. "폴리데옥시리보뉴클레오티드" below. Cards: "연어 유래 PDRN", "피부 재생 촉진", "임상 시험 완료". Molecular bg texture.
+STYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9171c0/J5pVCUNDU0sIIeGjUmuRL_qOZKCMbs.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a9171c5/ehqWtv7lr1UuCfvCs_9EL_gjBm48f3.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>05</b>
+            <span>텍스처</span>
+            <em class="success">✓ 36.7s · ref:2</em>
+          </summary>
+          <div class="log-body">
+            <h4>Final Prompt</h4>
+            <pre>Korean skincare TEXTURE. Split: Left — serum texture close-up, translucent purple-clear. Right — "실리프팅 텍스처" title, "가볍게 밀착되는 워터 세럼", "끈적임 없이 빠르게 흡수". Product bottle small corner, matching ref. Editorial skincare photography. Lavender bg.
+STYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9171c0/J5pVCUNDU0sIIeGjUmuRL_qOZKCMbs.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a9171c0/gKwXsB4qIWZJRW7TGo6jg_product-image.jpg" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a9171c5/H2GJvIR9SZ94kM32VFfDB_UXqsjxGj.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>06</b>
+            <span>사용 전후</span>
+            <em class="success">✓ 16.7s · ref:1</em>
+          </summary>
+          <div class="log-body">
+            <h4>Final Prompt</h4>
+            <pre>Korean skincare BEFORE/AFTER. Left "BEFORE": stylized skin — visible pores, dull. Right "AFTER 4주": smooth, glowing, tight. Purple divider. Stats: "모공 -32%" "탄력 +28%" "보습 +45%" purple pills. "*개인차" gray. "4주간의 변화" title. Illustrated, not photos.
+STYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9171c0/J5pVCUNDU0sIIeGjUmuRL_qOZKCMbs.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a9171c5/x6yNOQPABsDIRTTqQg__R_gbUCUkyo.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>07</b>
+            <span>리뷰</span>
+            <em class="success">✓ 16.9s · ref:1</em>
+          </summary>
+          <div class="log-body">
+            <h4>Final Prompt</h4>
+            <pre>Korean skincare REVIEWS. "4.8" + 5 gold stars + "(2,847 리뷰)". "92% 재구매율" purple heart. 3 review cards lavender bg: ★★★★★ "모공이 확실히 줄어들었어요!" 복합성 / ★★★★★ "PDRN 세럼 중 가성비 최고" 건성 / ★★★★☆ "탄력감이 올라온 느낌" 지성.
+STYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9171c0/J5pVCUNDU0sIIeGjUmuRL_qOZKCMbs.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a9171c5/2uuk4OpO51RJ_RZBfYeWg_eiTUy2kS.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>08</b>
+            <span>기획 혜택</span>
+            <em class="success">✓ 31.3s · ref:2</em>
+          </summary>
+          <div class="log-body">
+            <h4>Final Prompt</h4>
+            <pre>Korean skincare BUNDLE. Two EXACT purple PDRN bottles + "+" between. Match ref. "1+1" 3D purple. "40ml + 40ml = 80ml". "49,000원" strikethrough → "29,900원" bold purple → "1ml당 374원" gray. "올리브영 단독" purple badge. "한정 수량" coral-red. Lavender bg.
+STYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9171c0/J5pVCUNDU0sIIeGjUmuRL_qOZKCMbs.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a9171c0/gKwXsB4qIWZJRW7TGo6jg_product-image.jpg" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a9171c5/3PqEk1DDyU4M0KRSi8ePO_6BcLfyy3.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>09</b>
+            <span>사용 방법</span>
+            <em class="success">✓ 19.9s · ref:2</em>
+          </summary>
+          <div class="log-body">
+            <h4>Final Prompt</h4>
+            <pre>Korean skincare HOW TO USE. 3 steps vertical: 01 "세안 후 토너로 정돈" toner illust / 02 "세럼 2-3 펌프 도포" dropper bottle ref / 03 "두드려 흡수 후 크림 마무리" patting face. Purple numbered circles. "이렇게 사용하세요" title.
+STYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9171c0/J5pVCUNDU0sIIeGjUmuRL_qOZKCMbs.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a9171c0/gKwXsB4qIWZJRW7TGo6jg_product-image.jpg" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a9171c5/Gf-aq9--YFttPCZEeDYgr_EglXWUaw.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>10</b>
+            <span>임상 데이터</span>
+            <em class="success">✓ 14.6s · ref:1</em>
+          </summary>
+          <div class="log-body">
+            <h4>Final Prompt</h4>
+            <pre>Korean skincare CLINICAL DATA. "임상으로 입증된 PDRN" title. 4-week bar chart purple gradient. Circles: 87% "탄력 개선" / 92% "재구매 의향" / 85% "모공 축소". "*자체 임상" gray. Data-driven clinical.
+STYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9171c0/J5pVCUNDU0sIIeGjUmuRL_qOZKCMbs.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a9171c5/fYWw0vOvbsBh6DUSAFEOG_8enNIoEY.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>11</b>
+            <span>루틴 가이드</span>
+            <em class="success">✓ 16.2s · ref:1</em>
+          </summary>
+          <div class="log-body">
+            <h4>Final Prompt</h4>
+            <pre>Korean skincare ROUTINE. Flow: "클렌저 → 토너 → [PDRN 세럼] → 크림 → 선크림". PDRN step highlighted purple glow. Icons above each. "당신의 루틴에 추가하세요". "토너 다음, 크림 전". Clean diagram.
+STYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9171c0/J5pVCUNDU0sIIeGjUmuRL_qOZKCMbs.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a9171c5/e-3uSP7wdSx12TT81ioO-_8hw9qECK.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>12</b>
+            <span>브랜드 신뢰</span>
+            <em class="success">✓ 30.1s · ref:1</em>
+          </summary>
+          <div class="log-body">
+            <h4>Final Prompt</h4>
+            <pre>Korean skincare BRAND TRUST. "MEDIHEAL" silver/gray elegant. "대한민국 마스크팩 1위". Badges: "피부과 테스트" medical / "비건 인증" leaf / "올리브영 베스트" trophy. Purple pills. "피부 과학 기반 더마코스메틱" text.
+STYLE: Purple #7B5EA7/#9B7FCA, dark #2D1B4E, light #F3EEFF, red #FF4757. Clinical-luxe Korean dermacosmetic. STATIC IMAGE only — NO buttons, NO UI elements. Mobile 3:4 vertical.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9171c0/J5pVCUNDU0sIIeGjUmuRL_qOZKCMbs.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a9171c5/Sepo2yPJWZFC1A9HFDNzB_VBUfDYD5.png" class="result-img" />
+          </div>
+        </details>
+</div>
+
+<div class="footer">
+  12/12 sections · GPT 1.5 + NB2 1K · Reci Detail Page Experiment v3
+</div>
+
+</body>
+</html>
