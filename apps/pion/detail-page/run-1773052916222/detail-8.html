@@ -1,0 +1,231 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>한우마마 — 8P (v8)</title>
+<style>
+:root{--p:#5B2C6F;--s:#B21B2B;--d:#2C2C2C;--l:#F8F8F8;--a:#D4AF37;--g:#999;--b:#E8E0F0;--bg:#F8F7FA}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(--bg);color:#1a1a2e;-webkit-font-smoothing:antialiased}
+.header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--b)}.header-inner{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}.header h1{font-size:14px;font-weight:700;color:var(--d)}.header .meta{font-size:11px;color:var(--g)}.nav{display:flex;gap:4px}.nav a{padding:6px 16px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;color:var(--p);border:1px solid var(--b);transition:all .15s}.nav a:hover{background:var(--l)}.nav a.active{background:var(--p);color:#fff;border-color:var(--p)}
+.view-toggle{display:flex;background:var(--l);border-radius:8px;padding:2px;gap:2px}.vt-btn{padding:4px 12px;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--g);transition:all .15s}.vt-btn.active{background:#fff;color:var(--p);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.overview{background:#fff;border-bottom:1px solid var(--b);padding:16px 20px;overflow-x:auto}.overview h2{font-size:11px;font-weight:600;color:var(--g);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}.thumbs{display:flex;gap:8px;overflow-x:auto}.thumb{flex:0 0 auto;width:80px;border-radius:6px;overflow:hidden;border:2px solid transparent;text-decoration:none;position:relative}.thumb:hover{border-color:var(--s)}.thumb img{width:100%;display:block}.thumb span{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);color:#fff;font-size:9px;text-align:center;padding:2px;font-weight:600}
+.director-section{background:#fff;border-bottom:1px solid var(--b);padding:20px}.director-section h2{font-size:12px;font-weight:600;color:var(--d);margin-bottom:12px}.user-input-card{padding:16px;border:2px solid var(--p);border-radius:10px;margin-bottom:12px;background:linear-gradient(135deg,var(--l),#fff)}.user-input-card h3{font-size:11px;color:var(--p);margin-bottom:6px}.user-prompt{font-size:16px;font-weight:700;color:var(--d);margin-bottom:4px}.user-image{font-size:11px;color:var(--g)}.director-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:600px){.director-grid{grid-template-columns:1fr}}.director-card{padding:12px;border:1px solid var(--b);border-radius:8px;font-size:11px;line-height:1.6}.director-card h3{font-size:11px;font-weight:600;color:var(--p);margin-bottom:4px}.director-card b{color:var(--d)}.color-swatches{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}.swatch{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g)}.swatch span{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.1)}.asset-row{display:flex;gap:8px;margin-top:6px}.asset-row>div{flex:1}.asset-row img{width:100%;border-radius:4px;border:1px solid var(--b)}.asset-row span{display:block;font-size:9px;color:var(--g);margin-top:3px;text-align:center}
+.page{background:#fff;border-bottom:1px solid var(--b)}.page.view-500{max-width:500px;margin-left:auto;margin-right:auto;box-shadow:0 0 0 1px var(--b),0 8px 32px rgba(0,0,0,.08)}.sec{position:relative;border-bottom:1px solid #f0ecf5}.sec:last-child{border-bottom:none}.sec img{width:100%;display:block}.sec-info{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--l);font-size:10px}.sec-info.hidden{display:none}.sec-num{font-weight:700;color:var(--p)}.sec-name{flex:1;font-weight:500;color:var(--d)}.sec-badge{font-size:9px;padding:2px 6px;border-radius:4px;font-weight:600}.sec-badge.hero{background:#FFE0E6;color:#FF4757}.sec-badge.withProd,.sec-badge.withProdLifestyle{background:#E0F0FF;color:#3B82F6}.sec-badge.withLifestyle{background:#E8FFE0;color:#22C55E}.sec-badge.infoOnly{background:#F0ECF5;color:var(--p)}.sec-badge.withTT{background:#FFF3E0;color:#F59E0B}.sec-badge.withClientImage{background:#FFE0F5;color:#E91E90}.sec-time{color:var(--g)}
+.log-section{background:#fff;padding:20px;margin-top:1px}.log-section h2{font-size:12px;font-weight:600;color:var(--d);margin-bottom:10px}.log-entry{border:1px solid var(--b);border-radius:6px;margin-bottom:4px;overflow:hidden}.log-entry summary{padding:8px 10px;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:11px;background:var(--l)}.log-entry summary b{color:var(--p);min-width:18px}.log-entry summary span{flex:1;font-weight:500}.log-entry summary em{font-style:normal;font-size:10px;color:var(--g)}.log-entry summary em.success{color:#22c55e}.log-entry summary em.failed{color:var(--a)}.log-body{padding:12px;border-top:1px solid var(--b)}.log-body h4{font-size:10px;font-weight:600;color:var(--p);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.5px}.log-body h4:first-child{margin-top:0}.log-body pre{font-size:10px;line-height:1.5;background:#f8f6fc;padding:10px;border-radius:4px;white-space:pre-wrap;word-break:break-word;color:#555;max-height:200px;overflow-y:auto;font-family:'SF Mono',Menlo,monospace;margin-bottom:8px}.ref-imgs{display:flex;gap:6px;margin-bottom:8px}.ref-imgs img{width:80px;height:80px;object-fit:cover;border-radius:4px;border:1px solid var(--b)}.result-img{width:100%;max-height:300px;object-fit:contain;border-radius:4px;border:1px solid var(--b)}
+.footer{text-align:center;padding:20px;font-size:10px;color:var(--g);background:#fff;margin-top:1px}
+</style></head><body>
+<div class="header"><div class="header-inner"><div><h1>한우마마 한우선물세트</h1><div class="meta">8P · v8 · run-1773052916222</div></div>
+<div style="display:flex;align-items:center;gap:12px">
+<div class="view-toggle" id="viewToggle"><button class="vt-btn active" data-mode="500" onclick="setView('500')">500px</button><button class="vt-btn" data-mode="full" onclick="setView('full')">원본</button></div>
+<div class="view-toggle" id="infoToggle"><button class="vt-btn" data-mode="show" onclick="toggleInfo('show')">정보</button><button class="vt-btn active" data-mode="hide" onclick="toggleInfo('hide')">숨김</button></div>
+<div class="nav"><a href="detail-8.html" class="active">8P</a><a href="detail-12.html" class="">12P</a><a href="detail-24.html" class="">24P</a></div></div></div></div>
+<div class="overview"><h2>Overview (8/8)</h2><div class="thumbs">
+        <a href="#sec-1" class="thumb"><img src="https://v3b.fal.media/files/b/0a9176e1/kz_z-C7AK4uzv2CGPMh27_Xe2mTOFT.png" loading="lazy" /><span>01</span></a>
+        <a href="#sec-2" class="thumb"><img src="https://v3b.fal.media/files/b/0a9176e0/rcXUvXTI8tp_o0G1pytVx_9lgQv4JT.png" loading="lazy" /><span>02</span></a>
+        <a href="#sec-3" class="thumb"><img src="https://v3b.fal.media/files/b/0a9176e1/yv5_BGY9_rvH_t-loGPSK_K6V2JVtn.png" loading="lazy" /><span>03</span></a>
+        <a href="#sec-4" class="thumb"><img src="https://v3b.fal.media/files/b/0a9176e1/AYxj1QEE7HMMI8OCudxGj_5n0ywb5P.png" loading="lazy" /><span>04</span></a>
+        <a href="#sec-5" class="thumb"><img src="https://v3b.fal.media/files/b/0a9176e1/O5eGJ5MICXggBnoW33ONW_zgE6aHD0.png" loading="lazy" /><span>05</span></a>
+        <a href="#sec-6" class="thumb"><img src="https://v3b.fal.media/files/b/0a9176e1/ZNcU1ngHWSlt2xM4di5L8_Eel5cwTN.png" loading="lazy" /><span>06</span></a>
+        <a href="#sec-7" class="thumb"><img src="https://v3b.fal.media/files/b/0a9176e0/4f3_O1n_tdpMLjBWO2jlt_FpuLhtzY.png" loading="lazy" /><span>07</span></a>
+        <a href="#sec-8" class="thumb"><img src="https://v3b.fal.media/files/b/0a9176e0/pirz0VqHE0plA5DoXqTn1_bcT7xrRN.png" loading="lazy" /><span>08</span></a></div></div>
+
+    <div class="director-section">
+      <h2>🔍 Agent Pipeline Analysis</h2>
+      <div class="user-input-card">
+        <h3>클라이언트 의뢰</h3>
+        <p class="user-prompt">한우마마 한우선물세트</p>
+        <p class="user-image">📁 loud_193603_20260202 · 이미지 6개</p>
+      </div>
+      <div class="director-grid">
+        <div class="director-card">
+          <h3>Agent 0: 제품 분석</h3>
+          <p><b>한우마마 한우선물세트</b></p>
+          <p>식품/축산물 > 한우 선물세트 · clean-premium: 깔끔하고 대중적인 폰트를 사용하며, 화려함보다는 깔끔한 구성을 선호. 고풍스러움과 고급스러움을 동시에 표현하되 과하지 않은 절제된 프리미엄 이미지 지향</p>
+          <p>1++, 1+ 혼합 구성으로 최고급 품질을 합리적인 가격에 제공하는 3대째 직영 농가의 정직한 선물세트</p>
+          <p style="margin-top:4px"><b>클라이언트 요청:</b></p>
+          <p>• 메인 인트로 이미지: 한우선물세트와 포장 이미지가 겹쳐진 이미지, 배경은 고풍스럽고 고급스러운 이미지 선호</p><p>• 중간중간 적절한 GIF 활용</p><p>• 전체적인 컬러 구성은 화려함보다는 깔끔한 구성 선호</p><p>• 고풍스러운 폰트보다는 깔끔하고 대중적인 폰트 선호</p><p>• 상세페이지에 활용되는 폰트, 이미지, 아이콘 등은 상업적 이용이 가능한 것만 사용</p><p>• 가로 860px, 세로 자유</p><p>• 제출 파일: 웹용 이미지(jpg) 및 원본 파일(psd)</p><p>• 활용한 폰트(상업적 이용 가능) 명시, 구역별 레이어 정리 희망</p><p>• 4가지 USP를 직관적으로 인식시키기: 1++/1+ 혼합 구성, 직영 시스템, 지정일 예약배송, 고급스러운 포장</p>
+        </div>
+        <div class="director-card">
+          <h3>Agent 1: 디렉터</h3>
+          <p>타겟: 명절, 기념일, 감사 선물용으로 프리미엄 한우를 찾는 30-60대 구매자. 품질과 신뢰를 중시하며 선물 포장의 고급스러움을 중요하게 생각하는 소비자</p>
+          <p>• 1++, 1+ 혼합 구성으로 최고급 품질을 합리적인 가격에 제공</p><p>• 3대째 직영 농가와 육가공장 운영으로 생산부터 판매까지 직접 관리</p><p>• HACCP 안전관리인증 및 이력추적 시스템으로 검증된 안전성</p><p>• 고급스러운 전통 보자기 포장으로 선물용 최적화</p><p>• 지정일 예약 배송 가능으로 편리한 선물 전달</p><p>• 1980년대부터 축적된 3대째 노하우와 신뢰</p>
+        </div>
+        <div class="director-card">
+          <h3>색상 팔레트</h3>
+          <div class="color-swatches">
+            <div class="swatch"><span style="background:#5B2C6F"></span>primary: #5B2C6F</div><div class="swatch"><span style="background:#B21B2B"></span>secondary: #B21B2B</div><div class="swatch"><span style="background:#D4AF37"></span>accent: #D4AF37</div><div class="swatch"><span style="background:#2C2C2C"></span>dark: #2C2C2C</div><div class="swatch"><span style="background:#F8F8F8"></span>light: #F8F8F8</div>
+          </div>
+        </div>
+        <div class="director-card">
+          <h3>에셋</h3>
+          <div class="asset-row">
+            <div><img src="https://v3b.fal.media/files/b/0a9176d9/9UgDmvCCFc9WmAEV3KLeN_LWchTIwH.png" /><span>TT (51.4s)</span></div>
+            <div><img src="https://v3b.fal.media/files/b/0a9176d9/KW4J3fbgGuu5s0a8pM9Gv_aEFembYm.png" /><span>DS (59.2s)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="page">
+      <div class="sec" id="sec-1">
+        <img src="https://v3b.fal.media/files/b/0a9176e1/kz_z-C7AK4uzv2CGPMh27_Xe2mTOFT.png" alt="히어로 인트로" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">01</span>
+          <span class="sec-name">히어로 인트로</span>
+          <span class="sec-badge hero">hero (product-main)</span>
+          <span class="sec-time">47.6s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-2">
+        <img src="https://v3b.fal.media/files/b/0a9176e0/rcXUvXTI8tp_o0G1pytVx_9lgQv4JT.png" alt="4대 핵심 가치" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">02</span>
+          <span class="sec-name">4대 핵심 가치</span>
+          <span class="sec-badge withTT">withTT</span>
+          <span class="sec-time">31.5s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-3">
+        <img src="https://v3b.fal.media/files/b/0a9176e1/yv5_BGY9_rvH_t-loGPSK_K6V2JVtn.png" alt="1++, 1+ 혼합 구성 설명" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">03</span>
+          <span class="sec-name">1++, 1+ 혼합 구성 설명</span>
+          <span class="sec-badge hero">hero</span>
+          <span class="sec-time">48.1s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-4">
+        <img src="https://v3b.fal.media/files/b/0a9176e1/AYxj1QEE7HMMI8OCudxGj_5n0ywb5P.png" alt="3대째 이어온 신뢰" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">04</span>
+          <span class="sec-name">3대째 이어온 신뢰</span>
+          <span class="sec-badge withTT">withTT (farm)</span>
+          <span class="sec-time">64.0s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-5">
+        <img src="https://v3b.fal.media/files/b/0a9176e1/O5eGJ5MICXggBnoW33ONW_zgE6aHD0.png" alt="직영 시스템의 차별성" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">05</span>
+          <span class="sec-name">직영 시스템의 차별성</span>
+          <span class="sec-badge withTT">withTT (farm)</span>
+          <span class="sec-time">39.5s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-6">
+        <img src="https://v3b.fal.media/files/b/0a9176e1/ZNcU1ngHWSlt2xM4di5L8_Eel5cwTN.png" alt="세트 구성 전체 안내" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">06</span>
+          <span class="sec-name">세트 구성 전체 안내</span>
+          <span class="sec-badge hero">hero (product-main)</span>
+          <span class="sec-time">62.0s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-7">
+        <img src="https://v3b.fal.media/files/b/0a9176e0/4f3_O1n_tdpMLjBWO2jlt_FpuLhtzY.png" alt="한우 마블링 디테일" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">07</span>
+          <span class="sec-name">한우 마블링 디테일</span>
+          <span class="sec-badge withProd">withProd (product-main)</span>
+          <span class="sec-time">43.1s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-8">
+        <img src="https://v3b.fal.media/files/b/0a9176e0/pirz0VqHE0plA5DoXqTn1_bcT7xrRN.png" alt="포장 옵션 비교" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">08</span>
+          <span class="sec-name">포장 옵션 비교</span>
+          <span class="sec-badge hero">hero (packaging)</span>
+          <span class="sec-time">32.6s</span>
+        </div>
+      </div></div>
+<div class="log-section"><h2>Prompt Log (8)</h2>
+        <details class="log-entry">
+          <summary><b>01</b><span>히어로 인트로</span>
+          <em class="success">✓ 47.6s · ref:2 · hero</em></summary>
+          <div class="log-body">
+            <h4>Prompt</h4><pre>Premium Korean e-commerce HERO BANNER.
+TWO REFERENCE IMAGES:
+1st reference = TITLE TREATMENT (transparent PNG). Place on LEFT 55% as-is. Do not redraw.
+2nd reference = PRODUCT PHOTO. Extract ONLY the product — ignore background. Place RIGHT 40%.
+BACKGROUND: Complementary gradient harmonizing with title treatment colors. Subtle decorative elements at 5-10% opacity.
+TEXT CORRECTION (fix broken Korean characters): The correct text should read: "한우마마" (brand name), "한우선물세트" (hanwoo gift set), "3대째 귀한 고기만 담습니다" (3rd generation, only precious meat), "1++ · 1+ 혼합 구성" (1++ and 1+ mixed composition), "합리적인 가격의 최고급 품질" (premium quality at reasonable price). Fix any garbled characters. Keep original font styles.
+Mobile vertical 3:4. STATIC IMAGE — no buttons.
+STYLE RULES: Colors — #5B2C6F, #B21B2B, #2C2C2C, #F8F8F8, accent #D4AF37. clean-premium: 깔끔하고 대중적인 폰트를 사용하며, 화려함보다는 깔끔한 구성을 선호. 고풍스러움과 고급스러움을 동시에 표현하되 과하지 않은 절제된 프리미엄 이미지 지향. STATIC — NO buttons, NO UI. 3:4.</pre>
+            <h4>References (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9176d9/9UgDmvCCFc9WmAEV3KLeN_LWchTIwH.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a9176cb/YGcN7IvJwZ0_RMmL2fov1_n9ZBKg7DTKb5WA4b.%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%20%3F%3F%3F%3F%20%3F%3F%3F%3F%3F%3F%3F%3F%3F%20%3F%3F%3F%3F%3Fx.jpg" alt="ref-1" /></div>
+            <h4>Result</h4><img src="https://v3b.fal.media/files/b/0a9176e1/kz_z-C7AK4uzv2CGPMh27_Xe2mTOFT.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary><b>02</b><span>4대 핵심 가치</span>
+          <em class="success">✓ 31.5s · ref:2 · withTT</em></summary>
+          <div class="log-body">
+            <h4>Prompt</h4><pre>A premium Korean beef gift set e-commerce detail page section showcasing four key value propositions in a clean vertical infographic layout. The composition is divided into four equal horizontal segments, each featuring a distinct icon and benefit description. First segment: elegant icon of premium grade badges (1++ and 1+ symbols) with Korean text '1++/1+ 혼합 구성' as headline and '최고급 품질을 합리적인 가격에' as subtext. Second segment: icon of farm-to-table direct system with Korean text '직영 농가 시스템' as headline and '생산부터 판매까지 직접 관리' as subtext. Third segment: calendar and delivery box icon with Korean text '지정일 예약 배송' as headline and '원하는 날짜에 정확한 배송' as subtext. Fourth segment: traditional Korean wrapping cloth (bojagi) icon with Korean text '고급스러운 포장' as headline and '전통 보자기로 품격있는 선물' as subtext. Each segment uses minimalist line-art style icons in deep purple (#5B2C6F), with clean sans-serif Korean typography. Background alternates between soft cream (#F8F8F8) and white for visual rhythm. Subtle gold accent (#D4AF37) highlights on icons. Clean dividing lines between segments. Professional product photography lighting. Sophisticated yet restrained premium aesthetic, avoiding excessive ornamentation (from design sheet). STYLE RULES (mandatory): Colors — #5B2C6F, #B21B2B, #2C2C2C, #F8F8F8, accent #D4AF37. clean-premium: 깔끔하고 대중적인 폰트를 사용하며, 화려함보다는 깔끔한 구성을 선호. 고풍스러움과 고급스러움을 동시에 표현하되 과하지 않은 절제된 프리미엄 이미지 지향 aesthetic. STATIC IMAGE — NO buttons, NO UI. Mobile vertical 9:16. Match design sheet reference.</pre>
+            <h4>References (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9176d9/9UgDmvCCFc9WmAEV3KLeN_LWchTIwH.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a9176d9/KW4J3fbgGuu5s0a8pM9Gv_aEFembYm.png" alt="ref-1" /></div>
+            <h4>Result</h4><img src="https://v3b.fal.media/files/b/0a9176e0/rcXUvXTI8tp_o0G1pytVx_9lgQv4JT.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary><b>03</b><span>1++, 1+ 혼합 구성 설명</span>
+          <em class="success">✓ 48.1s · ref:2 · hero</em></summary>
+          <div class="log-body">
+            <h4>Prompt</h4><pre>A premium Korean beef (Hanwoo) gift set detailed infographic explaining the 1++ and 1+ grade mixture composition, vertical mobile layout 9:16 ratio. Top section features the actual vacuum-packed Hanwoo product from reference image (product object only, ignore background) with purple brand label, arranged elegantly on a clean surface. Middle section displays a sophisticated comparison infographic showing two grade badges side by side: left badge shows "1++ 등급" with marbling pattern illustration and text "최상급 마블링", right badge shows "1+ 등급" with slightly less marbling and text "프리미엄 마블링". Between them, a plus symbol and text "혼합 구성". Below the badges, three benefit callouts in clean boxes: "최고급 품질 보장", "합리적인 가격 실현", "균형잡힌 식감". Bottom section features a clean infographic chart showing the grade distribution with simple icons and Korean text "1++등급 50% + 1+등급 50% = 최상의 가성비". Background uses subtle traditional Korean pattern texture in very light opacity, maintaining clean and uncluttered composition. Color scheme: deep purple #5B2C6F for main elements, crimson red #B21B2B for accents, gold #D4AF37 for premium highlights, dark charcoal #2C2C2C for text, off-white #F8F8F8 for background. All typography in clean, modern sans-serif Korean font (not traditional calligraphy style). Elegant but restrained premium aesthetic with plenty of white space. Product photography style: professional food photography lighting. STYLE RULES (mandatory): Colors — #5B2C6F, #B21B2B, #2C2C2C, #F8F8F8, accent #D4AF37. clean-premium: 깔끔하고 대중적인 폰트를 사용하며, 화려함보다는 깔끔한 구성을 선호. 고풍스러움과 고급스러움을 동시에 표현하되 과하지 않은 절제된 프리미엄 이미지 지향 aesthetic. STATIC IMAGE — NO buttons, NO UI. Mobile vertical 9:16. Match design sheet reference.</pre>
+            <h4>References (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9176d9/9UgDmvCCFc9WmAEV3KLeN_LWchTIwH.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a9176cb/YGcN7IvJwZ0_RMmL2fov1_n9ZBKg7DTKb5WA4b.%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%20%3F%3F%3F%3F%20%3F%3F%3F%3F%3F%3F%3F%3F%3F%20%3F%3F%3F%3F%3Fx.jpg" alt="ref-1" /></div>
+            <h4>Result</h4><img src="https://v3b.fal.media/files/b/0a9176e1/yv5_BGY9_rvH_t-loGPSK_K6V2JVtn.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary><b>04</b><span>3대째 이어온 신뢰</span>
+          <em class="success">✓ 64.0s · ref:2 · withTT</em></summary>
+          <div class="log-body">
+            <h4>Prompt</h4><pre>Editorial-style vertical heritage story composition showcasing three generations of Korean beef farming legacy since 1980s. Center composition features a subtle timeline visualization flowing vertically: top section shows vintage sepia-toned imagery suggesting 1980s farm origins with traditional cattle farming silhouettes, middle section transitions to modern sustainable farming practices, bottom section displays contemporary premium beef production. Soft gradient background transitioning from warm sepia (#D4AF37 undertones) at top through deep burgundy (#B21B2B) in middle to refined purple (#5B2C6F) at bottom, creating elegant heritage narrative flow. Overlaid Korean text in clean modern sans-serif font: main headline "3대째 이어온 한우마마의 약속" prominently placed in upper-middle section, subheading "1980년부터 축산 전문 농가로 시작해" below, followed by "3대째 가족이 직접 키우고 관리하는" and "정직한 한우를 전합니다" in refined hierarchy. Delicate traditional Korean pattern borders frame left and right edges subtly. Atmospheric lighting with soft vignette effect. Sophisticated documentary photography aesthetic with restrained elegance. NO product images, NO buttons, NO horizontal layout. STYLE RULES (mandatory): Colors — #5B2C6F, #B21B2B, #2C2C2C, #F8F8F8, accent #D4AF37. clean-premium: 깔끔하고 대중적인 폰트를 사용하며, 화려함보다는 깔끔한 구성을 선호. 고풍스러움과 고급스러움을 동시에 표현하되 과하지 않은 절제된 프리미엄 이미지 지향 aesthetic. STATIC IMAGE — NO buttons, NO UI. Mobile vertical 9:16. Match design sheet reference.</pre>
+            <h4>References (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9176d9/9UgDmvCCFc9WmAEV3KLeN_LWchTIwH.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a9176d9/KW4J3fbgGuu5s0a8pM9Gv_aEFembYm.png" alt="ref-1" /></div>
+            <h4>Result</h4><img src="https://v3b.fal.media/files/b/0a9176e1/AYxj1QEE7HMMI8OCudxGj_5n0ywb5P.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary><b>05</b><span>직영 시스템의 차별성</span>
+          <em class="success">✓ 39.5s · ref:2 · withTT</em></summary>
+          <div class="log-body">
+            <h4>Prompt</h4><pre>A clean vertical infographic illustrating the direct farm-to-table system of 한우마마 premium Korean beef. The composition shows three connected stages in a flowing vertical layout: at the top, a sophisticated illustration of a traditional Korean cattle farm with modern facilities under soft natural lighting; in the middle, a certified HACCP meat processing facility with clean industrial aesthetics; at the bottom, elegant gift packaging with traditional Korean bojagi wrapping. Each stage is connected by flowing lines or subtle arrows indicating the seamless process. Korean text overlays include main title "생산부터 판매까지 직접 관리하는 직영 시스템" in bold clean sans-serif font, and three section labels: "3대째 이어온 직영 농가" (top), "HACCP 인증 육가공장" (middle), "신선한 배송까지 책임" (bottom). Small certification badges and trust icons (HACCP logo, traceability system icon) positioned near relevant sections. Background features subtle traditional Korean pattern texture in very light opacity. Color palette dominated by deep purple #5B2C6F for headers, burgundy red #B21B2B for accent elements, gold #D4AF37 for certification badges, with clean white #F8F8F8 background and dark gray #2C2C2C for body text. The overall design conveys trust, transparency, and premium quality through minimalist infographic style with refined traditional Korean touches. STYLE RULES (mandatory): Colors — #5B2C6F, #B21B2B, #2C2C2C, #F8F8F8, accent #D4AF37. clean-premium: 깔끔하고 대중적인 폰트를 사용하며, 화려함보다는 깔끔한 구성을 선호. 고풍스러움과 고급스러움을 동시에 표현하되 과하지 않은 절제된 프리미엄 이미지 지향 aesthetic. STATIC IMAGE — NO buttons, NO UI. Mobile vertical 9:16. Match design sheet reference.</pre>
+            <h4>References (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9176d9/9UgDmvCCFc9WmAEV3KLeN_LWchTIwH.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a9176d9/KW4J3fbgGuu5s0a8pM9Gv_aEFembYm.png" alt="ref-1" /></div>
+            <h4>Result</h4><img src="https://v3b.fal.media/files/b/0a9176e1/O5eGJ5MICXggBnoW33ONW_zgE6aHD0.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary><b>06</b><span>세트 구성 전체 안내</span>
+          <em class="success">✓ 62.0s · ref:2 · hero</em></summary>
+          <div class="log-body">
+            <h4>Prompt</h4><pre>A premium Korean beef gift set product lineup comparison infographic in vertical 9:16 format. Top section: elegant title "세트 구성 안내" in clean sans-serif typography with subtle gold accent line. Center: three vacuum-packed Korean beef products (from design sheet) arranged horizontally showing marbled beef slices in transparent trays with purple brand labels, use ONLY the product objects, ignore backgrounds. Below products: comprehensive comparison table with three columns labeled "A세트", "B세트", "C세트" showing three weight options per set - "1kg (4~5인)", "1.3kg (6~7인)", "1.6kg (8~9인)". Each cell lists specific cuts in Korean: A세트 includes "채끝살+등심+새우살", B세트 shows "등심+안심+부채살", C세트 displays "업진살+치마살+살치살" with exact gram amounts (400g/500g/600g variations). Price row at bottom showing "175,000원", "220,000원", "265,000원" in gold accent color. Background: soft gradient from warm cream (#F8F8F8) to subtle traditional Korean pattern texture, maintaining clean minimalist composition. Table borders in deep purple (#5B2C6F) with alternating row shading for readability. Small decorative Korean traditional motif elements in corners using burgundy (#B21B2B) and gold (#D4AF37) accents. Professional food photography lighting highlighting the premium beef marbling. Clean layout with generous white space, organized grid structure for easy comparison. STYLE RULES (mandatory): Colors — #5B2C6F, #B21B2B, #2C2C2C, #F8F8F8, accent #D4AF37. clean-premium: 깔끔하고 대중적인 폰트를 사용하며, 화려함보다는 깔끔한 구성을 선호. 고풍스러움과 고급스러움을 동시에 표현하되 과하지 않은 절제된 프리미엄 이미지 지향 aesthetic. STATIC IMAGE — NO buttons, NO UI. Mobile vertical 9:16. Match design sheet reference.</pre>
+            <h4>References (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9176d9/9UgDmvCCFc9WmAEV3KLeN_LWchTIwH.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a9176cb/YGcN7IvJwZ0_RMmL2fov1_n9ZBKg7DTKb5WA4b.%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%20%3F%3F%3F%3F%20%3F%3F%3F%3F%3F%3F%3F%3F%3F%20%3F%3F%3F%3F%3Fx.jpg" alt="ref-1" /></div>
+            <h4>Result</h4><img src="https://v3b.fal.media/files/b/0a9176e1/ZNcU1ngHWSlt2xM4di5L8_Eel5cwTN.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary><b>07</b><span>한우 마블링 디테일</span>
+          <em class="success">✓ 43.1s · ref:2 · withProd</em></summary>
+          <div class="log-body">
+            <h4>Prompt</h4><pre>A premium close-up product photograph of Korean Hanwoo beef showcasing exquisite marbling detail in vertical 3:4 composition. The main subject is a beautifully marbled cut of premium grade 1++ Hanwoo beef, positioned elegantly on a dark slate or traditional Korean ceramic surface. The beef slice shows rich, intricate white fat marbling patterns distributed throughout the deep red meat, creating a luxurious visual texture. Soft directional lighting from the top-left highlights the glistening surface and emphasizes the three-dimensional quality of the marbling. The background features a subtle, sophisticated gradient from deep purple (#5B2C6F) to charcoal (#2C2C2C), creating depth while maintaining a clean, premium aesthetic. Delicate traditional Korean pattern elements are subtly integrated in the background, barely visible, adding heritage without overwhelming. A small elegant text overlay in the upper portion reads "1++등급 한우" in clean, modern Korean sans-serif font. Near the bottom, refined Korean text states "최상급 마블링이 만드는 프리미엄 육질" in a sophisticated, legible typeface. Small accent details in gold (#D4AF37) frame the composition subtly. The overall mood is restrained luxury—clean, uncluttered, and focused entirely on the product's natural beauty. Professional food photography style with shallow depth of field, making the beef the hero while maintaining an upscale, traditional-modern Korean aesthetic. STYLE RULES (mandatory): Colors — #5B2C6F, #B21B2B, #2C2C2C, #F8F8F8, accent #D4AF37. clean-premium: 깔끔하고 대중적인 폰트를 사용하며, 화려함보다는 깔끔한 구성을 선호. 고풍스러움과 고급스러움을 동시에 표현하되 과하지 않은 절제된 프리미엄 이미지 지향 aesthetic. STATIC IMAGE — NO buttons, NO UI. Mobile vertical 3:4. Match design sheet reference.</pre>
+            <h4>References (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9176d9/KW4J3fbgGuu5s0a8pM9Gv_aEFembYm.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a9176cb/YGcN7IvJwZ0_RMmL2fov1_n9ZBKg7DTKb5WA4b.%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%20%3F%3F%3F%3F%20%3F%3F%3F%3F%3F%3F%3F%3F%3F%20%3F%3F%3F%3F%3Fx.jpg" alt="ref-1" /></div>
+            <h4>Result</h4><img src="https://v3b.fal.media/files/b/0a9176e0/4f3_O1n_tdpMLjBWO2jlt_FpuLhtzY.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary><b>08</b><span>포장 옵션 비교</span>
+          <em class="success">✓ 32.6s · ref:2 · hero</em></summary>
+          <div class="log-body">
+            <h4>Prompt</h4><pre>A premium vertical infographic comparing two packaging options for Korean Hanwoo beef gift sets, split-screen composition showing basic packaging on left versus premium packaging on right. Left side: vacuum-sealed beef slices in clear tray with purple brand label, simple white gift box. Right side: same beef product elegantly wrapped in traditional Korean bojagi fabric with classic patterns in deep purple (#5B2C6F) and gold (#D4AF37) accents, placed in luxurious gift bag with silk ribbon. Product object from reference — use ONLY the product, ignore background. Center vertical divider line in elegant gold (#D4AF37). Top section: Korean text header "포장 옵션 비교" in clean modern sans-serif font. Under each packaging option, bullet points in Korean describing features: Left "기본 포장" - simple protective packaging, suitable for personal use, clean presentation. Right "프리미엄 포장" - traditional bojagi wrapping, gift-ready presentation, luxurious feel, perfect for special occasions. Bottom section highlights premium upgrade benefit with Korean text "선물의 품격을 높이는 선택" in refined typography. Sophisticated photography style with soft directional lighting emphasizing texture of fabric and beef marbling. Clean white background (#F8F8F8) with subtle shadows. Professional product photography aesthetic with premium commercial quality. All text labels, descriptions, and comparison points in Korean language only. Brand name 한우마마 visible on product label. STYLE RULES (mandatory): Colors — #5B2C6F, #B21B2B, #2C2C2C, #F8F8F8, accent #D4AF37. clean-premium: 깔끔하고 대중적인 폰트를 사용하며, 화려함보다는 깔끔한 구성을 선호. 고풍스러움과 고급스러움을 동시에 표현하되 과하지 않은 절제된 프리미엄 이미지 지향 aesthetic. STATIC IMAGE — NO buttons, NO UI. Mobile vertical 9:16. Match design sheet reference.</pre>
+            <h4>References (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a9176d9/9UgDmvCCFc9WmAEV3KLeN_LWchTIwH.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a9176cb/YGcN7IvJwZ0_RMmL2fov1_n9ZBKg7DTKb5WA4b.%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%3F%20%3F%3F%3F%3F%20%3F%3F%3F%3F%3F%3F%3F%3F%3F%20%3F%3F%3F%3F%3Fx.jpg" alt="ref-1" /></div>
+            <h4>Result</h4><img src="https://v3b.fal.media/files/b/0a9176e0/pirz0VqHE0plA5DoXqTn1_bcT7xrRN.png" class="result-img" />
+          </div>
+        </details></div>
+<div class="footer">8/8 · v8 Full Agent · GPT 1.5 + NB2 1K</div>
+<script>
+function setView(m){var p=document.querySelector('.page');document.querySelectorAll('#viewToggle .vt-btn').forEach(function(b){b.classList.toggle('active',b.dataset.mode===m)});p.classList.toggle('view-500',m==='500');localStorage.setItem('detailViewMode',m)}
+function toggleInfo(m){var i=document.querySelectorAll('.sec-info');var t=document.getElementById('infoToggle');if(t){t.querySelectorAll('.vt-btn').forEach(function(b){b.classList.toggle('active',b.dataset.mode===m)})}i.forEach(function(e){e.classList.toggle('hidden',m==='hide')});localStorage.setItem('detailInfoMode',m)}
+(function(){setView(localStorage.getItem('detailViewMode')||'500');toggleInfo(localStorage.getItem('detailInfoMode')||'hide')})();
+</script></body></html>
