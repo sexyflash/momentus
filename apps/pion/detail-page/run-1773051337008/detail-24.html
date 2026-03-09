@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MEDIHEAL — 24P Detail Page (v7 Full Agent)</title>
+<style>
+:root{--p:#8B7FC7;--s:#5B4D8C;--d:#2D2640;--l:#F5F2FA;--a:#E8DFF5;--g:#999;--b:#E8E0F0;--bg:#F8F7FA}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(--bg);color:#1a1a2e;-webkit-font-smoothing:antialiased}
+
+.header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--b)}
+.header-inner{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.header h1{font-size:14px;font-weight:700;color:var(--d);white-space:nowrap}
+.header .meta{font-size:11px;color:var(--g)}
+.nav{display:flex;gap:4px}
+.nav a{padding:6px 16px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;color:var(--p);border:1px solid var(--b);transition:all .15s}
+.nav a:hover{background:var(--l)}
+.nav a.active{background:var(--p);color:#fff;border-color:var(--p)}
+
+.view-toggle{display:flex;background:var(--l);border-radius:8px;padding:2px;gap:2px}
+.vt-btn{padding:4px 12px;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--g);transition:all .15s}
+.vt-btn.active{background:#fff;color:var(--p);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.vt-btn:hover:not(.active){color:var(--d)}
+
+.overview{background:#fff;border-bottom:1px solid var(--b);padding:16px 20px;overflow-x:auto}
+.overview h2{font-size:11px;font-weight:600;color:var(--g);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.thumbs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scroll-snap-type:x mandatory}
+.thumb{flex:0 0 auto;width:80px;border-radius:6px;overflow:hidden;border:2px solid transparent;transition:all .15s;text-decoration:none;scroll-snap-align:start;position:relative}
+.thumb:hover{border-color:var(--s)}
+.thumb img{width:100%;display:block}
+.thumb span{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);color:#fff;font-size:9px;text-align:center;padding:2px;font-weight:600}
+
+.director-section{background:#fff;border-bottom:1px solid var(--b);padding:20px}
+.director-section h2{font-size:12px;font-weight:600;color:var(--d);margin-bottom:12px}
+.user-input-card{padding:16px;border:2px solid var(--p);border-radius:10px;margin-bottom:12px;background:linear-gradient(135deg,var(--l),#fff)}
+.user-input-card h3{font-size:11px;color:var(--p);margin-bottom:6px;font-weight:600}
+.user-prompt{font-size:16px;font-weight:700;color:var(--d);margin-bottom:4px}
+.user-image{font-size:11px;color:var(--g)}
+.director-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.director-grid{grid-template-columns:1fr}}
+.director-card{padding:12px;border:1px solid var(--b);border-radius:8px;font-size:11px;line-height:1.6}
+.director-card h3{font-size:11px;font-weight:600;color:var(--p);margin-bottom:4px}
+.director-card b{color:var(--d)}
+.color-swatches{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.swatch{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g)}
+.swatch span{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.1)}
+.asset-row{display:flex;gap:8px;margin-top:6px}
+.asset-row>div{flex:1}
+.asset-row img{width:100%;border-radius:4px;border:1px solid var(--b)}
+.asset-row span{display:block;font-size:9px;color:var(--g);margin-top:3px;text-align:center}
+
+.page{background:#fff;border-bottom:1px solid var(--b)}
+.page.view-500{max-width:500px;margin-left:auto;margin-right:auto;box-shadow:0 0 0 1px var(--b),0 8px 32px rgba(0,0,0,.08)}
+.sec{position:relative;border-bottom:1px solid #f0ecf5}
+.sec:last-child{border-bottom:none}
+.sec img{width:100%;display:block}
+.sec-info{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--l);font-size:10px;transition:all .2s}
+.sec-info.hidden{display:none}
+.sec-num{font-weight:700;color:var(--p)}
+.sec-name{flex:1;font-weight:500;color:var(--d)}
+.sec-badge{font-size:9px;padding:2px 6px;border-radius:4px;font-weight:600}
+.sec-badge.hero{background:#FFE0E6;color:#FF4757}
+.sec-badge.withProd,.sec-badge.withProdLifestyle{background:#E0F0FF;color:#3B82F6}
+.sec-badge.withLifestyle{background:#E8FFE0;color:#22C55E}
+.sec-badge.infoOnly{background:#F0ECF5;color:var(--p)}
+.sec-badge.withTT{background:#FFF3E0;color:#F59E0B}
+.sec-time{color:var(--g)}
+
+.log-section{background:#fff;padding:20px;margin-top:1px}
+.log-section h2{font-size:12px;font-weight:600;color:var(--d);margin-bottom:10px}
+.log-entry{border:1px solid var(--b);border-radius:6px;margin-bottom:4px;overflow:hidden}
+.log-entry summary{padding:8px 10px;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:11px;background:var(--l);user-select:none}
+.log-entry summary:hover{background:#ede4ff}
+.log-entry summary b{color:var(--p);min-width:18px}
+.log-entry summary span{flex:1;font-weight:500}
+.log-entry summary em{font-style:normal;font-size:10px;color:var(--g)}
+.log-entry summary em.success{color:#22c55e}
+.log-entry summary em.failed{color:var(--a)}
+.log-body{padding:12px;border-top:1px solid var(--b)}
+.log-body h4{font-size:10px;font-weight:600;color:var(--p);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.5px}
+.log-body h4:first-child{margin-top:0}
+.log-body pre{font-size:10px;line-height:1.5;background:#f8f6fc;padding:10px;border-radius:4px;white-space:pre-wrap;word-break:break-word;color:#555;max-height:200px;overflow-y:auto;font-family:'SF Mono',Menlo,monospace;margin-bottom:8px}
+.ref-imgs{display:flex;gap:6px;margin-bottom:8px}
+.ref-imgs img{width:80px;height:80px;object-fit:cover;border-radius:4px;border:1px solid var(--b)}
+.result-img{width:100%;max-height:300px;object-fit:contain;border-radius:4px;border:1px solid var(--b)}
+
+.footer{text-align:center;padding:20px;font-size:10px;color:var(--g);background:#fff;margin-top:1px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <h1>MEDIHEAL PDRN 모공 탄력 세럼</h1>
+      <div class="meta">24P · v7 Full Agent · run-1773051337008 · 2026. 3. 9.</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="view-toggle" id="viewToggle">
+        <button class="vt-btn active" data-mode="500" onclick="setView('500')">500px</button>
+        <button class="vt-btn" data-mode="full" onclick="setView('full')">원본</button>
+      </div>
+      <div class="view-toggle">
+        <button class="vt-btn active" data-mode="show" onclick="toggleInfo('show')">정보</button>
+        <button class="vt-btn" data-mode="hide" onclick="toggleInfo('hide')">숨김</button>
+      </div>
+      <div class="nav"><a href="detail-8.html" class="">8P</a><a href="detail-12.html" class="">12P</a><a href="detail-24.html" class="active">24P</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="overview">
+  <h2>Section Overview (25/25)</h2>
+  <div class="thumbs">
+        <a href="#sec-1" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763e/hzZGn98DusWCnV2Q_MuHi_7jD5JOaQ.png" alt="히어로 오프닝" loading="lazy" />
+          <span>01</span>
+        </a>
+        <a href="#sec-2" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763d/m_hAIpy3byjMCjZM6tpI2_irBtzszu.png" alt="올영픽 인증 배지" loading="lazy" />
+          <span>02</span>
+        </a>
+        <a href="#sec-3" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763e/uBy2q74KGGor5BU-jXqWG_dM8t6zGR.png" alt="1+1 프로모션 강조" loading="lazy" />
+          <span>03</span>
+        </a>
+        <a href="#sec-4" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763e/GOtL6Jseb6BCgb2XthA8__0MTtWhI4.png" alt="3대 효과 한눈에" loading="lazy" />
+          <span>04</span>
+        </a>
+        <a href="#sec-5" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763d/GKGAe82UMC0W8Up6KeDoa_gMWJXNyC.png" alt="PDRN 성분 과학" loading="lazy" />
+          <span>05</span>
+        </a>
+        <a href="#sec-6" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763e/RjSy4l5FynLy1Tcd3SvYz_0sCzYmKJ.png" alt="로즈+스쿠알란 시너지" loading="lazy" />
+          <span>06</span>
+        </a>
+        <a href="#sec-7" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763d/XlUdrrpinIfU79l7cXrx0_RjreGsVI.png" alt="텍스처 밀착 단계" loading="lazy" />
+          <span>07</span>
+        </a>
+        <a href="#sec-8" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763d/92s7lHEP9uGJt8BtLQ-1D_P1kbiRSH.png" alt="리프팅 임상 데이터" loading="lazy" />
+          <span>08</span>
+        </a>
+        <a href="#sec-9" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763e/cYfkgnUmAHlHUh2dsrgm-_jfHTJH4r.png" alt="모공 축소 비포애프터" loading="lazy" />
+          <span>09</span>
+        </a>
+        <a href="#sec-10" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763d/TSN7Li6pCVAvolLnF9P0t_E6hqXwWc.png" alt="글래스스킨 광채 연출" loading="lazy" />
+          <span>10</span>
+        </a>
+        <a href="#sec-11" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763d/FIDknxtiSvW8LUETSerG1_yUfM8k4C.png" alt="저녁 루틴 시퀀스" loading="lazy" />
+          <span>11</span>
+        </a>
+        <a href="#sec-12" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763d/ED81ogDM4rCRE2EDTIHMd_hxoT2zJx.png" alt="드로퍼 정밀 디테일" loading="lazy" />
+          <span>12</span>
+        </a>
+        <a href="#sec-13" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763e/QWtXmNsLdJjORdd5iQeiU_uX62hdiz.png" alt="연령대별 고민 매칭" loading="lazy" />
+          <span>13</span>
+        </a>
+        <a href="#sec-14" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763e/pSx6KhbTn02KZqdUEFPg9_xGySaPpz.png" alt="흡수 속도 테스트" loading="lazy" />
+          <span>14</span>
+        </a>
+        <a href="#sec-15" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763e/7X5jjlxwaR8SKaDK7gr08_Kf4NYFLr.png" alt="모닝 글로우 모델샷" loading="lazy" />
+          <span>15</span>
+        </a>
+        <a href="#sec-16" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763e/sfLNl_YMooiGEMuF9E8lF_pNEC8rTR.png" alt="성분 농도 비교표" loading="lazy" />
+          <span>16</span>
+        </a>
+        <a href="#sec-17" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763d/D1bGI-NCwiwVpVgHNTMvT_cANOeVwd.png" alt="패키징 디자인 디테일" loading="lazy" />
+          <span>17</span>
+        </a>
+        <a href="#sec-18" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763d/EUifTni4EosdG5tgsDGHk_TwWM5GaN.png" alt="유저 리뷰 하이라이트" loading="lazy" />
+          <span>18</span>
+        </a>
+        <a href="#sec-19" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763e/f2B3gLhpSTqwtWeT3RpIb_Xnt0BoMy.png" alt="피부과 전문의 코멘트" loading="lazy" />
+          <span>19</span>
+        </a>
+        <a href="#sec-20" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763e/uFDIEXN_oZRNaYk_lA6FH_uQWDcDIL.png" alt="메이크업 베이스 호환성" loading="lazy" />
+          <span>20</span>
+        </a>
+        <a href="#sec-21" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763d/Hd_YAL7110p38X_Xn3MtS_xt9fIUVn.png" alt="사용법 가이드" loading="lazy" />
+          <span>21</span>
+        </a>
+        <a href="#sec-22" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763e/XJVX4AReo3W5rYolxxgnh_DeoTSKKL.png" alt="가성비 계산기" loading="lazy" />
+          <span>22</span>
+        </a>
+        <a href="#sec-23" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763d/EyCHZEenvnJz0KhowV8cx_A5ErLgAl.png" alt="루틴 레이어링 제안" loading="lazy" />
+          <span>23</span>
+        </a>
+        <a href="#sec-24" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763e/X-MVfnrQoJNvLgxag4V3z_hOZfUBWz.png" alt="자주 묻는 질문" loading="lazy" />
+          <span>24</span>
+        </a>
+        <a href="#sec-25" class="thumb">
+          <img src="https://v3b.fal.media/files/b/0a91763e/fctJgNUrx8vOSLK7IRfTg_qIIaMoJG.png" alt="클로징 CTA" loading="lazy" />
+          <span>25</span>
+        </a></div>
+</div>
+
+
+    <div class="director-section">
+      <h2>🔍 Agent Pipeline Analysis</h2>
+
+      <div class="user-input-card">
+        <h3>사용자 입력 (이것만 넣었음)</h3>
+        <p class="user-prompt">"[3월 올영픽/1+1] 메디힐 PDRN 모공 탄력 세럼 40+40ml 단독 기획"</p>
+        <p class="user-image">📷 product-image.jpg</p>
+      </div>
+
+      <div class="director-grid">
+        <div class="director-card">
+          <h3>Agent 0: 제품 분석</h3>
+          <p><b>MEDIHEAL PDRN 모공 탄력 세럼</b></p>
+          <p>카테고리: 스킨케어/세럼</p>
+          <p>핵심: PDRN 18,902ppm + 스쿠알란 10,000ppm 고농축 리프팅 세럼</p>
+          <p>톤: clinical-luxe</p>
+          <p>전략: 성분 농도(PDRN 18,902ppm)를 전면에 내세운 과학적 신뢰도 구축 → 리프팅/모공/광채 3대 효과를 임상 데이터와 비포애프터로 입증 → 텍스처 밀착감과 스쿠알란 보습막 형성 과정을 단계별 비주얼로 표현 → 1+1 프로모션 가치 강조로 구매 전환 유도</p>
+          <p>외형: 보라색 그라데이션 글래스 드로퍼 세럼병, 블랙 고무 드로퍼 캡, 투명 라벨에 PDRN 로고와 18902 숫자 강조, 세련된 메디컬 뷰티 패키징</p>
+        </div>
+        <div class="director-card">
+          <h3>Agent 1: 디렉터</h3>
+          <p><b>고농축 리프팅 세럼 (PDRN 함유 안티에이징 기능성)</b></p>
+          <p>타겟: 모공·탄력·피부결 고민이 시작된 20-40대 여성, 고농축 성분과 임상 데이터 기반의 기능성 스킨케어를 선호하며 올리브영 프로모션에 민감한 가성비 추구 소비자</p>
+          <p>톤: clinical-luxe: 메디컬 신뢰도와 럭셔리 뷰티의 균형. 보라빛 그라데이션과 화이트 배경으로 청결하고 과학적인 분위기를 유지하되, 드로퍼 글로우 연출과 세럼 텍스처 클로즈업으로 프리미엄 감성 부각</p>
+          <p style="margin-top:4px"><b>셀링 포인트:</b></p>
+          <p>• PDRN 18,902ppm + 로즈 8,902ppm 초고농축 함유로 피부 재생 집중 케어</p><p>• 스쿠알란 10,000ppm으로 밀착 흡수되는 텍스처와 보습막 형성</p><p>• 모공 축소 + 탄력 개선 + 광채 부여 트리플 기능 임상 입증</p><p>• 1+1 단독 기획 80ml 대용량으로 압도적 가성비</p><p>• 올리브영 3월 올영픽 선정으로 검증된 신뢰도</p>
+        </div>
+        <div class="director-card">
+          <h3>색상 팔레트 (이미지에서 추출)</h3>
+          <div class="color-swatches">
+            <div class="swatch"><span style="background:#8B7FC7"></span>primary: #8B7FC7</div><div class="swatch"><span style="background:#5B4D8C"></span>secondary: #5B4D8C</div><div class="swatch"><span style="background:#E8DFF5"></span>accent: #E8DFF5</div><div class="swatch"><span style="background:#2D2640"></span>dark: #2D2640</div><div class="swatch"><span style="background:#F5F2FA"></span>light: #F5F2FA</div>
+          </div>
+        </div>
+        <div class="director-card">
+          <h3>에셋 (Agent 2a/2b가 프롬프트 생성)</h3>
+          <div class="asset-row">
+            <div><img src="https://v3b.fal.media/files/b/0a917635/CLSNDuBfJPIRZJV0nmDuR_f25LHkkp.png" /><span>Title Treatment (43.0s)</span></div>
+            <div><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" /><span>Design Sheet (61.0s)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="page">
+      <div class="sec" id="sec-1">
+        <img src="https://v3b.fal.media/files/b/0a91763e/hzZGn98DusWCnV2Q_MuHi_7jD5JOaQ.png" alt="히어로 오프닝" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">01</span>
+          <span class="sec-name">히어로 오프닝</span>
+          <span class="sec-badge hero">hero</span>
+          <span class="sec-time">42.9s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-2">
+        <img src="https://v3b.fal.media/files/b/0a91763d/m_hAIpy3byjMCjZM6tpI2_irBtzszu.png" alt="올영픽 인증 배지" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">02</span>
+          <span class="sec-name">올영픽 인증 배지</span>
+          <span class="sec-badge infoOnly">infoOnly</span>
+          <span class="sec-time">34.3s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-3">
+        <img src="https://v3b.fal.media/files/b/0a91763e/uBy2q74KGGor5BU-jXqWG_dM8t6zGR.png" alt="1+1 프로모션 강조" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">03</span>
+          <span class="sec-name">1+1 프로모션 강조</span>
+          <span class="sec-badge hero">hero</span>
+          <span class="sec-time">46.5s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-4">
+        <img src="https://v3b.fal.media/files/b/0a91763e/GOtL6Jseb6BCgb2XthA8__0MTtWhI4.png" alt="3대 효과 한눈에" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">04</span>
+          <span class="sec-name">3대 효과 한눈에</span>
+          <span class="sec-badge withTT">withTT</span>
+          <span class="sec-time">31.3s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-5">
+        <img src="https://v3b.fal.media/files/b/0a91763d/GKGAe82UMC0W8Up6KeDoa_gMWJXNyC.png" alt="PDRN 성분 과학" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">05</span>
+          <span class="sec-name">PDRN 성분 과학</span>
+          <span class="sec-badge withTT">withTT</span>
+          <span class="sec-time">43.7s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-6">
+        <img src="https://v3b.fal.media/files/b/0a91763e/RjSy4l5FynLy1Tcd3SvYz_0sCzYmKJ.png" alt="로즈+스쿠알란 시너지" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">06</span>
+          <span class="sec-name">로즈+스쿠알란 시너지</span>
+          <span class="sec-badge infoOnly">infoOnly</span>
+          <span class="sec-time">33.4s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-7">
+        <img src="https://v3b.fal.media/files/b/0a91763d/XlUdrrpinIfU79l7cXrx0_RjreGsVI.png" alt="텍스처 밀착 단계" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">07</span>
+          <span class="sec-name">텍스처 밀착 단계</span>
+          <span class="sec-badge withProd">withProd</span>
+          <span class="sec-time">35.5s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-8">
+        <img src="https://v3b.fal.media/files/b/0a91763d/92s7lHEP9uGJt8BtLQ-1D_P1kbiRSH.png" alt="리프팅 임상 데이터" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">08</span>
+          <span class="sec-name">리프팅 임상 데이터</span>
+          <span class="sec-badge withTT">withTT</span>
+          <span class="sec-time">33.1s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-9">
+        <img src="https://v3b.fal.media/files/b/0a91763e/cYfkgnUmAHlHUh2dsrgm-_jfHTJH4r.png" alt="모공 축소 비포애프터" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">09</span>
+          <span class="sec-name">모공 축소 비포애프터</span>
+          <span class="sec-badge withTT">withTT</span>
+          <span class="sec-time">20.1s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-10">
+        <img src="https://v3b.fal.media/files/b/0a91763d/TSN7Li6pCVAvolLnF9P0t_E6hqXwWc.png" alt="글래스스킨 광채 연출" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">10</span>
+          <span class="sec-name">글래스스킨 광채 연출</span>
+          <span class="sec-badge withLifestyle">withLifestyle</span>
+          <span class="sec-time">27.0s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-11">
+        <img src="https://v3b.fal.media/files/b/0a91763d/FIDknxtiSvW8LUETSerG1_yUfM8k4C.png" alt="저녁 루틴 시퀀스" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">11</span>
+          <span class="sec-name">저녁 루틴 시퀀스</span>
+          <span class="sec-badge withProdLifestyle">withProdLifestyle</span>
+          <span class="sec-time">36.2s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-12">
+        <img src="https://v3b.fal.media/files/b/0a91763d/ED81ogDM4rCRE2EDTIHMd_hxoT2zJx.png" alt="드로퍼 정밀 디테일" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">12</span>
+          <span class="sec-name">드로퍼 정밀 디테일</span>
+          <span class="sec-badge withProd">withProd</span>
+          <span class="sec-time">22.0s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-13">
+        <img src="https://v3b.fal.media/files/b/0a91763e/QWtXmNsLdJjORdd5iQeiU_uX62hdiz.png" alt="연령대별 고민 매칭" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">13</span>
+          <span class="sec-name">연령대별 고민 매칭</span>
+          <span class="sec-badge infoOnly">infoOnly</span>
+          <span class="sec-time">21.0s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-14">
+        <img src="https://v3b.fal.media/files/b/0a91763e/pSx6KhbTn02KZqdUEFPg9_xGySaPpz.png" alt="흡수 속도 테스트" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">14</span>
+          <span class="sec-name">흡수 속도 테스트</span>
+          <span class="sec-badge infoOnly">infoOnly</span>
+          <span class="sec-time">28.3s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-15">
+        <img src="https://v3b.fal.media/files/b/0a91763e/7X5jjlxwaR8SKaDK7gr08_Kf4NYFLr.png" alt="모닝 글로우 모델샷" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">15</span>
+          <span class="sec-name">모닝 글로우 모델샷</span>
+          <span class="sec-badge withLifestyle">withLifestyle</span>
+          <span class="sec-time">32.0s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-16">
+        <img src="https://v3b.fal.media/files/b/0a91763e/sfLNl_YMooiGEMuF9E8lF_pNEC8rTR.png" alt="성분 농도 비교표" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">16</span>
+          <span class="sec-name">성분 농도 비교표</span>
+          <span class="sec-badge infoOnly">infoOnly</span>
+          <span class="sec-time">64.0s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-17">
+        <img src="https://v3b.fal.media/files/b/0a91763d/D1bGI-NCwiwVpVgHNTMvT_cANOeVwd.png" alt="패키징 디자인 디테일" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">17</span>
+          <span class="sec-name">패키징 디자인 디테일</span>
+          <span class="sec-badge withProd">withProd</span>
+          <span class="sec-time">45.3s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-18">
+        <img src="https://v3b.fal.media/files/b/0a91763d/EUifTni4EosdG5tgsDGHk_TwWM5GaN.png" alt="유저 리뷰 하이라이트" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">18</span>
+          <span class="sec-name">유저 리뷰 하이라이트</span>
+          <span class="sec-badge infoOnly">infoOnly</span>
+          <span class="sec-time">30.4s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-19">
+        <img src="https://v3b.fal.media/files/b/0a91763e/f2B3gLhpSTqwtWeT3RpIb_Xnt0BoMy.png" alt="피부과 전문의 코멘트" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">19</span>
+          <span class="sec-name">피부과 전문의 코멘트</span>
+          <span class="sec-badge infoOnly">infoOnly</span>
+          <span class="sec-time">19.4s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-20">
+        <img src="https://v3b.fal.media/files/b/0a91763e/uFDIEXN_oZRNaYk_lA6FH_uQWDcDIL.png" alt="메이크업 베이스 호환성" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">20</span>
+          <span class="sec-name">메이크업 베이스 호환성</span>
+          <span class="sec-badge withLifestyle">withLifestyle</span>
+          <span class="sec-time">26.4s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-21">
+        <img src="https://v3b.fal.media/files/b/0a91763d/Hd_YAL7110p38X_Xn3MtS_xt9fIUVn.png" alt="사용법 가이드" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">21</span>
+          <span class="sec-name">사용법 가이드</span>
+          <span class="sec-badge withProd">withProd</span>
+          <span class="sec-time">17.1s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-22">
+        <img src="https://v3b.fal.media/files/b/0a91763e/XJVX4AReo3W5rYolxxgnh_DeoTSKKL.png" alt="가성비 계산기" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">22</span>
+          <span class="sec-name">가성비 계산기</span>
+          <span class="sec-badge infoOnly">infoOnly</span>
+          <span class="sec-time">20.4s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-23">
+        <img src="https://v3b.fal.media/files/b/0a91763d/EyCHZEenvnJz0KhowV8cx_A5ErLgAl.png" alt="루틴 레이어링 제안" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">23</span>
+          <span class="sec-name">루틴 레이어링 제안</span>
+          <span class="sec-badge withProd">withProd</span>
+          <span class="sec-time">29.4s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-24">
+        <img src="https://v3b.fal.media/files/b/0a91763e/X-MVfnrQoJNvLgxag4V3z_hOZfUBWz.png" alt="자주 묻는 질문" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">24</span>
+          <span class="sec-name">자주 묻는 질문</span>
+          <span class="sec-badge infoOnly">infoOnly</span>
+          <span class="sec-time">34.1s</span>
+        </div>
+      </div>
+      <div class="sec" id="sec-25">
+        <img src="https://v3b.fal.media/files/b/0a91763e/fctJgNUrx8vOSLK7IRfTg_qIIaMoJG.png" alt="클로징 CTA" loading="lazy" />
+        <div class="sec-info">
+          <span class="sec-num">25</span>
+          <span class="sec-name">클로징 CTA</span>
+          <span class="sec-badge hero">hero</span>
+          <span class="sec-time">32.7s</span>
+        </div>
+      </div></div>
+
+<div class="log-section">
+  <h2>Prompt Log — All Agent-Generated (25 sections)</h2>
+  
+        <details class="log-entry">
+          <summary>
+            <b>01</b>
+            <span>히어로 오프닝</span>
+            <em class="success">✓ 42.9s · ref:2 · hero</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>Premium Korean e-commerce HERO BANNER.
+
+TWO REFERENCE IMAGES:
+1st reference = TITLE TREATMENT (transparent PNG with pre-designed typography). This is finished text artwork. Place it prominently on the LEFT 55% of the image. Preserve its EXACT fonts, colors, sizes, and layout — treat it as a finished graphic overlay.
+2nd reference = PRODUCT PHOTO. Extract ONLY the product object — ignore any background in this reference. Place the product on the RIGHT 40%, vertically centered.
+
+BACKGROUND: Complementary gradient that harmonizes with the title treatment's color scheme. Subtle decorative elements at 5-10% opacity.
+
+TEXT CORRECTION (fix broken Korean characters in the title treatment): The correct text should read: MEDIHEAL, PDRN 모공 탄력 세럼, 피부를 당기듯 밀착! 래디언트 글래스 스킨, PDRN 18,902ppm, 스쿠알란 10,000ppm, 40+40ml 단독 기획. Fix any garbled or broken Korean characters to match these correct spellings. Keep the original font style and colors from the title treatment — only fix the text accuracy.
+
+Mobile vertical 3:4. STATIC IMAGE — no buttons, no interactive UI.
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI. Mobile vertical 3:4.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/CLSNDuBfJPIRZJV0nmDuR_f25LHkkp.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a91762f/LXPKF4gphMGQ2Ja8SDwMk_product-image.jpg" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763e/hzZGn98DusWCnV2Q_MuHi_7jD5JOaQ.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>02</b>
+            <span>올영픽 인증 배지</span>
+            <em class="success">✓ 34.3s · ref:1 · infoOnly</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>A clean editorial badge section for Korean e-commerce detail page, vertical 3:4 mobile layout. Top center of the composition features a prominent circular badge with soft violet gradient background (#8B7FC7 to #5B4D8C), approximately one-fifth of the image height. Inside the badge, white Korean text "3월 올영픽" (March Olive Young Pick) is displayed in bold sans-serif typography, with a small crown icon above the text rendered in accent color (#E8DFF5). The badge has a subtle glow effect radiating outward in light violet (#F5F2FA). Below the main badge, a thin horizontal line in secondary violet (#5B4D8C) extends across, with small decorative sparkle icons on both ends. Underneath, centered Korean text reads "올리브영이 선택한 이달의 트렌드 세럼" (Olive Young's Selected Serum of the Month) in medium-weight font, color #2D2640. The background is a soft gradient from pure white at top to pale lavender (#F5F2FA) at bottom, creating a clinical yet luxurious atmosphere. The entire composition maintains generous white space around elements, emphasizing the premium editorial feel. All badge elements and typography should match the design sheet reference for exact proportions and styling. No product bottles, no buttons, no UI elements, pure editorial badge presentation. STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 3:4. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763d/m_hAIpy3byjMCjZM6tpI2_irBtzszu.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>03</b>
+            <span>1+1 프로모션 강조</span>
+            <em class="success">✓ 46.5s · ref:2 · hero</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>Vertical 3:4 e-commerce product shot for Korean skincare brand MEDIHEAL PDRN serum, showcasing exclusive 1+1 promotional bundle. Clean studio photography with clinical-luxe aesthetic.
+
+LAYOUT &amp; COMPOSITION:
+Center stage: Two identical MEDIHEAL PDRN serum bottles (product object from reference — use ONLY the product, ignore any background) positioned side by side with slight diagonal tilt, creating dynamic symmetry. Bottles feature purple gradient glass with black rubber dropper caps, transparent labels showing "PDRN 18902" prominently. Left bottle slightly forward, right bottle 15% behind for depth. Soft lavender glow (#E8DFF5) radiating between the two bottles, creating premium halo effect.
+
+BACKGROUND:
+Pure white studio backdrop transitioning to soft violet gradient (#F5F2FA to #E8DFF5) in upper third. Subtle circular gradient spotlight behind products in deep violet (#8B7FC7) with 40% opacity, creating medical-grade professional atmosphere.
+
+TOP SECTION:
+Title treatment (from design sheet) positioned at top center, displaying "1+1 단독 기획" in bold Korean typography. Below title, clean sans-serif text "80ml 대용량 구성" in deep purple (#5B4D8C).
+
+CALLOUT ANNOTATIONS:
+Left side callout with thin line pointing to left bottle: "40ml 정품" in medium weight Korean font, deep violet (#8B7FC7) text on white rounded rectangle badge with subtle shadow.
+Right side callout with thin line pointing to right bottle: "+40ml 추가 증정" in same style, accent color (#E8DFF5) background with deep purple text.
+
+BOTTOM SECTION:
+Horizontal bar spanning lower quarter, soft gradient from white to light lavender (#F5F2FA). Contains three key benefit icons (from design sheet if available) aligned horizontally:
+- Left icon: "리프팅 효과" with upward arrow symbol
+- Center icon: "래디언트 광채" with sparkle symbol  
+- Right icon: "글래스스킨" with droplet symbol
+Each icon accompanied by Korean label underneath in #5B4D8C, clean minimal style.
+
+TEXTURE DETAILS:
+Foreground: Three serum droplets with glass-like transparency falling near dropper tips, catching light with purple-pink iridescence. Subtle reflection of bottles on white surface below, enhancing premium quality perception.
+
+LIGHTING:
+Soft directional lighting from top-left creating gentle highlights on glass bottles and dropper caps. No harsh shadows. Clinical clean brightness with luxurious glow accents in violet tones.
+
+TYPOGRAPHY HIERARCHY:
+All Korean text rendered clearly — promotional messaging, volume indicators, and benefit labels in sans-serif font family. No English except brand name "MEDIHEAL" and ingredient "PDRN" with numerical value "18902".
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 3:4. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/CLSNDuBfJPIRZJV0nmDuR_f25LHkkp.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a91762f/LXPKF4gphMGQ2Ja8SDwMk_product-image.jpg" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763e/uBy2q74KGGor5BU-jXqWG_dM8t6zGR.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>04</b>
+            <span>3대 효과 한눈에</span>
+            <em class="success">✓ 31.3s · ref:2 · withTT</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>E-commerce product detail page section: triple-effect overview infographic for MEDIHEAL PDRN Serum. Vertical mobile layout (3:4 ratio), clean white background with subtle violet gradient fade at the top (#F5F2FA to white). 
+
+Top section: Large headline typography (from design sheet) reading "3가지 효과로 완성하는 리프팅 케어" in deep violet (#2D2640), bold weight, centered alignment, positioned in upper third of canvas.
+
+Main content area: Three vertically stacked effect blocks, each with icon-text-description layout, evenly spaced with generous breathing room. Senior graphic designer level pixel-perfect alignment.
+
+BLOCK 1 (top): Circular icon badge (from design sheet) on the left showing upward arrow symbol in violet (#8B7FC7) on light lavender background (#E8DFF5). Right side text: "리프팅" in bold (#2D2640), followed by "탄력 개선 18.7% 임상 입증" in medium weight (#5B4D8C). Thin horizontal divider line below in light violet.
+
+BLOCK 2 (middle): Circular icon badge (from design sheet) on the left showing minimized pore graphic in deep purple (#5B4D8C) on white. Right side text: "모공 케어" in bold (#2D2640), followed by "모공 사이즈 12.3% 축소" in medium weight (#5B4D8C). Thin horizontal divider line below.
+
+BLOCK 3 (bottom): Circular icon badge (from design sheet) on the left showing glass-skin glow effect in gradient violet (#8B7FC7 to #E8DFF5). Right side text: "글래스 스킨" in bold (#2D2640), followed by "광채 &amp; 매끈함 동시 완성" in medium weight (#5B4D8C).
+
+Bottom area: Small badge cluster showing "PDRN 18,902ppm" in rounded rectangle badge with violet border (#8B7FC7), centered below the three blocks.
+
+Bold data visualization, clinical-luxe aesthetic with medical precision and premium beauty feel. No human photos, no product bottle. Typography-driven infographic design with icon accents from reference sheet.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 3:4. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/CLSNDuBfJPIRZJV0nmDuR_f25LHkkp.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763e/GOtL6Jseb6BCgb2XthA8__0MTtWhI4.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>05</b>
+            <span>PDRN 성분 과학</span>
+            <em class="success">✓ 43.7s · ref:2 · withTT</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>A vertical 9:16 mobile e-commerce infographic section explaining the science of PDRN ingredient mechanism, designed by a senior graphic designer with pixel-perfect alignment and bold data visualization. The layout is divided into three main zones on a soft gradient background transitioning from white (#FFFFFF) at top to pale lavender (#F5F2FA) at bottom.
+
+TOP ZONE: Large bold headline in Korean "PDRN 18,902ppm의 피부 재생 과학" (from design sheet) positioned at top-center, using deep violet (#8B7FC7) color. Below it, a smaller subheading in Korean "DNA 유래 폴리뉴클레오타이드가 피부 속 재생을 돕는 원리" in dark purple (#2D2640).
+
+CENTER ZONE: A large circular diagram occupying the middle section, illustrating the PDRN skin regeneration process. The diagram features concentric circles with a cross-section view of skin layers. At the center, a glowing violet (#8B7FC7) core representing PDRN molecules penetrating skin. Three curved arrows in gradient violet (#5B4D8C to #8B7FC7) point outward to three labeled boxes positioned around the circle:
+- Left box: Korean text "콜라겐 합성 촉진" with an icon of collagen fibers, background in light accent (#E8DFF5)
+- Top-right box: Korean text "세포 재생 활성화" with a cell regeneration icon, background in light accent (#E8DFF5)
+- Bottom-right box: Korean text "탄력 섬유 강화" with an elastin fiber icon, background in light accent (#E8DFF5)
+
+Each box has a bold number in deep violet (#8B7FC7): "18,902 ppm" prominently displayed. The skin layer illustration shows epidermis, dermis, and subcutaneous layers in soft gradients of beige to pink, with violet PDRN particles visualized as glowing dots penetrating deep into dermis layer.
+
+BOTTOM ZONE: A horizontal bar chart comparing PDRN concentration levels. Three bars arranged vertically:
+- Top bar labeled "메디힐 PDRN 세럼" showing full-length bar in vibrant violet (#8B7FC7), with "18,902 ppm" in bold white text inside
+- Middle bar labeled "일반 세럼 A" showing 40% length bar in muted gray, with "7,500 ppm" in gray text
+- Bottom bar labeled "일반 세럼 B" showing 25% length bar in light gray, with "4,800 ppm" in gray text
+
+At the very bottom, a small footnote in Korean "※ 제품별 PDRN 함량 비교 (자체 조사)" in dark gray (#2D2640), aligned center.
+
+All typography is clean, modern sans-serif. Icons are minimal line-style in deep violet (#8B7FC7). The overall composition emphasizes scientific credibility through structured layout, bold numerical data, and medical-grade color palette. No human photos, no buttons, no CTA elements.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 9:16. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/CLSNDuBfJPIRZJV0nmDuR_f25LHkkp.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763d/GKGAe82UMC0W8Up6KeDoa_gMWJXNyC.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>06</b>
+            <span>로즈+스쿠알란 시너지</span>
+            <em class="success">✓ 33.4s · ref:1 · infoOnly</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>A premium infographic-style visual for Korean e-commerce detail page, vertical 3:4 ratio, showcasing the synergy between Rose 8,902ppm and Squalane 10,000ppm in a clinical-luxe aesthetic. Layout: Top third features a large heading "로즈 + 스쿠알란 듀얼 시너지" in bold sans-serif, deep violet (#8B7FC7), centered. Below the heading, two large circular ingredient visualizations side by side — left circle shows a delicate rose petal illustration with soft pink-violet glow, labeled "로즈 8,902ppm" in clean typography; right circle displays golden droplets representing squalane with a warm amber glow, labeled "스쿠알란 10,000ppm". Both circles have subtle gradient borders in brand colors. Middle section: A large downward-pointing arrow icon in accent lavender (#E8DFF5) connects to a horizontal synergy bar showing the fusion of rose and squalane. The bar has a gradient from pink-violet to golden amber, with a glossy serum texture overlay. Above the bar, text reads "밀착 보습 시너지 효과". Bottom third: Three horizontal benefit cards stacked vertically, each with an icon (from design sheet) on the left and text on the right. First card: droplet icon, "깊은 수분 공급 &amp; 피부 장벽 강화"; second card: glow icon, "빠른 흡수, 끈적임 없는 마무리"; third card: bounce icon, "모공 탄력 듀얼 케어". Background: clean white with subtle lavender (#F5F2FA) gradient from top, maintaining clinical cleanliness. Senior graphic designer level execution, pixel-perfect alignment, bold data visualization with large numbers and clear hierarchy. No human photos, no buttons, no interactive elements. STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 3:4. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763e/RjSy4l5FynLy1Tcd3SvYz_0sCzYmKJ.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>07</b>
+            <span>텍스처 밀착 단계</span>
+            <em class="success">✓ 35.5s · ref:2 · withProd</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>A vertical 9:16 mobile e-commerce product detail section showcasing the texture absorption process of MEDIHEAL PDRN serum in four sequential stages.
+
+LAYOUT: Clean white background (#FFFFFF) with soft violet glow (#E8DFF5) diffused around product zones. Four horizontal panels stacked vertically, each occupying equal height, separated by thin divider lines in light lavender (#F5F2FA).
+
+STAGE 1 (TOP PANEL): Center-left, the product object from reference — use ONLY the purple gradient glass dropper bottle, ignore any background. Dropper cap is lifted with a single droplet suspended mid-air, catching light with a glossy highlight. Right side: Korean label "드로퍼에서 1방울" in medium sans-serif, deep violet (#5B4D8C). Small subtext below: "고농축 세럼 텍스처" in light gray (#9E9E9E).
+
+STAGE 2 (SECOND PANEL): Close-up of a fingertip touching a translucent serum droplet on smooth skin surface. The droplet shows visible thickness and slight purple tint. Korean label on right: "피부 접촉" in deep violet (#5B4D8C), with subtext "밀착형 오일 텍스처" in gray.
+
+STAGE 3 (THIRD PANEL): Skin texture macro shot showing serum spreading into a thin, even layer with micro-shimmer particles visible. Skin appears hydrated with subtle glow. Korean label: "빠른 흡수" in deep violet, subtext "스쿠알란 10,000ppm 밀착" in gray.
+
+STAGE 4 (BOTTOM PANEL): Skin surface with glassy, dewy finish showing refined pores and plump texture. Soft radiant glow effect around the skin area. Korean label: "보습막 형성" in deep violet, subtext "끈적임 없는 글래스 피니시" in gray.
+
+BOTTOM BAR: Thin horizontal strip in soft lavender gradient (#E8DFF5 to #F5F2FA), centered text "PDRN 18,902ppm 고밀착 텍스처 시스템" in deep purple (#2D2640), medium weight sans-serif.
+
+VISUAL STYLE: Clinical-luxe aesthetic with editorial product photography. Soft directional lighting from top-left creating subtle shadows. All skin tones are natural and even. Purple accent glows are subtle and diffused, not overpowering. Typography is clean, modern sans-serif with generous spacing.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 9:16. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a91762f/LXPKF4gphMGQ2Ja8SDwMk_product-image.jpg" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763d/XlUdrrpinIfU79l7cXrx0_RjreGsVI.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>08</b>
+            <span>리프팅 임상 데이터</span>
+            <em class="success">✓ 33.1s · ref:2 · withTT</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>A premium clinical infographic section showcasing lifting efficacy data for MEDIHEAL PDRN serum, vertical 3:4 mobile layout, clinical-luxe aesthetic with soft purple gradient background transitioning from light lavender (#F5F2FA) at top to deeper violet (#8B7FC7) at bottom. 
+
+TOP SECTION: Large bold title "리프팅 임상 데이터" in clean sans-serif typography (from design sheet), positioned center-aligned near top, deep violet (#5B4D8C) color with subtle glow effect.
+
+CENTER-LEFT AREA: Large circular percentage badge showing "97.2%" in extra-bold white typography on deep purple (#5B4D8C) circular background, with smaller Korean label below "탄력 개선 만족도" in white, badge diameter roughly one-fifth of canvas width, positioned slightly left of center.
+
+CENTER-RIGHT AREA: Vertical bar graph with three ascending bars representing "2주", "4주", "8주" time periods, bars in gradient from light violet (#E8DFF5) to deep purple (#5B4D8C), height increasing progressively. Korean labels below each bar. Percentage values displayed above bars: "34%", "68%", "94%" in bold white typography. Graph positioned to balance the circular badge on left.
+
+BOTTOM THIRD: Two side-by-side data cards with rounded corners, white background with 10% opacity, soft shadow. LEFT CARD shows "모공 크기 감소" with bold number "-23%" in deep violet (#5B4D8C). RIGHT CARD shows "피부 탄력 증가" with bold number "+41%" in same color. Both cards have small icons (from design sheet) above the text - pore icon for left, lifting arrow icon for right.
+
+BOTTOM BAR: Thin horizontal stripe in accent violet (#E8DFF5) with small Korean text "4주 사용 후 자체 임상 결과" in dark purple (#2D2640), center-aligned.
+
+DESIGN DETAILS: Senior graphic designer level execution, pixel-perfect alignment, bold data visualization with clear hierarchy. All numbers extra-large and prominent. Soft gradient overlays, subtle geometric line patterns in background (barely visible, 5% opacity). Clean medical-grade aesthetic with luxury beauty sensibility. No human photos, no product bottles, pure data-driven infographic layout.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 3:4. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/CLSNDuBfJPIRZJV0nmDuR_f25LHkkp.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763d/92s7lHEP9uGJt8BtLQ-1D_P1kbiRSH.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>09</b>
+            <span>모공 축소 비포애프터</span>
+            <em class="success">✓ 20.1s · ref:2 · withTT</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>Korean e-commerce detail page infographic section showcasing pore tightening before-after comparison for MEDIHEAL PDRN serum, vertical 3:4 mobile layout, clinical-luxe aesthetic with purple gradient and white background. Top third: large bold headline "모공 축소 비포애프터" (from design sheet) in deep violet (#8B7FC7) with subtle glow effect, center-aligned. Middle section: split-screen layout with two macro photography panels side by side — left panel labeled "사용 전" showing enlarged skin pore texture with visible roughness and wide pores, right panel labeled "4주 후" displaying refined smooth skin with visibly tightened pores, both panels framed with thin borders in #5B4D8C. Between the two panels, a vertical arrow pointing right with text "PDRN 18,902ppm 집중 케어" in white on violet background. Below the image panels: three bold statistical callouts arranged horizontally — "모공 크기 -32.4%" in large numbers with small label underneath, "피부 탄력 +28.7%" in center, "피부결 개선 +41.2%" on right, all numbers in deep violet (#8B7FC7) with percentage symbols, labels in dark purple (#2D2640). Bottom third: light purple (#F5F2FA) background bar containing clinical proof badge icon (from design sheet) on left with text "4주 임상 시험 결과" and small disclaimer text "*20명 대상 자가 평가 기준" in smaller font on right side. Senior graphic designer level execution with pixel-perfect alignment, bold data visualization, clean medical-grade layout. Purple accent glow (#E8DFF5) around key numbers. No human faces, no buttons, pure data-driven infographic design. STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 3:4. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/CLSNDuBfJPIRZJV0nmDuR_f25LHkkp.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763e/cYfkgnUmAHlHUh2dsrgm-_jfHTJH4r.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>10</b>
+            <span>글래스스킨 광채 연출</span>
+            <em class="success">✓ 27.0s · ref:1 · withLifestyle</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>Real photorealistic Korean K-beauty model close-up portrait, professional beauty photographer, Phase One IQ4, studio lighting with soft diffused glow. Mobile vertical 3:4 ratio composition.
+
+SCENE DESCRIPTION:
+Center frame: Close-up of a Korean woman's face (mid-20s to early 30s), shot from a slight upward angle to emphasize cheekbones and jawline. Her skin displays radiant glass skin effect with visible luminosity, dewy sheen, and translucent glow. Skin texture appears refined with minimized pores, bouncy elasticity visible especially on cheeks and forehead. Natural makeup with subtle highlight on high points of face.
+
+Lighting: Soft key light from upper left creating gentle shadows that enhance facial contours, secondary fill light from right to illuminate skin transparency. Backlight creates subtle rim glow around face edges, emphasizing lifted appearance and radiance.
+
+Expression: Serene, confident smile with eyes gently closed or looking slightly upward, fingers delicately touching cheek or jawline to suggest lifted, firm skin texture.
+
+Background: Pure white to soft lavender gradient (#F5F2FA to #E8DFF5), very subtle and clean to keep focus on skin radiance. Minimal depth of field with background completely blurred.
+
+Color grading: Cool-toned with slight violet tint (#8B7FC7 influence) in highlights and shadows to match clinical-luxe aesthetic. Skin tones remain natural but enhanced with radiant luminosity. Highlight areas show glass-like reflectivity suggesting deep hydration and plumpness.
+
+Texture details: Visible skin dewiness with micro light reflections suggesting serum absorption, healthy glow emanating from within, no visible pores in T-zone area, cheek area shows bouncy lifted appearance.
+
+Photography style: High-end beauty editorial, sharp focus on facial features, shallow depth of field (f/2.8), professional retouching maintaining skin texture realism while emphasizing glass skin effect and radiant finish.
+
+Mood: Luxurious, clinical confidence, K-beauty perfection, transformative radiance, premium skincare results.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 3:4. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763d/TSN7Li6pCVAvolLnF9P0t_E6hqXwWc.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>11</b>
+            <span>저녁 루틴 시퀀스</span>
+            <em class="success">✓ 36.2s · ref:2 · withProdLifestyle</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>Real photorealistic Korean K-beauty model evening skincare routine scene, professional beauty photography, Phase One IQ4, studio lighting with soft violet accent glow. Vertical 9:16 mobile layout.
+
+SCENE COMPOSITION:
+- Upper two-thirds: Close-up hand shot of elegant Korean woman's hand holding the MEDIHEAL PDRN serum dropper bottle (product object from reference — use ONLY the product, ignore any background). The purple gradient glass bottle is positioned center-right, tilted slightly toward camera. Model's hand has natural manicured nails, gentle grip on the black rubber dropper cap.
+- Dropper is pulled up, showing 2-3 drops of luminous serum suspended mid-air, with soft glow effect around each droplet in pale violet (#E8DFF5)
+- Background: Soft-focus modern Korean bathroom vanity, white marble countertop, warm evening ambient lighting mixed with cool violet accent light from left side
+- Lower third: Dark violet gradient overlay panel (#5B4D8C to #2D2640, 40% opacity) serving as information bar
+
+TEXT ELEMENTS (all in Korean):
+- Top-left corner: Small label "저녁 루틴 Step 2" in white sans-serif, lightweight
+- Center-left, middle area: Main copy "토너 후, 드로퍼 2-3방울" in elegant white serif font, medium size
+- Bottom panel text block (left-aligned, white typography):
+  · "PDRN 18,902ppm 고농축"
+  · "밀착 흡수 텍스처"
+  · "모공·탄력 듀얼 케어"
+- Bottom-right corner: Small badge icon showing "40+40ml" with subtle glow outline in accent violet (#E8DFF5)
+
+VISUAL DETAILS:
+- Serum droplets have realistic refraction, catching light with violet-pink iridescence
+- Soft depth-of-field: sharp focus on hand and dropper, gentle blur on background vanity items (toner bottle, cotton pads)
+- Skin texture of hand is natural, healthy, with subtle highlight on knuckles
+- Purple gradient bottle glass reflects ambient light, shows partial transparency revealing serum inside
+- Overall mood: serene, clinical-luxe, evening self-care ritual, premium skincare moment
+
+LIGHTING:
+- Key light: soft diffused from top-right (simulating bathroom mirror light)
+- Accent light: cool violet gel light from left, creating clinical-luxe atmosphere
+- Rim light: gentle backlight on dropper and serum drops for dimensional glow
+- Color temperature: neutral-warm base (4500K) with violet accent (6500K + magenta gel)
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 9:16. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a91762f/LXPKF4gphMGQ2Ja8SDwMk_product-image.jpg" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763d/FIDknxtiSvW8LUETSerG1_yUfM8k4C.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>12</b>
+            <span>드로퍼 정밀 디테일</span>
+            <em class="success">✓ 22.0s · ref:2 · withProd</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>Extreme close-up product photography shot of MEDIHEAL PDRN serum dropper extraction moment, vertical 3:4 mobile layout, clinical-luxe editorial style.
+
+COMPOSITION: Center frame shows the black rubber dropper cap suspended mid-air, precisely extracting a single luminous serum droplet. The dropper is positioned at upper-center, angled 15 degrees, with the violet gradient glass bottle (#8B7FC7 to #5B4D8C) slightly blurred in the lower third. The droplet catches studio light, creating a radiant glow with internal refraction showing the serum's golden-amber viscosity.
+
+PRODUCT DETAIL: Use product object from reference — black rubber dropper with precision tip, MEDIHEAL PDRN bottle with transparent label showing "18902" number and PDRN logo. Ignore any background from reference, only extract the product elements.
+
+ANNOTATIONS &amp; CALLOUTS: Three minimalist callout lines extend from key areas:
+- Top-right callout pointing to dropper tip: "정밀 추출 디자인" in clean sans-serif, deep violet (#5B4D8C)
+- Left callout pointing to rubber bulb: "위생적 고무 소재" with small icon of hygiene symbol
+- Bottom callout near droplet: "1회 적정량 2-3방울" with measurement indicator line
+
+BACKGROUND: Soft gradient from pure white at top to pale lavender (#F5F2FA) at bottom, with subtle circular glow (#E8DFF5) radiating behind the dropper to emphasize the precision moment. Faint hexagonal pattern overlay in lightest violet (10% opacity) suggests scientific precision.
+
+LIGHTING: Studio key light from upper-left creates sharp highlight on the rubber dropper surface and dramatic rim light on the suspended droplet. Soft fill light from right prevents harsh shadows. The serum droplet has internal caustic light refraction showing golden-amber core.
+
+TYPOGRAPHY: Top banner in thin sans-serif, deep violet (#2D2640): "정량 추출 시스템". Bottom-right corner shows small badge with "드로퍼 밀봉 설계" in white text on deep violet (#5B4D8C) rounded rectangle.
+
+TEXTURE DETAIL: Macro detail visible on black rubber showing matte finish, glass bottle shows gradient transparency with light refraction, serum droplet has high surface tension creating perfect spherical form with visible viscosity.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 3:4. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a91762f/LXPKF4gphMGQ2Ja8SDwMk_product-image.jpg" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763d/ED81ogDM4rCRE2EDTIHMd_hxoT2zJx.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>13</b>
+            <span>연령대별 고민 매칭</span>
+            <em class="success">✓ 21.0s · ref:1 · infoOnly</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>A vertical 9:16 mobile infographic layout for Korean e-commerce skincare product detail page, designed by senior graphic designer with pixel-perfect alignment and bold data visualization. The scene presents age-specific skin concern matching chart for MEDIHEAL PDRN serum.
+
+LAYOUT STRUCTURE:
+Top section: Large header text "연령대별 맞춤 솔루션" in bold sans-serif, deep violet (#8B7FC7), centered, occupying upper 15% of canvas.
+
+Main content area divided into three equal horizontal bands, each representing an age group:
+
+FIRST BAND (20s):
+Left side: Large numeral "20대" in bold, deep violet (#8B7FC7)
+Center: Icon of pore (circular dot pattern) in secondary purple (#5B4D8C)
+Right side: Text block with "주요 고민: 모공" as heading and "PDRN 18,902ppm이 모공 벽 강화" as solution description, both in Korean, dark purple (#2D2640)
+Background: light lavender (#F5F2FA)
+
+SECOND BAND (30s):
+Left side: Large numeral "30대" in bold, deep violet (#8B7FC7)
+Center: Icon of elasticity (upward arrow with skin layer illustration) in secondary purple (#5B4D8C)
+Right side: Text block with "주요 고민: 탄력" as heading and "스쿠알란 10,000ppm 밀착 리프팅" as solution description, both in Korean, dark purple (#2D2640)
+Background: white with subtle accent border in #E8DFF5
+
+THIRD BAND (40s):
+Left side: Large numeral "40대" in bold, deep violet (#8B7FC7)
+Center: Icon of lifting (facial contour line with upward curve) in secondary purple (#5B4D8C)
+Right side: Text block with "주요 고민: 처짐" as heading and "듀얼 케어로 래디언트 리프팅" as solution description, both in Korean, dark purple (#2D2640)
+Background: light lavender (#F5F2FA)
+
+Bottom section: Small badge or seal stating "전 연령 글래스스킨 효과" in Korean, centered, accent purple (#E8DFF5) background with deep violet text.
+
+VISUAL DETAILS:
+All icons (from design sheet) are line-art style, consistent stroke weight, secondary purple (#5B4D8C). Numbers are extra-bold, minimum 3x larger than body text. Solution descriptions use medium-weight sans-serif. Vertical dividing lines between bands in accent purple (#E8DFF5), hair-thin. Clean white space around each element. No photographs, no people, pure graphic design. Typography hierarchy: age numerals largest, concern headings medium, solution text smallest but legible.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 9:16. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763e/QWtXmNsLdJjORdd5iQeiU_uX62hdiz.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>14</b>
+            <span>흡수 속도 테스트</span>
+            <em class="success">✓ 28.3s · ref:1 · infoOnly</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>A clean vertical 3:4 infographic comparing absorption speed test results, designed by a senior graphic designer with pixel-perfect alignment and bold data visualization. Clinical-luxe aesthetic with medical precision.
+
+LAYOUT: White background (#FFFFFF) with subtle lavender gradient (#F5F2FA) in top third. Centered vertical composition.
+
+TOP SECTION: Bold Korean headline "흡수 속도 비교 테스트" in deep violet (#2D2640), heavy sans-serif font, positioned at upper center. Small subtitle below "일반 세럼 vs 메디힐 PDRN 세럼" in medium gray.
+
+CENTER COMPARISON: Two vertical timeline bars side by side, left bar labeled "일반 세럼" in gray (#9E9E9E), right bar labeled "메디힐 PDRN" in primary violet (#8B7FC7). Each bar shows time markers: 0초, 30초, 60초, 90초. Left bar shows full absorption at 90-second mark with sticky residue icon. Right bar shows complete absorption at 30-second mark with checkmark icon in accent lavender (#E8DFF5).
+
+LARGE NUMERIC DISPLAY: Between the bars, giant "3X" in bold primary violet (#8B7FC7) with Korean caption below "더 빠른 흡수" in secondary violet (#5B4D8C).
+
+BOTTOM SECTION: Three horizontal benefit boxes with icons (from design sheet): 
+1. Droplet icon + "30초 완전 흡수"
+2. No-sticky icon + "끈적임 0%"
+3. Glow icon + "즉각 밀착 텍스처"
+Each box has light lavender background (#E8DFF5) with violet text.
+
+VISUAL DETAILS: Minimal drop shadow on timeline bars, clean grid alignment, medical-grade precision in spacing, no product photography, pure data-driven layout.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 3:4. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763e/pSx6KhbTn02KZqdUEFPg9_xGySaPpz.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>15</b>
+            <span>모닝 글로우 모델샷</span>
+            <em class="success">✓ 32.0s · ref:1 · withLifestyle</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>Real photorealistic Korean K-beauty model in her late twenties, captured in a serene morning bedroom scene with soft natural sunlight streaming through sheer white curtains. The model is positioned center-right in a vertical 3:4 composition, sitting on a white linen bed, wearing a minimalist ivory silk camisole. Her skin glows with a radiant, dewy finish, showcasing perfect glass skin texture with visibly refined pores and lifted contours. She gently touches her cheek with her fingertips, eyes closed in a moment of peaceful satisfaction, expressing the transformative effect of overnight skincare.
+
+The lighting is soft golden hour sunlight from the left side, creating a natural glow on her face and highlighting the luminous, bouncy skin texture. Background is intentionally blurred with bokeh effect, showing hints of white bedding, a minimalist bedside table, and soft violet (#8B7FC7) accent elements like a small lavender plant or silk cushion to subtly echo the MEDIHEAL PDRN serum brand color.
+
+Professional beauty photography shot with Phase One IQ4 medium format camera, 80mm lens, f/2.8 aperture for shallow depth of field. Cinematic color grading with clinical-luxe aesthetic: clean whites, soft violet undertones (#E8DFF5), and warm skin tones. The overall mood is tranquil, aspirational, and authentic—capturing the "morning after" glow that the serum promises.
+
+No text overlay, no product bottle visible, no UI elements. Pure lifestyle moment focusing on skin transformation and emotional satisfaction. The model's expression conveys confidence and natural beauty. Hair is styled in a relaxed, effortless way—loose waves or a simple low bun. Makeup is minimal, emphasizing the naturally radiant skin.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 3:4. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763e/7X5jjlxwaR8SKaDK7gr08_Kf4NYFLr.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>16</b>
+            <span>성분 농도 비교표</span>
+            <em class="success">✓ 64.0s · ref:1 · infoOnly</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>A vertical 9:16 mobile e-commerce detail page section showcasing an ingredient concentration comparison infographic for MEDIHEAL PDRN serum. Senior graphic designer, pixel-perfect alignment, bold data visualization.
+
+LAYOUT: Clean white background (#FFFFFF) with subtle gradient overlay in light lavender (#F5F2FA) at top and bottom edges. Center-aligned composition.
+
+TOP SECTION: Title area at upper third, text "성분 농도 비교" in bold sans-serif, deep violet (#5B4D8C), large and prominent. Below title, small subtitle "경쟁 제품 대비 우위 성분 함량" in medium gray, centered.
+
+MAIN CONTENT: Large comparison table occupying center 60% of canvas. Table structure with 4 columns and 4 rows:
+- Header row: "제품" | "PDRN 함량" | "스쿠알란 함량" | "총점"
+- Row 1: "메디힐 PDRN 세럼" | "18,902 ppm" in bold violet (#8B7FC7) | "10,000 ppm" in bold violet | Gold star badge "★★★★★"
+- Row 2: "경쟁사 A" | "5,000 ppm" in light gray | "3,000 ppm" in light gray | Silver stars "★★★"
+- Row 3: "경쟁사 B" | "8,000 ppm" in light gray | "없음" in faded text | Bronze stars "★★"
+
+Table styling: Alternating row backgrounds in pure white and very light lavender (#F5F2FA). First row (MEDIHEAL) has thicker border in deep violet (#5B4D8C), 3-point stroke. Column dividers in soft gray hairlines. Numbers are extra-bold, large point size for MEDIHEAL row, smaller for competitors.
+
+VISUAL ACCENTS: On left side of MEDIHEAL row, small circular badge icon with "1위" text in white on violet gradient background. On right side, upward trending arrow graphic in accent lavender (#E8DFF5).
+
+BOTTOM SECTION: Below table, centered callout box with rounded corners, filled with light accent color (#E8DFF5). Inside box, text "PDRN 18,902ppm + 스쿠알란 10,000ppm 고농축 포뮬라" in medium-bold, deep violet (#2D2640). Small checkmark icons flanking the text.
+
+FOOTER NOTE: At very bottom, small disclaimer text "* 2024년 3월 기준 올리브영 판매 세럼 비교" in tiny light gray font, left-aligned with subtle line above.
+
+Typography hierarchy: Bold geometric sans-serif for headers and numbers, clean readability. All Korean text perfectly legible. No English except brand name "MEDIHEAL" and unit "ppm". Pixel-perfect grid alignment, professional infographic aesthetic balancing clinical trust and premium beauty.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 9:16. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763e/sfLNl_YMooiGEMuF9E8lF_pNEC8rTR.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>17</b>
+            <span>패키징 디자인 디테일</span>
+            <em class="success">✓ 45.3s · ref:2 · withProd</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>A premium product detail shot showcasing the MEDIHEAL PDRN serum bottle in vertical 3:4 composition. The product object from reference — use ONLY the product, ignore any background — is positioned center-right, occupying roughly 60% of the frame height. The bottle features a beautiful violet-to-deep-purple gradient (#8B7FC7 to #5B4D8C) in translucent glass, topped with a matte black rubber dropper cap. The transparent label prominently displays "PDRN" logo and the number "18902" in bold typography.
+
+Background is a soft clinical white (#FFFFFF) with subtle radial gradient fading to pale lavender (#F5F2FA) at edges, creating depth. Three elegant callout lines extend from key features of the bottle:
+
+Top-left callout points to the dropper cap with Korean text label "프리미엄 블랙 드로퍼" in sans-serif font, deep purple (#5B4D8C).
+
+Center-left callout highlights the PDRN number area with Korean text "PDRN 18,902ppm 고농축" in medium weight, accent color (#E8DFF5) background pill shape behind text.
+
+Bottom-left callout indicates the gradient glass with Korean label "보라빛 그라데이션 글래스" in elegant typography, dark purple (#2D2640).
+
+Soft directional lighting from top-left creates a luminous glow on the glass surface, emphasizing the gradient effect and premium quality. Subtle shadow beneath the bottle anchors it to the surface. The overall mood is medical-luxe: clean, scientific, yet sophisticated and high-end beauty.
+
+Typography is modern sans-serif, all labels in Korean matching the clinical-luxe aesthetic. No buttons, no UI elements, pure product photography with editorial annotation style.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 3:4. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a91762f/LXPKF4gphMGQ2Ja8SDwMk_product-image.jpg" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763d/D1bGI-NCwiwVpVgHNTMvT_cANOeVwd.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>18</b>
+            <span>유저 리뷰 하이라이트</span>
+            <em class="success">✓ 30.4s · ref:1 · infoOnly</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>A vertical 9:16 editorial-style user review highlight section for MEDIHEAL PDRN serum on a clean gradient background transitioning from soft lavender (#F5F2FA) at top to white at bottom. The layout features a sophisticated magazine-editorial composition with authentic customer review snippets arranged in an organic, overlapping card layout.
+
+At the top center, a small emblem badge (from design sheet) in deep violet (#8B7FC7) with text "올리브영 구매자 PICK" in white, surrounded by a subtle glow effect. Below, a main headline in bold Korean typography: "실제 사용자들의 리얼 후기" centered, in dark purple (#2D2640), medium-large size.
+
+The central area displays 5-6 review cards arranged in a scattered, overlapping editorial layout. Each card is a rounded-corner white box with soft shadow, containing: a star rating (5 gold stars), a short review quote in Korean quotation marks, and a small label showing "20대 여성" or "30대 여성" in light violet. Key review quotes to include:
+- "모공이 확실히 줄어들었어요!"
+- "끈적임 없이 쫀쫀하게 흡수돼요"
+- "탄력이 눈에 띄게 좋아졌어요"
+- "1+1 구성 혜자템!"
+- "PDRN 고농축이라 효과 빨라요"
+- "유리 피부 느낌 제대로 나요"
+
+Each card is slightly rotated (3-5 degrees) for dynamic editorial feel. Some cards are larger, some smaller, creating visual hierarchy. Key benefit keywords like "모공", "탄력", "흡수력", "글래스스킨" are highlighted in violet (#8B7FC7) or underlined with accent color (#E8DFF5).
+
+At the bottom, a horizontal statistics bar showing three metrics in clean icons (from design sheet): a percentage icon with "95% 모공 만족도", a heart icon with "4.8/5.0 평점", and a cart icon with "올영 세럼 베스트 10위". Each metric uses deep violet (#5B4D8C) for numbers and light text for labels.
+
+Subtle decorative elements: small sparkle icons scattered around cards, thin curved lines connecting some review cards, and a faint watermark pattern of PDRN molecular structure in background (#E8DFF5 at 5% opacity). Overall mood is trustworthy, editorial, and user-centric with clinical-luxe aesthetic.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 9:16. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763d/EUifTni4EosdG5tgsDGHk_TwWM5GaN.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>19</b>
+            <span>피부과 전문의 코멘트</span>
+            <em class="success">✓ 19.4s · ref:1 · infoOnly</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>Editorial-style dermatologist endorsement section for MEDIHEAL PDRN serum, vertical 3:4 mobile layout. Clean white background (#FFFFFF) with subtle lavender gradient (#F5F2FA to #E8DFF5) fading from top. Upper third: small circular portrait placeholder of dermatologist in white coat against soft-focus clinical backdrop, positioned center-left. Right of portrait: thin vertical accent line in deep violet (#8B7FC7). 
+
+Center area dominates: large quotation mark icon in light purple (#E8DFF5) at top-left of quote block. Main quote text in Korean: "PDRN 18,902ppm 고농축 포뮬라는 피부 재생 주기를 단축시키고, 진피층 탄력 회복에 임상적으로 유의미한 효과를 보입니다. 모공 축소와 리프팅을 동시에 원하는 환자분들께 추천하는 성분입니다." displayed in elegant serif or modern sans-serif, dark purple (#2D2640), line-height relaxed for readability, spanning 70% width centered.
+
+Below quote: attribution line in smaller size, medium weight, reading "— 피부과 전문의 김OO 원장" in violet (#5B4D8C), aligned right within quote block. Thin horizontal divider line in accent purple (#E8DFF5) separates quote from credential section.
+
+Lower third: credential badge area with small icon of medical certificate or seal (from design sheet) on left, followed by text "대한피부과의사회 정회원 | 피부재생 전문" in compact sans-serif, medium gray-purple (#8B7FC7). Background remains clean white with ample negative space around all elements, maintaining clinical-luxe editorial sophistication.
+
+Typography hierarchy clear: quote is largest and most prominent, attribution medium, credentials smallest. No product imagery, no buttons, no pricing. Pure editorial trust-building composition with medical authority and premium restraint.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 3:4. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763e/f2B3gLhpSTqwtWeT3RpIb_Xnt0BoMy.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>20</b>
+            <span>메이크업 베이스 호환성</span>
+            <em class="success">✓ 26.4s · ref:1 · withLifestyle</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>Real photorealistic Korean K-beauty model close-up portrait, professional beauty photographer, Phase One IQ4, studio lighting with soft diffusion. Vertical 3:4 mobile composition. Upper two-thirds of frame: frontal face shot of Korean woman in her late 20s with flawless makeup—dewy glass skin finish, subtle highlight on cheekbones, soft gradient eyeshadow in mauve tones, nude pink lip gloss. Her skin shows radiant luminosity and refined pore texture, demonstrating makeup adherence over serum base. Expression is serene and confident, eyes looking directly at camera. Background is clean white with subtle lavender (#E8DFF5) gradient haze on left edge. Lower third of frame: semi-transparent overlay bar in deep violet (#8B7FC7) with 70% opacity, containing Korean text layout. Left side of bar: white bold sans-serif headline "메이크업 밀착 지속" (makeup adherence lasting). Right side: smaller white body text "PDRN 세럼 위 파운데이션 10시간 밀림 없음" (PDRN serum under foundation, no sliding for 10 hours). Small badge icon (from design sheet) in bottom-right corner of bar: circular lavender (#E8DFF5) badge with white text "8시간 테스트 완료" (8-hour test completed). Lighting emphasizes skin texture and makeup finish—natural glow without excess shine. Color grading: cool-toned with violet undertones, clinical-luxe aesthetic. Photorealistic skin detail, no illustration or cartoon style. STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 3:4. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763e/uFDIEXN_oZRNaYk_lA6FH_uQWDcDIL.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>21</b>
+            <span>사용법 가이드</span>
+            <em class="success">✓ 17.1s · ref:2 · withProd</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>Senior graphic designer crafting a vertical 9:16 infographic-style how-to-use guide for MEDIHEAL PDRN serum, pixel-perfect alignment, bold data visualization, clinical-luxe aesthetic.
+
+LAYOUT: Vertical composition divided into three clear instruction zones stacked vertically. Top section: centered title "사용 방법" in bold sans-serif, deep violet (#8B7FC7), medium size. White gradient background (#FFFFFF to #F5F2FA) with subtle radial glow emanating from center.
+
+PRODUCT REFERENCE: Product object from reference — use ONLY the product, ignore any background. The purple gradient dropper bottle positioned at top-center, angled 15 degrees, with glowing halo effect around it.
+
+STEP 1 ZONE (upper third): Large circular icon on left showing dropper illustration with 2-3 droplets falling, outlined in violet (#8B7FC7). Right side text block: "STEP 1" in small caps (#5B4D8C), below it "2-3방울 덜어내기" in bold Korean sans-serif, and smaller description text "드로퍼를 이용해 적당량을 손바닥에 덜어주세요" in medium gray. Dotted connector line flowing downward in accent color (#E8DFF5).
+
+STEP 2 ZONE (middle third): Large circular icon on right showing illustrated face outline with dots indicating application points (forehead, cheeks, chin, nose), outlined in secondary violet (#5B4D8C). Left side text block: "STEP 2" in small caps, below it "얼굴 전체 도포" in bold Korean, and description "모공과 탄력이 필요한 부위에 골고루 펴 발라주세요" in medium gray. Dotted connector line continuing downward.
+
+STEP 3 ZONE (lower third): Large circular icon on left showing two hands pressing gently on face illustration, outlined in primary violet (#8B7FC7). Right side text block: "STEP 3" in small caps, below it "밀착 흡수" in bold Korean, and description "손바닥으로 가볍게 눌러 피부 깊숙이 흡수시켜주세요" in medium gray.
+
+BOTTOM BAR: Soft violet gradient bar (#E8DFF5 to #8B7FC7) spanning full width, containing centered text "토너 → 세럼 → 크림 순서로 사용" in white bold Korean typography with small serum bottle icon (from sheet) on left side.
+
+All circular icons have soft drop shadows, clean vector style illustration, medical-grade precision. Typography hierarchy: title largest, step labels medium-bold, descriptions smaller and lighter weight. Generous white space between zones for clarity. Subtle geometric line accents in accent color (#E8DFF5) connecting steps vertically along left and right margins.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 9:16. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a91762f/LXPKF4gphMGQ2Ja8SDwMk_product-image.jpg" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763d/Hd_YAL7110p38X_Xn3MtS_xt9fIUVn.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>22</b>
+            <span>가성비 계산기</span>
+            <em class="success">✓ 20.4s · ref:1 · infoOnly</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>A clean, data-driven infographic layout for Korean e-commerce detail page, vertical 3:4 ratio, designed by senior graphic designer with pixel-perfect alignment and bold data visualization. White background (#FFFFFF) with soft violet accents.
+
+TOP SECTION (upper third): Large headline in bold Korean sans-serif, deep violet (#8B7FC7): "1+1 기획, 얼마나 이득일까?" centered. Below, subheading in medium weight, dark gray (#2D2640): "1ml당 가격과 사용 기간을 계산했습니다"
+
+CENTER MAIN AREA (middle half): Three calculation boxes arranged vertically with equal spacing. Each box has rounded corners, light lavender background (#F5F2FA), and subtle shadow.
+
+BOX 1 (top): Left-aligned label "총 용량" in small caps, violet (#5B4D8C). Right side: huge bold number "80ml" in deep violet (#8B7FC7), with small annotation below "40ml × 2개" in gray.
+
+BOX 2 (middle): Left label "1ml당 가격". Right side: oversized number "₩125" in deep violet, with small calculation formula below "₩10,000 ÷ 80ml" in light gray.
+
+BOX 3 (bottom): Left label "1일 2회 사용 시". Right side: bold number "약 40일" in deep violet, with icon of calendar or clock in accent violet (#E8DFF5) on the left.
+
+BOTTOM SECTION (lower fifth): Horizontal comparison bar chart. Left bar labeled "일반 세럼 30ml" in gray, shorter length. Right bar labeled "메디힐 PDRN 1+1 (80ml)" in gradient violet (#8B7FC7 to #E8DFF5), significantly longer. Percentage indicator "+167% 더 많은 용량" in accent color above right bar.
+
+FOOTER STRIP (very bottom): Thin horizontal band in light violet (#E8DFF5) with small text in dark violet: "* 올리브영 단독 기획 기준 산정" centered.
+
+All typography clean, modern Korean sans-serif. Numbers extra bold and large for immediate impact. Grid-based layout with consistent padding. clinical-luxe aesthetic with medical precision and premium feel. Icons minimal, line-style from design sheet. No product photography, pure infographic data visualization.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 3:4. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763e/XJVX4AReo3W5rYolxxgnh_DeoTSKKL.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>23</b>
+            <span>루틴 레이어링 제안</span>
+            <em class="success">✓ 29.4s · ref:2 · withProd</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>Senior graphic designer infographic layout, pixel-perfect alignment, bold data visualization. Vertical 3:4 mobile e-commerce detail page section showing MEDIHEAL PDRN skincare routine layering guide. Clinical-luxe aesthetic with deep violet (#8B7FC7) and white (#FFFFFF) background gradient, clean medical beauty vibe.
+
+TOP SECTION: Large Korean headline "메디힐 PDRN 라인 3단계 루틴" in bold sans-serif, deep violet (#5B4D8C), centered, occupies upper 15% of canvas.
+
+CENTER MAIN AREA: Three-step vertical flow diagram with connecting dotted lines in light purple (#E8DFF5). Each step shows product object from reference — use ONLY the product, ignore any background:
+
+STEP 1 (top third): Product object from design sheet — MEDIHEAL toner bottle, positioned left-center, medium size. Right side shows Korean text "1단계: PDRN 토너" in bold (#2D2640), below it "수분 공급 &amp; 피부결 정돈" in smaller light text (#8B7FC7). Soft purple glow around product.
+
+STEP 2 (middle third): Product object from reference — use ONLY the product, ignore any background — the purple gradient dropper serum bottle with black cap and "18902" label, positioned center, slightly larger than step 1. Left side shows Korean text "2단계: PDRN 모공 탄력 세럼" in bold (#2D2640), below it "18,902ppm 고농축 리프팅" in smaller text with small badge icon showing "핵심 단계" in white on violet (#5B4D8C) background. Prominent dropper glow effect with light rays.
+
+STEP 3 (bottom third): Product object from design sheet — MEDIHEAL cream jar, positioned right-center, medium size. Left side shows Korean text "3단계: PDRN 크림" in bold (#2D2640), below it "영양 밀봉 &amp; 탄력 마무리" in smaller light text (#8B7FC7). Subtle shimmer around product.
+
+Dotted vertical connector lines in light violet (#E8DFF5) flow between all three products with small downward arrow icons.
+
+BOTTOM BAR: Soft lavender (#F5F2FA) rounded rectangle background, contains Korean text "라인 풀 케어 시 탄력 개선 효과 2배 ↑" in medium bold (#5B4D8C), centered. Small sparkle icons flanking text.
+
+No people, no buttons, no UI elements, no CTA. Clean white-to-violet gradient background with subtle radial glow from center. Professional product photography lighting. All Korean text sharp and legible.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 3:4. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a91762f/LXPKF4gphMGQ2Ja8SDwMk_product-image.jpg" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763d/EyCHZEenvnJz0KhowV8cx_A5ErLgAl.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>24</b>
+            <span>자주 묻는 질문</span>
+            <em class="success">✓ 34.1s · ref:1 · infoOnly</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>A clean editorial-style FAQ section for Korean e-commerce, vertical 9:16 layout with clinical-luxe aesthetic. Top section features centered title "자주 묻는 질문" in bold sans-serif, deep violet (#8B7FC7), medium size, with subtle underline accent in light lavender (#E8DFF5). White background (#FFFFFF) with soft gradient overlay from top in pale lavender (#F5F2FA).
+
+Below title, five FAQ cards arranged vertically with equal spacing. Each card has rounded corners, white fill with subtle shadow, and thin border in accent lavender (#E8DFF5). Card structure: left side shows "Q" icon in circle with deep violet background (#8B7FC7), white letter. Right side contains question text in medium-bold dark purple (#2D2640), followed by answer text in smaller regular weight, muted violet (#5B4D8C).
+
+FAQ content from top to bottom:
+Card 1 — Q: "PDRN 성분, 민감한 피부에도 안전한가요?" A: "PDRN은 피부 재생을 돕는 저분자 성분으로, 저자극 테스트 완료하여 민감 피부도 사용 가능합니다."
+Card 2 — Q: "하루 몇 번 사용해야 하나요?" A: "아침·저녁 토너 후 2-3방울을 얼굴 전체에 흡수시키면 효과적입니다."
+Card 3 — Q: "모공 효과는 언제부터 보이나요?" A: "2주차부터 피부결 개선, 4주 사용 시 모공 축소 및 탄력 효과가 나타납니다."
+Card 4 — Q: "지성 피부에도 끈적이지 않나요?" A: "스쿠알란 10,000ppm 함유로 가볍게 밀착되며, 끈적임 없이 흡수됩니다."
+Card 5 — Q: "1+1 기획, 유통기한은 어떻게 되나요?" A: "개봉 후 12개월 이내 사용 권장. 밀봉 상태로 서늘한 곳에 보관하세요."
+
+Bottom section shows small badge cluster: "피부과 테스트 완료" and "저자극 포뮬러" in rounded pill shapes, light lavender background (#E8DFF5), deep violet text (#8B7FC7), centered alignment. Subtle medical cross icon (from design sheet) next to first badge in matching violet.
+
+Typography: modern Korean sans-serif (Pretendard or Spoqa Han Sans style). Clean spacing, clinical precision with luxe softness. No buttons, no UI elements, pure informational editorial layout.
+
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI, NO CTA. Mobile vertical 9:16. Match the design sheet reference for all icons, badges, typography, color values, and spacing.</pre>
+            <h4>Reference Images (1)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763e/X-MVfnrQoJNvLgxag4V3z_hOZfUBWz.png" class="result-img" />
+          </div>
+        </details>
+        <details class="log-entry">
+          <summary>
+            <b>25</b>
+            <span>클로징 CTA</span>
+            <em class="success">✓ 32.7s · ref:2 · hero</em>
+          </summary>
+          <div class="log-body">
+            <h4>Agent-Generated Prompt</h4>
+            <pre>Korean e-commerce CLOSING BANNER.
+Elegant final section. Product (from reference — use ONLY the product object, ignore background) beautifully positioned.
+"피부를 당기듯 밀착! 래디언트 글래스 스킨" large elegant Korean typography.
+"[3월 올영픽/1+1] 메디힐 PDRN 모공 탄력 세럼 40+40ml 단독 기획" subtitle.
+ "올리브영 단독" badge. "40+40ml 단독 기획" promotional badge.
+Soft gradient background matching brand colors. Premium aspirational closing.
+STYLE RULES (mandatory): Colors — #8B7FC7, #5B4D8C, #2D2640, #F5F2FA, accent #E8DFF5. clinical-luxe aesthetic. STATIC IMAGE — NO buttons, NO interactive UI. Mobile vertical 3:4.</pre>
+            <h4>Reference Images (2)</h4>
+            <div class="ref-imgs"><img src="https://v3b.fal.media/files/b/0a917635/2CYJLzil9dlmF90ZNojng_6Z16dv14.png" alt="ref-0" /><img src="https://v3b.fal.media/files/b/0a91762f/LXPKF4gphMGQ2Ja8SDwMk_product-image.jpg" alt="ref-1" /></div>
+            <h4>Generated Result</h4><img src="https://v3b.fal.media/files/b/0a91763e/fctJgNUrx8vOSLK7IRfTg_qIIaMoJG.png" class="result-img" />
+          </div>
+        </details>
+</div>
+
+<div class="footer">
+  25/25 sections · v7 Full Agent Pipeline · GPT 1.5 + NB2 1K · Input: "[3월 올영픽/1+1] 메디힐 PDRN 모공 탄력 세럼 40+40ml 단독 기획..."
+</div>
+
+<script>
+function setView(mode) {
+  var page = document.querySelector('.page');
+  document.querySelectorAll('#viewToggle .vt-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.mode === mode); });
+  page.classList.toggle('view-500', mode === '500');
+  localStorage.setItem('detailViewMode', mode);
+}
+function toggleInfo(mode) {
+  var infos = document.querySelectorAll('.sec-info');
+  var btns = event.target.parentElement.querySelectorAll('.vt-btn');
+  btns.forEach(function(b) { b.classList.toggle('active', b.dataset.mode === mode); });
+  infos.forEach(function(el) { el.classList.toggle('hidden', mode === 'hide'); });
+  localStorage.setItem('detailInfoMode', mode);
+}
+(function() {
+  setView(localStorage.getItem('detailViewMode') || '500');
+  var info = localStorage.getItem('detailInfoMode') || 'show';
+  if (info === 'hide') toggleInfo('hide');
+})();
+</script>
+
+</body>
+</html>
