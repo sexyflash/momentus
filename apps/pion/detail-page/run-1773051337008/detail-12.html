@@ -102,8 +102,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sa
         <button class="vt-btn" data-mode="full" onclick="setView('full')">원본</button>
       </div>
       <div class="view-toggle">
-        <button class="vt-btn active" data-mode="show" onclick="toggleInfo('show')">정보</button>
-        <button class="vt-btn" data-mode="hide" onclick="toggleInfo('hide')">숨김</button>
+        <button class="vt-btn" data-mode="show" onclick="toggleInfo('show')">정보</button>
+        <button class="vt-btn active" data-mode="hide" onclick="toggleInfo('hide')">숨김</button>
       </div>
       <div class="nav"><a href="detail-8.html" class="">8P</a><a href="detail-12.html" class="active">12P</a><a href="detail-24.html" class="">24P</a></div>
     </div>
@@ -708,7 +708,7 @@ function toggleInfo(mode) {
 }
 (function() {
   setView(localStorage.getItem('detailViewMode') || '500');
-  var info = localStorage.getItem('detailInfoMode') || 'show';
+  var info = localStorage.getItem('detailInfoMode') || 'hide';
   if (info === 'hide') toggleInfo('hide');
 })();
 </script>
