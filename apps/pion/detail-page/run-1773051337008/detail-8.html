@@ -101,9 +101,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sa
         <button class="vt-btn active" data-mode="500" onclick="setView('500')">500px</button>
         <button class="vt-btn" data-mode="full" onclick="setView('full')">원본</button>
       </div>
-      <div class="view-toggle">
+      <div class="view-toggle" id="infoToggle">
         <button class="vt-btn" data-mode="show" onclick="toggleInfo('show')">정보</button>
-        <button class="vt-btn active" data-mode="hide" onclick="toggleInfo('hide')">숨김</button>
+        <button class="vt-btn" data-mode="hide" onclick="toggleInfo('hide')">숨김</button>
       </div>
       <div class="nav"><a href="detail-8.html" class="active">8P</a><a href="detail-12.html" class="">12P</a><a href="detail-24.html" class="">24P</a></div>
     </div>
@@ -536,9 +536,8 @@ function setView(mode) {
 }
 function toggleInfo(mode) {
   var infos = document.querySelectorAll('.sec-info');
-  var btns = event.target.parentElement.querySelectorAll('.vt-btn');
-  btns.forEach(function(b) { b.classList.toggle('active', b.dataset.mode === mode); });
-  infos.forEach(function(el) { el.classList.toggle('hidden', mode === 'hide'); });
+  var toggle = document.getElementById("infoToggle"); if(toggle){toggle.querySelectorAll(".vt-btn").forEach(function(b){b.classList.toggle("active",b.dataset.mode===mode)})};
+    infos.forEach(function(el) { el.classList.toggle('hidden', mode === 'hide'); });
   localStorage.setItem('detailInfoMode', mode);
 }
 (function() {
