@@ -1,6 +1,6 @@
 {
-  "version": "2.1.5",
-  "lastUpdated": "2025-07-15T12:00:00Z",
+  "version": "2.1.6",
+  "lastUpdated": "2026-05-20T00:00:00Z",
   "extractionMethods": {
     "videoIdPatterns": [
       "(?:youtube\\.com\\/watch\\?v=|youtu\\.be\\/|youtube\\.com\\/embed\\/|youtube\\.com\\/v\\/)([^&\\n?#]+)",
@@ -118,6 +118,39 @@
       "button.ytp-subtitles-button",
       "button.ytp-caption-button"
     ],
+    "chipBarSelectors": [
+      "chip-bar-view-model",
+      "[class*=\"chip-bar\"]",
+      "[data-chip-bar]",
+      ".chip-bar-container"
+    ],
+    "chipTabSelectors": [
+      "chip-bar-view-model chip-view-model chip-shape button[role=\"tab\"]",
+      "chip-view-model button[role=\"tab\"]",
+      "[class*=\"chip\"] button[role=\"tab\"]",
+      "button[role=\"tab\"][aria-label*=\"챕터\" i]",
+      "button[role=\"tab\"][aria-label*=\"Chapters\" i]",
+      "button[role=\"tab\"][aria-label*=\"チャプター\" i]",
+      "button[role=\"tab\"][aria-label*=\"章节\" i]",
+      "button[role=\"tab\"][aria-label*=\"Capítulos\" i]",
+      "button[role=\"tab\"][aria-label*=\"Chapitres\" i]",
+      "button[role=\"tab\"][aria-label*=\"Kapitel\" i]",
+      "button[role=\"tab\"][aria-label*=\"스크립트\" i]",
+      "button[role=\"tab\"][aria-label*=\"Transcript\" i]",
+      "button[role=\"tab\"][aria-label*=\"文字起こし\" i]",
+      "button[role=\"tab\"][aria-label*=\"字幕\" i]",
+      "button[role=\"tab\"][aria-label*=\"Transcripción\" i]",
+      "button[role=\"tab\"][aria-label*=\"Transkript\" i]"
+    ],
+    "loadingSpinnerSelectors": [
+      "tp-yt-paper-spinner",
+      ".ytd-transcript-renderer [class*=\"spinner\"]",
+      "[class*=\"loading-spinner\"]",
+      "ytd-continuation-item-renderer",
+      ".spinner-container",
+      "[class*=\"spinner\"][class*=\"active\"]",
+      "paper-spinner-lite[active]"
+    ],
     "transcriptButtonSelectors": [
       "button[aria-label*='스크립트 표시' i]:not([disabled])",
       "button[aria-label*='Show transcript' i]:not([disabled])",
@@ -175,6 +208,7 @@
       "button[data-target=\"transcript\"]"
     ],
     "transcriptContainerSelectors": [
+      "yt-section-list-renderer[data-target-id*=\"transcript\"]",
       "ytd-transcript-segment-list-renderer",
       "ytd-transcript-renderer",
       "ytd-transcript-body-renderer",
@@ -199,6 +233,7 @@
       "ytd-video-description-transcript-section-renderer"
     ],
     "transcriptSegmentSelectors": [
+      "transcript-segment-view-model",
       "ytd-transcript-segment-renderer",
       "ytd-transcript-segment-renderer.style-scope",
       ".ytd-transcript-segment-renderer",
@@ -209,6 +244,7 @@
       "div[role=\"button\"][tabindex=\"0\"]"
     ],
     "timestampSelectors": [
+      ".ytwTranscriptSegmentViewModelTimestamp",
       ".segment-timestamp",
       ".segment-start-offset .segment-timestamp",
       "div.segment-timestamp",
@@ -222,6 +258,9 @@
       ".transcript-time"
     ],
     "textSelectors": [
+      "transcript-segment-view-model span[role=\"text\"]",
+      "span.ytAttributedStringHost[role=\"text\"]",
+      ".ytwTranscriptSegmentViewModelSegmentText",
       "yt-formatted-string.segment-text",
       "yt-formatted-string[class*=\"segment-text\"]",
       ".segment-text",
@@ -373,7 +412,14 @@
     "mutationObserverDebounce": 500,
     "transcriptLoadingThreshold": 1000,
     "panelVerificationDelay": 1000,
-    "segmentExtractionDelay": 500
+    "segmentExtractionDelay": 500,
+    "chipBarClickDelay": 300,
+    "chipBarRetryAttempts": 3,
+    "spinnerDetectionEnabled": true,
+    "extendedWaitOnSpinner": true,
+    "spinnerMaxWaitTime": 10000,
+    "tabToggleDelay": 500,
+    "forceRefreshDelay": 1000
   },
   "fallbackMethods": [
     "dom_observation",
