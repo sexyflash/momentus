@@ -1,37 +1,49 @@
 <!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AIR 스포츠슬리퍼 에어 스포츠 슬리퍼 — v9 preset</title>
 <style>:root{--p:#2D2D2D;--s:#F5F5F5;--d:#1A1A1A;--l:#FFFFFF;--a:#4A90E2}
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:#F4F4F6;color:#1a1a2e}
-.hd{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #ddd;padding:12px 20px}.hd h1{font-size:14px;color:var(--d)}.hd .m{font-size:11px;color:#999}
+.hd{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #ddd;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}.hd h1{font-size:14px;color:var(--d)}.hd .m{font-size:11px;color:#999}
+.nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.nav .nlab{font-size:11px;color:#999;margin-right:2px}.nav a{font-size:11px;font-weight:600;color:var(--p);text-decoration:none;padding:5px 12px;border:1px solid var(--l);border-radius:20px;background:#fff}.nav a:hover{background:var(--l)}
 .wrap{max-width:1100px;margin:0 auto;padding:16px}
 .info{background:#fff;padding:14px 18px;border-radius:10px;font-size:12px;line-height:1.7;margin-bottom:12px}.info b{color:var(--p)}.info .src{font-size:10px;color:#999;word-break:break-all}
-.timing{background:#1a1a2e;color:#fff;padding:12px 18px;border-radius:10px;font-size:12px;margin-bottom:12px}.timing b{color:#7fd1ff;font-size:14px}.tbar{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.tbar span{background:rgba(255,255,255,.1);padding:3px 8px;border-radius:5px;font-size:10px}.tnote{margin-top:6px;font-size:10px;color:#999}
-.resource{background:#fff;border-radius:10px;padding:14px 18px;margin-bottom:12px}.resource h2{font-size:12px;color:var(--d);margin-bottom:10px}.rgrid{display:flex;gap:10px;flex-wrap:wrap}.rgrid figure{width:120px;font-size:9px;color:#777;text-align:center}.rgrid img{width:120px;height:120px;object-fit:contain;background:#fafafa;border:1px solid #eee;border-radius:6px}.rgrid figcaption{margin-top:3px}
-.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px;align-items:start}
-.compare .col{background:#fff;border-radius:10px;overflow:hidden}
-.compare .ctitle{position:sticky;top:0;z-index:5;padding:9px 14px;font-size:12px;font-weight:700;color:var(--d);background:var(--l);border-bottom:1px solid #eee}
-.compare .cbody img{width:100%;height:auto;display:block;vertical-align:top}
-.log{background:#fff;border-radius:10px;padding:16px}.log h2{font-size:12px;color:var(--d);margin-bottom:10px}
+.flow{background:#161629;color:#fff;padding:16px 18px;border-radius:10px;margin-bottom:12px}.flow h2{font-size:13px;color:#7fd1ff;margin-bottom:10px}.flow h2 small{color:#888;font-weight:400}.fpre{font-size:10px;color:#aaa;margin-bottom:12px;line-height:1.6}.fpre b{color:#ddd;font-weight:600}
+.fgen{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.fb{background:#2a2a45;border-radius:8px;padding:8px 12px;font-size:12px;font-weight:700;text-align:center;min-width:64px}.fb em{display:block;font-style:normal;font-size:11px;color:#7fd1ff;font-weight:600;margin-top:2px}.fb small{display:block;font-size:8px;color:#888}.fb.dir{background:#3a3a5c}.fb.crit{background:#5c2a2a;outline:1px solid #a44}.farr{color:#666;font-size:14px}
+.fpar{border:1px dashed #556;border-radius:10px;padding:18px 10px 8px;display:flex;gap:6px;position:relative}.fparl{position:absolute;top:-9px;left:10px;background:#161629;font-size:9px;color:#7fd1ff;padding:0 6px}.fpar .fb.p{background:#243a4a}
+.fnote{margin-top:12px;font-size:10px;color:#bbb;line-height:1.6}
+.resource{background:#fff;border-radius:10px;padding:14px 18px;margin-bottom:12px}.resource h2{font-size:12px;color:var(--d);margin-bottom:10px}.rgrid{display:flex;gap:10px;flex-wrap:wrap}.rgrid figure{width:140px;font-size:9px;color:#777;text-align:center}.rgrid img{width:140px;height:120px;object-fit:contain;background:#fafafa;border:1px solid #eee;border-radius:6px}.rgrid figcaption{margin-top:3px}
+.log{background:#fff;border-radius:10px;padding:16px;margin-bottom:12px}.log h2{font-size:12px;color:var(--d);margin-bottom:10px}
 details{border:1px solid #eee;border-radius:6px;margin-bottom:6px}summary{padding:8px 10px;cursor:pointer;font-size:11px;background:#fafafa}summary b{color:var(--p)}summary em{float:right;font-style:normal;color:#999}summary em.success{color:#22c55e}summary em.failed{color:var(--a)}
 details h5{font-size:10px;color:var(--p);margin:8px 10px 4px;text-transform:uppercase}details pre{font-size:10px;padding:10px;margin:0 10px;white-space:pre-wrap;color:#555;background:#f8f6fc;max-height:240px;overflow:auto;border-radius:4px}
 .refs{display:flex;gap:6px;flex-wrap:wrap;padding:0 10px}.refs figure{width:88px;font-size:8px;color:#888;text-align:center}.refs img{width:88px;height:88px;object-fit:contain;background:#fafafa;border:1px solid #eee;border-radius:4px}.refs figcaption{margin-top:2px;word-break:break-all}
-details .res{width:100%;max-height:340px;object-fit:contain;padding:8px 10px}</style></head><body>
-<div class="hd"><h1>AIR 스포츠슬리퍼 에어 스포츠 슬리퍼</h1><div class="m">v9 preset · ref_preset_1 · preset-1780975224278 · 커버✓ · 8/8섹션</div></div>
+details .res{width:100%;max-height:340px;object-fit:contain;padding:8px 10px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.compare .col{background:#fff;border-radius:10px;overflow:hidden}
+.compare .ctitle{position:sticky;top:0;z-index:5;padding:9px 14px;font-size:12px;font-weight:700;color:var(--d);background:var(--l);border-bottom:1px solid #eee}
+.compare .cbody img{width:100%;height:auto;display:block;vertical-align:top}
+.shead{font-size:13px;font-weight:700;color:var(--d);margin:4px 0 10px}</style></head><body>
+<div class="hd"><h1>AIR 스포츠슬리퍼 에어 스포츠 슬리퍼</h1><div class="nav"><span class="nlab">📑 샘플</span><a href="../v9-gumbamall-slipper/">슬리퍼 (네이버)</a><a href="../v9-oy-cream/">수분크림 (올리브영)</a><a href="../v9-oy-fan/">선풍기 (올리브영)</a></div></div>
 <div class="wrap">
-<div class="info"><b>남녀공용 3cm 에어 스포츠 슬리퍼 1P 화이트/블랙 푹신한 사무실 실내화 빅사이즈</b><br>패션잡화/신발 > 슬리퍼/샌들<br>프리셋 ref_preset_1 (레이아웃·타이포·DS) · 색·제품·콘텐츠 = 타겟<br><span class="src">소스: https://smartstore.naver.com/gumbamall/products/11086537551</span></div>
-<div class="timing"><b>⏱ 총 417s</b> · 디렉터 19s · 생성(병렬) 398s
-    <div class="tbar">
-      <span>TT 170.1s</span><span>DS 173.6s</span><span>커버 225.9s</span>
-      <span>S1 109.0s</span><span>S2 102.7s</span><span>S3 115.8s</span><span>S4 118.1s</span><span>S5 103.3s</span><span>S6 117.9s</span><span>S7 111.0s</span><span>S8 112.5s</span>
+<div class="info"><b>남녀공용 3cm 에어 스포츠 슬리퍼 1P 화이트/블랙 푹신한 사무실 실내화 빅사이즈</b> · 패션잡화/신발 > 슬리퍼/샌들<br>프리셋 ref_preset_1 (레이아웃·타이포·DS) · 색·제품·콘텐츠 = 타겟 · 8/8섹션<br><span class="src">소스: https://smartstore.naver.com/gumbamall/products/11086537551</span></div>
+<div class="flow">
+    <h2>⚙️ 전체 공정 흐름 <small>(총 417s)</small></h2>
+    <div class="fpre">사전 1회 (직렬): <b>URL 스크랩</b> → <b>전처리·비전</b> → <b>콘텐츠 합성</b> → <b>제품 형태비전 + 추출</b> → <b>프리셋 분석</b></div>
+    <div class="fgen">
+      <div class="fb dir">① 디렉터<em>19s</em></div>
+      <div class="farr">→</div>
+      <div class="fpar"><div class="fparl">⫶ 병렬 동시 생성</div>
+        <div class="fb p">TT<em>170.1s</em></div>
+        <div class="fb p">DS<em>173.6s</em></div>
+        <div class="fb p">섹션 ×8<em>103~118s</em></div>
+      </div>
+      <div class="farr">→</div>
+      <div class="fb crit">커버<em>225.9s</em><small>TT 후</small></div>
+      <div class="farr">→</div>
+      <div class="fb">HTML</div>
     </div>
-    <div class="tnote">병렬 임계경로 ≈ TT→커버 체인 · 최장 단건 225.9s</div>
+    <div class="fnote">🔴 임계경로 = 디렉터(19s) → TT(170.1s) → 커버(225.9s). DS·섹션은 그 안에서 병렬로 끝남. 직렬은 디렉터/커버, 나머지는 전부 병렬.</div>
   </div>
-<div class="compare">
-  <div class="col"><div class="ctitle">📄 원본 (네이버 상세이미지 10장)</div><div class="cbody"><img src="assets/a001.png" loading="lazy"/><img src="assets/a002.jpg" loading="lazy"/><img src="assets/a003.jpg" loading="lazy"/><img src="assets/a004.jpg" loading="lazy"/><img src="assets/a005.jpg" loading="lazy"/><img src="assets/a006.jpg" loading="lazy"/><img src="assets/a007.jpg" loading="lazy"/><img src="assets/a008.jpg" loading="lazy"/><img src="assets/a009.jpg" loading="lazy"/><img src="assets/a010.jpg" loading="lazy"/></div></div>
-  <div class="col"><div class="ctitle">✨ 우리 생성 (v9 · 커버+섹션 8)</div><div class="cbody"><img src="assets/a011.png"/><img src="assets/a012.png" loading="lazy"/><img src="assets/a013.png" loading="lazy"/><img src="assets/a014.png" loading="lazy"/><img src="assets/a015.png" loading="lazy"/><img src="assets/a016.png" loading="lazy"/><img src="assets/a017.png" loading="lazy"/><img src="assets/a018.png" loading="lazy"/><img src="assets/a019.png" loading="lazy"/></div></div>
-</div>
-<div class="resource"><h2>🧰 전처리 리소스 (생성에 사용된 재료)</h2><div class="rgrid"><figure><img src="assets/a020.png"/><figcaption>TT (타이틀 트리트먼트)</figcaption></figure><figure><img src="assets/a021.png"/><figcaption>DS 디자인시트</figcaption></figure><figure><img src="assets/a022.jpg"/><figcaption>제품 사진 시트 (16:9 4K)</figcaption></figure></div></div>
-<div class="log"><h2>📦 생성 페이로드 (첨부 image_urls + 프롬프트)</h2><details><summary><b>TT</b> Title Treatment <em class="success">✓ 170.1s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a023.jpg"/><figcaption>blank-canvas</figcaption></figure></div>
+<div class="resource"><h2>🧰 전처리 리소스 (생성에 쓴 재료: TT·DS·제품시트)</h2><div class="rgrid"><figure><img src="assets/a001.png"/><figcaption>TT (타이틀 트리트먼트)</figcaption></figure><figure><img src="assets/a002.png"/><figcaption>DS 디자인시트</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품 사진 시트</figcaption></figure></div></div>
+<div class="log"><h2>📦 생성 페이로드 (각 컷의 첨부 image_urls + 프롬프트)</h2><details><summary><b>TT</b> Title Treatment <em class="success">✓ 170.1s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a004.jpg"/><figcaption>blank-canvas</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Create a TITLE TREATMENT typographic lockup (no product photo, typography + minimal decoration only) on this blank canvas.
 Preset typography style to follow: 제목은 매우 크고 굵은 고딕체(산세리프), 둥근 모서리 처리. 한글과 영어가 혼용되어 사용됨. 영어 서브 텍스트는 기울기(skew) 효과가 적용됨. Decorative motifs allowed (subtle): 여름/해변 테마(조개, 야자수 잎, 불가사리)와 제품 특징을 설명하는 기능적 그래픽(화살표, 선, 유연성을 나타내는 물결선)이 사용됩니다..
 DESIGN SYSTEM — apply these exact recurring design elements (inherited from preset, recolored to product palette):
@@ -58,8 +70,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • AIR 스포츠슬리퍼
 • 3cm 에어 쿠션 스포츠 슬리퍼
 • 스펀지를 밟는 듯한 푹신함, 사무실부터 일상까지 편안하게</pre>
-<h5>결과</h5><img class="res" src="assets/a020.png"/></details><details><summary><b>DS</b> Design System 시트 <em class="success">✓ 173.6s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a024.jpg"/><figcaption>blank-canvas</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a001.png"/></details><details><summary><b>DS</b> Design System 시트 <em class="success">✓ 173.6s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a005.jpg"/><figcaption>blank-canvas</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Design a clean, polished DESIGN SYSTEM style-guide page (like a brand guideline sheet) on this white canvas.
 Use GENEROUS whitespace and LARGE, perfectly legible labels. Lay it out as a FEW clearly separated panels — do NOT cram many tiny elements, do NOT stretch or squash any text. Each element fully designed and crisp.
 Panels (recolored to the product palette):
@@ -71,8 +83,8 @@ Panels (recolored to the product palette):
 6) Typography sample — 한글/영문 모두 현대적인 산세리프체를 사용합니다. 제목은 매우 굵고 약간 둥근 형태이며, 본문 텍스트는 보통 굵기입니다. 굵은 제목과 보통 굵기의 본문 텍스트 간의 대비가 뚜렷합니다.
 ⛔ NO buttons, NO "수량 선택"/"구매"/"장바구니"/CTA, no commerce widgets. ⛔ No tiny cramped text, no stretched/warped letters.
 Clean, spacious, ultra-sharp, white background.</pre>
-<h5>결과</h5><img class="res" src="assets/a021.png"/></details><details><summary><b>00</b> 커버 <em class="success">✓ 225.9s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a025.jpg"/><figcaption>preset-cover(layout)</figcaption></figure><figure><img src="assets/a020.png"/><figcaption>TT(title)</figcaption></figure><figure><img src="assets/a022.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a002.png"/></details><details><summary><b>00</b> 커버 <em class="success">✓ 225.9s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a006.jpg"/><figcaption>preset-cover(layout)</figcaption></figure><figure><img src="assets/a001.png"/><figcaption>TT(title)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Compose a clean HERO banner (cover). This is ONLY the hero — NOT a feature summary.
 - FIRST ref = preset cover = hero LAYOUT (product hero placement + decoration). Hero composition only.
 - SECOND ref = TITLE TREATMENT = place this title lockup AS-IS as the cover title. Do NOT redraw, restyle, or regenerate the typography — reuse the given lockup directly.
@@ -91,8 +103,8 @@ STYLE RULES:
 VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, zero malformed syllables:
 • 3cm 에어 쿠션 스포츠 슬리퍼
 • 스펀지를 밟는 듯한 푹신함, 사무실부터 일상까지 편안하게</pre>
-<h5>결과</h5><img class="res" src="assets/a011.png"/></details><details><summary><b>01</b> 핵심 기술: 3cm 에어 쿠션 시스템 <em class="success">✓ 109.0s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a026.jpg"/><figcaption>preset-section_1.jpg(layout)</figcaption></figure><figure><img src="assets/a022.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a007.png"/></details><details><summary><b>01</b> 핵심 기술: 3cm 에어 쿠션 시스템 <em class="success">✓ 109.0s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a008.jpg"/><figcaption>preset-section_1.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 남녀공용 슬리퍼 형태. 발등 부분에 'Air-shoes SPORT' 로고가 새겨진 일체형 PVC 몰딩 구조. 3cm 두께의 에어쿠션 미드솔과 미끄럼 방지 아웃솔. 블랙/화이트 2가지 컬러. 심플하고 스포티한 디자인으로 앞코가 둥글고 발볼 여유가 있는 형태..
@@ -131,8 +143,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 경량 EVA 소재로 장시간 착용해도 발 피로 최소화
 • 스펀지 밟는 듯한 부드러운 신축성과 복원력
 • 미드솔 두께 3.0cm / EVA 소재</pre>
-<h5>결과</h5><img class="res" src="assets/a012.png"/></details><details><summary><b>02</b> 화이트 & 블랙 베이직 컬러 <em class="success">✓ 102.7s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a027.jpg"/><figcaption>preset-section_2.jpg(layout)</figcaption></figure><figure><img src="assets/a022.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a009.png"/></details><details><summary><b>02</b> 화이트 & 블랙 베이직 컬러 <em class="success">✓ 102.7s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a010.jpg"/><figcaption>preset-section_2.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 남녀공용 슬리퍼 형태. 발등 부분에 'Air-shoes SPORT' 로고가 새겨진 일체형 PVC 몰딩 구조. 3cm 두께의 에어쿠션 미드솔과 미끄럼 방지 아웃솔. 블랙/화이트 2가지 컬러. 심플하고 스포티한 디자인으로 앞코가 둥글고 발볼 여유가 있는 형태..
@@ -171,8 +183,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 발등 'Air-shoes SPORT' 로고 포인트
 • 스포티하면서도 깔끔한 디자인
 • 컬러 옵션: 화이트, 블랙 2종</pre>
-<h5>결과</h5><img class="res" src="assets/a013.png"/></details><details><summary><b>03</b> 논슬립 아웃솔 & 안전 설계 <em class="success">✓ 115.8s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a028.jpg"/><figcaption>preset-section_3.jpg(layout)</figcaption></figure><figure><img src="assets/a022.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a011.png"/></details><details><summary><b>03</b> 논슬립 아웃솔 & 안전 설계 <em class="success">✓ 115.8s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a012.jpg"/><figcaption>preset-section_3.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 남녀공용 슬리퍼 형태. 발등 부분에 'Air-shoes SPORT' 로고가 새겨진 일체형 PVC 몰딩 구조. 3cm 두께의 에어쿠션 미드솔과 미끄럼 방지 아웃솔. 블랙/화이트 2가지 컬러. 심플하고 스포티한 디자인으로 앞코가 둥글고 발볼 여유가 있는 형태..
@@ -211,8 +223,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 에어홀 구조로 통기성 확보 및 쾌적한 착용감
 • 젖은 바닥에서도 안정적인 그립력
 • 아웃솔: 합성고무 논슬립 처리</pre>
-<h5>결과</h5><img class="res" src="assets/a014.png"/></details><details><summary><b>04</b> PVC 일체형 몰딩 구조 <em class="success">✓ 118.1s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a029.jpg"/><figcaption>preset-section_4.jpg(layout)</figcaption></figure><figure><img src="assets/a022.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a013.png"/></details><details><summary><b>04</b> PVC 일체형 몰딩 구조 <em class="success">✓ 118.1s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a014.jpg"/><figcaption>preset-section_4.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 남녀공용 슬리퍼 형태. 발등 부분에 'Air-shoes SPORT' 로고가 새겨진 일체형 PVC 몰딩 구조. 3cm 두께의 에어쿠션 미드솔과 미끄럼 방지 아웃솔. 블랙/화이트 2가지 컬러. 심플하고 스포티한 디자인으로 앞코가 둥글고 발볼 여유가 있는 형태..
@@ -252,7 +264,7 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 발볼 넓은 분들도 편하게 착용 가능한 넉넉한 핏
 • 구조: PVC 일체형 몰딩 / 발볼 여유 설계</pre>
 <h5>결과</h5><img class="res" src="assets/a015.png"/></details><details><summary><b>05</b> 230~295mm 빅사이즈 7단계 <em class="success">✓ 103.3s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a030.jpg"/><figcaption>preset-section_5.jpg(layout)</figcaption></figure><figure><img src="assets/a022.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a016.jpg"/><figcaption>preset-section_5.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 남녀공용 슬리퍼 형태. 발등 부분에 'Air-shoes SPORT' 로고가 새겨진 일체형 PVC 몰딩 구조. 3cm 두께의 에어쿠션 미드솔과 미끄럼 방지 아웃솔. 블랙/화이트 2가지 컬러. 심플하고 스포티한 디자인으로 앞코가 둥글고 발볼 여유가 있는 형태..
@@ -291,8 +303,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 남녀공용 디자인으로 가족 구성원 모두 착용 가능
 • 후기 기반 정사이즈 착용 권장
 • 사이즈: 36/38/40/42/44/46/48호 7단계 / 230~295mm</pre>
-<h5>결과</h5><img class="res" src="assets/a016.png"/></details><details><summary><b>06</b> 화이트 컬러 상세 뷰 <em class="success">✓ 117.9s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a031.jpg"/><figcaption>preset-section_6.jpg(layout)</figcaption></figure><figure><img src="assets/a022.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a017.png"/></details><details><summary><b>06</b> 화이트 컬러 상세 뷰 <em class="success">✓ 117.9s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a018.jpg"/><figcaption>preset-section_6.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 남녀공용 슬리퍼 형태. 발등 부분에 'Air-shoes SPORT' 로고가 새겨진 일체형 PVC 몰딩 구조. 3cm 두께의 에어쿠션 미드솔과 미끄럼 방지 아웃솔. 블랙/화이트 2가지 컬러. 심플하고 스포티한 디자인으로 앞코가 둥글고 발볼 여유가 있는 형태..
@@ -331,8 +343,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 사무실·병원·학교 등 공식 공간에 적합
 • 오염 관리만 잘하면 오래 착용 가능한 내구성
 • 화이트 컬러 전용 상세 이미지</pre>
-<h5>결과</h5><img class="res" src="assets/a017.png"/></details><details><summary><b>07</b> 블랙 컬러 다각도 디테일 <em class="success">✓ 111.0s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a032.jpg"/><figcaption>preset-section_7.jpg(layout)</figcaption></figure><figure><img src="assets/a022.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a019.png"/></details><details><summary><b>07</b> 블랙 컬러 다각도 디테일 <em class="success">✓ 111.0s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a020.jpg"/><figcaption>preset-section_7.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 남녀공용 슬리퍼 형태. 발등 부분에 'Air-shoes SPORT' 로고가 새겨진 일체형 PVC 몰딩 구조. 3cm 두께의 에어쿠션 미드솔과 미끄럼 방지 아웃솔. 블랙/화이트 2가지 컬러. 심플하고 스포티한 디자인으로 앞코가 둥글고 발볼 여유가 있는 형태..
@@ -371,8 +383,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 헬스장 샤워실, 집안 거실화로 활용도 높음
 • 측면·밑창·발등 각도별 디테일 확인
 • 블랙 컬러 다각도 상세 이미지</pre>
-<h5>결과</h5><img class="res" src="assets/a018.png"/></details><details><summary><b>08</b> 다용도 실내외 활용 시나리오 <em class="success">✓ 112.5s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a033.jpg"/><figcaption>preset-section_8.jpg(layout)</figcaption></figure><figure><img src="assets/a022.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a021.png"/></details><details><summary><b>08</b> 다용도 실내외 활용 시나리오 <em class="success">✓ 112.5s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a022.jpg"/><figcaption>preset-section_8.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 남녀공용 슬리퍼 형태. 발등 부분에 'Air-shoes SPORT' 로고가 새겨진 일체형 PVC 몰딩 구조. 3cm 두께의 에어쿠션 미드솔과 미끄럼 방지 아웃솔. 블랙/화이트 2가지 컬러. 심플하고 스포티한 디자인으로 앞코가 둥글고 발볼 여유가 있는 형태..
@@ -411,5 +423,10 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 헬스장·수영장 샤워실, 병원·학교 실내 공간
 • 여름철 가벼운 외출용 샌들 대체 가능
 • 후기 6건 / 정사이즈 착용감 만족 / 재구매 의사 높음</pre>
-<h5>결과</h5><img class="res" src="assets/a019.png"/></details></div>
+<h5>결과</h5><img class="res" src="assets/a023.png"/></details></div>
+<div class="shead">🖼️ 시안 비교 — 좌: 원본 / 우: 생성 (스크롤 동기화)</div>
+<div class="compare">
+  <div class="col"><div class="ctitle">📄 원본 (상세이미지 10장)</div><div class="cbody"><img src="assets/a024.png" loading="lazy"/><img src="assets/a025.jpg" loading="lazy"/><img src="assets/a026.jpg" loading="lazy"/><img src="assets/a027.jpg" loading="lazy"/><img src="assets/a028.jpg" loading="lazy"/><img src="assets/a029.jpg" loading="lazy"/><img src="assets/a030.jpg" loading="lazy"/><img src="assets/a031.jpg" loading="lazy"/><img src="assets/a032.jpg" loading="lazy"/><img src="assets/a033.jpg" loading="lazy"/></div></div>
+  <div class="col"><div class="ctitle">✨ 우리 생성 (v9 · 커버+섹션 8)</div><div class="cbody"><img src="assets/a007.png"/><img src="assets/a009.png" loading="lazy"/><img src="assets/a011.png" loading="lazy"/><img src="assets/a013.png" loading="lazy"/><img src="assets/a015.png" loading="lazy"/><img src="assets/a017.png" loading="lazy"/><img src="assets/a019.png" loading="lazy"/><img src="assets/a021.png" loading="lazy"/><img src="assets/a023.png" loading="lazy"/></div></div>
+</div>
 </div></body></html>

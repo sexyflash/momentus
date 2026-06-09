@@ -1,37 +1,49 @@
 <!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>알로코리아 (alloKOREA) 아이스터보 FA3 — v9 preset</title>
 <style>:root{--p:#00A8E1;--s:#1E3A8A;--d:#0F172A;--l:#F0F9FF;--a:#00D4FF}
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:#F4F4F6;color:#1a1a2e}
-.hd{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #ddd;padding:12px 20px}.hd h1{font-size:14px;color:var(--d)}.hd .m{font-size:11px;color:#999}
+.hd{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #ddd;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}.hd h1{font-size:14px;color:var(--d)}.hd .m{font-size:11px;color:#999}
+.nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.nav .nlab{font-size:11px;color:#999;margin-right:2px}.nav a{font-size:11px;font-weight:600;color:var(--p);text-decoration:none;padding:5px 12px;border:1px solid var(--l);border-radius:20px;background:#fff}.nav a:hover{background:var(--l)}
 .wrap{max-width:1100px;margin:0 auto;padding:16px}
 .info{background:#fff;padding:14px 18px;border-radius:10px;font-size:12px;line-height:1.7;margin-bottom:12px}.info b{color:var(--p)}.info .src{font-size:10px;color:#999;word-break:break-all}
-.timing{background:#1a1a2e;color:#fff;padding:12px 18px;border-radius:10px;font-size:12px;margin-bottom:12px}.timing b{color:#7fd1ff;font-size:14px}.tbar{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.tbar span{background:rgba(255,255,255,.1);padding:3px 8px;border-radius:5px;font-size:10px}.tnote{margin-top:6px;font-size:10px;color:#999}
-.resource{background:#fff;border-radius:10px;padding:14px 18px;margin-bottom:12px}.resource h2{font-size:12px;color:var(--d);margin-bottom:10px}.rgrid{display:flex;gap:10px;flex-wrap:wrap}.rgrid figure{width:120px;font-size:9px;color:#777;text-align:center}.rgrid img{width:120px;height:120px;object-fit:contain;background:#fafafa;border:1px solid #eee;border-radius:6px}.rgrid figcaption{margin-top:3px}
-.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px;align-items:start}
-.compare .col{background:#fff;border-radius:10px;overflow:hidden}
-.compare .ctitle{position:sticky;top:0;z-index:5;padding:9px 14px;font-size:12px;font-weight:700;color:var(--d);background:var(--l);border-bottom:1px solid #eee}
-.compare .cbody img{width:100%;height:auto;display:block;vertical-align:top}
-.log{background:#fff;border-radius:10px;padding:16px}.log h2{font-size:12px;color:var(--d);margin-bottom:10px}
+.flow{background:#161629;color:#fff;padding:16px 18px;border-radius:10px;margin-bottom:12px}.flow h2{font-size:13px;color:#7fd1ff;margin-bottom:10px}.flow h2 small{color:#888;font-weight:400}.fpre{font-size:10px;color:#aaa;margin-bottom:12px;line-height:1.6}.fpre b{color:#ddd;font-weight:600}
+.fgen{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.fb{background:#2a2a45;border-radius:8px;padding:8px 12px;font-size:12px;font-weight:700;text-align:center;min-width:64px}.fb em{display:block;font-style:normal;font-size:11px;color:#7fd1ff;font-weight:600;margin-top:2px}.fb small{display:block;font-size:8px;color:#888}.fb.dir{background:#3a3a5c}.fb.crit{background:#5c2a2a;outline:1px solid #a44}.farr{color:#666;font-size:14px}
+.fpar{border:1px dashed #556;border-radius:10px;padding:18px 10px 8px;display:flex;gap:6px;position:relative}.fparl{position:absolute;top:-9px;left:10px;background:#161629;font-size:9px;color:#7fd1ff;padding:0 6px}.fpar .fb.p{background:#243a4a}
+.fnote{margin-top:12px;font-size:10px;color:#bbb;line-height:1.6}
+.resource{background:#fff;border-radius:10px;padding:14px 18px;margin-bottom:12px}.resource h2{font-size:12px;color:var(--d);margin-bottom:10px}.rgrid{display:flex;gap:10px;flex-wrap:wrap}.rgrid figure{width:140px;font-size:9px;color:#777;text-align:center}.rgrid img{width:140px;height:120px;object-fit:contain;background:#fafafa;border:1px solid #eee;border-radius:6px}.rgrid figcaption{margin-top:3px}
+.log{background:#fff;border-radius:10px;padding:16px;margin-bottom:12px}.log h2{font-size:12px;color:var(--d);margin-bottom:10px}
 details{border:1px solid #eee;border-radius:6px;margin-bottom:6px}summary{padding:8px 10px;cursor:pointer;font-size:11px;background:#fafafa}summary b{color:var(--p)}summary em{float:right;font-style:normal;color:#999}summary em.success{color:#22c55e}summary em.failed{color:var(--a)}
 details h5{font-size:10px;color:var(--p);margin:8px 10px 4px;text-transform:uppercase}details pre{font-size:10px;padding:10px;margin:0 10px;white-space:pre-wrap;color:#555;background:#f8f6fc;max-height:240px;overflow:auto;border-radius:4px}
 .refs{display:flex;gap:6px;flex-wrap:wrap;padding:0 10px}.refs figure{width:88px;font-size:8px;color:#888;text-align:center}.refs img{width:88px;height:88px;object-fit:contain;background:#fafafa;border:1px solid #eee;border-radius:4px}.refs figcaption{margin-top:2px;word-break:break-all}
-details .res{width:100%;max-height:340px;object-fit:contain;padding:8px 10px}</style></head><body>
-<div class="hd"><h1>알로코리아 (alloKOREA) 아이스터보 FA3</h1><div class="m">v9 preset · ref_preset_3 · preset-1780978891957 · 커버✓ · 10/10섹션</div></div>
+details .res{width:100%;max-height:340px;object-fit:contain;padding:8px 10px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.compare .col{background:#fff;border-radius:10px;overflow:hidden}
+.compare .ctitle{position:sticky;top:0;z-index:5;padding:9px 14px;font-size:12px;font-weight:700;color:var(--d);background:var(--l);border-bottom:1px solid #eee}
+.compare .cbody img{width:100%;height:auto;display:block;vertical-align:top}
+.shead{font-size:13px;font-weight:700;color:var(--d);margin:4px 0 10px}</style></head><body>
+<div class="hd"><h1>알로코리아 (alloKOREA) 아이스터보 FA3</h1><div class="nav"><span class="nlab">📑 샘플</span><a href="../v9-gumbamall-slipper/">슬리퍼 (네이버)</a><a href="../v9-oy-cream/">수분크림 (올리브영)</a><a href="../v9-oy-fan/">선풍기 (올리브영)</a></div></div>
 <div class="wrap">
-<div class="info"><b>알로코리아 아이스터보 냉각 제트 휴대용 선풍기 FA3</b><br>디지털/기기 > 손선풍기/손난로<br>프리셋 ref_preset_3 (레이아웃·타이포·DS) · 색·제품·콘텐츠 = 타겟<br><span class="src">소스: https://www.oliveyoung.co.kr/store/goods/getGoodsDetail.do?goodsNo=B000000227071&dispCatNo=1000003000600040010</span></div>
-<div class="timing"><b>⏱ 총 369s</b> · 디렉터 25s · 생성(병렬) 344s
-    <div class="tbar">
-      <span>TT 159.4s</span><span>DS 163.5s</span><span>커버 183.5s</span>
-      <span>S1 98.9s</span><span>S2 94.7s</span><span>S3 96.8s</span><span>S4 91.7s</span><span>S5 103.9s</span><span>S6 91.7s</span><span>S7 128.5s</span><span>S8 110.9s</span><span>S9 125.6s</span><span>S10 97.6s</span>
+<div class="info"><b>알로코리아 아이스터보 냉각 제트 휴대용 선풍기 FA3</b> · 디지털/기기 > 손선풍기/손난로<br>프리셋 ref_preset_3 (레이아웃·타이포·DS) · 색·제품·콘텐츠 = 타겟 · 10/10섹션<br><span class="src">소스: https://www.oliveyoung.co.kr/store/goods/getGoodsDetail.do?goodsNo=B000000227071&dispCatNo=1000003000600040010</span></div>
+<div class="flow">
+    <h2>⚙️ 전체 공정 흐름 <small>(총 369s)</small></h2>
+    <div class="fpre">사전 1회 (직렬): <b>URL 스크랩</b> → <b>전처리·비전</b> → <b>콘텐츠 합성</b> → <b>제품 형태비전 + 추출</b> → <b>프리셋 분석</b></div>
+    <div class="fgen">
+      <div class="fb dir">① 디렉터<em>25s</em></div>
+      <div class="farr">→</div>
+      <div class="fpar"><div class="fparl">⫶ 병렬 동시 생성</div>
+        <div class="fb p">TT<em>159.4s</em></div>
+        <div class="fb p">DS<em>163.5s</em></div>
+        <div class="fb p">섹션 ×10<em>92~129s</em></div>
+      </div>
+      <div class="farr">→</div>
+      <div class="fb crit">커버<em>183.5s</em><small>TT 후</small></div>
+      <div class="farr">→</div>
+      <div class="fb">HTML</div>
     </div>
-    <div class="tnote">병렬 임계경로 ≈ TT→커버 체인 · 최장 단건 183.5s</div>
+    <div class="fnote">🔴 임계경로 = 디렉터(25s) → TT(159.4s) → 커버(183.5s). DS·섹션은 그 안에서 병렬로 끝남. 직렬은 디렉터/커버, 나머지는 전부 병렬.</div>
   </div>
-<div class="compare">
-  <div class="col"><div class="ctitle">📄 원본 (네이버 상세이미지 31장)</div><div class="cbody"><img src="assets/a001.jpg" loading="lazy"/><img src="assets/a002.jpg" loading="lazy"/><img src="assets/a003.jpg" loading="lazy"/><img src="assets/a004.jpg" loading="lazy"/><img src="assets/a005.jpg" loading="lazy"/><img src="assets/a006.jpg" loading="lazy"/><img src="assets/a007.jpg" loading="lazy"/><img src="assets/a008.jpg" loading="lazy"/><img src="assets/a009.jpg" loading="lazy"/><img src="assets/a010.jpg" loading="lazy"/><img src="assets/a011.jpg" loading="lazy"/><img src="assets/a012.jpg" loading="lazy"/><img src="assets/a013.jpg" loading="lazy"/><img src="assets/a014.jpg" loading="lazy"/><img src="assets/a015.jpg" loading="lazy"/><img src="assets/a016.jpg" loading="lazy"/><img src="assets/a017.jpg" loading="lazy"/><img src="assets/a018.jpg" loading="lazy"/><img src="assets/a019.jpg" loading="lazy"/><img src="assets/a020.jpg" loading="lazy"/><img src="assets/a021.jpg" loading="lazy"/><img src="assets/a022.jpg" loading="lazy"/><img src="assets/a023.jpg" loading="lazy"/><img src="assets/a024.jpg" loading="lazy"/><img src="assets/a025.jpg" loading="lazy"/><img src="assets/a026.jpg" loading="lazy"/><img src="assets/a027.jpg" loading="lazy"/><img src="assets/a028.jpg" loading="lazy"/><img src="assets/a029.jpg" loading="lazy"/><img src="assets/a030.jpg" loading="lazy"/><img src="assets/a031.jpg" loading="lazy"/></div></div>
-  <div class="col"><div class="ctitle">✨ 우리 생성 (v9 · 커버+섹션 10)</div><div class="cbody"><img src="assets/a032.png"/><img src="assets/a033.png" loading="lazy"/><img src="assets/a034.png" loading="lazy"/><img src="assets/a035.png" loading="lazy"/><img src="assets/a036.png" loading="lazy"/><img src="assets/a037.png" loading="lazy"/><img src="assets/a038.png" loading="lazy"/><img src="assets/a039.png" loading="lazy"/><img src="assets/a040.png" loading="lazy"/><img src="assets/a041.png" loading="lazy"/><img src="assets/a042.png" loading="lazy"/></div></div>
-</div>
-<div class="resource"><h2>🧰 전처리 리소스 (생성에 사용된 재료)</h2><div class="rgrid"><figure><img src="assets/a043.png"/><figcaption>TT (타이틀 트리트먼트)</figcaption></figure><figure><img src="assets/a044.png"/><figcaption>DS 디자인시트</figcaption></figure><figure><img src="assets/a045.jpg"/><figcaption>제품 사진 시트 (16:9 4K)</figcaption></figure></div></div>
-<div class="log"><h2>📦 생성 페이로드 (첨부 image_urls + 프롬프트)</h2><details><summary><b>TT</b> Title Treatment <em class="success">✓ 159.4s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a046.jpg"/><figcaption>blank-canvas</figcaption></figure></div>
+<div class="resource"><h2>🧰 전처리 리소스 (생성에 쓴 재료: TT·DS·제품시트)</h2><div class="rgrid"><figure><img src="assets/a001.png"/><figcaption>TT (타이틀 트리트먼트)</figcaption></figure><figure><img src="assets/a002.png"/><figcaption>DS 디자인시트</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품 사진 시트</figcaption></figure></div></div>
+<div class="log"><h2>📦 생성 페이로드 (각 컷의 첨부 image_urls + 프롬프트)</h2><details><summary><b>TT</b> Title Treatment <em class="success">✓ 159.4s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a004.jpg"/><figcaption>blank-canvas</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Create a TITLE TREATMENT typographic lockup (no product photo, typography + minimal decoration only) on this blank canvas.
 Preset typography style to follow: 메인 제목은 매우 크고 굵은 산세리프체, 모두 대문자. 보조 텍스트는 작고 보통 굵기의 산세리프체, 모두 대문자. 모두 영문.. Decorative motifs allowed (subtle): 얇은 원형 테두리 안에 단순한 라인 아트 스타일의 아이콘이 사용됩니다. 아이콘은 단색(짙은 회색/검정)이며, 제품의 특징이나 기능을 시각적으로 표현하는 데 활용됩니다..
 DESIGN SYSTEM — apply these exact recurring design elements (inherited from preset, recolored to product palette):
@@ -58,8 +70,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 알로코리아 (alloKOREA)
 • 3초 급속 냉각, 100단계 터보 바람
 • 얼음처럼 차가운 쿨링패드와 최대 9m 도달하는 초강력 제트 바람으로 폭염을 이겨내는 프리미엄 휴대용 선풍기</pre>
-<h5>결과</h5><img class="res" src="assets/a043.png"/></details><details><summary><b>DS</b> Design System 시트 <em class="success">✓ 163.5s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a047.jpg"/><figcaption>blank-canvas</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a001.png"/></details><details><summary><b>DS</b> Design System 시트 <em class="success">✓ 163.5s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a005.jpg"/><figcaption>blank-canvas</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Design a clean, polished DESIGN SYSTEM style-guide page (like a brand guideline sheet) on this white canvas.
 Use GENEROUS whitespace and LARGE, perfectly legible labels. Lay it out as a FEW clearly separated panels — do NOT cram many tiny elements, do NOT stretch or squash any text. Each element fully designed and crisp.
 Panels (recolored to the product palette):
@@ -71,8 +83,8 @@ Panels (recolored to the product palette):
 6) Typography sample — 전반적으로 깔끔하고 현대적인 산세리프체(한글/영문 동일)를 사용합니다. 제목은 굵거나 매우 굵은 가중치를 가지며, 본문 텍스트는 보통 가중치를 사용합니다. 영문 제목과 섹션 표시는 대문자를 자주 사용하며, 폰트의 둥글기는 강하지 않고 깔끔하고 기하학적인 느낌입니다.
 ⛔ NO buttons, NO "수량 선택"/"구매"/"장바구니"/CTA, no commerce widgets. ⛔ No tiny cramped text, no stretched/warped letters.
 Clean, spacious, ultra-sharp, white background.</pre>
-<h5>결과</h5><img class="res" src="assets/a044.png"/></details><details><summary><b>00</b> 커버 <em class="success">✓ 183.5s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a048.jpg"/><figcaption>preset-cover(layout)</figcaption></figure><figure><img src="assets/a043.png"/><figcaption>TT(title)</figcaption></figure><figure><img src="assets/a045.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a002.png"/></details><details><summary><b>00</b> 커버 <em class="success">✓ 183.5s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a006.jpg"/><figcaption>preset-cover(layout)</figcaption></figure><figure><img src="assets/a001.png"/><figcaption>TT(title)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Compose a clean HERO banner (cover). This is ONLY the hero — NOT a feature summary.
 - FIRST ref = preset cover = hero LAYOUT (product hero placement + decoration). Hero composition only.
 - SECOND ref = TITLE TREATMENT = place this title lockup AS-IS as the cover title. Do NOT redraw, restyle, or regenerate the typography — reuse the given lockup directly.
@@ -91,8 +103,8 @@ STYLE RULES:
 VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, zero malformed syllables:
 • 3초 급속 냉각, 100단계 터보 바람
 • 얼음처럼 차가운 쿨링패드와 최대 9m 도달하는 초강력 제트 바람으로 폭염을 이겨내는 프리미엄 휴대용 선풍기</pre>
-<h5>결과</h5><img class="res" src="assets/a032.png"/></details><details><summary><b>01</b> 아이스터보 FA3 핵심 스펙 요약 <em class="success">✓ 98.9s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a049.jpg"/><figcaption>preset-section_1.jpg(layout)</figcaption></figure><figure><img src="assets/a045.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a007.png"/></details><details><summary><b>01</b> 아이스터보 FA3 핵심 스펙 요약 <em class="success">✓ 98.9s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a008.jpg"/><figcaption>preset-section_1.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
@@ -132,8 +144,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 1~100단계 디테일 풍속 조절 + LCD 디스플레이 실시간 확인
 • 3,600mAh 대용량 배터리로 최대 9시간 무선 사용
 • 크기 60×63×160mm / 무게 220g / 평점 4.8/5.0 (70건 리뷰)</pre>
-<h5>결과</h5><img class="res" src="assets/a033.png"/></details><details><summary><b>02</b> 2-in-1 듀얼 쿨링 시스템 <em class="success">✓ 94.7s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a050.jpg"/><figcaption>preset-section_2.jpg(layout)</figcaption></figure><figure><img src="assets/a045.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a009.png"/></details><details><summary><b>02</b> 2-in-1 듀얼 쿨링 시스템 <em class="success">✓ 94.7s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a010.jpg"/><figcaption>preset-section_2.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
@@ -172,8 +184,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 선풍기 모드: 제트 터널 블레이드로 강력한 직진 바람 생성
 • 두 가지 모드를 동시 또는 개별 사용 가능한 하이브리드 냉각
 • 쿨링패드 3초 급속 냉각 / 제트 바람 최대 9m 도달</pre>
-<h5>결과</h5><img class="res" src="assets/a034.png"/></details><details><summary><b>03</b> 컴팩트한 휴대성과 실사용 시나리오 <em class="success">✓ 96.8s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a051.jpg"/><figcaption>preset-section_3.jpg(layout)</figcaption></figure><figure><img src="assets/a045.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a011.png"/></details><details><summary><b>03</b> 컴팩트한 휴대성과 실사용 시나리오 <em class="success">✓ 96.8s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a012.jpg"/><figcaption>preset-section_3.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
@@ -212,8 +224,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 캠핑·페스티벌·등산·스포츠 관람 등 야외 활동 필수템
 • 출퇴근 가방에 쏙, 사무실·집에서 개인 냉방 기기로 활용
 • 크기 60×63×160mm / 무게 220g / 핸드 스트랩 포함</pre>
-<h5>결과</h5><img class="res" src="assets/a035.png"/></details><details><summary><b>04</b> 프리미엄 BLDC 항공 모터 기술 <em class="success">✓ 91.7s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a052.jpg"/><figcaption>preset-section_4.jpg(layout)</figcaption></figure><figure><img src="assets/a045.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a013.png"/></details><details><summary><b>04</b> 프리미엄 BLDC 항공 모터 기술 <em class="success">✓ 91.7s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a014.jpg"/><figcaption>preset-section_4.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
@@ -252,8 +264,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 분당 13,600RPM 초고속 회전으로 강력한 풍량 생성
 • 소음 최소화 설계로 조용하고 부드러운 작동감
 • BLDC 항공 모터 / 13,600RPM 회전 속도</pre>
-<h5>결과</h5><img class="res" src="assets/a036.png"/></details><details><summary><b>05</b> 스크류형 6엽 날개 + 제트 터널 블레이드 <em class="success">✓ 103.9s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a053.jpg"/><figcaption>preset-section_5.jpg(layout)</figcaption></figure><figure><img src="assets/a045.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a015.png"/></details><details><summary><b>05</b> 스크류형 6엽 날개 + 제트 터널 블레이드 <em class="success">✓ 103.9s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a016.jpg"/><figcaption>preset-section_5.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
@@ -292,8 +304,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 제트 터널 블레이드 시스템으로 바람 손실 최소화
 • 최대 9m까지 도달하는 초강력 터보 바람 구현
 • 6엽 스크류 날개 / 제트 터널 블레이드 시스템 / 최대 9m 도달</pre>
-<h5>결과</h5><img class="res" src="assets/a037.png"/></details><details><summary><b>06</b> LCD 디스플레이 직관적 정보 확인 <em class="success">✓ 91.7s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a054.jpg"/><figcaption>preset-section_6.jpg(layout)</figcaption></figure><figure><img src="assets/a045.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a017.png"/></details><details><summary><b>06</b> LCD 디스플레이 직관적 정보 확인 <em class="success">✓ 91.7s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a018.jpg"/><figcaption>preset-section_6.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
@@ -332,8 +344,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 배터리 잔량 퍼센트(%) 정확한 확인 가능
 • 작동 모드(에어컨/선풍기) 상태 한눈에 파악
 • LCD 디스플레이 탑재 / 풍속·배터리·모드 표시</pre>
-<h5>결과</h5><img class="res" src="assets/a038.png"/></details><details><summary><b>07</b> 대용량 3,600mAh 배터리 장시간 사용 <em class="success">✓ 128.5s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a055.jpg"/><figcaption>preset-section_7.jpg(layout)</figcaption></figure><figure><img src="assets/a045.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a019.png"/></details><details><summary><b>07</b> 대용량 3,600mAh 배터리 장시간 사용 <em class="success">✓ 128.5s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a020.jpg"/><figcaption>preset-section_7.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
@@ -372,8 +384,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • Type-C 고속 충전 방식으로 빠른 재충전
 • 배터리 전문기업 알로코리아의 안전하고 오래가는 품질
 • 3,600mAh 배터리 / 최대 9시간 사용 / Type-C 충전</pre>
-<h5>결과</h5><img class="res" src="assets/a039.png"/></details><details><summary><b>08</b> 안전 인증 및 스마트 보호 시스템 <em class="success">✓ 110.9s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a056.jpg"/><figcaption>preset-section_8.jpg(layout)</figcaption></figure><figure><img src="assets/a045.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a021.png"/></details><details><summary><b>08</b> 안전 인증 및 스마트 보호 시스템 <em class="success">✓ 110.9s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a022.jpg"/><figcaption>preset-section_8.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
@@ -412,8 +424,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • KC 인증 완료 및 제조물 책임보험 가입으로 안심 사용
 • 천만 고객이 선택한 알로코리아 브랜드 신뢰도
 • KC 인증 완료 / 제조물 책임보험 가입 / 천만 고객 선택</pre>
-<h5>결과</h5><img class="res" src="assets/a040.png"/></details><details><summary><b>09</b> 화이트·블루 깔끔한 디자인과 색상 옵션 <em class="success">✓ 125.6s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a057.jpg"/><figcaption>preset-section_9.jpg(layout)</figcaption></figure><figure><img src="assets/a045.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a023.png"/></details><details><summary><b>09</b> 화이트·블루 깔끔한 디자인과 색상 옵션 <em class="success">✓ 125.6s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a024.jpg"/><figcaption>preset-section_9.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
@@ -452,8 +464,8 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 손에 쥐기 편한 그립감과 미끄럼 방지 질감 처리
 • 어디서나 돋보이는 프리미엄 감성 컬러
 • 화이트/블루 컬러 / 그립감 우수 / 미끄럼 방지 질감</pre>
-<h5>결과</h5><img class="res" src="assets/a041.png"/></details><details><summary><b>10</b> 제품 상세 스펙 및 구성품 <em class="success">✓ 97.6s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a058.jpg"/><figcaption>preset-section_10.jpg(layout)</figcaption></figure><figure><img src="assets/a045.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a025.png"/></details><details><summary><b>10</b> 제품 상세 스펙 및 구성품 <em class="success">✓ 97.6s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a026.jpg"/><figcaption>preset-section_10.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
 - SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
@@ -492,5 +504,10 @@ VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, ze
 • 크기 60×63×160mm / 무게 220g / 배터리 3,600mAh
 • 풍속 1~100단계 조절 / 최대 9시간 사용 / 최대 9m 도달
 • 크기 60×63×160mm / 무게 220g / 3,600mAh 배터리 / 1~100단계 풍속 조절</pre>
-<h5>결과</h5><img class="res" src="assets/a042.png"/></details></div>
+<h5>결과</h5><img class="res" src="assets/a027.png"/></details></div>
+<div class="shead">🖼️ 시안 비교 — 좌: 원본 / 우: 생성 (스크롤 동기화)</div>
+<div class="compare">
+  <div class="col"><div class="ctitle">📄 원본 (상세이미지 31장)</div><div class="cbody"><img src="assets/a028.jpg" loading="lazy"/><img src="assets/a029.jpg" loading="lazy"/><img src="assets/a030.jpg" loading="lazy"/><img src="assets/a031.jpg" loading="lazy"/><img src="assets/a032.jpg" loading="lazy"/><img src="assets/a033.jpg" loading="lazy"/><img src="assets/a034.jpg" loading="lazy"/><img src="assets/a035.jpg" loading="lazy"/><img src="assets/a036.jpg" loading="lazy"/><img src="assets/a037.jpg" loading="lazy"/><img src="assets/a038.jpg" loading="lazy"/><img src="assets/a039.jpg" loading="lazy"/><img src="assets/a040.jpg" loading="lazy"/><img src="assets/a041.jpg" loading="lazy"/><img src="assets/a042.jpg" loading="lazy"/><img src="assets/a043.jpg" loading="lazy"/><img src="assets/a044.jpg" loading="lazy"/><img src="assets/a045.jpg" loading="lazy"/><img src="assets/a046.jpg" loading="lazy"/><img src="assets/a047.jpg" loading="lazy"/><img src="assets/a048.jpg" loading="lazy"/><img src="assets/a049.jpg" loading="lazy"/><img src="assets/a050.jpg" loading="lazy"/><img src="assets/a051.jpg" loading="lazy"/><img src="assets/a052.jpg" loading="lazy"/><img src="assets/a053.jpg" loading="lazy"/><img src="assets/a054.jpg" loading="lazy"/><img src="assets/a055.jpg" loading="lazy"/><img src="assets/a056.jpg" loading="lazy"/><img src="assets/a057.jpg" loading="lazy"/><img src="assets/a058.jpg" loading="lazy"/></div></div>
+  <div class="col"><div class="ctitle">✨ 우리 생성 (v9 · 커버+섹션 10)</div><div class="cbody"><img src="assets/a007.png"/><img src="assets/a009.png" loading="lazy"/><img src="assets/a011.png" loading="lazy"/><img src="assets/a013.png" loading="lazy"/><img src="assets/a015.png" loading="lazy"/><img src="assets/a017.png" loading="lazy"/><img src="assets/a019.png" loading="lazy"/><img src="assets/a021.png" loading="lazy"/><img src="assets/a023.png" loading="lazy"/><img src="assets/a025.png" loading="lazy"/><img src="assets/a027.png" loading="lazy"/></div></div>
+</div>
 </div></body></html>
