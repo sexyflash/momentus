@@ -24,26 +24,29 @@ details .res{width:100%;max-height:340px;object-fit:contain;padding:8px 10px}
 <div class="wrap">
 <div class="info"><b>알로코리아 아이스터보 냉각 제트 휴대용 선풍기 FA3</b> · 디지털/기기 > 손선풍기/손난로<br>프리셋 ref_preset_3 (레이아웃·타이포·DS) · 색·제품·콘텐츠 = 타겟 · 10/10섹션<br><span class="src">소스: https://www.oliveyoung.co.kr/store/goods/getGoodsDetail.do?goodsNo=B000000227071&dispCatNo=1000003000600040010</span></div>
 <div class="flow">
-    <h2>⚙️ 전체 공정 흐름 <small>(총 369s)</small></h2>
-    <div class="fpre">사전 1회 (직렬): <b>URL 스크랩</b> → <b>전처리·비전</b> → <b>콘텐츠 합성</b> → <b>제품 형태비전 + 추출</b> → <b>프리셋 분석</b></div>
+    <h2>⚙️ 전체 공정 흐름 <small>(총 421s)</small></h2>
+    <div class="fpre">사전 1회 (직렬): <b>URL 스크랩</b> → <b>전처리·비전</b> → <b>콘텐츠 합성</b> → <b>프리셋 분석</b></div>
     <div class="fgen">
-      <div class="fb dir">① 디렉터<em>25s</em></div>
+      <div class="fb dir">① 디렉터<em>31s</em></div>
       <div class="farr">→</div>
-      <div class="fpar"><div class="fparl">⫶ 병렬 동시 생성</div>
-        <div class="fb p">TT<em>159.4s</em></div>
-        <div class="fb p">DS<em>163.5s</em></div>
-        <div class="fb p">섹션 ×10<em>92~129s</em></div>
+      <div class="fpar"><div class="fparl">② 병렬</div>
+        <div class="fb p">TT<em>171.0s</em></div>
+        <div class="fb p">DS<em>148.0s</em></div>
+        <div class="fb p">제품시트<small>형태비전+생성</small></div>
       </div>
       <div class="farr">→</div>
-      <div class="fb crit">커버<em>183.5s</em><small>TT 후</small></div>
+      <div class="fpar"><div class="fparl">③ 병렬</div>
+        <div class="fb p">섹션 ×10<em>92~139s</em></div>
+        <div class="fb p crit">커버<em>217.2s</em></div>
+      </div>
       <div class="farr">→</div>
       <div class="fb">HTML</div>
     </div>
-    <div class="fnote">🔴 임계경로 = 디렉터(25s) → TT(159.4s) → 커버(183.5s). DS·섹션은 그 안에서 병렬로 끝남. 직렬은 디렉터/커버, 나머지는 전부 병렬.</div>
+    <div class="fnote">직렬 = ① 디렉터. 그 뒤 ② TT·DS·제품시트가 동시, ③ 섹션×10·커버가 동시. 임계경로 ≈ 디렉터(31s) → ②(171.0s급) → 커버(217.2s).</div>
   </div>
-<div class="resource"><h2>🧰 전처리 리소스 (생성에 쓴 재료: TT·DS·제품시트)</h2><div class="rgrid"><figure><img src="assets/a001.png"/><figcaption>TT (타이틀 트리트먼트)</figcaption></figure><figure><img src="assets/a002.png"/><figcaption>DS 디자인시트</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품 사진 시트</figcaption></figure></div></div>
-<div class="log"><h2>📦 생성 페이로드 (각 컷의 첨부 image_urls + 프롬프트)</h2><details><summary><b>TT</b> Title Treatment <em class="success">✓ 159.4s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a004.jpg"/><figcaption>blank-canvas</figcaption></figure></div>
+<div class="resource"><h2>🧰 전처리 리소스 (생성에 쓴 재료: TT·DS·제품시트)</h2><div class="rgrid"><figure><img src="assets/a001.png"/><figcaption>TT (타이틀 트리트먼트)</figcaption></figure><figure><img src="assets/a002.png"/><figcaption>DS 디자인시트</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품 사진 시트 · 휴대용 선풍기 본체</figcaption></figure></div></div>
+<div class="log"><h2>📦 생성 페이로드 (각 컷의 첨부 image_urls + 프롬프트)</h2><details><summary><b>TT</b> Title Treatment <em class="success">✓ 171.0s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5>
 <h5>프롬프트</h5><pre>Create a TITLE TREATMENT typographic lockup (no product photo, typography + minimal decoration only) on this blank canvas.
 Preset typography style to follow: 메인 제목은 매우 크고 굵은 산세리프체, 모두 대문자. 보조 텍스트는 작고 보통 굵기의 산세리프체, 모두 대문자. 모두 영문.. Decorative motifs allowed (subtle): 얇은 원형 테두리 안에 단순한 라인 아트 스타일의 아이콘이 사용됩니다. 아이콘은 단색(짙은 회색/검정)이며, 제품의 특징이나 기능을 시각적으로 표현하는 데 활용됩니다..
 DESIGN SYSTEM — apply these exact recurring design elements (inherited from preset, recolored to product palette):
@@ -57,21 +60,25 @@ DESIGN SYSTEM — apply these exact recurring design elements (inherited from pr
 STYLE RULES:
 - LAYOUT/TYPOGRAPHY/DECORATION come from the preset template reference(s) — preserve exact composition, positions, typographic style, motifs.
 - COLORS come from THIS product — recolor everything to: primary #00A8E1, secondary #1E3A8A, accent #00D4FF, dark #0F172A, light #F0F9FF. Do not keep template colors.
-- PRODUCT FIDELITY: keep the product's REAL proportions/shape from the product reference. Do NOT stretch, squash, warp, elongate, or distort it. Natural aspect ratio, clean.
+- PRODUCT FIDELITY: keep the product's REAL form, container type, proportions, and shape from the product reference. NEVER change the container/form factor (a squeeze tube stays a tube, a pump bottle stays a pump, a jar stays a jar). Do NOT stretch, squash, warp, or distort. Natural proportions, clean.
 - TEXT: Korean only (브랜드/단위/약어만 영어), zero spelling errors, fully legible.
 - NO COMMERCE UI: this is a product-INTRODUCTION image only. Absolutely NO buttons, NO "구매하기"/"장바구니"/"수량 선택"/CTA, no cart/quantity/checkout widgets, no price-with-buy-button, no 상품정보 commerce table. The shopping platform renders all purchase UI separately — never draw it.
 - FULL-BLEED: the design FILLS the ENTIRE frame edge-to-edge. NO white side margins, NO letterbox/pillarbox bars, NO empty padding on left/right or top/bottom. The background color/scene extends to all four edges.
 - STATIC image. Mobile vertical.
 CONTENT:
 - Brand: "알로코리아 (alloKOREA)"
-- Main title: "3초 급속 냉각, 100단계 터보 바람"
-- Sub copy: "얼음처럼 차가운 쿨링패드와 최대 9m 도달하는 초강력 제트 바람으로 폭염을 이겨내는 프리미엄 휴대용 선풍기"
+- Main title: "3초 급속 냉각 쿨링패드
+100단계 터보 풍량 조절"
+- Sub copy: "얼음처럼 차가운 에어컨 모드 + 최대 9m 도달 초강력 바람
+알로코리아 아이스터보 냉각 제트 휴대용 선풍기 FA3"
 VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, zero malformed syllables:
 • 알로코리아 (alloKOREA)
-• 3초 급속 냉각, 100단계 터보 바람
-• 얼음처럼 차가운 쿨링패드와 최대 9m 도달하는 초강력 제트 바람으로 폭염을 이겨내는 프리미엄 휴대용 선풍기</pre>
-<h5>결과</h5><img class="res" src="assets/a001.png"/></details><details><summary><b>DS</b> Design System 시트 <em class="success">✓ 163.5s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a005.jpg"/><figcaption>blank-canvas</figcaption></figure></div>
+• 3초 급속 냉각 쿨링패드
+100단계 터보 풍량 조절
+• 얼음처럼 차가운 에어컨 모드 + 최대 9m 도달 초강력 바람
+알로코리아 아이스터보 냉각 제트 휴대용 선풍기 FA3</pre>
+<h5>결과</h5><img class="res" src="assets/a001.png"/></details><details><summary><b>DS</b> Design System 시트 <em class="success">✓ 148.0s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5>
 <h5>프롬프트</h5><pre>Design a clean, polished DESIGN SYSTEM style-guide page (like a brand guideline sheet) on this white canvas.
 Use GENEROUS whitespace and LARGE, perfectly legible labels. Lay it out as a FEW clearly separated panels — do NOT cram many tiny elements, do NOT stretch or squash any text. Each element fully designed and crisp.
 Panels (recolored to the product palette):
@@ -83,8 +90,8 @@ Panels (recolored to the product palette):
 6) Typography sample — 전반적으로 깔끔하고 현대적인 산세리프체(한글/영문 동일)를 사용합니다. 제목은 굵거나 매우 굵은 가중치를 가지며, 본문 텍스트는 보통 가중치를 사용합니다. 영문 제목과 섹션 표시는 대문자를 자주 사용하며, 폰트의 둥글기는 강하지 않고 깔끔하고 기하학적인 느낌입니다.
 ⛔ NO buttons, NO "수량 선택"/"구매"/"장바구니"/CTA, no commerce widgets. ⛔ No tiny cramped text, no stretched/warped letters.
 Clean, spacious, ultra-sharp, white background.</pre>
-<h5>결과</h5><img class="res" src="assets/a002.png"/></details><details><summary><b>00</b> 커버 <em class="success">✓ 183.5s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a006.jpg"/><figcaption>preset-cover(layout)</figcaption></figure><figure><img src="assets/a001.png"/><figcaption>TT(title)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
+<h5>결과</h5><img class="res" src="assets/a002.png"/></details><details><summary><b>00</b> 커버 <em class="success">✓ 217.2s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a001.png"/><figcaption>TT(title)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Compose a clean HERO banner (cover). This is ONLY the hero — NOT a feature summary.
 - FIRST ref = preset cover = hero LAYOUT (product hero placement + decoration). Hero composition only.
 - SECOND ref = TITLE TREATMENT = place this title lockup AS-IS as the cover title. Do NOT redraw, restyle, or regenerate the typography — reuse the given lockup directly.
@@ -95,19 +102,21 @@ Background in product palette with subtle preset motifs (얇은 원형 테두리
 STYLE RULES:
 - LAYOUT/TYPOGRAPHY/DECORATION come from the preset template reference(s) — preserve exact composition, positions, typographic style, motifs.
 - COLORS come from THIS product — recolor everything to: primary #00A8E1, secondary #1E3A8A, accent #00D4FF, dark #0F172A, light #F0F9FF. Do not keep template colors.
-- PRODUCT FIDELITY: keep the product's REAL proportions/shape from the product reference. Do NOT stretch, squash, warp, elongate, or distort it. Natural aspect ratio, clean.
+- PRODUCT FIDELITY: keep the product's REAL form, container type, proportions, and shape from the product reference. NEVER change the container/form factor (a squeeze tube stays a tube, a pump bottle stays a pump, a jar stays a jar). Do NOT stretch, squash, warp, or distort. Natural proportions, clean.
 - TEXT: Korean only (브랜드/단위/약어만 영어), zero spelling errors, fully legible.
 - NO COMMERCE UI: this is a product-INTRODUCTION image only. Absolutely NO buttons, NO "구매하기"/"장바구니"/"수량 선택"/CTA, no cart/quantity/checkout widgets, no price-with-buy-button, no 상품정보 commerce table. The shopping platform renders all purchase UI separately — never draw it.
 - FULL-BLEED: the design FILLS the ENTIRE frame edge-to-edge. NO white side margins, NO letterbox/pillarbox bars, NO empty padding on left/right or top/bottom. The background color/scene extends to all four edges.
 - STATIC image. Mobile vertical.
 VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, zero malformed syllables:
-• 3초 급속 냉각, 100단계 터보 바람
-• 얼음처럼 차가운 쿨링패드와 최대 9m 도달하는 초강력 제트 바람으로 폭염을 이겨내는 프리미엄 휴대용 선풍기</pre>
-<h5>결과</h5><img class="res" src="assets/a007.png"/></details><details><summary><b>01</b> 아이스터보 FA3 핵심 스펙 요약 <em class="success">✓ 98.9s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a008.jpg"/><figcaption>preset-section_1.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
+• 3초 급속 냉각 쿨링패드
+100단계 터보 풍량 조절
+• 얼음처럼 차가운 에어컨 모드 + 최대 9m 도달 초강력 바람
+알로코리아 아이스터보 냉각 제트 휴대용 선풍기 FA3</pre>
+<h5>결과</h5><img class="res" src="assets/a004.png"/></details><details><summary><b>01</b> 3초 만에 얼음처럼 차가워지는 에어컨 모드 쿨링패드 <em class="success">✓ 115.9s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
-- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
+- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 흰색의 손잡이형 휴대용 선풍기 본체로, 길쭉한 원통형 몸체에 둥근 팬 헤드가 있으며 'allo' 로고가 새겨져 있습니다. (용기형: 휴대용 선풍기 본체, 손잡이형, 길쭉하고 원통형).
 ⭐ FIDELITY: keep EVERY structural element of the preset section. If it has a point/feature grid (포인트 1~4), keep that exact grid count and layout. If it shows the product from multiple angles, show multiple angles. If it has a product-info / spec block, keep that block. If it shows color options, show this product's color variants. Do NOT simplify, omit, merge, or reduce the layout — only swap product, recolor to product palette, and translate text.
 Template intent: 제품 소개 및 핵심 요약. Layout: 상단에 브랜드 로고와 제품명, 중앙에 제품 이미지와 보조 설명 텍스트가 배치된 구조. 상단 로고와 제품명 사이에 얇은 구분선이 있음. 하단에 제품 상세 설명 섹션으로 넘어가는 경계가 명확함..
 DESIGN SYSTEM — apply these exact recurring design elements (inherited from preset, recolored to product palette):
@@ -121,7 +130,7 @@ DESIGN SYSTEM — apply these exact recurring design elements (inherited from pr
 STYLE RULES:
 - LAYOUT/TYPOGRAPHY/DECORATION come from the preset template reference(s) — preserve exact composition, positions, typographic style, motifs.
 - COLORS come from THIS product — recolor everything to: primary #00A8E1, secondary #1E3A8A, accent #00D4FF, dark #0F172A, light #F0F9FF. Do not keep template colors.
-- PRODUCT FIDELITY: keep the product's REAL proportions/shape from the product reference. Do NOT stretch, squash, warp, elongate, or distort it. Natural aspect ratio, clean.
+- PRODUCT FIDELITY: keep the product's REAL form, container type, proportions, and shape from the product reference. NEVER change the container/form factor (a squeeze tube stays a tube, a pump bottle stays a pump, a jar stays a jar). Do NOT stretch, squash, warp, or distort. Natural proportions, clean.
 - TEXT: Korean only (브랜드/단위/약어만 영어), zero spelling errors, fully legible.
 - NO COMMERCE UI: this is a product-INTRODUCTION image only. Absolutely NO buttons, NO "구매하기"/"장바구니"/"수량 선택"/CTA, no cart/quantity/checkout widgets, no price-with-buy-button, no 상품정보 commerce table. The shopping platform renders all purchase UI separately — never draw it.
 - FULL-BLEED: the design FILLS the ENTIRE frame edge-to-edge. NO white side margins, NO letterbox/pillarbox bars, NO empty padding on left/right or top/bottom. The background color/scene extends to all four edges.
@@ -134,21 +143,20 @@ QUALITY (this is a FINISHED, polished design — not a placeholder):
 - PRODUCT SCALE: show the product on its own at realistic, natural scale. NEVER show hands/models holding the product. If the template has a hand-held/worn shot, replace it with a clean product-only shot at correct proportions.
 - NO PRICE: never render any price, discount %, or 원 amount anywhere — pricing changes and is the platform's job.
 NEW CONTENT (Korean):
-- Section title: "아이스터보 FA3 핵심 스펙 요약"
-- Points: "에어컨 모드: 3초 만에 급속 냉각되는 얼음 쿨링패드 탑재", "터보 모드: 분당 13,600RPM 초고속 회전, 최대 9m 직진 바람", "1~100단계 디테일 풍속 조절 + LCD 디스플레이 실시간 확인", "3,600mAh 대용량 배터리로 최대 9시간 무선 사용"
-- Exact data (no invented numbers): 크기 60×63×160mm / 무게 220g / 평점 4.8/5.0 (70건 리뷰)
+- Section title: "3초 만에 얼음처럼 차가워지는 에어컨 모드 쿨링패드"
+- Points: "전면 탑재된 냉각 쿨링패드가 3초 만에 급속 냉각되어 얼굴·팔·목에 직접 대면 즉각 쿨다운", "피부에 닿는 순간 에어컨처럼 시원한 냉감 전달, 폭염 속 체온 조절 필수 기능", "바람 + 냉각 2-in-1 시스템으로 더위를 동시에 해결하는 스마트 냉방 솔루션"
+- Exact data (no invented numbers): 3초 급속 냉각 쿨링패드 탑재 / 에어컨 모드 지원
 VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, zero malformed syllables:
-• 아이스터보 FA3 핵심 스펙 요약
-• 에어컨 모드: 3초 만에 급속 냉각되는 얼음 쿨링패드 탑재
-• 터보 모드: 분당 13,600RPM 초고속 회전, 최대 9m 직진 바람
-• 1~100단계 디테일 풍속 조절 + LCD 디스플레이 실시간 확인
-• 3,600mAh 대용량 배터리로 최대 9시간 무선 사용
-• 크기 60×63×160mm / 무게 220g / 평점 4.8/5.0 (70건 리뷰)</pre>
-<h5>결과</h5><img class="res" src="assets/a009.png"/></details><details><summary><b>02</b> 2-in-1 듀얼 쿨링 시스템 <em class="success">✓ 94.7s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a010.jpg"/><figcaption>preset-section_2.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
+• 3초 만에 얼음처럼 차가워지는 에어컨 모드 쿨링패드
+• 전면 탑재된 냉각 쿨링패드가 3초 만에 급속 냉각되어 얼굴·팔·목에 직접 대면 즉각 쿨다운
+• 피부에 닿는 순간 에어컨처럼 시원한 냉감 전달, 폭염 속 체온 조절 필수 기능
+• 바람 + 냉각 2-in-1 시스템으로 더위를 동시에 해결하는 스마트 냉방 솔루션
+• 3초 급속 냉각 쿨링패드 탑재 / 에어컨 모드 지원</pre>
+<h5>결과</h5><img class="res" src="assets/a005.png"/></details><details><summary><b>02</b> 1단계부터 100단계까지 디테일한 풍속 조절 <em class="success">✓ 100.3s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
-- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
+- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 흰색의 손잡이형 휴대용 선풍기 본체로, 길쭉한 원통형 몸체에 둥근 팬 헤드가 있으며 'allo' 로고가 새겨져 있습니다. (용기형: 휴대용 선풍기 본체, 손잡이형, 길쭉하고 원통형).
 ⭐ FIDELITY: keep EVERY structural element of the preset section. If it has a point/feature grid (포인트 1~4), keep that exact grid count and layout. If it shows the product from multiple angles, show multiple angles. If it has a product-info / spec block, keep that block. If it shows color options, show this product's color variants. Do NOT simplify, omit, merge, or reduce the layout — only swap product, recolor to product palette, and translate text.
 Template intent: Key Point 요약 및 제품 디테일 (2-in-1 기능 강조). Layout: 상단에 작은 포인트 번호, 큰 메인 제목, 중간 크기 서브 제목. 이어서 짧은 요약 문구와 상세 설명 텍스트. 하단에 제품 이미지..
 DESIGN SYSTEM — apply these exact recurring design elements (inherited from preset, recolored to product palette):
@@ -162,7 +170,7 @@ DESIGN SYSTEM — apply these exact recurring design elements (inherited from pr
 STYLE RULES:
 - LAYOUT/TYPOGRAPHY/DECORATION come from the preset template reference(s) — preserve exact composition, positions, typographic style, motifs.
 - COLORS come from THIS product — recolor everything to: primary #00A8E1, secondary #1E3A8A, accent #00D4FF, dark #0F172A, light #F0F9FF. Do not keep template colors.
-- PRODUCT FIDELITY: keep the product's REAL proportions/shape from the product reference. Do NOT stretch, squash, warp, elongate, or distort it. Natural aspect ratio, clean.
+- PRODUCT FIDELITY: keep the product's REAL form, container type, proportions, and shape from the product reference. NEVER change the container/form factor (a squeeze tube stays a tube, a pump bottle stays a pump, a jar stays a jar). Do NOT stretch, squash, warp, or distort. Natural proportions, clean.
 - TEXT: Korean only (브랜드/단위/약어만 영어), zero spelling errors, fully legible.
 - NO COMMERCE UI: this is a product-INTRODUCTION image only. Absolutely NO buttons, NO "구매하기"/"장바구니"/"수량 선택"/CTA, no cart/quantity/checkout widgets, no price-with-buy-button, no 상품정보 commerce table. The shopping platform renders all purchase UI separately — never draw it.
 - FULL-BLEED: the design FILLS the ENTIRE frame edge-to-edge. NO white side margins, NO letterbox/pillarbox bars, NO empty padding on left/right or top/bottom. The background color/scene extends to all four edges.
@@ -175,20 +183,20 @@ QUALITY (this is a FINISHED, polished design — not a placeholder):
 - PRODUCT SCALE: show the product on its own at realistic, natural scale. NEVER show hands/models holding the product. If the template has a hand-held/worn shot, replace it with a clean product-only shot at correct proportions.
 - NO PRICE: never render any price, discount %, or 원 amount anywhere — pricing changes and is the platform's job.
 NEW CONTENT (Korean):
-- Section title: "2-in-1 듀얼 쿨링 시스템"
-- Points: "에어컨 모드: 쿨링패드를 얼굴·팔에 직접 대어 즉각 냉각 효과", "선풍기 모드: 제트 터널 블레이드로 강력한 직진 바람 생성", "두 가지 모드를 동시 또는 개별 사용 가능한 하이브리드 냉각"
-- Exact data (no invented numbers): 쿨링패드 3초 급속 냉각 / 제트 바람 최대 9m 도달
+- Section title: "1단계부터 100단계까지 디테일한 풍속 조절"
+- Points: "미세한 1단계 산들바람부터 강력한 100단계 터보 바람까지 자유롭게 선택", "상황과 체감 온도에 맞춰 정밀하게 조절 가능한 100단계 풍속 시스템", "LCD 디스플레이로 현재 풍속 단계를 실시간 확인하며 직관적으로 조작"
+- Exact data (no invented numbers): 1~100단계 풍속 조절 가능 / LCD 디스플레이 탑재
 VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, zero malformed syllables:
-• 2-in-1 듀얼 쿨링 시스템
-• 에어컨 모드: 쿨링패드를 얼굴·팔에 직접 대어 즉각 냉각 효과
-• 선풍기 모드: 제트 터널 블레이드로 강력한 직진 바람 생성
-• 두 가지 모드를 동시 또는 개별 사용 가능한 하이브리드 냉각
-• 쿨링패드 3초 급속 냉각 / 제트 바람 최대 9m 도달</pre>
-<h5>결과</h5><img class="res" src="assets/a011.png"/></details><details><summary><b>03</b> 컴팩트한 휴대성과 실사용 시나리오 <em class="success">✓ 96.8s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a012.jpg"/><figcaption>preset-section_3.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
+• 1단계부터 100단계까지 디테일한 풍속 조절
+• 미세한 1단계 산들바람부터 강력한 100단계 터보 바람까지 자유롭게 선택
+• 상황과 체감 온도에 맞춰 정밀하게 조절 가능한 100단계 풍속 시스템
+• LCD 디스플레이로 현재 풍속 단계를 실시간 확인하며 직관적으로 조작
+• 1~100단계 풍속 조절 가능 / LCD 디스플레이 탑재</pre>
+<h5>결과</h5><img class="res" src="assets/a006.png"/></details><details><summary><b>03</b> 분당 13,600RPM 초고속 회전 + 최대 9m 도달 터보 바람 <em class="success">✓ 102.2s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
-- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
+- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 흰색의 손잡이형 휴대용 선풍기 본체로, 길쭉한 원통형 몸체에 둥근 팬 헤드가 있으며 'allo' 로고가 새겨져 있습니다. (용기형: 휴대용 선풍기 본체, 손잡이형, 길쭉하고 원통형).
 ⭐ FIDELITY: keep EVERY structural element of the preset section. If it has a point/feature grid (포인트 1~4), keep that exact grid count and layout. If it shows the product from multiple angles, show multiple angles. If it has a product-info / spec block, keep that block. If it shows color options, show this product's color variants. Do NOT simplify, omit, merge, or reduce the layout — only swap product, recolor to product palette, and translate text.
 Template intent: 제품의 크기, 휴대성, 사용 맥락을 보여줌. Layout: 상단에 제품을 손에 쥐고 있는 이미지가 크게 배치됨.
 DESIGN SYSTEM — apply these exact recurring design elements (inherited from preset, recolored to product palette):
@@ -202,7 +210,7 @@ DESIGN SYSTEM — apply these exact recurring design elements (inherited from pr
 STYLE RULES:
 - LAYOUT/TYPOGRAPHY/DECORATION come from the preset template reference(s) — preserve exact composition, positions, typographic style, motifs.
 - COLORS come from THIS product — recolor everything to: primary #00A8E1, secondary #1E3A8A, accent #00D4FF, dark #0F172A, light #F0F9FF. Do not keep template colors.
-- PRODUCT FIDELITY: keep the product's REAL proportions/shape from the product reference. Do NOT stretch, squash, warp, elongate, or distort it. Natural aspect ratio, clean.
+- PRODUCT FIDELITY: keep the product's REAL form, container type, proportions, and shape from the product reference. NEVER change the container/form factor (a squeeze tube stays a tube, a pump bottle stays a pump, a jar stays a jar). Do NOT stretch, squash, warp, or distort. Natural proportions, clean.
 - TEXT: Korean only (브랜드/단위/약어만 영어), zero spelling errors, fully legible.
 - NO COMMERCE UI: this is a product-INTRODUCTION image only. Absolutely NO buttons, NO "구매하기"/"장바구니"/"수량 선택"/CTA, no cart/quantity/checkout widgets, no price-with-buy-button, no 상품정보 commerce table. The shopping platform renders all purchase UI separately — never draw it.
 - FULL-BLEED: the design FILLS the ENTIRE frame edge-to-edge. NO white side margins, NO letterbox/pillarbox bars, NO empty padding on left/right or top/bottom. The background color/scene extends to all four edges.
@@ -215,20 +223,20 @@ QUALITY (this is a FINISHED, polished design — not a placeholder):
 - PRODUCT SCALE: show the product on its own at realistic, natural scale. NEVER show hands/models holding the product. If the template has a hand-held/worn shot, replace it with a clean product-only shot at correct proportions.
 - NO PRICE: never render any price, discount %, or 원 amount anywhere — pricing changes and is the platform's job.
 NEW CONTENT (Korean):
-- Section title: "컴팩트한 휴대성과 실사용 시나리오"
-- Points: "220g 초경량 + 핸드 스트랩으로 손목에 걸어 이동 편리", "캠핑·페스티벌·등산·스포츠 관람 등 야외 활동 필수템", "출퇴근 가방에 쏙, 사무실·집에서 개인 냉방 기기로 활용"
-- Exact data (no invented numbers): 크기 60×63×160mm / 무게 220g / 핸드 스트랩 포함
+- Section title: "분당 13,600RPM 초고속 회전 + 최대 9m 도달 터보 바람"
+- Points: "프리미엄 BLDC 항공 모터가 분당 13,600회 초고속 회전으로 강력한 풍량 생성", "스크류형 6엽 날개 + 제트 터널 블레이드 시스템이 바람을 압축해 최대 9m까지 직진 송풍", "저전력·고효율·반영구적 사용이 가능한 항공급 모터로 오래도록 강력한 성능 유지"
+- Exact data (no invented numbers): 분당 13,600RPM / 최대 9m 도달 / BLDC 항공 모터
 VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, zero malformed syllables:
-• 컴팩트한 휴대성과 실사용 시나리오
-• 220g 초경량 + 핸드 스트랩으로 손목에 걸어 이동 편리
-• 캠핑·페스티벌·등산·스포츠 관람 등 야외 활동 필수템
-• 출퇴근 가방에 쏙, 사무실·집에서 개인 냉방 기기로 활용
-• 크기 60×63×160mm / 무게 220g / 핸드 스트랩 포함</pre>
-<h5>결과</h5><img class="res" src="assets/a013.png"/></details><details><summary><b>04</b> 프리미엄 BLDC 항공 모터 기술 <em class="success">✓ 91.7s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a014.jpg"/><figcaption>preset-section_4.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
+• 분당 13,600RPM 초고속 회전 + 최대 9m 도달 터보 바람
+• 프리미엄 BLDC 항공 모터가 분당 13,600회 초고속 회전으로 강력한 풍량 생성
+• 스크류형 6엽 날개 + 제트 터널 블레이드 시스템이 바람을 압축해 최대 9m까지 직진 송풍
+• 저전력·고효율·반영구적 사용이 가능한 항공급 모터로 오래도록 강력한 성능 유지
+• 분당 13,600RPM / 최대 9m 도달 / BLDC 항공 모터</pre>
+<h5>결과</h5><img class="res" src="assets/a007.png"/></details><details><summary><b>04</b> 대용량 3,600mAh 배터리로 최대 9시간 무선 사용 <em class="success">✓ 112.1s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
-- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
+- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 흰색의 손잡이형 휴대용 선풍기 본체로, 길쭉한 원통형 몸체에 둥근 팬 헤드가 있으며 'allo' 로고가 새겨져 있습니다. (용기형: 휴대용 선풍기 본체, 손잡이형, 길쭉하고 원통형).
 ⭐ FIDELITY: keep EVERY structural element of the preset section. If it has a point/feature grid (포인트 1~4), keep that exact grid count and layout. If it shows the product from multiple angles, show multiple angles. If it has a product-info / spec block, keep that block. If it shows color options, show this product's color variants. Do NOT simplify, omit, merge, or reduce the layout — only swap product, recolor to product palette, and translate text.
 Template intent: 제품 소개 및 기능 설명, 핵심 특징 강조. Layout: 상단에 제품 사용 모습을 담은 라이프스타일 이미지 배치. 중단에는 제품의 기능 설명(버튼 조작법, 온도 단계별 사용 시간)을 이미지와 텍스트, 표로 구성. 하단에는 제품의 특정 소재 특징을 텍스트 위주로 강조하는 구조..
 DESIGN SYSTEM — apply these exact recurring design elements (inherited from preset, recolored to product palette):
@@ -242,7 +250,7 @@ DESIGN SYSTEM — apply these exact recurring design elements (inherited from pr
 STYLE RULES:
 - LAYOUT/TYPOGRAPHY/DECORATION come from the preset template reference(s) — preserve exact composition, positions, typographic style, motifs.
 - COLORS come from THIS product — recolor everything to: primary #00A8E1, secondary #1E3A8A, accent #00D4FF, dark #0F172A, light #F0F9FF. Do not keep template colors.
-- PRODUCT FIDELITY: keep the product's REAL proportions/shape from the product reference. Do NOT stretch, squash, warp, elongate, or distort it. Natural aspect ratio, clean.
+- PRODUCT FIDELITY: keep the product's REAL form, container type, proportions, and shape from the product reference. NEVER change the container/form factor (a squeeze tube stays a tube, a pump bottle stays a pump, a jar stays a jar). Do NOT stretch, squash, warp, or distort. Natural proportions, clean.
 - TEXT: Korean only (브랜드/단위/약어만 영어), zero spelling errors, fully legible.
 - NO COMMERCE UI: this is a product-INTRODUCTION image only. Absolutely NO buttons, NO "구매하기"/"장바구니"/"수량 선택"/CTA, no cart/quantity/checkout widgets, no price-with-buy-button, no 상품정보 commerce table. The shopping platform renders all purchase UI separately — never draw it.
 - FULL-BLEED: the design FILLS the ENTIRE frame edge-to-edge. NO white side margins, NO letterbox/pillarbox bars, NO empty padding on left/right or top/bottom. The background color/scene extends to all four edges.
@@ -255,20 +263,20 @@ QUALITY (this is a FINISHED, polished design — not a placeholder):
 - PRODUCT SCALE: show the product on its own at realistic, natural scale. NEVER show hands/models holding the product. If the template has a hand-held/worn shot, replace it with a clean product-only shot at correct proportions.
 - NO PRICE: never render any price, discount %, or 원 amount anywhere — pricing changes and is the platform's job.
 NEW CONTENT (Korean):
-- Section title: "프리미엄 BLDC 항공 모터 기술"
-- Points: "저전력·고효율·반영구적 사용 가능한 BLDC 모터 탑재", "분당 13,600RPM 초고속 회전으로 강력한 풍량 생성", "소음 최소화 설계로 조용하고 부드러운 작동감"
-- Exact data (no invented numbers): BLDC 항공 모터 / 13,600RPM 회전 속도
+- Section title: "대용량 3,600mAh 배터리로 최대 9시간 무선 사용"
+- Points: "3,600mAh 대용량 배터리 탑재로 하루 종일 충전 걱정 없이 사용 가능", "최대 9시간 연속 무선 작동으로 야외 활동·캠핑·페스티벌에서도 안심", "LCD 디스플레이에 배터리 잔량이 실시간 표시되어 충전 타이밍을 놓치지 않음"
+- Exact data (no invented numbers): 3,600mAh 배터리 / 최대 9시간 사용 / 배터리 잔량 표시
 VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, zero malformed syllables:
-• 프리미엄 BLDC 항공 모터 기술
-• 저전력·고효율·반영구적 사용 가능한 BLDC 모터 탑재
-• 분당 13,600RPM 초고속 회전으로 강력한 풍량 생성
-• 소음 최소화 설계로 조용하고 부드러운 작동감
-• BLDC 항공 모터 / 13,600RPM 회전 속도</pre>
-<h5>결과</h5><img class="res" src="assets/a015.png"/></details><details><summary><b>05</b> 스크류형 6엽 날개 + 제트 터널 블레이드 <em class="success">✓ 103.9s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a016.jpg"/><figcaption>preset-section_5.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
+• 대용량 3,600mAh 배터리로 최대 9시간 무선 사용
+• 3,600mAh 대용량 배터리 탑재로 하루 종일 충전 걱정 없이 사용 가능
+• 최대 9시간 연속 무선 작동으로 야외 활동·캠핑·페스티벌에서도 안심
+• LCD 디스플레이에 배터리 잔량이 실시간 표시되어 충전 타이밍을 놓치지 않음
+• 3,600mAh 배터리 / 최대 9시간 사용 / 배터리 잔량 표시</pre>
+<h5>결과</h5><img class="res" src="assets/a008.png"/></details><details><summary><b>05</b> 60×63×160mm 컴팩트 사이즈 + 220g 초경량 휴대성 <em class="success">✓ 91.7s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
-- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
+- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 흰색의 손잡이형 휴대용 선풍기 본체로, 길쭉한 원통형 몸체에 둥근 팬 헤드가 있으며 'allo' 로고가 새겨져 있습니다. (용기형: 휴대용 선풍기 본체, 손잡이형, 길쭉하고 원통형).
 ⭐ FIDELITY: keep EVERY structural element of the preset section. If it has a point/feature grid (포인트 1~4), keep that exact grid count and layout. If it shows the product from multiple angles, show multiple angles. If it has a product-info / spec block, keep that block. If it shows color options, show this product's color variants. Do NOT simplify, omit, merge, or reduce the layout — only swap product, recolor to product palette, and translate text.
 Template intent: 제품의 핵심 기능(최고 온도, 양면 발열, 발열 시간)을 시각적으로 강조하고 상세히 설명합니다.. Layout: 상단에는 두 개의 제품이 공중에 떠 있는 듯한 연출로 시각적 흥미를 유발하고, 중단에는 기능에 대한 텍스트 설명 블록이 배치됩니다. 하단에는 제품의 발열 기능을 시각적으로 보여주는 이미지와 함께 핵심 수치 정보가 좌우로 나뉘어 제시됩니다. 전체적으로 시각적 요소와 텍스트 설명, 그리고 다시 시각적 강조 및 요약으로 이어지는 흐름입니다..
 DESIGN SYSTEM — apply these exact recurring design elements (inherited from preset, recolored to product palette):
@@ -282,7 +290,7 @@ DESIGN SYSTEM — apply these exact recurring design elements (inherited from pr
 STYLE RULES:
 - LAYOUT/TYPOGRAPHY/DECORATION come from the preset template reference(s) — preserve exact composition, positions, typographic style, motifs.
 - COLORS come from THIS product — recolor everything to: primary #00A8E1, secondary #1E3A8A, accent #00D4FF, dark #0F172A, light #F0F9FF. Do not keep template colors.
-- PRODUCT FIDELITY: keep the product's REAL proportions/shape from the product reference. Do NOT stretch, squash, warp, elongate, or distort it. Natural aspect ratio, clean.
+- PRODUCT FIDELITY: keep the product's REAL form, container type, proportions, and shape from the product reference. NEVER change the container/form factor (a squeeze tube stays a tube, a pump bottle stays a pump, a jar stays a jar). Do NOT stretch, squash, warp, or distort. Natural proportions, clean.
 - TEXT: Korean only (브랜드/단위/약어만 영어), zero spelling errors, fully legible.
 - NO COMMERCE UI: this is a product-INTRODUCTION image only. Absolutely NO buttons, NO "구매하기"/"장바구니"/"수량 선택"/CTA, no cart/quantity/checkout widgets, no price-with-buy-button, no 상품정보 commerce table. The shopping platform renders all purchase UI separately — never draw it.
 - FULL-BLEED: the design FILLS the ENTIRE frame edge-to-edge. NO white side margins, NO letterbox/pillarbox bars, NO empty padding on left/right or top/bottom. The background color/scene extends to all four edges.
@@ -295,20 +303,20 @@ QUALITY (this is a FINISHED, polished design — not a placeholder):
 - PRODUCT SCALE: show the product on its own at realistic, natural scale. NEVER show hands/models holding the product. If the template has a hand-held/worn shot, replace it with a clean product-only shot at correct proportions.
 - NO PRICE: never render any price, discount %, or 원 amount anywhere — pricing changes and is the platform's job.
 NEW CONTENT (Korean):
-- Section title: "스크류형 6엽 날개 + 제트 터널 블레이드"
-- Points: "6엽 스크류 날개가 공기를 압축하여 강력한 직진 바람 생성", "제트 터널 블레이드 시스템으로 바람 손실 최소화", "최대 9m까지 도달하는 초강력 터보 바람 구현"
-- Exact data (no invented numbers): 6엽 스크류 날개 / 제트 터널 블레이드 시스템 / 최대 9m 도달
+- Section title: "60×63×160mm 컴팩트 사이즈 + 220g 초경량 휴대성"
+- Points: "손안에 쏙 들어오는 60×63×160mm 크기로 가방·파우치에 간편하게 수납", "220g 초경량 설계로 장시간 들고 있어도 손목 부담 없이 편안함", "핸드 스트랩 제공으로 손목에 걸어 분실 방지 및 휴대 편의성 극대화"
+- Exact data (no invented numbers): 크기 60×63×160mm / 무게 220g / 핸드 스트랩 포함
 VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, zero malformed syllables:
-• 스크류형 6엽 날개 + 제트 터널 블레이드
-• 6엽 스크류 날개가 공기를 압축하여 강력한 직진 바람 생성
-• 제트 터널 블레이드 시스템으로 바람 손실 최소화
-• 최대 9m까지 도달하는 초강력 터보 바람 구현
-• 6엽 스크류 날개 / 제트 터널 블레이드 시스템 / 최대 9m 도달</pre>
-<h5>결과</h5><img class="res" src="assets/a017.png"/></details><details><summary><b>06</b> LCD 디스플레이 직관적 정보 확인 <em class="success">✓ 91.7s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a018.jpg"/><figcaption>preset-section_6.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
+• 60×63×160mm 컴팩트 사이즈 + 220g 초경량 휴대성
+• 손안에 쏙 들어오는 60×63×160mm 크기로 가방·파우치에 간편하게 수납
+• 220g 초경량 설계로 장시간 들고 있어도 손목 부담 없이 편안함
+• 핸드 스트랩 제공으로 손목에 걸어 분실 방지 및 휴대 편의성 극대화
+• 크기 60×63×160mm / 무게 220g / 핸드 스트랩 포함</pre>
+<h5>결과</h5><img class="res" src="assets/a009.png"/></details><details><summary><b>06</b> 여름 야외 활동부터 일상까지, 다양한 사용 시나리오 <em class="success">✓ 118.1s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
-- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
+- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 흰색의 손잡이형 휴대용 선풍기 본체로, 길쭉한 원통형 몸체에 둥근 팬 헤드가 있으며 'allo' 로고가 새겨져 있습니다. (용기형: 휴대용 선풍기 본체, 손잡이형, 길쭉하고 원통형).
 ⭐ FIDELITY: keep EVERY structural element of the preset section. If it has a point/feature grid (포인트 1~4), keep that exact grid count and layout. If it shows the product from multiple angles, show multiple angles. If it has a product-info / spec block, keep that block. If it shows color options, show this product's color variants. Do NOT simplify, omit, merge, or reduce the layout — only swap product, recolor to product palette, and translate text.
 Template intent: 제품의 핵심 기능 설명 (배터리 잔량 표시). Layout: 상단에 'POINT 06'과 제목, 중단에 소제목과 상세 설명 텍스트가 좌측 정렬로 배치되고, 하단에 제품 이미지가 크게 배치된 수직형 레이아웃.
 DESIGN SYSTEM — apply these exact recurring design elements (inherited from preset, recolored to product palette):
@@ -322,7 +330,7 @@ DESIGN SYSTEM — apply these exact recurring design elements (inherited from pr
 STYLE RULES:
 - LAYOUT/TYPOGRAPHY/DECORATION come from the preset template reference(s) — preserve exact composition, positions, typographic style, motifs.
 - COLORS come from THIS product — recolor everything to: primary #00A8E1, secondary #1E3A8A, accent #00D4FF, dark #0F172A, light #F0F9FF. Do not keep template colors.
-- PRODUCT FIDELITY: keep the product's REAL proportions/shape from the product reference. Do NOT stretch, squash, warp, elongate, or distort it. Natural aspect ratio, clean.
+- PRODUCT FIDELITY: keep the product's REAL form, container type, proportions, and shape from the product reference. NEVER change the container/form factor (a squeeze tube stays a tube, a pump bottle stays a pump, a jar stays a jar). Do NOT stretch, squash, warp, or distort. Natural proportions, clean.
 - TEXT: Korean only (브랜드/단위/약어만 영어), zero spelling errors, fully legible.
 - NO COMMERCE UI: this is a product-INTRODUCTION image only. Absolutely NO buttons, NO "구매하기"/"장바구니"/"수량 선택"/CTA, no cart/quantity/checkout widgets, no price-with-buy-button, no 상품정보 commerce table. The shopping platform renders all purchase UI separately — never draw it.
 - FULL-BLEED: the design FILLS the ENTIRE frame edge-to-edge. NO white side margins, NO letterbox/pillarbox bars, NO empty padding on left/right or top/bottom. The background color/scene extends to all four edges.
@@ -335,20 +343,20 @@ QUALITY (this is a FINISHED, polished design — not a placeholder):
 - PRODUCT SCALE: show the product on its own at realistic, natural scale. NEVER show hands/models holding the product. If the template has a hand-held/worn shot, replace it with a clean product-only shot at correct proportions.
 - NO PRICE: never render any price, discount %, or 원 amount anywhere — pricing changes and is the platform's job.
 NEW CONTENT (Korean):
-- Section title: "LCD 디스플레이 직관적 정보 확인"
-- Points: "현재 풍속 단계(1~100) 실시간 표시", "배터리 잔량 퍼센트(%) 정확한 확인 가능", "작동 모드(에어컨/선풍기) 상태 한눈에 파악"
-- Exact data (no invented numbers): LCD 디스플레이 탑재 / 풍속·배터리·모드 표시
+- Section title: "여름 야외 활동부터 일상까지, 다양한 사용 시나리오"
+- Points: "캠핑·등산·페스티벌·스포츠 관람 등 야외에서 즉각 냉각 및 송풍", "출퇴근 시 대중교통 안에서, 사무실·집에서 개인 냉방 기기로 활용", "운동 후 쿨다운, 더운 날씨 외출 시 휴대용 냉각 기기로 폭염 대비 필수 아이템"
+- Exact data (no invented numbers): 야외 활동·출퇴근·사무실·운동 후 등 다양한 사용 맥락
 VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, zero malformed syllables:
-• LCD 디스플레이 직관적 정보 확인
-• 현재 풍속 단계(1~100) 실시간 표시
-• 배터리 잔량 퍼센트(%) 정확한 확인 가능
-• 작동 모드(에어컨/선풍기) 상태 한눈에 파악
-• LCD 디스플레이 탑재 / 풍속·배터리·모드 표시</pre>
-<h5>결과</h5><img class="res" src="assets/a019.png"/></details><details><summary><b>07</b> 대용량 3,600mAh 배터리 장시간 사용 <em class="success">✓ 128.5s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a020.jpg"/><figcaption>preset-section_7.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
+• 여름 야외 활동부터 일상까지, 다양한 사용 시나리오
+• 캠핑·등산·페스티벌·스포츠 관람 등 야외에서 즉각 냉각 및 송풍
+• 출퇴근 시 대중교통 안에서, 사무실·집에서 개인 냉방 기기로 활용
+• 운동 후 쿨다운, 더운 날씨 외출 시 휴대용 냉각 기기로 폭염 대비 필수 아이템
+• 야외 활동·출퇴근·사무실·운동 후 등 다양한 사용 맥락</pre>
+<h5>결과</h5><img class="res" src="assets/a010.png"/></details><details><summary><b>07</b> Type-C 충전 방식으로 편리하고 빠른 충전 <em class="success">✓ 120.9s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
-- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
+- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 흰색의 손잡이형 휴대용 선풍기 본체로, 길쭉한 원통형 몸체에 둥근 팬 헤드가 있으며 'allo' 로고가 새겨져 있습니다. (용기형: 휴대용 선풍기 본체, 손잡이형, 길쭉하고 원통형).
 ⭐ FIDELITY: keep EVERY structural element of the preset section. If it has a point/feature grid (포인트 1~4), keep that exact grid count and layout. If it shows the product from multiple angles, show multiple angles. If it has a product-info / spec block, keep that block. If it shows color options, show this product's color variants. Do NOT simplify, omit, merge, or reduce the layout — only swap product, recolor to product palette, and translate text.
 Template intent: 제품의 기내 반입 가능 여부 및 여행 친화적 특성 강조. Layout: 상단에 원형 아이콘과 텍스트 배치, 중앙에 제품 이미지, 우측에 큰 제목과 보조 설명 텍스트 배치.
 DESIGN SYSTEM — apply these exact recurring design elements (inherited from preset, recolored to product palette):
@@ -362,7 +370,7 @@ DESIGN SYSTEM — apply these exact recurring design elements (inherited from pr
 STYLE RULES:
 - LAYOUT/TYPOGRAPHY/DECORATION come from the preset template reference(s) — preserve exact composition, positions, typographic style, motifs.
 - COLORS come from THIS product — recolor everything to: primary #00A8E1, secondary #1E3A8A, accent #00D4FF, dark #0F172A, light #F0F9FF. Do not keep template colors.
-- PRODUCT FIDELITY: keep the product's REAL proportions/shape from the product reference. Do NOT stretch, squash, warp, elongate, or distort it. Natural aspect ratio, clean.
+- PRODUCT FIDELITY: keep the product's REAL form, container type, proportions, and shape from the product reference. NEVER change the container/form factor (a squeeze tube stays a tube, a pump bottle stays a pump, a jar stays a jar). Do NOT stretch, squash, warp, or distort. Natural proportions, clean.
 - TEXT: Korean only (브랜드/단위/약어만 영어), zero spelling errors, fully legible.
 - NO COMMERCE UI: this is a product-INTRODUCTION image only. Absolutely NO buttons, NO "구매하기"/"장바구니"/"수량 선택"/CTA, no cart/quantity/checkout widgets, no price-with-buy-button, no 상품정보 commerce table. The shopping platform renders all purchase UI separately — never draw it.
 - FULL-BLEED: the design FILLS the ENTIRE frame edge-to-edge. NO white side margins, NO letterbox/pillarbox bars, NO empty padding on left/right or top/bottom. The background color/scene extends to all four edges.
@@ -375,20 +383,20 @@ QUALITY (this is a FINISHED, polished design — not a placeholder):
 - PRODUCT SCALE: show the product on its own at realistic, natural scale. NEVER show hands/models holding the product. If the template has a hand-held/worn shot, replace it with a clean product-only shot at correct proportions.
 - NO PRICE: never render any price, discount %, or 원 amount anywhere — pricing changes and is the platform's job.
 NEW CONTENT (Korean):
-- Section title: "대용량 3,600mAh 배터리 장시간 사용"
-- Points: "최대 9시간 무선 사용 가능한 대용량 배터리", "Type-C 고속 충전 방식으로 빠른 재충전", "배터리 전문기업 알로코리아의 안전하고 오래가는 품질"
-- Exact data (no invented numbers): 3,600mAh 배터리 / 최대 9시간 사용 / Type-C 충전
+- Section title: "Type-C 충전 방식으로 편리하고 빠른 충전"
+- Points: "범용 Type-C 충전 포트로 스마트폰 충전기·보조배터리와 호환 가능", "별도 전용 케이블 없이도 어디서나 간편하게 충전 가능한 범용성", "충전 케이블 기본 제공으로 구매 즉시 바로 사용 가능"
+- Exact data (no invented numbers): Type-C 충전 방식 / 충전 케이블 기본 제공
 VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, zero malformed syllables:
-• 대용량 3,600mAh 배터리 장시간 사용
-• 최대 9시간 무선 사용 가능한 대용량 배터리
-• Type-C 고속 충전 방식으로 빠른 재충전
-• 배터리 전문기업 알로코리아의 안전하고 오래가는 품질
-• 3,600mAh 배터리 / 최대 9시간 사용 / Type-C 충전</pre>
-<h5>결과</h5><img class="res" src="assets/a021.png"/></details><details><summary><b>08</b> 안전 인증 및 스마트 보호 시스템 <em class="success">✓ 110.9s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a022.jpg"/><figcaption>preset-section_8.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
+• Type-C 충전 방식으로 편리하고 빠른 충전
+• 범용 Type-C 충전 포트로 스마트폰 충전기·보조배터리와 호환 가능
+• 별도 전용 케이블 없이도 어디서나 간편하게 충전 가능한 범용성
+• 충전 케이블 기본 제공으로 구매 즉시 바로 사용 가능
+• Type-C 충전 방식 / 충전 케이블 기본 제공</pre>
+<h5>결과</h5><img class="res" src="assets/a011.png"/></details><details><summary><b>08</b> 배터리 전문기업 알로코리아의 안전하고 신뢰할 수 있는 품질 <em class="success">✓ 116.7s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
-- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
+- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 흰색의 손잡이형 휴대용 선풍기 본체로, 길쭉한 원통형 몸체에 둥근 팬 헤드가 있으며 'allo' 로고가 새겨져 있습니다. (용기형: 휴대용 선풍기 본체, 손잡이형, 길쭉하고 원통형).
 ⭐ FIDELITY: keep EVERY structural element of the preset section. If it has a point/feature grid (포인트 1~4), keep that exact grid count and layout. If it shows the product from multiple angles, show multiple angles. If it has a product-info / spec block, keep that block. If it shows color options, show this product's color variants. Do NOT simplify, omit, merge, or reduce the layout — only swap product, recolor to product palette, and translate text.
 Template intent: 제품의 안전성 및 신뢰성 강조 (스마트 IC 칩 기술 및 책임보험 가입을 통한 안전성 어필). Layout: 상단에 영문 서브타이틀, 국문 메인 타이틀, 설명 텍스트가 중앙 정렬로 배치. 중단에 핵심 기술(IC 칩)을 시각적으로 보여주는 이미지와 인증 배지가 배치. 하단에 제품 책임보험 가입을 안내하는 정보 박스가 배치됨. 전체적으로 상-중-하 3단 구성으로 정보가 흐름..
 DESIGN SYSTEM — apply these exact recurring design elements (inherited from preset, recolored to product palette):
@@ -402,7 +410,7 @@ DESIGN SYSTEM — apply these exact recurring design elements (inherited from pr
 STYLE RULES:
 - LAYOUT/TYPOGRAPHY/DECORATION come from the preset template reference(s) — preserve exact composition, positions, typographic style, motifs.
 - COLORS come from THIS product — recolor everything to: primary #00A8E1, secondary #1E3A8A, accent #00D4FF, dark #0F172A, light #F0F9FF. Do not keep template colors.
-- PRODUCT FIDELITY: keep the product's REAL proportions/shape from the product reference. Do NOT stretch, squash, warp, elongate, or distort it. Natural aspect ratio, clean.
+- PRODUCT FIDELITY: keep the product's REAL form, container type, proportions, and shape from the product reference. NEVER change the container/form factor (a squeeze tube stays a tube, a pump bottle stays a pump, a jar stays a jar). Do NOT stretch, squash, warp, or distort. Natural proportions, clean.
 - TEXT: Korean only (브랜드/단위/약어만 영어), zero spelling errors, fully legible.
 - NO COMMERCE UI: this is a product-INTRODUCTION image only. Absolutely NO buttons, NO "구매하기"/"장바구니"/"수량 선택"/CTA, no cart/quantity/checkout widgets, no price-with-buy-button, no 상품정보 commerce table. The shopping platform renders all purchase UI separately — never draw it.
 - FULL-BLEED: the design FILLS the ENTIRE frame edge-to-edge. NO white side margins, NO letterbox/pillarbox bars, NO empty padding on left/right or top/bottom. The background color/scene extends to all four edges.
@@ -415,20 +423,20 @@ QUALITY (this is a FINISHED, polished design — not a placeholder):
 - PRODUCT SCALE: show the product on its own at realistic, natural scale. NEVER show hands/models holding the product. If the template has a hand-held/worn shot, replace it with a clean product-only shot at correct proportions.
 - NO PRICE: never render any price, discount %, or 원 amount anywhere — pricing changes and is the platform's job.
 NEW CONTENT (Korean):
-- Section title: "안전 인증 및 스마트 보호 시스템"
-- Points: "과충전·과방전·과열 방지 스마트 IC 칩 탑재", "KC 인증 완료 및 제조물 책임보험 가입으로 안심 사용", "천만 고객이 선택한 알로코리아 브랜드 신뢰도"
-- Exact data (no invented numbers): KC 인증 완료 / 제조물 책임보험 가입 / 천만 고객 선택
+- Section title: "배터리 전문기업 알로코리아의 안전하고 신뢰할 수 있는 품질"
+- Points: "천만 고객이 선택한 배터리 전문 브랜드 알로코리아의 검증된 기술력", "안전한 배터리 설계와 스마트 IC 칩 기술로 과열·과충전·과방전 방지", "오래가는 배터리 수명과 안정적인 성능으로 장기간 사용 가능"
+- Exact data (no invented numbers): 알로코리아 배터리 전문기업 / 천만 고객 선택 / 안전 설계
 VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, zero malformed syllables:
-• 안전 인증 및 스마트 보호 시스템
-• 과충전·과방전·과열 방지 스마트 IC 칩 탑재
-• KC 인증 완료 및 제조물 책임보험 가입으로 안심 사용
-• 천만 고객이 선택한 알로코리아 브랜드 신뢰도
-• KC 인증 완료 / 제조물 책임보험 가입 / 천만 고객 선택</pre>
-<h5>결과</h5><img class="res" src="assets/a023.png"/></details><details><summary><b>09</b> 화이트·블루 깔끔한 디자인과 색상 옵션 <em class="success">✓ 125.6s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a024.jpg"/><figcaption>preset-section_9.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
+• 배터리 전문기업 알로코리아의 안전하고 신뢰할 수 있는 품질
+• 천만 고객이 선택한 배터리 전문 브랜드 알로코리아의 검증된 기술력
+• 안전한 배터리 설계와 스마트 IC 칩 기술로 과열·과충전·과방전 방지
+• 오래가는 배터리 수명과 안정적인 성능으로 장기간 사용 가능
+• 알로코리아 배터리 전문기업 / 천만 고객 선택 / 안전 설계</pre>
+<h5>결과</h5><img class="res" src="assets/a012.png"/></details><details><summary><b>09</b> 화이트/블루 계열 깔끔한 디자인 + 직관적인 LCD 인터페이스 <em class="success">✓ 138.9s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
-- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
+- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 흰색의 손잡이형 휴대용 선풍기 본체로, 길쭉한 원통형 몸체에 둥근 팬 헤드가 있으며 'allo' 로고가 새겨져 있습니다. (용기형: 휴대용 선풍기 본체, 손잡이형, 길쭉하고 원통형).
 ⭐ FIDELITY: keep EVERY structural element of the preset section. If it has a point/feature grid (포인트 1~4), keep that exact grid count and layout. If it shows the product from multiple angles, show multiple angles. If it has a product-info / spec block, keep that block. If it shows color options, show this product's color variants. Do NOT simplify, omit, merge, or reduce the layout — only swap product, recolor to product palette, and translate text.
 Template intent: 제품의 커스텀 인쇄/브랜딩 가능성 강조 및 홍보용 활용 제안. Layout: 상단에 영문 서브타이틀, 중앙에 메인 타이틀, 그 아래 설명 텍스트가 배치되고, 하단에는 제품 이미지 위에 작은 카테고리 라벨이 있으며, 두 개의 제품 이미지가 나란히 중앙에 배치된 구조.
 DESIGN SYSTEM — apply these exact recurring design elements (inherited from preset, recolored to product palette):
@@ -442,7 +450,7 @@ DESIGN SYSTEM — apply these exact recurring design elements (inherited from pr
 STYLE RULES:
 - LAYOUT/TYPOGRAPHY/DECORATION come from the preset template reference(s) — preserve exact composition, positions, typographic style, motifs.
 - COLORS come from THIS product — recolor everything to: primary #00A8E1, secondary #1E3A8A, accent #00D4FF, dark #0F172A, light #F0F9FF. Do not keep template colors.
-- PRODUCT FIDELITY: keep the product's REAL proportions/shape from the product reference. Do NOT stretch, squash, warp, elongate, or distort it. Natural aspect ratio, clean.
+- PRODUCT FIDELITY: keep the product's REAL form, container type, proportions, and shape from the product reference. NEVER change the container/form factor (a squeeze tube stays a tube, a pump bottle stays a pump, a jar stays a jar). Do NOT stretch, squash, warp, or distort. Natural proportions, clean.
 - TEXT: Korean only (브랜드/단위/약어만 영어), zero spelling errors, fully legible.
 - NO COMMERCE UI: this is a product-INTRODUCTION image only. Absolutely NO buttons, NO "구매하기"/"장바구니"/"수량 선택"/CTA, no cart/quantity/checkout widgets, no price-with-buy-button, no 상품정보 commerce table. The shopping platform renders all purchase UI separately — never draw it.
 - FULL-BLEED: the design FILLS the ENTIRE frame edge-to-edge. NO white side margins, NO letterbox/pillarbox bars, NO empty padding on left/right or top/bottom. The background color/scene extends to all four edges.
@@ -455,20 +463,20 @@ QUALITY (this is a FINISHED, polished design — not a placeholder):
 - PRODUCT SCALE: show the product on its own at realistic, natural scale. NEVER show hands/models holding the product. If the template has a hand-held/worn shot, replace it with a clean product-only shot at correct proportions.
 - NO PRICE: never render any price, discount %, or 원 amount anywhere — pricing changes and is the platform's job.
 NEW CONTENT (Korean):
-- Section title: "화이트·블루 깔끔한 디자인과 색상 옵션"
-- Points: "화이트/블루 계열의 모던하고 세련된 외관 디자인", "손에 쥐기 편한 그립감과 미끄럼 방지 질감 처리", "어디서나 돋보이는 프리미엄 감성 컬러"
-- Exact data (no invented numbers): 화이트/블루 컬러 / 그립감 우수 / 미끄럼 방지 질감
+- Section title: "화이트/블루 계열 깔끔한 디자인 + 직관적인 LCD 인터페이스"
+- Points: "화이트·블루 컬러의 모던하고 깔끔한 디자인으로 어디서나 세련된 스타일", "LCD 디스플레이에 풍속·배터리 잔량·작동 상태가 한눈에 표시되어 직관적 확인", "중앙 그립부에 배치된 조작 버튼으로 한 손으로 간편하게 모든 기능 제어"
+- Exact data (no invented numbers): 화이트/블루 컬러 / LCD 디스플레이 / 원터치 조작
 VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, zero malformed syllables:
-• 화이트·블루 깔끔한 디자인과 색상 옵션
-• 화이트/블루 계열의 모던하고 세련된 외관 디자인
-• 손에 쥐기 편한 그립감과 미끄럼 방지 질감 처리
-• 어디서나 돋보이는 프리미엄 감성 컬러
-• 화이트/블루 컬러 / 그립감 우수 / 미끄럼 방지 질감</pre>
-<h5>결과</h5><img class="res" src="assets/a025.png"/></details><details><summary><b>10</b> 제품 상세 스펙 및 구성품 <em class="success">✓ 97.6s</em></summary>
-<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a026.jpg"/><figcaption>preset-section_10.jpg(layout)</figcaption></figure><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
+• 화이트/블루 계열 깔끔한 디자인 + 직관적인 LCD 인터페이스
+• 화이트·블루 컬러의 모던하고 깔끔한 디자인으로 어디서나 세련된 스타일
+• LCD 디스플레이에 풍속·배터리 잔량·작동 상태가 한눈에 표시되어 직관적 확인
+• 중앙 그립부에 배치된 조작 버튼으로 한 손으로 간편하게 모든 기능 제어
+• 화이트/블루 컬러 / LCD 디스플레이 / 원터치 조작</pre>
+<h5>결과</h5><img class="res" src="assets/a013.png"/></details><details><summary><b>10</b> 제품 상세 스펙 및 구성품 안내 <em class="success">✓ 115.2s</em></summary>
+<h5>첨부 레퍼런스 (페이로드 image_urls, 순서대로)</h5><div class="refs"><figure><img src="assets/a003.jpg"/><figcaption>제품시트</figcaption></figure></div>
 <h5>프롬프트</h5><pre>Recreate this e-commerce detail SECTION by swapping in a new product — stay FAITHFUL to the preset section's full structure.
 - FIRST ref = preset section = the exact LAYOUT/TYPOGRAPHY/DECORATION template to replicate.
-- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 손잡이가 있는 휴대용 선풍기 형태. 상단에 스크류형 6엽 날개가 장착된 원형 팬 헤드, 중앙에 LCD 디스플레이와 조작 버튼이 있는 그립부, 하단에 Type-C 충전 포트가 있는 배터리 본체로 구성. 전면에 냉각 쿨링패드가 탑재되어 있으며, 핸드 스트랩이 부착 가능한 고리 존재. 컬러는 화이트/블루 계열의 깔끔한 디자인. 크기 60×63×160mm, 무게 220g의 컴팩트한 휴대용 디자인..
+- SECOND ref = product sheet (clean studio shots, multiple colors/angles) = use the appropriate product/color, faithful, no distortion: 흰색의 손잡이형 휴대용 선풍기 본체로, 길쭉한 원통형 몸체에 둥근 팬 헤드가 있으며 'allo' 로고가 새겨져 있습니다. (용기형: 휴대용 선풍기 본체, 손잡이형, 길쭉하고 원통형).
 ⭐ FIDELITY: keep EVERY structural element of the preset section. If it has a point/feature grid (포인트 1~4), keep that exact grid count and layout. If it shows the product from multiple angles, show multiple angles. If it has a product-info / spec block, keep that block. If it shows color options, show this product's color variants. Do NOT simplify, omit, merge, or reduce the layout — only swap product, recolor to product palette, and translate text.
 Template intent: 제품 상세 정보 (SPEC), 구성품 (COMPONENT), 상세 스펙 (SPECIFICATION), 포장 옵션 (PACKAGING) 안내. Layout: 상단에 좌측 브랜드 로고와 우측 제품명 텍스트 헤더. 중상단에 중앙 정렬된 대형 영문 제목과 소형 한글 부제목. 중단에 좌측 정렬된 영문 소제목 아래 제품 구성품 이미지 2개 가로 배치, 하단에 각 구성품 번호와 한글 설명. 중하단에 좌측 정렬된 영문 소제목 아래 2단 테이블 형식으로 제품 상세 스펙 정보 나열. 하단에 2개의 제품 포장 이미지 가로 배치, 각 이미지 하단에 한글 설명 텍스트 중앙 정렬..
 DESIGN SYSTEM — apply these exact recurring design elements (inherited from preset, recolored to product palette):
@@ -482,7 +490,7 @@ DESIGN SYSTEM — apply these exact recurring design elements (inherited from pr
 STYLE RULES:
 - LAYOUT/TYPOGRAPHY/DECORATION come from the preset template reference(s) — preserve exact composition, positions, typographic style, motifs.
 - COLORS come from THIS product — recolor everything to: primary #00A8E1, secondary #1E3A8A, accent #00D4FF, dark #0F172A, light #F0F9FF. Do not keep template colors.
-- PRODUCT FIDELITY: keep the product's REAL proportions/shape from the product reference. Do NOT stretch, squash, warp, elongate, or distort it. Natural aspect ratio, clean.
+- PRODUCT FIDELITY: keep the product's REAL form, container type, proportions, and shape from the product reference. NEVER change the container/form factor (a squeeze tube stays a tube, a pump bottle stays a pump, a jar stays a jar). Do NOT stretch, squash, warp, or distort. Natural proportions, clean.
 - TEXT: Korean only (브랜드/단위/약어만 영어), zero spelling errors, fully legible.
 - NO COMMERCE UI: this is a product-INTRODUCTION image only. Absolutely NO buttons, NO "구매하기"/"장바구니"/"수량 선택"/CTA, no cart/quantity/checkout widgets, no price-with-buy-button, no 상품정보 commerce table. The shopping platform renders all purchase UI separately — never draw it.
 - FULL-BLEED: the design FILLS the ENTIRE frame edge-to-edge. NO white side margins, NO letterbox/pillarbox bars, NO empty padding on left/right or top/bottom. The background color/scene extends to all four edges.
@@ -495,19 +503,19 @@ QUALITY (this is a FINISHED, polished design — not a placeholder):
 - PRODUCT SCALE: show the product on its own at realistic, natural scale. NEVER show hands/models holding the product. If the template has a hand-held/worn shot, replace it with a clean product-only shot at correct proportions.
 - NO PRICE: never render any price, discount %, or 원 amount anywhere — pricing changes and is the platform's job.
 NEW CONTENT (Korean):
-- Section title: "제품 상세 스펙 및 구성품"
-- Points: "구성품: 본품 + 핸드스트랩 + Type-C 충전케이블 + 설명서", "크기 60×63×160mm / 무게 220g / 배터리 3,600mAh", "풍속 1~100단계 조절 / 최대 9시간 사용 / 최대 9m 도달"
-- Exact data (no invented numbers): 크기 60×63×160mm / 무게 220g / 3,600mAh 배터리 / 1~100단계 풍속 조절
+- Section title: "제품 상세 스펙 및 구성품 안내"
+- Points: "본품 + 핸드 스트랩 + Type-C 충전 케이블 + 사용 설명서 기본 구성", "크기 60×63×160mm / 무게 220g / 3,600mAh 배터리 / BLDC 모터 / 스크류형 6엽 날개", "평점 4.8/5.0 (70건 리뷰) 높은 만족도 / 올리브영 단독 포토리뷰 이벤트 진행 중"
+- Exact data (no invented numbers): 구성품: 본품+스트랩+케이블+설명서 / 평점 4.8/5.0 (70건)
 VERBATIM KOREAN TEXT — render each string EXACTLY, crisp and fully legible, zero malformed syllables:
-• 제품 상세 스펙 및 구성품
-• 구성품: 본품 + 핸드스트랩 + Type-C 충전케이블 + 설명서
-• 크기 60×63×160mm / 무게 220g / 배터리 3,600mAh
-• 풍속 1~100단계 조절 / 최대 9시간 사용 / 최대 9m 도달
-• 크기 60×63×160mm / 무게 220g / 3,600mAh 배터리 / 1~100단계 풍속 조절</pre>
-<h5>결과</h5><img class="res" src="assets/a027.png"/></details></div>
+• 제품 상세 스펙 및 구성품 안내
+• 본품 + 핸드 스트랩 + Type-C 충전 케이블 + 사용 설명서 기본 구성
+• 크기 60×63×160mm / 무게 220g / 3,600mAh 배터리 / BLDC 모터 / 스크류형 6엽 날개
+• 평점 4.8/5.0 (70건 리뷰) 높은 만족도 / 올리브영 단독 포토리뷰 이벤트 진행 중
+• 구성품: 본품+스트랩+케이블+설명서 / 평점 4.8/5.0 (70건)</pre>
+<h5>결과</h5><img class="res" src="assets/a014.png"/></details></div>
 <div class="shead">🖼️ 시안 비교 — 좌: 원본 / 우: 생성 (스크롤 동기화)</div>
 <div class="compare">
-  <div class="col"><div class="ctitle">📄 원본 (상세이미지 31장)</div><div class="cbody"><img src="assets/a028.jpg" loading="lazy"/><img src="assets/a029.jpg" loading="lazy"/><img src="assets/a030.jpg" loading="lazy"/><img src="assets/a031.jpg" loading="lazy"/><img src="assets/a032.jpg" loading="lazy"/><img src="assets/a033.jpg" loading="lazy"/><img src="assets/a034.jpg" loading="lazy"/><img src="assets/a035.jpg" loading="lazy"/><img src="assets/a036.jpg" loading="lazy"/><img src="assets/a037.jpg" loading="lazy"/><img src="assets/a038.jpg" loading="lazy"/><img src="assets/a039.jpg" loading="lazy"/><img src="assets/a040.jpg" loading="lazy"/><img src="assets/a041.jpg" loading="lazy"/><img src="assets/a042.jpg" loading="lazy"/><img src="assets/a043.jpg" loading="lazy"/><img src="assets/a044.jpg" loading="lazy"/><img src="assets/a045.jpg" loading="lazy"/><img src="assets/a046.jpg" loading="lazy"/><img src="assets/a047.jpg" loading="lazy"/><img src="assets/a048.jpg" loading="lazy"/><img src="assets/a049.jpg" loading="lazy"/><img src="assets/a050.jpg" loading="lazy"/><img src="assets/a051.jpg" loading="lazy"/><img src="assets/a052.jpg" loading="lazy"/><img src="assets/a053.jpg" loading="lazy"/><img src="assets/a054.jpg" loading="lazy"/><img src="assets/a055.jpg" loading="lazy"/><img src="assets/a056.jpg" loading="lazy"/><img src="assets/a057.jpg" loading="lazy"/><img src="assets/a058.jpg" loading="lazy"/></div></div>
-  <div class="col"><div class="ctitle">✨ 우리 생성 (v9 · 커버+섹션 10)</div><div class="cbody"><img src="assets/a007.png"/><img src="assets/a009.png" loading="lazy"/><img src="assets/a011.png" loading="lazy"/><img src="assets/a013.png" loading="lazy"/><img src="assets/a015.png" loading="lazy"/><img src="assets/a017.png" loading="lazy"/><img src="assets/a019.png" loading="lazy"/><img src="assets/a021.png" loading="lazy"/><img src="assets/a023.png" loading="lazy"/><img src="assets/a025.png" loading="lazy"/><img src="assets/a027.png" loading="lazy"/></div></div>
+  <div class="col"><div class="ctitle">📄 원본 (상세이미지 31장)</div><div class="cbody"><img src="assets/a015.jpg" loading="lazy"/><img src="assets/a016.jpg" loading="lazy"/><img src="assets/a017.jpg" loading="lazy"/><img src="assets/a018.jpg" loading="lazy"/><img src="assets/a019.jpg" loading="lazy"/><img src="assets/a020.jpg" loading="lazy"/><img src="assets/a021.jpg" loading="lazy"/><img src="assets/a022.jpg" loading="lazy"/><img src="assets/a023.jpg" loading="lazy"/><img src="assets/a024.jpg" loading="lazy"/><img src="assets/a025.jpg" loading="lazy"/><img src="assets/a026.jpg" loading="lazy"/><img src="assets/a027.jpg" loading="lazy"/><img src="assets/a028.jpg" loading="lazy"/><img src="assets/a029.jpg" loading="lazy"/><img src="assets/a030.jpg" loading="lazy"/><img src="assets/a031.jpg" loading="lazy"/><img src="assets/a032.jpg" loading="lazy"/><img src="assets/a033.jpg" loading="lazy"/><img src="assets/a034.jpg" loading="lazy"/><img src="assets/a035.jpg" loading="lazy"/><img src="assets/a036.jpg" loading="lazy"/><img src="assets/a037.jpg" loading="lazy"/><img src="assets/a038.jpg" loading="lazy"/><img src="assets/a039.jpg" loading="lazy"/><img src="assets/a040.jpg" loading="lazy"/><img src="assets/a041.jpg" loading="lazy"/><img src="assets/a042.jpg" loading="lazy"/><img src="assets/a043.jpg" loading="lazy"/><img src="assets/a044.jpg" loading="lazy"/><img src="assets/a045.jpg" loading="lazy"/></div></div>
+  <div class="col"><div class="ctitle">✨ 우리 생성 (v9 · 커버+섹션 10)</div><div class="cbody"><img src="assets/a004.png"/><img src="assets/a005.png" loading="lazy"/><img src="assets/a006.png" loading="lazy"/><img src="assets/a007.png" loading="lazy"/><img src="assets/a008.png" loading="lazy"/><img src="assets/a009.png" loading="lazy"/><img src="assets/a010.png" loading="lazy"/><img src="assets/a011.png" loading="lazy"/><img src="assets/a012.png" loading="lazy"/><img src="assets/a013.png" loading="lazy"/><img src="assets/a014.png" loading="lazy"/></div></div>
 </div>
 </div></body></html>
