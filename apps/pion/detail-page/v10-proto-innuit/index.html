@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>v10 프로토 — INNUIT 스타일 → AIR 슬리퍼</title>
+<style>
+:root{--bg:#f4f4f6;--card:#fff;--line:#e3e3e8;--mut:#8a8a93;--ink:#1a1a22;--ac:#b08d57}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+.hd{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:14px 20px}
+.hd h1{font-size:15px;font-weight:700}
+.hd p{font-size:11.5px;color:var(--mut);margin-top:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:24px 16px 60px}
+h2{font-size:13px;font-weight:700;margin:30px 0 6px;letter-spacing:-.2px}
+h2 .tag{font-size:10px;font-weight:600;color:#fff;background:var(--ac);padding:2px 7px;border-radius:10px;margin-left:6px;vertical-align:middle}
+.sub{font-size:11.5px;color:var(--mut);margin-bottom:14px}
+.cmp{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:8px}
+.col{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.col .lb{font-size:11px;font-weight:600;padding:7px 10px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.col .lb b{color:var(--ink)} .col .lb span{font-size:9.5px;color:var(--mut)}
+.col img{width:100%;display:block}
+.col.win .lb{background:#faf6ef} .col.win .lb b{color:var(--ac)}
+.page{max-width:460px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 6px 28px rgba(0,0,0,.06)}
+.page img{width:100%;display:block}
+.note{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:12px;color:#444;margin-top:10px}
+.note b{color:var(--ink)} .note ul{margin:6px 0 0 16px} .note li{margin:3px 0}
+.full img{width:100%;border:1px solid var(--line);border-radius:12px;display:block}
+@media(max-width:720px){.cmp{grid-template-columns:1fr}}
+</style></head><body>
+<div class="hd"><h1>v10 프로토 — 무신사 1등(INNUIT) 스타일 → AIR 스포츠슬리퍼</h1>
+<p>대상 상세페이지를 카드 단위로 충실 복제 + 제품·카피 교체. gpt-image-2/edit i2i · ds vs non-ds 비교</p></div>
+<div class="wrap">
+
+<h2>1. 조립된 v10 페이지 <span class="tag">ds</span></h2>
+<div class="sub">에디토리얼 라이프스타일 + 피처 콜아웃 카드를 2:3로 생성해 세로로 스택. INNUIT의 웜베이지 톤을 입은 내 슬리퍼.</div>
+<div class="page"><img src="assets/life-ds.png" alt="lifestyle ds"><img src="assets/feat-ds.png" alt="feature ds"></div>
+
+<h2>2. ds vs non-ds — 라이프스타일 카드(하드: 모델 발 착용 교체)</h2>
+<div class="sub">제일 어려운 케이스. 모델 발의 털클로그 → 내 오픈 스포츠슬라이드 교체. 사진 자체가 웜무드라 ds·non-ds 차이는 작음.</div>
+<div class="cmp">
+ <div class="col"><div class="lb"><b>INNUIT 원본</b><span>대상</span></div><img src="assets/innuit-life.jpg"></div>
+ <div class="col"><div class="lb"><b>v10-non-ds</b><span>DS 없음</span></div><img src="assets/life-nonds.png"></div>
+ <div class="col win"><div class="lb"><b>v10-ds</b><span>스타일보드 앵커</span></div><img src="assets/life-ds.png"></div>
+</div>
+
+<h2>3. ds vs non-ds — 피처 콜아웃 카드(중난도: 텍스트+제품)</h2>
+<div class="sub">4단 콜아웃 레이아웃·번호뱃지 복제 + 제품/카피 교체. 여기서 DS 효과가 큼 — non-ds는 웜톤 소실, ds는 베이지 무드 복원.</div>
+<div class="cmp">
+ <div class="col"><div class="lb"><b>INNUIT 원본</b><span>대상</span></div><img src="assets/innuit-feat.jpg"></div>
+ <div class="col"><div class="lb"><b>v10-non-ds</b><span>흰배경·톤 소실</span></div><img src="assets/feat-nonds.png"></div>
+ <div class="col win"><div class="lb"><b>v10-ds</b><span>웜베이지 복원</span></div><img src="assets/feat-ds.png"></div>
+</div>
+
+<div class="note"><b>관찰 정리</b>
+<ul>
+<li><b>i2i 엔진</b> openai/gpt-image-2/edit — 한글 텍스트·레이아웃 충실 복제 확인</li>
+<li><b>제품 교체</b> 피처샷·저울샷·아웃솔·모델 착용까지 적응 (착용샷은 제품 디테일 근사)</li>
+<li><b>DS 가치는 카드 종류별로 다름</b> — 그래픽/피처 카드엔 큼(톤 복원), 라이프스타일엔 작음(사진이 이미 무드 보유)</li>
+</ul></div>
+
+<h2>4. 분할 검증 — 여백 컷 (대상 총 46,304px)</h2>
+<div class="sub">대상 11장(최대 7,000px)을 여백 띠에서 자름. 빨강=섹션 컷, 파랑=2:3 강제 하드컷(콘텐츠 관통 6/71).</div>
+<div class="full"><img src="assets/seg-preview.jpg"></div>
+
+</div></body></html>
