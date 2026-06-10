@@ -51,7 +51,7 @@ body{font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;b
 
  <div class="lane">
   <div class="lh v10"><b>v10-ds</b><span>대상 복제 + 스타일보드 앵커</span></div>
-  <div class="stack"><img src="assets/life-ds.png"><img src="assets/feat-ds.png"></div>
+  <div class="stack"><img src="assets/life-ds.png"><img src="assets/feat-ds-fixed.png"></div>
  </div>
 
  <div class="lane">
@@ -61,14 +61,21 @@ body{font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;b
 </div>
 
 <div class="foot">
- <div class="note">
-  <h3>⚠️ 핵심 미해결: 없는 자료 → 할루시네이션 (밑창 예시)</h3>
+ <div class="note"><h3>✅ D1/D2 디렉터 — 할루시네이션 차단 검증</h3>
+디렉터가 대상 카드의 각 항목을 내 제품 자료에 매칭해 판정·보정한 결과. <b>240g 무게 발명·가짜 밑창이 제거</b>됨.
+<div style="font-size:11.5px;margin:8px 0 10px;background:#faf6ef;border-radius:8px;padding:8px 10px">
+01 소가죽 <span class="d2">D2</span>→ PVC 일체형 몰딩 · 02 240g무게 <span class="d2">D2</span>→ 3.0cm 미드솔 · 03 착화감 <span class="d1">D1</span>→ 신축성 · 04 털안감 <span class="d2">D2</span>→ 미끄럼방지 아웃솔(실샷)
+</div>
+<img src="assets/director-3way.jpg" style="width:100%;border:1px solid #e3e3e8;border-radius:8px;display:block">
+<div style="font-size:11px;color:#8a8a93;margin-top:5px">좌: INNUIT 원본 / 중: 보정 전(240g·가짜밑창) / 우: 보정 후(D1/D2 디렉터)</div></div>
+<div class="note">
+  <h3>✅ 해결됨: 없는 자료 → 할루시네이션 (밑창 예시)</h3>
   피처 카드 "04 미끄럼 방지 아웃솔"에서 <b>우리가 가진 제품 자료에 밑창샷이 없는데</b> 텍스트로 요청하니 모델이 밑창을 <b>지어냈습니다</b>(할루시네이션). 이걸 막으려면 생성 전에 <b>자료 보유 여부를 데이터로 판정</b>하고 디렉팅하는 층이 필요:
   <ul>
    <li><b class="d1">D1 (자료 있음)</b> → 실제 샷을 i2i 레퍼런스로 그대로 사용</li>
    <li><b class="d2">D2 (자료 없음)</b> → <b>절대 지어내지 않음.</b> 디렉터가 ①다른 보유샷으로 대체 ②지원 가능한 카피로 교체 ③생략 중 결정 → 그 보정안으로만 생성</li>
   </ul>
-  → 이 D1/D2 디렉팅 + 보정 생성 층이 v10(및 v8-2)에 들어가야 함. 다음 빌드 1순위.
+  → 위에서 검증 완료. 이제 모든 카드에 디렉터를 걸어 v8-2·풀 v10 생성으로 확장.
  </div>
  <div class="note">
   <h3>지금까지 검증된 것</h3>
