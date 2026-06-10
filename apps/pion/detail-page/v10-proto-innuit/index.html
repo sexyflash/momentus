@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>상세페이지 버전 비교 — 무신사(INNUIT) 레퍼런스 → AIR 슬리퍼</title>
+<title>상세페이지 버전 비교 — 무신사(INNUIT) → AIR 슬리퍼</title>
 <style>
 :root{--bg:#f4f4f6;--card:#fff;--line:#e3e3e8;--mut:#8a8a93;--ink:#1a1a22;--ac:#b08d57;--wait:#c44}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -7,83 +7,33 @@ body{font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;b
 .hd{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 18px}
 .hd h1{font-size:14px;font-weight:700} .hd p{font-size:11px;color:var(--mut);margin-top:2px}
 .board{display:flex;gap:12px;padding:14px;overflow-x:auto;align-items:flex-start}
-.lane{flex:0 0 300px;width:300px}
+.lane{flex:0 0 280px;width:280px}
 .lh{position:sticky;top:54px;z-index:20;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-bottom:8px}
 .lh b{font-size:12.5px} .lh span{display:block;font-size:10px;color:var(--mut);margin-top:1px}
 .lh.ref b{color:#222} .lh.v10 b{color:var(--ac)}
-.lane img{width:100%;display:block;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;background:#fff}
-.stack img{margin-bottom:0;border-radius:0} .stack{border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.ph{border:1.5px dashed #d3a;border-radius:10px;padding:26px 12px;text-align:center;color:var(--wait);font-size:12px;background:#fff7fb}
-.ph b{display:block;font-size:13px;margin-bottom:4px}
-.lk{display:block;background:var(--ink);color:#fff;text-decoration:none;text-align:center;font-size:11.5px;font-weight:600;padding:9px;border-radius:8px;margin-bottom:6px}
-.lk:hover{background:#000} .lk span{opacity:.6;font-size:10px}
+.lane img{width:100%;display:block}
+.stack{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff} .stack img{margin:0}
+.ph{border:1.5px dashed #d3a;border-radius:10px;padding:26px 12px;text-align:center;color:var(--wait);font-size:12px;background:#fff7fb} .ph b{display:block;font-size:13px;margin-bottom:4px}
+.lk{display:block;background:var(--ink);color:#fff;text-decoration:none;text-align:center;font-size:11.5px;font-weight:600;padding:9px;border-radius:8px;margin-bottom:6px} .lk:hover{background:#000} .lk span{opacity:.6;font-size:10px}
+.ref-img{border:1px solid var(--line);border-radius:8px}
 .foot{max-width:900px;margin:8px auto 60px;padding:0 16px}
 .note{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-size:12.5px;color:#3a3a42;margin-top:14px}
-.note h3{font-size:13px;margin-bottom:8px} .note ul{margin:6px 0 0 16px} .note li{margin:4px 0}
-.d1{color:#2a7}.d2{color:#c44}
+.note h3{font-size:13px;margin-bottom:8px} .note ul{margin:6px 0 0 16px} .note li{margin:4px 0} .d1{color:#2a7}.d2{color:#c44}
 </style></head><body>
-<div class="hd"><h1>상세페이지 버전 비교 — 무신사 1등(INNUIT) 레퍼런스 → AIR 스포츠슬리퍼</h1>
-<p>왼쪽=대상 원본 전체 + 컷 가이드 / 오른쪽으로 각 방식 결과. ⚠️ 아직 v8-2·풀 v10은 생성 대기 (프레임 먼저)</p></div>
-
+<div class="hd"><h1>상세페이지 버전 비교 — 무신사 1등(INNUIT) → AIR 스포츠슬리퍼</h1>
+<p>왼쪽=대상 원본+컷 / v10=대상 카드단위 복제+D1/D2 디렉터 보정. ds 31장 · non-ds 4장</p></div>
 <div class="board">
- <div class="lane">
-  <div class="lh ref"><b>0. 무신사 원본 + 컷</b><span>46,304px · 빨강=섹션컷 파랑=2:3하드컷</span></div>
-  <img src="assets/source-cuts.jpg" alt="source with cuts">
- </div>
-
- <div class="lane">
-  <div class="lh"><b>v8</b><span>구버전 (GPT1.5+NB2) · 링크</span></div>
-  <a class="lk" href="https://the-moment.us/apps/pion/detail-page/run-1773040002472/" target="_blank">v8 예전 결과 보기 <span>↗</span></a>
-  <div class="ph">동일 제품 기준<br>예전 v8 산출물 링크</div>
- </div>
-
- <div class="lane">
-  <div class="lh"><b>v8-2</b><span>v8 → gpt-image-2 업글</span></div>
-  <div class="ph"><b>생성 대기</b>gpt-image-2 i2i로<br>v8 방식 재생성 (다음 빌드)</div>
- </div>
-
- <div class="lane">
-  <div class="lh"><b>v9</b><span>어제 작업 · 프리셋 기반 3샘플</span></div>
-  <a class="lk" href="https://the-moment.us/apps/pion/detail-page/v9-gumbamall-slipper/" target="_blank">v9 슬리퍼 <span>↗</span></a>
-  <a class="lk" href="https://the-moment.us/apps/pion/detail-page/v9-oy-cream/" target="_blank">v9 크림 <span>↗</span></a>
-  <a class="lk" href="https://the-moment.us/apps/pion/detail-page/v9-oy-fan/" target="_blank">v9 선풍기 <span>↗</span></a>
- </div>
-
- <div class="lane">
-  <div class="lh v10"><b>v10-ds</b><span>대상 복제 + 스타일보드 앵커</span></div>
-  <div class="stack"><img src="assets/life-ds.png"><img src="assets/feat-ds-fixed.png"></div>
- </div>
-
- <div class="lane">
-  <div class="lh v10"><b>v10-non-ds</b><span>대상 복제 · DS 없음</span></div>
-  <div class="stack"><img src="assets/life-nonds.png"><img src="assets/feat-nonds.png"></div>
- </div>
+ <div class="lane"><div class="lh ref"><b>0. 무신사 원본 + 컷</b><span>46,304px · 빨강 섹션 / 파랑 하드컷</span></div><img class="ref-img" src="assets/source-cuts.jpg"></div>
+ <div class="lane"><div class="lh "><b>v8</b><span>구버전 GPT1.5+NB2</span></div><a class="lk" href="https://the-moment.us/apps/pion/detail-page/run-1773040002472/" target="_blank">v8 예전 결과 ↗</a><div class="ph">예전 v8 산출물</div></div>
+ <div class="lane"><div class="lh "><b>v8-2</b><span>v8 → gpt-image-2</span></div><div class="ph"><b>생성 대기</b>v8 방식 gpt-image-2<br>재생성 (다음 배치)</div></div>
+ <div class="lane"><div class="lh "><b>v9</b><span>어제 · 프리셋 3샘플</span></div><a class="lk" href="https://the-moment.us/apps/pion/detail-page/v9-gumbamall-slipper/" target="_blank">v9 슬리퍼 ↗</a><a class="lk" href="https://the-moment.us/apps/pion/detail-page/v9-oy-cream/" target="_blank">v9 크림 ↗</a><a class="lk" href="https://the-moment.us/apps/pion/detail-page/v9-oy-fan/" target="_blank">v9 선풍기 ↗</a></div>
+ <div class="lane"><div class="lh v10"><b>v10-ds</b><span>대상 복제+스타일앵커 · 31장</span></div><div class="stack"><img src="assets/ds/card-01.png"><img src="assets/ds/card-02.png"><img src="assets/ds/card-03.png"><img src="assets/ds/card-05.png"><img src="assets/ds/card-06.png"><img src="assets/ds/card-07.png"><img src="assets/ds/card-08.png"><img src="assets/ds/card-09.png"><img src="assets/ds/card-10.png"><img src="assets/ds/card-11.png"><img src="assets/ds/card-12.png"><img src="assets/ds/card-13.png"><img src="assets/ds/card-14.png"><img src="assets/ds/card-15.png"><img src="assets/ds/card-16.png"><img src="assets/ds/card-17.png"><img src="assets/ds/card-18.png"><img src="assets/ds/card-19.png"><img src="assets/ds/card-20.png"><img src="assets/ds/card-21.png"><img src="assets/ds/card-22.png"><img src="assets/ds/card-23.png"><img src="assets/ds/card-24.png"><img src="assets/ds/card-25.png"><img src="assets/ds/card-26.png"><img src="assets/ds/card-27.png"><img src="assets/ds/card-28.png"><img src="assets/ds/card-29.png"><img src="assets/ds/card-30.png"><img src="assets/ds/card-31.png"><img src="assets/ds/card-32.png"></div></div>
+ <div class="lane"><div class="lh v10"><b>v10-non-ds</b><span>대상 복제 · DS 없음 · 4장</span></div><div class="stack"><img src="assets/nonds/card-01.png"><img src="assets/nonds/card-02.png"><img src="assets/nonds/card-03.png"><img src="assets/nonds/card-05.png"></div></div>
 </div>
-
 <div class="foot">
- <div class="note"><h3>✅ D1/D2 디렉터 — 할루시네이션 차단 검증</h3>
-디렉터가 대상 카드의 각 항목을 내 제품 자료에 매칭해 판정·보정한 결과. <b>240g 무게 발명·가짜 밑창이 제거</b>됨.
-<div style="font-size:11.5px;margin:8px 0 10px;background:#faf6ef;border-radius:8px;padding:8px 10px">
-01 소가죽 <span class="d2">D2</span>→ PVC 일체형 몰딩 · 02 240g무게 <span class="d2">D2</span>→ 3.0cm 미드솔 · 03 착화감 <span class="d1">D1</span>→ 신축성 · 04 털안감 <span class="d2">D2</span>→ 미끄럼방지 아웃솔(실샷)
-</div>
-<img src="assets/director-3way.jpg" style="width:100%;border:1px solid #e3e3e8;border-radius:8px;display:block">
-<div style="font-size:11px;color:#8a8a93;margin-top:5px">좌: INNUIT 원본 / 중: 보정 전(240g·가짜밑창) / 우: 보정 후(D1/D2 디렉터)</div></div>
-<div class="note">
-  <h3>✅ 해결됨: 없는 자료 → 할루시네이션 (밑창 예시)</h3>
-  피처 카드 "04 미끄럼 방지 아웃솔"에서 <b>우리가 가진 제품 자료에 밑창샷이 없는데</b> 텍스트로 요청하니 모델이 밑창을 <b>지어냈습니다</b>(할루시네이션). 이걸 막으려면 생성 전에 <b>자료 보유 여부를 데이터로 판정</b>하고 디렉팅하는 층이 필요:
-  <ul>
-   <li><b class="d1">D1 (자료 있음)</b> → 실제 샷을 i2i 레퍼런스로 그대로 사용</li>
-   <li><b class="d2">D2 (자료 없음)</b> → <b>절대 지어내지 않음.</b> 디렉터가 ①다른 보유샷으로 대체 ②지원 가능한 카피로 교체 ③생략 중 결정 → 그 보정안으로만 생성</li>
-  </ul>
-  → 위에서 검증 완료. 이제 모든 카드에 디렉터를 걸어 v8-2·풀 v10 생성으로 확장.
+ <div class="note"><h3>✅ D1/D2 디렉터 — 할루시네이션 차단</h3>
+  카드마다 대상 항목을 내 제품 자료에 매칭해 D1(있음)/D2(없음) 판정 → D2는 발명 금지, 내 실제 피처로 대체. INNUIT 브랜드인트로·배송공지 카드는 자동 drop.
+  <div style="font-size:11.5px;margin:8px 0 10px;background:#faf6ef;border-radius:8px;padding:8px 10px">예) 소가죽 <span class="d2">D2</span>→PVC몰딩 · 240g무게 <span class="d2">D2</span>→3cm미드솔 · 털안감 <span class="d2">D2</span>→미끄럼방지 아웃솔(실샷)</div>
+  <img src="assets/director-3way.jpg" style="width:100%;border:1px solid #e3e3e8;border-radius:8px"><div style="font-size:11px;color:#8a8a93;margin-top:5px">좌 원본 / 중 보정전(240g·가짜밑창) / 우 보정후</div>
  </div>
- <div class="note">
-  <h3>지금까지 검증된 것</h3>
-  <ul>
-   <li>i2i 엔진 = openai/gpt-image-2/edit (한글·레이아웃 충실)</li>
-   <li>여백 컷 분할 (콘텐츠 관통 6/71)</li>
-   <li>v10-ds vs non-ds: DS는 그래픽/피처 카드의 웜톤 복원에 효과, 라이프스타일엔 작음</li>
-  </ul>
- </div>
-</div>
-</body></html>
+</div></body></html>
