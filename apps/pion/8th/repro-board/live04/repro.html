@@ -1,0 +1,80 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=720">
+<title>ref_04 재현 — Check Point</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  /* 원본 720px 실측 기반 — 감으로 키우지 않는다 */
+  * { margin:0; padding:0; box-sizing:border-box; word-break:keep-all; }
+  body { font-family:"Pretendard",sans-serif; color:#4A4238; background:#fff; }
+  .page { width:720px; margin:0 auto; position:relative;
+    background:
+      repeating-linear-gradient(0deg, rgba(160,150,135,.09) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(90deg, rgba(160,150,135,.09) 0 1px, transparent 1px 40px),
+      #FCFBF8; }
+
+  /* S1 — Check Point 인덱스 (실측: pre~22px, pill 300x62/34px, cols en~24 ko~19) */
+  .intro { text-align:center; padding:88px 40px 74px; }
+  .intro__pre { font-size:22px; font-weight:500; color:#5C5346; margin-bottom:20px; }
+  .intro__pill { display:inline-block; background:#EE7930; color:#fff; font-weight:800;
+    font-size:34px; padding:13px 44px; border-radius:999px;
+    box-shadow:0 4px 10px rgba(238,121,48,.20); }
+  .intro__cols { display:flex; justify-content:center; gap:64px; margin-top:44px; }
+  .icol { text-align:left; }
+  .icol__en { font-size:24px; font-weight:800; color:#EE7930; display:flex; align-items:center; gap:8px; }
+  .chk { width:19px; height:19px; border:2.5px solid #EE7930; border-radius:4px; position:relative; flex:none; }
+  .chk::after { content:""; position:absolute; left:3px; top:0px; width:8px; height:12px;
+    border:solid #EE7930; border-width:0 2.5px 2.5px 0; transform:rotate(40deg); }
+  .icol__ko { font-size:19px; color:#5C5346; margin-top:6px; padding-left:27px; }
+
+  /* S2 — Design 라벨(x=28, 이미지 모서리 걸침) + 인셋 이미지 + 컴팩트 krows */
+  .design { padding-top:34px; }
+  .design__label { position:relative; z-index:2; display:inline-flex; align-items:baseline; gap:10px;
+    background:#EE7930; color:#fff; border-radius:999px; padding:11px 34px 12px 24px;
+    font-size:26px; font-weight:800; margin:0 0 -24px 28px;
+    box-shadow:0 4px 10px rgba(238,121,48,.22); }
+  .design__label .dot { width:7px; height:7px; border-radius:50%; background:#fff; align-self:center; }
+  .design__label .ko { font-size:17px; font-weight:500; opacity:.92; }
+  .design__imgwrap { padding:0 12px; }
+  .design__img { display:block; width:100%; }
+  .krows { padding:30px 56px 26px; background:#F7F1E5; }
+  .krow { display:grid; grid-template-columns:198px 1fr; gap:34px; padding:26px 0; align-items:start; }
+  .krow__kw { font-size:23px; font-weight:500; line-height:1.42; color:#4A4238; }
+  .krow__kw b { display:block; color:#EE7930; font-weight:800; font-size:25px; }
+  .krow__desc { font-size:17.5px; color:#6B6153; line-height:1.75; }
+  .krow__desc .ln { display:block; border-bottom:1px solid #E9E1D1; padding-bottom:5px; margin-bottom:7px; }
+  .krow__desc .ln:last-child { border-bottom:0; margin-bottom:0; }
+</style></head>
+<body><div class="page">
+
+<!-- S1 -->
+<section class="intro">
+  <div class="intro__pre">보이지 않는 곳까지, 꼼꼼하게!</div>
+  <div class="intro__pill">Check Point</div>
+  <div class="intro__cols">
+    <div class="icol"><div class="icol__en"><span class="chk"></span>Design</div><div class="icol__ko">디자인</div></div>
+    <div class="icol"><div class="icol__en"><span class="chk"></span>Detail</div><div class="icol__ko">디테일</div></div>
+    <div class="icol"><div class="icol__en"><span class="chk"></span>Material</div><div class="icol__ko">소재</div></div>
+  </div>
+</section>
+
+<!-- S2 -->
+<section class="design">
+  <div class="design__label"><span class="dot"></span>Design <span class="ko">디자인</span></div>
+  <div class="design__imgwrap"><img class="design__img" src="photo.png" alt=""></div>
+  <div class="krows">
+    <div class="krow">
+      <div class="krow__kw">따듯한<b>내추럴 감성</b></div>
+      <div class="krow__desc"><span class="ln">원목의 차분하고 따듯한 감성이 스며든</span><span class="ln">내추럴 색상의 세련된 북유럽 스타일로</span><span class="ln">감각적인 공간 연출이 가능합니다.</span></div>
+    </div>
+    <div class="krow">
+      <div class="krow__kw">120cm<b>컴팩트한 사이즈</b></div>
+      <div class="krow__desc"><span class="ln">120cm의 컴팩트한 사이즈로</span><span class="ln">작은 공간에서도 사용 가능하며,</span><span class="ln">편안하면서도 깔끔한 분위기를 낼 수 있습니다.</span></div>
+    </div>
+    <div class="krow">
+      <div class="krow__kw">고급스러움을 더한<b>시나몬 컬러</b></div>
+      <div class="krow__desc"><span class="ln">다른 가구나 소품과도</span><span class="ln">자연스럽게 잘 어울리는 시나몬 컬러는</span><span class="ln">공간의 고급스러움을 더해 줍니다.</span></div>
+    </div>
+  </div>
+</section>
+
+</div></body></html>

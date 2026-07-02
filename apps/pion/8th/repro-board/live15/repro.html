@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@1,400&display=swap">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { width:1000px; background:#fff; font-family:Pretendard, sans-serif; }
+.page { position:relative; width:1000px; }
+
+/* ============ SECTION 1 : HERO ============ */
+.hero { position:relative; width:1000px; height:949px; }
+.hero img.bg { display:block; width:1000px; height:949px; }
+.panel {
+  position:absolute; left:293px; top:111px; width:413px; height:464px;
+  background:linear-gradient(180deg, #F7F6F4 0%, #F5F4F1 62%, #EFECE5 100%);
+  box-shadow:0 10px 24px rgba(120,110,95,.10);
+}
+.panel .copy {
+  position:absolute; top:99px; left:0; width:100%;
+  text-align:center; font-size:15px; font-weight:400; color:#8C857D;
+  letter-spacing:8.5px; text-indent:8.5px; line-height:1;
+}
+.panel .typo {
+  position:absolute; top:119px; left:0; width:100%;
+  font-size:64px; font-weight:300; color:#443F3A;
+  letter-spacing:10.5px; text-indent:10.5px; line-height:99px;
+  text-align:center;
+}
+.panel .typo .row2 {
+  display:flex; align-items:center; justify-content:center; height:99px;
+  text-indent:0; letter-spacing:0;
+}
+.panel .typo .row2 img { width:65px; height:60px; margin:6px 37px 0 38px; }
+
+/* ============ SECTION 2 : YELLOW BAND ============ */
+.band {
+  position:relative; width:1000px; height:799px;
+  background:
+    radial-gradient(90% 55% at 50% 72%, rgba(255,255,255,.28) 0%, rgba(255,255,255,0) 70%),
+    #F9EBA7;
+}
+/* stamp badge */
+.stamp { position:absolute; left:414px; top:124px; width:180px; height:180px; }
+.stamp svg { display:block; }
+/* heads */
+.redhead {
+  position:absolute; top:296px; left:0; width:100%; text-align:center;
+  font-size:24px; font-weight:700; color:#C4694A; letter-spacing:-0.3px;
+}
+.bighead {
+  position:absolute; top:366px; left:0; width:100%; text-align:center;
+  font-size:66px; font-weight:300; color:#4E4735; letter-spacing:-2.8px;
+  line-height:1; white-space:nowrap;
+}
+.bighead b { font-weight:700; color:#443D28; }
+.subhead {
+  position:absolute; top:450px; left:0; width:100%; text-align:center;
+  font-size:25px; font-weight:400; color:#5B5443; letter-spacing:-0.4px;
+}
+/* steps */
+.steps { position:absolute; left:0; top:0; width:100%; height:100%; }
+.circle {
+  position:absolute; top:569px; width:148px; height:148px; border-radius:50%;
+  background:#fff; display:flex; align-items:center; justify-content:center;
+}
+.circle.ringed { box-shadow:0 0 0 4px #FFAF8A; }
+.circle img { width:100px; height:88px; }
+.c1 { left:113px; } .c2 { left:319px; } .c3 { left:525px; } .c4 { left:733px; }
+.only {
+  position:absolute; font-family:'Great Vibes', cursive; font-size:34px;
+  color:#EE8A5F; transform:rotate(-22deg); line-height:1;
+}
+.only.o2 { left:312px; top:527px; }
+.only.o4 { left:726px; top:527px; }
+.chev { position:absolute; top:619px; width:26px; height:50px; }
+.chev svg { display:block; }
+.v1 { left:277px; } .v2 { left:483px; } .v3 { left:689px; }
+.pill {
+  position:absolute; top:706px; width:114px; height:29px; border-radius:15px;
+  background:#44433E; color:#fff; font-size:14px; font-weight:600;
+  letter-spacing:1.5px; text-align:center; line-height:29px;
+}
+.p1 { left:130px; } .p2 { left:336px; } .p3 { left:542px; } .p4 { left:749px; }
+.desc {
+  position:absolute; top:751px; width:220px; text-align:center;
+  font-size:20px; font-weight:500; color:#4A4335; line-height:25px;
+  letter-spacing:-0.3px;
+}
+.d1 { left:77px; } .d2 { left:283px; top:761px; } .d3 { left:489px; } .d4 { left:696px; font-size:19px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- SECTION 1 : hero -->
+  <div class="hero">
+    <img class="bg" src="photo_hero.png" alt="">
+    <div class="panel">
+      <div class="copy">레이디키친 첫 론칭 이벤트</div>
+      <div class="typo">
+        <div>슬기로운</div>
+        <div class="row2"><span>주</span><img src="icon_utensils.png" alt=""><span>방</span></div>
+        <div>인테리어</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 : yellow band -->
+  <div class="band">
+    <div class="stamp">
+      <svg width="180" height="180" viewBox="0 0 180 180">
+        <circle cx="90" cy="79" r="41" fill="#FEDF52"/>
+        <path id="arc" d="M 39.7 85 A 50 50 0 0 1 126.3 85" fill="none"/>
+        <text font-family="Pretendard" font-size="10" font-weight="600"
+              letter-spacing="1.8" fill="#3E3A2F">
+          <textPath href="#arc" startOffset="50%" text-anchor="middle">&#183; LADY KITCHEN &#183;</textPath>
+        </text>
+        <path d="M 80 71 Q 89 66 97 57 C 96 79 88 106 72 130"
+              fill="none" stroke="#3A372E" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <div class="redhead">오직 레이디키친만의 원스탑 클린 케어</div>
+    <div class="bighead">철거부터 청소까지 <b>한번에</b></div>
+    <div class="subhead">레이디키친 전문 시공팀이 처음부터 끝까지 모두 책임집니다.</div>
+
+    <div class="steps">
+      <div class="circle c1"><img src="icon_step1.png" alt=""></div>
+      <div class="circle c2 ringed"><img src="icon_step2.png" alt=""></div>
+      <div class="circle c3"><img src="icon_step3.png" alt=""></div>
+      <div class="circle c4 ringed"><img src="icon_step4.png" alt=""></div>
+      <div class="only o2">only</div>
+      <div class="only o4">only</div>
+      <div class="chev v1"><svg width="26" height="50" viewBox="0 0 26 50"><polyline points="4,4 22,25 4,46" fill="none" stroke="#F5BA90" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="chev v2"><svg width="26" height="50" viewBox="0 0 26 50"><polyline points="4,4 22,25 4,46" fill="none" stroke="#F5BA90" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="chev v3"><svg width="26" height="50" viewBox="0 0 26 50"><polyline points="4,4 22,25 4,46" fill="none" stroke="#F5BA90" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="pill p1">STEP 01</div>
+      <div class="pill p2">STEP 02</div>
+      <div class="pill p3">STEP 03</div>
+      <div class="pill p4">STEP 04</div>
+      <div class="desc d1">방문 실측,<br>맞춤 주문제작</div>
+      <div class="desc d2">무료 철거</div>
+      <div class="desc d3">보양 작업<br>및 시공</div>
+      <div class="desc d4">레이디키친 x 한스클린<br>무료 주방 청소 서비스</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

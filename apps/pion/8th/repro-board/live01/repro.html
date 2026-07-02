@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { background:#fff; }
+  body { font-family:'Poppins','Noto Sans SC',Pretendard,sans-serif; -webkit-font-smoothing:antialiased; }
+  .zh { font-family:'Noto Sans SC',Pretendard,sans-serif; }
+  .page { width:138px; background:#f9f7f3; position:relative; overflow:hidden; }
+  img { display:block; }
+
+  /* ---------- 1. HERO (h 340) ---------- */
+  .hero { height:340px; background:linear-gradient(125deg,#474b4a 0%,#4d5250 45%,#5d625f 100%); position:relative; }
+  .hero-top { position:absolute; top:8px; left:11px; right:8px; display:flex; align-items:flex-start; }
+  .hero-logo { display:flex; gap:2px; }
+  .hero-logo svg { width:14px; height:15px; }
+  .logo-zh { color:rgba(255,255,255,.85); font-size:4px; line-height:1.2; font-weight:500; letter-spacing:.5px; writing-mode:vertical-rl; }
+  .hero-taste { margin-left:auto; color:rgba(255,255,255,.55); font-size:3.5px; letter-spacing:.4px; padding-top:2px; }
+  .hero-title { position:absolute; top:49px; left:14px; color:#fff; }
+  .hero-title .t-zh { font-size:14px; font-weight:700; letter-spacing:1px; line-height:1.15; }
+  .hero-title .t-en { font-size:14px; font-weight:600; letter-spacing:.2px; line-height:1.15; margin-top:3px; }
+  .hero-sub { position:absolute; top:102px; left:14px; color:rgba(255,255,255,.95); font-size:6.8px; font-weight:700; letter-spacing:.5px; }
+  .hero-para { position:absolute; top:117px; left:14px; width:110px; color:rgba(255,255,255,.62); font-size:4.3px; line-height:1.32; text-align:justify; }
+  .hero-photo { position:absolute; top:136px; left:0; width:138px; height:204px; object-fit:cover; }
+
+  /* ---------- 2. ITALIAN LUXURY (340 -> 460) ---------- */
+  .italian { padding:18px 11px 0 14px; height:120px; }
+  .ital-title { text-align:right; color:#24221e; font-size:14px; font-weight:700; line-height:1.26; letter-spacing:.2px; }
+  .ital-sub { text-align:right; color:#24221e; font-size:7.2px; font-weight:700; letter-spacing:1px; margin-top:2px; }
+  .ital-para { margin-top:14px; margin-right:1px; color:#8a8880; font-size:4.3px; line-height:1.6; text-align:justify; text-align-last:right; }
+
+  /* ---------- 3. PRODUCT PHOTO (460 -> 608) ---------- */
+  .product img { width:138px; height:148px; }
+
+  /* ---------- 4. RULE / CAPTION / PILLS (608 -> ~695) ---------- */
+  .pillsec { padding:20px 13px 0 13px; }
+  .pillsec .rule { height:0.8px; background:#8a8880; }
+  .pill-cap { display:flex; justify-content:space-between; align-items:baseline; margin-top:5px; }
+  .pill-cap .l { color:#55534d; font-size:4.1px; letter-spacing:.2px; }
+  .pill-cap .r { color:#8f8d86; font-size:3.8px; }
+  .pills { display:flex; justify-content:space-between; margin-top:12px; }
+  .pill { width:32px; height:13px; border:0.8px solid #45433d; border-radius:7px;
+          display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.6px; }
+  .pill .a { font-size:3.2px; color:#3c3a34; line-height:1; }
+  .pill .b { font-size:3.2px; color:#3c3a34; line-height:1; letter-spacing:.2px; }
+
+  /* ---------- 5. FURNITURE TEXT (695 -> ~755) ---------- */
+  .furn { padding:29px 11px 0 14px; height:90px; }
+  .furn-en { color:#1e1c19; font-size:9.5px; font-weight:600; letter-spacing:.1px; }
+  .furn-zh { color:#1e1c19; font-size:8.5px; font-weight:700; letter-spacing:.8px; margin-top:2.5px; }
+  .furn-para { margin-top:6px; color:#8a8880; font-size:4.2px; line-height:1.55; text-align:justify; }
+
+  /* ---------- 6. GRID (755 -> 977) ---------- */
+  .grid { position:relative; height:222px; margin-top:0; }
+  .grid .vline { position:absolute; left:69px; top:13px; width:0.7px; height:200px; background:#a09e97; }
+  .g-basket { position:absolute; left:13px; top:21px; width:53px; height:27px; object-fit:cover; }
+  .g-plant  { position:absolute; left:13px; top:50px; width:53px; height:36px; object-fit:cover; }
+  .g-bar { position:absolute; left:13px; top:86px; width:56px; height:20px; background:#111110;
+           color:#f5f3ef; display:flex; flex-direction:column; justify-content:center; padding-left:4px; }
+  .g-bar .ln { font-size:4.6px; font-weight:700; letter-spacing:.3px; line-height:1.5; }
+  .g-left2 { position:absolute; left:13px; top:107px; width:53px; height:73px; object-fit:cover; }
+  .g-capL { position:absolute; left:13px; top:183px; color:#33312c; font-size:4.1px; font-weight:600; line-height:1.5; letter-spacing:.1px; white-space:nowrap; }
+  .g-pill { position:absolute; left:77px; top:20px; width:39px; height:8px; background:#161512; border-radius:4px;
+            color:#f0eeea; font-size:2.9px; letter-spacing:.2px; display:flex; align-items:center; justify-content:center; }
+  .g-right { position:absolute; left:70px; top:32px; width:54px; height:164px; object-fit:cover; }
+  .g-capR { position:absolute; right:14px; top:201px; color:#57554f; font-size:3.9px; letter-spacing:.2px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 1. HERO -->
+  <div class="hero">
+    <div class="hero-top">
+      <div class="hero-logo">
+        <svg viewBox="0 0 14 15" fill="none" stroke="#fff" stroke-width="0.7">
+          <path d="M7 1 L13 4.5 L13 11 L7 14.2 L1 11 L1 4.5 Z"/>
+          <path d="M1 4.5 L7 7.8 L13 4.5 M7 7.8 L7 14.2"/>
+        </svg>
+        <div class="logo-zh zh">左向之光</div>
+      </div>
+      <div class="hero-taste">Taste of life</div>
+    </div>
+    <div class="hero-title">
+      <div class="t-zh zh">生活.家</div>
+      <div class="t-en">Life. Home</div>
+    </div>
+    <div class="hero-sub zh">品味生活 从一件家具开始出发</div>
+    <div class="hero-para zh">在城市的喧嚣中，我们尤为渴望自然的宁静与温暖，这也正是为什么我们的家具坚持采用天然的材质。木质温润、布艺柔软，让生活的每一处细节，都值得被认真对待，尽享生活的质感。</div>
+    <img class="hero-photo" src="photo01.png" alt="">
+  </div>
+
+  <!-- 2. ITALIAN LUXURY -->
+  <div class="italian">
+    <div class="ital-title">Italian<br>Luxury</div>
+    <div class="ital-sub zh">意式轻奢进口家具</div>
+    <div class="ital-para zh">这套融合了当代美学与经典工艺的现代轻奢意式家具，将你引入一场关于品位与格调的对话之中。我们以匠心与考究的选材成就每一件作品，让家成为优雅生活的延伸。</div>
+  </div>
+
+  <!-- 3. PRODUCT PHOTO -->
+  <div class="product"><img src="photo02.png" alt=""></div>
+
+  <!-- 4. RULE / CAPTION / PILLS -->
+  <div class="pillsec">
+    <div class="rule"></div>
+    <div class="pill-cap">
+      <span class="l zh">个性混搭，将经典美学融进每一天的生活方式</span>
+      <span class="r">come</span>
+    </div>
+    <div class="pills">
+      <div class="pill"><span class="a zh">舒适 /</span><span class="b">comforts</span></div>
+      <div class="pill"><span class="a zh">灵动 /</span><span class="b">flexible</span></div>
+      <div class="pill"><span class="a zh">自然 /</span><span class="b">greenhouse</span></div>
+    </div>
+  </div>
+
+  <!-- 5. FURNITURE -->
+  <div class="furn">
+    <div class="furn-en">Furniture</div>
+    <div class="furn-zh zh">意式轻奢进口家具</div>
+    <div class="furn-para zh">我们的家具不只注重实用性，它还须集大成工艺的内涵。臻选考究的原材与恰到好处的舒适感受，每一件器物都藏着关于生活的匠心思考，让日常起居成为一场艺术体验，每一次归家都是一次值得被珍视的仪式。</div>
+  </div>
+
+  <!-- 6. GRID -->
+  <div class="grid">
+    <div class="vline"></div>
+    <img class="g-basket" src="photo03.png" alt="">
+    <img class="g-plant"  src="photo04.png" alt="">
+    <div class="g-bar">
+      <div class="ln">FIND BEAUTY</div>
+      <div class="ln">IN THE ORDINARY</div>
+    </div>
+    <img class="g-left2" src="photo05.png" alt="">
+    <div class="g-capL">Classic Designs Revisited<br>And Rediscovered</div>
+    <div class="g-pill">Enlifest CO Commune</div>
+    <img class="g-right" src="photo06.png" alt="">
+    <div class="g-capR">Arrange your home</div>
+  </div>
+
+</div>
+</body>
+</html>
