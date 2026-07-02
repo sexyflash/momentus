@@ -156,21 +156,30 @@ body {
 .divider { height:1px; background: var(--line); border:0; margin: var(--gap) 0; }
 
 /* ── scene section: i2i 씬 위 HTML 카피(텍스트-세이프) ──────────── */
+/* 히어로/씬 섹션은 full-bleed(가장자리까지). 콘텐츠 섹션(.sec)의 세이프마진을 쓰지 않는다. */
+.sec--bleed { padding: 0; }
+.sec--bleed .scene { border-radius: 0; }
 .scene { position:relative; border-radius: var(--r-img); overflow:hidden; }
 .scene__img { display:block; width:100%; height:auto; }
-.scene__copy { position:absolute; inset:0; padding: 40px; display:flex; flex-direction:column;
-  justify-content:flex-start; text-align: var(--header-align); }
+/* 카피는 씬 안에서 세이프마진(좌우 8%, 상단 여유)만 내부 패딩으로 확보.
+   히어로 씬 카피는 편집숍 관례상 좌측정렬 고정 — 콘텐츠 섹션헤더/카드의 --header-align과 분리. */
+.scene__copy { position:absolute; inset:0; padding: 56px var(--safe-x);
+  display:flex; flex-direction:column; justify-content:flex-start;
+  text-align: left; align-items: flex-start; }
+.scene__copy .display { max-width: 92%; }
+.scene__copy__sub { margin-top: 12px; max-width: 22em; color: var(--ink-soft); font-size: var(--fs-lead); font-weight: var(--w-medium); }
+.scene__copy__cta { margin-top: 20px; }
 
 </style>
 </head>
 <body><div class="page">
-<section class="sec">
+<section class="sec sec--bleed">
   <div class="scene">
     <img class="scene__img" src="assets/a001.png" alt="">
     <div class="scene__copy">
       <div class="display">하루종일 속수분<br>지켜주는 수분광</div>
-      <p class="sec-head__sub" style="max-width:60%">스쿠알란 150,000ppm이 얇은 수분막으로 속건조를 잡아줍니다.</p>
-      <div style="margin-top:16px"><span class="chip">올리브영 수분크림 1위</span></div>
+      <p class="scene__copy__sub">스쿠알란 150,000ppm이 얇은 수분막으로 속건조를 잡아줍니다.</p>
+      <div class="scene__copy__cta"><span class="chip">올리브영 수분크림 1위</span></div>
     </div>
   </div>
 </section>
