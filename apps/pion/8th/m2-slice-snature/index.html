@@ -18,6 +18,7 @@
   --line: #DDE7F0;
 
   /* type scale (px @ 860 기준) */
+  --fs-hero: 60px;
   --fs-display: 46px;
   --fs-h1: 34px;
   --fs-h2: 26px;
@@ -82,9 +83,14 @@ body {
 }
 .sec-head__sub { margin-top: 8px; font-size: var(--fs-lead); color: var(--ink-soft); font-weight: var(--w-medium); }
 
-/* 히어로 전용 최대 위계(정책 3: 화면당 최대크기 1개만) */
+/* 섹션 대형 헤드 */
 .display {
   font-size: var(--fs-display); font-weight: var(--w-black);
+  line-height: var(--lh-display); letter-spacing: var(--tk-display); text-wrap: balance;
+}
+/* 히어로 타이틀 — 페이지 최대 위계(정책 3: 화면당 최대크기 1개만) */
+.hero-title {
+  font-size: var(--fs-hero); font-weight: var(--w-black);
   line-height: var(--lh-display); letter-spacing: var(--tk-display); text-wrap: balance;
 }
 
@@ -162,13 +168,12 @@ body {
 .scene { position:relative; border-radius: var(--r-img); overflow:hidden; }
 .scene__img { display:block; width:100%; height:auto; }
 /* 카피는 씬 안에서 세이프마진(좌우 8%, 상단 여유)만 내부 패딩으로 확보.
-   히어로 씬 카피는 편집숍 관례상 좌측정렬 고정 — 콘텐츠 섹션헤더/카드의 --header-align과 분리. */
-.scene__copy { position:absolute; inset:0; padding: 56px var(--safe-x);
+   히어로 씬 카피는 중앙정렬(히어로 관례) — 큰 타이틀이 화면 상단에 균형있게. */
+.scene__copy { position:absolute; inset:0; padding: 64px var(--safe-x);
   display:flex; flex-direction:column; justify-content:flex-start;
-  text-align: left; align-items: flex-start; }
-.scene__copy .display { max-width: 92%; }
-.scene__copy__sub { margin-top: 12px; max-width: 22em; color: var(--ink-soft); font-size: var(--fs-lead); font-weight: var(--w-medium); }
-.scene__copy__cta { margin-top: 20px; }
+  text-align: center; align-items: center; }
+.scene__copy__sub { margin-top: 14px; max-width: 24em; color: var(--ink-soft); font-size: var(--fs-lead); font-weight: var(--w-medium); }
+.scene__copy__cta { margin-top: 22px; }
 
 </style>
 </head>
@@ -177,7 +182,7 @@ body {
   <div class="scene">
     <img class="scene__img" src="assets/a001.png" alt="">
     <div class="scene__copy">
-      <div class="display">하루종일 속수분<br>지켜주는 수분광</div>
+      <div class="hero-title">하루종일 속수분<br>지켜주는 수분광</div>
       <p class="scene__copy__sub">스쿠알란 150,000ppm이 얇은 수분막으로 속건조를 잡아줍니다.</p>
       <div class="scene__copy__cta"><span class="chip">올리브영 수분크림 1위</span></div>
     </div>
