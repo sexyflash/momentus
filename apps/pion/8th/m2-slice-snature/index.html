@@ -1,0 +1,186 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=860">
+<title>S.NATURE — M2 vertical slice</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+/* ds.css — GENERATED from ds.tokens.json. 손으로 고치지 마라(컴파일러가 덮어씀). */
+/* 브랜드: S.NATURE · 클리니컬 아쿠아 프리미엄 */
+
+:root {
+  /* palette */
+  --bg: #FFFFFF;
+  --bg-alt: #F2F8FF;
+  --ink: #202020;
+  --ink-soft: #7B858E;
+  --primary: #1E8EF2;
+  --primary-ink: #FFFFFF;
+  --accent: #B8C4CC;
+  --line: #DDE7F0;
+
+  /* type scale (px @ 860 기준) */
+  --fs-display: 46px;
+  --fs-h1: 34px;
+  --fs-h2: 26px;
+  --fs-lead: 20px;
+  --fs-body: 17px;
+  --fs-caption: 14px;
+  --fs-stat: 44px;
+  --w-black: 900;
+  --w-bold: 700;
+  --w-medium: 500;
+  --w-regular: 400;
+  --lh-display: 1.02;
+  --lh-head: 1.12;
+  --lh-body: 1.5;
+  --tk-display: -0.03em;
+  --tk-head: -0.02em;
+
+  /* space (8px 배수) */
+  --unit: 8px;
+  --sec-y: 72px;
+  --gap: 24px;
+  --gap-in: 12px;
+  --safe-x: 8%;
+
+  /* radius */
+  --r-card: 12px;
+  --r-btn: 8px;
+  --r-chip: 999px;
+  --r-img: 8px;
+  --r-badge: 8px;
+
+  --header-align: center;
+}
+
+/* ── base: 정책 9(keep-all/strict), Pretendard ───────────────────── */
+* { margin:0; padding:0; box-sizing:border-box; word-break:keep-all; line-break:strict; }
+html { -webkit-text-size-adjust:100%; }
+body {
+  font-family: "Pretendard", -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: var(--w-regular);
+}
+.page { width: 860px; margin:0 auto; background: var(--bg); }
+
+/* ── section: 세이프마진(정책 7), 배경 교대 리듬 ─────────────────── */
+.sec { padding: var(--sec-y) var(--safe-x); background: var(--bg); }
+.sec--alt { background: var(--bg-alt); }
+.sec__inner { max-width: 100%; }
+
+/* ── section header: 단일 정렬축(정책 1) + 단일 H1 위계(정책 3) ──── */
+.sec-head { text-align: var(--header-align); margin-bottom: var(--gap); }
+.sec-head__eyebrow {
+  display:inline-block; font-size: var(--fs-caption); font-weight: var(--w-bold);
+  color: var(--primary); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px;
+}
+.sec-head__title {
+  font-size: var(--fs-h1); font-weight: var(--w-black);
+  line-height: var(--lh-head); letter-spacing: var(--tk-head); text-wrap: balance;
+}
+.sec-head__sub { margin-top: 8px; font-size: var(--fs-lead); color: var(--ink-soft); font-weight: var(--w-medium); }
+
+/* 히어로 전용 최대 위계(정책 3: 화면당 최대크기 1개만) */
+.display {
+  font-size: var(--fs-display); font-weight: var(--w-black);
+  line-height: var(--lh-display); letter-spacing: var(--tk-display); text-wrap: balance;
+}
+
+/* ── chip / badge: 배지≠CTA(정책 5) ─────────────────────────────── */
+.chip {
+  display:inline-flex; align-items:center; gap:6px; padding:8px 14px;
+  border-radius: var(--r-chip); background: var(--primary); color: var(--primary-ink);
+  font-size: var(--fs-caption); font-weight: var(--w-bold);
+}
+.chip--ghost { background: transparent; color: var(--primary); border:1.5px solid var(--primary); }
+.badge {
+  display:inline-flex; align-items:center; padding:6px 10px; border-radius: var(--r-badge);
+  background: var(--bg-alt); color: var(--ink); border:1px solid var(--line);
+  font-size: var(--fs-caption); font-weight: var(--w-bold);
+}
+
+/* ── CTA: pill fill(정책 5) ──────────────────────────────────────── */
+.cta {
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:18px 32px; border-radius: var(--r-chip);
+  background: var(--primary); color: var(--primary-ink);
+  font-size: var(--fs-lead); font-weight: var(--w-black); text-decoration:none;
+}
+
+/* ── feature card ───────────────────────────────────────────────── */
+.cards { display:grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+.card {
+  background: var(--bg); border:1px solid var(--line); border-radius: var(--r-card);
+  padding: 24px; text-align: var(--header-align);
+}
+.sec--alt .card { background: var(--bg); }
+.card__icon { width:48px; height:48px; border-radius: var(--r-chip); background: var(--bg-alt);
+  display:grid; place-items:center; margin: 0 auto 12px; font-size:22px; }
+.card__stat { font-size: var(--fs-stat); font-weight: var(--w-black); color: var(--primary); line-height:1; letter-spacing: var(--tk-head); }
+.card__title { font-size: var(--fs-h2); font-weight: var(--w-bold); margin: 8px 0 6px; }
+.card__desc { font-size: var(--fs-body); color: var(--ink-soft); }
+
+/* ── spec table (정보는 HTML 네이티브) ──────────────────────────── */
+.spec { width:100%; border-collapse: collapse; font-size: var(--fs-body); }
+.spec th, .spec td { padding: 16px 18px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+.spec th { width:34%; color: var(--ink-soft); font-weight: var(--w-medium); background: var(--bg-alt); }
+.spec td { font-weight: var(--w-medium); }
+.spec caption { caption-side:bottom; margin-top:10px; font-size: var(--fs-caption); color: var(--ink-soft); text-align:left; }
+
+/* ── comparison table (강조 컬럼) ───────────────────────────────── */
+.cmp { width:100%; border-collapse:separate; border-spacing:0; font-size: var(--fs-body); }
+.cmp th, .cmp td { padding:16px; text-align:center; border-bottom:1px solid var(--line); }
+.cmp thead th { font-weight: var(--w-bold); font-size: var(--fs-caption); color: var(--ink-soft); }
+.cmp .col-us { background: var(--bg-alt); }
+.cmp thead .col-us { background: var(--primary); color: var(--primary-ink); border-top-left-radius: var(--r-card); border-top-right-radius: var(--r-card); }
+.cmp td.col-us { font-weight: var(--w-black); color: var(--ink); }
+.cmp .row-label { text-align:left; color: var(--ink-soft); font-weight: var(--w-medium); }
+
+/* ── usage steps ────────────────────────────────────────────────── */
+.steps { display:grid; gap: var(--gap-in); }
+.step { display:grid; grid-template-columns: 56px 1fr; gap:16px; align-items:start;
+  padding:20px; background: var(--bg); border:1px solid var(--line); border-radius: var(--r-card); }
+.step__no { width:56px; height:56px; border-radius: var(--r-chip); background: var(--primary); color: var(--primary-ink);
+  display:grid; place-items:center; font-size: var(--fs-h2); font-weight: var(--w-black); }
+.step__title { font-size: var(--fs-lead); font-weight: var(--w-bold); margin-bottom:4px; }
+.step__desc { font-size: var(--fs-body); color: var(--ink-soft); }
+
+/* ── stat callout (social proof) ────────────────────────────────── */
+.stats { display:grid; grid-template-columns: repeat(3,1fr); gap: var(--gap); text-align:center; }
+.stat__num { font-size: var(--fs-stat); font-weight: var(--w-black); color: var(--primary); letter-spacing: var(--tk-head); }
+.stat__label { font-size: var(--fs-caption); color: var(--ink-soft); margin-top:4px; }
+
+/* ── divider (정책 2/6: 은은, glow 금지) ───────────────────────── */
+.divider { height:1px; background: var(--line); border:0; margin: var(--gap) 0; }
+
+/* ── scene section: i2i 씬 위 HTML 카피(텍스트-세이프) ──────────── */
+.scene { position:relative; border-radius: var(--r-img); overflow:hidden; }
+.scene__img { display:block; width:100%; height:auto; }
+.scene__copy { position:absolute; inset:0; padding: 40px; display:flex; flex-direction:column;
+  justify-content:flex-start; text-align: var(--header-align); }
+
+</style>
+</head>
+<body><div class="page">
+<section class="sec">
+  <div class="scene">
+    <img class="scene__img" src="assets/a001.png" alt="">
+    <div class="scene__copy">
+      <div class="display">하루종일 속수분<br>지켜주는 수분광</div>
+      <p class="sec-head__sub" style="max-width:60%">스쿠알란 150,000ppm이 얇은 수분막으로 속건조를 잡아줍니다.</p>
+      <div style="margin-top:16px"><span class="chip">올리브영 수분크림 1위</span></div>
+    </div>
+  </div>
+</section>
+<section class="sec sec--alt">
+  <div class="sec__inner">
+    <div class="sec-head">
+      <span class="sec-head__eyebrow">PRODUCT INFO</span>
+      <div class="sec-head__title">제품 상세 정보</div>
+    </div>
+    <table class="spec"><tbody><tr><th>브랜드</th><td>S.NATURE</td></tr><tr><th>제품명</th><td>아쿠아 스쿠알란 수분크림</td></tr><tr><th>주요성분</th><td>스쿠알란 150,000ppm, 판테놀, 히알루론산 8종, 콜라겐</td></tr><tr><th>용량</th><td>60ml</td></tr><tr><th>피부타입</th><td>모든 피부 / 속건조·모공 고민 피부</td></tr><tr><th>사용시점</th><td>토너·세럼 후 마지막 단계, 아침·저녁</td></tr></tbody><caption>* 전성분은 제품 상세 하단 표기 참조</caption></table>
+  </div>
+</section>
+</div></body></html>
