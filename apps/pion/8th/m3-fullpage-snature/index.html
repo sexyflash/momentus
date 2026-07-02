@@ -1,0 +1,232 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=860">
+<title>S.NATURE — 아쿠아 스쿠알란 수분크림</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+/* ds.css — GENERATED from ds.tokens.json. 손으로 고치지 마라(컴파일러가 덮어씀). */
+/* 브랜드: S.NATURE · 클리니컬 아쿠아 프리미엄 */
+
+:root {
+  /* palette */
+  --bg: #FFFFFF;
+  --bg-alt: #F2F8FF;
+  --ink: #202020;
+  --ink-soft: #7B858E;
+  --primary: #1E8EF2;
+  --primary-ink: #FFFFFF;
+  --accent: #B8C4CC;
+  --line: #DDE7F0;
+
+  /* type scale (px @ 860 기준) */
+  --fs-claim: 96px;
+  --fs-hero: 60px;
+  --fs-display: 46px;
+  --fs-h1: 34px;
+  --fs-h2: 26px;
+  --fs-lead: 20px;
+  --fs-body: 17px;
+  --fs-caption: 14px;
+  --fs-stat: 44px;
+  --w-black: 900;
+  --w-bold: 700;
+  --w-medium: 500;
+  --w-regular: 400;
+  --lh-display: 1.02;
+  --lh-head: 1.12;
+  --lh-body: 1.5;
+  --tk-display: -0.03em;
+  --tk-head: -0.02em;
+
+  /* space (8px 배수) */
+  --unit: 8px;
+  --sec-y: 72px;
+  --gap: 24px;
+  --gap-in: 12px;
+  --safe-x: 8%;
+
+  /* radius */
+  --r-card: 12px;
+  --r-btn: 8px;
+  --r-chip: 999px;
+  --r-img: 8px;
+  --r-badge: 8px;
+
+  --header-align: center;
+}
+
+/* ── base: 정책 9(keep-all/strict), Pretendard ───────────────────── */
+* { margin:0; padding:0; box-sizing:border-box; word-break:keep-all; line-break:strict; }
+html { -webkit-text-size-adjust:100%; }
+body {
+  font-family: "Pretendard", -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: var(--w-regular);
+}
+.page { width: 860px; margin:0 auto; background: var(--bg); }
+
+/* ── section: 세이프마진(정책 7), 배경 교대 리듬 ─────────────────── */
+.sec { padding: var(--sec-y) var(--safe-x); background: var(--bg); }
+.sec--alt { background: var(--bg-alt); }
+.sec__inner { max-width: 100%; }
+
+/* ── section header: 단일 정렬축(정책 1) + 단일 H1 위계(정책 3) ──── */
+.sec-head { text-align: var(--header-align); margin-bottom: var(--gap); }
+.sec-head__eyebrow {
+  display:inline-block; font-size: var(--fs-caption); font-weight: var(--w-bold);
+  color: var(--primary); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px;
+}
+.sec-head__title {
+  font-size: var(--fs-h1); font-weight: var(--w-black);
+  line-height: var(--lh-head); letter-spacing: var(--tk-head); text-wrap: balance;
+}
+.sec-head__sub { margin-top: 8px; font-size: var(--fs-lead); color: var(--ink-soft); font-weight: var(--w-medium); }
+
+/* 섹션 대형 헤드 */
+.display {
+  font-size: var(--fs-display); font-weight: var(--w-black);
+  line-height: var(--lh-display); letter-spacing: var(--tk-display); text-wrap: balance;
+}
+/* 히어로 타이틀 — 페이지 최대 위계(정책 3: 화면당 최대크기 1개만) */
+.hero-title {
+  font-size: var(--fs-hero); font-weight: var(--w-black);
+  line-height: var(--lh-display); letter-spacing: var(--tk-display); text-wrap: balance;
+}
+
+/* ── chip / badge: 배지≠CTA(정책 5) ─────────────────────────────── */
+.chip {
+  display:inline-flex; align-items:center; gap:6px; padding:8px 14px;
+  border-radius: var(--r-chip); background: var(--primary); color: var(--primary-ink);
+  font-size: var(--fs-caption); font-weight: var(--w-bold);
+}
+.chip--ghost { background: transparent; color: var(--primary); border:1.5px solid var(--primary); }
+.badge {
+  display:inline-flex; align-items:center; padding:6px 10px; border-radius: var(--r-badge);
+  background: var(--bg-alt); color: var(--ink); border:1px solid var(--line);
+  font-size: var(--fs-caption); font-weight: var(--w-bold);
+}
+
+/* ── CTA: pill fill(정책 5) ──────────────────────────────────────── */
+.cta {
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:18px 32px; border-radius: var(--r-chip);
+  background: var(--primary); color: var(--primary-ink);
+  font-size: var(--fs-lead); font-weight: var(--w-black); text-decoration:none;
+}
+
+/* ── feature card ───────────────────────────────────────────────── */
+.cards { display:grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+.card {
+  background: var(--bg); border:1px solid var(--line); border-radius: var(--r-card);
+  padding: 24px; text-align: var(--header-align);
+}
+.sec--alt .card { background: var(--bg); }
+.card__icon { width:48px; height:48px; border-radius: var(--r-chip); background: var(--bg-alt);
+  display:grid; place-items:center; margin: 0 auto 12px; font-size:22px; }
+.card__stat { font-size: var(--fs-stat); font-weight: var(--w-black); color: var(--primary); line-height:1; letter-spacing: var(--tk-head); }
+.card__title { font-size: var(--fs-h2); font-weight: var(--w-bold); margin: 8px 0 6px; }
+.card__desc { font-size: var(--fs-body); color: var(--ink-soft); }
+
+/* ── spec table (정보는 HTML 네이티브) ──────────────────────────── */
+.spec { width:100%; border-collapse: collapse; font-size: var(--fs-body); }
+.spec th, .spec td { padding: 16px 18px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+.spec th { width:34%; color: var(--ink-soft); font-weight: var(--w-medium); background: var(--bg-alt); }
+.spec td { font-weight: var(--w-medium); }
+.spec caption { caption-side:bottom; margin-top:10px; font-size: var(--fs-caption); color: var(--ink-soft); text-align:left; }
+
+/* ── comparison table (강조 컬럼) ───────────────────────────────── */
+.cmp { width:100%; border-collapse:separate; border-spacing:0; font-size: var(--fs-body); }
+.cmp th, .cmp td { padding:16px; text-align:center; border-bottom:1px solid var(--line); }
+.cmp thead th { font-weight: var(--w-bold); font-size: var(--fs-caption); color: var(--ink-soft); }
+.cmp .col-us { background: var(--bg-alt); }
+.cmp thead .col-us { background: var(--primary); color: var(--primary-ink); border-top-left-radius: var(--r-card); border-top-right-radius: var(--r-card); }
+.cmp td.col-us { font-weight: var(--w-black); color: var(--ink); }
+.cmp .row-label { text-align:left; color: var(--ink-soft); font-weight: var(--w-medium); }
+
+/* ── usage steps ────────────────────────────────────────────────── */
+.steps { display:grid; gap: var(--gap-in); }
+.step { display:grid; grid-template-columns: 56px 1fr; gap:16px; align-items:start;
+  padding:20px; background: var(--bg); border:1px solid var(--line); border-radius: var(--r-card); }
+.step__no { width:56px; height:56px; border-radius: var(--r-chip); background: var(--primary); color: var(--primary-ink);
+  display:grid; place-items:center; font-size: var(--fs-h2); font-weight: var(--w-black); }
+.step__title { font-size: var(--fs-lead); font-weight: var(--w-bold); margin-bottom:4px; }
+.step__desc { font-size: var(--fs-body); color: var(--ink-soft); }
+
+/* ── stat callout (social proof) ────────────────────────────────── */
+.stats { display:grid; grid-template-columns: repeat(3,1fr); gap: var(--gap); text-align:center; }
+.stat__num { font-size: var(--fs-stat); font-weight: var(--w-black); color: var(--primary); letter-spacing: var(--tk-head); }
+.stat__label { font-size: var(--fs-caption); color: var(--ink-soft); margin-top:4px; }
+
+/* ── claim-callout: 대형 단일 수치 풀블리드(M1 샘플 5/5 유형) ──── */
+.claim { text-align:center; }
+.claim__big { font-size: var(--fs-claim); font-weight: var(--w-black); color: var(--primary);
+  line-height: .95; letter-spacing: -.03em; }
+.claim__unit { font-size: var(--fs-h1); font-weight: var(--w-black); color: var(--primary); }
+.claim__label { font-size: var(--fs-h2); font-weight: var(--w-bold); margin-top: 12px; }
+.claim__sub { font-size: var(--fs-lead); color: var(--ink-soft); margin-top: 8px; }
+
+/* ── problem-empathy: 공감 블록(말풍선형) ───────────────────────── */
+.empathy { display:grid; gap: var(--gap-in); }
+.empathy__item { background: var(--bg); border:1px solid var(--line); border-radius: var(--r-card);
+  padding: 18px 24px; font-size: var(--fs-lead); font-weight: var(--w-medium); text-align:center; }
+
+/* ── divider (정책 2/6: 은은, glow 금지) ───────────────────────── */
+.divider { height:1px; background: var(--line); border:0; margin: var(--gap) 0; }
+
+/* ── scene section: i2i 씬 위 HTML 카피(텍스트-세이프) ──────────── */
+/* 히어로/씬 섹션은 full-bleed(가장자리까지). 콘텐츠 섹션(.sec)의 세이프마진을 쓰지 않는다. */
+.sec--bleed { padding: 0; }
+.sec--bleed .scene { border-radius: 0; }
+.scene { position:relative; border-radius: var(--r-img); overflow:hidden; }
+.scene__img { display:block; width:100%; height:auto; }
+/* 카피는 씬 안에서 세이프마진(좌우 8%, 상단 여유)만 내부 패딩으로 확보.
+   히어로 씬 카피는 중앙정렬(히어로 관례) — 큰 타이틀이 화면 상단에 균형있게. */
+.scene__copy { position:absolute; inset:0; padding: 64px var(--safe-x);
+  display:flex; flex-direction:column; justify-content:flex-start;
+  text-align: center; align-items: center; }
+.scene__copy--bottom { justify-content: flex-end; }
+.scene__copy__sub { margin-top: 14px; max-width: 24em; color: var(--ink-soft); font-size: var(--fs-lead); font-weight: var(--w-medium); }
+.scene__copy__cta { margin-top: 22px; }
+
+</style>
+</head><body><div class="page">
+<section class="sec sec--bleed"><div class="scene">
+  <img class="scene__img" src="assets/hero.png" alt="">
+  <div class="scene__copy">
+    <div class="hero-title">속수분은 깊게<br>모공은 쫀쫀하게<br>수분광 크림</div>
+    <p class="scene__copy__sub">스쿠알란 150,000ppm과 8종 히알루론산으로 건조한 피부에 산뜻한 보습감을 채워주세요.</p>
+    <div class="scene__copy__cta"><span class="chip">올리브영 온라인몰 전체 랭킹 1위</span></div>
+  </div></div></section>
+<section class="sec"><div class="sec__inner">
+  <div class="sec-head"><span class="sec-head__eyebrow">SKIN CONCERN</span><div class="sec-head__title">속은 당기고 모공은 도드라져 보이나요?</div></div>
+  <div class="empathy"><div class="empathy__item">바른 직후만 촉촉하고 금세 건조해지는 피부</div><div class="empathy__item">수분 부족으로 모공 주변이 느슨해 보이는 피부</div><div class="empathy__item">유분감은 부담스럽고 산뜻한 보습이 필요한 피부</div></div></div></section>
+<section class="sec sec--alt"><div class="sec__inner"><div class="claim">
+  <div><span class="claim__big">150,000</span><span class="claim__unit">ppm</span></div>
+  <div class="claim__label">스쿠알란 함량</div>
+  <div class="claim__sub">피부 보습막을 도와 속건조가 고민인 피부에 편안한 수분감을 전합니다.</div></div></div></section>
+<section class="sec"><div class="sec__inner">
+  <div class="sec-head"><span class="sec-head__eyebrow">AQUA SQUALANE CARE</span><div class="sec-head__title">수분부터 탄력감까지 한 번에 케어</div></div>
+  <div class="cards"><div class="card"><div class="card__icon">💧</div><div class="card__stat">속수분</div><div class="card__title">건조한 피부에 수분 충전</div><div class="card__desc">8종 히알루론산이 피부에 촉촉한 보습감을 더해줍니다.</div></div><div class="card"><div class="card__icon">✨</div><div class="card__stat">모공 쫀쫀</div><div class="card__title">매끈해 보이는 피부결</div><div class="card__desc">수분을 머금은 듯한 사용감으로 모공 주변 피부를 탄탄하게 가꿔줍니다.</div></div><div class="card"><div class="card__icon">🫧</div><div class="card__stat">수분광</div><div class="card__title">번들거림보다 맑은 윤기</div><div class="card__desc">산뜻한 보습막이 건조로 푸석해 보이는 피부에 생기 있는 광채를 더합니다.</div></div></div></div></section>
+<section class="sec sec--alt"><div class="sec__inner">
+  <div class="sec-head"><span class="sec-head__eyebrow">KEY INGREDIENTS</span><div class="sec-head__title">검증된 보습 성분을 균형 있게</div></div>
+  <div class="cards"><div class="card"><div class="card__stat">150,000ppm</div><div class="card__title">스쿠알란</div><div class="card__desc">피부 친화적인 보습 성분으로 건조한 피부에 유연한 보습막을 형성합니다.</div></div><div class="card"><div class="card__stat">8종</div><div class="card__title">히알루론산</div><div class="card__desc">다양한 크기의 보습 성분이 피부에 촉촉한 수분감을 채워줍니다.</div></div><div class="card"><div class="card__stat">보습 진정 케어</div><div class="card__title">판테놀 · 알란토인</div><div class="card__desc">건조로 예민해진 피부를 편안하게 가꾸는 데 도움을 줍니다.</div></div></div></div></section>
+<section class="sec"><div class="sec__inner">
+  <div class="sec-head"><span class="sec-head__eyebrow">HOW TO USE</span><div class="sec-head__title">매일 부담 없이 촉촉하게</div></div>
+  <div class="steps"><div class="step"><div class="step__no">1</div><div><div class="step__title">스킨케어 마지막 단계</div><div class="step__desc">토너와 세럼 사용 후 적당량을 덜어 얼굴 전체에 펴 발라주세요.</div></div></div><div class="step"><div class="step__no">2</div><div><div class="step__title">건조한 부위 레이어링</div><div class="step__desc">볼과 입가처럼 당김이 느껴지는 부위에는 한 번 더 얇게 덧발라주세요.</div></div></div><div class="step"><div class="step__no">3</div><div><div class="step__title">아침저녁 데일리 케어</div><div class="step__desc">산뜻한 보습감으로 메이크업 전이나 밤 보습 케어 모두 사용하기 좋습니다.</div></div></div></div></div></section>
+<section class="sec sec--alt"><div class="sec__inner">
+  <div class="sec-head"><span class="sec-head__eyebrow">TRUST POINT</span><div class="sec-head__title">랭킹과 리뷰로 확인한 선택</div></div>
+  <div class="stats"><div><div class="stat__num">1위</div><div class="stat__label">올리브영 온라인몰 전체 랭킹</div></div><div><div class="stat__num">4.8</div><div class="stat__label">리뷰 평점 28,889건 기준</div></div><div><div class="stat__num">2023·2024</div><div class="stat__label">올리브영 어워즈 트렌드 및 MD&#x27;s PICK</div></div></div></div></section>
+<section class="sec"><div class="sec__inner">
+  <div class="sec-head"><span class="sec-head__eyebrow">PRODUCT INFO</span><div class="sec-head__title">제품 상세 정보</div></div>
+  <table class="spec"><tbody><tr><th>브랜드</th><td>S.NATURE 에스네이처</td></tr><tr><th>제품명</th><td>아쿠아 스쿠알란 수분크림</td></tr><tr><th>용량</th><td>60ml</td></tr><tr><th>핵심 성분</th><td>스쿠알란 150,000ppm 판테놀 8종 히알루론산</td></tr><tr><th>주요 케어</th><td>속수분 모공 쫀쫀 수분광 주름 케어</td></tr><tr><th>프로모션</th><td>1+1 오늘드림 가능</td></tr></tbody><caption>랭킹 리뷰 및 프로모션 정보는 판매처와 시점에 따라 달라질 수 있습니다.</caption></table>
+  </div></section>
+<section class="sec sec--bleed"><div class="scene">
+  <img class="scene__img" src="assets/cta.png" alt="">
+  <div class="scene__copy scene__copy--bottom">
+    <div class="hero-title">오늘 필요한 수분을<br>아쿠아 스쿠알란으로</div>
+    <div class="scene__copy__cta"><a class="cta" href="#">1+1 혜택으로 구매하기</a></div>
+    <p class="scene__copy__sub">오늘드림 가능 상품으로 당일배송 옵션을 확인해보세요.</p>
+  </div></div></section>
+</div></body></html>
