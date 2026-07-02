@@ -1,0 +1,48 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8th 재현 평가 보드 — 원본 vs 재현</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Pretendard",sans-serif; background:#191b1e; color:#e8eaed; padding:40px 24px 100px; }
+  h1 { font-size:26px; font-weight:800; margin-bottom:6px; }
+  .sub { color:#9aa0a6; font-size:14px; margin-bottom:36px; }
+  .case { margin-bottom:80px; }
+  .case h2 { font-size:18px; font-weight:700; margin-bottom:4px; }
+  .case .meta { color:#9aa0a6; font-size:13px; margin-bottom:16px; }
+  .pair { display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:1200px; }
+  .col { background:#232529; border-radius:12px; padding:14px; }
+  .col .tag { display:inline-block; font-size:12px; font-weight:700; padding:4px 12px;
+    border-radius:999px; margin-bottom:10px; }
+  .tag--o { background:#3a3f47; color:#cdd3da; }
+  .tag--r { background:#2f6fed; color:#fff; }
+  .col img { width:100%; border-radius:8px; display:block; }
+  .notes { max-width:1200px; background:#232529; border-radius:12px; padding:20px 24px; margin-top:14px;
+    font-size:14px; line-height:1.8; color:#c7ccd2; }
+  .notes b { color:#e8eaed; }
+</style></head>
+<body>
+<h1>8th 재현 평가 보드</h1>
+<div class="sub">레퍼런스 상세페이지를 섹션별로 CSS 충실 재현 — 원본(좌) vs 재현(우)으로 평가. 2026-07-03</div>
+
+<div class="case">
+  <h2>CASE 1 — ref_09 화장대 BESSI (감성 크림톤)</h2>
+  <div class="meta">섹션 3개: ① 씬+BESSI/필기체 겹침 히어로 (씬은 nb-lite로 무텍스트 재생성) ② 크림 밴드+명조 세리프 헤드+필기체 디바이더 ③ 흰 블롭 포인트 3개 지그재그</div>
+  <div class="pair">
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/ref09_orig.jpg"></div>
+    <div class="col"><span class="tag tag--r">재현 (HTML/CSS + i2i 씬)</span><img src="assets/ref09_repro.png"></div>
+  </div>
+  <div class="notes"><b>재현 요소</b>: Noto Serif KR(명조 헤드) · Great Vibes(필기체 Dressing/Lovely Bessi/Bessi point) · letterspaced BESSI · 필기체-대형타이포 오버랩 · 상하 가는선 디바이더 · 블롭 pill 지그재그(가운데만 아래 오프셋) · 2줄째만 볼드.</div>
+</div>
+
+<div class="case">
+  <h2>CASE 2 — ref_04 가구 Check Point (오렌지 포인트)</h2>
+  <div class="meta">섹션 2개: ① 모눈 배경+Check Point pill+체크 3컬럼 인덱스 ② Design pill 라벨(이미지에 걸침)+풀폭 사진+키워드|설명 3행(행별 가는 밑선)</div>
+  <div class="pair">
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/ref04_orig.jpg"></div>
+    <div class="col"><span class="tag tag--r">재현 (HTML/CSS)</span><img src="assets/ref04_repro.png"></div>
+  </div>
+  <div class="notes"><b>재현 요소</b>: 모눈 그리드 배경(repeating-linear-gradient) · 오렌지 pill 대소 2종 · pill의 이미지 오버랩(음수 마진) · 키워드 2줄(2줄째 오렌지 볼드) | 설명 행별 밑선 · 크림 하프 배경 전환.</div>
+</div>
+
+</body></html>
