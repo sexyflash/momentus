@@ -1,0 +1,254 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=860">
+<title>S.NATURE — M4 visual primitives</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+/* ds.css — GENERATED from ds.tokens.json. 손으로 고치지 마라(컴파일러가 덮어씀). */
+/* 브랜드: S.NATURE · 클리니컬 아쿠아 프리미엄 */
+
+:root {
+  /* palette */
+  --bg: #FFFFFF;
+  --bg-alt: #F2F8FF;
+  --ink: #202020;
+  --ink-soft: #7B858E;
+  --primary: #1E8EF2;
+  --primary-ink: #FFFFFF;
+  --accent: #B8C4CC;
+  --line: #DDE7F0;
+
+  /* type scale (px @ 860 기준) */
+  --fs-claim: 96px;
+  --fs-hero: 60px;
+  --fs-display: 46px;
+  --fs-h1: 34px;
+  --fs-h2: 26px;
+  --fs-lead: 20px;
+  --fs-body: 17px;
+  --fs-caption: 14px;
+  --fs-stat: 44px;
+  --w-black: 900;
+  --w-bold: 700;
+  --w-medium: 500;
+  --w-regular: 400;
+  --lh-display: 1.02;
+  --lh-head: 1.12;
+  --lh-body: 1.5;
+  --tk-display: -0.03em;
+  --tk-head: -0.02em;
+
+  /* space (8px 배수) */
+  --unit: 8px;
+  --sec-y: 72px;
+  --gap: 24px;
+  --gap-in: 12px;
+  --safe-x: 8%;
+
+  /* radius */
+  --r-card: 12px;
+  --r-btn: 8px;
+  --r-chip: 999px;
+  --r-img: 8px;
+  --r-badge: 8px;
+
+  --header-align: center;
+}
+
+/* ── base: 정책 9(keep-all/strict), Pretendard ───────────────────── */
+* { margin:0; padding:0; box-sizing:border-box; word-break:keep-all; line-break:strict; }
+html { -webkit-text-size-adjust:100%; }
+body {
+  font-family: "Pretendard", -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: var(--w-regular);
+}
+.page { width: 860px; margin:0 auto; background: var(--bg); }
+
+/* ── section: 세이프마진(정책 7), 배경 교대 리듬 ─────────────────── */
+.sec { padding: var(--sec-y) var(--safe-x); background: var(--bg); }
+.sec--alt { background: var(--bg-alt); }
+.sec__inner { max-width: 100%; }
+
+/* ── section header: 단일 정렬축(정책 1) + 단일 H1 위계(정책 3) ──── */
+.sec-head { text-align: var(--header-align); margin-bottom: var(--gap); }
+.sec-head__eyebrow {
+  display:inline-block; font-size: var(--fs-caption); font-weight: var(--w-bold);
+  color: var(--primary); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px;
+}
+.sec-head__title {
+  font-size: var(--fs-h1); font-weight: var(--w-black);
+  line-height: var(--lh-head); letter-spacing: var(--tk-head); text-wrap: balance;
+}
+.sec-head__sub { margin-top: 8px; font-size: var(--fs-lead); color: var(--ink-soft); font-weight: var(--w-medium); }
+
+/* 섹션 대형 헤드 */
+.display {
+  font-size: var(--fs-display); font-weight: var(--w-black);
+  line-height: var(--lh-display); letter-spacing: var(--tk-display); text-wrap: balance;
+}
+/* 히어로 타이틀 — 페이지 최대 위계(정책 3: 화면당 최대크기 1개만) */
+.hero-title {
+  font-size: var(--fs-hero); font-weight: var(--w-black);
+  line-height: var(--lh-display); letter-spacing: var(--tk-display); text-wrap: balance;
+}
+
+/* ── chip / badge: 배지≠CTA(정책 5) ─────────────────────────────── */
+.chip {
+  display:inline-flex; align-items:center; gap:6px; padding:8px 14px;
+  border-radius: var(--r-chip); background: var(--primary); color: var(--primary-ink);
+  font-size: var(--fs-caption); font-weight: var(--w-bold);
+}
+.chip--ghost { background: transparent; color: var(--primary); border:1.5px solid var(--primary); }
+.badge {
+  display:inline-flex; align-items:center; padding:6px 10px; border-radius: var(--r-badge);
+  background: var(--bg-alt); color: var(--ink); border:1px solid var(--line);
+  font-size: var(--fs-caption); font-weight: var(--w-bold);
+}
+
+/* ── CTA: pill fill(정책 5) ──────────────────────────────────────── */
+.cta {
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:18px 32px; border-radius: var(--r-chip);
+  background: var(--primary); color: var(--primary-ink);
+  font-size: var(--fs-lead); font-weight: var(--w-black); text-decoration:none;
+}
+
+/* ── feature card ───────────────────────────────────────────────── */
+.cards { display:grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+.card {
+  background: var(--bg); border:1px solid var(--line); border-radius: var(--r-card);
+  padding: 24px; text-align: var(--header-align);
+}
+.sec--alt .card { background: var(--bg); }
+.card__icon { width:48px; height:48px; border-radius: var(--r-chip); background: var(--bg-alt);
+  display:grid; place-items:center; margin: 0 auto 12px; font-size:22px; }
+.card__stat { font-size: var(--fs-stat); font-weight: var(--w-black); color: var(--primary); line-height:1; letter-spacing: var(--tk-head); }
+.card__title { font-size: var(--fs-h2); font-weight: var(--w-bold); margin: 8px 0 6px; }
+.card__desc { font-size: var(--fs-body); color: var(--ink-soft); }
+
+/* ── spec table (정보는 HTML 네이티브) ──────────────────────────── */
+.spec { width:100%; border-collapse: collapse; font-size: var(--fs-body); }
+.spec th, .spec td { padding: 16px 18px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+.spec th { width:34%; color: var(--ink-soft); font-weight: var(--w-medium); background: var(--bg-alt); }
+.spec td { font-weight: var(--w-medium); }
+.spec caption { caption-side:bottom; margin-top:10px; font-size: var(--fs-caption); color: var(--ink-soft); text-align:left; }
+
+/* ── comparison table (강조 컬럼) ───────────────────────────────── */
+.cmp { width:100%; border-collapse:separate; border-spacing:0; font-size: var(--fs-body); }
+.cmp th, .cmp td { padding:16px; text-align:center; border-bottom:1px solid var(--line); }
+.cmp thead th { font-weight: var(--w-bold); font-size: var(--fs-caption); color: var(--ink-soft); }
+.cmp .col-us { background: var(--bg-alt); }
+.cmp thead .col-us { background: var(--primary); color: var(--primary-ink); border-top-left-radius: var(--r-card); border-top-right-radius: var(--r-card); }
+.cmp td.col-us { font-weight: var(--w-black); color: var(--ink); }
+.cmp .row-label { text-align:left; color: var(--ink-soft); font-weight: var(--w-medium); }
+
+/* ── usage steps ────────────────────────────────────────────────── */
+.steps { display:grid; gap: var(--gap-in); }
+.step { display:grid; grid-template-columns: 56px 1fr; gap:16px; align-items:start;
+  padding:20px; background: var(--bg); border:1px solid var(--line); border-radius: var(--r-card); }
+.step__no { width:56px; height:56px; border-radius: var(--r-chip); background: var(--primary); color: var(--primary-ink);
+  display:grid; place-items:center; font-size: var(--fs-h2); font-weight: var(--w-black); }
+.step__title { font-size: var(--fs-lead); font-weight: var(--w-bold); margin-bottom:4px; }
+.step__desc { font-size: var(--fs-body); color: var(--ink-soft); }
+
+/* ── stat callout (social proof) ────────────────────────────────── */
+.stats { display:grid; grid-template-columns: repeat(3,1fr); gap: var(--gap); text-align:center; }
+.stat__num { font-size: var(--fs-stat); font-weight: var(--w-black); color: var(--primary); letter-spacing: var(--tk-head); }
+.stat__label { font-size: var(--fs-caption); color: var(--ink-soft); margin-top:4px; }
+
+/* ── 이미지 마스킹은 CSS가 한다(비주얼 v2): 서클/큐브/전후 전부 재료사진 재사용 ── */
+.img-circle { width:120px; height:120px; border-radius:50%; object-fit:cover;
+  display:block; margin:0 auto 14px; }
+.card__img { width:100%; aspect-ratio:1/1; object-fit:cover; border-radius: var(--r-img);
+  display:block; margin-bottom:14px; }
+
+/* 전/후(before-after): 가이드 좌표에 라벨 오버레이 — 위치는 코드가 앎(guide.zones) */
+.ba { position:relative; border-radius: var(--r-img); overflow:hidden; }
+.ba__img { display:block; width:100%; height:auto; }
+.ba__label { position:absolute; top:5.5%; }
+.ba__label--l { left:4.5%; }
+.ba__label--r { left:54.5%; }
+
+/* ── claim-callout: 대형 단일 수치 풀블리드(M1 샘플 5/5 유형) ──── */
+.claim { text-align:center; }
+.claim__big { font-size: var(--fs-claim); font-weight: var(--w-black); color: var(--primary);
+  line-height: .95; letter-spacing: -.03em; }
+.claim__unit { font-size: var(--fs-h1); font-weight: var(--w-black); color: var(--primary); }
+.claim__label { font-size: var(--fs-h2); font-weight: var(--w-bold); margin-top: 12px; }
+.claim__sub { font-size: var(--fs-lead); color: var(--ink-soft); margin-top: 8px; }
+
+/* ── problem-empathy: 공감 블록(말풍선형) ───────────────────────── */
+.empathy { display:grid; gap: var(--gap-in); }
+.empathy__item { background: var(--bg); border:1px solid var(--line); border-radius: var(--r-card);
+  padding: 18px 24px; font-size: var(--fs-lead); font-weight: var(--w-medium); text-align:center; }
+
+/* ── divider (정책 2/6: 은은, glow 금지) ───────────────────────── */
+.divider { height:1px; background: var(--line); border:0; margin: var(--gap) 0; }
+
+/* ── scene section: i2i 씬 위 HTML 카피(텍스트-세이프) ──────────── */
+/* 히어로/씬 섹션은 full-bleed(가장자리까지). 콘텐츠 섹션(.sec)의 세이프마진을 쓰지 않는다. */
+.sec--bleed { padding: 0; }
+.sec--bleed .scene { border-radius: 0; }
+.scene { position:relative; border-radius: var(--r-img); overflow:hidden; }
+.scene__img { display:block; width:100%; height:auto; }
+/* 카피는 씬 안에서 세이프마진(좌우 8%, 상단 여유)만 내부 패딩으로 확보.
+   히어로 씬 카피는 중앙정렬(히어로 관례) — 큰 타이틀이 화면 상단에 균형있게. */
+.scene__copy { position:absolute; inset:0; padding: 64px var(--safe-x);
+  display:flex; flex-direction:column; justify-content:flex-start;
+  text-align: center; align-items: center; }
+.scene__copy--bottom { justify-content: flex-end; }
+.scene__copy__sub { margin-top: 14px; max-width: 24em; color: var(--ink-soft); font-size: var(--fs-lead); font-weight: var(--w-medium); }
+.scene__copy__cta { margin-top: 22px; }
+
+</style>
+</head><body><div class="page">
+<section class="sec">
+  <div class="sec__inner">
+    <div class="sec-head">
+      <span class="sec-head__eyebrow">BEFORE &amp; AFTER</span>
+      <div class="sec-head__title">수분이 바뀌면<br>피부 결이 달라집니다</div>
+      <div class="sec-head__sub">같은 피부 — 아쿠아 스쿠알란 사용 전과 후</div>
+    </div>
+    <div class="ba">
+      <img class="ba__img" src="assets/ba.png" alt="">
+      <span class="badge ba__label ba__label--l">BEFORE</span>
+      <span class="chip ba__label ba__label--r">AFTER</span>
+    </div>
+  </div>
+</section>
+<section class="sec sec--alt">
+  <div class="sec__inner">
+    <div class="sec-head">
+      <span class="sec-head__eyebrow">AQUA CARE</span>
+      <div class="sec-head__title">수분 케어의 세 가지 순간</div>
+    </div>
+    <div class="cards">
+      <div class="card"><img class="img-circle" src="assets/tex_cream.png" alt="">
+        <div class="card__title">쫀쫀한 제형</div><div class="card__desc">가볍게 밀착되는 크림 텍스처</div></div>
+      <div class="card"><img class="img-circle" src="assets/tex_splash.png" alt="">
+        <div class="card__title">아쿠아 수분</div><div class="card__desc">스쿠알란 수분이 즉시 스며듭니다</div></div>
+      <div class="card"><img class="img-circle" src="assets/tex_skin.png" alt="">
+        <div class="card__title">수분광 마무리</div><div class="card__desc">번들거림 없는 맑은 윤기</div></div>
+    </div>
+  </div>
+</section>
+<section class="sec">
+  <div class="sec__inner">
+    <div class="sec-head">
+      <span class="sec-head__eyebrow">TEXTURE</span>
+      <div class="sec-head__title">눈으로 확인하는 보습</div>
+    </div>
+    <div class="cards">
+      <div class="card"><img class="card__img" src="assets/tex_tube.png" alt="">
+        <div class="card__title">듬직한 한 튜브</div><div class="card__desc">60ml 데일리 수분 크림</div></div>
+      <div class="card"><img class="card__img" src="assets/tex_cream.png" alt="">
+        <div class="card__title">리치 텍스처</div><div class="card__desc">끈적임 없는 리치 밀착감</div></div>
+      <div class="card"><img class="card__img" src="assets/tex_skin.png" alt="">
+        <div class="card__title">촉촉한 결</div><div class="card__desc">수분을 머금은 피부 표면</div></div>
+    </div>
+  </div>
+</section>
+</div></body></html>
