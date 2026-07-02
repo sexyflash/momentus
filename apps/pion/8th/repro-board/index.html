@@ -1,48 +1,160 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>8th 재현 평가 보드 — 원본 vs 재현</title>
+<title>8th 재현 평가 보드 — 원본 vs 재현 (16)</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:"Pretendard",sans-serif; background:#191b1e; color:#e8eaed; padding:40px 24px 100px; }
+  body { font-family:"Pretendard",sans-serif; background:#191b1e; color:#e8eaed; padding:40px 24px 120px; }
   h1 { font-size:26px; font-weight:800; margin-bottom:6px; }
-  .sub { color:#9aa0a6; font-size:14px; margin-bottom:36px; }
-  .case { margin-bottom:80px; }
+  .sub { color:#9aa0a6; font-size:14px; margin-bottom:10px; }
+  .toc { color:#9aa0a6; font-size:13px; margin-bottom:40px; }
+  .toc a { color:#7ab3ff; text-decoration:none; }
+  .case { margin-bottom:90px; }
   .case h2 { font-size:18px; font-weight:700; margin-bottom:4px; }
-  .case .meta { color:#9aa0a6; font-size:13px; margin-bottom:16px; }
-  .pair { display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:1200px; }
+  .case .meta { color:#9aa0a6; font-size:13px; margin-bottom:14px; }
+  .pair { display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:1240px; }
   .col { background:#232529; border-radius:12px; padding:14px; }
-  .col .tag { display:inline-block; font-size:12px; font-weight:700; padding:4px 12px;
-    border-radius:999px; margin-bottom:10px; }
+  .tag { display:inline-block; font-size:12px; font-weight:700; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
   .tag--o { background:#3a3f47; color:#cdd3da; }
   .tag--r { background:#2f6fed; color:#fff; }
   .col img { width:100%; border-radius:8px; display:block; }
-  .notes { max-width:1200px; background:#232529; border-radius:12px; padding:20px 24px; margin-top:14px;
-    font-size:14px; line-height:1.8; color:#c7ccd2; }
-  .notes b { color:#e8eaed; }
-</style></head>
-<body>
-<h1>8th 재현 평가 보드</h1>
-<div class="sub">레퍼런스 상세페이지를 섹션별로 CSS 충실 재현 — 원본(좌) vs 재현(우)으로 평가. 2026-07-03</div>
+</style></head><body>
+<h1>8th 재현 평가 보드 — 레퍼런스 16장 전체</h1>
+<div class="sub">레퍼런스를 섹션별 HTML/CSS로 충실 재현 (실측 기반, 사진=원본 크롭). 원본(좌) vs 재현(우). 2026-07-03</div>
+<div class="toc">바로가기: <a href="#c01">01</a> · <a href="#c02">02</a> · <a href="#c03">03</a> · <a href="#c04">04</a> · <a href="#c05">05</a> · <a href="#c06">06</a> · <a href="#c08">08</a> · <a href="#c09">09</a> · <a href="#c10">10</a> · <a href="#c11">11</a> · <a href="#c12">12</a> · <a href="#c13">13</a> · <a href="#c14">14</a> · <a href="#c15">15</a> · <a href="#c16">16</a></div>
 
-<div class="case">
-  <h2>CASE 1 — ref_09 화장대 BESSI (감성 크림톤)</h2>
-  <div class="meta">섹션 3개: ① 씬+BESSI/필기체 겹침 히어로 (씬은 nb-lite로 무텍스트 재생성) ② 크림 밴드+명조 세리프 헤드+필기체 디바이더 ③ 흰 블롭 포인트 3개 지그재그</div>
+<div class="case" id="c01">
+  <h2>CASE 01 — 가구 에디토리얼 3열 (좌열 재현)</h2>
+  <div class="meta">원본 138×977 · 재현 138×969</div>
   <div class="pair">
-    <div class="col"><span class="tag tag--o">원본</span><img src="assets/ref09_orig.jpg"></div>
-    <div class="col"><span class="tag tag--r">재현 (HTML/CSS + i2i 씬)</span><img src="assets/ref09_repro.png"></div>
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/o01.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">재현</span><img src="assets/r01.png" loading="lazy"></div>
   </div>
-  <div class="notes"><b>재현 요소</b>: Noto Serif KR(명조 헤드) · Great Vibes(필기체 Dressing/Lovely Bessi/Bessi point) · letterspaced BESSI · 필기체-대형타이포 오버랩 · 상하 가는선 디바이더 · 블롭 pill 지그재그(가운데만 아래 오프셋) · 2줄째만 볼드.</div>
 </div>
 
-<div class="case">
-  <h2>CASE 2 — ref_04 가구 Check Point (오렌지 포인트)</h2>
-  <div class="meta">섹션 2개: ① 모눈 배경+Check Point pill+체크 3컬럼 인덱스 ② Design pill 라벨(이미지에 걸침)+풀폭 사진+키워드|설명 3행(행별 가는 밑선)</div>
+<div class="case" id="c02">
+  <h2>CASE 02 — 원목가구 시리즈 지그재그</h2>
+  <div class="meta">원본 736×1158 · 재현 736×1160</div>
   <div class="pair">
-    <div class="col"><span class="tag tag--o">원본</span><img src="assets/ref04_orig.jpg"></div>
-    <div class="col"><span class="tag tag--r">재현 (HTML/CSS)</span><img src="assets/ref04_repro.png"></div>
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/o02.jpg" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">재현</span><img src="assets/r02.png" loading="lazy"></div>
   </div>
-  <div class="notes"><b>재현 요소</b>: 모눈 그리드 배경(repeating-linear-gradient) · 오렌지 pill 대소 2종 · pill의 이미지 오버랩(음수 마진) · 키워드 2줄(2줄째 오렌지 볼드) | 설명 행별 밑선 · 크림 하프 배경 전환.</div>
 </div>
 
+<div class="case" id="c03">
+  <h2>CASE 03 — AIRMADE 선풍기 히어로+서클인서트</h2>
+  <div class="meta">원본 2480×3508 · 재현 2480×3398</div>
+  <div class="pair">
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/o03.jpg" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">재현</span><img src="assets/r03.png" loading="lazy"></div>
+  </div>
+</div>
+
+<div class="case" id="c04">
+  <h2>CASE 04 — 가구 Check Point (오렌지)</h2>
+  <div class="meta">원본 720×1337 · 재현 720×1459</div>
+  <div class="pair">
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/o04.jpg" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">재현</span><img src="assets/r04.png" loading="lazy"></div>
+  </div>
+</div>
+
+<div class="case" id="c05">
+  <h2>CASE 05 — 양말 라인아이콘 3컬럼</h2>
+  <div class="meta">원본 570×936 · 재현 570×940</div>
+  <div class="pair">
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/o05.jpg" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">재현</span><img src="assets/r05.png" loading="lazy"></div>
+  </div>
+</div>
+
+<div class="case" id="c06">
+  <h2>CASE 06 — 가구 브랜드스토리 비대칭</h2>
+  <div class="meta">원본 736×1028 · 재현 736×973</div>
+  <div class="pair">
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/o06.jpg" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">재현</span><img src="assets/r06.png" loading="lazy"></div>
+  </div>
+</div>
+
+<div class="case" id="c08">
+  <h2>CASE 08 — 건축 taplink 수치그리드 (우열)</h2>
+  <div class="meta">원본 315×1639 · 재현 315×1651</div>
+  <div class="pair">
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/o08.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">재현</span><img src="assets/r08.png" loading="lazy"></div>
+  </div>
+</div>
+
+<div class="case" id="c09">
+  <h2>CASE 09 — BESSI 화장대 (필기체 크림톤)</h2>
+  <div class="meta">원본 860×1706 · 재현 860×2087</div>
+  <div class="pair">
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/o09.jpg" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">재현</span><img src="assets/r09.png" loading="lazy"></div>
+  </div>
+</div>
+
+<div class="case" id="c10">
+  <h2>CASE 10 — WINDSOR CHAIR 에디토리얼 (좌열)</h2>
+  <div class="meta">원본 134×846 · 재현 134×833</div>
+  <div class="pair">
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/o10.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">재현</span><img src="assets/r10.png" loading="lazy"></div>
+  </div>
+</div>
+
+<div class="case" id="c11">
+  <h2>CASE 11 — 소파 숍 세리프+콜라주 (좌열)</h2>
+  <div class="meta">원본 280×1045 · 재현 280×1020</div>
+  <div class="pair">
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/o11.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">재현</span><img src="assets/r11.png" loading="lazy"></div>
+  </div>
+</div>
+
+<div class="case" id="c12">
+  <h2>CASE 12 — 하루끝베개 REASON 시리즈 (우열)</h2>
+  <div class="meta">원본 354×1472 · 재현 301×1465</div>
+  <div class="pair">
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/o12.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">재현</span><img src="assets/r12.png" loading="lazy"></div>
+  </div>
+</div>
+
+<div class="case" id="c13">
+  <h2>CASE 13 — 아우라홈 가습기 다크리듬 (중열)</h2>
+  <div class="meta">원본 354×1440 · 재현 354×1426</div>
+  <div class="pair">
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/o13.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">재현</span><img src="assets/r13.png" loading="lazy"></div>
+  </div>
+</div>
+
+<div class="case" id="c14">
+  <h2>CASE 14 — 멤버십 세리프+점선 그리드</h2>
+  <div class="meta">원본 816×1280 · 재현 816×1206</div>
+  <div class="pair">
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/o14.jpg" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">재현</span><img src="assets/r14.png" loading="lazy"></div>
+  </div>
+</div>
+
+<div class="case" id="c15">
+  <h2>CASE 15 — 주방 패널히어로+옐로밴드+STEP</h2>
+  <div class="meta">원본 1000×1748 · 재현 1000×1750</div>
+  <div class="pair">
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/o15.jpg" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">재현</span><img src="assets/r15.png" loading="lazy"></div>
+  </div>
+</div>
+
+<div class="case" id="c16">
+  <h2>CASE 16 — LE TOV 디퓨저 클래식 세리프 (좌열)</h2>
+  <div class="meta">원본 245×1350 · 재현 246×1351</div>
+  <div class="pair">
+    <div class="col"><span class="tag tag--o">원본</span><img src="assets/o16.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">재현</span><img src="assets/r16.png" loading="lazy"></div>
+  </div>
+</div>
 </body></html>
