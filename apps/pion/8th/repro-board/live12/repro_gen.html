@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { background:#fff; }
+  body { font-family:'Pretendard',sans-serif; -webkit-font-smoothing:antialiased; }
+  #page { position:relative; width:301px; height:1472px; background:#fff; overflow:hidden; }
+  .abs { position:absolute; left:27px; }
+
+  /* S1: top mesh photo + circle diagram (baked labels) */
+  .photo-top { left:0; top:0; width:301px; }
+
+  /* S2: 두한족열 head + body */
+  .s2-head { top:109px; font-size:16px; line-height:23px; font-weight:700; color:#333; letter-spacing:-0.2px; }
+  .s2-body { top:171px; font-size:12.5px; line-height:18.5px; color:#484848; font-weight:600; letter-spacing:-0.2px; }
+  .divider { top:240px; width:274px; height:2px; background:#eeeeee; }
+
+  /* S3: TEST 비교 */
+  .test-row { top:275px; font-size:14.5px; }
+  .test-row b { font-weight:800; color:#303030; letter-spacing:1px; }
+  .test-row span { font-size:11.5px; color:#4a4a4a; font-weight:500; margin-left:6px; }
+  .test-photos { top:296px; left:27px; display:flex; gap:7px; }
+  .test-photos img { width:118px; height:114px; display:block; }
+  .test-labels { top:433px; left:27px; display:flex; gap:7px; }
+  .test-labels div { width:118px; text-align:center; }
+  .test-labels div:first-child span { position:relative; left:11px; }
+  .test-labels span { font-size:13px; font-weight:700; color:#3a3a3a; border-bottom:1.5px solid #3a3a3a; padding-bottom:3px; }
+
+  /* S4: REASON 03 */
+  .r-label { font-size:15px; font-weight:700; color:#6e8ea6; letter-spacing:0.5px; }
+  .r03-label { top:519px; }
+  .r-head { font-size:22.5px; font-weight:800; color:#1f1f1f; letter-spacing:-0.3px; }
+  .r03-head { top:545px; }
+  .r-body { font-size:15px; color:#4e4e4e; font-weight:500; letter-spacing:-0.2px; }
+  .r03-body { top:591px; }
+
+  /* S5: 9cm photo (annotation baked) */
+  .photo-9cm { left:0; top:634px; width:301px; }
+
+  /* S6: body under photo */
+  .s6-bold { top:869px; font-size:15px; line-height:23px; font-weight:700; color:#333; letter-spacing:-0.2px; }
+  .s6-body { top:930px; font-size:12.5px; line-height:18px; color:#585858; font-weight:500; letter-spacing:-0.2px; }
+
+  /* S7: REASON 04 */
+  .r04-label { top:1028px; }
+  .r04-head { top:1054px; }
+  .r04-body { top:1101px; }
+
+  /* S8: rack photo + gray band + centered text */
+  .gray-band { position:absolute; left:0; top:1255px; width:301px; height:144px; background:#f3f3f4; }
+  .photo-rack { position:absolute; left:0; top:1128px; width:301px; }
+  .rack-bold { position:absolute; left:0; top:1296px; width:297px; text-align:center; font-size:14.5px; line-height:20px; font-weight:700; color:#303030; letter-spacing:-0.2px; }
+  .rack-cap { position:absolute; left:0; top:1346px; width:297px; text-align:center; font-size:11.5px; line-height:17px; color:#606060; font-weight:500; letter-spacing:-0.2px; }
+
+  /* S9: REASON 05 peek */
+  .r05-label { top:1448px; }
+</style>
+</head>
+<body>
+<div id="page">
+  <img class="photo-top abs" src="gen_top.png" alt="">
+
+  <div class="s2-head abs">머리는 차갑게, 발은 따뜻하게 해야<br>숙면에 도움이 된다는 &lsquo;두한족열&rsquo; 충족</div>
+  <div class="s2-body abs">2중 통기성 구조가 머리 체열을<br>효과적으로 방출해 깊은 잠에 들게 해요.</div>
+  <div class="divider abs"></div>
+
+  <div class="test-row abs"><b>TEST</b><span>&middot; 머리 온도 비교실험</span></div>
+  <div class="test-photos abs"><img src="gen_test_left.png" alt=""><img src="gen_test_right.png" alt=""></div>
+  <div class="test-labels abs"><div><span>일반 솜베개</span></div><div><span>하루끝베개</span></div></div>
+
+  <div class="r-label r03-label abs">REASON 03 .</div>
+  <div class="r-head r03-head abs">한국인에 맞춘 9cm 높이</div>
+  <div class="r-body r03-body abs">어깨 말림 없이 푹 잘 수 있어요.</div>
+
+  <img class="photo-9cm abs" src="gen_9cm.png" alt="">
+
+  <div class="s6-bold abs">낮은 베개를 사용하면 어깨가 말리면서<br>불편함 개선에 전혀 도움이 되지 않아요.</div>
+  <div class="s6-body abs">그래서 저희는 어깨 말림이 없는<br>최적의 베개 높이 9cm로 설계했어요.</div>
+
+  <div class="r-label r04-label abs">REASON 04 .</div>
+  <div class="r-head r04-head abs">쉽고 간편한 통세척</div>
+  <div class="r-body r04-body abs">통세척으로 위생적인 관리가 가능해요.</div>
+
+  <div class="gray-band"></div>
+  <img class="photo-rack" src="gen_rack.png" alt="">
+  <div class="rack-bold">피부에 매일 닿는 베개,<br>세탁이 어렵거나 모양 변형이 우려되셨나요?</div>
+  <div class="rack-cap">이제는 매일 걱정 없이 샤워기로<br>쉽게 세척하고 건조만 시켜주세요.</div>
+
+  <div class="r-label r05-label abs">REASON 05 .</div>
+</div>
+</body>
+</html>

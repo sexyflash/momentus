@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { background:#fff; }
+  .page { width:246px; font-family:'Noto Serif KR', serif; }
+  img { display:block; width:100%; }
+
+  /* ── 1. hero lockup ── */
+  .hero { height:168px; background:linear-gradient(160deg, #cac2b0 0%, #c2baa6 40%, #cec7b5 100%); text-align:center; position:relative; }
+  .hero .copy { padding-top:57px; font-size:7.5px; font-weight:500; letter-spacing:0.4px; color:rgba(250,246,232,0.92); }
+  .hero .logo-row { margin-top:14px; height:26px; line-height:26px; color:#fffdf4; }
+  .hero .logo { font-family:'Cinzel', serif; font-size:30px; font-weight:500; letter-spacing:-1px; vertical-align:baseline; }
+  .hero .logo-kr { font-size:8px; font-weight:500; margin-left:5px; vertical-align:2px; letter-spacing:1px; }
+  .hero .frag { margin-top:2px; font-family:'Cormorant Garamond', serif; font-style:italic; font-size:9.5px; letter-spacing:1.2px; color:rgba(255,253,244,0.85); }
+  .hero .subline { position:absolute; left:0; right:0; top:148px; font-size:9.5px; font-weight:600; letter-spacing:-0.3px; color:#fffef0; }
+
+  /* ── 3+4. paragraph + dark label box (continuous greige gradient) ── */
+  .mid { height:284px; background:linear-gradient(#e7dfce, #e4dcca 45%, #d7cbb8 100%); text-align:center; }
+  .mid .para { padding-top:55px; font-size:8.8px; font-weight:500; line-height:11.5px; letter-spacing:-1.2px; white-space:nowrap; color:#241a0e; }
+  .mid .plumb { width:1.5px; height:43px; background:#4d4536; margin:6px auto 0; }
+  .dbox { margin:0 13px; height:102px; background:#1a0f0a; color:#f7f3ee; }
+  .dbox .title { padding-top:8px; font-family:'Cinzel', serif; font-size:14px; font-weight:500; color:#fffcfa; letter-spacing:0.5px; }
+  .dbox .title .kr { font-family:'Noto Serif KR', serif; font-size:6.5px; letter-spacing:0.5px; margin-left:3px; vertical-align:1.5px; }
+  .dbox .p1 { margin-top:12px; font-size:6.8px; line-height:11px; letter-spacing:-0.4px; white-space:nowrap; color:#f5f0ea; }
+  .dbox .p2 { margin-top:11px; font-size:6.8px; line-height:11px; letter-spacing:-0.3px; white-space:nowrap; color:#f5f0ea; }
+
+  /* ── 5+6+7. gray zone: wreath / check point / numbered list ── */
+  .gray { height:426px; background:#f4f4f4; padding-top:18px; }
+  .gray .wreath { display:block; width:140px; height:78px; margin:0 auto; }
+  .gray .chk-copy { margin-top:8px; line-height:9px; text-align:center; font-family:'Pretendard', sans-serif; font-size:7px; font-weight:700; letter-spacing:-0.3px; color:#4c4944; }
+  .gray .chk { margin-top:2px; line-height:22px; text-align:center; font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:500; font-size:25.5px; letter-spacing:0; color:#0a0a0a; }
+  .items { margin-top:44px; }
+  .item { display:flex; margin-bottom:24px; }
+  .item .num { width:37px; margin-left:29px; font-family:'Cormorant Garamond', serif; font-style:italic; font-size:40px; font-weight:400; line-height:42px; transform:translateY(1px); font-variant-numeric:lining-nums; font-feature-settings:'lnum' 1; color:#000; }
+  .item .txt { flex:1; }
+  .item .t { font-size:12px; line-height:14px; font-weight:700; letter-spacing:-0.9px; color:#000; }
+  .item .d { margin-top:9px; font-family:'Pretendard', sans-serif; font-size:8.6px; line-height:10.5px; letter-spacing:-0.2px; color:#3d3d3d; }
+
+  /* ── 8. bottom photo + caption ── */
+  .capstrip { height:54px; background:#f7f0e4; text-align:center; }
+  .capstrip .cap { padding-top:42px; font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:500; font-size:9.5px; letter-spacing:0.2px; color:#393429; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 1. hero lockup -->
+  <div class="hero">
+    <div class="copy">보이지 않아도 느껴지는 사랑의 향기</div>
+    <div class="logo-row"><span class="logo">LE TOV</span><span class="logo-kr">르토브</span></div>
+    <div class="frag">fragrance</div>
+    <div class="subline">1885 디퓨저 | 4110 차량용 방향제</div>
+  </div>
+
+  <!-- 2. product scene photo -->
+  <img src="gen_photo_main.png" alt="" style="height:268px">
+
+  <!-- 3. body paragraph / 4. dark label box -->
+  <div class="mid">
+    <div class="para">르토브는 하나님의 사랑과 선함을 담은 향기를 전합니다.<br>나의 공간에 은은하게 퍼지는 믿음과 위로의 향기로 하루를 채워보세요</div>
+    <div class="plumb"></div>
+    <div class="dbox">
+      <div class="title">LE TOV<span class="kr">르토브</span></div>
+      <div class="p1">LE TOV는 하나님이 이 세상의 모든 만물을 창조하신후 &lsquo;보기에 아름다웠더라&rsquo;<br>말씀하신 창세기 1장의 구절, 히브리어 טוב TOV로부터 시작하였습니다.</div>
+      <div class="p2">하나님의 사랑처럼 눈에 보이지 않아도,<br>삶 곳곳에 스며들어 당신의 하루를 위로합니다.</div>
+    </div>
+  </div>
+
+  <!-- 5. botanical wreath (drawn SVG) / 6. check point / 7. numbered list -->
+  <div class="gray">
+    <svg class="wreath" viewBox="0 0 140 78" fill="none"
+         stroke="#3b3b3b" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round">
+      <!-- inner cartouche : double line -->
+      <rect x="27" y="19" width="86" height="42" rx="15"/>
+      <rect x="29.5" y="21.5" width="81" height="37" rx="12.5" stroke-width="0.6"/>
+      <!-- left half botanicals (mirrored below) -->
+      <g id="halfL">
+        <!-- top vine -->
+        <path d="M68,10 C52,4 36,5 24,13"/>
+        <path d="M58,7.6 q-2,-4 -6,-4 q2,4 6,4 Z" fill="#3b3b3b" stroke="none"/>
+        <path d="M46,6.2 q-2,-4 -6,-3.4 q2,3.8 6,3.4 Z" fill="#3b3b3b" stroke="none"/>
+        <path d="M35,7.5 q-3,-3.4 -6.6,-2 q2.4,3.4 6.6,2 Z" fill="#3b3b3b" stroke="none"/>
+        <!-- bird top-left -->
+        <path d="M15,9.5 q3,-4.5 7,-2.2 q4,-3 6,0.8 l-5.4,2.4 q-0.6,3 -4,3.4 q-2.6,0.3 -3.6,-4.4 Z" fill="#3b3b3b" stroke="none"/>
+        <!-- corner spray upper-left -->
+        <path d="M24,13 C17,17 13,23 12,30"/>
+        <path d="M18,17.5 q-4.4,-1.4 -7,1.6 q3.6,2.2 7,-1.6 Z" fill="#3b3b3b" stroke="none"/>
+        <!-- side rosette -->
+        <g stroke-width="0.7">
+          <circle cx="13" cy="39" r="2.1"/>
+          <circle cx="13" cy="34.6" r="1.8"/>
+          <circle cx="13" cy="43.4" r="1.8"/>
+          <circle cx="9.4" cy="36.9" r="1.8"/>
+          <circle cx="9.4" cy="41.1" r="1.8"/>
+          <circle cx="16.6" cy="36.9" r="1.8"/>
+          <circle cx="16.6" cy="41.1" r="1.8"/>
+        </g>
+        <!-- bottom vine -->
+        <path d="M12,48 C13,57 20,64 30,68 C42,72.5 56,73.5 68,73"/>
+        <path d="M20,60 q-4.6,-0.6 -6.6,3 q4,1.6 6.6,-3 Z" fill="#3b3b3b" stroke="none"/>
+        <path d="M33,68.6 q-3.4,-3.2 -7.4,-1.6 q2.6,3.6 7.4,1.6 Z" fill="#3b3b3b" stroke="none"/>
+        <path d="M47,71.6 q-2.6,-3.8 -6.8,-3 q1.8,4 6.8,3 Z" fill="#3b3b3b" stroke="none"/>
+        <path d="M59,72.8 q-2,-4 -6.2,-3.8 q1.4,4.2 6.2,3.8 Z" fill="#3b3b3b" stroke="none"/>
+      </g>
+      <use href="#halfL" transform="translate(140,0) scale(-1,1)"/>
+      <!-- top center flower cluster -->
+      <g stroke-width="0.7">
+        <circle cx="70" cy="9" r="3.2"/>
+        <circle cx="70" cy="9" r="1.1" fill="#3b3b3b" stroke="none"/>
+        <circle cx="64.6" cy="11" r="1.9"/>
+        <circle cx="75.4" cy="11" r="1.9"/>
+      </g>
+      <!-- bottom center leaf pair -->
+      <path d="M70,75.5 q-3.4,-3 -7.6,-1.6 q3,3.4 7.6,1.6 Z" fill="#3b3b3b" stroke="none"/>
+      <path d="M70,75.5 q3.4,-3 7.6,-1.6 q-3,3.4 -7.6,1.6 Z" fill="#3b3b3b" stroke="none"/>
+      <!-- verse text -->
+      <g font-family="'Cormorant Garamond', serif" font-style="italic" font-size="8"
+         fill="#1c1c1c" stroke="none" text-anchor="middle">
+        <text x="70" y="33">For I can do everything</text>
+        <text x="70" y="42.5">through Christ,</text>
+        <text x="70" y="52">who gives me strength.</text>
+      </g>
+      <text x="70" y="70" font-family="'Cinzel', serif" font-size="4.6" letter-spacing="1.4"
+            fill="#2a2a2a" stroke="none" text-anchor="middle">LE TOV</text>
+    </svg>
+    <div class="chk-copy">르토브 1885 디퓨저 &amp; 4110 차량용 방향제</div>
+    <div class="chk">Check Point</div>
+    <div class="items">
+      <div class="item">
+        <div class="num">1</div>
+        <div class="txt">
+          <div class="t">클래식하고 감각적인 디자인</div>
+          <div class="d">성경 속 꽃과 나무, 말씀으로 채워진<br>드로잉 아티스트의 클래식하고 고급스러운 일러스트</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="num">2</div>
+        <div class="txt">
+          <div class="t">퀄리티 높은 향 구성</div>
+          <div class="d">성경 말씀에서 영감 받은 르토브만의 향기,<br>갈릴리의 사랑 / 감람산의 기도 / 샤론의 꽃</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="num">3</div>
+        <div class="txt">
+          <div class="t">전문 조향사 &amp; 최고급 향료 사용</div>
+          <div class="d">미국 수석 조향사가 만든 고급 향기,<br>IFRA 인증 향료 사용</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="num">4</div>
+        <div class="txt">
+          <div class="t">믿을 수 있는 안전성</div>
+          <div class="d">생활화학제품 안전 인증 완료 /<br>프탈레이트 無첨가 / 식물성 베이스</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. bottom product photo + caption -->
+  <img src="gen_photo_caps.png" alt="" style="height:150px">
+  <div class="capstrip">
+    <div class="cap">The Unique Scents of LE TOV</div>
+  </div>
+
+</div>
+</body>
+</html>

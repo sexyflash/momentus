@@ -23,183 +23,183 @@
   .tag--r { background:#2f6fed; color:#fff; }
   .col img { width:100%; border-radius:8px; display:block; }
 </style></head><body>
-<h1>8th 재현 평가 보드 — ① 원본 | ② 이미지 재료 | ③ 최종 결합</h1>
-<div class="sub"><b>규명</b>: 텍스트는 i2i(이미지 생성)가 아니라 전부 HTML/CSS/SVG다. ②는 같은 HTML에서 <b>텍스트만 투명 처리</b>한 렌더 — 글자가 없이 사진·배경·도형만 남는 것이 그 증거. i2i는 16케이스 중 <b>ref_09 씬 1장뿐</b>(원본 씬에 글자가 박혀 있어 무텍스트 재생성), 나머지 사진은 원본 크롭 재사용. 각 케이스의 "라이브 HTML"을 열면 글자를 드래그 선택할 수 있다.</div>
+<h1>8th 재현 평가 보드 v3 — ① 원본 | ② 생성 재료(t2i) | ③ 최종 결합</h1>
+<div class="sub"><b>M9 — 원본 픽셀 0%</b>: ②의 사진은 전부 <b>t2i 생성물</b>(원본을 눈으로 읽고 쓴 프롬프트만, 원본 이미지 미투입·i2i 편집 미사용)이고 텍스트를 투명 처리한 재료 레이어다. ③은 같은 생성 재료 위에 <b>HTML/CSS 텍스트</b>를 얹은 최종. 아이콘·배지는 SVG 직접 드로잉. "라이브 HTML"에서 글자 드래그 선택 가능. 슬롯별 t2i 프롬프트 전문은 각 ref의 notes_gen.md.</div>
 <div class="toc">바로가기: <a href="#c01">01</a> · <a href="#c02">02</a> · <a href="#c03">03</a> · <a href="#c04">04</a> · <a href="#c05">05</a> · <a href="#c06">06</a> · <a href="#c07">07</a> · <a href="#c08">08</a> · <a href="#c09">09</a> · <a href="#c10">10</a> · <a href="#c11">11</a> · <a href="#c12">12</a> · <a href="#c13">13</a> · <a href="#c14">14</a> · <a href="#c15">15</a> · <a href="#c16">16</a></div>
 
 <div class="case" id="c01">
   <h2>CASE 01 — 가구 에디토리얼 3열 (좌열)</h2>
-  <div class="meta">원본 138×977 · 재현 138×969 · <a class="live" href="live01/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 전부 = 원본 크롭 재사용(i2i 0회) · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
+  <div class="meta">원본 138×977 · 재현 138×970 · <a class="live" href="live01/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o01.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m01.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r01.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m01.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r01.png" loading="lazy"></div>
   </div>
 </div>
 
 <div class="case" id="c02">
   <h2>CASE 02 — 원목가구 시리즈 지그재그</h2>
-  <div class="meta">원본 736×1158 · 재현 736×1160 · <a class="live" href="live02/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 전부 = 원본 크롭 재사용(i2i 0회) · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
+  <div class="meta">원본 736×1158 · 재현 736×1160 · <a class="live" href="live02/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o02.jpg" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m02.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r02.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m02.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r02.png" loading="lazy"></div>
   </div>
 </div>
 
 <div class="case" id="c03">
   <h2>CASE 03 — AIRMADE 선풍기 히어로+서클인서트</h2>
-  <div class="meta">원본 2480×3508 · 재현 2480×3398 · <a class="live" href="live03/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 전부 = 원본 크롭 재사용(i2i 0회) · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
+  <div class="meta">원본 2480×3508 · 재현 2480×3399 · <a class="live" href="live03/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o03.jpg" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m03.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r03.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m03.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r03.png" loading="lazy"></div>
   </div>
 </div>
 
 <div class="case" id="c04">
   <h2>CASE 04 — 가구 Check Point (오렌지)</h2>
-  <div class="meta">원본 720×1337 · 재현 720×1459 · <a class="live" href="live04/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 전부 = 원본 크롭 재사용(i2i 0회) · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
+  <div class="meta">원본 720×1337 · 재현 720×1459 · <a class="live" href="live04/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o04.jpg" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m04.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r04.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m04.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r04.png" loading="lazy"></div>
   </div>
 </div>
 
 <div class="case" id="c05">
   <h2>CASE 05 — 양말 라인아이콘 3컬럼</h2>
-  <div class="meta">원본 570×936 · 재현 570×940 · <a class="live" href="live05/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 전부 = 원본 크롭 재사용(i2i 0회) · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
+  <div class="meta">원본 570×936 · 재현 570×940 · <a class="live" href="live05/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o05.jpg" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m05.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r05.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m05.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r05.png" loading="lazy"></div>
   </div>
 </div>
 
 <div class="case" id="c06">
   <h2>CASE 06 — 가구 브랜드스토리 비대칭</h2>
-  <div class="meta">원본 736×1028 · 재현 736×973 · <a class="live" href="live06/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 전부 = 원본 크롭 재사용(i2i 0회) · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
+  <div class="meta">원본 736×1028 · 재현 736×973 · <a class="live" href="live06/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o06.jpg" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m06.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r06.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m06.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r06.png" loading="lazy"></div>
   </div>
 </div>
 
 <div class="case" id="c07">
   <h2>CASE 07 — 가구 프로모 세리프 타이포아트</h2>
-  <div class="meta">원본 2205×3920 · 재현 2205×3922 · <a class="live" href="live07/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 전부 = 원본 크롭 재사용(i2i 0회) · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
+  <div class="meta">원본 2205×3920 · 재현 2205×3922 · <a class="live" href="live07/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o07.jpg" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m07.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r07.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m07.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r07.png" loading="lazy"></div>
   </div>
 </div>
 
 <div class="case" id="c08">
   <h2>CASE 08 — 건축 taplink 수치그리드 (우열)</h2>
-  <div class="meta">원본 315×1639 · 재현 315×1651 · <a class="live" href="live08/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 전부 = 원본 크롭 재사용(i2i 0회) · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
+  <div class="meta">원본 315×1639 · 재현 315×1651 · <a class="live" href="live08/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o08.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m08.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r08.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m08.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r08.png" loading="lazy"></div>
   </div>
 </div>
 
 <div class="case" id="c09">
   <h2>CASE 09 — BESSI 화장대 (필기체 크림톤)</h2>
-  <div class="meta">원본 860×1706 · 재현 860×2087 · <a class="live" href="live09/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 1장 = <b>nb-lite i2i 재생성</b>(원본 씬에 글자가 박혀 있어 무텍스트 씬으로) · 텍스트/디바이더 = HTML</div>
+  <div class="meta">원본 860×1706 · 재현 860×2087 · <a class="live" href="live09/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o09.jpg" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m09.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r09.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m09.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r09.png" loading="lazy"></div>
   </div>
 </div>
 
 <div class="case" id="c10">
   <h2>CASE 10 — WINDSOR CHAIR 에디토리얼 (좌열)</h2>
-  <div class="meta">원본 134×846 · 재현 134×833 · <a class="live" href="live10/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 전부 = 원본 크롭 재사용(i2i 0회) · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
+  <div class="meta">원본 134×846 · 재현 134×833 · <a class="live" href="live10/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o10.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m10.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r10.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m10.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r10.png" loading="lazy"></div>
   </div>
 </div>
 
 <div class="case" id="c11">
   <h2>CASE 11 — 소파 숍 세리프+콜라주 (좌열)</h2>
-  <div class="meta">원본 280×1045 · 재현 280×1020 · <a class="live" href="live11/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 전부 = 원본 크롭 재사용(i2i 0회) · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
+  <div class="meta">원본 280×1045 · 재현 280×1020 · <a class="live" href="live11/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o11.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m11.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r11.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m11.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r11.png" loading="lazy"></div>
   </div>
 </div>
 
 <div class="case" id="c12">
   <h2>CASE 12 — 하루끝베개 REASON 시리즈 (우열)</h2>
-  <div class="meta">원본 354×1472 · 재현 301×1465 · <a class="live" href="live12/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 전부 = 원본 크롭 재사용(i2i 0회) · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
+  <div class="meta">원본 354×1472 · 재현 301×1464 · <a class="live" href="live12/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o12.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m12.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r12.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m12.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r12.png" loading="lazy"></div>
   </div>
 </div>
 
 <div class="case" id="c13">
   <h2>CASE 13 — 아우라홈 가습기 다크리듬 (중열)</h2>
-  <div class="meta">원본 354×1440 · 재현 354×1426 · <a class="live" href="live13/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 전부 = 원본 크롭 재사용(i2i 0회) · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
+  <div class="meta">원본 354×1440 · 재현 354×1425 · <a class="live" href="live13/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o13.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m13.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r13.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m13.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r13.png" loading="lazy"></div>
   </div>
 </div>
 
 <div class="case" id="c14">
   <h2>CASE 14 — 멤버십 세리프+점선 그리드</h2>
-  <div class="meta">원본 816×1280 · 재현 816×1206 · <a class="live" href="live14/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 전부 = 원본 크롭 재사용(i2i 0회) · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
+  <div class="meta">원본 816×1280 · 재현 816×1205 · <a class="live" href="live14/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o14.jpg" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m14.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r14.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m14.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r14.png" loading="lazy"></div>
   </div>
 </div>
 
 <div class="case" id="c15">
   <h2>CASE 15 — 주방 패널히어로+옐로밴드+STEP</h2>
-  <div class="meta">원본 1000×1748 · 재현 1000×1750 · <a class="live" href="live15/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 전부 = 원본 크롭 재사용(i2i 0회) · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
+  <div class="meta">원본 1000×1748 · 재현 1000×1749 · <a class="live" href="live15/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o15.jpg" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m15.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r15.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m15.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r15.png" loading="lazy"></div>
   </div>
 </div>
 
 <div class="case" id="c16">
   <h2>CASE 16 — LE TOV 디퓨저 클래식 세리프 (좌열)</h2>
-  <div class="meta">원본 245×1350 · 재현 246×1351 · <a class="live" href="live16/repro.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
-  <div class="mat">사진 전부 = 원본 크롭 재사용(i2i 0회) · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
+  <div class="meta">원본 245×1350 · 재현 246×1351 · <a class="live" href="live16/repro_gen.html" target="_blank">↗ 라이브 HTML (글자 드래그 선택 가능)</a></div>
+  <div class="mat">사진 전부 = <b>t2i 생성(원본 픽셀 0%, 프롬프트만)</b> · 텍스트/아이콘/배지/표 = HTML·CSS·SVG</div>
   <div class="triple">
     <div class="col"><span class="tag tag--o">① 원본</span><img src="assets/o16.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--m">② 이미지 재료 (텍스트 제거)</span><img src="assets/m16.png" loading="lazy"></div>
-    <div class="col"><span class="tag tag--r">③ 최종 = ② + HTML 텍스트</span><img src="assets/r16.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--m">② 생성 재료 (t2i 프롬프트-온리)</span><img src="assets/m16.png" loading="lazy"></div>
+    <div class="col"><span class="tag tag--r">③ 최종 = 생성재료 + HTML 텍스트</span><img src="assets/r16.png" loading="lazy"></div>
   </div>
 </div>
 </body></html>

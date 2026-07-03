@@ -1,0 +1,83 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=860">
+<title>ref_09 재현 — BESSI 화장대</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Great+Vibes&display=swap">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; word-break:keep-all; }
+  body { font-family:"Pretendard",sans-serif; background:#F6EFDD; color:#4A3E32; }
+  .page { width:860px; margin:0 auto; }
+
+  /* S1 — 히어로: 씬 + BESSI/필기체 겹침 오버레이 */
+  .hero { position:relative; }
+  .hero__img { display:block; width:100%; }
+  .hero__copy { position:absolute; top:72px; left:0; right:0; text-align:center; }
+  .hero__kicker { font-size:22px; font-weight:500; color:#fff; letter-spacing:.14em;
+    text-shadow:0 1px 10px rgba(90,70,40,.25); margin-bottom:64px; }
+  .hero__lockup { position:relative; display:inline-block; }
+  .hero__script { position:absolute; top:-64px; left:50%; transform:translateX(-50%) rotate(-4deg);
+    font-family:"Great Vibes",cursive; font-size:118px; color:#E9A94E; opacity:.92; white-space:nowrap; }
+  .hero__brand { position:relative; font-size:104px; font-weight:600; color:#fff;
+    letter-spacing:.32em; margin-right:-.32em; text-shadow:0 2px 18px rgba(90,70,40,.28); }
+
+  /* 필기체 디바이더 (S1 하단/S2 상단 공통 장식) */
+  .script-divider { text-align:center; padding:42px 0 34px; position:relative; }
+  .script-divider::before, .script-divider::after { content:""; position:absolute; left:50%;
+    transform:translateX(-50%); width:150px; height:1px; background:#C9B48E; }
+  .script-divider::before { top:34px; }
+  .script-divider::after { bottom:24px; }
+  .script-divider span { font-family:"Great Vibes",cursive; font-size:34px; color:#B98A45; }
+
+  /* S2 — 톤 밴드 세리프 헤드 */
+  .band { text-align:center; padding:34px 60px 78px; }
+  .band__pre { font-family:"Noto Serif KR",serif; font-size:30px; font-weight:600; color:#8A6B4A; margin-bottom:20px; }
+  .band__head { font-family:"Noto Serif KR",serif; font-size:52px; font-weight:700; color:#3F3428; letter-spacing:-.01em; }
+  .band__sub { font-size:26px; color:#6E5C48; margin-top:44px; }
+
+  /* S3 — 블롭 포인트 지그재그 */
+  .points { position:relative; padding:20px 34px 96px; display:grid;
+    grid-template-columns:repeat(3,1fr); gap:0; align-items:start; }
+  .blob { background:#fff; border-radius:999px; padding:38px 30px 42px; text-align:center;
+    box-shadow:0 10px 26px rgba(120,95,55,.10); width:112%; }
+  .blob:nth-child(1) { justify-self:start; }
+  .blob:nth-child(2) { justify-self:center; margin-top:96px; z-index:1; }
+  .blob:nth-child(3) { justify-self:end; }
+  .blob__label { font-family:"Great Vibes",cursive; font-size:27px; color:#DF9A3E; display:block; margin-bottom:12px; }
+  .blob__l1 { font-size:25px; color:#55483A; line-height:1.45; }
+  .blob__l2 { font-size:26px; font-weight:800; color:#3F3428; line-height:1.4; }
+  .points-end { height:1px; background:#C9B48E; width:150px; margin:0 auto 60px; }
+</style></head>
+<body><div class="page">
+
+<!-- S1 -->
+<section class="hero">
+  <img class="hero__img" src="gen_scene.png" alt="">
+  <div class="hero__copy">
+    <div class="hero__kicker">LED의 화려함, 수납의 편리함!</div>
+    <div class="hero__lockup">
+      <span class="hero__script">Dressing</span>
+      <span class="hero__brand">BESSI</span>
+    </div>
+  </div>
+</section>
+<div class="script-divider"><span>Lovely Bessi</span></div>
+
+<!-- S2 -->
+<section class="band">
+  <div class="band__pre">이미 수년간의 판매실적!</div>
+  <div class="band__head">베스트셀러 LED 화장대, 베시</div>
+  <div class="band__sub">리얼후기보고 구매하세요.</div>
+</section>
+
+<!-- S3 -->
+<section class="points">
+  <div class="blob"><span class="blob__label">Bessi point</span>
+    <div class="blob__l1">조명이 따로 필요 없는</div><div class="blob__l2">LED 화장대</div></div>
+  <div class="blob"><span class="blob__label">Bessi point</span>
+    <div class="blob__l1">알찬 수납공간,</div><div class="blob__l2">수납걱정은 NO!</div></div>
+  <div class="blob"><span class="blob__label">Bessi point</span>
+    <div class="blob__l1">와이드한 거울,</div><div class="blob__l2">군더더기 없는 디자인</div></div>
+</section>
+<div class="points-end"></div>
+
+</div></body></html>

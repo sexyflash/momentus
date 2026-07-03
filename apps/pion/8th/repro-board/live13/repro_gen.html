@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root{
+    --green-fill:#287d60;   /* solid fills: pill, tag, greenbox (40,124,96) */
+    --green-text:#1e5a43;   /* text green (27,84,65) */
+    --dark:#111;
+    --panel:#eff5f3;        /* sec2 panel bg (239,245,243) */
+    --bar:#333;             /* sec3 label bar (51,51,51) */
+    --mint:#bfeada;         /* green text on dark bar (200,241,227) */
+    --thbg:#e4f1ea;         /* table header bg (228,241,234) */
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:354px;background:#fff;
+    font-family:Pretendard,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;word-break:keep-all}
+
+  /* ─── Section 1 : 디자인 헤드 + 인테리어 스트립 ─── */
+  .s1{padding-top:49px;text-align:center}
+  .s1 h1{position:relative;font-size:26px;line-height:33px;font-weight:700;color:var(--dark);letter-spacing:-0.5px}
+  .s1 h1 .g{color:var(--green-text)}
+  .dots{position:absolute;top:-7px;left:0;width:100%;height:4px}
+  .dots i{position:absolute;top:0;width:4px;height:4px;border-radius:50%;background:var(--green-text)}
+  .strip{margin-top:31px;height:198px;display:flex;justify-content:center;align-items:center;gap:17px}
+  .strip img{display:block}
+  .strip .side{width:58px;height:154px}
+  .strip .main{width:164px;height:198px}
+  .pill{margin:14px auto 0;width:54px;height:24px;border-radius:12px;background:var(--green-fill);
+    color:#fff;font-size:13px;font-weight:700;line-height:24px;text-align:center}
+  .cap1{margin-top:9px;font-size:15px;line-height:20px;color:#333}
+  .cap2{margin-top:0;font-size:14.5px;line-height:19px;font-weight:700;color:var(--dark)}
+
+  /* ─── Section 2 : POINT 1 패널 ─── */
+  .s2{margin:36px 20px 0;width:314px;background:var(--panel);
+    padding:46px 0 33px 24px}
+  .tag{display:inline-block;background:var(--green-fill);color:#fff;
+    font-size:9.5px;font-weight:700;letter-spacing:1.2px;
+    padding:2px 8px;border-radius:2px}
+  .s2 h2{margin-top:9px;font-size:26px;line-height:36px;font-weight:700;color:var(--dark);letter-spacing:-0.5px}
+  .s2 h2 .g{color:var(--green-text)}
+  .s2 p{margin-top:14px;font-size:12px;line-height:16.5px;color:#444;letter-spacing:-0.4px}
+  .s2 p b{font-weight:700;color:#222}
+
+  /* ─── Section 3 : 가습기 2분할 + 라벨바 ─── */
+  .s3{margin:0 20px}
+  .s3 img{display:block;width:314px;height:238px}
+  .bar{margin-top:1px;display:flex;gap:3px}
+  .bar div{flex:1;height:24px;background:var(--bar);color:#fff;
+    font-size:13.5px;font-weight:700;line-height:24px;text-align:center;letter-spacing:-0.3px}
+  .bar .g{color:var(--mint)}
+
+  /* ─── Section 4 : CHECK 카드 ─── */
+  .s4{position:relative;margin:49px 20px 0;padding-top:11px}
+  .clip{position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:82px;height:23px;background:#fff;border:2px solid #8d8d8d;border-radius:9px;z-index:2}
+  .clip::after{content:"";position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);z-index:-1;
+    width:52px;height:12px;background:#fff;border:2px solid #8d8d8d;border-radius:6px}
+  .card{background:#fff;border:1px solid #e2e2e2;border-radius:6px;
+    box-shadow:0 1px 4px rgba(0,0,0,.05);
+    padding:20px 30px 30px;text-align:center;position:relative;z-index:1}
+  .chk span{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:0.6px;color:var(--green-text);border-bottom:1.5px solid var(--green-text);padding-bottom:1px}
+  .card h2{margin-top:6px;font-size:23px;line-height:29px;white-space:nowrap;font-weight:700;color:#000;letter-spacing:-0.5px}
+  .card .body{margin-top:14px;font-size:13px;line-height:15.8px;color:#333;letter-spacing:-0.3px}
+  .card .body b{font-weight:700;color:#111}
+  .gbox{margin-top:10px;width:233px;margin-left:auto;margin-right:auto;height:23px;background:var(--green-fill);color:#fff;
+    font-size:13.5px;font-weight:700;line-height:23px;letter-spacing:-0.3px}
+  .cap3{margin-top:8px;font-size:12.5px;color:#555;letter-spacing:-0.3px}
+
+  table{margin-top:25px;width:233px;margin-left:auto;margin-right:auto;border-collapse:collapse;
+    border-top:1.5px solid #5f6663;border-bottom:1.5px solid #5f6663}
+  th,td{border-bottom:1px solid #9b9f9d;text-align:center;letter-spacing:-0.3px}
+  td:first-child,th:first-child{border-right:1px solid #777}
+  th{background:var(--thbg);height:32px;font-size:14px;font-weight:700;color:#222}
+  td{height:33px;font-size:14px;font-weight:700;color:#222}
+  td.v{font-size:15px;color:var(--green-text)}
+  tr:last-child td{border-bottom:none}
+</style>
+</head>
+<body>
+
+<section class="s1">
+  <h1><span class="dots"><i style="left:118px"></i><i style="left:143px"></i><i style="left:167px"></i><i style="left:190px"></i></span><span class="g">어떤 공간</span>에도<br>어울리는 디자인</h1>
+  <div class="strip">
+    <img class="side" src="gen_left.png" alt="">
+    <img class="main" src="gen_center.png" alt="">
+    <img class="side" src="gen_right.png" alt="">
+  </div>
+  <div class="pill">침실</div>
+  <p class="cap1">밤새 조용하게</p>
+  <p class="cap2">수면을 지켜주는 습도</p>
+</section>
+
+<section class="s2">
+  <span class="tag">POINT 1</span>
+  <h2>하루 한 번 급수로<br><span class="g">30시간 지속 가습</span></h2>
+  <p><b>4L의 넉넉한 용량</b>으로 자주 물을 보충하지 않아도<br>하루 종일 <b>균일한 습도</b>를 유지합니다.</p>
+</section>
+
+<section class="s3">
+  <img src="gen_humid.png" alt="">
+  <div class="bar">
+    <div><span class="g">최소</span> 가습</div>
+    <div><span class="g">최대</span> 가습</div>
+  </div>
+</section>
+
+<section class="s4">
+  <div class="clip"></div>
+  <div class="card">
+    <div class="chk"><span>CHECK</span></div>
+    <h2>건조한 환경 위험<br>적정습도 유지 중요한 이유?</h2>
+    <p class="body">건조한 환경은 <b>피부 자극</b><br><b>호흡기 질환·먼지 비산</b>을 유발합니다.<br>반면 습도가 높으면 <b>곰팡이 번식 위험</b>이 커지죠</p>
+    <div class="gbox">건강한 실내 습도의 기준은 40~60%</div>
+    <p class="cap3">아우라홈 가습기와 함께 적정 습도를 유지하세요.</p>
+    <table>
+      <tr><th>계절</th><th>적정 습도</th></tr>
+      <tr><td>봄, 가을</td><td class="v">50%</td></tr>
+      <tr><td>여름</td><td class="v">80%</td></tr>
+      <tr><td>겨울</td><td class="v">40%</td></tr>
+    </table>
+  </div>
+</section>
+
+</body>
+</html>

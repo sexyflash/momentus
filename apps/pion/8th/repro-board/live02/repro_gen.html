@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { background:#fff; }
+  body { font-family:'Pretendard',sans-serif; }
+  .page { width:736px; margin:0 auto; }
+  section { position:relative; overflow:hidden; }
+  img.ph { position:absolute; display:block; }
+
+  /* ============ SECTION 1 : HERO ============ */
+  .hero { height:239px; background:url('gen_photo01_hero.png') 0 0 no-repeat; }
+  .hero .deco { position:absolute; top:78px; left:120px; width:497px; height:1px;
+                background:rgba(255,255,255,0.35); }
+  .hero .title { position:absolute; top:95px; left:0; width:736px; text-align:center;
+                 font-size:40px; line-height:1.1; letter-spacing:-1px; }
+  .hero .title .lt { font-weight:300; color:#e6d8c9; }
+  .hero .title .gold { font-weight:700; color:#f5e3b7; }
+  .hero .title .wh { font-weight:700; color:#ffffff; }
+  .hero .sub { position:absolute; top:151px; left:0; width:736px; text-align:center;
+               font-size:12px; letter-spacing:3px; color:#665a4e; font-weight:500; }
+  .hero .sub .pct { color:#9c2a24; font-weight:800; }
+
+  /* ============ common series bits ============ */
+  .stitle { position:absolute; font-family:Georgia,'Times New Roman',serif;
+            font-size:24px; letter-spacing:1.2px; line-height:1; white-space:nowrap; }
+  .stitle .series { font-size:19px; letter-spacing:1px; color:#9d907c; }
+  .sbody { position:absolute; font-size:12px; color:#6f675d; letter-spacing:-0.2px;
+           white-space:nowrap; }
+  .sbody .big { font-size:17px; font-weight:500; }
+  .wm { position:absolute; font-family:Georgia,serif; white-space:nowrap;
+        transform-origin:0 0; line-height:1; }
+
+  /* ============ SECTION 2 : AUTUMN ============ */
+  .autumn { height:309px; background:#faeee0; }
+  .autumn img.ph { left:270px; top:0; }
+  .autumn .blend { position:absolute; left:270px; top:0; width:150px; height:100%;
+                   background:linear-gradient(to right,#faeee0,rgba(250,238,224,0)); }
+  .autumn .stitle { left:57px; top:107px; color:#584134; }
+  .autumn .sbody { left:57px; top:151px; line-height:20px; font-size:10.5px; letter-spacing:-0.5px; }
+  .autumn .sbody .big { color:#71624f; font-size:15px; }
+  /* watermark: reads top->bottom, cut at left edge */
+  .autumn .wm { font-size:64px; letter-spacing:5px; color:#f6e5d3;
+                left:28px; top:11px; transform:rotate(90deg); }
+
+  /* ============ SECTION 3 : SPRING ============ */
+  .spring { height:301px; background:#f8f3ef; }
+  .spring img.ph { left:0; top:0; }
+  .spring .blend { position:absolute; left:320px; top:0; width:150px; height:100%;
+                   background:linear-gradient(to left,#f8f3ef,rgba(248,243,239,0)); }
+  .spring .stitle { left:377px; top:79px; color:#c07a55; font-size:26px; letter-spacing:2.4px; }
+  .spring .sbody { left:359px; top:113px; line-height:24px; }
+  .spring .sbody .big { color:#bf7448; }
+  /* watermark: reads bottom->top, cut at right edge */
+  .spring .wm { font-size:38px; letter-spacing:2px; color:#f3e2d7;
+                left:703px; top:176px; transform:rotate(-90deg); }
+
+  /* ============ SECTION 4 : CARPENTERS ============ */
+  .carp { height:309px; background:#fbf8ef; }
+  .carp img.ph { left:290px; top:0; }
+  .carp .blend { position:absolute; left:290px; top:0; width:160px; height:100%;
+                 background:linear-gradient(to right,#fbf8ef,rgba(251,248,239,0)); }
+  .carp .stitle { left:57px; top:108px; color:#8a6f40; }
+  .carp .sbody { left:57px; top:150px; line-height:25px; }
+  .carp .sbody .big { color:#a08b58; }
+  .carp .wm { font-size:40px; letter-spacing:1.5px; color:#f3ecda;
+              left:28px; top:0; transform:rotate(90deg); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- SEC1 HERO -->
+  <section class="hero">
+    <div class="deco"></div>
+    <div class="title"><span class="lt">우리가 </span><span class="gold">원목</span><span class="lt">을 </span><span class="wh">사랑하는 이유</span></div>
+    <div class="sub">좋은 나무의 질감과 냄새는 말하지 않아도 알아요 <span class="pct">68%~</span></div>
+  </section>
+
+  <!-- SEC2 AUTUMN -->
+  <section class="autumn">
+    <img class="ph" src="gen_photo02_desk.png" width="466" height="309" alt="">
+    <div class="blend"></div>
+    <div class="wm">AUTUMN</div>
+    <div class="stitle">AUTUMN MOOD <span class="series">series</span></div>
+    <div class="sbody">
+      <span class="big">가</span>을, 그리고 겨울의 감성을 그대로 느낄 수 있는 투박한 듯<br>
+      멋스러운 디자인과 진한 브라운 컬러를 지니고 있는<br>
+      어텀우드 시리즈로 분위기 전환 어떠세요?
+    </div>
+  </section>
+
+  <!-- SEC3 SPRING -->
+  <section class="spring">
+    <img class="ph" src="gen_photo03_bedroom.png" width="470" height="301" alt="">
+    <div class="blend"></div>
+    <div class="wm">SPRING</div>
+    <div class="stitle">SPRING MOOD <span class="series">series</span></div>
+    <div class="sbody">
+      <span class="big">따</span>뜻한 햇살이 스며든 듯한 북유럽 스타일의 에쉬우드 가구로,<br>
+      나무의 질감을 그대로 느낄 수 있는 내추럴한 디자인으로<br>
+      집안 곳곳을 화사하게 연출해보세요!
+    </div>
+  </section>
+
+  <!-- SEC4 CARPENTERS -->
+  <section class="carp">
+    <img class="ph" src="gen_photo04_kitchen.png" width="446" height="309" alt="">
+    <div class="blend"></div>
+    <div class="wm">CARPENTERS</div>
+    <div class="stitle">CARPENTERS <span class="series">series</span></div>
+    <div class="sbody">
+      <span class="big">실</span>용성을 적용한 감각적인 디자인과 숙련된 목수들의<br>
+      장인 정신으로 정성껏 제작한 에쉬우드 가구입니다.<br>
+      다양한 품목과 디자인으로 인테리어 감각을 업그레이드하세요!
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { background:#fff; }
+  body { width:134px; font-family:'Pretendard',sans-serif; color:#111; }
+  .strip { position:relative; width:134px; height:846px; background:#fff; overflow:hidden; }
+  .abs { position:absolute; }
+
+  /* ── S1 header ─ THE y31-45 / WINDSOR y50-64 / CHAIR y67-82 ── */
+  .hd { left:0; width:134px; text-align:center; font-weight:700; }
+  .hd-the    { top:31px;  font-size:19px; line-height:16px; letter-spacing:1.5px; }
+  .hd-windsor{ top:48px;  font-family:'Playfair Display',serif; font-weight:600;
+               font-size:19px; line-height:17px; letter-spacing:.7px; }
+  .hd-chair  { top:65px;  font-size:20px; line-height:18px; letter-spacing:1px; }
+  .hd-chair sup { font-size:7px; font-weight:500; letter-spacing:0; vertical-align:6px; margin-left:2px; }
+
+  /* ── S2 photo + caption ── */
+  .photo1 { left:5px; top:97px; width:123px; height:186px; }
+  img { display:block; }
+  .cap { top:287px; font-size:5.5px; line-height:5px; letter-spacing:.1px; color:#222; }
+  .cap-l { left:6px;  font-weight:700; }
+  .cap-r { left:54px; font-weight:500; }
+
+  /* ── S3 01 + body ── */
+  .num01 { left:6px; top:338px; font-size:36px; line-height:32px; font-weight:700; letter-spacing:-1px; }
+  .body  { left:54px; top:337px; width:74px; font-size:7.5px; line-height:9.4px;
+           font-weight:600; letter-spacing:.2px; }
+  .body span { display:block; text-align:justify; text-align-last:justify; text-justify:inter-character; }
+  .body span.last { text-align-last:left; }
+
+  /* ── S4 diagonal + 3 materials ── */
+  .diag { left:54px; top:494px; width:25px; height:24px; }
+  .diag line { stroke:#111; stroke-width:2; }
+  .mats { left:6px; top:533px; font-size:21px; line-height:20px; font-weight:700; letter-spacing:-.3px; }
+
+  /* ── S5 offset photo ── */
+  .photo2 { left:53px; top:590px; width:64px; height:96px; }
+
+  /* ── S6 gallery ── */
+  .glab { left:6px; top:696px; font-size:10px; line-height:9px; font-weight:600; letter-spacing:0; }
+  .grule { left:6px; top:706px; width:122px; border-top:1px solid #e3e3e3; }
+  .photo3 { left:5px; top:716px; width:124px; height:115px; }
+</style>
+</head>
+<body>
+<div class="strip">
+  <div class="abs hd hd-the">THE</div>
+  <div class="abs hd hd-windsor">WINDSOR</div>
+  <div class="abs hd hd-chair">CHAIR<sup>&reg;</sup></div>
+
+  <img class="abs photo1" src="gen_photo1.png" alt="">
+  <div class="abs cap cap-l">THIS<br>VARIANT:</div>
+  <div class="abs cap cap-r">FSC&trade;-certified oak<br>smoked oil</div>
+
+  <div class="abs num01">01</div>
+  <div class="abs body"><span>The Windsor Chair</span><span>was designed in</span><span>1938 by the Danish</span><span>architect and cabi&#8209;</span><span>netmaker Frits</span><span>Henningsen. In con&#8209;</span><span>tinuous production</span><span>at Carl Hansen &amp;</span><span>S&oslash;n until 2003, the</span><span>majestic chair is</span><span>now reissued with</span><span>modern comfort in</span><span class="last">mind.</span></div>
+
+  <svg class="abs diag" viewBox="0 0 25 24"><line x1="1" y1="23" x2="24" y2="1"/></svg>
+  <div class="abs mats">3 materials<br>&amp;colors</div>
+
+  <img class="abs photo2" src="gen_photo2.png" alt="">
+
+  <div class="abs glab">Gallery</div>
+  <div class="abs grule"></div>
+  <img class="abs photo3" src="gen_photo3.png" alt="">
+</div>
+</body>
+</html>

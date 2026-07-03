@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  @font-face {
+    font-family:'Playfair Display'; font-weight:400; font-style:normal;
+    src:url('fonts/PlayfairDisplay.woff2') format('woff2');
+  }
+  @font-face {
+    font-family:'Great Vibes'; font-weight:400; font-style:normal;
+    src:url('fonts/GreatVibes.woff2') format('woff2');
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { background:#e7e4dd; }
+  .page {
+    position:relative; width:816px; height:1280px;
+    background:#e7e4dd; overflow:hidden;
+    font-family:Pretendard, sans-serif;
+  }
+  .photo { display:block; width:816px; height:411px; }
+
+  /* ── typo hero ── */
+  .script {
+    position:absolute; left:84px; top:497px;
+    font-family:'Great Vibes', cursive; font-size:80px; line-height:1;
+    color:#e0c9a2; transform:rotate(-8deg); transform-origin:left center;
+    white-space:nowrap;
+  }
+  .brand {
+    position:absolute; left:0; width:816px; top:490px;
+    font-family:'Playfair Display', serif; font-weight:400;
+    font-size:66.6px; line-height:1; letter-spacing:4.38px;
+    color:#131313; text-align:center; text-indent:4.38px;
+    white-space:nowrap;
+  }
+
+  /* ── message ── */
+  .msg {
+    position:absolute; left:0; width:816px; top:601px;
+    font-size:18.6px; line-height:32px; letter-spacing:-0.2px;
+    color:#222; text-align:center; font-weight:400;
+  }
+
+  /* ── dashed dividers ── */
+  .vline {
+    position:absolute; left:406px; top:746px; width:1px; height:458px;
+    background:repeating-linear-gradient(180deg,#c1beb7 0 4px,transparent 4px 7px);
+  }
+  .hline {
+    position:absolute; left:203px; top:969px; width:430px; height:1px;
+    background:repeating-linear-gradient(90deg,#c1beb7 0 4px,transparent 4px 7px);
+  }
+
+  /* ── grid cells ── */
+  .icon { position:absolute; }
+  .cell-title {
+    position:absolute; width:300px; text-align:center;
+    font-size:21.5px; font-weight:700; line-height:1; letter-spacing:-0.2px;
+    color:#111;
+  }
+  .cell-desc {
+    position:absolute; width:300px; text-align:center;
+    color:#4a4741; font-weight:400;
+  }
+  .lx { left:125px; }  /* center 275 */
+  .rx { left:373px; }  /* center 523 */
+  .d1 { font-size:15.4px; line-height:17px; }
+  .d2 { font-size:18.4px; line-height:21.5px; }
+  svg text { font-family:Pretendard, sans-serif; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <img class="photo" src="gen_photo_top.png" alt="">
+
+  <div class="brand">MEMBERSHIP</div>
+  <div class="script">uptownholic</div>
+
+  <div class="msg">등급에 따라 매월 할인쿠폰을 제공합니다!<br>다양한 혜택과 함께 즐거운 쇼핑되세요 :)</div>
+
+  <div class="vline"></div>
+  <div class="hline"></div>
+
+  <!-- ① coupon -->
+  <svg class="icon" style="left:228px;top:739px" width="94" height="94" viewBox="0 0 100 100"
+       fill="none" stroke="#131313" stroke-width="4.1" stroke-linecap="round" stroke-linejoin="round">
+    <!-- sparkle top-left -->
+    <g stroke-width="4.2">
+      <line x1="14" y1="4"  x2="14" y2="10"/><line x1="14" y1="18" x2="14" y2="24"/>
+      <line x1="4"  y1="14" x2="10" y2="14"/><line x1="18" y1="14" x2="24" y2="14"/>
+    </g>
+    <!-- sparkle bottom-right -->
+    <g stroke-width="4.2">
+      <line x1="87" y1="78" x2="87" y2="84"/><line x1="87" y1="92" x2="87" y2="98"/>
+      <line x1="77" y1="88" x2="83" y2="88"/><line x1="91" y1="88" x2="97" y2="88"/>
+    </g>
+    <!-- back ticket -->
+    <rect x="27" y="20" width="66" height="48" rx="7"/>
+    <!-- front ticket (bg fill occludes back) -->
+    <rect x="12" y="32" width="66" height="48" rx="7" fill="#e7e4dd"/>
+    <!-- perforation -->
+    <line x1="28" y1="38" x2="28" y2="68" stroke-dasharray="6 5.5"/>
+    <!-- bottom notch -->
+    <rect x="21" y="77" width="14" height="5" fill="#e7e4dd" stroke="none"/>
+    <path d="M21.5,80 A7 7 0 0 1 34.5,80" fill="#e7e4dd"/>
+    <!-- inner lines -->
+    <line x1="38" y1="43" x2="69" y2="43"/>
+    <line x1="38" y1="69" x2="69" y2="69"/>
+    <text x="53" y="64" text-anchor="middle" stroke="none" fill="#131313"
+          font-size="25" font-weight="800">%</text>
+  </svg>
+  <div class="cell-title lx" style="top:855px;font-size:17.8px">신규가입 쿠폰</div>
+  <div class="cell-desc lx d1" style="top:888px">3,000원 할인<br>5% 할인<br>첫구매 무료배송</div>
+
+  <!-- ② coins in hand -->
+  <svg class="icon" style="left:481px;top:748px" width="86" height="85" viewBox="0 0 100 99"
+       fill="none" stroke="#131313" stroke-width="4.1" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2"  y="4"  width="60" height="13" rx="6.5"/>
+    <rect x="12" y="17" width="66" height="13" rx="6.5"/>
+    <rect x="2"  y="30" width="62" height="13" rx="6.5"/>
+    <rect x="2"  y="43" width="58" height="13" rx="6.5"/>
+    <rect x="2"  y="56" width="56" height="13" rx="6.5"/>
+    <rect x="4"  y="69" width="52" height="13" rx="6.5"/>
+    <circle cx="63" cy="62" r="32" fill="#e7e4dd"/>
+    <!-- inner broken ring + dots -->
+    <path d="M45,75 A22 22 0 0 1 45,49" stroke-width="3.0"/>
+    <path d="M60,40.4 A22 22 0 0 1 84.6,66" stroke-width="3.0"/>
+    <circle cx="53" cy="42.8" r="1" stroke-width="3.2"/>
+    <circle cx="80" cy="77" r="1" stroke-width="3.2"/>
+    <text x="63" y="73" text-anchor="middle" stroke="none" fill="#131313"
+          font-size="32" font-weight="700">$</text>
+  </svg>
+  <div class="cell-title rx" style="top:854px">구매 적립금</div>
+  <div class="cell-desc rx d2" style="top:892px">구매 금액의<br>1% point 적립</div>
+
+  <!-- ③ free delivery truck -->
+  <svg class="icon" style="left:234px;top:1001px" width="84" height="71" viewBox="0 0 100 84"
+       fill="none" stroke="#131313" stroke-width="4.1" stroke-linecap="round" stroke-linejoin="round">
+    <!-- speed lines -->
+    <line x1="15" y1="5" x2="17" y2="5" stroke-width="5"/>
+    <line x1="25" y1="5" x2="45" y2="5" stroke-width="5"/>
+    <line x1="30" y1="13" x2="53" y2="13" stroke-width="5"/>
+    <!-- body -->
+    <rect x="4" y="21" width="62" height="40"/>
+    <line x1="4" y1="52" x2="66" y2="52"/>
+    <text x="35" y="45" text-anchor="middle" stroke="none" fill="#131313"
+          font-size="23" font-weight="800" letter-spacing="0.5">FREE</text>
+    <!-- cab -->
+    <path d="M66,32 H88 V61 H66"/>
+    <rect x="70" y="36" width="12" height="11"/>
+    <line x1="88" y1="50" x2="93" y2="53"/>
+    <line x1="93" y1="53" x2="93" y2="61"/>
+    <!-- wheels -->
+    <circle cx="22" cy="68" r="8" fill="#e7e4dd"/><circle cx="22" cy="68" r="2.4"/>
+    <circle cx="41" cy="68" r="8" fill="#e7e4dd"/><circle cx="41" cy="68" r="2.4"/>
+    <circle cx="80" cy="68" r="8" fill="#e7e4dd"/><circle cx="80" cy="68" r="2.4"/>
+    <!-- ground -->
+    <line x1="2" y1="80" x2="97" y2="80" stroke-width="5"/>
+  </svg>
+  <div class="cell-title lx" style="top:1108px">무료배송</div>
+  <div class="cell-desc lx d2" style="top:1146px">70,000원 이상<br>무료배송</div>
+
+  <!-- ④ gift box -->
+  <svg class="icon" style="left:486px;top:1004px" width="76" height="76" viewBox="0 0 100 100"
+       fill="none" stroke="#131313" stroke-width="5.8" stroke-linecap="round" stroke-linejoin="round">
+    <!-- bow -->
+    <path d="M50,29 C41,5 24,7 27,18 C29,26 42,30 50,29"/>
+    <path d="M50,29 C59,5 76,7 73,18 C71,26 58,30 50,29"/>
+    <!-- lid -->
+    <rect x="8" y="29" width="84" height="17"/>
+    <!-- box -->
+    <rect x="16" y="46" width="68" height="47"/>
+    <!-- ribbon -->
+    <line x1="44" y1="29" x2="44" y2="93"/>
+    <line x1="56" y1="29" x2="56" y2="93"/>
+  </svg>
+  <div class="cell-title rx" style="top:1128px">리뷰혜택</div>
+  <div class="cell-desc rx d2" style="top:1168px">1,500p 지급</div>
+
+</div>
+</body>
+</html>

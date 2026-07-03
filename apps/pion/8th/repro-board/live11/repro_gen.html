@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@144,900&family=Inter:wght@400&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:280px; }
+  body {
+    font-family: Inter, Pretendard, Arial, sans-serif;
+    background:#f0ede6;
+    color:#45423c;
+    -webkit-font-smoothing: antialiased;
+  }
+  .card { width:280px; position:relative; padding-bottom:27px; }
+
+  /* nav: text ink rows 11-19, hairline y33 full-bleed */
+  nav {
+    display:flex; gap:14px;
+    padding:10px 0 0 13px;
+    font-size:10.5px; line-height:11px;
+    letter-spacing:0.1px;
+    color:#4a473f;
+  }
+  .navline { border:0; border-top:1px solid #c9c5bb; margin-top:13px; }
+
+  /* "sofa": top at y66 (nav line y34 + 32), ascender 34px, x-height 25px, width 83px */
+  h1 {
+    font-family:'Fraunces', serif;
+    font-weight:900;
+    color:#0b0a08;
+    padding-left:13px;
+  }
+  h1.sofa {
+    font-size:50px; line-height:50px;
+    letter-spacing:-1.5px;
+    margin-top:27px;
+  }
+  /* body: 4 lines, tops 115/125/135/146 -> lh 10.3, ink ~8 -> fs 9.3 */
+  .lead {
+    font-size:9.8px; line-height:10.4px;
+    letter-spacing:0.02px;
+    white-space:nowrap;
+    margin:5px 0 0 13px;
+    color:#45423c;
+  }
+
+  /* hero photo: crop starts x55 y155(abs col), right edge flush */
+  .hero { display:block; margin-top:0; margin-left:55px; width:225px; height:157px; }
+
+  /* pills: y373-466; photo bottom 312 -> gap 61; pill 253x27 r14, gap 6 */
+  .pills { margin:57px 0 0 13px; display:flex; flex-direction:column; gap:6px; }
+  .pill {
+    width:253px; height:27px;
+    border:1px solid #aaa79e;
+    border-radius:14px;
+    display:flex; align-items:center;
+    padding-left:17px;
+    font-size:10.5px;
+    color:#4a473f;
+    background:transparent;
+  }
+
+  /* "furniture": top y507 (pill3 bottom 466 + 41), ink height 31, width 162 */
+  h1.furniture {
+    font-size:42px; line-height:42px;
+    letter-spacing:-1.2px;
+    margin-top:41px;
+  }
+
+  /* collage: A top y554 = furniture ink bottom 537 + 17. absolute grid */
+  .collage { position:relative; margin-top:5px; height:419px; }
+  .collage img { position:absolute; display:block; }
+  .img-a { left:13px; top:0;    width:254px; height:136px; }
+  .img-b { left:13px; top:140px; width:127px; height:136px; }
+  .img-c { left:13px; top:338px; width:127px; height:78px; }
+  .img-d { left:143px; top:280px; width:124px; height:139px; }
+  .cap {
+    position:absolute;
+    font-size:7.6px; line-height:10.5px;
+    letter-spacing:-0.3px;
+    color:#55524a;
+    white-space:nowrap;
+  }
+  .cap-1 { left:143px; top:139px; }  /* y694 abs */
+  .cap-3 { left:143px; top:260px; }  /* y816 abs */
+  .cap-2 { left:13px;  top:281px; }  /* y837 abs */
+  .cap-4 { left:13px;  top:316px; }  /* y872 abs */
+
+  /* catalog pill: y991 = collage bottom 973 + 18 */
+  .catalog { margin-top:18px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <nav>
+    <span>Каталог</span><span>О компании</span><span>Магазины</span><span>Контакты</span>
+  </nav>
+  <hr class="navline">
+
+  <h1 class="sofa">sofa</h1>
+  <p class="lead">Мы рады приветствовать Вас в магазине sofa,<br>где Вы можете ознакомиться с ассортиментом<br>и найти все, что Вам нужно для создания уюта<br>и комфорта дома.</p>
+
+  <img class="hero" src="gen_hero.png" alt="">
+
+  <div class="pills">
+    <div class="pill">Диваны</div>
+    <div class="pill">Кресла</div>
+    <div class="pill">Стулья</div>
+  </div>
+
+  <h1 class="furniture">furniture</h1>
+
+  <div class="collage">
+    <img class="img-a" src="gen_a.png" alt="">
+    <img class="img-b" src="gen_b.png" alt="">
+    <img class="img-c" src="gen_c.png" alt="">
+    <img class="img-d" src="gen_d.png" alt="">
+    <div class="cap cap-1">Диван с мягкой обивкой Devale,<br>коллекция SCANDINAVIAN, 52200₽</div>
+    <div class="cap cap-3">Стул из бука с мягким сиденьем Air,<br>коллекция MINIMALIST, 22500₽</div>
+    <div class="cap cap-2">Мягкое кресло Desi, коллекция<br>SCANDINAVIAN, 43600₽</div>
+    <div class="cap cap-4">Льняное кресло Asteria Oakwood,<br>коллекция SCANDINAVIAN, 42400₽</div>
+  </div>
+
+  <div class="pills catalog">
+    <div class="pill">Каталог</div>
+  </div>
+</div>
+</body>
+</html>

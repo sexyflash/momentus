@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@1,400&display=swap">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { width:1000px; background:#fff; font-family:Pretendard, sans-serif; }
+.page { position:relative; width:1000px; }
+
+/* ============ SECTION 1 : HERO ============ */
+.hero { position:relative; width:1000px; height:949px; }
+.hero img.bg { display:block; width:1000px; height:949px; }
+.panel {
+  position:absolute; left:293px; top:111px; width:413px; height:464px;
+  background:linear-gradient(180deg, #F7F6F4 0%, #F5F4F1 62%, #EFECE5 100%);
+  box-shadow:0 10px 24px rgba(120,110,95,.10);
+}
+.panel .copy {
+  position:absolute; top:99px; left:0; width:100%;
+  text-align:center; font-size:15px; font-weight:400; color:#8C857D;
+  letter-spacing:8.5px; text-indent:8.5px; line-height:1;
+}
+.panel .typo {
+  position:absolute; top:119px; left:0; width:100%;
+  font-size:64px; font-weight:300; color:#443F3A;
+  letter-spacing:10.5px; text-indent:10.5px; line-height:99px;
+  text-align:center;
+}
+.panel .typo .row2 {
+  display:flex; align-items:center; justify-content:center; height:99px;
+  text-indent:0; letter-spacing:0;
+}
+.panel .typo .row2 svg { width:65px; height:60px; margin:6px 37px 0 38px; }
+
+/* ============ SECTION 2 : YELLOW BAND ============ */
+.band {
+  position:relative; width:1000px; height:799px;
+  background:
+    radial-gradient(90% 55% at 50% 72%, rgba(255,255,255,.28) 0%, rgba(255,255,255,0) 70%),
+    #F9EBA7;
+}
+/* stamp badge */
+.stamp { position:absolute; left:414px; top:124px; width:180px; height:180px; }
+.stamp svg { display:block; }
+/* heads */
+.redhead {
+  position:absolute; top:296px; left:0; width:100%; text-align:center;
+  font-size:24px; font-weight:700; color:#C4694A; letter-spacing:-0.3px;
+}
+.bighead {
+  position:absolute; top:366px; left:0; width:100%; text-align:center;
+  font-size:66px; font-weight:300; color:#4E4735; letter-spacing:-2.8px;
+  line-height:1; white-space:nowrap;
+}
+.bighead b { font-weight:700; color:#443D28; }
+.subhead {
+  position:absolute; top:450px; left:0; width:100%; text-align:center;
+  font-size:25px; font-weight:400; color:#5B5443; letter-spacing:-0.4px;
+}
+/* steps */
+.steps { position:absolute; left:0; top:0; width:100%; height:100%; }
+.circle {
+  position:absolute; top:569px; width:148px; height:148px; border-radius:50%;
+  background:#fff; display:flex; align-items:center; justify-content:center;
+}
+.circle.ringed { box-shadow:0 0 0 4px #FFAF8A; }
+.circle svg { width:100px; height:88px; }
+.c1 { left:113px; } .c2 { left:319px; } .c3 { left:525px; } .c4 { left:733px; }
+.only {
+  position:absolute; font-family:'Great Vibes', cursive; font-size:34px;
+  color:#EE8A5F; transform:rotate(-22deg); line-height:1;
+}
+.only.o2 { left:312px; top:527px; }
+.only.o4 { left:726px; top:527px; }
+.chev { position:absolute; top:619px; width:26px; height:50px; }
+.chev svg { display:block; }
+.v1 { left:277px; } .v2 { left:483px; } .v3 { left:689px; }
+.pill {
+  position:absolute; top:706px; width:114px; height:29px; border-radius:15px;
+  background:#44433E; color:#fff; font-size:14px; font-weight:600;
+  letter-spacing:1.5px; text-align:center; line-height:29px;
+}
+.p1 { left:130px; } .p2 { left:336px; } .p3 { left:542px; } .p4 { left:749px; }
+.desc {
+  position:absolute; top:751px; width:220px; text-align:center;
+  font-size:20px; font-weight:500; color:#4A4335; line-height:25px;
+  letter-spacing:-0.3px;
+}
+.d1 { left:77px; } .d2 { left:283px; top:761px; } .d3 { left:489px; } .d4 { left:696px; font-size:19px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- SECTION 1 : hero -->
+  <div class="hero">
+    <img class="bg" src="gen_photo_hero.png" alt="">
+    <div class="panel">
+      <div class="copy">레이디키친 첫 론칭 이벤트</div>
+      <div class="typo">
+        <div>슬기로운</div>
+        <div class="row2"><span>주</span>
+        <!-- hanging kitchen utensils : drawn stroke SVG -->
+        <svg viewBox="0 0 65 60" fill="none" stroke="#8C7F6E" stroke-width="2.6"
+             stroke-linecap="round" stroke-linejoin="round">
+          <line x1="2" y1="6" x2="63" y2="6"/>
+          <!-- whisk -->
+          <circle cx="13" cy="10.5" r="2.2"/>
+          <line x1="13" y1="13" x2="13" y2="23"/>
+          <path d="M13,23 C5.5,29 5.5,42 13,47 C20.5,42 20.5,29 13,23"/>
+          <path d="M13,23 C9.7,29 9.7,42 13,47" stroke-width="1.8"/>
+          <path d="M13,23 C16.3,29 16.3,42 13,47" stroke-width="1.8"/>
+          <!-- slotted turner -->
+          <circle cx="32.5" cy="10.5" r="2.2"/>
+          <line x1="32.5" y1="13" x2="32.5" y2="26"/>
+          <rect x="25.5" y="26" width="14" height="19" rx="4.5"/>
+          <line x1="30" y1="31" x2="30" y2="40" stroke-width="1.8"/>
+          <line x1="35" y1="31" x2="35" y2="40" stroke-width="1.8"/>
+          <!-- utensil crock -->
+          <circle cx="52" cy="10.5" r="2.2"/>
+          <line x1="48" y1="14" x2="48" y2="21"/>
+          <line x1="52" y1="13" x2="52" y2="21"/>
+          <line x1="56" y1="15" x2="56" y2="21"/>
+          <rect x="43.5" y="21" width="17" height="23" rx="2.5"/>
+          <line x1="43.5" y1="27" x2="60.5" y2="27" stroke-width="1.8"/>
+        </svg>
+        <span>방</span></div>
+        <div>인테리어</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 : yellow band -->
+  <div class="band">
+    <div class="stamp">
+      <svg width="180" height="180" viewBox="0 0 180 180">
+        <circle cx="90" cy="79" r="41" fill="#FEDF52"/>
+        <path id="arc" d="M 39.7 85 A 50 50 0 0 1 126.3 85" fill="none"/>
+        <text font-family="Pretendard" font-size="10" font-weight="600"
+              letter-spacing="1.8" fill="#3E3A2F">
+          <textPath href="#arc" startOffset="50%" text-anchor="middle">&#183; LADY KITCHEN &#183;</textPath>
+        </text>
+        <path d="M 80 71 Q 89 66 97 57 C 96 79 88 106 72 130"
+              fill="none" stroke="#3A372E" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <div class="redhead">오직 레이디키친만의 원스탑 클린 케어</div>
+    <div class="bighead">철거부터 청소까지 <b>한번에</b></div>
+    <div class="subhead">레이디키친 전문 시공팀이 처음부터 끝까지 모두 책임집니다.</div>
+
+    <div class="steps">
+      <!-- STEP1 : measuring tape -->
+      <div class="circle c1">
+        <svg viewBox="0 0 100 88" fill="none" stroke="#26241F" stroke-width="4"
+             stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="38" cy="38" r="26" fill="#fff"/>
+          <ellipse cx="38" cy="31" rx="13" ry="9" fill="#FFD54F"/>
+          <path d="M60,50 H88 A4 4 0 0 1 92,54 V66 A4 4 0 0 1 88,70 H38" fill="#fff"/>
+          <line x1="56" y1="62" x2="56" y2="70" stroke-width="2.6"/>
+          <line x1="65" y1="62" x2="65" y2="70" stroke-width="2.6"/>
+          <line x1="74" y1="62" x2="74" y2="70" stroke-width="2.6"/>
+          <line x1="83" y1="62" x2="83" y2="70" stroke-width="2.6"/>
+        </svg>
+      </div>
+      <!-- STEP2 : worker carrying plank, brick wall -->
+      <div class="circle c2 ringed">
+        <svg viewBox="0 0 100 88" fill="none" stroke="#26241F" stroke-width="3.4"
+             stroke-linecap="round" stroke-linejoin="round">
+          <!-- brick patch -->
+          <g stroke-width="2.4">
+            <rect x="3" y="50" width="15" height="9" fill="#fff"/>
+            <rect x="3" y="59" width="21" height="9" fill="#fff"/>
+            <rect x="3" y="68" width="13" height="9" fill="#fff"/>
+          </g>
+          <!-- plank -->
+          <path d="M18,34 L82,10 L85.5,17.5 L21.5,41.5 Z" fill="#FBE9DC"/>
+          <!-- head + hard hat -->
+          <circle cx="52" cy="33" r="7" fill="#fff"/>
+          <path d="M44,31 A8.5 8 0 0 1 60,29.5 Z" fill="#FFD54F"/>
+          <!-- arms gripping plank -->
+          <path d="M51,42 L36,33"/>
+          <path d="M53,42 L68,23"/>
+          <!-- torso + legs -->
+          <path d="M52,41 L51,58"/>
+          <path d="M51,58 L42,76 L46,77"/>
+          <path d="M51,58 L60,73 L64,72"/>
+        </svg>
+      </div>
+      <!-- STEP3 : covered kitchen / protection sheets -->
+      <div class="circle c3">
+        <svg viewBox="0 0 100 88" fill="none" stroke="#26241F" stroke-width="3.2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <rect x="8" y="12" width="84" height="64" fill="#fff"/>
+          <rect x="8" y="12" width="84" height="9" fill="#FFD54F"/>
+          <rect x="8" y="67" width="84" height="9" fill="#FFD54F"/>
+          <line x1="8" y1="42" x2="92" y2="42"/>
+          <line x1="36" y1="21" x2="36" y2="42" stroke-width="2.4"/>
+          <line x1="64" y1="21" x2="64" y2="42" stroke-width="2.4"/>
+          <g stroke-width="2.4">
+            <rect x="13" y="47" width="13" height="15" fill="#BFDCE0"/>
+            <rect x="30" y="47" width="13" height="15" fill="#BFDCE0"/>
+            <rect x="47" y="47" width="13" height="15" fill="#BFDCE0"/>
+            <line x1="66" y1="49" x2="87" y2="49"/>
+            <line x1="66" y1="54" x2="87" y2="54"/>
+            <line x1="66" y1="59" x2="87" y2="59"/>
+          </g>
+        </svg>
+      </div>
+      <!-- STEP4 : vacuum cleaner -->
+      <div class="circle c4 ringed">
+        <svg viewBox="0 0 100 88" fill="none" stroke="#26241F" stroke-width="3.4"
+             stroke-linecap="round" stroke-linejoin="round">
+          <!-- hose -->
+          <path d="M64,40 C64,14 88,14 88,34 C88,46 84,52 79,57" stroke="#9FC3CB" stroke-width="7"/>
+          <path d="M64,40 C64,14 88,14 88,34 C88,46 84,52 79,57" stroke-width="1.6"/>
+          <rect x="70" y="56" width="16" height="8" rx="2.5" fill="#fff" stroke-width="2.6"/>
+          <!-- upright piece -->
+          <rect x="8" y="48" width="11" height="22" rx="4.5" fill="#fff" stroke-width="2.6"/>
+          <!-- body -->
+          <path d="M26,70 V46 A21 21 0 0 1 68,46 V70 Z" fill="#FBE9DC"/>
+          <circle cx="47" cy="40" r="6.5" fill="#fff" stroke-width="2.6"/>
+          <line x1="47" y1="40" x2="47" y2="36" stroke-width="2.2"/>
+          <line x1="47" y1="40" x2="50" y2="42" stroke-width="2.2"/>
+          <g stroke-width="2.2">
+            <line x1="42" y1="52" x2="53" y2="52"/>
+            <line x1="42" y1="57" x2="53" y2="57"/>
+            <line x1="42" y1="62" x2="53" y2="62"/>
+          </g>
+          <rect x="22" y="70" width="50" height="7" rx="3.5" fill="#fff" stroke-width="2.6"/>
+        </svg>
+      </div>
+      <div class="only o2">only</div>
+      <div class="only o4">only</div>
+      <div class="chev v1"><svg width="26" height="50" viewBox="0 0 26 50"><polyline points="4,4 22,25 4,46" fill="none" stroke="#F5BA90" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="chev v2"><svg width="26" height="50" viewBox="0 0 26 50"><polyline points="4,4 22,25 4,46" fill="none" stroke="#F5BA90" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="chev v3"><svg width="26" height="50" viewBox="0 0 26 50"><polyline points="4,4 22,25 4,46" fill="none" stroke="#F5BA90" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="pill p1">STEP 01</div>
+      <div class="pill p2">STEP 02</div>
+      <div class="pill p3">STEP 03</div>
+      <div class="pill p4">STEP 04</div>
+      <div class="desc d1">방문 실측,<br>맞춤 주문제작</div>
+      <div class="desc d2">무료 철거</div>
+      <div class="desc d3">보양 작업<br>및 시공</div>
+      <div class="desc d4">레이디키친 x 한스클린<br>무료 주방 청소 서비스</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
