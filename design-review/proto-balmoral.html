@@ -24,13 +24,13 @@
   @media(max-width:860px){.g12{grid-template-columns:repeat(4,1fr)}}
 
   /* ===== GNB (lambert.co.kr 구조 이식) — 좌 로고 · 우 정렬 대문자 메뉴 · 유틸 아이콘 · fixed 60px ===== */
-  header{position:fixed;inset:0 0 auto;z-index:40;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:#fff;border-bottom:1px solid var(--line)}
-  header .wm{font-size:21px;font-weight:600;letter-spacing:.03em}
-  .gnb{display:flex;align-items:center;gap:38px}
-  .mainmenu{display:flex;gap:30px;list-style:none;margin:0;padding:0;height:60px}
+  header{position:fixed;inset:0 0 auto;z-index:40;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 max(28px,calc((100% - 1300px)/2));background:#fff;border-bottom:1px solid var(--line);--gm:"Gmarket Sans","Apple SD Gothic Neo",var(--sans)}
+  header .wm{font-size:19px;font-weight:600;letter-spacing:.02em}
+  .gnb{display:flex;align-items:center;gap:30px}
+  .mainmenu{display:flex;gap:0;list-style:none;margin:0;padding:0;height:60px}
   .mainmenu>li{position:relative;display:flex;align-items:center}
-  .mainmenu>li>a{font-size:13px;letter-spacing:.07em;text-transform:uppercase;line-height:60px}
-  .mainmenu>li>a::after{content:"";position:absolute;left:0;right:0;bottom:16px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.215,.61,.355,1)}
+  .mainmenu>li>a{font-family:var(--gm);font-size:12px;letter-spacing:.05em;text-transform:uppercase;line-height:60px;padding:0 26px}
+  .mainmenu>li>a::after{content:"";position:absolute;left:26px;right:26px;bottom:19px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.215,.61,.355,1)}
   .mainmenu>li:hover>a::after{transform:scaleX(1)}
   .dd{position:absolute;top:60px;left:50%;transform:translateX(-50%) translateY(6px);background:#fff;border:1px solid var(--line);min-width:150px;padding:8px 0;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s;box-shadow:0 8px 24px rgba(0,0,0,.06)}
   .mainmenu>li:hover .dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
