@@ -24,12 +24,11 @@
   @media(max-width:860px){.g12{grid-template-columns:repeat(4,1fr)}}
 
   /* ===== GNB (lambert.co.kr 구조 이식) — 좌 로고 · 우 정렬 대문자 메뉴 · 유틸 아이콘 · fixed 60px ===== */
-  header{position:fixed;inset:0 0 auto;z-index:40;height:96px;display:flex;align-items:center;justify-content:space-between;padding:0 max(40px,calc((100% - 1640px)/2));background:#fff;border-bottom:1px solid #e6e6e6}
-  header .wm{font-size:28px;font-weight:900;font-style:italic;letter-spacing:-.03em}
-  .mainmenu{display:flex;gap:0;list-style:none;margin:0;padding:0;height:96px}
+  header{position:fixed;inset:0 0 auto;z-index:40;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 max(20px,calc((100% - 1170px)/2));background:#fff}
+  header .wm{font-size:22px;font-weight:800;letter-spacing:-.01em}
+  .mainmenu{display:flex;gap:0;list-style:none;margin:0;padding:0;height:60px}
   .mainmenu>li{position:relative;display:flex;align-items:center}
-  .mainmenu>li>a{font-size:17px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;line-height:96px;padding:0 30px;color:#141414}
-  .mainmenu>li:last-child>a{padding-right:0}
+  .mainmenu>li>a{font-family:"Gmarket Sans","Apple SD Gothic Neo",var(--sans);font-size:12px;font-weight:400;letter-spacing:.6px;text-transform:uppercase;line-height:60px;padding:0 26px;color:#000}
   .mainmenu>li>a:hover{opacity:.5}
   .mainmenu>li>a::after{display:none}
   .mainmenu>li:hover>a::after{transform:scaleX(1)}
@@ -46,10 +45,10 @@
   .mdrawer.open{display:block}
   .mdrawer a{display:block;padding:13px 24px;font-size:14px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line)}
   .mdrawer a.sub{padding-left:44px;text-transform:none;letter-spacing:0;color:var(--gray);font-size:13px}
-  @media(max-width:860px){.mainmenu{display:none}.ham{display:block}header{height:70px;padding:0 20px}header .wm{font-size:22px}.mdrawer{inset:70px 0 auto}}
+  @media(max-width:860px){.mainmenu{display:none}.ham{display:block}header{height:56px;padding:0 18px}header .wm{font-size:20px}.mdrawer{inset:56px 0 auto}}
   .pg{display:none}.pg.on{display:block}
-  main{padding-top:96px}
-  @media(max-width:860px){main{padding-top:70px}}
+  main{padding-top:60px}
+  @media(max-width:860px){main{padding-top:56px}}
 
   /* ===== hero 100lvh ===== */
   .hero{position:relative;height:100lvh;min-height:540px}
@@ -109,7 +108,7 @@
   .banner img{position:absolute;inset:0}
   .banner::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.22)}
   .banner h1{position:absolute;z-index:2;left:var(--gut);bottom:18px;color:#fff;font-size:clamp(20px,3vw,40px)}
-  .fbar{position:sticky;top:96px;z-index:30;background:var(--paper);display:flex;justify-content:space-between;align-items:center;padding:12px var(--gut) 14px;border-bottom:1px solid var(--line);font-size:12px}
+  .fbar{position:sticky;top:60px;z-index:30;background:var(--paper);display:flex;justify-content:space-between;align-items:center;padding:12px var(--gut) 14px;border-bottom:1px solid var(--line);font-size:12px}
   .fbar .fs{display:flex;gap:16px}
   .fbar .fs button{background:none;border:none;font:inherit;cursor:pointer;color:var(--gray);padding:0}
   .fbar .fs button.on{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
@@ -124,7 +123,7 @@
   .pdpb{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gut);padding:0 var(--gut)}
   .pdpb .gal{grid-column:1/span 7;display:flex;flex-direction:column;gap:var(--gut);margin-left:calc(var(--gut) * -1)}
   .pdpb .gal .w{aspect-ratio:4/5;overflow:hidden}
-  .pdpb .buy{grid-column:9/span 4;position:sticky;top:108px;align-self:start;min-height:calc(100vh - 108px);padding-top:22px}
+  .pdpb .buy{grid-column:9/span 4;position:sticky;top:72px;align-self:start;min-height:calc(100vh - 72px);padding-top:22px}
   @media(max-width:860px){.pdpb .gal,.pdpb .buy{grid-column:1/-1;position:static;margin-left:0;min-height:0}}
   .buy h1{font-size:24px}
   .buy .pline{font-size:14px;color:var(--gray);margin-top:8px}
@@ -183,7 +182,7 @@
 <header>
   <a class="wm" href="#home" data-nav>MOMENTUS</a>
   <ul class="mainmenu">
-    <li><a href="#shop" data-nav>Tools</a></li>
+    <li><a href="#shop" data-nav>Products</a></li>
     <li><a href="#press" data-nav>Journal</a></li>
     <li><a href="#about" data-nav>About</a></li>
     <li><a href="mailto:hello@the-moment.us">Contact</a></li>
@@ -191,7 +190,7 @@
   <button class="ham" id="ham" aria-label="메뉴">≡</button>
 </header>
 <div class="mdrawer" id="mdrawer">
-  <a href="#shop" data-nav>Tools</a>
+  <a href="#shop" data-nav>Products</a>
   <a href="#press" data-nav>Journal</a>
   <a href="#about" data-nav>About</a>
   <a href="mailto:hello@the-moment.us">Contact</a>
