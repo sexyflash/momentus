@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>MOMENTUS — 시안 1 · BALMORAL 결</title>
+<style>
+  /* ===== tokens (Balmoral grammar → MOMENTUS) ===== */
+  :root{
+    --ink:#171614; --paper:#fff; --ph:#eaeaec; --gray:#828282; --line:#e8e9eb;
+    --gut:10px;
+    --sans:"Helvetica Neue",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{font-size:18px}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:400;line-height:1.2}
+  a{color:inherit;text-decoration:none}
+  img{display:block;width:100%;height:100%;object-fit:cover;background:var(--ph)}
+  h1,h2,h3,p{margin:0;font-weight:400}
+  .up{text-transform:uppercase;font-weight:500;letter-spacing:0}
+  .lb{font-size:11px}.lb2{font-size:12px}
+  .g12{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gut);padding:0 var(--gut)}
+  @media(max-width:860px){.g12{grid-template-columns:repeat(4,1fr)}}
+
+  /* ===== header 47px ===== */
+  header{position:fixed;inset:0 0 auto;z-index:40;height:47px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gut);background:rgba(255,255,255,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  header .wm{font-size:15px;font-weight:500}
+  header nav{display:flex;gap:22px;font-size:13px}
+  header nav a{transition:opacity .25s}
+  header nav:hover a{opacity:.11}
+  header nav:hover a:hover{opacity:1}
+  .pg{display:none}.pg.on{display:block}
+  main{padding-top:47px}
+
+  /* ===== hero 100lvh ===== */
+  .hero{position:relative;height:100lvh;min-height:540px}
+  .hero img{position:absolute;inset:0}
+  .hero::after{content:"";position:absolute;inset:auto 0 0;height:28%;background:linear-gradient(transparent,rgba(0,0,0,.35))}
+  .hero .on-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gut);padding:64px var(--gut) 26px;z-index:2;color:#fff}
+  .hero h1{grid-column:1/span 6;font-size:clamp(20px,3vw,40px);align-self:start}
+  .hero .cap{grid-column:10/span 3;align-self:end;font-size:13px;line-height:1.45}
+  @media(max-width:860px){.hero .on-grid{grid-template-columns:repeat(4,1fr)}.hero h1{grid-column:1/-1}.hero .cap{grid-column:1/-1}}
+  .hero .cap a{text-decoration:underline;text-underline-offset:3px}
+
+  /* ===== promo split ===== */
+  .promo{margin-top:var(--gut)}
+  .promo .big{grid-column:1/span 6;aspect-ratio:355/444;margin-left:calc(var(--gut) * -1);position:relative;overflow:hidden}
+  .promo.rev .big{grid-column:7/span 6;margin-left:0;margin-right:calc(var(--gut) * -1)}
+  .promo .mini{grid-column:7/span 6;display:grid;grid-template-columns:1fr 1fr;gap:var(--gut);align-content:start}
+  .promo.rev .mini{grid-column:1/span 6}
+  @media(max-width:860px){.promo .big,.promo.rev .big,.promo .mini,.promo.rev .mini{grid-column:1/-1;margin:0}}
+  .promo .big .ov{position:absolute;left:0;bottom:0;padding:8px 10px;color:#fff;opacity:0;transition:opacity .3s;background:linear-gradient(transparent,rgba(0,0,0,.35));right:0}
+  .promo .big:hover .ov{opacity:1}
+  .promo .big .ov .nm{font-size:14px}
+  .promo .big .ov .pr{font-size:13px;margin-top:2px}
+
+  /* ===== product card ===== */
+  .pc .im{aspect-ratio:4/5;overflow:hidden;position:relative;background:var(--ph)}
+  .pc .im img{transition:transform .6s cubic-bezier(.215,.61,.355,1)}
+  .pc:hover .im img{transform:scale(1.04)}
+  .pc .nm{font-size:13px;margin-top:7px;display:flex;justify-content:space-between;gap:8px}
+  .pc .pr{font-size:13px;color:var(--gray)}
+  .pc .md{font-size:11px;color:var(--gray);margin-top:2px}
+  .bars{display:flex;gap:4px;margin-top:6px}
+  .bars i{width:26px;height:3px;background:var(--ink);opacity:.25;transition:transform .25s cubic-bezier(.215,.61,.355,1),opacity .25s;transform-origin:bottom}
+  .bars i.on{opacity:1}
+  .pc:hover .bars i{transform:scaleY(2)}
+
+  /* ===== featured strip ===== */
+  .feat{margin-top:70px}
+  .feat .hd{display:flex;align-items:baseline;padding:0 var(--gut);gap:12px}
+  .feat .hd h2{font-size:17px}
+  .feat .hd a{margin-left:auto;font-size:12px;text-decoration:underline;text-underline-offset:3px}
+  .feat ul{list-style:none;margin:14px 0 0;padding:0 var(--gut);display:grid;grid-template-columns:repeat(4,1fr);gap:20px var(--gut)}
+  @media(max-width:860px){.feat ul{grid-template-columns:1fr 1fr}}
+
+  /* ===== text-media ===== */
+  .tm{margin-top:100px}
+  .tm h2{grid-column:1/span 4;font-size:clamp(18px,2.2vw,26px);line-height:1.25}
+  .tm .tx{grid-column:5/span 3;font-size:13px;line-height:1.5;color:var(--gray)}
+  .tm .cta{grid-column:8/span 2;font-size:12px;text-decoration:underline;text-underline-offset:3px;align-self:start}
+  .tm .ims{grid-column:1/-1;margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:var(--gut)}
+  .tm .ims .w{position:relative;aspect-ratio:355/444;overflow:hidden}
+  .tm .ims .w::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.2)}
+  .tm .ims .w span{position:absolute;z-index:2;left:12px;bottom:12px;color:#fff;font-size:13px}
+  @media(max-width:860px){.tm h2,.tm .tx,.tm .cta{grid-column:1/-1}}
+
+  /* ===== listing ===== */
+  .banner{position:relative;aspect-ratio:1440/568;min-height:220px;overflow:hidden}
+  .banner img{position:absolute;inset:0}
+  .banner::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.22)}
+  .banner h1{position:absolute;z-index:2;left:var(--gut);bottom:18px;color:#fff;font-size:clamp(20px,3vw,40px)}
+  .fbar{position:sticky;top:47px;z-index:30;background:var(--paper);display:flex;justify-content:space-between;align-items:center;padding:12px var(--gut) 14px;border-bottom:1px solid var(--line);font-size:12px}
+  .fbar .fs{display:flex;gap:16px}
+  .fbar .fs button{background:none;border:none;font:inherit;cursor:pointer;color:var(--gray);padding:0}
+  .fbar .fs button.on{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+  .plist{list-style:none;margin:0;padding:20px var(--gut) 0;display:grid;grid-template-columns:repeat(4,1fr);gap:30px var(--gut)}
+  @media(max-width:860px){.plist{grid-template-columns:1fr 1fr}}
+  .edit2{grid-column:span 2}
+  .edit2 .w{aspect-ratio:91/114;overflow:hidden;position:relative}
+  .edit2 .w::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.15)}
+  .edit2 span{display:block;font-size:11px;color:var(--gray);margin-top:7px}
+
+  /* ===== PDP ===== */
+  .pdpb{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gut);padding:0 var(--gut)}
+  .pdpb .gal{grid-column:1/span 7;display:flex;flex-direction:column;gap:var(--gut);margin-left:calc(var(--gut) * -1)}
+  .pdpb .gal .w{aspect-ratio:4/5;overflow:hidden}
+  .pdpb .buy{grid-column:9/span 4;position:sticky;top:69px;align-self:start;min-height:calc(100vh - 69px);padding-top:22px}
+  @media(max-width:860px){.pdpb .gal,.pdpb .buy{grid-column:1/-1;position:static;margin-left:0;min-height:0}}
+  .buy h1{font-size:24px}
+  .buy .pline{font-size:14px;color:var(--gray);margin-top:8px}
+  .optrow{margin-top:26px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+  .optrow>button{width:100%;background:none;border:none;font:inherit;display:flex;justify-content:space-between;padding:12px 0;cursor:pointer;font-size:13px}
+  .optrow .ops{display:none;padding:0 0 14px;gap:8px;flex-wrap:wrap}
+  .optrow.open .ops{display:flex}
+  .optrow .op{border:1px solid var(--line);background:none;font:inherit;font-size:12px;padding:8px 14px;cursor:pointer}
+  .optrow .op.sel{border-color:var(--ink)}
+  .cta40{margin-top:16px;width:100%;height:40px;background:var(--ink);color:#fff;border:1px solid var(--ink);font:inherit;font-size:13px;cursor:pointer;position:relative;overflow:hidden}
+  .cta40:hover{background:#000}
+  .cta40[disabled]{background:var(--ph);color:var(--gray);border-color:var(--line);cursor:not-allowed}
+  .desc{font-size:13px;line-height:1.55;color:var(--ink);margin-top:22px;max-width:40ch}
+  .more{margin-top:14px;background:none;border:none;font:inherit;cursor:pointer;padding:0}
+  .more span{font-size:10px}
+  .moretx{display:none;font-size:12.5px;line-height:1.6;color:var(--gray);margin-top:10px;max-width:42ch}
+  .moretx.on{display:block}
+  .hook{margin-top:34px;font-size:12px;color:var(--gray)}
+  .hook a{text-decoration:underline;text-underline-offset:3px;color:var(--ink)}
+  .reco{padding:100px 0 80px}
+
+  /* ===== about ===== */
+  .aroot{padding-bottom:90px}
+  .arow{margin-top:90px}
+  .arow .lab{grid-column:1/span 2;font-size:11px;color:var(--gray)}
+  .arow .bd{grid-column:4/span 6}
+  .arow .bd h2{font-size:clamp(20px,2.6vw,32px);line-height:1.3}
+  .arow .bd p{font-size:14px;line-height:1.6;margin-top:14px;max-width:52ch}
+  .arow .bd .st{display:flex;gap:44px;margin-top:24px}
+  .arow .bd .st b{display:block;font-size:26px;font-weight:400}
+  .arow .bd .st span{font-size:11px;color:var(--gray)}
+  @media(max-width:860px){.arow .lab,.arow .bd{grid-column:1/-1}.arow{margin-top:50px}}
+
+  /* ===== press/journal ===== */
+  .press{padding:34px var(--gut) 90px}
+  .press h1{font-size:clamp(20px,3vw,40px)}
+  .strip{display:flex;gap:var(--gut);overflow-x:auto;margin-top:26px;padding-bottom:8px;scroll-snap-type:x mandatory}
+  .pcard{flex:0 0 clamp(220px,24vw,320px);scroll-snap-align:start}
+  .pcard .w{aspect-ratio:3/4;overflow:hidden}
+  .pcard .src{font-size:12px;margin-top:9px}
+  .pcard .tx{font-size:14px;line-height:1.5;margin-top:4px;color:var(--gray)}
+
+  /* ===== footer ===== */
+  footer{margin-top:100px;border-top:1px solid var(--line);padding:34px var(--gut) 46px;display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gut);font-size:12px}
+  footer .col{grid-column:span 2}
+  footer .col h4{margin:0 0 10px;font-size:11px;color:var(--gray);font-weight:500;text-transform:uppercase}
+  footer .col a{display:block;padding:3px 0}
+  footer .nl{grid-column:9/span 4}
+  footer .legal{grid-column:1/-1;margin-top:30px;color:var(--gray);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  @media(max-width:860px){footer .col{grid-column:span 2}footer .nl{grid-column:1/-1}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="wm" href="#home" data-nav>MOMENTUS</a>
+  <nav>
+    <a href="#shop" data-nav>도구 전체</a>
+    <a href="#shop" data-nav>리서치</a>
+    <a href="#shop" data-nav>커머스</a>
+    <a href="#shop" data-nav>생산성</a>
+    <a href="#about" data-nav>소개</a>
+    <a href="#press" data-nav>저널</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ HOME ============ -->
+<div class="pg on" id="pg-home">
+  <section class="hero">
+    <img src="https://picsum.photos/seed/momentus-hero/1800/1200?grayscale" alt="">
+    <div class="on-grid">
+      <h1>비싼 도구의 시대는 끝났다</h1>
+      <p class="cap">설치도 로그인도 결제도 없이, 버튼 하나 드래그로 끝나는 브라우저 도구들. 전부 무료.<br><a href="#shop" data-nav>도구 보러 가기</a></p>
+    </div>
+  </section>
+
+  <!-- promo 1 : 커머스(퀵팡) -->
+  <section class="g12 promo">
+    <a class="big" href="#pdp" data-nav>
+      <img src="https://picsum.photos/seed/quickpang-big/1420/1776?grayscale" alt="">
+      <div class="ov"><div class="nm">퀵팡 — 쿠팡 퀵보기</div><div class="pr">무료 · 끌어놓기 · 1만 명 사용</div></div>
+    </a>
+    <div class="mini">
+      <a class="pc" href="#pdp" data-nav>
+        <div class="im"><img src="https://picsum.photos/seed/ig-sort/720/900?grayscale" alt=""></div>
+        <div class="nm"><span>인스타 인기순 정렬</span><span class="pr">무료</span></div>
+        <div class="md">리서치 · 끌어놓기</div>
+        <div class="bars"><i class="on"></i><i></i><i></i></div>
+      </a>
+      <a class="pc" href="#pdp" data-nav>
+        <div class="im"><img src="https://picsum.photos/seed/yt-rank/720/900?grayscale" alt=""></div>
+        <div class="nm"><span>유튜브 인기순 정렬</span><span class="pr">무료</span></div>
+        <div class="md">리서치 · 끌어놓기</div>
+        <div class="bars"><i class="on"></i><i></i></div>
+      </a>
+      <a class="pc" href="#pdp" data-nav>
+        <div class="im"><img src="https://picsum.photos/seed/pin-grab/720/900?grayscale" alt=""></div>
+        <div class="nm"><span>핀터레스트 원본 추출</span><span class="pr">무료</span></div>
+        <div class="md">리서치 · 끌어놓기</div>
+        <div class="bars"><i class="on"></i><i></i><i></i></div>
+      </a>
+      <a class="pc" href="#pdp" data-nav>
+        <div class="im"><img src="https://picsum.photos/seed/her-mini/720/900?grayscale" alt=""></div>
+        <div class="nm"><span>her — 음성 입력</span><span class="pr">무료</span></div>
+        <div class="md">생산성 · 크롬 확장</div>
+        <div class="bars"><i class="on"></i></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- featured : 생산성 -->
+  <section class="feat">
+    <div class="hd"><h2>생산성 — 시간·손 아끼기</h2><a href="#shop" data-nav>전체 보기</a></div>
+    <ul>
+      <li><a class="pc" href="#pdp" data-nav><div class="im"><img src="https://picsum.photos/seed/chatpage-f/720/900?grayscale" alt=""></div><div class="nm"><span>ChatPage — 유튜브 3초 요약</span><span class="pr">무료</span></div><div class="md">크롬 확장 · 별점 5.0</div></a></li>
+      <li><a class="pc" href="#pdp" data-nav><div class="im"><img src="https://picsum.photos/seed/her-f/720/900?grayscale" alt=""></div><div class="nm"><span>her — 음성 입력</span><span class="pr">무료</span></div><div class="md">크롬 확장 · ⌘⇧R</div></a></li>
+      <li><a class="pc" href="#pdp" data-nav><div class="im"><img src="https://picsum.photos/seed/ig-f/720/900?grayscale" alt=""></div><div class="nm"><span>인스타 인기순 정렬</span><span class="pr">무료</span></div><div class="md">북마크릿 · 끌어놓기</div></a></li>
+      <li><a class="pc" href="#pdp" data-nav><div class="im"><img src="https://picsum.photos/seed/qp-f/720/900?grayscale" alt=""></div><div class="nm"><span>퀵팡 — 쿠팡 퀵보기</span><span class="pr">무료</span></div><div class="md">북마크릿 · 1만 사용</div></a></li>
+    </ul>
+  </section>
+
+  <!-- text-media : 브랜드 -->
+  <section class="g12 tm">
+    <h2>한 사람이 만들고,<br>모두가 씁니다.</h2>
+    <p class="tx">MOMENTUS는 강형모의 1인 AI 스튜디오. 매일 뭔가를 만들고, 쓸만한 건 전부 무료로 풉니다. 로그인도 결제도 이메일 수집도 없이.</p>
+    <a class="cta" href="#about" data-nav>스튜디오 소개</a>
+    <div class="ims">
+      <div class="w"><img src="https://picsum.photos/seed/studio-a/1000/1250?grayscale" alt=""><span>작업실, 서울</span></div>
+      <div class="w"><img src="https://picsum.photos/seed/studio-b/1000/1250?grayscale" alt=""><span>여섯 번째 도구를 만드는 중</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="col"><h4>도구</h4><a href="#shop" data-nav>전체</a><a href="#shop" data-nav>리서치</a><a href="#shop" data-nav>커머스</a><a href="#shop" data-nav>생산성</a></div>
+    <div class="col"><h4>스튜디오</h4><a href="#about" data-nav>소개</a><a href="#press" data-nav>저널</a></div>
+    <div class="col"><h4>문의</h4><a href="mailto:hello@the-moment.us">이메일</a><a href="#">인스타그램</a></div>
+    <div class="nl"><h4>새 도구 소식</h4><p style="font-size:12px;color:var(--gray);line-height:1.5">뉴스레터는 없습니다. 대신 저널에 다 적어둡니다.</p></div>
+    <div class="legal"><span>© 2026 MOMENTUS · 강형모</span><span><a href="#">이용약관</a> · <a href="#">개인정보처리방침</a></span></div>
+  </footer>
+</div>
+
+<!-- ============ SHOP LISTING ============ -->
+<div class="pg" id="pg-shop">
+  <section class="banner">
+    <img src="https://picsum.photos/seed/shop-banner/1800/710?grayscale" alt="">
+    <h1>도구 전체</h1>
+  </section>
+  <div class="fbar">
+    <div class="fs">
+      <button class="on">전체 6</button><button>리서치 3</button><button>커머스 1</button><button>생산성 2</button>
+    </div>
+    <span style="color:var(--gray)">전부 무료</span>
+  </div>
+  <ul class="plist">
+    <li><a class="pc" href="#pdp" data-nav><div class="im"><img src="https://picsum.photos/seed/l-ig/720/900?grayscale" alt=""></div><div class="nm"><span>인스타 인기순 정렬</span><span class="pr">무료</span></div><div class="md">리서치 · 끌어놓기</div></a></li>
+    <li><a class="pc" href="#pdp" data-nav><div class="im"><img src="https://picsum.photos/seed/l-yt/720/900?grayscale" alt=""></div><div class="nm"><span>유튜브 인기순 정렬</span><span class="pr">무료</span></div><div class="md">리서치 · 끌어놓기</div></a></li>
+    <li class="edit2"><div class="w"><img src="https://picsum.photos/seed/l-edit1/1400/1750?grayscale" alt=""></div><span>사용 장면 — 릴스 레퍼런스 리서치</span></li>
+    <li><a class="pc" href="#pdp" data-nav><div class="im"><img src="https://picsum.photos/seed/l-pin/720/900?grayscale" alt=""></div><div class="nm"><span>핀터레스트 원본 추출</span><span class="pr">무료</span></div><div class="md">리서치 · 끌어놓기</div></a></li>
+    <li><a class="pc" href="#pdp" data-nav><div class="im"><img src="https://picsum.photos/seed/l-qp/720/900?grayscale" alt=""></div><div class="nm"><span>퀵팡 — 쿠팡 퀵보기</span><span class="pr">무료</span></div><div class="md">커머스 · 1만 사용</div></a></li>
+    <li><a class="pc" href="#pdp" data-nav><div class="im"><img src="https://picsum.photos/seed/l-cp/720/900?grayscale" alt=""></div><div class="nm"><span>ChatPage — 3초 요약</span><span class="pr">무료</span></div><div class="md">생산성 · 크롬 확장</div></a></li>
+    <li><a class="pc" href="#pdp" data-nav><div class="im"><img src="https://picsum.photos/seed/l-her/720/900?grayscale" alt=""></div><div class="nm"><span>her — 음성 입력</span><span class="pr">무료</span></div><div class="md">생산성 · 크롬 확장</div></a></li>
+    <li class="edit2"><div class="w"><img src="https://picsum.photos/seed/l-edit2/1400/1750?grayscale" alt=""></div><span>사용 장면 — 말로 쓰는 하루</span></li>
+  </ul>
+  <footer>
+    <div class="col"><h4>도구</h4><a href="#shop" data-nav>전체</a></div>
+    <div class="col"><h4>스튜디오</h4><a href="#about" data-nav>소개</a><a href="#press" data-nav>저널</a></div>
+    <div class="legal"><span>© 2026 MOMENTUS</span><span><a href="#">이용약관</a> · <a href="#">개인정보처리방침</a></span></div>
+  </footer>
+</div>
+
+<!-- ============ PDP (her) ============ -->
+<div class="pg" id="pg-pdp">
+  <div class="pdpb" style="margin-top:10px">
+    <div class="gal">
+      <div class="w"><img src="https://picsum.photos/seed/pdp-her-1/1440/1800?grayscale" alt=""></div>
+      <div class="w"><img src="https://picsum.photos/seed/pdp-her-2/1440/1800?grayscale" alt=""></div>
+      <div class="w"><img src="https://picsum.photos/seed/pdp-her-3/1440/1800?grayscale" alt=""></div>
+    </div>
+    <div class="buy">
+      <h1>her — 음성 입력</h1>
+      <p class="pline">무료 · 크롬 확장 · v1.0.9</p>
+      <div class="optrow" id="optrow">
+        <button type="button" id="optToggle"><span>브라우저 선택</span><span class="up" style="font-size:10px">열기</span></button>
+        <div class="ops">
+          <button class="op" data-op>Chrome</button>
+          <button class="op" data-op>Edge</button>
+          <button class="op" data-op>Whale</button>
+        </div>
+      </div>
+      <button class="cta40" id="getBtn" disabled>무료로 설치</button>
+      <p class="desc">타이핑 대신 말로. 어디서든 ⌘⇧R 하나면 말이 글이 됩니다. ChatGPT·Claude·Gemini·Notion — 모든 입력창에서.</p>
+      <button class="more" id="moreBtn"><span class="up">더 자세히</span></button>
+      <div class="moretx" id="moreTx">100개 이상 언어 지원. 음성 처리는 전부 기기 안에서만 — 서버 전송 0, 프라이버시 100%. Perplexity 같은 까다로운 에디터도 특별 대응. 설치 후 아무 입력창에서 마이크를 누르거나 단축키를 누르면 시작.</div>
+      <p class="hook">⚡ 이거 만든 사람의 다른 무료 도구 — <a href="#shop" data-nav>전체 보기</a></p>
+    </div>
+  </div>
+  <section class="feat reco">
+    <div class="hd"><h2>함께 쓰면 좋은 것</h2><a href="#shop" data-nav>전체 보기</a></div>
+    <ul>
+      <li><a class="pc" href="#pdp" data-nav><div class="im"><img src="https://picsum.photos/seed/r-cp/720/900?grayscale" alt=""></div><div class="nm"><span>ChatPage</span><span class="pr">무료</span></div></a></li>
+      <li><a class="pc" href="#pdp" data-nav><div class="im"><img src="https://picsum.photos/seed/r-ig/720/900?grayscale" alt=""></div><div class="nm"><span>인스타 인기순 정렬</span><span class="pr">무료</span></div></a></li>
+      <li><a class="pc" href="#pdp" data-nav><div class="im"><img src="https://picsum.photos/seed/r-yt/720/900?grayscale" alt=""></div><div class="nm"><span>유튜브 인기순 정렬</span><span class="pr">무료</span></div></a></li>
+      <li><a class="pc" href="#pdp" data-nav><div class="im"><img src="https://picsum.photos/seed/r-qp/720/900?grayscale" alt=""></div><div class="nm"><span>퀵팡</span><span class="pr">무료</span></div></a></li>
+    </ul>
+  </section>
+  <footer>
+    <div class="col"><h4>도구</h4><a href="#shop" data-nav>전체</a></div>
+    <div class="col"><h4>스튜디오</h4><a href="#about" data-nav>소개</a><a href="#press" data-nav>저널</a></div>
+    <div class="legal"><span>© 2026 MOMENTUS</span><span><a href="#">이용약관</a> · <a href="#">개인정보처리방침</a></span></div>
+  </footer>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<div class="pg" id="pg-about">
+  <section class="banner">
+    <img src="https://picsum.photos/seed/about-banner/1800/710?grayscale" alt="">
+    <h1>스튜디오</h1>
+  </section>
+  <div class="aroot">
+    <div class="g12 arow">
+      <span class="lab up">누구</span>
+      <div class="bd">
+        <h2>강형모.<br>1인 AI 스튜디오, MOMENTUS.</h2>
+        <p>AI 슈트를 입은 한 사람이 혼자선 불가능한 생산량으로 매일 뭔가를 만듭니다. 로고 1,193개를 만든 자동화도, 여기 있는 브라우저 도구들도 전부 그 결과물.</p>
+      </div>
+    </div>
+    <div class="g12 arow">
+      <span class="lab up">왜 무료인가</span>
+      <div class="bd">
+        <p>비싸고 어려워서 미뤄두던 일들을 그냥 한 번 눌러보게 만들고 싶었습니다. 그래서 값을 매기지 않습니다. 로그인도, 결제도, 이메일 수집도 없이 — 도구가 실제로 당신 일을 되게 하면, 당신은 언젠가 돌아오니까.</p>
+      </div>
+    </div>
+    <div class="g12 arow">
+      <span class="lab up">숫자</span>
+      <div class="bd">
+        <div class="st">
+          <div><b>6+</b><span>무료 도구</span></div>
+          <div><b>1만+</b><span>퀵팡 사용자</span></div>
+          <div><b>5.0</b><span>ChatPage 별점</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="g12 arow">
+      <span class="lab up">연락</span>
+      <div class="bd"><p><a href="mailto:hello@the-moment.us" style="text-decoration:underline;text-underline-offset:3px">hello@the-moment.us</a> — 또는 인스타그램 DM. 무엇이든.</p></div>
+    </div>
+  </div>
+  <footer>
+    <div class="col"><h4>도구</h4><a href="#shop" data-nav>전체</a></div>
+    <div class="col"><h4>스튜디오</h4><a href="#press" data-nav>저널</a></div>
+    <div class="legal"><span>© 2026 MOMENTUS</span><span><a href="#">이용약관</a> · <a href="#">개인정보처리방침</a></span></div>
+  </footer>
+</div>
+
+<!-- ============ PRESS / JOURNAL ============ -->
+<div class="pg" id="pg-press">
+  <div class="press">
+    <h1>저널</h1>
+    <div class="strip">
+      <a class="pcard" href="#pdp" data-nav><div class="w"><img src="https://picsum.photos/seed/j-1/900/1200?grayscale" alt=""></div><div class="src up lb2">Release · 2026.07</div><p class="tx">her 1.0 — 타이핑을 그만두기로 했다</p></a>
+      <a class="pcard" href="#pdp" data-nav><div class="w"><img src="https://picsum.photos/seed/j-2/900/1200?grayscale" alt=""></div><div class="src up lb2">Release · 2026.06</div><p class="tx">ChatPage 2.9 — 3초 요약이 되기까지</p></a>
+      <a class="pcard" href="#pdp" data-nav><div class="w"><img src="https://picsum.photos/seed/j-3/900/1200?grayscale" alt=""></div><div class="src up lb2">Note · 2026.02</div><p class="tx">퀵팡으로 1만 명이 온 뒤 배운 것</p></a>
+      <a class="pcard" href="#about" data-nav><div class="w"><img src="https://picsum.photos/seed/j-4/900/1200?grayscale" alt=""></div><div class="src up lb2">Note · 2026.01</div><p class="tx">왜 전부 무료로 푸는가</p></a>
+      <a class="pcard" href="#pdp" data-nav><div class="w"><img src="https://picsum.photos/seed/j-5/900/1200?grayscale" alt=""></div><div class="src up lb2">Release · 2025.12</div><p class="tx">인스타 인기순 정렬 — 레퍼런스는 세는 것</p></a>
+    </div>
+  </div>
+  <footer>
+    <div class="col"><h4>도구</h4><a href="#shop" data-nav>전체</a></div>
+    <div class="col"><h4>스튜디오</h4><a href="#about" data-nav>소개</a></div>
+    <div class="legal"><span>© 2026 MOMENTUS</span><span><a href="#">이용약관</a> · <a href="#">개인정보처리방침</a></span></div>
+  </footer>
+</div>
+
+</main>
+
+<script>
+(function(){
+  var pages={home:'pg-home',shop:'pg-shop',pdp:'pg-pdp',about:'pg-about',press:'pg-press'};
+  function go(h){
+    var k=(h||'#home').replace('#','');if(!pages[k])k='home';
+    document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
+    document.getElementById(pages[k]).classList.add('on');
+    window.scrollTo(0,0);
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('[data-nav]');if(!a)return;
+    e.preventDefault();history.replaceState(null,'',a.getAttribute('href'));go(a.getAttribute('href'));
+  });
+  go(location.hash);
+  /* PDP options */
+  var row=document.getElementById('optrow'),tg=document.getElementById('optToggle'),btn=document.getElementById('getBtn');
+  if(tg){tg.addEventListener('click',function(){row.classList.toggle('open');});}
+  document.querySelectorAll('[data-op]').forEach(function(o){
+    o.addEventListener('click',function(){
+      document.querySelectorAll('[data-op]').forEach(function(x){x.classList.remove('sel');});
+      o.classList.add('sel');btn.disabled=false;btn.textContent='무료로 설치 — '+o.textContent;
+    });
+  });
+  if(btn){btn.addEventListener('click',function(){btn.textContent='설치 안내로 이동 ✓ (프로토타입)';});}
+  var mb=document.getElementById('moreBtn'),mt=document.getElementById('moreTx');
+  if(mb){mb.addEventListener('click',function(){mt.classList.toggle('on');});}
+})();
+</script>
+</body>
+</html>

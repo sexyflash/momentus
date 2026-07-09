@@ -1,0 +1,163 @@
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>MOMENTUS — 사이트 정의서 (편집샵 IA)</title>
+<style>
+  :root{
+    --bg:#fbfbf9;--surface:#fff;--ink:#17171b;--body:#3f434b;--muted:#6b7280;--faint:#9aa0aa;
+    --line:#e7e6e0;--accent:#1a4dbe;--tint:#eef3fd;--code:#f3f2ec;--ok:#0a7d3c;--stop:#b4442e;--warm:#9a6b2e;
+    --sans:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Segoe UI",Roboto,sans-serif;
+    --mono:"SF Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#0c0e12;--surface:#141821;--ink:#eef1f6;--body:#b6bdc8;--muted:#8a93a1;--faint:#5f6773;
+    --line:#232833;--accent:#6aa1ff;--tint:#152238;--code:#181d27;--ok:#4ec27f;--stop:#e2795f;--warm:#d1a05a;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0c0e12;--surface:#141821;--ink:#eef1f6;--body:#b6bdc8;--muted:#8a93a1;--faint:#5f6773;
+    --line:#232833;--accent:#6aa1ff;--tint:#152238;--code:#181d27;--ok:#4ec27f;--stop:#e2795f;--warm:#d1a05a;
+  }
+  :root[data-theme="light"]{
+    --bg:#fbfbf9;--surface:#fff;--ink:#17171b;--body:#3f434b;--muted:#6b7280;--faint:#9aa0aa;
+    --line:#e7e6e0;--accent:#1a4dbe;--tint:#eef3fd;--code:#f3f2ec;--ok:#0a7d3c;--stop:#b4442e;--warm:#9a6b2e;
+  }
+  *{box-sizing:border-box}
+  body{margin:0}
+  .doc{background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.68;font-size:16px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:770px;margin:0 auto;padding:44px 20px 90px}
+  h1,h2,h3{color:var(--ink);line-height:1.25;letter-spacing:-.01em;text-wrap:balance}
+  h1{font-size:26px;margin:0 0 6px}
+  h2{font-size:19px;margin:46px 0 8px;padding-top:22px;border-top:1px solid var(--line)}
+  h3{font-size:15.5px;margin:22px 0 6px}
+  p{margin:10px 0}
+  .kick{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.02em}
+  .lead{color:var(--muted);font-size:14.5px;margin-top:4px}
+  b,strong{color:var(--ink)}
+  ul{margin:8px 0;padding-left:20px}li{margin:5px 0}
+  code{font-family:var(--mono);font-size:.86em;background:var(--code);padding:2px 6px;border-radius:5px;color:var(--ink)}
+  pre{background:var(--code);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--ink);margin:14px 0}
+  .scroll{overflow-x:auto;margin:14px 0}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:500px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+  td:first-child{color:var(--ink);font-weight:700;white-space:nowrap}
+  .box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:14px 0}
+  .box.tint{background:var(--tint);border-color:transparent}.box.tint b{color:var(--accent)}
+  .aisle{border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;background:var(--surface)}
+  .aisle .h{display:flex;align-items:baseline;gap:10px}
+  .aisle .h .em{font-size:20px}
+  .aisle .h .nm{font-size:16px;font-weight:700;color:var(--ink)}
+  .aisle .h .say{color:var(--muted);font-size:13px}
+  .aisle .items{margin-top:10px;display:flex;flex-wrap:wrap;gap:7px}
+  .item{font-size:12.5px;border:1px solid var(--line);border-radius:99px;padding:4px 11px;color:var(--body)}
+  .item .b{font-family:var(--mono);font-size:10px;color:var(--faint);margin-left:5px}
+  .pill{display:inline-block;font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:99px;border:1px solid var(--line)}
+  .ok{color:var(--ok);border-color:var(--ok)}.no{color:var(--stop);border-color:var(--stop)}
+  .was{color:var(--stop);text-decoration:line-through;opacity:.7}
+  .tt{position:fixed;top:14px;right:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:34px;height:30px;border-radius:8px;cursor:pointer}
+  hr{border:none;border-top:1px solid var(--line);margin:20px 0}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<button class="tt" id="tt" aria-label="테마 전환">◐</button>
+<div class="doc"><div class="wrap">
+
+  <div class="kick">MOMENTUS · the-moment.us · 사이트 정의서 · 2026-07-09</div>
+  <h1>편집샵 IA — 쓰는 사람 관점의 구조</h1>
+  <p class="lead">제공자 언어(북마크릿/확장)로 묶던 걸 버리고, "뭐 하려고 왔나"로 진열한다.</p>
+
+  <h2>0 · 컨셉 한 줄</h2>
+  <div class="box tint"><b>미니멀 갤러리 룩 + 쇼핑몰만큼 쉬운 UX + 개인 편집샵 큐레이션.</b><br>
+  일반인이 쇼핑몰 돌듯 편하게, 그런데 아무거나 파는 잡화점이 아니라 <b>주인 취향이 있는 편집샵</b>. 보기는 갤러리, 쓰기는 쇼핑몰.</div>
+
+  <h2>1 · 진열 원칙 (제일 중요)</h2>
+  <p>옷을 <b>봉제법</b>(북마크릿/확장)으로 안 나누고 <b>겉옷·상의·악세사리</b>처럼 나눈다. 기준은 <b>"이 손님이 뭘 하려고 왔나."</b></p>
+  <div class="scroll"><table>
+    <tr><th>버림 (제공자 언어)</th><th>씀 (쓰는 사람 언어)</th></tr>
+    <tr><td><span class="was">북마크릿</span> / <span class="was">크롬 익스텐션</span></td><td>리서치 · 커머스 · 생산성 (내가 하려는 일)</td></tr>
+    <tr><td>드래그 vs 설치</td><td>= 카테고리 아님. 제품 상세에 작은 배지로만("끌어놓기 / 설치")</td></tr>
+  </table></div>
+
+  <h2>2 · 카테고리 (진열대) — 지금 6개 제품 매핑</h2>
+  <div class="aisle">
+    <div class="h"><span class="em">🔍</span><span class="nm">리서치 — 잘 나가는 거 찾기</span></div>
+    <div class="h" style="margin-top:2px"><span class="say">"뭐가 인기지? 레퍼런스 좀 훔치자"</span></div>
+    <div class="items"><span class="item">인스타 인기순 정렬<span class="b">끌어놓기</span></span><span class="item">유튜브 인기순 정렬<span class="b">끌어놓기</span></span><span class="item">핀터레스트 원본 추출<span class="b">끌어놓기</span></span></div>
+  </div>
+  <div class="aisle">
+    <div class="h"><span class="em">🛒</span><span class="nm">커머스 — 팔고 소싱할 때</span></div>
+    <div class="h" style="margin-top:2px"><span class="say">"이 상품 재고·옵션 빨리 보자"</span></div>
+    <div class="items"><span class="item">퀵팡 · 쿠팡 퀵보기<span class="b">끌어놓기 · 1만</span></span></div>
+  </div>
+  <div class="aisle">
+    <div class="h"><span class="em">⚡</span><span class="nm">생산성 — 시간·손 아끼기</span></div>
+    <div class="h" style="margin-top:2px"><span class="say">"긴 건 요약, 타이핑 대신 말로"</span></div>
+    <div class="items"><span class="item">ChatPage · 유튜브 3초 요약<span class="b">설치</span></span><span class="item">her · 음성 입력<span class="b">설치</span></span></div>
+  </div>
+  <div class="box"><b>참고:</b> 한 코너에 1개여도 편집샵은 괜찮음(작은 코너, 제품 늘면 참). <b>플랫폼(인스타·유튜브·쿠팡)은 2차 필터 태그</b>로 — "인스타 쓸 때"로도 찾게. 카테고리 이름·개수는 조정 가능.</div>
+
+  <h2>3 · 네비게이션 (GNB)</h2>
+  <pre>[MOMENTUS]        리서치 · 커머스 · 생산성        소개   문의</pre>
+  <ul>
+    <li><b>로고</b> = 홈. <b>3 진열대</b>를 바로 노출(쇼핑몰 매대 간판처럼) — 일반인이 헤매지 않게.</li>
+    <li><b>소개</b> = 주인 이야기. <b>문의</b> = 우측 작게(또는 푸터).</li>
+    <li>"전체 보기"는 홈/컬렉션에서. 검색은 나중(제품 늘면).</li>
+  </ul>
+
+  <h2>4 · About 정의 — "회사소개" 아님</h2>
+  <p>편집샵 <b>주인 이야기</b>. 강형모=이 가게를 혼자 꾸리는 사람.</p>
+  <ul>
+    <li><b>담을 것:</b> 나 한 문단(1인 AI 스튜디오) · <b>왜 다 무료로 푸나</b> · 만든 것 타임라인 · 소셜/GitHub</li>
+    <li><b>톤:</b> 정직·개인적(회사말투 X). "이 사람 재밌네, 팬 되고 싶다"로 이어지는 층</li>
+    <li><b>형태:</b> 단독 페이지 <code>/about</code> + 홈 하단에 짧은 teaser(→더 보기)</li>
+  </ul>
+
+  <h2>5 · 문의 정의 — 오버스펙 금지</h2>
+  <ul>
+    <li><b>기본:</b> <code>mailto:hello@the-moment.us</code> + 인스타 DM 링크. <b>큰 폼·티켓 시스템 안 만듦</b>(문의량 적음 = 오버스펙).</li>
+    <li><b>위치:</b> 푸터 상주 + /about 하단 + GNB 우측 작게. <b>별도 큰 페이지 불필요.</b></li>
+    <li>정 필요하면 초경량 mailto 버튼 "무엇이든 물어보세요" 하나.</li>
+  </ul>
+
+  <h2>6 · 제품 상세 정의 (쓰는 사람 언어)</h2>
+  <pre>제품 이름
+"이거 하면 뭐가 좋아?"  ← 한 줄 (기능 설명 아님, 결과)
+[ 지금 써보기 ]         ← 끌어놓기 / 설치 (작은 배지)
+이렇게 써요 · 1·2·3     ← 3스텝 + GIF 자리
+자주 묻는 것            ← 질문형(AEO도 겸함)
+같은 코너 다른 것        ← 귀환 갈고리(이 카테고리 이웃)
+만든 사람 → /about</pre>
+
+  <h2>7 · 사이트맵 (갱신)</h2>
+  <pre>the-moment.us
+├─ /                        홈 · 편집샵 입구
+│    히어로 → 3 진열대 → 베스트(퀵팡 1만) → 소개 teaser
+├─ /tools                   전체 보기
+│    ├─ /tools/research      🔍 리서치 진열대
+│    ├─ /tools/commerce      🛒 커머스 진열대
+│    ├─ /tools/productivity  ⚡ 생산성 진열대
+│    └─ /tools/[slug]        제품 상세 (예: /tools/instagram-sort)
+├─ /about                   소개(주인 이야기)
+├─ 문의                     mailto (페이지 아님)
+└─ /legal · /privacy        재사용(이미 있음)</pre>
+  <div class="box"><b>URL 메모:</b> 화면 라벨은 한글(리서치·커머스·생산성), URL은 영문 SEO 슬러그. 카테고리 슬러그(research 등)는 예약어라 제품 slug와 안 겹침. 원하면 <code>/tools/research/instagram-sort</code>로 빵부스러기(breadcrumb) 깊이도 가능.</div>
+
+  <h2>8 · 뒤에서 (CMS · 정적 — 요약)</h2>
+  <ul>
+    <li><b>제품 등록 = 리포 안 플랫 파일 1개 추가 → git push → 자동 배포.</b> DB·헤드리스 SaaS·admin 앱 안 만듦(오버스펙).</li>
+    <li>Astro Content Collections + 스키마 검증. <b>이 봇이 자동 등록도 가능.</b></li>
+    <li><b>Astro 정적 빌드</b> = "스태틱처럼 관리"(쉬움) + "LLM이 읽음"(AEO)이 한 시스템. 상세페이지가 AEO 유닛(질문형 헤딩+원자답변). 진짜 트래픽은 페이지 밖 다출처.</li>
+  </ul>
+
+  <hr>
+  <p class="kick">형이 정해줄 것</p>
+  <ul>
+    <li>① 카테고리 3개(리서치·커머스·생산성) 이름·구성 OK? 더 세분/합칠지</li>
+    <li>② 제품을 뭐라 부를까 — "무료 도구" 유지 vs 다른 이름(꿀템 등)</li>
+    <li>③ URL <code>/tools/*</code> vs 한글 카테고리 노출 방식</li>
+  </ul>
+
+</div></div>
+<script>
+  (function(){var r=document.documentElement,b=document.getElementById('tt');
+  function c(){var a=r.getAttribute('data-theme');return a||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');}
+  b.addEventListener('click',function(){r.setAttribute('data-theme',c()==='dark'?'light':'dark');});})();
+</script>

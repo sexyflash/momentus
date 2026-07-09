@@ -1,0 +1,389 @@
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>MOMENTUS — 시안 2 · OUTFIT 결</title>
+<style>
+  /* ============ tokens (Outfit grammar → MOMENTUS) ============ */
+  :root{
+    --cream:#ede4dd; --plate:#d2cac3; --ink:#000; --gray:#5a5a5a; --red:#ff0001;
+    --bg:var(--cream); --fg:var(--ink); --plate-c:var(--plate); --mut:var(--gray);
+    --sans:"Helvetica Neue",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",Arial,sans-serif;
+    --ease1:cubic-bezier(.87,0,.13,1); --ease2:cubic-bezier(.83,0,.17,1);
+  }
+  [data-mode="dark"]{--bg:#0c0c0c;--fg:#ede4dd;--plate-c:#232323;--mut:#8f8a84}
+  [data-mode="red"]{--bg:#ff0001;--fg:#000;--plate-c:#e00001;--mut:#7a0000}
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);transition:background .5s var(--ease1),color .5s var(--ease1)}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,p,dl,dd,dt{margin:0}
+  ::selection{background:var(--red);color:#fff}
+  .up{text-transform:uppercase;letter-spacing:.02em}
+  .xs{font-size:12px;font-weight:700}
+  .xxs{font-size:11px;font-weight:700}
+
+  /* 16-col full-bleed grid */
+  .g16{display:grid;grid-template-columns:repeat(16,1fr);gap:24px;padding:0 24px}
+  @media(max-width:860px){.g16{grid-template-columns:repeat(8,1fr);gap:16px;padding:0 16px}}
+
+  .rule5{height:5px;background:currentColor;margin:14px 24px 0;transform-origin:left;animation:sx .9s var(--ease1) both}
+  @media(max-width:860px){.rule5{margin:14px 16px 0}}
+  @keyframes sx{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+  /* ============ fixed nav (blend) ============ */
+  nav{position:fixed;inset:0 0 auto;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:18px 24px;mix-blend-mode:difference;color:#fff}
+  nav .lg{font-weight:800;font-size:19px;letter-spacing:-.03em}
+  nav .lk{display:flex;gap:26px;font-size:clamp(15px,1.6vw,22px);font-weight:500}
+  nav .lk a{position:relative}
+  nav .lk a::after{content:"";position:absolute;left:0;bottom:-3px;height:2px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease2)}
+  nav .lk a:hover::after,nav .lk a.on::after{transform:scaleX(1)}
+  .dots{position:fixed;top:19px;right:24px;z-index:50;display:flex;gap:9px}
+  .dots button{width:18px;height:18px;border-radius:99px;cursor:pointer;border:1.5px solid rgba(0,0,0,.35);padding:0}
+  .dots .d1{background:#ede4dd}.dots .d2{background:#0c0c0c}.dots .d3{background:#ff0001}
+  [data-mode="dark"] .dots button{border-color:rgba(255,255,255,.4)}
+  nav .lk{margin-right:96px}
+
+  /* ============ page switching ============ */
+  .pg{display:none;min-height:100vh;padding-top:104px}
+  .pg.on{display:block}
+
+  /* ============ masthead / info band ============ */
+  .mast{padding:0 24px}
+  .mast .wordmark{font-weight:800;font-size:clamp(38px,7vw,84px);letter-spacing:-.05em;line-height:.9}
+  .band{margin-top:18px}
+  .band .cell p{max-width:60ch;font-weight:700;line-height:1.45}
+
+  /* ============ product card ============ */
+  .card{display:block}
+  .ph{position:relative;overflow:hidden;background:var(--plate-c)}
+  .ph .a,.ph .b{position:absolute;inset:0;display:grid;place-items:center;transition:clip-path .5s var(--ease1),transform .5s var(--ease1)}
+  .ph .b{clip-path:polygon(0 0,0 0,0 100%,0 100%);transform:scale(1.2)}
+  .card:hover .ph .b{clip-path:polygon(0 0,100% 0,100% 100%,0 100%);transform:scale(1)}
+  .r912{aspect-ratio:9/12}.rsq{aspect-ratio:242/240}
+  .meta{margin-top:12px;display:flex;justify-content:space-between;align-items:baseline;font-size:18px;line-height:1.1;font-weight:500}
+  .meta .pr{font-variant-numeric:tabular-nums}
+  .tax{margin-top:6px;display:flex;align-items:center;gap:7px}
+  .tax i{width:8px;height:8px;border-radius:99px;background:currentColor}
+  .tax span{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+
+  /* CSS-art "product shots" (자리표시 — 실서비스 시 실사진 교체) */
+  .art{width:72%;max-width:280px}
+  .art .glyph{font-weight:800;letter-spacing:-.05em;line-height:.85}
+  .shotA .glyph{font-size:clamp(34px,4.5vw,64px)}
+  .shotB{width:100%;height:100%;padding:12%}
+  .ui{width:100%;height:100%;border:2px solid currentColor;display:flex;flex-direction:column;opacity:.92}
+  .ui .bar{height:14%;border-bottom:2px solid currentColor;display:flex;align-items:center;gap:6px;padding:0 8%}
+  .ui .bar i{width:8px;height:8px;border-radius:99px;border:1.5px solid currentColor}
+  .ui .rows{flex:1;display:flex;flex-direction:column;gap:8%;padding:8%}
+  .ui .rows b{display:block;height:12%;background:currentColor;opacity:.85}
+  .ui .rows b:nth-child(2){width:72%}.ui .rows b:nth-child(3){width:85%}.ui .rows b:nth-child(4){width:56%}
+
+  .sect{margin-bottom:136px}
+  .sect-head{padding:0 24px;margin-bottom:26px;display:flex;justify-content:space-between;align-items:baseline}
+  .sect-head h2{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+
+  /* uniform 4-up */
+  .u4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:0 24px}
+  @media(max-width:860px){.u4{grid-template-columns:repeat(2,1fr);gap:16px;padding:0 16px}}
+
+  /* ============ monument footer ============ */
+  footer{margin-top:160px;padding:0 24px 40px}
+  footer .st{font-weight:900;font-size:clamp(2rem,6vw,6vw);letter-spacing:-.05em;line-height:1;max-width:16ch}
+  footer .st .g2{color:var(--mut)}
+  footer .num{font-weight:900;font-size:clamp(28vw,45vw,45vw);letter-spacing:-.06em;line-height:.8;margin-top:8rem}
+  @media(min-width:861px){footer .num{font-size:12.75vw;margin-top:16rem}}
+  footer .links{border-top:2px solid currentColor;margin-top:20px;padding-top:16px;display:flex;flex-wrap:wrap;gap:10px 28px;font-size:12px;font-weight:700;text-transform:uppercase}
+  footer .links a:hover{color:var(--red)}
+  [data-mode="red"] footer .links a:hover{color:#fff}
+
+  /* ============ PDP ============ */
+  .pdp{display:grid;grid-template-columns:repeat(16,1fr);gap:24px;padding:0 24px;margin:0 0 160px}
+  .pdp .gal{grid-column:1/span 9;display:flex;flex-direction:column;gap:24px}
+  .pdp .buy{grid-column:10/span 7;position:sticky;top:112px;align-self:start;height:max-content}
+  @media(max-width:860px){.pdp{grid-template-columns:1fr;padding:0 16px}.pdp .gal,.pdp .buy{grid-column:1/-1;position:static}}
+  .back{font-size:14px;font-weight:700;display:inline-flex;gap:8px;align-items:center;margin-bottom:26px}
+  .pdp h1{font-weight:500;font-size:clamp(3rem,7vw,6rem);letter-spacing:-.03em;line-height:.9}
+  .pdp .price{font-size:clamp(1.9rem,3.4vw,3rem);font-weight:500;margin:14px 0 20px;font-variant-numeric:tabular-nums}
+  .pdp .desc{font-size:15px;line-height:1.6;max-width:46ch;margin-bottom:30px}
+  .vrow{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0;border-bottom:2px solid currentColor}
+  .vrow dt{font-size:clamp(17px,2vw,24px);letter-spacing:-.02em}
+  .vrow dd{display:flex;gap:8px;flex-wrap:wrap}
+  .vopt{font-size:clamp(15px,1.8vw,22px);padding:2px 12px;border-radius:99px;box-shadow:inset 0 0 0 1px transparent;cursor:pointer;background:none;border:none;color:inherit;font-family:inherit;transition:box-shadow .2s}
+  .vopt:hover{box-shadow:inset 0 0 0 1px currentColor}
+  .vopt.sel{box-shadow:inset 0 0 0 1.5px currentColor}
+  .install{display:inline-flex;align-items:center;gap:16px;font-size:clamp(1.7rem,3vw,2.4rem);font-weight:500;margin-top:34px;background:none;border:none;color:inherit;font-family:inherit;cursor:pointer;padding:0;letter-spacing:-.02em}
+  .install .ar{transition:transform .4s var(--ease2)}
+  .install:hover .ar{transform:translateX(.5em)}
+  .install[disabled]{opacity:.45;pointer-events:none}
+  .hooknote{margin-top:40px;padding-top:14px;border-top:2px solid currentColor;font-size:13px;font-weight:700;line-height:1.5}
+  .hooknote a{text-decoration:underline}
+
+  /* ============ Kit(bag) ============ */
+  .kit-title{padding:0 24px;font-weight:800;font-size:clamp(3rem,8vw,6rem);letter-spacing:-.05em;text-transform:uppercase}
+  .kit-empty{padding:10vh 24px 0}
+  .kit-empty .l1{font-weight:800;font-size:10vw;letter-spacing:-.05em;line-height:.9}
+  .kit-empty .l2{font-weight:800;font-size:10vw;letter-spacing:-.05em;line-height:.9;color:var(--mut)}
+  .kitrow{display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:2px solid currentColor;font-size:clamp(17px,2.4vw,26px);font-weight:500}
+  .kitrow .rm{font-size:13px;font-weight:700;cursor:pointer;background:none;border:none;color:var(--mut);font-family:inherit}
+  .kitrow .rm:hover{color:var(--red)}
+  .kitwrap{padding:26px 24px 0;max-width:900px}
+
+  /* ============ prose(about) ============ */
+  .prose{max-width:42rem;margin:0 auto;padding:40px 20px 0}
+  .prose h1{font-size:clamp(2.4rem,5vw,3rem);font-weight:700;letter-spacing:-.03em;margin:60px 0}
+  .prose p{font-size:16.5px;line-height:1.75;margin:18px 0}
+  .prose .mut{color:var(--mut)}
+  .prose .stat{display:flex;gap:40px;margin:36px 0;font-variant-numeric:tabular-nums}
+  .prose .stat b{display:block;font-size:2rem;font-weight:800;letter-spacing:-.03em}
+  .prose .stat span{font-size:12px;font-weight:700;text-transform:uppercase;color:var(--mut)}
+
+  /* ============ journal ============ */
+  .jr{padding:0 24px;max-width:1100px}
+  .jrow{display:grid;grid-template-columns:110px 1fr auto;gap:24px;align-items:baseline;padding:22px 0;border-bottom:2px solid currentColor}
+  @media(max-width:700px){.jrow{grid-template-columns:1fr}}
+  .jrow .dt{font-size:12px;font-weight:700;color:var(--mut)}
+  .jrow h3{font-size:clamp(19px,2.6vw,28px);font-weight:500;letter-spacing:-.02em}
+  .jrow:hover h3{color:var(--red)}
+  [data-mode="red"] .jrow:hover h3{color:#fff}
+  .jrow .tg{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--mut)}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<nav>
+  <a class="lg" href="#home" data-nav>MOMENTUS®</a>
+  <div class="lk">
+    <a href="#home" data-nav class="on">Shop</a>
+    <a href="#journal" data-nav>Journal</a>
+    <a href="#about" data-nav>About</a>
+    <a href="#kit" data-nav>Kit (<span id="kitn">0</span>)</a>
+  </div>
+</nav>
+<div class="dots">
+  <button class="d1" data-mode="" aria-label="크림"></button>
+  <button class="d2" data-mode="dark" aria-label="다크"></button>
+  <button class="d3" data-mode="red" aria-label="레드"></button>
+</div>
+
+<!-- ================= HOME (= SHOP) ================= -->
+<div class="pg on" id="pg-home">
+  <header class="mast">
+    <div class="wordmark">MOMENTUS®</div>
+  </header>
+  <div class="rule5"></div>
+  <div class="g16 band" style="margin-top:18px">
+    <div class="cell up xs" style="grid-column:span 4">무료 브라우저<br>도구 편집샵</div>
+    <div class="cell" style="grid-column:span 8"><p class="xs up">비싸고 어려운 마케팅 도구 대신, 버튼 하나 드래그로 끝나는 것들. 전부 ₩0 — 로그인도 결제도 없음. 강형모가 만들고 매일 씀.</p></div>
+    <div class="cell xxs up" style="grid-column:span 3;display:flex;flex-direction:column;gap:4px"><a href="#about" data-nav>About</a><a href="#journal" data-nav>Journal</a><a href="mailto:hello@the-moment.us">Contact</a></div>
+    <div class="cell xxs up" style="grid-column:span 1;text-align:right">©26</div>
+  </div>
+
+  <!-- collage 1 : 리서치 -->
+  <div class="sect" style="margin-top:120px">
+    <div class="sect-head"><h2>● 리서치 — 잘 나가는 거 찾기</h2><span class="xxs up" style="color:var(--mut)">3 items</span></div>
+    <div class="g16">
+      <a class="card" style="grid-column:1/span 3" href="#pdp" data-nav>
+        <div class="ph r912">
+          <div class="a"><div class="art shotA"><div class="glyph">IG<br>SORT</div></div></div>
+          <div class="b"><div class="shotB"><div class="ui"><div class="bar"><i></i><i></i><i></i></div><div class="rows"><b></b><b></b><b></b></div></div></div></div>
+        </div>
+        <div class="meta"><span>인스타 인기순 정렬</span><span class="pr">₩0</span></div>
+        <div class="tax"><i></i><span>리서치 · 끌어놓기</span></div>
+      </a>
+      <a class="card" style="grid-column:4/span 3" href="#pdp" data-nav>
+        <div class="ph rsq">
+          <div class="a"><div class="art shotA"><div class="glyph">YT<br>RANK</div></div></div>
+          <div class="b"><div class="shotB"><div class="ui"><div class="bar"><i></i><i></i><i></i></div><div class="rows"><b></b><b></b><b></b></div></div></div></div>
+        </div>
+        <div class="meta"><span>유튜브 인기순 정렬</span><span class="pr">₩0</span></div>
+        <div class="tax"><i></i><span>리서치 · 끌어놓기</span></div>
+      </a>
+      <a class="card" style="grid-column:9/-1" href="#pdp" data-nav>
+        <div class="ph rsq">
+          <div class="a"><div class="art shotA"><div class="glyph">PIN /<br>ORIGINALS</div></div></div>
+          <div class="b"><div class="shotB"><div class="ui"><div class="bar"><i></i><i></i><i></i></div><div class="rows"><b></b><b></b><b></b><b></b></div></div></div></div>
+        </div>
+        <div class="meta"><span>핀터레스트 원본 추출</span><span class="pr">₩0</span></div>
+        <div class="tax"><i></i><span>리서치 · 끌어놓기</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- collage 2 : 커머스 (베스트) -->
+  <div class="sect">
+    <div class="sect-head"><h2>● 커머스 — 팔고 소싱할 때</h2><span class="xxs up" style="color:var(--mut)">best · 1만 팔로워</span></div>
+    <div class="g16">
+      <a class="card" style="grid-column:1/span 5" href="#pdp" data-nav>
+        <div class="ph r912">
+          <div class="a"><div class="art shotA"><div class="glyph">QUICK<br>PANG</div></div></div>
+          <div class="b"><div class="shotB"><div class="ui"><div class="bar"><i></i><i></i><i></i></div><div class="rows"><b></b><b></b><b></b></div></div></div></div>
+        </div>
+        <div class="meta"><span>퀵팡 · 쿠팡 퀵보기</span><span class="pr">₩0</span></div>
+        <div class="tax"><i></i><span>커머스 · 끌어놓기</span></div>
+      </a>
+      <div style="grid-column:7/span 6;align-self:center">
+        <p style="font-weight:800;font-size:clamp(20px,3vw,34px);letter-spacing:-.04em;line-height:1.05">클릭 없이 옵션·품절이<br>그 자리에서 보인다.<br><span style="color:var(--mut)">1만 명이 이걸로 왔다.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- uniform row : 생산성 -->
+  <div class="sect">
+    <div class="sect-head"><h2>● 생산성 — 시간·손 아끼기</h2><span class="xxs up" style="color:var(--mut)">2 items</span></div>
+    <div class="u4">
+      <a class="card" href="#pdp" data-nav>
+        <div class="ph r912">
+          <div class="a"><div class="art shotA"><div class="glyph">CHAT<br>PAGE</div></div></div>
+          <div class="b"><div class="shotB"><div class="ui"><div class="bar"><i></i><i></i><i></i></div><div class="rows"><b></b><b></b><b></b></div></div></div></div>
+        </div>
+        <div class="meta"><span>ChatPage</span><span class="pr">₩0</span></div>
+        <div class="tax"><i></i><span>생산성 · 설치</span></div>
+      </a>
+      <a class="card" href="#pdp" data-nav>
+        <div class="ph r912">
+          <div class="a"><div class="art shotA"><div class="glyph">her<span style="font-weight:400">*</span></div></div></div>
+          <div class="b"><div class="shotB"><div class="ui"><div class="bar"><i></i><i></i><i></i></div><div class="rows"><b></b><b></b><b></b></div></div></div></div>
+        </div>
+        <div class="meta"><span>her · 음성 입력</span><span class="pr">₩0</span></div>
+        <div class="tax"><i></i><span>생산성 · 설치</span></div>
+      </a>
+      <div></div><div></div>
+    </div>
+  </div>
+
+  <footer>
+    <p class="st">공짜라고 대충 만들지 않았다.<br><span class="g2">전부, 내가 매일 쓰는 것들이라.</span></p>
+    <div class="num">©26</div>
+    <div class="links">
+      <a href="#about" data-nav>About</a><a href="#journal" data-nav>Journal</a>
+      <a href="mailto:hello@the-moment.us">hello@the-moment.us</a>
+      <a href="#">Instagram</a><a href="#">이용약관</a><a href="#">개인정보처리방침</a>
+    </div>
+  </footer>
+</div>
+
+<!-- ================= PDP (her) ================= -->
+<div class="pg" id="pg-pdp">
+  <div class="pdp">
+    <div class="gal">
+      <div class="ph r912"><div class="a" style="position:static;display:grid;place-items:center;height:100%"><div class="art shotA"><div class="glyph" style="font-size:clamp(60px,8vw,110px)">her<span style="font-weight:400">*</span></div></div></div></div>
+      <div class="ph rsq"><div class="a" style="position:static;display:grid;place-items:center;height:100%"><div class="shotB" style="width:70%;height:70%"><div class="ui"><div class="bar"><i></i><i></i><i></i></div><div class="rows"><b></b><b></b><b></b></div></div></div></div></div>
+      <div class="ph r912"><div class="a" style="position:static;display:grid;place-items:center;height:100%"><div class="art shotA"><div class="glyph" style="font-size:clamp(30px,4vw,54px)">⌘⇧R</div></div></div></div>
+    </div>
+    <div class="buy">
+      <a class="back" href="#home" data-nav>← Return to Shop</a>
+      <h1>her</h1>
+      <div class="price">₩0</div>
+      <p class="desc">타이핑 대신 말로. 어디서든 ⌘⇧R 하나면 말이 글이 됩니다. ChatGPT·Claude·Gemini·Notion — 모든 입력창. 100개 언어, 처리 전부 기기 안(프라이버시 100%).</p>
+      <dl>
+        <div class="vrow"><dt>브라우저</dt><dd>
+          <button class="vopt" data-v>Chrome</button><button class="vopt" data-v>Edge</button><button class="vopt" data-v>Whale</button>
+        </dd></div>
+        <div class="vrow"><dt>형식</dt><dd><span class="vopt sel" style="cursor:default">크롬 확장</span></dd></div>
+        <div class="vrow"><dt>언어</dt><dd><span class="vopt sel" style="cursor:default">한국어 외 100+</span></dd></div>
+      </dl>
+      <button class="install" id="installBtn" disabled>무료로 설치 <span class="ar">→</span></button>
+      <p class="xs" style="margin-top:10px;color:var(--mut)">↑ 브라우저를 먼저 고르면 활성화됩니다</p>
+      <div class="hooknote">⚡ 이거 만든 사람의 다른 무료 도구 — <a href="#home" data-nav>Shop 전체 보기</a></div>
+    </div>
+  </div>
+  <footer>
+    <p class="st">마음에 들면<br><span class="g2">키트에 담아 가세요.</span></p>
+    <div class="links"><a href="#home" data-nav>Shop</a><a href="#about" data-nav>About</a><a href="mailto:hello@the-moment.us">Contact</a></div>
+  </footer>
+</div>
+
+<!-- ================= KIT (bag) ================= -->
+<div class="pg" id="pg-kit">
+  <div class="kit-title">Your Kit</div>
+  <div class="rule5"></div>
+  <div id="kitEmpty" class="kit-empty">
+    <p class="l1">아직 비었네요.</p>
+    <p class="l2">전부 공짜인데도.</p>
+  </div>
+  <div id="kitList" class="kitwrap" style="display:none"></div>
+  <footer>
+    <p class="st">담은 건 한 번에<br><span class="g2">설치할 수 있어요.</span></p>
+    <div class="links"><a href="#home" data-nav>Shop 계속 보기</a></div>
+  </footer>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<div class="pg" id="pg-about">
+  <div class="prose">
+    <h1>이 가게 주인</h1>
+    <p><b>강형모.</b> 1인 AI 스튜디오 MOMENTUS를 혼자 꾸립니다. AI 슈트를 입은 한 사람이 혼자선 불가능한 생산량으로 매일 뭔가를 만듭니다.</p>
+    <p class="mut">비싸고 어려워서 미뤄두던 일들을 — 그냥 한 번 눌러보게 만들고 싶었어요. 그래서 여기 있는 건 전부 공짜입니다. 로그인도, 결제도, 이메일 수집도 없어요.</p>
+    <p>대신 그 도구가 실제로 당신 일을 되게 하면, 당신은 언젠가 돌아옵니다. 그거면 충분해요.</p>
+    <div class="stat">
+      <div><b>6+</b><span>무료 도구</span></div>
+      <div><b>1만+</b><span>퀵팡 사용자</span></div>
+      <div><b>5.0</b><span>ChatPage 별점</span></div>
+    </div>
+    <p class="mut">궁금한 건 <a href="mailto:hello@the-moment.us" style="text-decoration:underline">hello@the-moment.us</a> 또는 인스타 DM.</p>
+  </div>
+  <footer>
+    <p class="st">만든 것이 곧<br><span class="g2">소개서입니다.</span></p>
+    <div class="links"><a href="#home" data-nav>Shop</a><a href="#journal" data-nav>Journal</a></div>
+  </footer>
+</div>
+
+<!-- ================= JOURNAL ================= -->
+<div class="pg" id="pg-journal">
+  <div class="kit-title">Journal</div>
+  <div class="rule5"></div>
+  <div class="jr" style="margin-top:40px">
+    <a class="jrow" href="#pdp" data-nav><span class="dt">2026.07</span><h3>her 1.0 — 타이핑을 그만두기로 했다</h3><span class="tg">release</span></a>
+    <a class="jrow" href="#pdp" data-nav><span class="dt">2026.06</span><h3>ChatPage 2.9 — 3초 요약이 되기까지</h3><span class="tg">release</span></a>
+    <a class="jrow" href="#pdp" data-nav><span class="dt">2026.05</span><h3>인스타 인기순 정렬 — 레퍼런스는 훔치는 게 아니라 세는 것</h3><span class="tg">release</span></a>
+    <a class="jrow" href="#pdp" data-nav><span class="dt">2026.02</span><h3>퀵팡으로 1만 명이 온 뒤 배운 것</h3><span class="tg">note</span></a>
+    <a class="jrow" href="#about" data-nav><span class="dt">2026.01</span><h3>왜 전부 무료로 푸는가</h3><span class="tg">note</span></a>
+  </div>
+  <footer>
+    <p class="st">만들고, 적고,<br><span class="g2">다시 만든다.</span></p>
+    <div class="links"><a href="#home" data-nav>Shop</a><a href="#about" data-nav>About</a></div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  /* theme dots */
+  document.querySelectorAll('.dots button').forEach(function(b){
+    b.addEventListener('click',function(){document.body.setAttribute('data-mode',b.dataset.mode);});
+  });
+  /* hash router */
+  var pages={home:'pg-home',pdp:'pg-pdp',kit:'pg-kit',about:'pg-about',journal:'pg-journal'};
+  function go(h){
+    var k=(h||'#home').replace('#','');if(!pages[k])k='home';
+    document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
+    document.getElementById(pages[k]).classList.add('on');
+    document.querySelectorAll('nav .lk a').forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+k);});
+    window.scrollTo(0,0);
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('[data-nav]');if(!a)return;
+    e.preventDefault();history.replaceState(null,'',a.getAttribute('href'));go(a.getAttribute('href'));
+  });
+  go(location.hash);
+  /* variant → install enable + kit */
+  var kit=[];var kn=document.getElementById('kitn');
+  var btn=document.getElementById('installBtn');
+  document.querySelectorAll('[data-v]').forEach(function(v){
+    v.addEventListener('click',function(){
+      document.querySelectorAll('[data-v]').forEach(function(x){x.classList.remove('sel');});
+      v.classList.add('sel');btn.disabled=false;
+    });
+  });
+  btn.addEventListener('click',function(){
+    if(kit.indexOf('her')<0){kit.push('her');kn.textContent=kit.length;renderKit();}
+    btn.innerHTML='담았습니다 ✓';
+    setTimeout(function(){btn.innerHTML='무료로 설치 <span class="ar">→</span>';},1400);
+  });
+  function renderKit(){
+    var e=document.getElementById('kitEmpty'),l=document.getElementById('kitList');
+    if(!kit.length){e.style.display='';l.style.display='none';return;}
+    e.style.display='none';l.style.display='';
+    l.innerHTML=kit.map(function(k){return '<div class="kitrow"><span>her — 음성 입력 · Chrome</span><span style="display:flex;gap:18px;align-items:center"><span class="pr">₩0</span><button class="rm" data-rm="'+k+'">빼기</button></span></div>';}).join('')
+      +'<button class="install" style="margin-top:26px" onclick="alert(\'프로토타입: 실제로는 스토어/드래그 안내로 연결\')">전부 설치 <span class="ar">→</span></button>';
+    l.querySelectorAll('[data-rm]').forEach(function(r){r.addEventListener('click',function(){kit=kit.filter(function(x){return x!==r.dataset.rm;});kn.textContent=kit.length;renderKit();});});
+  }
+})();
+</script>
