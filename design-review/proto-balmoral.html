@@ -23,15 +23,31 @@
   .g12{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gut);padding:0 var(--gut)}
   @media(max-width:860px){.g12{grid-template-columns:repeat(4,1fr)}}
 
-  /* ===== header 47px ===== */
-  header{position:fixed;inset:0 0 auto;z-index:40;height:47px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gut);background:rgba(255,255,255,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
-  header .wm{font-size:15px;font-weight:500}
-  header nav{display:flex;gap:22px;font-size:13px}
-  header nav a{transition:opacity .25s}
-  header nav:hover a{opacity:.11}
-  header nav:hover a:hover{opacity:1}
+  /* ===== GNB (lambert.co.kr 구조 이식) — 좌 로고 · 우 정렬 대문자 메뉴 · 유틸 아이콘 · fixed 60px ===== */
+  header{position:fixed;inset:0 0 auto;z-index:40;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:#fff;border-bottom:1px solid var(--line)}
+  header .wm{font-size:21px;font-weight:600;letter-spacing:.03em}
+  .gnb{display:flex;align-items:center;gap:38px}
+  .mainmenu{display:flex;gap:30px;list-style:none;margin:0;padding:0;height:60px}
+  .mainmenu>li{position:relative;display:flex;align-items:center}
+  .mainmenu>li>a{font-size:13px;letter-spacing:.07em;text-transform:uppercase;line-height:60px}
+  .mainmenu>li>a::after{content:"";position:absolute;left:0;right:0;bottom:16px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.215,.61,.355,1)}
+  .mainmenu>li:hover>a::after{transform:scaleX(1)}
+  .dd{position:absolute;top:60px;left:50%;transform:translateX(-50%) translateY(6px);background:#fff;border:1px solid var(--line);min-width:150px;padding:8px 0;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+  .mainmenu>li:hover .dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+  .dd a{display:block;padding:9px 20px;font-size:13px;white-space:nowrap;color:var(--gray);transition:color .15s}
+  .dd a:hover{color:var(--ink)}
+  .util{display:flex;align-items:center;gap:18px}
+  .util a{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+  .util .ico{font-size:17px;line-height:1;letter-spacing:0}
+  .util .kit{display:inline-flex;align-items:center;gap:5px}
+  .ham{display:none;background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink);line-height:1;padding:0}
+  .mdrawer{display:none;position:fixed;inset:60px 0 auto;z-index:39;background:#fff;border-bottom:1px solid var(--line);padding:8px 0}
+  .mdrawer.open{display:block}
+  .mdrawer a{display:block;padding:13px 24px;font-size:14px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line)}
+  .mdrawer a.sub{padding-left:44px;text-transform:none;letter-spacing:0;color:var(--gray);font-size:13px}
+  @media(max-width:860px){.gnb{display:none}.ham{display:block}}
   .pg{display:none}.pg.on{display:block}
-  main{padding-top:47px}
+  main{padding-top:60px}
 
   /* ===== hero 100lvh ===== */
   .hero{position:relative;height:100lvh;min-height:540px}
@@ -91,7 +107,7 @@
   .banner img{position:absolute;inset:0}
   .banner::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.22)}
   .banner h1{position:absolute;z-index:2;left:var(--gut);bottom:18px;color:#fff;font-size:clamp(20px,3vw,40px)}
-  .fbar{position:sticky;top:47px;z-index:30;background:var(--paper);display:flex;justify-content:space-between;align-items:center;padding:12px var(--gut) 14px;border-bottom:1px solid var(--line);font-size:12px}
+  .fbar{position:sticky;top:60px;z-index:30;background:var(--paper);display:flex;justify-content:space-between;align-items:center;padding:12px var(--gut) 14px;border-bottom:1px solid var(--line);font-size:12px}
   .fbar .fs{display:flex;gap:16px}
   .fbar .fs button{background:none;border:none;font:inherit;cursor:pointer;color:var(--gray);padding:0}
   .fbar .fs button.on{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
@@ -106,7 +122,7 @@
   .pdpb{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gut);padding:0 var(--gut)}
   .pdpb .gal{grid-column:1/span 7;display:flex;flex-direction:column;gap:var(--gut);margin-left:calc(var(--gut) * -1)}
   .pdpb .gal .w{aspect-ratio:4/5;overflow:hidden}
-  .pdpb .buy{grid-column:9/span 4;position:sticky;top:69px;align-self:start;min-height:calc(100vh - 69px);padding-top:22px}
+  .pdpb .buy{grid-column:9/span 4;position:sticky;top:72px;align-self:start;min-height:calc(100vh - 72px);padding-top:22px}
   @media(max-width:860px){.pdpb .gal,.pdpb .buy{grid-column:1/-1;position:static;margin-left:0;min-height:0}}
   .buy h1{font-size:24px}
   .buy .pline{font-size:14px;color:var(--gray);margin-top:8px}
@@ -164,15 +180,36 @@
 
 <header>
   <a class="wm" href="#home" data-nav>MOMENTUS</a>
-  <nav>
-    <a href="#shop" data-nav>도구 전체</a>
-    <a href="#shop" data-nav>리서치</a>
-    <a href="#shop" data-nav>커머스</a>
-    <a href="#shop" data-nav>생산성</a>
-    <a href="#about" data-nav>소개</a>
-    <a href="#press" data-nav>저널</a>
+  <nav class="gnb">
+    <ul class="mainmenu">
+      <li>
+        <a href="#shop" data-nav>Tools</a>
+        <div class="dd">
+          <a href="#shop" data-nav>전체 보기</a>
+          <a href="#shop" data-nav>리서치</a>
+          <a href="#shop" data-nav>커머스</a>
+          <a href="#shop" data-nav>생산성</a>
+        </div>
+      </li>
+      <li><a href="#about" data-nav>About</a></li>
+      <li><a href="#press" data-nav>Journal</a></li>
+    </ul>
+    <div class="util">
+      <a class="ico" href="#home" data-nav aria-label="검색"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg></a>
+      <a class="kit" href="#shop" data-nav aria-label="담은 도구"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>0</span></a>
+    </div>
   </nav>
+  <button class="ham" id="ham" aria-label="메뉴">≡</button>
 </header>
+<div class="mdrawer" id="mdrawer">
+  <a href="#shop" data-nav>Tools</a>
+  <a class="sub" href="#shop" data-nav>전체 보기</a>
+  <a class="sub" href="#shop" data-nav>리서치</a>
+  <a class="sub" href="#shop" data-nav>커머스</a>
+  <a class="sub" href="#shop" data-nav>생산성</a>
+  <a href="#about" data-nav>About</a>
+  <a href="#press" data-nav>Journal</a>
+</div>
 
 <main>
 
@@ -394,10 +431,13 @@
     document.getElementById(pages[k]).classList.add('on');
     window.scrollTo(0,0);
   }
+  var drawer=document.getElementById('mdrawer'),ham=document.getElementById('ham');
   document.addEventListener('click',function(e){
     var a=e.target.closest('[data-nav]');if(!a)return;
     e.preventDefault();history.replaceState(null,'',a.getAttribute('href'));go(a.getAttribute('href'));
+    if(drawer)drawer.classList.remove('open');
   });
+  if(ham){ham.addEventListener('click',function(){drawer.classList.toggle('open');ham.textContent=drawer.classList.contains('open')?'✕':'≡';});}
   go(location.hash);
   /* PDP options */
   var row=document.getElementById('optrow'),tg=document.getElementById('optToggle'),btn=document.getElementById('getBtn');
