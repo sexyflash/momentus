@@ -15,7 +15,7 @@
     --ease:cubic-bezier(.16,1,.3,1);
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.4;-webkit-font-smoothing:antialiased}
+  body{margin:0;word-break:keep-all;overflow-wrap:break-word;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.4;-webkit-font-smoothing:antialiased}
   a{color:inherit;text-decoration:none}
   h1,h2,h3,p{margin:0;font-weight:400}
   img{display:block}
@@ -27,16 +27,16 @@
   main{padding-top:56px}
 
   /* 헤더(제목 블록) */
-  .top{padding:clamp(34px,6vh,66px) var(--gut) 0;max-width:760px;margin:0 auto;text-align:center}
+  .top{padding:clamp(34px,6vh,66px) var(--gut) 0;max-width:1180px;margin:0 auto;text-align:left}
   .top .cat{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--pt);letter-spacing:.06em;text-transform:uppercase}
   .top h1{margin-top:16px;font-size:clamp(30px,4.4vw,52px);font-weight:800;letter-spacing:-.03em;line-height:1.15;text-wrap:balance}
   .top .meta{margin-top:20px;font-family:var(--mono);font-size:13px;color:var(--faint)}
-  .cover{max-width:1000px;margin:clamp(28px,4vw,44px) auto 0;padding:0 var(--gut)}
+  .cover{max-width:1180px;margin:clamp(28px,4vw,44px) auto 0;padding:0 var(--gut)}
   .cover .im{aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:var(--soft)}
   .cover img{width:100%;height:100%;object-fit:cover}
 
   /* 본문 + TOC 2단 */
-  .body-grid{max-width:1000px;margin:clamp(40px,6vw,64px) auto 0;padding:0 var(--gut);display:grid;grid-template-columns:1fr 200px;gap:clamp(30px,4vw,60px);align-items:start}
+  .body-grid{max-width:1180px;margin:clamp(40px,6vw,64px) auto 0;padding:0 var(--gut);display:grid;grid-template-columns:minmax(0,760px) 1fr;gap:clamp(30px,4vw,60px);align-items:start}
   @media(max-width:900px){.body-grid{grid-template-columns:1fr}.toc{display:none}}
   .toc{position:sticky;top:80px}
   .toc .l{font-family:var(--mono);font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
@@ -75,7 +75,7 @@
   .cbox .note{margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--faint)}
 
   /* 관련글 */
-  .related{border-top:1px solid var(--line);margin-top:70px;padding:clamp(50px,7vw,90px) var(--gut) clamp(60px,9vh,110px);max-width:1120px;margin-left:auto;margin-right:auto}
+  .related{border-top:1px solid var(--line);margin-top:70px;padding:clamp(50px,7vw,90px) var(--gut) clamp(60px,9vh,110px);max-width:1280px;margin-left:auto;margin-right:auto}
   .related h3{font-size:20px;font-weight:700;margin-bottom:26px}
   .rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
   @media(max-width:760px){.rgrid{grid-template-columns:1fr}}
@@ -84,6 +84,25 @@
   .rcard h4{margin-top:12px;font-size:16px;font-weight:700;line-height:1.35}
   .rcard .m{margin-top:8px;font-size:12px;color:var(--faint);font-family:var(--mono)}
 
+  /* 댓글 위젯 (실동작·localStorage) */
+  .cwrap{max-width:760px}
+  .clogin{border:1px solid var(--line);border-radius:14px;padding:22px;background:var(--soft);text-align:center;color:var(--gray);font-size:14px}
+  .clogin .auth{margin-top:14px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .clogin .auth button{font-size:13px;font-weight:600;padding:9px 15px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer}
+  .clogin .auth button:hover{border-color:var(--ink)}
+  .cform{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+  .cme{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:10px}
+  .cme .av{width:26px;height:26px;border-radius:99px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+  .cme a{margin-left:auto;color:var(--faint);font-size:12px}
+  .cform textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;font:inherit;font-size:14px;resize:vertical;box-sizing:border-box}
+  .cform .crow{display:flex;justify-content:flex-end;margin-top:10px}
+  .cform .cpost{background:var(--ink);color:#fff;border:none;font-size:13px;font-weight:600;padding:9px 18px;border-radius:8px;cursor:pointer}
+  .clist{margin-top:20px;display:flex;flex-direction:column;gap:16px}
+  .citem{display:flex;gap:12px}
+  .citem .av{width:34px;height:34px;border-radius:99px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex:0 0 34px}
+  .citem .cb .top{font-size:13px;font-weight:700}.citem .cb .top span{color:var(--faint);font-weight:400;font-family:var(--mono);font-size:11px;margin-left:8px}
+  .citem .cb p{margin-top:4px;font-size:14px;color:#26303f;line-height:1.55}
+  .cempty{color:var(--faint);font-size:13px;padding:10px 0}
   footer{border-top:1px solid var(--line);padding:34px var(--gut);display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--faint)}
   footer a{color:var(--gray)}
 </style>
@@ -137,18 +156,29 @@
     </aside>
   </div>
 
-  <div class="share" style="margin-left:auto;margin-right:auto;max-width:680px">
+  <div class="share" style="max-width:1180px;margin:44px auto 0;padding:0 var(--gut)">
     <span>공유</span>
     <a href="#" title="X">X</a><a href="#" title="Facebook">f</a><a href="#" title="LinkedIn">in</a><a href="#" title="링크 복사">↗</a>
   </div>
 
   <!-- 댓글: 소셜 인증 (오픈소스 연동 예정) -->
-  <section class="comments" style="margin-left:auto;margin-right:auto">
+  <section class="comments" style="max-width:1180px;margin:48px auto 0;padding:0 var(--gut)">
     <h3>댓글</h3>
-    <div class="cbox">
-      로그인하고 의견을 남겨보세요.
-      <div class="auth"><button>Google로 계속</button><button>카카오로 계속</button><button>GitHub로 계속</button></div>
-      <div class="note">* Remark42(오픈소스·자체호스팅) 소셜 로그인 연동 예정 — 실제 서비스 시 활성화</div>
+    <div class="cwrap" id="croot">
+      <div class="clogin" id="clogin">
+        <p>로그인하고 의견을 남겨보세요.</p>
+        <div class="auth">
+          <button data-u="Google 사용자" data-c="#4285f4">Google로 계속</button>
+          <button data-u="카카오 사용자" data-c="#3b1e1e">카카오로 계속</button>
+          <button data-u="GitHub 사용자" data-c="#111111">GitHub로 계속</button>
+        </div>
+      </div>
+      <div class="cform" id="cform" hidden>
+        <div class="cme"><span class="av" id="cav"></span><b id="cname"></b><a href="#" id="cout">로그아웃</a></div>
+        <textarea id="ctext" rows="3" placeholder="댓글을 남겨보세요…"></textarea>
+        <div class="crow"><button class="cpost" id="cpost">등록</button></div>
+      </div>
+      <div class="clist" id="clist"></div>
     </div>
   </section>
 
@@ -162,7 +192,7 @@
   </section>
 </main>
 <footer>
-  <span>© 2026 MOMENTUS · 강형모</span>
+  <span>© 2026 모멘터스</span>
   <span style="display:flex;gap:18px"><a href="proto-journal.html">저널</a><a href="proto-products.html">제품</a><a href="mailto:hello@the-moment.us">문의</a></span>
 </footer>
 <script>
@@ -173,6 +203,39 @@
     while(i>0 && secs[i] && secs[i].offsetTop>y)i--;
     links.forEach(function(a,j){a.classList.toggle('on',j===i);});
   },{passive:true});
+</script>
+<script>
+(function(){
+  var KEY="momentus_comments_demo", me=null;
+  function load(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){return[]}}
+  function save(a){localStorage.setItem(KEY,JSON.stringify(a))}
+  var clogin=document.getElementById("clogin"),cform=document.getElementById("cform"),clist=document.getElementById("clist");
+  function initials(n){return (n||"?").trim().charAt(0).toUpperCase()}
+  function render(){
+    var a=load();
+    clist.innerHTML = a.length? a.map(function(c){
+      return '<div class="citem"><span class="av" style="background:'+c.color+'">'+initials(c.name)+'</span><div class="cb"><div class="top">'+c.name+'<span>'+c.time+'</span></div><p></p></div></div>';
+    }).join("") : '<div class="cempty">아직 댓글이 없어요. 첫 댓글을 남겨보세요.</div>';
+    // 안전하게 텍스트 삽입
+    var items=clist.querySelectorAll(".citem p");
+    a.forEach(function(c,i){ if(items[i]) items[i].textContent=c.text; });
+  }
+  document.querySelectorAll("#clogin .auth button").forEach(function(b){
+    b.addEventListener("click",function(){ me={name:b.dataset.u,color:b.dataset.c};
+      document.getElementById("cav").textContent=initials(me.name);
+      document.getElementById("cav").style.background=me.color;
+      document.getElementById("cname").textContent=me.name;
+      clogin.hidden=true; cform.hidden=false;
+    });
+  });
+  document.getElementById("cout").addEventListener("click",function(e){e.preventDefault();me=null;cform.hidden=true;clogin.hidden=false;});
+  document.getElementById("cpost").addEventListener("click",function(){
+    var t=document.getElementById("ctext").value.trim(); if(!t||!me)return;
+    var d=load(); d.unshift({name:me.name,color:me.color,text:t,time:"방금"}); save(d);
+    document.getElementById("ctext").value=""; render();
+  });
+  render();
+})();
 </script>
 <!-- Agentation — design-review 주석 도구 (비공개 리뷰 페이지) -->
 <div id="agentation-root"></div>
