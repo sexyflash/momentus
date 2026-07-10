@@ -174,5 +174,15 @@
     links.forEach(function(a,j){a.classList.toggle('on',j===i);});
   },{passive:true});
 </script>
+<!-- Agentation — design-review 주석 도구 (비공개 리뷰 페이지) -->
+<div id="agentation-root"></div>
+<script type="module">
+  try{
+    const React=(await import("https://esm.sh/react@18.3.1")).default;
+    const {createRoot}=await import("https://esm.sh/react-dom@18.3.1/client");
+    const {Agentation}=await import("https://esm.sh/agentation@3.0.2?deps=react@18.3.1,react-dom@18.3.1");
+    createRoot(document.getElementById("agentation-root")).render(React.createElement(Agentation));
+  }catch(e){ console.error("[Agentation] load fail", e); }
+</script>
 </body>
 </html>

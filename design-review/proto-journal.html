@@ -104,5 +104,15 @@
   <span>© 2026 MOMENTUS · 강형모</span>
   <span style="display:flex;gap:18px"><a href="proto-products.html">제품</a><a href="#">만들어드려요</a><a href="mailto:hello@the-moment.us">문의</a></span>
 </footer>
+<!-- Agentation — design-review 주석 도구 (비공개 리뷰 페이지) -->
+<div id="agentation-root"></div>
+<script type="module">
+  try{
+    const React=(await import("https://esm.sh/react@18.3.1")).default;
+    const {createRoot}=await import("https://esm.sh/react-dom@18.3.1/client");
+    const {Agentation}=await import("https://esm.sh/agentation@3.0.2?deps=react@18.3.1,react-dom@18.3.1");
+    createRoot(document.getElementById("agentation-root")).render(React.createElement(Agentation));
+  }catch(e){ console.error("[Agentation] load fail", e); }
+</script>
 </body>
 </html>
