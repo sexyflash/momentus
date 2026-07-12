@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>만들어드려요 — MOMENTUS</title>
+<meta name="description" content="불편한 걸 말해주세요. 공감 많은 것부터 무료로 만들어 드려요.">
+<meta property="og:title" content="만들어드려요 — MOMENTUS">
+<meta property="og:description" content="불편한 걸 말해주세요. 공감 많은 것부터 무료로 만들어 드려요.">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<header class="gnb">
+  <a class="wm" href="/">MOMENTUS</a>
+  <nav class="lk">
+    <div class="hasdrop"><a href="/products/" class="">제품 ▾</a><div class="drop">
+      <a href="/products/">전체</a><a href="/products/?f=new">새로 나온</a><a href="/products/?f=fast">일 빨리 끝내기</a><a href="/products/?f=sell">파는 사람 도구</a><a href="/products/?f=research">콘텐츠·리서치</a><a href="/products/?f=study">배우고 정리</a>
+    </div></div>
+    <a href="/journal/" class="">저널</a>
+    <a href="/lab/" class="hidem on">만들어드려요</a>
+    <a href="/about/" class="hidem">소개</a>
+  </nav>
+</header>
+<main>
+<div class="lab-hero"><div class="kick pt">Lab · 만들어드려요</div>
+<h1>불편한 거 있으면,<br>말해주세요.</h1>
+<p class="lead">"이런 게 불편해요"를 남겨주세요. 다른 분들이 공감(▲)하고, 공감 많은 것부터 제가 만들어 드려요. <b style="color:var(--ink)">돈 받고 만드는 게 아니에요</b> — 많이 불편하다는 걸 제가 대신 풀어드리는 거예요.</p></div>
+<div class="lab-wrap">
+  <div class="submitb" id="submitb"><textarea id="ptext" placeholder="예: 네이버 블로그 이미지들 한 번에 다운로드하고 싶어요…"></textarea>
+  <div class="row"><span class="hint">기한 약속은 안 해요. 공감 많으면 만들 확률이 확 올라가요.</span><button class="btn" id="psend" style="padding:10px 22px;font-size:14px">제보하기</button></div></div>
+  <div class="ldone" id="ldone"><span>✓</span><div><b>접수됐어요, 고마워요.</b> 비슷한 불편을 겪는 분이 많으면 우선 만들게요. 만들면 여기서 알려드릴게요.</div></div>
+  <section class="board"><div class="board-head"><h2>지금 사람들이 원하는 것</h2><span>공감순</span></div><div id="list"></div></section>
+  <div class="hsteps">
+    <div class="hstep"><div class="n">01</div><b>제보</b><p>불편한 걸 한 줄 남겨요.</p></div>
+    <div class="hstep"><div class="n">02</div><b>공감(▲)</b><p>같은 불편이면 눌러요. 수요가 쌓여요.</p></div>
+    <div class="hstep"><div class="n">03</div><b>내가 픽</b><p>공감 많은 것부터 만듭니다.</p></div>
+    <div class="hstep"><div class="n">04</div><b>알림</b><p>완성되면 제품으로 등록 + 알림.</p></div>
+  </div>
+  <p class="note-c">이미 만들어진 건 <a href="/products/" style="color:var(--ink);text-decoration:underline">제품</a>에서, 만드는 과정은 <a href="/journal/" style="color:var(--ink);text-decoration:underline">저널</a>에서 볼 수 있어요.</p>
+</div>
+</main>
+<footer class="site">
+  <div class="brand"><div class="wm">MOMENTUS</div><p>혼자, 매일 만드는<br>무료 브라우저 제품들.</p></div>
+  <div><h4>둘러보기</h4><a href="/products/">제품 전체</a><a href="/journal/">저널</a><a href="/lab/">만들어드려요</a><a href="/about/">소개</a></div>
+  <div><h4>카테고리</h4><a href="/products/?f=fast">일 빨리 끝내기</a><a href="/products/?f=sell">파는 사람 도구</a><a href="/products/?f=research">콘텐츠·리서치</a><a href="/products/?f=study">배우고 정리</a></div>
+  <div><h4>문의</h4><a href="mailto:hello@the-moment.us">hello@the-moment.us</a><a href="/apps/legal.html">이용약관</a><a href="/apps/privacy-policy.html">개인정보처리방침</a></div>
+  <div class="legal"><span>© 2026 모멘터스</span><span>the-moment.us</span></div>
+</footer>
+<script>
+document.getElementById('psend').addEventListener('click',function(){var t=document.getElementById('ptext').value.trim();if(!t)return;
+try{var k='momentus_lab_requests';var a=JSON.parse(localStorage.getItem(k)||'[]');a.push({text:t,ts:Date.now()});localStorage.setItem(k,JSON.stringify(a));}catch(e){}
+document.getElementById('submitb').style.display='none';document.getElementById('ldone').classList.add('show');});
+var items=[
+ {id:'r1',t:'네이버 블로그 본문 이미지 한 번에 저장',d:'상세페이지 만들 때 이미지 긁는 게 너무 번거로워요.',v:128,tag:'리서치'},
+ {id:'r2',t:'쿠팡 여러 상품 가격/재고 한눈에 비교',d:'소싱할 때 탭 여러 개 열어 비교하는 게 지쳐요.',v:94,tag:'커머스',state:'building'},
+ {id:'r3',t:'유튜브 자막 통째로 복사',d:'요약 말고 원문 자막 자체가 필요할 때가 있어요.',v:61,tag:'생산성'},
+ {id:'r4',t:'인스타 저장한 게시물 정리·내보내기',d:'저장만 하고 다시 못 찾아요.',v:47,tag:'리서치'},
+ {id:'r5',t:'스레드/X 글타래 이미지로 저장',d:'캡처 여러 장 이어붙이기 귀찮아요.',v:33,tag:'콘텐츠'}];
+var voted={};try{voted=JSON.parse(localStorage.getItem('momentus_lab_votes')||'{}');}catch(e){}
+function render(){items.sort(function(a,b){return b.v-a.v;});
+document.getElementById('list').innerHTML=items.map(function(it){
+var on=voted[it.id]?' on':'';var st=it.state==='building'?'<span class="tagx building">만드는 중</span>':'';
+return '<div class="litem"><button class="vote'+on+'" data-id="'+it.id+'"><span class="ar">▲</span><span class="n">'+it.v+'</span></button><div><h3></h3><p></p><div class="tags"><span class="tagx">'+it.tag+'</span>'+st+'</div></div></div>';}).join('');
+var rows=document.querySelectorAll('#list .litem');
+items.forEach(function(it,i){if(rows[i]){rows[i].querySelector('h3').textContent=it.t;rows[i].querySelector('p').textContent=it.d;}});
+[].slice.call(document.querySelectorAll('.vote')).forEach(function(v){v.addEventListener('click',function(){
+var id=v.dataset.id,it=items.filter(function(x){return x.id===id;})[0];
+if(voted[id]){voted[id]=false;it.v--;}else{voted[id]=true;it.v++;}
+try{localStorage.setItem('momentus_lab_votes',JSON.stringify(voted));}catch(e){}render();});});}
+render();
+</script></body>
+</html>
