@@ -74,15 +74,33 @@
   footer .col a{display:block;padding:4px 0;color:var(--gray)}footer .col a:hover{color:var(--ink)}
   footer .brand .wm{font-size:18px}footer .brand p{margin-top:10px;color:var(--faint);font-size:12px;line-height:1.6}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+  /* ===== 통일 GNB (canonical) ===== */
+  .gnb{position:fixed;inset:0 0 auto;z-index:100;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 max(20px,calc((100% - 1200px)/2));background:rgba(255,255,255,.85);backdrop-filter:blur(14px);border-bottom:1px solid #e6e8ec;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Segoe UI",sans-serif}
+  .gnb .wm{font-size:20px;font-weight:800;letter-spacing:-.02em;color:#0b0c0e}
+  .gnb .lk{display:flex;align-items:center;gap:26px;height:56px}
+  .gnb .lk>a,.gnb .hasdrop>a{font-size:14px;color:#5b6270;font-weight:500}
+  .gnb .lk>a:hover,.gnb .hasdrop>a:hover{color:#0b0c0e}
+  .gnb .lk .on{color:#0b0c0e;font-weight:700}
+  .gnb .hasdrop{position:relative;display:flex;align-items:center;height:56px}
+  .gnb .drop{position:absolute;top:56px;left:50%;transform:translateX(-50%) translateY(4px);background:#fff;border:1px solid #e6e8ec;border-radius:10px;padding:6px 0;min-width:160px;opacity:0;visibility:hidden;transition:opacity .16s,transform .16s;box-shadow:0 12px 32px -12px rgba(0,0,0,.18)}
+  .gnb .hasdrop:hover .drop{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+  .gnb .drop a{display:block;padding:9px 18px;font-size:13px;color:#5b6270;white-space:nowrap}
+  .gnb .drop a:hover{color:#0b0c0e;background:#f4f5f7}
+  @media(max-width:820px){.gnb .lk{gap:15px}.gnb .lk .hidem{display:none}}
 </style>
 </head>
 <body>
 
 <header class="gnb">
   <a class="wm" href="proto-landing.html">MOMENTUS</a>
-  <nav class="nav">
-    <div class="lk"><a href="proto-products.html" class="on">제품</a><a href="#">저널</a><a href="#">만들어드려요</a><a href="#">소개</a></div>
-    <a class="cta" href="proto-landing.html">무료로 시작 →</a>
+  <nav class="lk">
+    <div class="hasdrop"><a href="proto-products.html" class="on">제품 ▾</a><div class="drop">
+      <a href="proto-products.html">전체</a><a href="proto-products.html?f=new">새로 나온</a><a href="proto-products.html?f=fast">일 빨리 끝내기</a><a href="proto-products.html?f=sell">파는 사람 도구</a><a href="proto-products.html?f=research">콘텐츠·리서치</a><a href="proto-products.html?f=study">배우고 정리</a>
+    </div></div>
+    <a href="proto-journal.html" class="">저널</a>
+    <a href="proto-lab.html" class=" hidem">만들어드려요</a>
+    <a href="proto-about.html" class=" hidem">소개</a>
   </nav>
 </header>
 
