@@ -351,44 +351,98 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
    팔레트: 흰 + 블루(#3182f6) + 잉크
    ============================================================ */
 :root{--rn-blue:#3182f6}
-/* tattoo 골격: 중앙정렬 초대형 히어로 → 좌우 모노 라벨행 → 균일 카드 그리드 */
+/* 섹션 = [라벨] + [큰 문장] + [카드] — apple.com/apple-intelligence 패턴
+   카드 이미지는 스톡사진이 아니라 제품이 실제로 켜진 화면(CSS로 그림) */
 .rn-hero{padding:calc(56px + clamp(76px,13vh,150px)) var(--gut) clamp(56px,8vh,100px);text-align:center}
-.rn-hero h1{font-size:clamp(40px,7.4vw,106px);font-weight:800;letter-spacing:-.035em;line-height:1.02;
-  margin:0 auto;max-width:14ch}
+.rn-hero h1{font-size:clamp(40px,7.4vw,106px);font-weight:800;letter-spacing:-.035em;line-height:1.02;margin:0 auto;max-width:14ch}
 .rn-hero .sub{margin:34px auto 0;font-size:clamp(15px,1.35vw,18px);color:var(--gray);max-width:46ch;line-height:1.75}
-.rn-secthead{display:flex;justify-content:space-between;align-items:baseline;gap:20px;
-  padding:0 var(--gut);margin-bottom:clamp(28px,3.6vh,44px);
-  font-family:var(--mono);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);line-height:1.7}
-.rn-secthead .r{color:var(--faint)}
-.rn-secthead a.r:hover{color:var(--rn-blue)}
-.rn-sect{padding-top:clamp(60px,9vh,116px)}
-.rn-grid{padding:0 var(--gut);display:grid;gap:18px}
+
+.rn-sect{padding:clamp(70px,10vh,130px) var(--gut) 0}
+.rn-eyebrow{font-size:21px;font-weight:600;letter-spacing:.01em;color:var(--ink);line-height:1.25}
+.rn-sectitle{margin-top:10px;font-size:clamp(27px,3.3vw,44px);font-weight:600;letter-spacing:-.022em;
+  line-height:1.2;max-width:20ch;color:var(--ink)}
+.rn-sectsub{margin-top:16px;font-size:16px;color:var(--gray);max-width:48ch;line-height:1.7}
+
+.rn-grid{display:grid;gap:18px;margin-top:clamp(36px,5vh,60px)}
 .rn-grid.four{grid-template-columns:repeat(4,1fr)}
 .rn-grid.three{grid-template-columns:repeat(3,1fr)}
-.rn-card{display:flex;flex-direction:column;gap:18px}
-.rn-shot{border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--soft);
-  transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
-.rn-shot img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/5;display:block}
-.rn-card:hover .rn-shot{transform:translateY(-4px);box-shadow:0 20px 40px -18px rgba(11,12,14,.18)}
+.rn-card{display:flex;flex-direction:column;gap:16px}
 .rn-card:hover h3{color:var(--rn-blue)}
-.rn-card .kick{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.7}
-.rn-card h3{margin-top:10px;font-size:17.5px;font-weight:700;letter-spacing:-.02em;line-height:1.56}
-.rn-card p{margin-top:10px;font-size:14px;color:var(--gray);line-height:1.75}
-.rn-tool{display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);border-radius:10px;
+.rn-card h3{font-size:17px;font-weight:600;letter-spacing:-.022em;line-height:1.5}
+.rn-card p{margin-top:8px;font-size:13.5px;color:var(--gray);line-height:1.7}
+.rn-card .kick{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+
+/* ---- 제품 스틸: 브라우저 프레임 + 실제 UI ---- */
+.st{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--paper);
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.rn-card:hover .st{transform:translateY(-4px);box-shadow:0 20px 40px -18px rgba(11,12,14,.18)}
+.st .bar{display:flex;align-items:center;gap:5px;padding:8px 10px;border-bottom:1px solid var(--line);background:var(--soft)}
+.st .bar i{width:6px;height:6px;border-radius:50%;background:var(--soft2)}
+.st .bar span{margin-left:6px;font-family:var(--mono);font-size:8.5px;color:var(--faint);
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.st .cv{aspect-ratio:4/5;padding:12px;display:flex}
+
+/* heyreci — 폰 사진 → 판매용 컷 */
+.ba{flex:1;display:grid;grid-template-rows:1fr 1fr;gap:8px}
+.sh{position:relative;border-radius:6px;overflow:hidden}
+.sh span{position:absolute;left:6px;top:6px;z-index:2;font-family:var(--mono);font-size:8px;
+  padding:2px 6px;border-radius:3px;background:rgba(255,255,255,.92);color:var(--ink2)}
+.sh.b{background:linear-gradient(150deg,#b9bec6,#8e949d)}
+.sh.b::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 62%,#6b7280 0 24%,transparent 25%),linear-gradient(#0000001a,#00000033)}
+.sh.a{background:linear-gradient(150deg,#eef4ff,#cfe0ff)}
+.sh.a span{background:var(--rn-blue);color:#fff}
+.sh.a::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 58%,#1f2937 0 24%,transparent 25%),
+             radial-gradient(ellipse at 50% 86%,rgba(0,0,0,.16) 0 26%,transparent 27%)}
+
+/* Mark — 업종별 로고 시안 그리드 */
+.lg{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.lg i{border:1px solid var(--line);border-radius:5px;display:flex;align-items:center;justify-content:center}
+.lg i::after{content:"";display:block;background:var(--ink);opacity:.8}
+.lg i:nth-child(1)::after{width:15px;height:15px;border-radius:50%}
+.lg i:nth-child(2)::after{width:16px;height:5px;border-radius:3px}
+.lg i:nth-child(3)::after{width:14px;height:14px;transform:rotate(45deg)}
+.lg i:nth-child(4)::after{width:14px;height:14px;border-radius:50% 50% 50% 2px}
+.lg i:nth-child(5)::after{width:5px;height:16px;border-radius:3px}
+.lg i:nth-child(6)::after{width:16px;height:9px;border-radius:8px 8px 0 0}
+.lg i:nth-child(7)::after{width:14px;height:14px;border-radius:50% 2px 50% 2px}
+.lg i:nth-child(8)::after{width:15px;height:15px;border-radius:4px;background:transparent;
+  border:3px solid var(--ink);opacity:.8}
+.lg i:nth-child(9)::after{width:16px;height:16px;border-radius:50% 2px}
+.lg i.on{border-color:var(--rn-blue);background:color-mix(in srgb,var(--rn-blue) 7%,transparent)}
+.lg i.on::after{background:var(--rn-blue);opacity:1}
+.lg i.on:nth-child(8)::after{border-color:var(--rn-blue);background:transparent}
+
+/* THE PLAN — 플래너 속지 */
+.pl{flex:1;display:flex;flex-direction:column;gap:7px;border:1px solid var(--line);border-radius:6px;padding:10px}
+.pl .t{height:6px;width:42%;border-radius:3px;background:var(--ink);opacity:.85}
+.pl .wk{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.pl .wk i{aspect-ratio:1;border-radius:2px;background:var(--soft);border:1px solid var(--line)}
+.pl .wk i.on{background:var(--rn-blue);border-color:var(--rn-blue)}
+.pl .ln{height:3px;border-radius:2px;background:var(--soft2)}
+.pl .ln.s{width:58%}
+
+/* Cue — 면접 (다크) */
+.cu{flex:1;border-radius:6px;background:#0E1013;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:12px;padding:14px;text-align:center}
+.cu .q{font-size:11.5px;color:#fff;line-height:1.55;max-width:20ch}
+.cu .wv{display:flex;align-items:center;gap:2.5px;height:20px}
+.cu .wv i{width:2.5px;border-radius:2px;background:#5B9BFF}
+.cu .tm{font-family:var(--mono);font-size:8.5px;color:#7f8792}
+
+/* 주는 것 — 텍스트 카드 */
+.rn-tool{display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);border-radius:12px;
   padding:24px 24px 20px;transition:border-color .2s,transform .2s var(--ease)}
 .rn-tool:hover{border-color:var(--ink);transform:translateY(-2px)}
-.rn-tool .tn{font-size:17.5px;font-weight:700;letter-spacing:-.02em;line-height:1.56}
-.rn-tool .td{font-size:14px;color:var(--gray);line-height:1.75}
+.rn-tool .tn{font-size:17px;font-weight:600;letter-spacing:-.022em;line-height:1.5}
+.rn-tool .td{font-size:13.5px;color:var(--gray);line-height:1.7}
 .rn-bridge{margin-top:auto;padding-top:16px;border-top:1px dashed var(--line);
-  font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--rn-blue);line-height:1.6}
+  font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--rn-blue);line-height:1.6}
 .rn-bridge.plain{color:var(--faint)}
 .rn-outro{padding:clamp(80px,12vh,150px) var(--gut) 0}
-@media(max-width:980px){
-  .rn-grid.four,.rn-grid.three{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:620px){
-  .rn-grid.four,.rn-grid.three{grid-template-columns:1fr}
-}
+@media(max-width:980px){.rn-grid.four,.rn-grid.three{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.rn-grid.four,.rn-grid.three{grid-template-columns:1fr}}
 """
 
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
@@ -774,34 +828,66 @@ land_body = """<section class="rn-hero">
 </section>
 
 <section class="rn-sect">
-  <div class="rn-secthead"><span>/ 파는 것</span><span class="r">(04)</span></div>
+  <div class="rn-eyebrow">파는 것</div>
+  <h2 class="rn-sectitle">일이 되게 하는 네 가지.</h2>
+  <p class="rn-sectsub">각자 다른 문제를 풉니다. 필요한 것만 골라 쓰세요.</p>
+
   <div class="rn-grid four">
     <a class="rn-card" href="https://heyreci.com" target="_blank" rel="noopener">
-      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?w=900&q=75&auto=format&fit=crop" alt="스튜디오 조명 아래 놓인 화장품 상품 사진"></div>
+      <div class="st">
+        <div class="bar"><i></i><i></i><i></i><span>heyreci.com — 상품 사진 스튜디오</span></div>
+        <div class="cv"><div class="ba">
+          <div class="sh b"><span>폰으로 찍은 것</span></div>
+          <div class="sh a"><span>30초 뒤</span></div>
+        </div></div>
+      </div>
       <div>
         <span class="kick">heyreci</span>
         <h3>모델 촬영비 0원으로 카탈로그를 만듭니다</h3>
         <p>폰으로 찍은 상품 사진이 30초 만에 판매용 컷으로.</p>
       </div>
     </a>
+
     <a class="rn-card" href="https://mark.the-moment.us" target="_blank" rel="noopener">
-      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1713616147761-c126f8009c6f?w=900&q=75&auto=format&fit=crop" alt="종이에 로고를 스케치하는 모습" loading="lazy"></div>
+      <div class="st">
+        <div class="bar"><i></i><i></i><i></i><span>mark — 병원·의원 시안 236개</span></div>
+        <div class="cv"><div class="lg">
+          <i></i><i class="on"></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i>
+        </div></div>
+      </div>
       <div>
         <span class="kick">Mark</span>
         <h3>내 업종 로고를 먼저 보고 고릅니다</h3>
         <p>같은 업종만 깊이 판 시안 600여 개. 간판·명함에 얹은 모습까지.</p>
       </div>
     </a>
+
     <a class="rn-card" href="https://planner.the-moment.us" target="_blank" rel="noopener">
-      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1673597487243-8e84ae538b8d?w=900&q=75&auto=format&fit=crop" alt="태블릿에 띄운 달력 플래너" loading="lazy"></div>
+      <div class="st">
+        <div class="bar"><i></i><i></i><i></i><span>THE PLAN — 위클리 · 월요일 시작</span></div>
+        <div class="cv"><div class="pl">
+          <i class="t"></i>
+          <div class="wk"><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
+          <i class="ln"></i><i class="ln s"></i><i class="ln"></i><i class="ln s"></i>
+          <i class="ln"></i><i class="ln s"></i><i class="ln"></i>
+        </div></div>
+      </div>
       <div>
         <span class="kick">THE PLAN</span>
         <h3>내 손에 맞는 플래너를 골라서 씁니다</h3>
         <p>스타일·구성·시작 요일까지 고른 대로 조립해 PDF로.</p>
       </div>
     </a>
+
     <a class="rn-card" href="https://cue.the-moment.us" target="_blank" rel="noopener">
-      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1698047681452-08eba22d0c64?w=900&q=75&auto=format&fit=crop" alt="면접에서 답변하는 지원자" loading="lazy"></div>
+      <div class="st">
+        <div class="bar"><i></i><i></i><i></i><span>cue — 답변 중</span></div>
+        <div class="cv"><div class="cu">
+          <div class="q">“가장 실패한 프로젝트는 뭔가요?”</div>
+          <div class="wv"><i style="height:5px"></i><i style="height:13px"></i><i style="height:19px"></i><i style="height:9px"></i><i style="height:16px"></i><i style="height:7px"></i><i style="height:15px"></i><i style="height:11px"></i><i style="height:18px"></i><i style="height:6px"></i></div>
+          <div class="tm">00:42</div>
+        </div></div>
+      </div>
       <div>
         <span class="kick">Cue</span>
         <h3>면접장에서 얼어붙지 않으려면 소리 내어 연습해야 합니다</h3>
@@ -812,7 +898,10 @@ land_body = """<section class="rn-hero">
 </section>
 
 <section class="rn-sect">
-  <div class="rn-secthead"><span>/ 주는 것</span><a class="r" href="/products/">(전체 보기)</a></div>
+  <div class="rn-eyebrow">주는 것</div>
+  <h2 class="rn-sectitle">매일 쓰는 도구는 그냥 드립니다.</h2>
+  <p class="rn-sectsub">설치도 로그인도 결제도 없습니다. 쓰다 보면 위의 제품이 왜 필요한지 알게 되실 겁니다.</p>
+
   <div class="rn-grid three">
     <a class="rn-tool" href="/products/quickpang/">
       <span class="tn">퀵팡</span>
