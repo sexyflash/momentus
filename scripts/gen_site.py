@@ -3,6 +3,7 @@
    assets/bookmarklets/*.txt(원본 소스)를 드래그 버튼 href에 실제 주입한다.
    실행: python3 scripts/gen_site.py (repo 루트에서)"""
 import os
+import json
 import hashlib
 
 os.chdir(os.path.join(os.path.dirname(__file__), ".."))
@@ -657,6 +658,29 @@ body:has(.vd){padding-bottom:88px}
   .an-row{grid-template-columns:1fr;gap:32px}
   .an-post h1{font-size:30px}
 }
+
+/* ---- 법적 페이지 (약관·개인정보·환불) + 푸터 사업자 표기 ---- */
+.lg{max-width:760px;margin:0 auto;padding:0 24px}
+.lg-head{padding:calc(56px + 90px) 0 0;border-bottom:1px solid #EAEAEA;padding-bottom:32px}
+.lg-head h1{font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-.03em;color:#202020}
+.lg-head .upd{margin-top:12px;font-size:14px;color:#909090}
+.lg-body{padding:48px 0 120px}
+.lg-body p{font-size:16px;line-height:1.85;color:#5A5A5A}
+.lg-body p+p{margin-top:16px}
+.lg-body b{color:#202020;font-weight:700}
+.lg-body h2{margin:44px 0 14px;font-size:20px;font-weight:700;letter-spacing:-.02em;color:#202020}
+.lg-body h3{margin:28px 0 10px;font-size:16.5px;font-weight:700;color:#202020}
+.lg-body ul{margin:14px 0;padding-left:20px}
+.lg-body li{font-size:16px;line-height:1.85;color:#5A5A5A;margin-bottom:10px}
+.lg-body a{color:#202020;text-decoration:underline;text-underline-offset:3px}
+.lg-biz{width:100%;border-collapse:collapse;margin-top:16px;font-size:15px}
+.lg-biz th{text-align:left;padding:12px 16px 12px 0;color:#909090;font-weight:400;white-space:nowrap;
+  border-bottom:1px solid #F0F0F0;vertical-align:top;width:150px}
+.lg-biz td{padding:12px 0;color:#202020;border-bottom:1px solid #F0F0F0}
+
+footer.site .biz{grid-column:1/-1;margin-top:36px;padding-top:24px;border-top:1px solid #EAEAEA;
+  display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:#A8A8A8;line-height:1.8}
+
 """
 
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
@@ -674,13 +698,50 @@ def gnb(active=""):
   </nav>
 </header>"""
 
-FOOTER = """<footer class="site">
+# ---------- 사업자 정보 (단일 소스) ----------
+BIZ = dict(
+    name="모멘터스 (MOMENTUS)",
+    ceo="박진이",
+    reg="113-34-00602",
+    mail_order="2024-서울양천-1300호",
+    addr="서울특별시 양천구 신월로 99",
+    tel="070-8098-7367",
+    email="hello.momentus@gmail.com",
+    privacy_officer="강형모",
+    updated="2026. 07. 14",
+)
+
+FOOTER = f"""<footer class="site">
   <div class="brand"><div class="wm">MOMENTUS</div><p>쓸모 있는 것만<br>만듭니다.</p></div>
   <div><h4>제품</h4><a href="/products/heyreci/">AI 상품사진 — 헤이레시</a><a href="/products/mark/">로고 디자인 — 마크</a><a href="/products/theplan/">디지털 플래너 — 더플랜</a><a href="/products/cue/">AI 모의면접 — 큐</a><a href="/products/quickpang/">쿠팡 옵션·재고 — 퀵팡</a></div>
   <div><h4>무료 도구</h4><a href="/products/insta-rank/">인스타 인기순 정렬</a><a href="/products/youtube-rank/">유튜브 인기순 정렬</a><a href="/products/pinterest-grab/">핀터레스트 원본 추출</a><a href="/products/chatpage/">유튜브 AI 요약 — ChatPage</a><a href="/products/her/">음성 입력 — her</a></div>
-  <div><h4>모멘터스</h4><a href="/log/">블로그</a><a href="/about/">소개</a><a href="mailto:hello@the-moment.us">hello@the-moment.us</a><a href="/apps/legal.html">이용약관</a><a href="/apps/privacy-policy.html">개인정보처리방침</a></div>
+  <div><h4>모멘터스</h4><a href="/log/">로그</a><a href="/about/">소개</a><a href="mailto:{BIZ['email']}">문의하기</a><a href="/legal/terms/">이용약관</a><a href="/legal/privacy/">개인정보처리방침</a><a href="/legal/refund/">환불 규정</a></div>
+  <div class="biz">
+    <span>{BIZ['name']}</span><span>대표 {BIZ['ceo']}</span><span>사업자등록번호 {BIZ['reg']}</span><span>통신판매업신고 {BIZ['mail_order']}</span>
+    <span>{BIZ['addr']}</span><span>{BIZ['tel']}</span><span>{BIZ['email']}</span><span>개인정보보호책임자 {BIZ['privacy_officer']}</span>
+  </div>
   <div class="legal"><span>© 2026 모멘터스</span><span>the-moment.us</span></div>
 </footer>"""
+
+JSONLD = json.dumps({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "모멘터스",
+    "alternateName": "MOMENTUS",
+    "url": "https://the-moment.us",
+    "email": BIZ["email"],
+    "telephone": BIZ["tel"],
+    "description": "AI로 제품을 만드는 스튜디오. AI 상품사진(헤이레시), 로고 디자인(마크), 디지털 플래너(더플랜), AI 모의면접(큐)을 만들어 팔고, 브라우저 도구 6종을 무료로 제공합니다.",
+    "address": {"@type": "PostalAddress", "addressLocality": "서울", "streetAddress": BIZ["addr"], "addressCountry": "KR"},
+    "founder": {"@type": "Person", "name": "강형모"},
+    "makesOffer": [
+        {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "헤이레시 — AI 상품사진 생성", "applicationCategory": "DesignApplication", "url": "https://heyreci.com"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "마크 — 업종별 로고 디자인", "url": "https://mark.the-moment.us"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "더플랜 — 디지털 플래너", "url": "https://planner.the-moment.us"}},
+        {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "큐 — AI 모의면접", "applicationCategory": "EducationalApplication", "url": "https://cue.the-moment.us"}},
+    ],
+}, ensure_ascii=False)
+
 
 def page(title, desc, body, active="", extra=""):
     return f"""<!doctype html>
@@ -693,6 +754,7 @@ def page(title, desc, body, active="", extra=""):
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <link rel="stylesheet" href="/assets/site.css?v={CSS_VER}">
+<script type="application/ld+json">{JSONLD}</script>
 </head>
 <body>
 {gnb(active)}
@@ -1443,8 +1505,156 @@ LAND_JS = """<script>
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다", "상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.", land_body, active="", extra=LAND_JS))
 
+# ---------- 법적 페이지 (약관·개인정보·환불) ----------
+LEGAL_CSS_WRAP = '<div class="lg">'
+
+BIZ_TABLE = f"""<table class="lg-biz">
+<tr><th>상호</th><td>{BIZ['name']}</td></tr>
+<tr><th>대표자</th><td>{BIZ['ceo']}</td></tr>
+<tr><th>사업자등록번호</th><td>{BIZ['reg']}</td></tr>
+<tr><th>통신판매업신고</th><td>{BIZ['mail_order']}</td></tr>
+<tr><th>사업장 주소</th><td>{BIZ['addr']}</td></tr>
+<tr><th>전화</th><td>{BIZ['tel']}</td></tr>
+<tr><th>이메일</th><td><a href="mailto:{BIZ['email']}">{BIZ['email']}</a></td></tr>
+<tr><th>개인정보보호책임자</th><td>{BIZ['privacy_officer']}</td></tr>
+</table>"""
+
+PRIVACY = f"""{LEGAL_CSS_WRAP}
+  <div class="lg-head">
+    <h1>개인정보처리방침</h1>
+    <p class="upd">최종 업데이트: {BIZ['updated']}</p>
+  </div>
+  <div class="lg-body">
+    <p><b>모멘터스는 개인정보를 수집하지 않는 것을 원칙으로 합니다.</b> 브라우저 도구(퀵팡·인스타 인기순 정렬·유튜브 인기순 정렬·핀터레스트 원본 추출·ChatPage·her)는 모든 처리를 이용자의 브라우저 안에서 수행하며, 어떠한 데이터도 모멘터스 서버로 전송하지 않습니다.</p>
+
+    <h2>1. 수집하는 항목</h2>
+    <h3>1.1 브라우저 도구 (무료)</h3>
+    <ul>
+      <li><b>수집하지 않습니다.</b> 회원가입, 로그인, 이메일 수집이 없습니다.</li>
+      <li>도구가 다루는 데이터(예: 쿠팡 상품 정보, 인스타그램 게시물 좋아요 수, 음성 입력 내용)는 <b>이용자의 브라우저 안에서만</b> 처리되고 즉시 폐기됩니다.</li>
+      <li><b>her(음성 입력)</b>: 음성 인식은 기기 내에서 처리되며, 녹음 파일이 외부로 전송되지 않습니다.</li>
+      <li><b>ChatPage</b>: 이용자가 선택한 AI 서비스(ChatGPT·Claude·Gemini)의 탭으로 자막 텍스트를 전달합니다. 이때 해당 AI 서비스의 개인정보처리방침이 적용됩니다.</li>
+    </ul>
+
+    <h3>1.2 웹사이트 (the-moment.us)</h3>
+    <ul>
+      <li>방문 통계 확인을 위해 Google Analytics를 사용할 수 있으며, 이 경우 IP 주소·브라우저 종류·방문 페이지 등 <b>식별되지 않는 통계 정보</b>가 수집됩니다.</li>
+      <li>쿠키는 통계 목적으로만 사용하며, 브라우저 설정에서 거부할 수 있습니다.</li>
+    </ul>
+
+    <h3>1.3 유료 제품</h3>
+    <p>헤이레시(heyreci.com), 마크(mark.the-moment.us), 더플랜(planner.the-moment.us), 큐(cue.the-moment.us)는 <b>각 서비스에서 별도의 개인정보처리방침을 운영</b>합니다. 결제·회원 정보는 해당 서비스와 결제대행사가 처리하며, 모멘터스 웹사이트는 이를 수집·보관하지 않습니다.</p>
+
+    <h2>2. 이용 목적</h2>
+    <p>수집된 통계 정보는 서비스 개선 목적으로만 사용하며, 제3자에게 판매하거나 제공하지 않습니다.</p>
+
+    <h2>3. 보유 기간</h2>
+    <p>브라우저 도구는 데이터를 보관하지 않습니다. 웹사이트 통계 정보는 수집일로부터 최대 26개월간 보관 후 파기합니다.</p>
+
+    <h2>4. 이용자의 권리</h2>
+    <p>개인정보를 수집하지 않으므로 열람·정정·삭제를 요청할 대상이 없습니다. 다만 문의사항이 있으시면 아래로 연락 주십시오.</p>
+
+    <h2>5. 개인정보보호책임자</h2>
+    <p>{BIZ['privacy_officer']} · <a href="mailto:{BIZ['email']}">{BIZ['email']}</a></p>
+
+    <h2>6. 사업자 정보</h2>
+    {BIZ_TABLE}
+
+    <h2>7. 변경 고지</h2>
+    <p>본 방침이 변경되는 경우 이 페이지에 게시합니다.</p>
+  </div>
+</div>"""
+
+TERMS = f"""{LEGAL_CSS_WRAP}
+  <div class="lg-head">
+    <h1>이용약관</h1>
+    <p class="upd">최종 업데이트: {BIZ['updated']}</p>
+  </div>
+  <div class="lg-body">
+    <h2>1. 적용 범위</h2>
+    <p>본 약관은 모멘터스가 the-moment.us에서 제공하는 <b>무료 브라우저 도구</b>와, 이 웹사이트를 통해 안내되는 <b>유료 제품</b>의 이용에 적용됩니다.</p>
+
+    <h2>2. 무료 브라우저 도구</h2>
+    <ul>
+      <li>퀵팡, 인스타 인기순 정렬, 유튜브 인기순 정렬, 핀터레스트 원본 추출, ChatPage, her는 <b>무료로 제공</b>됩니다.</li>
+      <li>회원가입·결제·이메일 등록이 필요하지 않습니다.</li>
+      <li>개인적·상업적 용도로 자유롭게 사용할 수 있습니다.</li>
+      <li>도구를 역공학하거나, 타인의 권리를 침해하는 목적으로 사용해서는 안 됩니다.</li>
+      <li>각 도구는 대상 웹사이트(쿠팡·인스타그램·유튜브 등)의 화면 구성에 의존하므로, 해당 사이트의 변경으로 <b>예고 없이 동작하지 않을 수 있습니다.</b></li>
+    </ul>
+
+    <h2>3. 유료 제품</h2>
+    <p>헤이레시·마크·더플랜·큐는 <b>각 서비스에서 별도의 약관과 결제 조건</b>을 운영합니다. 계약은 각 서비스와 이용자 사이에 성립하며, the-moment.us는 이를 안내하는 역할만 합니다.</p>
+
+    <h2>4. 면책</h2>
+    <ul>
+      <li>무료 도구는 <b>있는 그대로(as-is)</b> 제공되며, 특정 목적에 대한 적합성을 보증하지 않습니다.</li>
+      <li>도구 사용으로 발생한 직·간접적 손해에 대해 모멘터스는 책임을 지지 않습니다.</li>
+      <li>도구가 다루는 제3자 사이트의 데이터에 대한 정확성은 보증하지 않습니다.</li>
+    </ul>
+
+    <h2>5. 서비스 변경·중단</h2>
+    <p>모멘터스는 사전 고지 없이 도구를 수정하거나 중단할 수 있습니다. 무료 제공이므로 이에 따른 보상은 제공되지 않습니다.</p>
+
+    <h2>6. 지식재산권</h2>
+    <p>모멘터스가 제작한 도구·디자인·문서의 저작권은 모멘터스에 있습니다.</p>
+
+    <h2>7. 문의</h2>
+    <p><a href="mailto:{BIZ['email']}">{BIZ['email']}</a></p>
+
+    <h2>8. 사업자 정보</h2>
+    {BIZ_TABLE}
+  </div>
+</div>"""
+
+REFUND = f"""{LEGAL_CSS_WRAP}
+  <div class="lg-head">
+    <h1>환불 규정</h1>
+    <p class="upd">최종 업데이트: {BIZ['updated']}</p>
+  </div>
+  <div class="lg-body">
+    <h2>1. 무료 제품</h2>
+    <p>브라우저 도구 6종은 <b>전액 무료</b>이므로 결제와 환불이 발생하지 않습니다.</p>
+
+    <h2>2. 유료 제품</h2>
+    <p>유료 제품은 각 서비스에서 결제가 이루어지며, 환불도 해당 서비스의 규정을 따릅니다.</p>
+    <ul>
+      <li><b>헤이레시</b> (AI 상품사진) — 크레딧 충전제. 미사용 크레딧은 결제일로부터 7일 이내 환불 가능. 이미 생성에 사용된 크레딧은 환불되지 않습니다.</li>
+      <li><b>마크</b> (로고 디자인) — 제작 착수 전 전액 환불. 시안 전달 후에는 진행 단계에 따라 부분 환불.</li>
+      <li><b>더플랜</b> (디지털 플래너) — 디지털 콘텐츠 특성상 <b>파일 다운로드 전까지</b> 환불 가능.</li>
+      <li><b>큐</b> (AI 모의면접) — 구독 개시 후 7일 이내, 이용 이력이 없는 경우 전액 환불.</li>
+    </ul>
+
+    <h2>3. 청약철회</h2>
+    <p>전자상거래법에 따라 결제일로부터 7일 이내 청약철회가 가능합니다. 다만 <b>디지털 콘텐츠의 제공이 개시된 경우</b>(플래너 파일 다운로드, 이미지 생성 완료 등) 청약철회가 제한될 수 있으며, 이는 결제 전에 고지됩니다.</p>
+
+    <h2>4. 환불 절차</h2>
+    <p>아래로 연락 주시면 3영업일 이내 회신하고, 승인 시 7영업일 이내 결제 수단으로 환불합니다.</p>
+    <p><a href="mailto:{BIZ['email']}">{BIZ['email']}</a> · {BIZ['tel']}</p>
+
+    <h2>5. 사업자 정보</h2>
+    {BIZ_TABLE}
+  </div>
+</div>"""
+
+for slug, title, body, desc in [
+    ("privacy", "개인정보처리방침", PRIVACY, "모멘터스는 개인정보를 수집하지 않습니다. 브라우저 도구는 모든 처리를 기기 안에서 수행합니다."),
+    ("terms", "이용약관", TERMS, "모멘터스 무료 브라우저 도구 및 유료 제품 이용약관."),
+    ("refund", "환불 규정", REFUND, "모멘터스 유료 제품의 환불 규정 및 청약철회 안내."),
+]:
+    os.makedirs(f"legal/{slug}", exist_ok=True)
+    with open(f"legal/{slug}/index.html", "w", encoding="utf-8") as fh:
+        fh.write(page(f"{title} — MOMENTUS", desc, body, active=""))
+
+# 크롬 웹스토어가 참조하는 기존 URL 유지 (내용만 교체)
+os.makedirs("apps", exist_ok=True)
+with open("apps/privacy-policy.html", "w", encoding="utf-8") as fh:
+    fh.write(page("개인정보처리방침 — MOMENTUS", "모멘터스는 개인정보를 수집하지 않습니다.", PRIVACY, active=""))
+with open("apps/legal.html", "w", encoding="utf-8") as fh:
+    fh.write(page("이용약관 — MOMENTUS", "모멘터스 이용약관.", TERMS, active=""))
+
 # ---------- sitemap ----------
-urls = ["", "log/", "about/"] + [f"products/{s}/" for s in ORDER] + [f"log/{s}/" for s in PORDER]
+urls = ["", "log/", "about/", "legal/privacy/", "legal/terms/", "legal/refund/"] + [f"products/{s}/" for s in ORDER] + [f"log/{s}/" for s in PORDER]
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for u in urls:
     sm += f"  <url><loc>https://the-moment.us/{u}</loc></url>\n"
