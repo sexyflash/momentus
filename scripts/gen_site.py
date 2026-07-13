@@ -500,6 +500,35 @@ body:has(.vd){padding-bottom:88px}
   .vd-guide.open{max-height:520px}
   .vd-guide .inner{grid-template-columns:1fr;gap:22px;padding:26px 20px 24px}
 }
+
+/* ---- 소개 (vinylc 톤: 넉넉한 여백, 담백한 타이포) ---- */
+.ab{max-width:1245px;margin:0 auto;padding:0 24px}
+.ab-hero{padding:calc(56px + 140px) 0 0}
+.ab-hero h1{font-size:clamp(30px,3.8vw,54px);font-weight:700;letter-spacing:-1px;line-height:1.35;color:#202020}
+.ab-hero .lead{margin-top:26px;font-size:19px;line-height:1.9;color:#909090}
+.ab-body{max-width:660px;padding:100px 0 0}
+.ab-body p{font-size:17px;line-height:2.05;color:#5A5A5A}
+.ab-body p+p{margin-top:38px}
+.ab-body b{color:#202020;font-weight:700}
+.ab-now{padding:130px 0 0}
+.ab-kick{font-size:19px;font-weight:700;color:#909090}
+.ab-now h2{margin-top:16px;font-size:clamp(24px,2.8vw,36px);font-weight:700;letter-spacing:-1px;line-height:1.5;color:#202020;max-width:24ch}
+.ab-cards{margin-top:64px;display:grid;grid-template-columns:repeat(3,1fr);gap:60px}
+.ab-card b{display:block;font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.5;color:#202020}
+.ab-card p{margin-top:16px;font-size:15.5px;line-height:1.9;color:#909090}
+.ab-end{padding:150px 0 40px;border-top:1px solid #EAEAEA;margin-top:130px}
+.ab-end p{font-size:clamp(21px,2.4vw,30px);font-weight:700;letter-spacing:-.03em;line-height:1.6;color:#202020}
+.ab-btns{margin-top:44px;display:flex;gap:14px;flex-wrap:wrap}
+.ab-go{display:inline-flex;align-items:center;height:60px;padding:0 34px;background:#202020;color:#fff;font-size:17px;font-weight:700;letter-spacing:-.02em;transition:background .2s}
+.ab-go:hover{background:#5A5A5A}
+.ab-ghost{display:inline-flex;align-items:center;height:60px;padding:0 30px;border:1px solid #DADADA;color:#5A5A5A;font-size:17px;font-weight:700;letter-spacing:-.02em;transition:border-color .2s,color .2s}
+.ab-ghost:hover{border-color:#202020;color:#202020}
+@media(max-width:900px){
+  .ab-cards{grid-template-columns:1fr;gap:44px}
+  .ab-body{padding-top:64px}
+  .ab-now{padding-top:90px}
+  .ab-end{padding-top:90px;margin-top:90px}
+}
 """
 
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
@@ -950,30 +979,50 @@ with open("lab/index.html", "w", encoding="utf-8") as f:
     f.write(page("만들어드려요 — MOMENTUS", "불편한 걸 말해주세요. 공감 많은 것부터 무료로 만들어 드려요.", lab_body, active="l", extra=LAB_JS))
 
 # ---------- about ----------
-about_body = """<div class="awrap">
-  <section class="ahero"><div class="kick pt">About</div>
-    <h1>혼자, 매일 만듭니다.</h1>
-    <p class="lead">MOMENTUS는 강형모의 1인 AI 스튜디오예요. AI 슈트를 입은 한 사람이, 혼자선 불가능한 생산량으로 브라우저에서 쓰는 작은 제품들을 계속 만듭니다.</p>
-    <div class="avat"><div class="a">강</div><div><b>강형모</b><span>Founder · MOMENTUS</span></div></div>
+about_body = """<div class="ab">
+  <section class="ab-hero">
+    <h1>이걸로 먹고 살 수 있을까.</h1>
+    <p class="lead">요즘 다들 한 번쯤 하는 고민이죠.<br>저희도 그 답을 찾는 중입니다.</p>
   </section>
-  <div class="split3">✳ ✳ ✳</div>
-  <p class="say">비싸고 어려워서 미뤄두던 일들을, 그냥 한 번 눌러보게 만들고 싶었어요. 그래서 여기 있는 건 <b>전부 무료</b>로 풉니다. 로그인도, 결제도, 이메일 수집도 없이 — 도구가 실제로 당신 일을 되게 하면, 그거면 충분해요.</p>
-  <div class="stats3">
-    <div class="stat3"><b>6+</b><span>무료 제품 (계속 증가)</span></div>
-    <div class="stat3"><b>1만+</b><span>퀵팡으로 모인 사용자</span></div>
-    <div class="stat3"><b>5.0</b><span>ChatPage 스토어 별점</span></div>
-  </div>
-  <section class="tl"><h2>만든 것들</h2>
-    <div class="trow"><span class="yr">2026</span><div><b>her · ChatPage</b><p>말로 조작하는 확장 · 유튜브 3초 요약</p></div></div>
-    <div class="trow"><span class="yr">2025</span><div><b>Mark</b><p>AI 로고 자동 생성 — 작품 1,193건</p></div></div>
-    <div class="trow"><span class="yr">2024</span><div><b>퀵팡</b><p>쿠팡 퀵보기 — 1만 사용자의 시작</p></div></div>
+
+  <section class="ab-body">
+    <p>모멘터스는 <b>부부가 함께 하는 작은 회사</b>예요. 사업자는 아내 이름으로 냈고, 제품은 제가 만듭니다. 서로 없으면 굴러가지 않습니다.</p>
+
+    <p>둘 다 십수 년을 디지털 제품 만드는 일로 먹고살았습니다. 이모션글로벌, NC소프트 재팬, 아이플래테아, 네오랩컨버전스, 엔카닷컴 — 이름을 다 아실 필요는 없어요. 그냥 <b>남의 제품을 오래 만들어 온 사람들</b>이라고만 알아주시면 됩니다.</p>
+
+    <p>그러다 우리 걸 만들기 시작했어요. 대단한 매출은 아닙니다. 어떤 달은 만 원, 어떤 달은 이만 원. 솔직히 아직도 그 답을 못 찾았습니다.<br><b>다만 한 번도 멈추지 않았습니다.</b> 그게 지금 내세울 수 있는 전부예요.</p>
   </section>
-  <section class="cta-dark"><h2>필요한 게 있으면,<br>말해주세요.</h2><p>불편한 걸 알려주면, 그중에서 골라 만들어 드려요.</p>
-  <div class="btns"><a href="/lab/">만들어드려요 →</a><a class="ghost" href="mailto:hello@the-moment.us">hello@the-moment.us</a></div></section>
+
+  <section class="ab-now">
+    <div class="ab-kick">요즘 하는 일</div>
+    <h2>AI가 사람을 이기는 지점을 찾고 있습니다.</h2>
+    <div class="ab-cards">
+      <div class="ab-card">
+        <b>로고 공모에 AI로 나갑니다</b>
+        <p>사람 디자이너들과 같은 판에서 겨룹니다. 이기기도 하고, 집니다. 이기는 날이 늘고 있어요.</p>
+      </div>
+      <div class="ab-card">
+        <b>봇이 스스로 코드를 고칩니다</b>
+        <p>슬랙에 사는 AI 팀이 제품을 만들고, 버그를 찾고, 자기 코드를 고쳐서 배포합니다.</p>
+      </div>
+      <div class="ab-card">
+        <b>거기서 배운 걸로 만듭니다</b>
+        <p>여기 있는 제품들은 그 실험에서 나왔어요. 우리가 먼저 쓰고, 쓸모 있으면 남깁니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ab-end">
+    <p>혹시 비슷한 고민을 하고 계신다면,<br>여기 있는 걸 그냥 가져다 쓰세요.</p>
+    <div class="ab-btns">
+      <a class="ab-go" href="/">만든 것들 보기 →</a>
+      <a class="ab-ghost" href="/lab/">불편한 거 알려주기</a>
+    </div>
+  </section>
 </div>"""
 os.makedirs("about", exist_ok=True)
 with open("about/index.html", "w", encoding="utf-8") as f:
-    f.write(page("소개 — MOMENTUS", "강형모의 1인 AI 스튜디오. 무료 브라우저 제품을 매일 만듭니다.", about_body, active="a"))
+    f.write(page("소개 — MOMENTUS", "부부가 함께 하는 작은 회사. AI가 사람을 이기는 지점을 찾으며 제품을 만듭니다.", about_body, active="a"))
 
 # ---------- landing (root index.html) ----------
 land_body = """<div class="vc">
