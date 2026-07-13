@@ -400,6 +400,61 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
   .vc-item h3,.vc-item.big h3{font-size:21px}
   .vc-item .cat{font-size:16px}
 }
+
+/* ============================================================
+   제품 상세 = vinylc.com/ko/goods/{id} 구조 그대로 (실측)
+   풀블리드 히어로(제목 54px 흰색) → 이미지 리듬 → CTA → Next
+   ============================================================ */
+.vd{--vd-w:1245px}
+.vd-hero{position:relative;width:100vw;margin-left:calc(50% - 50vw);height:600px;overflow:hidden}
+.vd-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.vd-hero::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.35) 0 30%,rgba(0,0,0,.1) 60%,rgba(0,0,0,.45) 100%)}
+.vd-hero .cap{position:absolute;left:50%;transform:translateX(-50%);bottom:64px;z-index:2;
+  width:100%;max-width:var(--vd-w);padding:0 24px}
+.vd-hero .kick{font-size:19px;font-weight:500;color:rgba(255,255,255,.75);letter-spacing:normal}
+.vd-hero h1{margin-top:14px;font-size:54px;font-weight:700;letter-spacing:-1px;line-height:1.25;color:#fff;max-width:20ch}
+
+.vd-flow{max-width:var(--vd-w);margin:0 auto;padding:0 24px}
+.vd-note{max-width:var(--vd-w);margin:0 auto;padding:96px 24px;text-align:center}
+.vd-note p{font-size:16px;line-height:2;color:#5A5A5A;max-width:60ch;margin:0 auto}
+.vd-note p+p{margin-top:0}
+
+.vd-full{width:100vw;margin-left:calc(50% - 50vw);margin-top:100px}
+.vd-full img{width:100%;height:auto;display:block}
+.vd-wide{margin-top:100px}
+.vd-wide img{width:100%;aspect-ratio:1245/779;object-fit:cover;display:block}
+.vd-duo{margin-top:100px;display:grid;grid-template-columns:345px 795px;gap:105px;align-items:center}
+.vd-duo.rev{grid-template-columns:795px 345px}
+.vd-duo img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+.vd-pair{margin-top:100px;display:grid;grid-template-columns:1fr 1fr;gap:105px}
+.vd-pair img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+
+.vd-cta{max-width:var(--vd-w);margin:0 auto;padding:120px 24px;text-align:center}
+.vd-cta .btn-buy{display:inline-flex;align-items:center;justify-content:center;
+  min-width:280px;height:64px;padding:0 40px;background:#202020;color:#fff;
+  font-size:21px;font-weight:700;letter-spacing:-.02em;border-radius:0;transition:background .2s}
+.vd-cta .btn-buy:hover{background:#5A5A5A}
+.vd-cta .hint{margin-top:20px;font-size:15px;color:#909090;line-height:1.7}
+
+.vd-next{position:relative;width:100vw;margin-left:calc(50% - 50vw);height:271px;overflow:hidden;display:block}
+.vd-next img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.vd-next:hover img{transform:scale(1.04)}
+.vd-next::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.42)}
+.vd-next .cap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
+  width:100%;max-width:var(--vd-w);padding:0 24px;text-align:center}
+.vd-next .lbl{font-size:19px;font-weight:500;color:rgba(255,255,255,.72)}
+.vd-next .ttl{margin-top:10px;font-size:24px;font-weight:500;color:#fff;letter-spacing:-.02em}
+
+@media(max-width:1100px){
+  .vd-duo,.vd-duo.rev{grid-template-columns:1fr;gap:40px}
+  .vd-pair{gap:40px}
+  .vd-hero{height:420px}
+  .vd-hero h1{font-size:34px}
+  .vd-full,.vd-wide,.vd-duo,.vd-pair{margin-top:64px}
+  .vd-note{padding:64px 24px}
+}
 """
 
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
@@ -525,42 +580,95 @@ with open("assets/site.css", "w", encoding="utf-8") as f:
     f.write(CSS)
 
 # ---------- product detail pages ----------
-for slug in ORDER:
+# ---------- 제품 상세 = vinylc 구조 (풀블리드 히어로 → 이미지 리듬 → CTA → Next) ----------
+M = "https://www.vinylc.com/upload/module/"
+G = "https://www.vinylc.com/upload/goods/"
+# vinylc 상세 이미지 세트 (임시 — 추후 실제 제품 스크린샷으로 교체)
+VIMG = [
+    G + "GD00000066/vinylc_2021_calendar_diary_00.jpg",   # 0 히어로
+    M + "MD00004413/vinylc_2021_calendar_diary_01.jpg",   # 1 풀블리드
+    M + "MD00004415/vinylc_2021_calendar_diary_02.jpg",   # 2 소
+    M + "MD00004416/vinylc_2021_calendar_diary_03.jpg",   # 3 대
+    M + "MD00004417/vinylc_2021_calendar_diary_033.jpg",  # 4 짝
+    M + "MD00004418/vinylc_2021_calendar_diary_04.jpg",   # 5 짝
+    M + "MD00004420/vinylc_2021_calendar_diary_05.jpg",   # 6 와이드
+    M + "MD00004421/vinylc_2021_calendar_diary_06.jpg",   # 7
+    M + "MD00004422/vinylc_2021_calendar_diary_07.jpg",   # 8
+    M + "MD00004425/vinylc_2021_calendar_diary_08.jpg",   # 9
+    M + "MD00004426/vinylc_2021_calendar_diary_09.jpg",   # 10 와이드
+    M + "MD00004428/vinylc_2021_calendar_diary_10.jpg",   # 11 풀블리드
+]
+
+for idx, slug in enumerate(ORDER):
     p = P[slug]
-    feats = "".join(f'<section class="feature"><div class="fk">기능 0{i+1}</div><h2>{t}</h2><p>{d}</p></section>' for i, (t, d) in enumerate(p["feats"]))
-    spec = "".join(f'<div class="r"><span>{k}</span><span>{v}</span></div>' for k, v in p["spec"])
-    how = "".join(f'<div class="step"><span class="n">0{i+1}</span><div><b>{t}</b><p>{d}</p></div></div>' for i, (t, d) in enumerate(p["how"]))
-    rel = [s for s in ORDER if s != slug][:3]
-    relh = "".join(f'<a class="rcard" href="/products/{s}/"><div class="ic" style="background:{P[s]["color"]}">{P[s]["icon"]}</div><h3>{P[s]["name"]}</h3><p>{P[s]["tagline"]}</p></a>' for s in rel)
-    hint = '<div class="risk">↖ 클릭 말고, 버튼을 위 북마크바로 <b>드래그</b>해서 등록하세요</div>' if p["cta"] == "drag" else '<div class="risk">계정 없음 · 결제 없음 · 1클릭 제거</div>'
-    body = f"""<div class="dwrap">
-  <div class="dhead">
-    <a class="back" href="/products/">← 전체 제품</a>
-    <div><div class="kick">{p['tag']}</div><h1>{p['name']}</h1></div>
-    <p class="lead">{p['lead']}</p>
-  </div>
-  <div class="dbody">
-    <div>
-      {feats}
-      <section class="howto"><h2>쓰는 데 30초</h2><div class="steps">{how}</div></section>
+    nxt = ORDER[(idx + 1) % len(ORDER)]
+    # 제품별로 이미지 순서를 돌려 서로 달라 보이게
+    r = lambda n: VIMG[(n + idx * 3) % len(VIMG)]
+
+    # feats 3개 → vinylc식 짧은 문단 3덩이
+    f = p["feats"]
+    note = lambda i: f'<div class="vd-note"><p><b>{f[i][0]}</b></p><p>{f[i][1]}</p></div>'
+
+    body = f"""<div class="vd">
+  <div class="vd-hero">
+    <img src="{r(0)}" alt="{p['name']}">
+    <div class="cap">
+      <div class="kick">{p['tag']}</div>
+      <h1>{p['tagline']}</h1>
     </div>
-    <aside class="buy">
-      <span class="free">무료</span>
-      <div class="price">₩0 <small>· 평생 무료</small></div>
-      {cta(slug, big=True)}
-      {hint}
-      <div class="spec">{spec}</div>
-      <div class="also"><div class="lbl">함께 쓰면 좋은</div>
-        <a href="/products/{rel[0]}/"><span class="ic" style="background:{P[rel[0]]['color']}">{P[rel[0]]['icon']}</span>{P[rel[0]]['name']}</a>
-        <a href="/products/{rel[1]}/"><span class="ic" style="background:{P[rel[1]]['color']}">{P[rel[1]]['icon']}</span>{P[rel[1]]['name']}</a>
-      </div>
-    </aside>
   </div>
-  <section class="related"><h2>강형모가 만든 다른 무료 제품</h2><div class="rgrid">{relh}</div></section>
+
+  <div class="vd-note"><p>{p['lead']}</p></div>
+
+  <div class="vd-full"><img src="{r(1)}" alt="" loading="lazy"></div>
+
+  {note(0)}
+
+  <div class="vd-flow">
+    <div class="vd-duo">
+      <img src="{r(2)}" alt="" loading="lazy">
+      <img src="{r(3)}" alt="" loading="lazy">
+    </div>
+  </div>
+
+  {note(1)}
+
+  <div class="vd-flow">
+    <div class="vd-pair">
+      <img src="{r(4)}" alt="" loading="lazy">
+      <img src="{r(5)}" alt="" loading="lazy">
+    </div>
+    <div class="vd-wide"><img src="{r(6)}" alt="" loading="lazy"></div>
+  </div>
+
+  {note(2)}
+
+  <div class="vd-flow">
+    <div class="vd-duo rev">
+      <img src="{r(9)}" alt="" loading="lazy">
+      <img src="{r(7)}" alt="" loading="lazy">
+    </div>
+    <div class="vd-wide"><img src="{r(10)}" alt="" loading="lazy"></div>
+  </div>
+
+  <div class="vd-full"><img src="{r(11)}" alt="" loading="lazy"></div>
+
+  <div class="vd-cta">
+    {cta(slug, big=True)}
+    <div class="hint">{'클릭 말고, 버튼을 브라우저 북마크바로 드래그해서 등록하세요' if p["cta"] == "drag" else '계정 없음 · 결제 없음 · 1클릭 제거'}</div>
+  </div>
+
+  <a class="vd-next" href="/products/{nxt}/">
+    <img src="{VIMG[(idx * 3 + 5) % len(VIMG)]}" alt="{P[nxt]['name']}" loading="lazy">
+    <div class="cap">
+      <div class="lbl">Next Product</div>
+      <div class="ttl">{P[nxt]['tagline']}</div>
+    </div>
+  </a>
 </div>"""
     os.makedirs(f"products/{slug}", exist_ok=True)
-    with open(f"products/{slug}/index.html", "w", encoding="utf-8") as f:
-        f.write(page(f"{p['name']} — MOMENTUS", p["tagline"] + " 무료.", body, active="p"))
+    with open(f"products/{slug}/index.html", "w", encoding="utf-8") as fh:
+        fh.write(page(f"{p['name']} — MOMENTUS", p["tagline"] + " 무료.", body, active="p"))
 
 # ---------- products listing ----------
 cards = []

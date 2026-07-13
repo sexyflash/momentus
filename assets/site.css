@@ -385,3 +385,58 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
   .vc-item h3,.vc-item.big h3{font-size:21px}
   .vc-item .cat{font-size:16px}
 }
+
+/* ============================================================
+   제품 상세 = vinylc.com/ko/goods/{id} 구조 그대로 (실측)
+   풀블리드 히어로(제목 54px 흰색) → 이미지 리듬 → CTA → Next
+   ============================================================ */
+.vd{--vd-w:1245px}
+.vd-hero{position:relative;width:100vw;margin-left:calc(50% - 50vw);height:600px;overflow:hidden}
+.vd-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.vd-hero::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.35) 0 30%,rgba(0,0,0,.1) 60%,rgba(0,0,0,.45) 100%)}
+.vd-hero .cap{position:absolute;left:50%;transform:translateX(-50%);bottom:64px;z-index:2;
+  width:100%;max-width:var(--vd-w);padding:0 24px}
+.vd-hero .kick{font-size:19px;font-weight:500;color:rgba(255,255,255,.75);letter-spacing:normal}
+.vd-hero h1{margin-top:14px;font-size:54px;font-weight:700;letter-spacing:-1px;line-height:1.25;color:#fff;max-width:20ch}
+
+.vd-flow{max-width:var(--vd-w);margin:0 auto;padding:0 24px}
+.vd-note{max-width:var(--vd-w);margin:0 auto;padding:96px 24px;text-align:center}
+.vd-note p{font-size:16px;line-height:2;color:#5A5A5A;max-width:60ch;margin:0 auto}
+.vd-note p+p{margin-top:0}
+
+.vd-full{width:100vw;margin-left:calc(50% - 50vw);margin-top:100px}
+.vd-full img{width:100%;height:auto;display:block}
+.vd-wide{margin-top:100px}
+.vd-wide img{width:100%;aspect-ratio:1245/779;object-fit:cover;display:block}
+.vd-duo{margin-top:100px;display:grid;grid-template-columns:345px 795px;gap:105px;align-items:center}
+.vd-duo.rev{grid-template-columns:795px 345px}
+.vd-duo img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+.vd-pair{margin-top:100px;display:grid;grid-template-columns:1fr 1fr;gap:105px}
+.vd-pair img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+
+.vd-cta{max-width:var(--vd-w);margin:0 auto;padding:120px 24px;text-align:center}
+.vd-cta .btn-buy{display:inline-flex;align-items:center;justify-content:center;
+  min-width:280px;height:64px;padding:0 40px;background:#202020;color:#fff;
+  font-size:21px;font-weight:700;letter-spacing:-.02em;border-radius:0;transition:background .2s}
+.vd-cta .btn-buy:hover{background:#5A5A5A}
+.vd-cta .hint{margin-top:20px;font-size:15px;color:#909090;line-height:1.7}
+
+.vd-next{position:relative;width:100vw;margin-left:calc(50% - 50vw);height:271px;overflow:hidden;display:block}
+.vd-next img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.vd-next:hover img{transform:scale(1.04)}
+.vd-next::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.42)}
+.vd-next .cap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
+  width:100%;max-width:var(--vd-w);padding:0 24px;text-align:center}
+.vd-next .lbl{font-size:19px;font-weight:500;color:rgba(255,255,255,.72)}
+.vd-next .ttl{margin-top:10px;font-size:24px;font-weight:500;color:#fff;letter-spacing:-.02em}
+
+@media(max-width:1100px){
+  .vd-duo,.vd-duo.rev{grid-template-columns:1fr;gap:40px}
+  .vd-pair{gap:40px}
+  .vd-hero{height:420px}
+  .vd-hero h1{font-size:34px}
+  .vd-full,.vd-wide,.vd-duo,.vd-pair{margin-top:64px}
+  .vd-note{padding:64px 24px}
+}
