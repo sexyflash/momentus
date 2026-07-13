@@ -351,50 +351,43 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
    팔레트: 흰 + 블루(#3182f6) + 잉크
    ============================================================ */
 :root{--rn-blue:#3182f6}
-.rn-hero{padding:calc(56px + clamp(88px,15vh,190px)) var(--gut) clamp(56px,8vh,96px)}
-.rn-hero h1{font-size:clamp(34px,5.6vw,74px);font-weight:700;letter-spacing:-.03em;line-height:1.16;max-width:18ch}
-.rn-hero .sub{margin-top:30px;font-size:clamp(16px,1.4vw,19px);color:var(--gray);max-width:52ch;line-height:1.75}
-.rn-meta{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;
-  margin-top:clamp(56px,8vh,100px);padding-top:18px;border-top:1px solid var(--ink);
-  font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.7}
-.rn-sell{padding:0 var(--gut);display:flex;flex-direction:column;gap:clamp(84px,13vh,170px)}
-.rn-row{display:grid;gap:clamp(28px,3.4vw,56px)}
-.rn-row.big{grid-template-columns:1.4fr 1fr;align-items:end}
-.rn-row.big.rev{grid-template-columns:1fr 1.4fr}
-.rn-row.two{grid-template-columns:1fr 1fr}
-.rn-item{display:flex;flex-direction:column;gap:26px}
-.rn-item.side{justify-content:flex-end;padding-bottom:6px}
-.rn-shot{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--soft);
+/* tattoo 골격: 중앙정렬 초대형 히어로 → 좌우 모노 라벨행 → 균일 카드 그리드 */
+.rn-hero{padding:calc(56px + clamp(76px,13vh,150px)) var(--gut) clamp(56px,8vh,100px);text-align:center}
+.rn-hero h1{font-size:clamp(40px,7.4vw,106px);font-weight:800;letter-spacing:-.035em;line-height:1.02;
+  margin:0 auto;max-width:14ch}
+.rn-hero .sub{margin:34px auto 0;font-size:clamp(15px,1.35vw,18px);color:var(--gray);max-width:46ch;line-height:1.75}
+.rn-secthead{display:flex;justify-content:space-between;align-items:baseline;gap:20px;
+  padding:0 var(--gut);margin-bottom:clamp(28px,3.6vh,44px);
+  font-family:var(--mono);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);line-height:1.7}
+.rn-secthead .r{color:var(--faint)}
+.rn-secthead a.r:hover{color:var(--rn-blue)}
+.rn-sect{padding-top:clamp(60px,9vh,116px)}
+.rn-grid{padding:0 var(--gut);display:grid;gap:18px}
+.rn-grid.four{grid-template-columns:repeat(4,1fr)}
+.rn-grid.three{grid-template-columns:repeat(3,1fr)}
+.rn-card{display:flex;flex-direction:column;gap:18px}
+.rn-shot{border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--soft);
   transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
-.rn-shot img{width:100%;height:100%;object-fit:cover;aspect-ratio:16/10}
-.rn-shot.tall img{aspect-ratio:4/3}
-.rn-item:hover .rn-shot{transform:translateY(-4px);box-shadow:0 22px 44px -18px rgba(11,12,14,.16)}
-.rn-item:hover h3{color:var(--rn-blue)}
-.rn-cap .kick{font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--faint);line-height:1.7}
-.rn-cap h3{margin-top:18px;font-size:clamp(21px,2.2vw,31px);font-weight:700;letter-spacing:-.03em;
-  line-height:1.58;max-width:22ch}
-.rn-cap p{margin-top:16px;font-size:15.5px;color:var(--gray);max-width:34ch;line-height:1.78}
-.rn-go{display:inline-flex;align-items:center;gap:7px;margin-top:26px;transition:gap .25s var(--ease);
-  font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--rn-blue);font-weight:600}
-.rn-item:hover .rn-go{gap:12px}
-.rn-free{margin-top:clamp(110px,17vh,210px);padding:clamp(60px,9vh,104px) var(--gut) 0;border-top:1px solid var(--line)}
-.rn-free .kick{font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.7}
-.rn-free h2{margin-top:18px;font-size:clamp(25px,3vw,40px);font-weight:700;letter-spacing:-.03em;line-height:1.44;max-width:22ch}
-.rn-free .lead{margin-top:20px;font-size:16px;color:var(--gray);max-width:50ch;line-height:1.78}
-.rn-tools{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:clamp(48px,6vh,72px)}
-.rn-tool{border:1px solid var(--line);border-radius:12px;padding:24px 24px 20px;display:flex;flex-direction:column;gap:12px;
-  transition:border-color .2s,transform .2s var(--ease)}
+.rn-shot img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/5;display:block}
+.rn-card:hover .rn-shot{transform:translateY(-4px);box-shadow:0 20px 40px -18px rgba(11,12,14,.18)}
+.rn-card:hover h3{color:var(--rn-blue)}
+.rn-card .kick{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.7}
+.rn-card h3{margin-top:10px;font-size:17.5px;font-weight:700;letter-spacing:-.02em;line-height:1.56}
+.rn-card p{margin-top:10px;font-size:14px;color:var(--gray);line-height:1.75}
+.rn-tool{display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);border-radius:10px;
+  padding:24px 24px 20px;transition:border-color .2s,transform .2s var(--ease)}
 .rn-tool:hover{border-color:var(--ink);transform:translateY(-2px)}
-.rn-tool .tn{font-size:17px;font-weight:600;letter-spacing:-.02em;line-height:1.5}
-.rn-tool .td{font-size:14.5px;color:var(--gray);line-height:1.72}
+.rn-tool .tn{font-size:17.5px;font-weight:700;letter-spacing:-.02em;line-height:1.56}
+.rn-tool .td{font-size:14px;color:var(--gray);line-height:1.75}
 .rn-bridge{margin-top:auto;padding-top:16px;border-top:1px dashed var(--line);
   font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--rn-blue);line-height:1.6}
 .rn-bridge.plain{color:var(--faint)}
-.rn-free .cta-dark{margin-top:clamp(72px,10vh,120px)}
-@media(max-width:880px){
-  .rn-row.big,.rn-row.big.rev,.rn-row.two,.rn-tools{grid-template-columns:1fr}
-  .rn-item.side{padding-bottom:0}
+.rn-outro{padding:clamp(80px,12vh,150px) var(--gut) 0}
+@media(max-width:980px){
+  .rn-grid.four,.rn-grid.three{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:620px){
+  .rn-grid.four,.rn-grid.three{grid-template-columns:1fr}
 }
 """
 
@@ -776,79 +769,51 @@ with open("about/index.html", "w", encoding="utf-8") as f:
 
 # ---------- landing (root index.html) ----------
 land_body = """<section class="rn-hero">
-  <h1>일하는 사람을 위한<br>도구를 만듭니다.</h1>
+  <h1>일하는 사람을 위한 도구를 만듭니다.</h1>
   <p class="sub">상품 사진, 로고, 플래너, 면접 연습. 그리고 매일 쓰는 브라우저 도구는 무료로 드립니다.</p>
-  <div class="rn-meta">
-    <span>Momentus</span>
-    <span>파는 것 04 · 주는 것 06</span>
-  </div>
 </section>
 
-<section class="rn-sell">
-  <div class="rn-row big">
-    <a class="rn-item" href="https://heyreci.com" target="_blank" rel="noopener">
-      <div class="rn-shot tall">
-        <img src="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?w=1400&q=75&auto=format&fit=crop" alt="스튜디오 조명 아래 놓인 화장품 상품 사진">
-      </div>
-    </a>
-    <div class="rn-item side">
-      <div class="rn-cap">
-        <span class="kick">heyreci · 쇼핑몰 셀러</span>
+<section class="rn-sect">
+  <div class="rn-secthead"><span>/ 파는 것</span><span class="r">(04)</span></div>
+  <div class="rn-grid four">
+    <a class="rn-card" href="https://heyreci.com" target="_blank" rel="noopener">
+      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?w=900&q=75&auto=format&fit=crop" alt="스튜디오 조명 아래 놓인 화장품 상품 사진"></div>
+      <div>
+        <span class="kick">heyreci</span>
         <h3>모델 촬영비 0원으로 카탈로그를 만듭니다</h3>
-        <p>폰으로 찍은 상품 사진이 30초 만에 판매용 컷이 됩니다. 배경·모델·상세페이지까지, 이미지 도구 40종.</p>
-        <span class="rn-go">heyreci.com에서 써보기 ↗</span>
+        <p>폰으로 찍은 상품 사진이 30초 만에 판매용 컷으로.</p>
       </div>
-    </div>
-  </div>
-
-  <div class="rn-row two">
-    <a class="rn-item" href="https://mark.the-moment.us" target="_blank" rel="noopener">
-      <div class="rn-shot">
-        <img src="https://images.unsplash.com/photo-1713616147761-c126f8009c6f?w=1000&q=75&auto=format&fit=crop" alt="종이에 로고를 스케치하는 모습" loading="lazy">
-      </div>
-      <div class="rn-cap">
-        <span class="kick">Mark · 자영업 사장님</span>
+    </a>
+    <a class="rn-card" href="https://mark.the-moment.us" target="_blank" rel="noopener">
+      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1713616147761-c126f8009c6f?w=900&q=75&auto=format&fit=crop" alt="종이에 로고를 스케치하는 모습" loading="lazy"></div>
+      <div>
+        <span class="kick">Mark</span>
         <h3>내 업종 로고를 먼저 보고 고릅니다</h3>
-        <p>같은 업종만 깊이 판 시안 600여 개. 간판과 명함에 얹은 모습까지 보고, 마음에 들면 그때 맡기세요.</p>
-        <span class="rn-go">업종별 시안 보기 ↗</span>
+        <p>같은 업종만 깊이 판 시안 600여 개. 간판·명함에 얹은 모습까지.</p>
       </div>
     </a>
-    <a class="rn-item" href="https://planner.the-moment.us" target="_blank" rel="noopener">
-      <div class="rn-shot">
-        <img src="https://images.unsplash.com/photo-1673597487243-8e84ae538b8d?w=1000&q=75&auto=format&fit=crop" alt="태블릿에 띄운 달력 플래너" loading="lazy">
-      </div>
-      <div class="rn-cap">
-        <span class="kick">THE PLAN · 굿노트 · 아이패드</span>
+    <a class="rn-card" href="https://planner.the-moment.us" target="_blank" rel="noopener">
+      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1673597487243-8e84ae538b8d?w=900&q=75&auto=format&fit=crop" alt="태블릿에 띄운 달력 플래너" loading="lazy"></div>
+      <div>
+        <span class="kick">THE PLAN</span>
         <h3>내 손에 맞는 플래너를 골라서 씁니다</h3>
-        <p>스타일과 구성, 시작 요일까지 고른 대로 조립해 PDF로 드립니다. 남의 플래너에 나를 맞추지 마세요.</p>
-        <span class="rn-go">플래너 고르러 가기 ↗</span>
+        <p>스타일·구성·시작 요일까지 고른 대로 조립해 PDF로.</p>
       </div>
     </a>
-  </div>
-
-  <div class="rn-row big rev">
-    <div class="rn-item side">
-      <div class="rn-cap">
-        <span class="kick">Cue · 경력직 이직</span>
-        <h3>면접장에서 얼어붙지 않으려면, 소리 내어 연습해야 합니다</h3>
-        <p>눈으로 읽으면 다 아는 것 같습니다. 입으로 뱉어봐야 압니다. 동문서답하면 AI가 짚어 줍니다.</p>
-        <span class="rn-go">한 판 해보기 ↗</span>
-      </div>
-    </div>
-    <a class="rn-item" href="https://cue.the-moment.us" target="_blank" rel="noopener">
-      <div class="rn-shot">
-        <img src="https://images.unsplash.com/photo-1698047681452-08eba22d0c64?w=1400&q=75&auto=format&fit=crop" alt="면접에서 답변하는 지원자" loading="lazy">
+    <a class="rn-card" href="https://cue.the-moment.us" target="_blank" rel="noopener">
+      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1698047681452-08eba22d0c64?w=900&q=75&auto=format&fit=crop" alt="면접에서 답변하는 지원자" loading="lazy"></div>
+      <div>
+        <span class="kick">Cue</span>
+        <h3>면접장에서 얼어붙지 않으려면 소리 내어 연습해야 합니다</h3>
+        <p>읽지 말고 말하세요. 동문서답은 AI가 짚어 줍니다.</p>
       </div>
     </a>
   </div>
 </section>
 
-<section class="rn-free">
-  <span class="kick">그리고 — 공짜</span>
-  <h2>매일 쓰는 도구는 그냥 드립니다.</h2>
-  <p class="lead">설치도 로그인도 결제도 없습니다. 쓰다 보면 위의 제품이 왜 필요한지 알게 되실 겁니다.</p>
-
-  <div class="rn-tools">
+<section class="rn-sect">
+  <div class="rn-secthead"><span>/ 주는 것</span><a class="r" href="/products/">(전체 보기)</a></div>
+  <div class="rn-grid three">
     <a class="rn-tool" href="/products/quickpang/">
       <span class="tn">퀵팡</span>
       <span class="td">쿠팡 검색 결과에서, 들어가 보지 않고 옵션과 재고를 확인</span>
@@ -880,7 +845,9 @@ land_body = """<section class="rn-hero">
       <span class="rn-bridge plain">제품 전체 보기 →</span>
     </a>
   </div>
+</section>
 
+<section class="rn-outro">
   <div class="cta-dark">
     <h2>불편한 게 있으면 말해 주세요.</h2>
     <p>공감이 많이 쌓인 것부터 만들어 드립니다. 돈 받고 만드는 게 아닙니다.</p>
