@@ -3,6 +3,7 @@
    assets/bookmarklets/*.txt(원본 소스)를 드래그 버튼 href에 실제 주입한다.
    실행: python3 scripts/gen_site.py (repo 루트에서)"""
 import os
+import hashlib
 
 os.chdir(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -397,6 +398,10 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
 }
 """
 
+# CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
+# 내용이 바뀌면 URL도 바뀌게 해서 즉시 반영시킨다.
+CSS_VER = hashlib.md5(CSS.encode("utf-8")).hexdigest()[:8]
+
 def gnb(active=""):
     def on(k):
         return " on" if active == k else ""
@@ -430,7 +435,7 @@ def page(title, desc, body, active="", extra=""):
 <meta name="description" content="{desc}">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css?v={CSS_VER}">
 </head>
 <body>
 {gnb(active)}
