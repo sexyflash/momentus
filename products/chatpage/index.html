@@ -7,7 +7,7 @@
 <meta name="description" content="아무리 긴 유튜브도, 3초 요약. 무료.">
 <meta property="og:title" content="ChatPage — MOMENTUS">
 <meta property="og:description" content="아무리 긴 유튜브도, 3초 요약. 무료.">
-<link rel="stylesheet" href="/assets/site.css?v=b91fb8a4">
+<link rel="stylesheet" href="/assets/site.css?v=ef2ac3ab">
 </head>
 <body>
 <header class="gnb">
@@ -79,6 +79,24 @@
     </div>
   </a>
 </div>
+
+<div class="vd-dock">
+  <div class="vd-guide" id="vdguide">
+    <div class="inner"><div class="st"><div class="k">STEP 1</div><b>크롬에 추가</b><p>크롬 웹스토어에서 ChatPage 설치.</p></div><div class="st"><div class="k">STEP 2</div><b>유튜브에서 버튼 클릭</b><p>영상 페이지에 생긴 요약 버튼을 누르기.</p></div><div class="st"><div class="k">STEP 3</div><b>AI가 요약</b><p>쓰던 AI가 3초 만에 정리.</p></div></div>
+  </div>
+  <div class="bar">
+    <div class="id">
+      <div class="n">ChatPage</div>
+      <div class="s">크롬 웹스토어에서 1클릭 · 무료</div>
+    </div>
+    <div class="acts">
+      <button class="how" type="button" id="vdhow" aria-expanded="false" aria-controls="vdguide">
+        설치 방법 <span class="car">▾</span>
+      </button>
+      <a class="go" href="https://chromewebstore.google.com/" target="_blank" rel="noopener">크롬에 추가 →</a>
+    </div>
+  </div>
+</div>
 </main>
 <footer class="site">
   <div class="brand"><div class="wm">MOMENTUS</div><p>일하는 사람을 위한<br>도구를 만듭니다.</p></div>
@@ -87,5 +105,14 @@
   <div><h4>문의</h4><a href="mailto:hello@the-moment.us">hello@the-moment.us</a><a href="/apps/legal.html">이용약관</a><a href="/apps/privacy-policy.html">개인정보처리방침</a></div>
   <div class="legal"><span>© 2026 모멘터스</span><span>the-moment.us</span></div>
 </footer>
-</body>
+<script>
+(function(){
+  var btn=document.getElementById('vdhow'), g=document.getElementById('vdguide');
+  if(!btn||!g) return;
+  btn.addEventListener('click', function(){
+    var open = g.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+  });
+})();
+</script></body>
 </html>

@@ -455,6 +455,51 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
   .vd-full,.vd-wide,.vd-duo,.vd-pair{margin-top:64px}
   .vd-note{padding:64px 24px}
 }
+
+/* ---- 항시 떠 있는 설치 독 (풀스크린 이미지는 그대로 두고 아래에 고정) ---- */
+body:has(.vd){padding-bottom:88px}
+.vd-dock{position:fixed;left:0;right:0;bottom:0;z-index:90;
+  background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(24px);
+  -webkit-backdrop-filter:saturate(180%) blur(24px);
+  border-top:1px solid rgba(0,0,0,.07)}
+.vd-dock .bar{max-width:1245px;margin:0 auto;padding:15px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px}
+.vd-dock .id{min-width:0}
+.vd-dock .id .n{font-size:16px;font-weight:700;letter-spacing:-.02em;color:#202020;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vd-dock .id .s{margin-top:3px;font-size:13.5px;color:#909090;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vd-dock .acts{display:flex;align-items:center;gap:10px;flex:none}
+.vd-dock .how{background:none;border:0;cursor:pointer;font-family:inherit;
+  font-size:14px;font-weight:600;color:#5A5A5A;letter-spacing:-.02em;
+  display:inline-flex;align-items:center;gap:6px;padding:10px 4px;transition:color .2s}
+.vd-dock .how:hover{color:#202020}
+.vd-dock .how .car{display:inline-block;transition:transform .3s;font-size:11px}
+.vd-dock .how[aria-expanded="true"] .car{transform:rotate(180deg)}
+.vd-dock .go{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 26px;
+  background:#202020;color:#fff;font-size:15px;font-weight:700;letter-spacing:-.02em;
+  white-space:nowrap;transition:background .2s}
+.vd-dock .go:hover{background:#5A5A5A}
+
+/* 설명서 — 열면 위로 펼쳐짐 */
+.vd-guide{max-height:0;overflow:hidden;transition:max-height .42s cubic-bezier(.16,1,.3,1);
+  border-bottom:1px solid rgba(0,0,0,.06)}
+.vd-guide.open{max-height:280px}
+.vd-guide .inner{max-width:1245px;margin:0 auto;padding:34px 24px 30px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:44px}
+.vd-guide .st .k{font-size:12px;font-weight:700;color:#C4C4C4;letter-spacing:.06em}
+.vd-guide .st b{display:block;margin-top:9px;font-size:15.5px;font-weight:700;color:#202020;letter-spacing:-.02em}
+.vd-guide .st p{margin-top:7px;font-size:13.5px;color:#909090;line-height:1.75}
+
+@media(max-width:820px){
+  body:has(.vd){padding-bottom:132px}
+  .vd-dock .bar{flex-wrap:wrap;gap:12px;padding:13px 20px}
+  .vd-dock .id{width:100%}
+  .vd-dock .acts{width:100%;justify-content:space-between}
+  .vd-dock .go{flex:1;justify-content:center}
+  .vd-guide.open{max-height:520px}
+  .vd-guide .inner{grid-template-columns:1fr;gap:22px;padding:26px 20px 24px}
+}
 """
 
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
@@ -580,6 +625,17 @@ with open("assets/site.css", "w", encoding="utf-8") as f:
     f.write(CSS)
 
 # ---------- product detail pages ----------
+DOCK_JS = """<script>
+(function(){
+  var btn=document.getElementById('vdhow'), g=document.getElementById('vdguide');
+  if(!btn||!g) return;
+  btn.addEventListener('click', function(){
+    var open = g.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+  });
+})();
+</script>"""
+
 # ---------- 제품 상세 = vinylc 구조 (풀블리드 히어로 → 이미지 리듬 → CTA → Next) ----------
 M = "https://www.vinylc.com/upload/module/"
 G = "https://www.vinylc.com/upload/goods/"
@@ -608,6 +664,18 @@ for idx, slug in enumerate(ORDER):
     # feats 3개 → vinylc식 짧은 문단 3덩이
     f = p["feats"]
     note = lambda i: f'<div class="vd-note"><p><b>{f[i][0]}</b></p><p>{f[i][1]}</p></div>'
+
+    # 설치 독 — 항시 노출. 설명서는 접혀 있다가 열림.
+    guide = "".join(
+        f'<div class="st"><div class="k">STEP {i+1}</div><b>{t}</b><p>{d}</p></div>'
+        for i, (t, d) in enumerate(p["how"])
+    )
+    if p["cta"] == "drag":
+        dock_sub = "설치 없음 · 북마크바에 끌어놓기만 하면 끝"
+        dock_btn = f'<a class="go" href="{BM[p["bm"]]}" {DRAG_ATTR}>↖ 북마크바로 드래그</a>'
+    else:
+        dock_sub = "크롬 웹스토어에서 1클릭 · 무료"
+        dock_btn = f'<a class="go" href="{p["store"]}" target="_blank" rel="noopener">크롬에 추가 →</a>'
 
     body = f"""<div class="vd">
   <div class="vd-hero">
@@ -665,10 +733,28 @@ for idx, slug in enumerate(ORDER):
       <div class="ttl">{P[nxt]['tagline']}</div>
     </div>
   </a>
+</div>
+
+<div class="vd-dock">
+  <div class="vd-guide" id="vdguide">
+    <div class="inner">{guide}</div>
+  </div>
+  <div class="bar">
+    <div class="id">
+      <div class="n">{p['name']}</div>
+      <div class="s">{dock_sub}</div>
+    </div>
+    <div class="acts">
+      <button class="how" type="button" id="vdhow" aria-expanded="false" aria-controls="vdguide">
+        설치 방법 <span class="car">▾</span>
+      </button>
+      {dock_btn}
+    </div>
+  </div>
 </div>"""
     os.makedirs(f"products/{slug}", exist_ok=True)
     with open(f"products/{slug}/index.html", "w", encoding="utf-8") as fh:
-        fh.write(page(f"{p['name']} — MOMENTUS", p["tagline"] + " 무료.", body, active="p"))
+        fh.write(page(f"{p['name']} — MOMENTUS", p["tagline"] + " 무료.", body, active="p", extra=DOCK_JS))
 
 # ---------- products listing ----------
 cards = []
