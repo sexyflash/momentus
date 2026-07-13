@@ -97,7 +97,6 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
 .ig .tile .lk{position:absolute;left:7px;bottom:7px;z-index:2;font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);padding:3px 8px;border-radius:99px}
 .ig .tile .rk{position:absolute;right:7px;top:7px;z-index:2;width:22px;height:22px;border-radius:99px;background:var(--ig);color:#fff;font-family:var(--mono);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.5);transition:.4s}
 .ig.sorted .tile .rk{opacity:1;transform:scale(1)}
-.cat{padding:clamp(56px,9vh,110px) var(--gut) 0}
 .cat-head{max-width:1200px;margin:0 auto clamp(22px,3.5vw,40px);display:flex;align-items:baseline;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);padding-bottom:16px}
 .cat-head .l{display:flex;align-items:baseline;gap:14px}
 .cat-head h2{font-size:clamp(22px,2.6vw,32px);font-weight:700;letter-spacing:-.02em}
@@ -538,28 +537,29 @@ body:has(.vd){padding-bottom:88px}
    ============================================================ */
 .an{max-width:1140px;margin:0 auto;padding:0 24px}
 
-/* --- 블로그 목록 --- */
-.an-lhead{padding:calc(56px + 110px) 0 0;text-align:center}
-.an-lhead h1{font-size:clamp(34px,4.2vw,52px);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:#191919}
-.an-lhead p{margin-top:18px;font-size:18px;line-height:1.6;color:#6B6862;max-width:56ch;margin-left:auto;margin-right:auto}
-.an-feat{margin-top:72px;padding-bottom:44px;border-bottom:1px solid #E5E1D8}
-.an-feat a{display:block}
-.an-feat .m{display:flex;gap:16px;align-items:center;font-size:13px;color:#6B6862}
-.an-feat .cat{font-weight:600;color:#191919}
-.an-feat h2{margin-top:14px;font-size:clamp(24px,2.6vw,34px);font-weight:700;letter-spacing:-.015em;
-  line-height:1.28;color:#191919;max-width:22ch}
-.an-feat p{margin-top:14px;font-size:17px;line-height:1.6;color:#6B6862;max-width:62ch}
-.an-feat a:hover h2{color:#C15F3C}
+/* --- 블로그 목록 = openai.com/news 구조: 큰 제목 + 필터탭 + 3열 큰 썸네일 --- */
+.an-lhead{padding:calc(56px + 90px) 0 0}
+.an-lhead h1{font-size:clamp(38px,5vw,64px);font-weight:400;letter-spacing:-.02em;line-height:1.1;color:#191919}
+.an-tabs{margin-top:34px;padding-bottom:22px;display:flex;gap:26px;flex-wrap:wrap;align-items:center;
+  border-bottom:1px solid #E5E1D8}
+.an-tabs button{background:none;border:0;padding:0;cursor:pointer;font-family:inherit;
+  font-size:16px;color:#6B6862;letter-spacing:-.01em;transition:color .2s}
+.an-tabs button:hover{color:#191919}
+.an-tabs button[aria-pressed="true"]{color:#191919;font-weight:600}
 
-.an-grid{margin-top:48px;padding-bottom:120px;display:grid;grid-template-columns:repeat(3,1fr);gap:44px 36px}
+.an-grid{margin-top:48px;padding-bottom:120px;display:grid;grid-template-columns:repeat(3,1fr);gap:52px 32px}
+.an-card[hidden]{display:none}
 .an-card a{display:block}
-.an-card .m{display:flex;gap:14px;align-items:center;font-size:12.5px;color:#6B6862}
-.an-card .cat{font-weight:600;color:#191919}
-.an-card h3{margin-top:12px;font-size:20px;font-weight:700;letter-spacing:-.01em;line-height:1.35;color:#191919}
-.an-card p{margin-top:10px;font-size:15px;line-height:1.6;color:#6B6862}
-.an-card .more{margin-top:14px;font-size:14px;font-weight:600;color:#191919}
+.an-card .th{width:100%;aspect-ratio:1;border-radius:14px;overflow:hidden;background:#EFEAE0}
+.an-card .th img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.an-card a:hover .th img{transform:scale(1.04)}
+.an-card h3{margin-top:22px;font-size:21px;font-weight:600;letter-spacing:-.015em;line-height:1.35;color:#191919}
+.an-card .m{margin-top:12px;display:flex;gap:12px;align-items:center;font-size:13.5px;color:#6B6862}
+.an-card .cat{color:#191919}
+.an-card p{margin-top:12px;font-size:15px;line-height:1.6;color:#6B6862}
 .an-card a:hover h3{color:#C15F3C}
-.an-card a:hover .more{color:#C15F3C}
+.an-empty{padding:80px 0 120px;color:#6B6862;font-size:16px}
 
 /* --- 글 상세 --- */
 .an-post{max-width:1140px;margin:0 auto;padding:calc(56px + 80px) 24px 0}
@@ -1088,31 +1088,52 @@ for i, slug in enumerate(PORDER):
     with open(f"blog/{slug}/index.html", "w", encoding="utf-8") as fh:
         fh.write(page(f"{ps['title']} — MOMENTUS 블로그", ps["sub"], body, active="j"))
 
-feat = PORDER[0]
-rest = PORDER[1:]
+cats = []
+for x in PORDER:
+    c0 = POSTS[x]["cat"].split("·")[0].strip()
+    if c0 not in cats:
+        cats.append(c0)
+tabs = '<button type="button" data-f="all" aria-pressed="true">전체</button>' + "".join(
+    f'<button type="button" data-f="{c0}" aria-pressed="false">{c0}</button>' for c0 in cats)
 cards = "".join(
-    f'<div class="an-card"><a href="/blog/{x}/">'
+    f'<div class="an-card" data-cat="{POSTS[x]["cat"].split("·")[0].strip()}">'
+    f'<a href="/blog/{x}/">'
+    f'<div class="th"><img src="{VIMG[(i * 4 + 2) % len(VIMG)]}" alt="" loading="lazy"></div>'
+    f'<h3>{POSTS[x]["title"]}</h3>'
     f'<div class="m"><span class="cat">{POSTS[x]["cat"]}</span><span>{POSTS[x]["date"]}</span></div>'
-    f'<h3>{POSTS[x]["title"]}</h3><p>{POSTS[x]["sub"]}</p>'
-    f'<div class="more">더 읽기 →</div></a></div>' for x in rest)
+    f'<p>{POSTS[x]["sub"]}</p>'
+    f'</a></div>' for i, x in enumerate(PORDER))
 jbody = f"""<div class="an">
   <div class="an-lhead">
     <h1>블로그</h1>
-    <p>AI로 제품을 만들며 알게 된 것들. 쓸모 있으면 가져가세요.</p>
+    <div class="an-tabs" id="bltabs">{tabs}</div>
   </div>
-
-  <div class="an-feat">
-    <a href="/blog/{feat}/">
-      <div class="m"><span class="cat">{POSTS[feat]['cat']}</span><span>{POSTS[feat]['date']}</span></div>
-      <h2>{POSTS[feat]['title']}</h2>
-      <p>{POSTS[feat]['sub']}</p>
-    </a>
-  </div>
-
-  <div class="an-grid">{cards}</div>
+  <div class="an-grid" id="blgrid">{cards}</div>
+  <p class="an-empty" id="blempty" hidden>해당하는 글이 없어요.</p>
 </div>"""
+
+BLOG_JS = """<script>
+(function(){
+  var tabs=document.getElementById('bltabs'), grid=document.getElementById('blgrid'),
+      empty=document.getElementById('blempty');
+  if(!tabs||!grid) return;
+  var items=[].slice.call(grid.querySelectorAll('.an-card'));
+  tabs.addEventListener('click', function(e){
+    var btn=e.target.closest('button[data-f]'); if(!btn) return;
+    var f=btn.dataset.f, shown=0;
+    [].slice.call(tabs.querySelectorAll('button')).forEach(function(b){
+      b.setAttribute('aria-pressed', String(b===btn));
+    });
+    items.forEach(function(it){
+      var ok=(f==='all')||it.dataset.cat===f;
+      it.hidden=!ok; if(ok) shown++;
+    });
+    empty.hidden = shown>0;
+  });
+})();
+</script>"""
 with open("blog/index.html", "w", encoding="utf-8") as f:
-    f.write(page("블로그 — MOMENTUS", "만드는 이야기와 쓰는 법. 가이드·칼럼·메이킹 로그.", jbody, active="j"))
+    f.write(page("블로그 — MOMENTUS", "AI로 제품을 만들며 알게 된 것들. 실측 데이터와 실패 기록.", jbody, active="j", extra=BLOG_JS))
 
 # ---------- lab ----------
 lab_body = """<div class="lab-hero"><div class="kick pt">Lab · 만들어드려요</div>
