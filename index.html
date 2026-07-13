@@ -7,7 +7,7 @@
 <meta name="description" content="상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.">
 <meta property="og:title" content="MOMENTUS — 일하는 사람을 위한 도구를 만듭니다">
 <meta property="og:description" content="상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.">
-<link rel="stylesheet" href="/assets/site.css?v=802db163">
+<link rel="stylesheet" href="/assets/site.css?v=8c654ff0">
 </head>
 <body>
 <header class="gnb">
@@ -155,7 +155,7 @@
   var t=document.getElementById('gtrack'),
       p=document.getElementById('gprev'), n=document.getElementById('gnext');
   if(!t||!p||!n) return;
-  function step(){ var c=t.querySelector('.gcard'); return c ? c.offsetWidth+20 : 400; }
+  function step(){ var c=t.querySelector('.gcard'); return c ? c.offsetWidth+40 : 400; }
   function sync(){
     p.disabled = t.scrollLeft < 8;
     n.disabled = t.scrollLeft > t.scrollWidth - t.clientWidth - 8;

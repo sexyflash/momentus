@@ -351,45 +351,48 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
    팔레트: 흰 + 블루(#3182f6) + 잉크
    ============================================================ */
 :root{--rn-blue:#3182f6}
-/* 제품 섹션 = labs.google "Life beyond the Lab" graduation 캐러셀 구조 그대로 */
+/* 제품 섹션 = labs.google "Life beyond the Lab" — 여백·간격 실측값 그대로
+   섹션 pt 145 / headline→desc 20 / desc→track 80 / gap 40 / track→controls 80
+   카드 475x660 r43 / 카드 안쪽 30 / 컨트롤 60x60 gap 10 */
 .rn-hero{padding:calc(56px + clamp(76px,13vh,150px)) var(--gut) clamp(56px,8vh,100px);text-align:center}
 .rn-hero h1{font-size:clamp(40px,7.4vw,106px);font-weight:800;letter-spacing:-.035em;line-height:1.02;margin:0 auto;max-width:14ch}
 .rn-hero .sub{margin:34px auto 0;font-size:clamp(15px,1.35vw,18px);color:var(--gray);max-width:46ch;line-height:1.75}
 
-.grad{padding:clamp(64px,9vh,120px) 0 clamp(56px,8vh,96px);background:var(--soft);overflow:hidden}
+.grad{padding:clamp(80px,10vw,145px) 0 clamp(80px,10vw,145px);background:var(--soft);overflow:hidden}
 .grad__inner{text-align:center}
 .grad__headline{font-size:clamp(34px,4.4vw,60px);font-weight:500;letter-spacing:-.02em;line-height:1.1;
-  color:var(--ink);padding:0 var(--gut)}
-.grad__desc{margin:24px auto 0;max-width:52ch;padding:0 var(--gut);
+  color:var(--ink);padding:0 24px}
+.grad__desc{margin:20px auto 0;max-width:781px;padding:0 24px;
   font-size:clamp(16px,1.55vw,24px);font-weight:400;line-height:1.3;color:var(--ink2)}
 
-.grad__track{display:flex;gap:20px;margin-top:clamp(40px,6vh,64px);padding:4px var(--gut);
-  overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.grad__track{display:flex;gap:40px;margin-top:80px;padding:4px 24px;
+  overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:24px;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .grad__track::-webkit-scrollbar{display:none}
 
-.gcard{position:relative;flex:0 0 clamp(280px,32vw,475px);height:clamp(420px,46vw,660px);
+.gcard{position:relative;flex:0 0 clamp(300px,33vw,475px);height:clamp(440px,46vw,660px);
   border-radius:43px;overflow:hidden;scroll-snap-align:start;background:#e9e6e2;isolation:isolate}
 .gcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
   transition:transform .6s var(--ease)}
 .gcard:hover img{transform:scale(1.04)}
 .gcard::after{content:"";position:absolute;inset:0;z-index:1;
-  background:linear-gradient(180deg,rgba(0,0,0,.28) 0 22%,rgba(0,0,0,0) 45%,rgba(0,0,0,.72) 100%)}
-.gcard__pills{position:absolute;top:24px;left:24px;right:24px;z-index:2;display:flex;gap:8px;flex-wrap:wrap}
+  background:linear-gradient(180deg,rgba(0,0,0,.30) 0 20%,rgba(0,0,0,0) 44%,rgba(0,0,0,.74) 100%)}
+.gcard__pills{position:absolute;top:30px;left:30px;right:30px;z-index:2;display:flex;gap:8px;flex-wrap:wrap}
 .gcard__pill{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:46px;
   background:rgba(255,255,255,.15);backdrop-filter:blur(8px);color:#fff;
   font-size:13.7px;font-weight:500;letter-spacing:-.01em;white-space:nowrap}
-.gcard__body{position:absolute;left:24px;right:24px;bottom:24px;z-index:2;color:#fff;text-align:left}
-.gcard__headline{font-size:clamp(24px,2.9vw,42px);font-weight:400;letter-spacing:-.02em;line-height:1.1;color:#fff}
-.gcard__desc{margin-top:12px;font-size:clamp(14px,1.4vw,20px);font-weight:400;line-height:1.4;
+.gcard__body{position:absolute;left:30px;right:30px;bottom:30px;z-index:2;color:#fff;text-align:left}
+.gcard__headline{font-size:clamp(26px,2.9vw,42px);font-weight:400;letter-spacing:-.02em;line-height:1.1;color:#fff}
+.gcard__desc{font-size:clamp(15px,1.4vw,20px);font-weight:400;line-height:1.4;
   color:rgba(255,255,255,.86);max-width:24ch}
-.gcard__cta{display:inline-flex;align-items:center;justify-content:center;margin-top:20px;height:50px;padding:0 26px;
-  border:1px solid rgba(255,255,255,.7);border-radius:9990px;color:#fff;font-size:16px;font-weight:500;
+.gcard__cta{display:inline-flex;align-items:center;justify-content:center;margin-top:30px;height:58px;padding:0 28px;
+  border:1px solid rgba(255,255,255,.7);border-radius:9990px;color:#fff;font-size:18px;font-weight:500;
   transition:background .25s,color .25s}
 .gcard:hover .gcard__cta{background:#fff;color:var(--ink)}
 
-.grad__controls{display:flex;justify-content:center;gap:12px;margin-top:clamp(32px,4.5vh,48px)}
-.grad__ctrl{width:52px;height:52px;border-radius:50%;border:1px solid var(--soft2);background:transparent;
-  color:var(--ink);cursor:pointer;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;
+.grad__controls{display:flex;justify-content:center;gap:10px;margin-top:80px}
+.grad__ctrl{width:60px;height:60px;border-radius:50%;border:1px solid var(--soft2);background:transparent;
+  color:var(--ink);cursor:pointer;font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;
   transition:border-color .2s,background .2s}
 .grad__ctrl:hover:not(:disabled){border-color:var(--ink);background:var(--paper)}
 .grad__ctrl:disabled{opacity:.3;cursor:default}
@@ -900,7 +903,7 @@ LAND_JS = """<script>
   var t=document.getElementById('gtrack'),
       p=document.getElementById('gprev'), n=document.getElementById('gnext');
   if(!t||!p||!n) return;
-  function step(){ var c=t.querySelector('.gcard'); return c ? c.offsetWidth+20 : 400; }
+  function step(){ var c=t.querySelector('.gcard'); return c ? c.offsetWidth+40 : 400; }
   function sync(){
     p.disabled = t.scrollLeft < 8;
     n.disabled = t.scrollLeft > t.scrollWidth - t.clientWidth - 8;
