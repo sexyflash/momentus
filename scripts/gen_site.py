@@ -529,6 +529,105 @@ body:has(.vd){padding-bottom:88px}
   .ab-now{padding-top:90px}
   .ab-end{padding-top:90px;margin-top:90px}
 }
+
+/* ============================================================
+   블로그 + 소개 = anthropic.com 구조 (실측)
+   글: 중앙 컬럼 640px · h1 52px w700 중앙 · 본문 17px/26px
+   목록: 카테고리 · 날짜 · 제목 · 요약
+   소개: 좌측 섹션 라벨 + 우측 2열 콘텐츠
+   ============================================================ */
+.an{max-width:1140px;margin:0 auto;padding:0 24px}
+
+/* --- 블로그 목록 --- */
+.an-lhead{padding:calc(56px + 110px) 0 0;text-align:center}
+.an-lhead h1{font-size:clamp(34px,4.2vw,52px);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:#191919}
+.an-lhead p{margin-top:18px;font-size:18px;line-height:1.6;color:#6B6862;max-width:56ch;margin-left:auto;margin-right:auto}
+.an-feat{margin-top:72px;padding-bottom:44px;border-bottom:1px solid #E5E1D8}
+.an-feat a{display:block}
+.an-feat .m{display:flex;gap:16px;align-items:center;font-size:13px;color:#6B6862}
+.an-feat .cat{font-weight:600;color:#191919}
+.an-feat h2{margin-top:14px;font-size:clamp(24px,2.6vw,34px);font-weight:700;letter-spacing:-.015em;
+  line-height:1.28;color:#191919;max-width:22ch}
+.an-feat p{margin-top:14px;font-size:17px;line-height:1.6;color:#6B6862;max-width:62ch}
+.an-feat a:hover h2{color:#C15F3C}
+
+.an-grid{margin-top:48px;padding-bottom:120px;display:grid;grid-template-columns:repeat(3,1fr);gap:44px 36px}
+.an-card a{display:block}
+.an-card .m{display:flex;gap:14px;align-items:center;font-size:12.5px;color:#6B6862}
+.an-card .cat{font-weight:600;color:#191919}
+.an-card h3{margin-top:12px;font-size:20px;font-weight:700;letter-spacing:-.01em;line-height:1.35;color:#191919}
+.an-card p{margin-top:10px;font-size:15px;line-height:1.6;color:#6B6862}
+.an-card .more{margin-top:14px;font-size:14px;font-weight:600;color:#191919}
+.an-card a:hover h3{color:#C15F3C}
+.an-card a:hover .more{color:#C15F3C}
+
+/* --- 글 상세 --- */
+.an-post{max-width:1140px;margin:0 auto;padding:calc(56px + 80px) 24px 0}
+.an-post .top{text-align:center}
+.an-post .cat{font-size:14px;font-weight:600;color:#191919}
+.an-post h1{margin-top:16px;font-size:clamp(30px,3.8vw,52px);font-weight:700;letter-spacing:-.01em;
+  line-height:1.1;color:#191919;max-width:20ch;margin-left:auto;margin-right:auto}
+.an-post .date{margin-top:18px;font-size:14px;color:#6B6862}
+.an-post .cover{margin:44px auto 0;max-width:752px;aspect-ratio:752/367;border-radius:16px;overflow:hidden;
+  background:#F0E6E2}
+.an-post .cover img{width:100%;height:100%;object-fit:cover;display:block}
+.an-body{max-width:640px;margin:0 auto;padding:56px 0 0}
+.an-body p{font-size:17px;line-height:1.55;color:#2B2926}
+.an-body p+p{margin-top:22px}
+.an-body h2{margin:44px 0 14px;font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.4;color:#191919}
+.an-body h3{margin:36px 0 12px;font-size:17px;font-weight:700;color:#191919}
+.an-body ul{margin:18px 0;padding-left:22px}
+.an-body li{font-size:17px;line-height:1.55;color:#2B2926;margin-bottom:12px}
+.an-body li b{color:#191919}
+.an-body blockquote{margin:28px 0;padding-left:20px;border-left:2px solid #E5E1D8;color:#4A4741;font-style:normal}
+.an-body a{color:#C15F3C;text-decoration:underline;text-underline-offset:3px}
+.an-body b{font-weight:700;color:#191919}
+.an-share{max-width:640px;margin:64px auto 0;padding-top:28px;border-top:1px solid #E5E1D8;
+  display:flex;gap:14px;font-size:14px;color:#6B6862}
+.an-share a{color:#6B6862}
+.an-share a:hover{color:#191919}
+
+/* --- Related content --- */
+.an-rel{max-width:1140px;margin:96px auto 0;padding:56px 24px 120px;border-top:1px solid #E5E1D8}
+.an-rel h2{font-size:32px;font-weight:600;letter-spacing:-.01em;color:#191919}
+.an-rel .g{margin-top:36px;display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+.an-rel b{display:block;font-size:17px;font-weight:700;line-height:1.4;color:#191919}
+.an-rel p{margin-top:10px;font-size:14.5px;line-height:1.6;color:#6B6862}
+.an-rel .more{margin-top:12px;font-size:14px;font-weight:600;color:#191919}
+.an-rel a:hover b{color:#C15F3C}
+
+/* --- 소개 (anthropic /company: 좌 라벨 + 우 콘텐츠) --- */
+.an-ahero{padding:calc(56px + 90px) 24px 0;text-align:center;max-width:900px;margin:0 auto}
+.an-ahero h1{font-size:clamp(30px,3.9vw,52px);font-weight:700;letter-spacing:-.015em;line-height:1.18;color:#191919}
+.an-ahero p{margin-top:20px;font-size:16px;line-height:1.65;color:#6B6862;max-width:52ch;margin-left:auto;margin-right:auto}
+.an-ahero .btn{display:inline-flex;align-items:center;height:44px;padding:0 26px;margin-top:30px;
+  border-radius:99px;background:#F2EDE4;color:#191919;font-size:15px;font-weight:600;transition:background .2s}
+.an-ahero .btn:hover{background:#E5DED1}
+
+.an-sec{max-width:1140px;margin:0 auto;padding:80px 24px 0}
+.an-sec+.an-sec{border-top:1px solid #E5E1D8;margin-top:80px}
+.an-row{display:grid;grid-template-columns:300px 1fr;gap:60px}
+.an-lbl h2{font-size:26px;font-weight:700;letter-spacing:-.01em;line-height:1.3;color:#191919}
+.an-lbl p{margin-top:14px;font-size:15px;line-height:1.65;color:#6B6862}
+.an-two{display:grid;grid-template-columns:1fr 1fr;gap:36px 44px}
+.an-two h3{font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.35;color:#191919}
+.an-two p{margin-top:10px;font-size:15px;line-height:1.65;color:#6B6862}
+.an-num{display:grid;grid-template-columns:1fr 1fr;gap:36px 44px}
+.an-num .n{font-size:12.5px;font-weight:600;color:#A8A398}
+.an-num h3{margin-top:8px;font-size:19px;font-weight:700;letter-spacing:-.01em;line-height:1.35;color:#191919}
+.an-num p{margin-top:10px;font-size:15px;line-height:1.65;color:#6B6862}
+.an-cta{margin-top:100px;background:#191919;color:#fff;padding:96px 24px;text-align:center}
+.an-cta h2{font-size:clamp(26px,3.2vw,40px);font-weight:700;letter-spacing:-.015em;line-height:1.3;color:#fff;
+  max-width:20ch;margin:0 auto}
+.an-cta .btn{display:inline-flex;align-items:center;height:46px;padding:0 28px;margin-top:32px;
+  border-radius:99px;background:#fff;color:#191919;font-size:15px;font-weight:600}
+.an-cta .btn:hover{background:#E5DED1}
+
+@media(max-width:900px){
+  .an-grid,.an-rel .g,.an-two,.an-num{grid-template-columns:1fr}
+  .an-row{grid-template-columns:1fr;gap:32px}
+  .an-post h1{font-size:30px}
+}
 """
 
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
@@ -892,45 +991,61 @@ try{var k='momentus_comment_interest';localStorage.setItem(k,(+localStorage.getI
 document.getElementById('cbox').hidden=true;document.getElementById('cdone').hidden=false;});}
 </script>"""
 
-for slug in PORDER:
+for i, slug in enumerate(PORDER):
     ps = POSTS[slug]
-    others = [s for s in PORDER if s != slug]
-    toch = "".join(f'<li><a href="#{a}">{t}</a></li>' for a, t in ps["toc"])
-    railh = "".join(f'<li><a href="/blog/{s}/"><span class="th"><img src="https://picsum.photos/seed/{POSTS[s]["img"]}/128/88" alt=""></span><span class="t">{POSTS[s]["title"]}</span></a></li>' for s in others)
-    body = f"""<div class="post-top">
-  <div class="kick pt">{ps['cat']}</div>
-  <h1>{ps['title']}</h1>
-  <p class="sub">{ps['sub']}</p>
-</div>
-<div class="post-grid">
-  <aside class="post-toc"><nav aria-label="목차"><p class="rail-title">목차</p><ul>{toch}</ul></nav></aside>
-  <div class="post-main">
-    <div class="post-meta">
-      <div class="byline"><span class="av">모</span><span><b>모멘터스</b><time>{ps['date']} · {ps['mins']}분 읽기</time></span></div>
-      <div class="share"><a id="shX" href="#" target="_blank" rel="noopener" aria-label="X 공유">X</a><a id="shF" href="#" target="_blank" rel="noopener" aria-label="페이스북 공유">f</a><a id="shL" href="#" target="_blank" rel="noopener" aria-label="링크드인 공유">in</a><button id="shC" aria-label="링크 복사">↗</button></div>
-    </div>
-    <figure class="post-cover"><img src="https://picsum.photos/seed/{ps['img']}/1200/675" alt=""></figure>
-    <article class="prose">{ps['body']}</article>
-    {COMMENT_HTML}
+    rel = [x for x in PORDER if x != slug][:3]
+    relh = "".join(
+        f'<a href="/blog/{x}/"><b>{POSTS[x]["title"]}</b><p>{POSTS[x]["sub"]}</p>'
+        f'<div class="more">더 읽기 →</div></a>' for x in rel)
+    body = f"""<article class="an-post">
+  <div class="top">
+    <div class="cat">{ps['cat']}</div>
+    <h1>{ps['title']}</h1>
+    <div class="date">{ps['date']} · {ps['mins']}분 읽기</div>
   </div>
-  <aside class="post-aside"><div class="rail"><p class="rail-title">연관해서 읽기</p><ul class="rail-posts">{railh}</ul></div></aside>
-</div>"""
-    os.makedirs(f"blog/{slug}", exist_ok=True)
-    with open(f"blog/{slug}/index.html", "w", encoding="utf-8") as f:
-        f.write(page(f"{ps['title']} — MOMENTUS 블로그", ps["sub"], body, active="j", extra=post_js(slug)))
+  <div class="cover"><img src="{VIMG[(i * 4) % len(VIMG)]}" alt=""></div>
+</article>
 
-# ---------- journal listing ----------
-feat = POSTS["insta-reference"]
-rest = ["quickpang-10k", "why-free"]
-jcards = "".join(f"""<a class="jpost" href="/blog/{s}/"><div class="im"><span class="catb">{POSTS[s]['cat'].split(' ·')[0]}</span><img src="https://picsum.photos/seed/{POSTS[s]['img']}/600/420" alt=""></div><h3>{POSTS[s]['title']}</h3><p class="ex">{POSTS[s]['sub']}</p><div class="meta">{POSTS[s]['date']} · {POSTS[s]['mins']}분</div></a>""" for s in rest)
-jbody = f"""<div class="jhead"><div class="kick pt">Journal</div><h1>만드는 이야기,<br>쓰는 법.</h1>
-<p>브라우저를 더 잘 쓰는 법(가이드·칼럼)과, 이 제품들이 어떻게 만들어지는지(메이킹 로그). 연재합니다.</p></div>
-<section class="jfeat"><a href="/blog/insta-reference/">
-  <div class="im"><img src="https://picsum.photos/seed/{feat['img']}/900/620" alt=""></div>
-  <div><div class="kick pt">{feat['cat']}</div><h2>{feat['title']}</h2><p class="ex">{feat['sub']}</p><div class="meta">{feat['date']} · 모멘터스 · {feat['mins']}분</div></div>
-</a></section>
-<section class="jlist">{jcards}</section>"""
-os.makedirs("journal", exist_ok=True)
+<div class="an-body">
+{ps['body']}
+</div>
+
+<div class="an-share">
+  <a href="https://twitter.com/intent/tweet?url=https://the-moment.us/blog/{slug}/" target="_blank" rel="noopener">X에 공유</a>
+  <a href="/blog/">← 블로그 전체</a>
+</div>
+
+<section class="an-rel">
+  <h2>이어서 읽기</h2>
+  <div class="g">{relh}</div>
+</section>"""
+    os.makedirs(f"blog/{slug}", exist_ok=True)
+    with open(f"blog/{slug}/index.html", "w", encoding="utf-8") as fh:
+        fh.write(page(f"{ps['title']} — MOMENTUS 블로그", ps["sub"], body, active="j"))
+
+feat = PORDER[0]
+rest = PORDER[1:]
+cards = "".join(
+    f'<div class="an-card"><a href="/blog/{x}/">'
+    f'<div class="m"><span class="cat">{POSTS[x]["cat"]}</span><span>{POSTS[x]["date"]}</span></div>'
+    f'<h3>{POSTS[x]["title"]}</h3><p>{POSTS[x]["sub"]}</p>'
+    f'<div class="more">더 읽기 →</div></a></div>' for x in rest)
+jbody = f"""<div class="an">
+  <div class="an-lhead">
+    <h1>블로그</h1>
+    <p>AI로 제품을 만들며 알게 된 것들. 쓸모 있으면 가져가세요.</p>
+  </div>
+
+  <div class="an-feat">
+    <a href="/blog/{feat}/">
+      <div class="m"><span class="cat">{POSTS[feat]['cat']}</span><span>{POSTS[feat]['date']}</span></div>
+      <h2>{POSTS[feat]['title']}</h2>
+      <p>{POSTS[feat]['sub']}</p>
+    </a>
+  </div>
+
+  <div class="an-grid">{cards}</div>
+</div>"""
 with open("blog/index.html", "w", encoding="utf-8") as f:
     f.write(page("블로그 — MOMENTUS", "만드는 이야기와 쓰는 법. 가이드·칼럼·메이킹 로그.", jbody, active="j"))
 
@@ -979,50 +1094,106 @@ with open("lab/index.html", "w", encoding="utf-8") as f:
     f.write(page("만들어드려요 — MOMENTUS", "불편한 걸 말해주세요. 공감 많은 것부터 무료로 만들어 드려요.", lab_body, active="l", extra=LAB_JS))
 
 # ---------- about ----------
-about_body = """<div class="ab">
-  <section class="ab-hero">
-    <h1>이걸로 먹고 살 수 있을까.</h1>
-    <p class="lead">요즘 다들 한 번쯤 하는 고민이죠.<br>저희도 그 답을 찾는 중입니다.</p>
-  </section>
+about_body = """<div class="an-ahero">
+  <h1>AI가 사람을 이기는 지점을 찾습니다.</h1>
+  <p>모멘터스는 AI로 제품을 만드는 방법을 실험하는 스튜디오입니다. 매일 만들고, 직접 쓰고, 알게 된 걸 공개합니다.</p>
+  <a class="btn" href="/">만든 것들 보기 →</a>
+</div>
 
-  <section class="ab-body">
-    <p>모멘터스는 <b>부부가 함께 하는 작은 회사</b>예요. 사업자는 아내 이름으로 냈고, 제품은 제가 만듭니다. 서로 없으면 굴러가지 않습니다.</p>
-
-    <p>둘 다 십수 년을 디지털 제품 만드는 일로 먹고살았습니다. 이모션글로벌, NC소프트 재팬, 아이플래테아, 네오랩컨버전스, 엔카닷컴 — 이름을 다 아실 필요는 없어요. 그냥 <b>남의 제품을 오래 만들어 온 사람들</b>이라고만 알아주시면 됩니다.</p>
-
-    <p>그러다 우리 걸 만들기 시작했어요. 대단한 매출은 아닙니다. 어떤 달은 만 원, 어떤 달은 이만 원. 솔직히 아직도 그 답을 못 찾았습니다.<br><b>다만 한 번도 멈추지 않았습니다.</b> 그게 지금 내세울 수 있는 전부예요.</p>
-  </section>
-
-  <section class="ab-now">
-    <div class="ab-kick">요즘 하는 일</div>
-    <h2>AI가 사람을 이기는 지점을 찾고 있습니다.</h2>
-    <div class="ab-cards">
-      <div class="ab-card">
-        <b>로고 공모에 AI로 나갑니다</b>
-        <p>사람 디자이너들과 같은 판에서 겨룹니다. 이기기도 하고, 집니다. 이기는 날이 늘고 있어요.</p>
+<section class="an-sec">
+  <div class="an-row">
+    <div class="an-lbl">
+      <h2>하려는 일</h2>
+      <p>AI가 사람보다 잘하는 일과 여전히 못하는 일이 매달 바뀝니다. 그 경계를 직접 만들어 보며 확인합니다.</p>
+    </div>
+    <div class="an-two">
+      <div>
+        <h3>경계를 실측합니다</h3>
+        <p>AI가 어디까지 하는지는 써봐야 압니다. 로고 공모에 AI로 참여해 사람 디자이너들과 같은 판에서 겨루고, 결과를 기록합니다. 이기기도 하고 집니다.</p>
       </div>
-      <div class="ab-card">
-        <b>봇이 스스로 코드를 고칩니다</b>
-        <p>슬랙에 사는 AI 팀이 제품을 만들고, 버그를 찾고, 자기 코드를 고쳐서 배포합니다.</p>
+      <div>
+        <h3>스스로 고치는 팀을 만듭니다</h3>
+        <p>슬랙에 사는 AI 팀이 제품을 만들고, 버그를 찾고, 자기 코드를 고쳐서 배포합니다. 사람이 하던 일을 어디까지 넘길 수 있는지 실험합니다.</p>
       </div>
-      <div class="ab-card">
-        <b>거기서 배운 걸로 만듭니다</b>
-        <p>여기 있는 제품들은 그 실험에서 나왔어요. 우리가 먼저 쓰고, 쓸모 있으면 남깁니다.</p>
+      <div>
+        <h3>먼저 씁니다</h3>
+        <p>여기 있는 제품은 전부 우리가 먼저 쓰려고 만든 것입니다. 매일 안 쓰게 되면 버립니다. 살아남은 것만 남아 있습니다.</p>
+      </div>
+      <div>
+        <h3>배운 걸 공개합니다</h3>
+        <p>뭐가 됐고 뭐가 안 됐는지 블로그에 씁니다. 같은 시도를 하는 사람이 같은 벽에 부딪히지 않게.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="ab-end">
-    <p>혹시 비슷한 고민을 하고 계신다면,<br>여기 있는 걸 그냥 가져다 쓰세요.</p>
-    <div class="ab-btns">
-      <a class="ab-go" href="/">만든 것들 보기 →</a>
-      <a class="ab-ghost" href="/lab/">불편한 거 알려주기</a>
+<section class="an-sec">
+  <div class="an-row">
+    <div class="an-lbl">
+      <h2>만들 때 지키는 것</h2>
+      <p>제품을 만들지 말지, 남길지 버릴지를 정하는 기준입니다.</p>
     </div>
-  </section>
-</div>"""
+    <div class="an-num">
+      <div>
+        <div class="n">01</div>
+        <h3>내가 안 쓰면 만들지 않는다.</h3>
+        <p>남이 필요할 것 같아서 만든 건 전부 실패했습니다. 내 불편에서 시작한 것만 살아남았습니다.</p>
+      </div>
+      <div>
+        <div class="n">02</div>
+        <h3>설명서가 필요하면 진 것이다.</h3>
+        <p>쓰는 법을 설명해야 하는 도구는 안 씁니다. 눌러보면 알아야 합니다.</p>
+      </div>
+      <div>
+        <div class="n">03</div>
+        <h3>공짜로 풀 수 있으면 푼다.</h3>
+        <p>돈을 받을 이유가 없는 건 그냥 드립니다. 브라우저 도구가 그렇습니다.</p>
+      </div>
+      <div>
+        <div class="n">04</div>
+        <h3>안 쓰이면 버린다.</h3>
+        <p>애착으로 남긴 제품이 사이트를 무겁게 만듭니다. 안 쓰면 지웁니다.</p>
+      </div>
+      <div>
+        <div class="n">05</div>
+        <h3>실패도 기록한다.</h3>
+        <p>안 된 이유가 다음 제품의 재료입니다. 지우지 않습니다.</p>
+      </div>
+      <div>
+        <div class="n">06</div>
+        <h3>멈추지 않는다.</h3>
+        <p>어떤 달은 만 원, 어떤 달은 이만 원. 대단하지 않지만 한 번도 쉬지 않았습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="an-sec">
+  <div class="an-row">
+    <div class="an-lbl">
+      <h2>만드는 사람</h2>
+      <p>디지털 제품을 오래 만들어 온 사람들입니다.</p>
+    </div>
+    <div class="an-two">
+      <div>
+        <h3>남의 제품을 20년 만들었습니다</h3>
+        <p>이모션글로벌, NC소프트 재팬, 아이플래테아, 네오랩컨버전스, 엔카닷컴. 이름을 다 아실 필요는 없습니다. 그 시간에 배운 걸로 이제 우리 걸 만듭니다.</p>
+      </div>
+      <div>
+        <h3>둘이서 합니다</h3>
+        <p>제품을 만드는 사람과, 그게 굴러가게 하는 사람. 둘 다 있어야 회사가 됩니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="an-cta">
+  <h2>불편한 게 있으면<br>말해 주세요.</h2>
+  <a class="btn" href="/lab/">불편한 거 알려주기 →</a>
+</section>"""
 os.makedirs("about", exist_ok=True)
 with open("about/index.html", "w", encoding="utf-8") as f:
-    f.write(page("소개 — MOMENTUS", "부부가 함께 하는 작은 회사. AI가 사람을 이기는 지점을 찾으며 제품을 만듭니다.", about_body, active="a"))
+    f.write(page("소개 — MOMENTUS", "AI로 제품을 만드는 방법을 실험하는 스튜디오. 매일 만들고, 직접 쓰고, 알게 된 걸 공개합니다.", about_body, active="a"))
 
 # ---------- landing (root index.html) ----------
 land_body = """<div class="vc">
