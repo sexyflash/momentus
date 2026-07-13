@@ -550,10 +550,26 @@ body:has(.vd){padding-bottom:88px}
 .an-grid{margin-top:48px;padding-bottom:120px;display:grid;grid-template-columns:repeat(3,1fr);gap:52px 32px}
 .an-card[hidden]{display:none}
 .an-card a{display:block}
-.an-card .th{width:100%;aspect-ratio:1;border-radius:14px;overflow:hidden;background:#EFEAE0}
-.an-card .th img{width:100%;height:100%;object-fit:cover;display:block;
-  transition:transform .7s cubic-bezier(.16,1,.3,1)}
-.an-card a:hover .th img{transform:scale(1.04)}
+.an-card .th{position:relative;width:100%;aspect-ratio:1;border-radius:14px;overflow:hidden;
+  transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.an-card a:hover .th{transform:scale(1.02)}
+/* 추상 그라디언트 썸네일 — 글마다 다른 결. 스톡 사진보다 정직하다. */
+.an-card .th::before{content:"";position:absolute;inset:-20%;filter:blur(28px)}
+.th.g1{background:#DDE7F5}
+.th.g1::before{background:
+  radial-gradient(closest-side,#7BA7E8 0 40%,transparent 70%) 12% 22%/62% 62% no-repeat,
+  radial-gradient(closest-side,#B9CFF0 0 45%,transparent 72%) 78% 30%/58% 58% no-repeat,
+  radial-gradient(closest-side,#5C86C9 0 38%,transparent 68%) 55% 88%/70% 62% no-repeat}
+.th.g2{background:#DCEDE4}
+.th.g2::before{background:
+  radial-gradient(closest-side,#6FC49B 0 40%,transparent 70%) 18% 78%/64% 62% no-repeat,
+  radial-gradient(closest-side,#AFDCC6 0 45%,transparent 72%) 72% 24%/60% 60% no-repeat,
+  radial-gradient(closest-side,#3E9E77 0 36%,transparent 66%) 88% 82%/56% 56% no-repeat}
+.th.g3{background:#F1E6DC}
+.th.g3::before{background:
+  radial-gradient(closest-side,#E0A87A 0 40%,transparent 70%) 24% 26%/62% 62% no-repeat,
+  radial-gradient(closest-side,#EFD2B8 0 46%,transparent 74%) 76% 70%/64% 64% no-repeat,
+  radial-gradient(closest-side,#C8804F 0 34%,transparent 64%) 60% 14%/52% 52% no-repeat}
 .an-card h3{margin-top:22px;font-size:21px;font-weight:600;letter-spacing:-.015em;line-height:1.35;color:#191919}
 .an-card .m{margin-top:12px;display:flex;gap:12px;align-items:center;font-size:13.5px;color:#6B6862}
 .an-card .cat{color:#191919}
@@ -568,9 +584,8 @@ body:has(.vd){padding-bottom:88px}
 .an-post h1{margin-top:16px;font-size:clamp(30px,3.8vw,52px);font-weight:700;letter-spacing:-.01em;
   line-height:1.1;color:#191919;max-width:20ch;margin-left:auto;margin-right:auto}
 .an-post .date{margin-top:18px;font-size:14px;color:#6B6862}
-.an-post .cover{margin:44px auto 0;max-width:752px;aspect-ratio:752/367;border-radius:16px;overflow:hidden;
-  background:#F0E6E2}
-.an-post .cover img{width:100%;height:100%;object-fit:cover;display:block}
+.an-post .cover{position:relative;margin:44px auto 0;max-width:752px;aspect-ratio:752/367;
+  border-radius:16px;overflow:hidden}
 .an-body{max-width:640px;margin:0 auto;padding:56px 0 0}
 .an-body p{font-size:17px;line-height:1.55;color:#2B2926}
 .an-body p+p{margin-top:22px}
@@ -1068,7 +1083,7 @@ for i, slug in enumerate(PORDER):
     <h1>{ps['title']}</h1>
     <div class="date">{ps['date']} · {ps['mins']}분 읽기</div>
   </div>
-  <div class="cover"><img src="{VIMG[(i * 4) % len(VIMG)]}" alt=""></div>
+  <div class="cover th g{(i % 3) + 1}"></div>
 </article>
 
 <div class="an-body">
@@ -1098,7 +1113,7 @@ tabs = '<button type="button" data-f="all" aria-pressed="true">전체</button>' 
 cards = "".join(
     f'<div class="an-card" data-cat="{POSTS[x]["cat"].split("·")[0].strip()}">'
     f'<a href="/blog/{x}/">'
-    f'<div class="th"><img src="{VIMG[(i * 4 + 2) % len(VIMG)]}" alt="" loading="lazy"></div>'
+    f'<div class="th g{(i % 3) + 1}"></div>'
     f'<h3>{POSTS[x]["title"]}</h3>'
     f'<div class="m"><span class="cat">{POSTS[x]["cat"]}</span><span>{POSTS[x]["date"]}</span></div>'
     f'<p>{POSTS[x]["sub"]}</p>'
