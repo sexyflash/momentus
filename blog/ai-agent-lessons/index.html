@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 에이전트를 만들며 세 번 버린 것 — MOMENTUS 블로그</title>
+<meta name="description" content="LLM이 판단해야 할 자리에 규칙을 박으면 반드시 사고가 납니다. 세 번 겪고 나서야 알았습니다.">
+<meta property="og:title" content="AI 에이전트를 만들며 세 번 버린 것 — MOMENTUS 블로그">
+<meta property="og:description" content="LLM이 판단해야 할 자리에 규칙을 박으면 반드시 사고가 납니다. 세 번 겪고 나서야 알았습니다.">
+<link rel="stylesheet" href="/assets/site.css?v=b5b2f7ef">
+</head>
+<body>
+<header class="gnb">
+  <a class="wm" href="/">MOMENTUS</a>
+  <nav class="lk">
+    <a href="/blog/" class="on">블로그</a>
+    <a href="/lab/" class="hidem">만들어드려요</a>
+    <a href="/about/" class="hidem">소개</a>
+  </nav>
+</header>
+<main>
+<article class="an-post">
+  <div class="top">
+    <div class="cat">가이드 · AI</div>
+    <h1>AI 에이전트를 만들며 세 번 버린 것</h1>
+    <div class="date">2026. 07. 11 · 6분 읽기</div>
+  </div>
+  <div class="cover"><img src="https://www.vinylc.com/upload/module/MD00004417/vinylc_2021_calendar_diary_033.jpg" alt=""></div>
+</article>
+
+<div class="an-body">
+<p>제품을 만드는 AI 팀을 슬랙에 두고 있습니다. 이 팀이 코드를 쓰고, 버그를 찾고, 자기 코드를 고쳐서 배포합니다.</p>
+<p>만들면서 <b>같은 실수를 세 번</b> 했습니다. 매번 다른 얼굴로 왔지만 병은 하나였습니다. <b>LLM이 판단해야 하는 자리에 규칙(키워드·정규식)을 박은 것</b>입니다.</p>
+
+<h2 id="s1">첫 번째: 중단 명령</h2>
+<p>작업을 멈추라는 지시를 감지하려고 "그만 / 멈춰 / 하지마 / stop"을 정규식으로 잡았습니다.</p>
+<p>사고가 났습니다. <b>"이거 어때?"</b> 같은 평범한 질문이 오탐에 걸려 <b>진행 중이던 작업을 죽였습니다.</b> 패치를 7번 쌓다가 결국 전부 버리고 LLM 판단으로 넘겼습니다.</p>
+
+<h2 id="s2">두 번째: 위임 차단</h2>
+<p>"분석만 하고 실행하지 마"를 구분하려고 동사 목록을 만들었습니다. 분석 동사와 실행 동사를 나눠서 매칭했습니다.</p>
+<p>이번엔 <b>"맞아?"</b> 같은 일반 질문이 분석 의도로 잡혔습니다. 그리고 차단 메시지에 내부 용어가 그대로 실려 사용자에게 노출됐습니다. 또 버렸습니다.</p>
+
+<h2 id="s3">세 번째: 자동 분해</h2>
+<p>여기서 <b>"이번엔 다르다"고 확신했습니다.</b> 키워드가 아니라 결정론적 신호를 쓰기로 했으니까요 — 글자 수 250자 이상, 번호 목록 3개 이상, 특정 단어 포함. 규칙이 아니라 수치니까 안전하다고 봤습니다.</p>
+<p>아니었습니다. 사용자가 <b>채용 공고를 붙여넣자</b> 그 안의 "1. 2. 3." 번호와 "기획"이라는 단어가 조건을 채웠습니다. 단순한 글쓰기 요청이 중장비 분해 작업으로 오발동했고, 결과는 빈손이었습니다.</p>
+<p>여기서 진짜 원인을 알았습니다. <b>사용자가 붙여넣는 자료가 신호를 오염시킵니다.</b> 우리는 "사용자의 의도"를 센 게 아니라 "붙여넣은 자료"를 센 거였습니다.</p>
+
+<h2 id="s4">규칙이 안 되는 이유</h2>
+<p>세 번 겪고 정리한 결론입니다.</p>
+<ul>
+<li><b>자연어는 열거할 수 없습니다.</b> "확인할까요?" "되는 거죠?" "맞나요?" — 사람이 어떻게 말할지 미리 다 적을 수 없습니다.</li>
+<li><b>부정문이 뒤집습니다.</b> "수정하지 마"라는 문장 안에 "수정"이 들어 있습니다.</li>
+<li><b>붙여넣은 자료가 신호를 오염시킵니다.</b> 이게 제일 무섭습니다. 결정론적 수치도 안전하지 않습니다.</li>
+</ul>
+
+<h2>그래서 어떻게 하나</h2>
+<p>지금은 이 기준으로 나눕니다.</p>
+<ul>
+<li><b>순수하게 기계적인 판단</b>(경로가 존재하나, 깊이 제한, DB 잠금) → 규칙으로 해도 됩니다.</li>
+<li><b>자연어의 의미를 판단</b> → 무조건 LLM에게 맡깁니다. 규칙은 프롬프트에 넣습니다.</li>
+<li><b>예외: 걸려도 손해가 0인 자리</b> → 규칙 OK. 예를 들어 "○○씨 있어요?" 같은 순수 호출을 정규식으로 잡아 인사만 하는 건, 틀려도 인사 한 마디라 무해합니다.</li>
+</ul>
+<p>판별 기준은 하나입니다. <b>오발동했을 때 파괴적인가.</b> 작업을 죽이거나, 차단하거나, 빈손으로 만든다면 — 거기엔 규칙을 넣지 마세요.</p>
+</div>
+
+<div class="an-share">
+  <a href="https://twitter.com/intent/tweet?url=https://the-moment.us/blog/ai-agent-lessons/" target="_blank" rel="noopener">X에 공유</a>
+  <a href="/blog/">← 블로그 전체</a>
+</div>
+
+<section class="an-rel">
+  <h2>이어서 읽기</h2>
+  <div class="g"><a href="/blog/loud-ai-contest/"><b>AI로 로고 공모에 524번 나가봤습니다</b><p>당선율을 가른 건 디자인이 아니라 '언제 냈느냐'였습니다. 마감 임박 56건의 당선은 0건이었습니다.</p><div class="more">더 읽기 →</div></a><a href="/blog/why-free/"><b>왜 공짜로 푸는가</b><p>돈을 받을 이유가 없는 건 그냥 드립니다. 대신 받을 이유가 있는 걸 만듭니다.</p><div class="more">더 읽기 →</div></a></div>
+</section>
+</main>
+<footer class="site">
+  <div class="brand"><div class="wm">MOMENTUS</div><p>쓸모 있는 것만<br>만듭니다.</p></div>
+  <div><h4>제품</h4><a href="/products/heyreci/">AI 상품사진 — 헤이레시</a><a href="/products/mark/">로고 디자인 — 마크</a><a href="/products/theplan/">디지털 플래너 — 더플랜</a><a href="/products/cue/">AI 모의면접 — 큐</a><a href="/products/quickpang/">쿠팡 옵션·재고 — 퀵팡</a></div>
+  <div><h4>무료 도구</h4><a href="/products/insta-rank/">인스타 인기순 정렬</a><a href="/products/youtube-rank/">유튜브 인기순 정렬</a><a href="/products/pinterest-grab/">핀터레스트 원본 추출</a><a href="/products/chatpage/">유튜브 AI 요약 — ChatPage</a><a href="/products/her/">음성 입력 — her</a></div>
+  <div><h4>모멘터스</h4><a href="/blog/">블로그</a><a href="/lab/">만들어드려요</a><a href="/about/">소개</a><a href="mailto:hello@the-moment.us">hello@the-moment.us</a><a href="/apps/legal.html">이용약관</a><a href="/apps/privacy-policy.html">개인정보처리방침</a></div>
+  <div class="legal"><span>© 2026 모멘터스</span><span>the-moment.us</span></div>
+</footer>
+</body>
+</html>
