@@ -351,30 +351,50 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
    팔레트: 흰 + 블루(#3182f6) + 잉크
    ============================================================ */
 :root{--rn-blue:#3182f6}
-/* 섹션 = [라벨] + [큰 문장] + [카드 그리드] — apple.com/apple-intelligence 패턴 */
+/* 제품 섹션 = labs.google "Life beyond the Lab" graduation 캐러셀 구조 그대로 */
 .rn-hero{padding:calc(56px + clamp(76px,13vh,150px)) var(--gut) clamp(56px,8vh,100px);text-align:center}
 .rn-hero h1{font-size:clamp(40px,7.4vw,106px);font-weight:800;letter-spacing:-.035em;line-height:1.02;margin:0 auto;max-width:14ch}
 .rn-hero .sub{margin:34px auto 0;font-size:clamp(15px,1.35vw,18px);color:var(--gray);max-width:46ch;line-height:1.75}
 
-.rn-sect{padding:clamp(60px,9vh,120px) var(--gut) 0}
-.rn-eyebrow{font-size:21px;font-weight:600;letter-spacing:.01em;color:var(--ink);line-height:1.25}
-.rn-sectitle{margin-top:10px;font-size:clamp(27px,3.3vw,44px);font-weight:600;letter-spacing:-.022em;
-  line-height:1.2;max-width:22ch;color:var(--ink)}
-.rn-sectsub{margin-top:16px;font-size:16px;color:var(--gray);max-width:48ch;line-height:1.7}
+.grad{padding:clamp(64px,9vh,120px) 0 clamp(56px,8vh,96px);background:var(--soft);overflow:hidden}
+.grad__inner{text-align:center}
+.grad__headline{font-size:clamp(34px,4.4vw,60px);font-weight:500;letter-spacing:-.02em;line-height:1.1;
+  color:var(--ink);padding:0 var(--gut)}
+.grad__desc{margin:24px auto 0;max-width:52ch;padding:0 var(--gut);
+  font-size:clamp(16px,1.55vw,24px);font-weight:400;line-height:1.3;color:var(--ink2)}
 
-.rn-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:clamp(36px,5vh,60px)}
-.rn-card{display:flex;flex-direction:column;gap:16px}
-.rn-card:hover h3{color:var(--rn-blue)}
-.rn-card:hover .rn-shot{transform:translateY(-4px);box-shadow:0 20px 40px -18px rgba(11,12,14,.18)}
-.rn-shot{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--soft);
-  transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
-.rn-shot img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/5;display:block}
-.rn-card .kick{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
-.rn-card h3{margin-top:9px;font-size:17px;font-weight:600;letter-spacing:-.022em;line-height:1.5}
-.rn-card p{margin-top:8px;font-size:13.5px;color:var(--gray);line-height:1.7}
+.grad__track{display:flex;gap:20px;margin-top:clamp(40px,6vh,64px);padding:4px var(--gut);
+  overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.grad__track::-webkit-scrollbar{display:none}
+
+.gcard{position:relative;flex:0 0 clamp(280px,32vw,475px);height:clamp(420px,46vw,660px);
+  border-radius:43px;overflow:hidden;scroll-snap-align:start;background:#e9e6e2;isolation:isolate}
+.gcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
+  transition:transform .6s var(--ease)}
+.gcard:hover img{transform:scale(1.04)}
+.gcard::after{content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(0,0,0,.28) 0 22%,rgba(0,0,0,0) 45%,rgba(0,0,0,.72) 100%)}
+.gcard__pills{position:absolute;top:24px;left:24px;right:24px;z-index:2;display:flex;gap:8px;flex-wrap:wrap}
+.gcard__pill{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:46px;
+  background:rgba(255,255,255,.15);backdrop-filter:blur(8px);color:#fff;
+  font-size:13.7px;font-weight:500;letter-spacing:-.01em;white-space:nowrap}
+.gcard__body{position:absolute;left:24px;right:24px;bottom:24px;z-index:2;color:#fff;text-align:left}
+.gcard__headline{font-size:clamp(24px,2.9vw,42px);font-weight:400;letter-spacing:-.02em;line-height:1.1;color:#fff}
+.gcard__desc{margin-top:12px;font-size:clamp(14px,1.4vw,20px);font-weight:400;line-height:1.4;
+  color:rgba(255,255,255,.86);max-width:24ch}
+.gcard__cta{display:inline-flex;align-items:center;justify-content:center;margin-top:20px;height:50px;padding:0 26px;
+  border:1px solid rgba(255,255,255,.7);border-radius:9990px;color:#fff;font-size:16px;font-weight:500;
+  transition:background .25s,color .25s}
+.gcard:hover .gcard__cta{background:#fff;color:var(--ink)}
+
+.grad__controls{display:flex;justify-content:center;gap:12px;margin-top:clamp(32px,4.5vh,48px)}
+.grad__ctrl{width:52px;height:52px;border-radius:50%;border:1px solid var(--soft2);background:transparent;
+  color:var(--ink);cursor:pointer;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;
+  transition:border-color .2s,background .2s}
+.grad__ctrl:hover:not(:disabled){border-color:var(--ink);background:var(--paper)}
+.grad__ctrl:disabled{opacity:.3;cursor:default}
+
 .rn-outro{padding:clamp(80px,12vh,150px) var(--gut) 0}
-@media(max-width:980px){.rn-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:620px){.rn-grid{grid-template-columns:1fr}}
 """
 
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
@@ -759,92 +779,108 @@ land_body = """<section class="rn-hero">
   <p class="sub">상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.</p>
 </section>
 
-<section class="rn-sect">
-  <div class="rn-eyebrow">제품</div>
-  <h2 class="rn-sectitle">일이 되게 하는 열 가지.</h2>
-  <p class="rn-sectsub">각자 다른 문제를 풉니다. 필요한 것만 골라 쓰세요.</p>
+<section class="grad">
+  <div class="grad__inner">
+    <h2 class="grad__headline">매일 쓰는 것만 남깁니다.</h2>
+    <p class="grad__desc">모든 건 하나의 불편에서 시작합니다. 내가 쓰려고 만들고, 매일 씁니다. 쓰다 보면 남고 안 쓰면 버립니다. 여기 있는 건 그렇게 살아남은 것들입니다.</p>
 
-  <div class="rn-grid">
-    <a class="rn-card" href="https://heyreci.com" target="_blank" rel="noopener">
-      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?w=800&q=75&auto=format&fit=crop" alt="스튜디오 조명 아래 놓인 상품 사진"></div>
-      <div>
-        <span class="kick">heyreci</span>
-        <h3>모델 촬영비 0원으로 카탈로그를 만듭니다</h3>
-        <p>폰으로 찍은 상품 사진이 30초 만에 판매용 컷으로.</p>
-      </div>
-    </a>
-    <a class="rn-card" href="https://mark.the-moment.us" target="_blank" rel="noopener">
-      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1713616147761-c126f8009c6f?w=800&q=75&auto=format&fit=crop" alt="종이에 로고를 스케치하는 모습" loading="lazy"></div>
-      <div>
-        <span class="kick">Mark</span>
-        <h3>내 업종 로고를 먼저 보고 고릅니다</h3>
-        <p>같은 업종만 깊이 판 시안 600여 개. 간판·명함에 얹은 모습까지.</p>
-      </div>
-    </a>
-    <a class="rn-card" href="https://planner.the-moment.us" target="_blank" rel="noopener">
-      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1673597487243-8e84ae538b8d?w=800&q=75&auto=format&fit=crop" alt="태블릿에 띄운 달력 플래너" loading="lazy"></div>
-      <div>
-        <span class="kick">THE PLAN</span>
-        <h3>내 손에 맞는 플래너를 골라서 씁니다</h3>
-        <p>스타일·구성·시작 요일까지 고른 대로 조립해 PDF로.</p>
-      </div>
-    </a>
-    <a class="rn-card" href="https://cue.the-moment.us" target="_blank" rel="noopener">
-      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1698047681452-08eba22d0c64?w=800&q=75&auto=format&fit=crop" alt="면접에서 답변하는 지원자" loading="lazy"></div>
-      <div>
-        <span class="kick">Cue</span>
-        <h3>면접장에서 얼어붙지 않으려면 소리 내어 연습해야 합니다</h3>
-        <p>읽지 말고 말하세요. 동문서답은 AI가 짚어 줍니다.</p>
-      </div>
-    </a>
-    <a class="rn-card" href="/products/quickpang/">
-      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1574717024757-c1ec4d86ae82?w=800&q=75&auto=format&fit=crop" alt="쇼핑 카트" loading="lazy"></div>
-      <div>
-        <span class="kick">퀵팡</span>
-        <h3>들어가 보지 않아도 옵션과 재고가 보입니다</h3>
-        <p>쿠팡 검색 결과 위에서 바로.</p>
-      </div>
-    </a>
-    <a class="rn-card" href="/products/insta-rank/">
-      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1736767431540-0d590ba5efc2?w=800&q=75&auto=format&fit=crop" alt="소셜 앱이 깔린 스마트폰" loading="lazy"></div>
-      <div>
-        <span class="kick">인스타 인기순 정렬</span>
-        <h3>이 계정, 대체 뭐가 제일 잘 됐나</h3>
-        <p>피드를 좋아요순으로 다시 깝니다.</p>
-      </div>
-    </a>
-    <a class="rn-card" href="/products/pinterest-grab/">
-      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1664638413739-d571590cb51b?w=800&q=75&auto=format&fit=crop" alt="재료 샘플로 만든 무드보드" loading="lazy"></div>
-      <div>
-        <span class="kick">핀터레스트 원본 추출</span>
-        <h3>저해상 썸네일 말고, 원본을 가져옵니다</h3>
-        <p>무드보드에 쓸 화질 그대로.</p>
-      </div>
-    </a>
-    <a class="rn-card" href="/products/chatpage/">
-      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1590769398823-a62d7ecc25e6?w=800&q=75&auto=format&fit=crop" alt="노트북으로 영상을 보는 모습" loading="lazy"></div>
-      <div>
-        <span class="kick">ChatPage</span>
-        <h3>1시간 42분짜리를 끝까지 볼 필요는 없습니다</h3>
-        <p>쓰던 AI로 넘겨 3초 요약.</p>
-      </div>
-    </a>
-    <a class="rn-card" href="/products/her/">
-      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1588800347304-ec7e6f353327?w=800&q=75&auto=format&fit=crop" alt="마이크" loading="lazy"></div>
-      <div>
-        <span class="kick">her · 음성 입력</span>
-        <h3>손이 못 따라갈 만큼 생각이 빠를 때, 그냥 말하면 됩니다</h3>
-        <p>모든 입력창에서, 타이핑 대신 말로.</p>
-      </div>
-    </a>
-    <a class="rn-card" href="/products/youtube-rank/">
-      <div class="rn-shot"><img src="https://images.unsplash.com/photo-1502209877429-d7c6df9eb3f9?w=800&q=75&auto=format&fit=crop" alt="영상 편집 타임라인" loading="lazy"></div>
-      <div>
-        <span class="kick">유튜브 인기순 정렬</span>
-        <h3>이 채널의 대표작이 뭔지, 5초 만에</h3>
-        <p>영상 목록을 조회수순으로 정렬합니다.</p>
-      </div>
-    </a>
+    <div class="grad__track" id="gtrack" role="region" aria-roledescription="carousel" aria-label="제품">
+      <article class="gcard" role="group" aria-roledescription="slide" aria-label="1 / 10">
+        <img src="https://labs.google/assets/images/graduation/gemini_bg.webp" alt="heyreci" draggable="false" decoding="async">
+        <div class="gcard__pills"><div class="gcard__pill"><span>Reci</span><span aria-hidden="true">→</span></div><div class="gcard__pill">heyreci</div></div>
+        <div class="gcard__body">
+          <h3 class="gcard__headline">heyreci</h3>
+          <p class="gcard__desc">폰으로 찍은 상품 사진이 30초 만에 판매용 컷이 됩니다. 이미지 도구 40종.</p>
+          <a class="gcard__cta" href="https://heyreci.com" target="_blank" rel="noopener">지금 써보기</a>
+        </div>
+      </article>
+      <article class="gcard" role="group" aria-roledescription="slide" aria-label="2 / 10">
+        <img src="https://labs.google/assets/images/graduation/flow_bg_ed_1.webp" alt="Mark" draggable="false" decoding="async" loading="lazy">
+        <div class="gcard__pills"><div class="gcard__pill">Mark</div></div>
+        <div class="gcard__body">
+          <h3 class="gcard__headline">Mark</h3>
+          <p class="gcard__desc">같은 업종만 깊이 판 로고 시안 600여 개. 간판·명함에 얹은 모습까지 보고 고르세요.</p>
+          <a class="gcard__cta" href="https://mark.the-moment.us" target="_blank" rel="noopener">지금 써보기</a>
+        </div>
+      </article>
+      <article class="gcard" role="group" aria-roledescription="slide" aria-label="3 / 10">
+        <img src="https://labs.google/assets/images/graduation/notebook_bg.webp" alt="THE PLAN" draggable="false" decoding="async" loading="lazy">
+        <div class="gcard__pills"><div class="gcard__pill">THE PLAN</div></div>
+        <div class="gcard__body">
+          <h3 class="gcard__headline">THE PLAN</h3>
+          <p class="gcard__desc">스타일·구성·시작 요일까지 고른 대로 조립해 PDF로 드립니다.</p>
+          <a class="gcard__cta" href="https://planner.the-moment.us" target="_blank" rel="noopener">지금 써보기</a>
+        </div>
+      </article>
+      <article class="gcard" role="group" aria-roledescription="slide" aria-label="4 / 10">
+        <img src="https://labs.google/assets/images/graduation/flow_music_bg.webp" alt="Cue" draggable="false" decoding="async" loading="lazy">
+        <div class="gcard__pills"><div class="gcard__pill"><span>Reps</span><span aria-hidden="true">→</span></div><div class="gcard__pill">Cue</div></div>
+        <div class="gcard__body">
+          <h3 class="gcard__headline">Cue</h3>
+          <p class="gcard__desc">읽지 말고 소리 내어 말하세요. 동문서답하면 AI가 짚어 줍니다.</p>
+          <a class="gcard__cta" href="https://cue.the-moment.us" target="_blank" rel="noopener">지금 써보기</a>
+        </div>
+      </article>
+      <article class="gcard" role="group" aria-roledescription="slide" aria-label="5 / 10">
+        <img src="https://labs.google/assets/images/graduation/ai_studio_bg_ed_1.webp" alt="퀵팡" draggable="false" decoding="async" loading="lazy">
+        <div class="gcard__pills"><div class="gcard__pill">퀵팡</div></div>
+        <div class="gcard__body">
+          <h3 class="gcard__headline">퀵팡</h3>
+          <p class="gcard__desc">쿠팡 검색 결과에서, 들어가 보지 않고 옵션과 재고를 확인합니다.</p>
+          <a class="gcard__cta" href="/products/quickpang/">지금 써보기</a>
+        </div>
+      </article>
+      <article class="gcard" role="group" aria-roledescription="slide" aria-label="6 / 10">
+        <img src="https://labs.google/assets/images/graduation/gemini_bg.webp" alt="인스타 인기순 정렬" draggable="false" decoding="async" loading="lazy">
+        <div class="gcard__pills"><div class="gcard__pill">인스타 인기순</div></div>
+        <div class="gcard__body">
+          <h3 class="gcard__headline">인스타 인기순 정렬</h3>
+          <p class="gcard__desc">이 계정, 대체 뭐가 제일 잘 됐나. 피드를 좋아요순으로 다시 깝니다.</p>
+          <a class="gcard__cta" href="/products/insta-rank/">지금 써보기</a>
+        </div>
+      </article>
+      <article class="gcard" role="group" aria-roledescription="slide" aria-label="7 / 10">
+        <img src="https://labs.google/assets/images/graduation/flow_bg_ed_1.webp" alt="핀터레스트 원본 추출" draggable="false" decoding="async" loading="lazy">
+        <div class="gcard__pills"><div class="gcard__pill">핀터레스트</div></div>
+        <div class="gcard__body">
+          <h3 class="gcard__headline">핀터레스트 원본 추출</h3>
+          <p class="gcard__desc">저해상 썸네일 말고, 무드보드에 쓸 원본 화질 그대로.</p>
+          <a class="gcard__cta" href="/products/pinterest-grab/">지금 써보기</a>
+        </div>
+      </article>
+      <article class="gcard" role="group" aria-roledescription="slide" aria-label="8 / 10">
+        <img src="https://labs.google/assets/images/graduation/notebook_bg.webp" alt="ChatPage" draggable="false" decoding="async" loading="lazy">
+        <div class="gcard__pills"><div class="gcard__pill">ChatPage</div></div>
+        <div class="gcard__body">
+          <h3 class="gcard__headline">ChatPage</h3>
+          <p class="gcard__desc">1시간 42분짜리 영상도 쓰던 AI로 넘겨 3초 만에 요약합니다.</p>
+          <a class="gcard__cta" href="/products/chatpage/">지금 써보기</a>
+        </div>
+      </article>
+      <article class="gcard" role="group" aria-roledescription="slide" aria-label="9 / 10">
+        <img src="https://labs.google/assets/images/graduation/flow_music_bg.webp" alt="her · 음성 입력" draggable="false" decoding="async" loading="lazy">
+        <div class="gcard__pills"><div class="gcard__pill">her</div></div>
+        <div class="gcard__body">
+          <h3 class="gcard__headline">her · 음성 입력</h3>
+          <p class="gcard__desc">타이핑이 생각을 못 따라갈 때. 모든 입력창에서, 말로.</p>
+          <a class="gcard__cta" href="/products/her/">지금 써보기</a>
+        </div>
+      </article>
+      <article class="gcard" role="group" aria-roledescription="slide" aria-label="10 / 10">
+        <img src="https://labs.google/assets/images/graduation/ai_studio_bg_ed_1.webp" alt="유튜브 인기순 정렬" draggable="false" decoding="async" loading="lazy">
+        <div class="gcard__pills"><div class="gcard__pill">유튜브 인기순</div></div>
+        <div class="gcard__body">
+          <h3 class="gcard__headline">유튜브 인기순 정렬</h3>
+          <p class="gcard__desc">이 채널의 대표작이 뭔지, 조회수순으로 5초 만에.</p>
+          <a class="gcard__cta" href="/products/youtube-rank/">지금 써보기</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="grad__controls">
+      <button class="grad__ctrl" id="gprev" type="button" aria-label="이전 제품" disabled>‹</button>
+      <button class="grad__ctrl" id="gnext" type="button" aria-label="다음 제품">›</button>
+    </div>
   </div>
 </section>
 
@@ -859,8 +895,26 @@ land_body = """<section class="rn-hero">
   </div>
 </section>"""
 
+LAND_JS = """<script>
+(function(){
+  var t=document.getElementById('gtrack'),
+      p=document.getElementById('gprev'), n=document.getElementById('gnext');
+  if(!t||!p||!n) return;
+  function step(){ var c=t.querySelector('.gcard'); return c ? c.offsetWidth+20 : 400; }
+  function sync(){
+    p.disabled = t.scrollLeft < 8;
+    n.disabled = t.scrollLeft > t.scrollWidth - t.clientWidth - 8;
+  }
+  p.addEventListener('click',function(){ t.scrollBy({left:-step(),behavior:'smooth'}); });
+  n.addEventListener('click',function(){ t.scrollBy({left: step(),behavior:'smooth'}); });
+  t.addEventListener('scroll', sync, {passive:true});
+  window.addEventListener('resize', sync);
+  sync();
+})();
+</script>"""
+
 with open("index.html", "w", encoding="utf-8") as f:
-    f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다", "상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구 6종은 무료로 드립니다.", land_body, active=""))
+    f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다", "상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.", land_body, active="", extra=LAND_JS))
 
 # ---------- sitemap ----------
 urls = ["", "products/", "journal/", "lab/", "about/"] + [f"products/{s}/" for s in ORDER] + [f"journal/{s}/" for s in PORDER]
