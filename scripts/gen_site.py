@@ -53,6 +53,36 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
 .hero .sub{margin-top:20px;font-size:clamp(16px,1.7vw,20px);color:var(--gray);max-width:48ch;line-height:1.6}
 .hero .btns{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 .hero .micro{margin-top:14px;font-size:13px;color:var(--faint)}
+/* ---- full-bleed rolling visual hero (placeholder) ---- */
+.vhero{position:relative;width:100vw;margin-left:calc(50% - 50vw);height:min(84vh,780px);min-height:520px;overflow:hidden;background:#0b0c0e;color:#fff;display:flex}
+.vslides{position:absolute;inset:0;z-index:0}
+.vslide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s var(--ease)}
+.vslide.on{opacity:1}
+.vslide img{width:100%;height:100%;object-fit:cover;transform:scale(1.05);transition:transform 8s linear}
+.vslide.on img{transform:scale(1.12)}
+.vover{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(11,12,14,.55),rgba(11,12,14,.12) 34%,rgba(11,12,14,.2) 56%,rgba(11,12,14,.86))}
+.vph{position:absolute;top:16px;right:max(20px,calc((100vw - 1200px)/2));z-index:5;display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:#e2e6ee;background:rgba(11,12,14,.5);border:1px dashed rgba(255,255,255,.3);border-radius:20px;padding:6px 12px}
+.vph i{width:7px;height:7px;border-radius:2px;background:#7fb0ff}
+.vcontent{position:relative;z-index:3;align-self:center;width:100%;max-width:1200px;margin:0 auto;padding:0 var(--gut)}
+.vcontent .eyebrow{color:rgba(255,255,255,.82)}
+.vhero h1{margin-top:16px;font-size:clamp(40px,6.4vw,84px);font-weight:800;letter-spacing:-.04em;line-height:1;max-width:15ch;text-shadow:0 2px 40px rgba(0,0,0,.4)}
+.vhero .vsub{margin-top:18px;font-size:clamp(16px,1.7vw,20px);color:rgba(255,255,255,.86);max-width:40ch;line-height:1.6}
+.vhero .btns{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+.btn.light{background:#fff;color:var(--ink)}
+.btn.glass{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.28)}
+.vfoot{position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:1200px;z-index:4;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:0 var(--gut) clamp(18px,4vh,38px)}
+.vcap{position:relative;height:50px;flex:1}
+.vcap .c{position:absolute;left:0;bottom:0;opacity:0;transform:translateY(6px);transition:opacity .6s,transform .6s}
+.vcap .c.on{opacity:1;transform:none}
+.vcap .tool{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:700}
+.vcap .tool::before{content:"";width:8px;height:8px;border-radius:99px;background:#7fb0ff;box-shadow:0 0 12px #7fb0ff}
+.vcap .line{margin-top:5px;color:rgba(255,255,255,.72);font-size:13.5px}
+.vdots{display:flex;gap:8px;flex:none}
+.vdots button{width:26px;height:4px;border-radius:3px;border:none;padding:0;cursor:pointer;background:rgba(255,255,255,.3);overflow:hidden;position:relative}
+.vdots button .f{position:absolute;inset:0;width:0;background:#fff}
+.vdots button.on .f{animation:vprog var(--vd,5500ms) linear forwards}
+@keyframes vprog{to{width:100%}}
+@media(max-width:640px){.vfoot{flex-direction:column;align-items:flex-start;gap:10px}.vcap{width:100%;height:46px}}
 .demo-wrap{width:100%;max-width:980px;margin:52px auto 0;padding:0 20px}
 .frame{border:1px solid var(--line);border-radius:16px 16px 0 0;overflow:hidden;background:#fff;box-shadow:0 40px 90px -40px rgba(11,12,20,.3);border-bottom:none}
 .frame .bar{display:flex;align-items:center;gap:8px;padding:11px 15px;background:var(--soft);border-bottom:1px solid var(--line)}
@@ -314,6 +344,55 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
 .cta-dark a{background:#fff;color:var(--ink);font-size:14px;font-weight:600;padding:12px 22px;border-radius:99px}
 .cta-dark a.ghost{background:none;color:#fff;border:1px solid rgba(255,255,255,.3)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* ============================================================
+   리뉴얼 2026-07 — 파는 것이 주인공, 무료 도구는 유입 깔때기
+   팔레트: 흰 + 블루(#3182f6) + 잉크
+   ============================================================ */
+:root{--rn-blue:#3182f6}
+.rn-hero{padding:calc(56px + clamp(72px,12vh,150px)) var(--gut) clamp(40px,6vh,72px)}
+.rn-hero h1{font-size:clamp(34px,5.8vw,78px);font-weight:800;letter-spacing:-.045em;line-height:1.05;max-width:17ch}
+.rn-hero .sub{margin-top:24px;font-size:clamp(15px,1.35vw,18px);color:var(--gray);max-width:54ch;line-height:1.65}
+.rn-hero .sub b{color:var(--ink);font-weight:600}
+.rn-meta{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;
+  margin-top:clamp(40px,6vh,76px);padding-top:14px;border-top:1px solid var(--ink);
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.rn-sell{padding:0 var(--gut);display:flex;flex-direction:column;gap:clamp(52px,8vh,104px)}
+.rn-row{display:grid;gap:clamp(24px,3vw,46px)}
+.rn-row.big{grid-template-columns:1.4fr 1fr;align-items:end}
+.rn-row.big.rev{grid-template-columns:1fr 1.4fr}
+.rn-row.two{grid-template-columns:1fr 1fr}
+.rn-item{display:flex;flex-direction:column;gap:18px}
+.rn-item.side{justify-content:flex-end;padding-bottom:4px}
+.rn-shot{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--soft);
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.rn-shot img{width:100%;height:100%;object-fit:cover;aspect-ratio:16/10}
+.rn-shot.tall img{aspect-ratio:4/3}
+.rn-item:hover .rn-shot{transform:translateY(-4px);box-shadow:0 22px 44px -18px rgba(11,12,14,.16)}
+.rn-item:hover h3{color:var(--rn-blue)}
+.rn-cap .kick{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.rn-cap h3{margin-top:12px;font-size:clamp(20px,2.1vw,30px);font-weight:700;letter-spacing:-.028em;line-height:1.34;max-width:24ch}
+.rn-cap p{margin-top:9px;font-size:14.5px;color:var(--gray);max-width:36ch;line-height:1.6}
+.rn-go{display:inline-flex;align-items:center;gap:6px;margin-top:16px;transition:gap .25s var(--ease);
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--rn-blue);font-weight:600}
+.rn-item:hover .rn-go{gap:10px}
+.rn-free{margin-top:clamp(68px,11vh,136px);padding:clamp(44px,6vh,76px) var(--gut) 0;border-top:1px solid var(--line)}
+.rn-free .kick{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.rn-free h2{margin-top:10px;font-size:clamp(24px,3vw,38px);font-weight:800;letter-spacing:-.035em;line-height:1.2;max-width:22ch}
+.rn-free .lead{margin-top:14px;font-size:15px;color:var(--gray);max-width:52ch;line-height:1.65}
+.rn-tools{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:34px}
+.rn-tool{border:1px solid var(--line);border-radius:12px;padding:17px 18px;display:flex;flex-direction:column;gap:7px;
+  transition:border-color .2s,transform .2s var(--ease)}
+.rn-tool:hover{border-color:var(--ink);transform:translateY(-2px)}
+.rn-tool .tn{font-size:15.5px;font-weight:600;letter-spacing:-.015em}
+.rn-tool .td{font-size:13px;color:var(--gray);line-height:1.55}
+.rn-bridge{margin-top:auto;padding-top:10px;border-top:1px dashed var(--line);
+  font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:var(--rn-blue)}
+.rn-bridge.plain{color:var(--faint)}
+@media(max-width:880px){
+  .rn-row.big,.rn-row.big.rev,.rn-row.two,.rn-tools{grid-template-columns:1fr}
+  .rn-item.side{padding-bottom:0}
+}
 """
 
 def gnb(active=""):
@@ -332,9 +411,9 @@ def gnb(active=""):
 </header>"""
 
 FOOTER = """<footer class="site">
-  <div class="brand"><div class="wm">MOMENTUS</div><p>혼자, 매일 만드는<br>무료 브라우저 제품들.</p></div>
-  <div><h4>둘러보기</h4><a href="/products/">제품 전체</a><a href="/journal/">저널</a><a href="/lab/">만들어드려요</a><a href="/about/">소개</a></div>
-  <div><h4>카테고리</h4><a href="/products/?f=fast">일 빨리 끝내기</a><a href="/products/?f=sell">파는 사람 도구</a><a href="/products/?f=research">콘텐츠·리서치</a><a href="/products/?f=study">배우고 정리</a></div>
+  <div class="brand"><div class="wm">MOMENTUS</div><p>혼자, 매일 만드는<br>1인 스튜디오.</p></div>
+  <div><h4>파는 것</h4><a href="https://heyreci.com" target="_blank" rel="noopener">heyreci — 상품 사진 ↗</a><a href="https://mark.the-moment.us" target="_blank" rel="noopener">Mark — 로고 ↗</a><a href="https://planner.the-moment.us" target="_blank" rel="noopener">THE PLAN — 플래너 ↗</a><a href="https://cue.the-moment.us" target="_blank" rel="noopener">Cue — 면접 연습 ↗</a></div>
+  <div><h4>주는 것</h4><a href="/products/">브라우저 도구 6종</a><a href="/lab/">만들어드려요</a><a href="/journal/">저널</a><a href="/about/">소개</a></div>
   <div><h4>문의</h4><a href="mailto:hello@the-moment.us">hello@the-moment.us</a><a href="/apps/legal.html">이용약관</a><a href="/apps/privacy-policy.html">개인정보처리방침</a></div>
   <div class="legal"><span>© 2026 모멘터스</span><span>the-moment.us</span></div>
 </footer>"""
@@ -689,116 +768,124 @@ with open("about/index.html", "w", encoding="utf-8") as f:
     f.write(page("소개 — MOMENTUS", "강형모의 1인 AI 스튜디오. 무료 브라우저 제품을 매일 만듭니다.", about_body, active="a"))
 
 # ---------- landing (root index.html) ----------
-land_body = f"""<section class="hero">
-  <span class="eyebrow"><span class="dot"></span>무료 브라우저 제품 · 6종</span>
-  <h1>브라우저에서 바로 쓰는<br>작은 무기들.</h1>
-  <p class="sub">설치도 로그인도 결제도 없이 — 버튼 하나로 지금 당장. 아래에서 <b style="color:var(--ink)">실제로 작동하는 걸</b> 보세요.</p>
-  <div class="btns"><a class="btn lg" href="/products/">제품 전체 보기</a><a class="btn lg ghost" href="/lab/">만들어드려요</a></div>
-  <p class="micro">신용카드 없음 · 계정 없음 · 클릭 한 번</p>
-  <div class="demo-wrap reveal">
-    <div class="frame"><div class="bar"><i></i><i></i><i></i><span class="url">instagram.com/explore</span><span class="pill">MOMENTUS · 인스타 인기순 정렬</span></div>
-    <div class="stage"><div class="ig" id="iggrid"></div></div></div>
+land_body = """<section class="rn-hero">
+  <h1>일하는 사람에게<br>필요한 것만 만듭니다.</h1>
+  <p class="sub">상품 사진, 로고, 플래너, 면접 연습 — <b>혼자 만들어 넷을 팝니다.</b> 그리고 매일 쓰는 브라우저 도구 여섯은 그냥 드립니다.</p>
+  <div class="rn-meta">
+    <span>Momentus — 1인 스튜디오</span>
+    <span>파는 것 04 · 주는 것 06</span>
   </div>
 </section>
 
-<section class="cat" id="new">
-  <div class="cat-head"><div class="l"><h2>방금 나온</h2><span class="en">New</span></div><span class="new">NEW</span></div>
-  <div class="banners">
-    <div class="banner dark reveal">
-      <div class="b-txt"><div class="tag"><span class="free">무료</span> 생산성 · 크롬 확장 · v1.0.9</div>
-        <h3>her<br>말로 씁니다.</h3>
-        <p class="d">타이핑 대신 말로. 어디서든 <span class="kbd">⌘⇧R</span> 하나면 말이 글이 됩니다. 모든 입력창에서, 기기 안에서만.</p>
-        <div class="act"><a class="btn lg" href="/products/her/">자세히 →</a></div></div>
-      <div class="b-vis"><div class="herm"><div class="field"><span id="hertext"></span><span class="cur"></span></div><div class="mic">🎙</div></div></div>
+<section class="rn-sell">
+  <div class="rn-row big">
+    <a class="rn-item" href="https://heyreci.com" target="_blank" rel="noopener">
+      <div class="rn-shot tall">
+        <img src="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?w=1400&q=75&auto=format&fit=crop" alt="스튜디오 조명 아래 놓인 화장품 상품 사진">
+      </div>
+    </a>
+    <div class="rn-item side">
+      <div class="rn-cap">
+        <span class="kick">heyreci · 쇼핑몰 셀러</span>
+        <h3>모델 촬영비 0원으로 카탈로그를 만듭니다</h3>
+        <p>폰으로 찍은 상품 사진이 30초 만에 판매용 컷이 됩니다. 배경·모델·상세페이지까지, 이미지 도구 40종.</p>
+        <span class="rn-go">heyreci.com에서 써보기 ↗</span>
+      </div>
     </div>
+  </div>
+
+  <div class="rn-row two">
+    <a class="rn-item" href="https://mark.the-moment.us" target="_blank" rel="noopener">
+      <div class="rn-shot">
+        <img src="https://images.unsplash.com/photo-1713616147761-c126f8009c6f?w=1000&q=75&auto=format&fit=crop" alt="종이에 로고를 스케치하는 모습" loading="lazy">
+      </div>
+      <div class="rn-cap">
+        <span class="kick">Mark · 자영업 사장님</span>
+        <h3>내 업종 로고를 먼저 보고 고릅니다</h3>
+        <p>같은 업종만 깊이 판 시안 600여 개. 간판과 명함에 얹은 모습까지 보고, 마음에 들면 그때 맡기세요.</p>
+        <span class="rn-go">업종별 시안 보기 ↗</span>
+      </div>
+    </a>
+    <a class="rn-item" href="https://planner.the-moment.us" target="_blank" rel="noopener">
+      <div class="rn-shot">
+        <img src="https://images.unsplash.com/photo-1673597487243-8e84ae538b8d?w=1000&q=75&auto=format&fit=crop" alt="태블릿에 띄운 달력 플래너" loading="lazy">
+      </div>
+      <div class="rn-cap">
+        <span class="kick">THE PLAN · 굿노트 · 아이패드</span>
+        <h3>내 손에 맞는 플래너를 골라서 씁니다</h3>
+        <p>스타일과 구성, 시작 요일까지 고른 대로 조립해 PDF로 드립니다. 남의 플래너에 나를 맞추지 마세요.</p>
+        <span class="rn-go">플래너 고르러 가기 ↗</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="rn-row big rev">
+    <div class="rn-item side">
+      <div class="rn-cap">
+        <span class="kick">Cue · 경력직 이직</span>
+        <h3>면접장에서 얼어붙지 않으려면, 소리 내어 연습해야 합니다</h3>
+        <p>눈으로 읽으면 다 아는 것 같습니다. 입으로 뱉어봐야 압니다. 동문서답하면 AI가 짚어 줍니다.</p>
+        <span class="rn-go">한 판 해보기 ↗</span>
+      </div>
+    </div>
+    <a class="rn-item" href="https://cue.the-moment.us" target="_blank" rel="noopener">
+      <div class="rn-shot">
+        <img src="https://images.unsplash.com/photo-1698047681452-08eba22d0c64?w=1400&q=75&auto=format&fit=crop" alt="면접에서 답변하는 지원자" loading="lazy">
+      </div>
+    </a>
   </div>
 </section>
 
-<section class="cat" id="research">
-  <div class="cat-head"><div class="l"><h2>리서치</h2><span class="en">Research</span></div><span class="cnt">3개 · 잘 나가는 거 찾기</span></div>
-  <div class="banners">
-    <div class="banner reveal">
-      <div class="b-txt"><div class="tag"><span class="free">무료</span> 인스타그램 · 끌어놓기</div>
-        <h3>인스타 인기순 정렬</h3>
-        <p class="d">군중이 무엇 앞에 멈췄는지. 피드를 좋아요순으로 다시 깔아 대표 게시물만 보여줍니다.</p>
-        <div class="act"><a class="btn lg drag" href="{BM['insta-rank']}" {DRAG_ATTR}>↖ 북마크바로 드래그</a><a class="btn lg ghost" href="/products/insta-rank/">자세히</a></div></div>
-      <div class="b-vis"><div class="ig sorted" id="iggrid2" style="width:min(100%,300px);aspect-ratio:1;position:relative"></div></div>
-    </div>
-    <div class="banner tint rev reveal">
-      <div class="b-txt"><div class="tag"><span class="free">무료</span> 유튜브 · 끌어놓기</div>
-        <h3>유튜브 인기순 정렬</h3>
-        <p class="d">검색·채널·쇼츠를 조회수순으로. 이 채널 대표작이 뭔지 한눈에.</p>
-        <div class="act"><a class="btn lg drag" href="{BM['youtube-rank']}" {DRAG_ATTR}>↖ 북마크바로 드래그</a><a class="btn lg ghost" href="/products/youtube-rank/">자세히</a></div></div>
-      <div class="b-vis"><div class="ytm">
-        <div class="ytrow"><span class="rk">#1</span><span class="th"><img src="https://picsum.photos/seed/ytm1/150/90" alt=""></span><span class="mt"><b>대표 영상 A</b><span>조회수 1,240,000</span></span></div>
-        <div class="ytrow"><span class="rk">#2</span><span class="th"><img src="https://picsum.photos/seed/ytm2/150/90" alt=""></span><span class="mt"><b>대표 영상 B</b><span>조회수 842,000</span></span></div>
-        <div class="ytrow"><span class="rk">#3</span><span class="th"><img src="https://picsum.photos/seed/ytm3/150/90" alt=""></span><span class="mt"><b>영상 C</b><span>조회수 511,000</span></span></div>
-      </div></div>
-    </div>
-    <div class="banner reveal">
-      <div class="b-txt"><div class="tag"><span class="free">무료</span> 핀터레스트 · 끌어놓기</div>
-        <h3>원본 이미지 추출</h3>
-        <p class="d">저해상 썸네일 뒤의 원본 이미지 URL을 골라 한 번에 거둡니다. 무드보드·레퍼런스 수집.</p>
-        <div class="act"><a class="btn lg drag" href="{BM['pinterest-grab']}" {DRAG_ATTR}>↖ 북마크바로 드래그</a><a class="btn lg ghost" href="/products/pinterest-grab/">자세히</a></div></div>
-      <div class="b-vis"><img src="https://picsum.photos/seed/pinboard/800/560" alt=""></div>
-    </div>
-  </div>
-</section>
+<section class="rn-free">
+  <span class="kick">그리고 — 공짜</span>
+  <h2>매일 쓰는 도구는 그냥 드립니다.</h2>
+  <p class="lead">설치도 로그인도 결제도 없습니다. 쓰다 보면 위의 제품이 왜 필요한지 알게 되실 겁니다.</p>
 
-<section class="cat" id="commerce">
-  <div class="cat-head"><div class="l"><h2>커머스</h2><span class="en">Commerce</span></div><span class="cnt">1개 · 1만 사용</span></div>
-  <div class="banners">
-    <div class="banner tint reveal">
-      <div class="b-txt"><div class="tag"><span class="free">무료</span> 쿠팡 · 끌어놓기 · 1만 사용</div>
-        <h3>퀵팡<br>클릭 없이 재고 확인</h3>
-        <p class="d">쿠팡 검색 결과에서 상품을 열지 않고 옵션·품절 여부를 그 자리에서. 셀러·소싱에 딱.</p>
-        <div class="act"><a class="btn lg drag" href="{BM['quickpang']}" {DRAG_ATTR}>↖ 북마크바로 드래그</a><a class="btn lg ghost" href="/products/quickpang/">자세히</a></div></div>
-      <div class="b-vis"><div class="qpm">
-        <div class="card"><div class="im"><img src="https://picsum.photos/seed/earbuds/160/160" alt=""></div><div><div class="nm">무선 이어폰 프로 (노이즈캔슬)</div><div class="pr">₩39,900</div></div></div>
-        <div class="chips"><span class="chip2 ok">화이트 ●</span><span class="chip2 ok">블랙 ●</span><span class="chip2 out">핑크 품절</span><span class="chip2 ok">그레이 ●</span></div>
-      </div></div>
-    </div>
+  <div class="rn-tools">
+    <a class="rn-tool" href="/products/quickpang/">
+      <span class="tn">퀵팡</span>
+      <span class="td">쿠팡 검색 결과에서, 들어가 보지 않고 옵션과 재고를 확인</span>
+      <span class="rn-bridge">셀러시라면 → heyreci 상품 사진 ↗</span>
+    </a>
+    <a class="rn-tool" href="/products/insta-rank/">
+      <span class="tn">인스타 인기순 정렬</span>
+      <span class="td">이 계정, 대체 뭐가 제일 잘 됐나 — 피드를 좋아요순으로</span>
+      <span class="rn-bridge">잘 되는 컷을 만들려면 → heyreci ↗</span>
+    </a>
+    <a class="rn-tool" href="/products/pinterest-grab/">
+      <span class="tn">핀터레스트 원본 추출</span>
+      <span class="td">저해상 썸네일 말고, 무드보드에 쓸 원본 화질 그대로</span>
+      <span class="rn-bridge">무드보드를 로고로 → Mark ↗</span>
+    </a>
+    <a class="rn-tool" href="/products/chatpage/">
+      <span class="tn">ChatPage</span>
+      <span class="td">1시간짜리 영상도 쓰던 AI로 넘겨 3초 만에 요약</span>
+      <span class="rn-bridge">면접 준비 중이라면 → Cue ↗</span>
+    </a>
+    <a class="rn-tool" href="/products/her/">
+      <span class="tn">her · 음성 입력</span>
+      <span class="td">타이핑이 생각을 못 따라갈 때. 모든 입력창에서, 말로</span>
+      <span class="rn-bridge">말하기 연습이 필요하면 → Cue ↗</span>
+    </a>
+    <a class="rn-tool" href="/products/youtube-rank/">
+      <span class="tn">유튜브 인기순 정렬</span>
+      <span class="td">이 채널의 대표작이 뭔지, 조회수순으로 5초 만에</span>
+      <span class="rn-bridge plain">제품 전체 보기 →</span>
+    </a>
   </div>
-</section>
 
-<section class="cat" id="productivity">
-  <div class="cat-head"><div class="l"><h2>생산성</h2><span class="en">Productivity</span></div><span class="cnt">2개 · 시간·손 아끼기</span></div>
-  <div class="banners">
-    <div class="banner reveal">
-      <div class="b-txt"><div class="tag"><span class="free">무료</span> 크롬 확장 · 별점 5.0</div>
-        <h3>ChatPage<br>긴 유튜브 3초 요약</h3>
-        <p class="d">아무리 긴 영상도 세 걸음에 요약. ChatGPT·Claude·Gemini 어디서든.</p>
-        <div class="act"><a class="btn lg" href="/products/chatpage/">자세히 →</a></div></div>
-      <div class="b-vis"><img src="https://picsum.photos/seed/chatpage/800/560" alt=""></div>
+  <div class="cta-dark">
+    <h2>불편한 게 있으면 말해 주세요.</h2>
+    <p>공감이 많이 쌓인 것부터 만들어 드립니다. 돈 받고 만드는 게 아닙니다.</p>
+    <div class="btns">
+      <a href="/lab/">불편한 거 알려주기</a>
+      <a class="ghost" href="/products/">제품 전체 보기</a>
     </div>
   </div>
 </section>"""
-LAND_JS = """<script>
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.15});
-[].slice.call(document.querySelectorAll('.reveal')).forEach(function(el){io.observe(el);});
-var likes=[820,140,610,990,70,430,250,880,360],seeds=['a','b','c','d','e','f','g','h','i'];
-function slotPos(){var s=[];for(var r=0;r<3;r++)for(var c=0;c<3;c++)s.push([c*34.25,r*34.25]);return s;}
-function buildGrid(host,mode){var slots=slotPos(),tiles=[];
-for(var k=0;k<9;k++){var t=document.createElement('div');t.className='tile';
-t.innerHTML='<img src="https://picsum.photos/seed/ig'+seeds[k]+'/320/320" alt=""><span class="lk">❤ '+likes[k].toLocaleString()+'</span><span class="rk"></span>';
-host.appendChild(t);tiles.push(t);}
-function place(o){o.forEach(function(ti,si){tiles[ti].style.left=slots[si][0]+'%';tiles[ti].style.top=slots[si][1]+'%';});}
-var orig=[0,1,2,3,4,5,6,7,8],sorted=orig.slice().sort(function(a,b){return likes[b]-likes[a];});
-sorted.forEach(function(ti,r){tiles[ti].querySelector('.rk').textContent=r+1;});
-if(mode==='static'){place(sorted);host.classList.add('sorted');return;}
-place(orig);var on=false;
-setInterval(function(){on=!on;if(on){place(sorted);host.classList.add('sorted');}else{place(orig);host.classList.remove('sorted');}},2800);
-setTimeout(function(){place(sorted);host.classList.add('sorted');},1000);}
-var g1=document.getElementById('iggrid');if(g1)buildGrid(g1,'animate');
-var g2=document.getElementById('iggrid2');if(g2)buildGrid(g2,'static');
-var phrases=['이번 캠페인 릴스 30초 스크립트','상세페이지 카피 초안 잡아줘','고객 문의 답변 정중하게'];
-var el=document.getElementById('hertext'),pi=0;
-function typeLoop(){if(!el)return;var t=phrases[pi%phrases.length],i=0;el.textContent='';
-var iv=setInterval(function(){el.textContent=t.slice(0,++i);if(i>=t.length){clearInterval(iv);setTimeout(function(){pi++;typeLoop();},1700);}},58);}
-typeLoop();
-</script>"""
+
 with open("index.html", "w", encoding="utf-8") as f:
-    f.write(page("MOMENTUS — 브라우저에서 바로 쓰는 무료 제품들", "무료 북마크릿·크롬 확장. 설치도 로그인도 결제도 없이, 버튼 하나로 지금 당장.", land_body, active="", extra=LAND_JS))
+    f.write(page("MOMENTUS — 일하는 사람에게 필요한 것만 만듭니다", "상품 사진, 로고, 플래너, 면접 연습. 혼자 만드는 1인 스튜디오. 매일 쓰는 브라우저 도구 6종은 그냥 드립니다.", land_body, active=""))
 
 # ---------- sitemap ----------
 urls = ["", "products/", "journal/", "lab/", "about/"] + [f"products/{s}/" for s in ORDER] + [f"journal/{s}/" for s in PORDER]
