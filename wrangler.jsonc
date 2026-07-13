@@ -10,8 +10,11 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   },
-  // 커스텀 도메인(the-moment.us)은 CF 대시보드에서 연결한다.
-  // wrangler OAuth 토큰에 zone:edit 권한이 없어 여기서 붙이면 배포가 실패한다.
-  // (Workers & Pages → momentus → Settings → Domains & Routes → Add custom domain)
+  // custom_domain은 쓸 수 없다 — the-moment.us에 GitHub Pages A 레코드가 남아 있어
+  // CF가 409(code 100117: externally managed DNS records)를 낸다.
+  // 대신 Route를 쓴다: DNS는 그대로 두고, CF 엣지를 통과하는 트래픽을 Worker가 가로챈다.
+  "routes": [
+    { "pattern": "the-moment.us/*", "zone_name": "the-moment.us" }
+  ],
   "observability": { "enabled": true }
 }
