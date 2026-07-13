@@ -350,45 +350,47 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
    팔레트: 흰 + 블루(#3182f6) + 잉크
    ============================================================ */
 :root{--rn-blue:#3182f6}
-.rn-hero{padding:calc(56px + clamp(72px,12vh,150px)) var(--gut) clamp(40px,6vh,72px)}
-.rn-hero h1{font-size:clamp(34px,5.8vw,78px);font-weight:800;letter-spacing:-.045em;line-height:1.05;max-width:17ch}
-.rn-hero .sub{margin-top:24px;font-size:clamp(15px,1.35vw,18px);color:var(--gray);max-width:54ch;line-height:1.65}
-.rn-hero .sub b{color:var(--ink);font-weight:600}
+.rn-hero{padding:calc(56px + clamp(88px,15vh,190px)) var(--gut) clamp(56px,8vh,96px)}
+.rn-hero h1{font-size:clamp(34px,5.6vw,74px);font-weight:700;letter-spacing:-.03em;line-height:1.16;max-width:18ch}
+.rn-hero .sub{margin-top:30px;font-size:clamp(16px,1.4vw,19px);color:var(--gray);max-width:52ch;line-height:1.75}
 .rn-meta{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;
-  margin-top:clamp(40px,6vh,76px);padding-top:14px;border-top:1px solid var(--ink);
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
-.rn-sell{padding:0 var(--gut);display:flex;flex-direction:column;gap:clamp(52px,8vh,104px)}
-.rn-row{display:grid;gap:clamp(24px,3vw,46px)}
+  margin-top:clamp(56px,8vh,100px);padding-top:18px;border-top:1px solid var(--ink);
+  font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.7}
+.rn-sell{padding:0 var(--gut);display:flex;flex-direction:column;gap:clamp(84px,13vh,170px)}
+.rn-row{display:grid;gap:clamp(28px,3.4vw,56px)}
 .rn-row.big{grid-template-columns:1.4fr 1fr;align-items:end}
 .rn-row.big.rev{grid-template-columns:1fr 1.4fr}
 .rn-row.two{grid-template-columns:1fr 1fr}
-.rn-item{display:flex;flex-direction:column;gap:18px}
-.rn-item.side{justify-content:flex-end;padding-bottom:4px}
+.rn-item{display:flex;flex-direction:column;gap:26px}
+.rn-item.side{justify-content:flex-end;padding-bottom:6px}
 .rn-shot{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--soft);
   transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
 .rn-shot img{width:100%;height:100%;object-fit:cover;aspect-ratio:16/10}
 .rn-shot.tall img{aspect-ratio:4/3}
 .rn-item:hover .rn-shot{transform:translateY(-4px);box-shadow:0 22px 44px -18px rgba(11,12,14,.16)}
 .rn-item:hover h3{color:var(--rn-blue)}
-.rn-cap .kick{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
-.rn-cap h3{margin-top:12px;font-size:clamp(20px,2.1vw,30px);font-weight:700;letter-spacing:-.028em;line-height:1.34;max-width:24ch}
-.rn-cap p{margin-top:9px;font-size:14.5px;color:var(--gray);max-width:36ch;line-height:1.6}
-.rn-go{display:inline-flex;align-items:center;gap:6px;margin-top:16px;transition:gap .25s var(--ease);
-  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--rn-blue);font-weight:600}
-.rn-item:hover .rn-go{gap:10px}
-.rn-free{margin-top:clamp(68px,11vh,136px);padding:clamp(44px,6vh,76px) var(--gut) 0;border-top:1px solid var(--line)}
-.rn-free .kick{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
-.rn-free h2{margin-top:10px;font-size:clamp(24px,3vw,38px);font-weight:800;letter-spacing:-.035em;line-height:1.2;max-width:22ch}
-.rn-free .lead{margin-top:14px;font-size:15px;color:var(--gray);max-width:52ch;line-height:1.65}
-.rn-tools{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:34px}
-.rn-tool{border:1px solid var(--line);border-radius:12px;padding:17px 18px;display:flex;flex-direction:column;gap:7px;
+.rn-cap .kick{font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);line-height:1.7}
+.rn-cap h3{margin-top:18px;font-size:clamp(21px,2.2vw,31px);font-weight:700;letter-spacing:-.03em;
+  line-height:1.58;max-width:22ch}
+.rn-cap p{margin-top:16px;font-size:15.5px;color:var(--gray);max-width:34ch;line-height:1.78}
+.rn-go{display:inline-flex;align-items:center;gap:7px;margin-top:26px;transition:gap .25s var(--ease);
+  font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--rn-blue);font-weight:600}
+.rn-item:hover .rn-go{gap:12px}
+.rn-free{margin-top:clamp(110px,17vh,210px);padding:clamp(60px,9vh,104px) var(--gut) 0;border-top:1px solid var(--line)}
+.rn-free .kick{font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:1.7}
+.rn-free h2{margin-top:18px;font-size:clamp(25px,3vw,40px);font-weight:700;letter-spacing:-.03em;line-height:1.44;max-width:22ch}
+.rn-free .lead{margin-top:20px;font-size:16px;color:var(--gray);max-width:50ch;line-height:1.78}
+.rn-tools{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:clamp(48px,6vh,72px)}
+.rn-tool{border:1px solid var(--line);border-radius:12px;padding:24px 24px 20px;display:flex;flex-direction:column;gap:12px;
   transition:border-color .2s,transform .2s var(--ease)}
 .rn-tool:hover{border-color:var(--ink);transform:translateY(-2px)}
-.rn-tool .tn{font-size:15.5px;font-weight:600;letter-spacing:-.015em}
-.rn-tool .td{font-size:13px;color:var(--gray);line-height:1.55}
-.rn-bridge{margin-top:auto;padding-top:10px;border-top:1px dashed var(--line);
-  font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:var(--rn-blue)}
+.rn-tool .tn{font-size:17px;font-weight:600;letter-spacing:-.02em;line-height:1.5}
+.rn-tool .td{font-size:14.5px;color:var(--gray);line-height:1.72}
+.rn-bridge{margin-top:auto;padding-top:16px;border-top:1px dashed var(--line);
+  font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--rn-blue);line-height:1.6}
 .rn-bridge.plain{color:var(--faint)}
+.rn-free .cta-dark{margin-top:clamp(72px,10vh,120px)}
 @media(max-width:880px){
   .rn-row.big,.rn-row.big.rev,.rn-row.two,.rn-tools{grid-template-columns:1fr}
   .rn-item.side{padding-bottom:0}
@@ -411,7 +413,7 @@ def gnb(active=""):
 </header>"""
 
 FOOTER = """<footer class="site">
-  <div class="brand"><div class="wm">MOMENTUS</div><p>혼자, 매일 만드는<br>1인 스튜디오.</p></div>
+  <div class="brand"><div class="wm">MOMENTUS</div><p>일하는 사람을 위한<br>도구를 만듭니다.</p></div>
   <div><h4>파는 것</h4><a href="https://heyreci.com" target="_blank" rel="noopener">heyreci — 상품 사진 ↗</a><a href="https://mark.the-moment.us" target="_blank" rel="noopener">Mark — 로고 ↗</a><a href="https://planner.the-moment.us" target="_blank" rel="noopener">THE PLAN — 플래너 ↗</a><a href="https://cue.the-moment.us" target="_blank" rel="noopener">Cue — 면접 연습 ↗</a></div>
   <div><h4>주는 것</h4><a href="/products/">브라우저 도구 6종</a><a href="/lab/">만들어드려요</a><a href="/journal/">저널</a><a href="/about/">소개</a></div>
   <div><h4>문의</h4><a href="mailto:hello@the-moment.us">hello@the-moment.us</a><a href="/apps/legal.html">이용약관</a><a href="/apps/privacy-policy.html">개인정보처리방침</a></div>
@@ -769,10 +771,10 @@ with open("about/index.html", "w", encoding="utf-8") as f:
 
 # ---------- landing (root index.html) ----------
 land_body = """<section class="rn-hero">
-  <h1>일하는 사람에게<br>필요한 것만 만듭니다.</h1>
-  <p class="sub">상품 사진, 로고, 플래너, 면접 연습 — <b>혼자 만들어 넷을 팝니다.</b> 그리고 매일 쓰는 브라우저 도구 여섯은 그냥 드립니다.</p>
+  <h1>일하는 사람을 위한<br>도구를 만듭니다.</h1>
+  <p class="sub">상품 사진, 로고, 플래너, 면접 연습. 그리고 매일 쓰는 브라우저 도구는 무료로 드립니다.</p>
   <div class="rn-meta">
-    <span>Momentus — 1인 스튜디오</span>
+    <span>Momentus</span>
     <span>파는 것 04 · 주는 것 06</span>
   </div>
 </section>
@@ -885,7 +887,7 @@ land_body = """<section class="rn-hero">
 </section>"""
 
 with open("index.html", "w", encoding="utf-8") as f:
-    f.write(page("MOMENTUS — 일하는 사람에게 필요한 것만 만듭니다", "상품 사진, 로고, 플래너, 면접 연습. 혼자 만드는 1인 스튜디오. 매일 쓰는 브라우저 도구 6종은 그냥 드립니다.", land_body, active=""))
+    f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다", "상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구 6종은 무료로 드립니다.", land_body, active=""))
 
 # ---------- sitemap ----------
 urls = ["", "products/", "journal/", "lab/", "about/"] + [f"products/{s}/" for s in ORDER] + [f"journal/{s}/" for s in PORDER]
