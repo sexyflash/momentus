@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "momentus",
+  "compatibility_date": "2026-07-13",
+  "assets": {
+    "directory": "./",
+    // /products/ → /products/index.html 매핑에 필요.
+    // 주의: /apps/legal.html 같은 .html 직링크는 308로 /apps/legal 에 보내진다.
+    // 크롬 웹스토어가 참조하는 URL이라 배포 후 반드시 최종 200을 실측할 것.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  // 커스텀 도메인(the-moment.us)은 CF 대시보드에서 연결한다.
+  // wrangler OAuth 토큰에 zone:edit 권한이 없어 여기서 붙이면 배포가 실패한다.
+  // (Workers & Pages → momentus → Settings → Domains & Routes → Add custom domain)
+  "observability": { "enabled": true }
+}
