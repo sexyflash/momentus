@@ -336,50 +336,52 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
    팔레트: 흰 + 블루(#3182f6) + 잉크
    ============================================================ */
 :root{--rn-blue:#3182f6}
-/* 제품 섹션 = labs.google "Life beyond the Lab" — 여백·간격 실측값 그대로
-   섹션 pt 145 / headline→desc 20 / desc→track 80 / gap 40 / track→controls 80
-   카드 475x660 r43 / 카드 안쪽 30 / 컨트롤 60x60 gap 10 */
-.rn-hero{padding:calc(56px + clamp(76px,13vh,150px)) var(--gut) clamp(56px,8vh,100px);text-align:center}
-.rn-hero h1{font-size:clamp(40px,7.4vw,106px);font-weight:800;letter-spacing:-.035em;line-height:1.02;margin:0 auto;max-width:14ch}
-.rn-hero .sub{margin:34px auto 0;font-size:clamp(15px,1.35vw,18px);color:var(--gray);max-width:46ch;line-height:1.75}
+/* ============================================================
+   랜딩 = vinylc.com/ko/goods 구조 그대로 (실측)
+   컨테이너 1245px · 3열 345px gap 105 · 대형 풀폭 1245
+   제목 24px w700 ls-1px #202020 · 라벨 19px w700 #909090
+   ============================================================ */
+.vc{--vc-w:1245px;--vc-col:345px;--vc-gap:105px}
+.vc-head{max-width:var(--vc-w);margin:0 auto;padding:calc(56px + 120px) 24px 0}
+.vc-head h1{font-size:clamp(28px,3.2vw,44px);font-weight:700;letter-spacing:-.03em;line-height:1.35;color:#202020}
+.vc-head p{margin-top:18px;font-size:17px;color:#909090;line-height:1.75;max-width:52ch}
 
-.grad{padding:clamp(80px,10vw,145px) 0 clamp(80px,10vw,145px);background:var(--soft);overflow:hidden}
-.grad__inner{text-align:center}
-.grad__headline{font-size:clamp(34px,4.4vw,60px);font-weight:500;letter-spacing:-.02em;line-height:1.1;
-  color:var(--ink);padding:0 24px}
-.grad__desc{margin:20px auto 0;max-width:781px;padding:0 24px;
-  font-size:clamp(16px,1.55vw,24px);font-weight:400;line-height:1.3;color:var(--ink2)}
+/* 소팅 */
+.vc-sort{max-width:var(--vc-w);margin:56px auto 0;padding:0 24px;display:flex;gap:26px;flex-wrap:wrap;
+  border-bottom:1px solid #EAEAEA;padding-bottom:16px}
+.vc-sort button{background:none;border:0;padding:0 0 16px;margin-bottom:-17px;cursor:pointer;
+  font-family:inherit;font-size:16px;font-weight:700;color:#B4B4B4;letter-spacing:-.02em;
+  border-bottom:2px solid transparent;transition:color .2s}
+.vc-sort button:hover{color:#5A5A5A}
+.vc-sort button[aria-pressed="true"]{color:#202020;border-bottom-color:#202020}
 
-.grad__track{display:flex;gap:40px;margin-top:80px;padding:4px 24px;
-  overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:24px;
-  scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.grad__track::-webkit-scrollbar{display:none}
+/* 그리드 */
+.vc-grid{max-width:var(--vc-w);margin:0 auto;padding:100px 24px 0;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:117px var(--vc-gap)}
+.vc-item{grid-column:span 1}
+.vc-item.big{grid-column:1 / -1}
+.vc-item[hidden]{display:none}
 
-.gcard{position:relative;flex:0 0 clamp(300px,33vw,475px);height:clamp(440px,46vw,660px);
-  border-radius:43px;overflow:hidden;scroll-snap-align:start;background:#e9e6e2;isolation:isolate}
-.gcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
-  transition:transform .6s var(--ease)}
-.gcard:hover img{transform:scale(1.04)}
-.gcard::after{content:"";position:absolute;inset:0;z-index:1;
-  background:linear-gradient(180deg,rgba(0,0,0,.30) 0 20%,rgba(0,0,0,0) 44%,rgba(0,0,0,.74) 100%)}
-.gcard__pills{position:absolute;top:30px;left:30px;right:30px;z-index:2;display:flex;gap:8px;flex-wrap:wrap}
-.gcard__pill{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:46px;
-  background:rgba(255,255,255,.15);backdrop-filter:blur(8px);color:#fff;
-  font-size:13.7px;font-weight:500;letter-spacing:-.01em;white-space:nowrap}
-.gcard__body{position:absolute;left:30px;right:30px;bottom:30px;z-index:2;color:#fff;text-align:left}
-.gcard__headline{font-size:clamp(26px,2.9vw,42px);font-weight:400;letter-spacing:-.02em;line-height:1.1;color:#fff}
-.gcard__desc{font-size:clamp(15px,1.4vw,20px);font-weight:400;line-height:1.4;
-  color:rgba(255,255,255,.86);max-width:24ch}
-.gcard__cta{display:inline-flex;align-items:center;justify-content:center;margin-top:30px;height:58px;padding:0 28px;
-  border:1px solid rgba(255,255,255,.7);border-radius:9990px;color:#fff;font-size:18px;font-weight:500;
-  transition:background .25s,color .25s}
-.gcard:hover .gcard__cta{background:#fff;color:var(--ink)}
+.vc-item a{display:block}
+.vc-thumb{width:100%;aspect-ratio:1;overflow:hidden;background:#F4F4F4}
+.vc-item.big .vc-thumb{aspect-ratio:1245/795}
+.vc-thumb img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.vc-item a:hover .vc-thumb img{transform:scale(1.03)}
 
-.grad__controls{display:flex;justify-content:center;gap:10px;margin-top:80px}
-.grad__ctrl{width:60px;height:60px;border-radius:50%;border:1px solid var(--soft2);background:transparent;
-  color:var(--ink);cursor:pointer;font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;
-  transition:border-color .2s,background .2s}
-.grad__ctrl:hover:not(:disabled){border-color:var(--ink);background:var(--paper)}
-.grad__ctrl:disabled{opacity:.3;cursor:default}
+.vc-item h3{margin-top:34px;font-size:24px;font-weight:700;letter-spacing:-1px;line-height:1.5;color:#202020}
+.vc-item.big h3{font-size:30px;max-width:22ch}
+.vc-item .cat{margin-top:14px;font-size:19px;font-weight:700;color:#909090;letter-spacing:normal}
+.vc-item a:hover h3{color:#5A5A5A}
 
-.rn-outro{padding:clamp(80px,12vh,150px) var(--gut) 0}
+.vc-empty{max-width:var(--vc-w);margin:80px auto;padding:0 24px;color:#909090;font-size:17px}
+
+@media(max-width:1100px){
+  .vc-grid{grid-template-columns:repeat(2,1fr);gap:80px 40px}
+  .vc-item.big{grid-column:1 / -1}
+}
+@media(max-width:680px){
+  .vc-grid{grid-template-columns:1fr;gap:64px;padding-top:56px}
+  .vc-item h3,.vc-item.big h3{font-size:21px}
+  .vc-item .cat{font-size:16px}
+}

@@ -351,53 +351,55 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
    팔레트: 흰 + 블루(#3182f6) + 잉크
    ============================================================ */
 :root{--rn-blue:#3182f6}
-/* 제품 섹션 = labs.google "Life beyond the Lab" — 여백·간격 실측값 그대로
-   섹션 pt 145 / headline→desc 20 / desc→track 80 / gap 40 / track→controls 80
-   카드 475x660 r43 / 카드 안쪽 30 / 컨트롤 60x60 gap 10 */
-.rn-hero{padding:calc(56px + clamp(76px,13vh,150px)) var(--gut) clamp(56px,8vh,100px);text-align:center}
-.rn-hero h1{font-size:clamp(40px,7.4vw,106px);font-weight:800;letter-spacing:-.035em;line-height:1.02;margin:0 auto;max-width:14ch}
-.rn-hero .sub{margin:34px auto 0;font-size:clamp(15px,1.35vw,18px);color:var(--gray);max-width:46ch;line-height:1.75}
+/* ============================================================
+   랜딩 = vinylc.com/ko/goods 구조 그대로 (실측)
+   컨테이너 1245px · 3열 345px gap 105 · 대형 풀폭 1245
+   제목 24px w700 ls-1px #202020 · 라벨 19px w700 #909090
+   ============================================================ */
+.vc{--vc-w:1245px;--vc-col:345px;--vc-gap:105px}
+.vc-head{max-width:var(--vc-w);margin:0 auto;padding:calc(56px + 120px) 24px 0}
+.vc-head h1{font-size:clamp(28px,3.2vw,44px);font-weight:700;letter-spacing:-.03em;line-height:1.35;color:#202020}
+.vc-head p{margin-top:18px;font-size:17px;color:#909090;line-height:1.75;max-width:52ch}
 
-.grad{padding:clamp(80px,10vw,145px) 0 clamp(80px,10vw,145px);background:var(--soft);overflow:hidden}
-.grad__inner{text-align:center}
-.grad__headline{font-size:clamp(34px,4.4vw,60px);font-weight:500;letter-spacing:-.02em;line-height:1.1;
-  color:var(--ink);padding:0 24px}
-.grad__desc{margin:20px auto 0;max-width:781px;padding:0 24px;
-  font-size:clamp(16px,1.55vw,24px);font-weight:400;line-height:1.3;color:var(--ink2)}
+/* 소팅 */
+.vc-sort{max-width:var(--vc-w);margin:56px auto 0;padding:0 24px;display:flex;gap:26px;flex-wrap:wrap;
+  border-bottom:1px solid #EAEAEA;padding-bottom:16px}
+.vc-sort button{background:none;border:0;padding:0 0 16px;margin-bottom:-17px;cursor:pointer;
+  font-family:inherit;font-size:16px;font-weight:700;color:#B4B4B4;letter-spacing:-.02em;
+  border-bottom:2px solid transparent;transition:color .2s}
+.vc-sort button:hover{color:#5A5A5A}
+.vc-sort button[aria-pressed="true"]{color:#202020;border-bottom-color:#202020}
 
-.grad__track{display:flex;gap:40px;margin-top:80px;padding:4px 24px;
-  overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:24px;
-  scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.grad__track::-webkit-scrollbar{display:none}
+/* 그리드 */
+.vc-grid{max-width:var(--vc-w);margin:0 auto;padding:100px 24px 0;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:117px var(--vc-gap)}
+.vc-item{grid-column:span 1}
+.vc-item.big{grid-column:1 / -1}
+.vc-item[hidden]{display:none}
 
-.gcard{position:relative;flex:0 0 clamp(300px,33vw,475px);height:clamp(440px,46vw,660px);
-  border-radius:43px;overflow:hidden;scroll-snap-align:start;background:#e9e6e2;isolation:isolate}
-.gcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
-  transition:transform .6s var(--ease)}
-.gcard:hover img{transform:scale(1.04)}
-.gcard::after{content:"";position:absolute;inset:0;z-index:1;
-  background:linear-gradient(180deg,rgba(0,0,0,.30) 0 20%,rgba(0,0,0,0) 44%,rgba(0,0,0,.74) 100%)}
-.gcard__pills{position:absolute;top:30px;left:30px;right:30px;z-index:2;display:flex;gap:8px;flex-wrap:wrap}
-.gcard__pill{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:46px;
-  background:rgba(255,255,255,.15);backdrop-filter:blur(8px);color:#fff;
-  font-size:13.7px;font-weight:500;letter-spacing:-.01em;white-space:nowrap}
-.gcard__body{position:absolute;left:30px;right:30px;bottom:30px;z-index:2;color:#fff;text-align:left}
-.gcard__headline{font-size:clamp(26px,2.9vw,42px);font-weight:400;letter-spacing:-.02em;line-height:1.1;color:#fff}
-.gcard__desc{font-size:clamp(15px,1.4vw,20px);font-weight:400;line-height:1.4;
-  color:rgba(255,255,255,.86);max-width:24ch}
-.gcard__cta{display:inline-flex;align-items:center;justify-content:center;margin-top:30px;height:58px;padding:0 28px;
-  border:1px solid rgba(255,255,255,.7);border-radius:9990px;color:#fff;font-size:18px;font-weight:500;
-  transition:background .25s,color .25s}
-.gcard:hover .gcard__cta{background:#fff;color:var(--ink)}
+.vc-item a{display:block}
+.vc-thumb{width:100%;aspect-ratio:1;overflow:hidden;background:#F4F4F4}
+.vc-item.big .vc-thumb{aspect-ratio:1245/795}
+.vc-thumb img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.vc-item a:hover .vc-thumb img{transform:scale(1.03)}
 
-.grad__controls{display:flex;justify-content:center;gap:10px;margin-top:80px}
-.grad__ctrl{width:60px;height:60px;border-radius:50%;border:1px solid var(--soft2);background:transparent;
-  color:var(--ink);cursor:pointer;font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;
-  transition:border-color .2s,background .2s}
-.grad__ctrl:hover:not(:disabled){border-color:var(--ink);background:var(--paper)}
-.grad__ctrl:disabled{opacity:.3;cursor:default}
+.vc-item h3{margin-top:34px;font-size:24px;font-weight:700;letter-spacing:-1px;line-height:1.5;color:#202020}
+.vc-item.big h3{font-size:30px;max-width:22ch}
+.vc-item .cat{margin-top:14px;font-size:19px;font-weight:700;color:#909090;letter-spacing:normal}
+.vc-item a:hover h3{color:#5A5A5A}
 
-.rn-outro{padding:clamp(80px,12vh,150px) var(--gut) 0}
+.vc-empty{max-width:var(--vc-w);margin:80px auto;padding:0 24px;color:#909090;font-size:17px}
+
+@media(max-width:1100px){
+  .vc-grid{grid-template-columns:repeat(2,1fr);gap:80px 40px}
+  .vc-item.big{grid-column:1 / -1}
+}
+@media(max-width:680px){
+  .vc-grid{grid-template-columns:1fr;gap:64px;padding-top:56px}
+  .vc-item h3,.vc-item.big h3{font-size:21px}
+  .vc-item .cat{font-size:16px}
+}
 """
 
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
@@ -777,144 +779,116 @@ with open("about/index.html", "w", encoding="utf-8") as f:
     f.write(page("소개 — MOMENTUS", "강형모의 1인 AI 스튜디오. 무료 브라우저 제품을 매일 만듭니다.", about_body, active="a"))
 
 # ---------- landing (root index.html) ----------
-land_body = """<section class="rn-hero">
-  <h1>일하는 사람을 위한 도구를 만듭니다.</h1>
-  <p class="sub">상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.</p>
-</section>
-
-<section class="grad">
-  <div class="grad__inner">
-    <h2 class="grad__headline">매일 쓰는 것만 남깁니다.</h2>
-    <p class="grad__desc">모든 건 하나의 불편에서 시작합니다. 내가 쓰려고 만들고, 매일 씁니다. 쓰다 보면 남고 안 쓰면 버립니다. 여기 있는 건 그렇게 살아남은 것들입니다.</p>
-
-    <div class="grad__track" id="gtrack" role="region" aria-roledescription="carousel" aria-label="제품">
-      <article class="gcard" role="group" aria-roledescription="slide" aria-label="1 / 10">
-        <img src="https://labs.google/assets/images/graduation/gemini_bg.webp" alt="heyreci" draggable="false" decoding="async">
-        <div class="gcard__pills"><div class="gcard__pill"><span>Reci</span><span aria-hidden="true">→</span></div><div class="gcard__pill">heyreci</div></div>
-        <div class="gcard__body">
-          <h3 class="gcard__headline">heyreci</h3>
-          <p class="gcard__desc">폰으로 찍은 상품 사진이 30초 만에 판매용 컷이 됩니다. 이미지 도구 40종.</p>
-          <a class="gcard__cta" href="https://heyreci.com" target="_blank" rel="noopener">지금 써보기</a>
-        </div>
-      </article>
-      <article class="gcard" role="group" aria-roledescription="slide" aria-label="2 / 10">
-        <img src="https://labs.google/assets/images/graduation/flow_bg_ed_1.webp" alt="Mark" draggable="false" decoding="async" loading="lazy">
-        <div class="gcard__pills"><div class="gcard__pill">Mark</div></div>
-        <div class="gcard__body">
-          <h3 class="gcard__headline">Mark</h3>
-          <p class="gcard__desc">같은 업종만 깊이 판 로고 시안 600여 개. 간판·명함에 얹은 모습까지 보고 고르세요.</p>
-          <a class="gcard__cta" href="https://mark.the-moment.us" target="_blank" rel="noopener">지금 써보기</a>
-        </div>
-      </article>
-      <article class="gcard" role="group" aria-roledescription="slide" aria-label="3 / 10">
-        <img src="https://labs.google/assets/images/graduation/notebook_bg.webp" alt="THE PLAN" draggable="false" decoding="async" loading="lazy">
-        <div class="gcard__pills"><div class="gcard__pill">THE PLAN</div></div>
-        <div class="gcard__body">
-          <h3 class="gcard__headline">THE PLAN</h3>
-          <p class="gcard__desc">스타일·구성·시작 요일까지 고른 대로 조립해 PDF로 드립니다.</p>
-          <a class="gcard__cta" href="https://planner.the-moment.us" target="_blank" rel="noopener">지금 써보기</a>
-        </div>
-      </article>
-      <article class="gcard" role="group" aria-roledescription="slide" aria-label="4 / 10">
-        <img src="https://labs.google/assets/images/graduation/flow_music_bg.webp" alt="Cue" draggable="false" decoding="async" loading="lazy">
-        <div class="gcard__pills"><div class="gcard__pill"><span>Reps</span><span aria-hidden="true">→</span></div><div class="gcard__pill">Cue</div></div>
-        <div class="gcard__body">
-          <h3 class="gcard__headline">Cue</h3>
-          <p class="gcard__desc">읽지 말고 소리 내어 말하세요. 동문서답하면 AI가 짚어 줍니다.</p>
-          <a class="gcard__cta" href="https://cue.the-moment.us" target="_blank" rel="noopener">지금 써보기</a>
-        </div>
-      </article>
-      <article class="gcard" role="group" aria-roledescription="slide" aria-label="5 / 10">
-        <img src="https://labs.google/assets/images/graduation/ai_studio_bg_ed_1.webp" alt="퀵팡" draggable="false" decoding="async" loading="lazy">
-        <div class="gcard__pills"><div class="gcard__pill">퀵팡</div></div>
-        <div class="gcard__body">
-          <h3 class="gcard__headline">퀵팡</h3>
-          <p class="gcard__desc">쿠팡 검색 결과에서, 들어가 보지 않고 옵션과 재고를 확인합니다.</p>
-          <a class="gcard__cta" href="/products/quickpang/">지금 써보기</a>
-        </div>
-      </article>
-      <article class="gcard" role="group" aria-roledescription="slide" aria-label="6 / 10">
-        <img src="https://labs.google/assets/images/graduation/gemini_bg.webp" alt="인스타 인기순 정렬" draggable="false" decoding="async" loading="lazy">
-        <div class="gcard__pills"><div class="gcard__pill">인스타 인기순</div></div>
-        <div class="gcard__body">
-          <h3 class="gcard__headline">인스타 인기순 정렬</h3>
-          <p class="gcard__desc">이 계정, 대체 뭐가 제일 잘 됐나. 피드를 좋아요순으로 다시 깝니다.</p>
-          <a class="gcard__cta" href="/products/insta-rank/">지금 써보기</a>
-        </div>
-      </article>
-      <article class="gcard" role="group" aria-roledescription="slide" aria-label="7 / 10">
-        <img src="https://labs.google/assets/images/graduation/flow_bg_ed_1.webp" alt="핀터레스트 원본 추출" draggable="false" decoding="async" loading="lazy">
-        <div class="gcard__pills"><div class="gcard__pill">핀터레스트</div></div>
-        <div class="gcard__body">
-          <h3 class="gcard__headline">핀터레스트 원본 추출</h3>
-          <p class="gcard__desc">저해상 썸네일 말고, 무드보드에 쓸 원본 화질 그대로.</p>
-          <a class="gcard__cta" href="/products/pinterest-grab/">지금 써보기</a>
-        </div>
-      </article>
-      <article class="gcard" role="group" aria-roledescription="slide" aria-label="8 / 10">
-        <img src="https://labs.google/assets/images/graduation/notebook_bg.webp" alt="ChatPage" draggable="false" decoding="async" loading="lazy">
-        <div class="gcard__pills"><div class="gcard__pill">ChatPage</div></div>
-        <div class="gcard__body">
-          <h3 class="gcard__headline">ChatPage</h3>
-          <p class="gcard__desc">1시간 42분짜리 영상도 쓰던 AI로 넘겨 3초 만에 요약합니다.</p>
-          <a class="gcard__cta" href="/products/chatpage/">지금 써보기</a>
-        </div>
-      </article>
-      <article class="gcard" role="group" aria-roledescription="slide" aria-label="9 / 10">
-        <img src="https://labs.google/assets/images/graduation/flow_music_bg.webp" alt="her · 음성 입력" draggable="false" decoding="async" loading="lazy">
-        <div class="gcard__pills"><div class="gcard__pill">her</div></div>
-        <div class="gcard__body">
-          <h3 class="gcard__headline">her · 음성 입력</h3>
-          <p class="gcard__desc">타이핑이 생각을 못 따라갈 때. 모든 입력창에서, 말로.</p>
-          <a class="gcard__cta" href="/products/her/">지금 써보기</a>
-        </div>
-      </article>
-      <article class="gcard" role="group" aria-roledescription="slide" aria-label="10 / 10">
-        <img src="https://labs.google/assets/images/graduation/ai_studio_bg_ed_1.webp" alt="유튜브 인기순 정렬" draggable="false" decoding="async" loading="lazy">
-        <div class="gcard__pills"><div class="gcard__pill">유튜브 인기순</div></div>
-        <div class="gcard__body">
-          <h3 class="gcard__headline">유튜브 인기순 정렬</h3>
-          <p class="gcard__desc">이 채널의 대표작이 뭔지, 조회수순으로 5초 만에.</p>
-          <a class="gcard__cta" href="/products/youtube-rank/">지금 써보기</a>
-        </div>
-      </article>
-    </div>
-
-    <div class="grad__controls">
-      <button class="grad__ctrl" id="gprev" type="button" aria-label="이전 제품" disabled>‹</button>
-      <button class="grad__ctrl" id="gnext" type="button" aria-label="다음 제품">›</button>
-    </div>
+land_body = """<div class="vc">
+  <div class="vc-head">
+    <h1>쓸모 있는 것만 만듭니다.</h1>
+    <p>필요해서 만들었고, 매일 씁니다. 필요한 것만 골라 쓰세요.</p>
   </div>
-</section>
 
-<section class="rn-outro">
-  <div class="cta-dark">
-    <h2>불편한 게 있으면 말해 주세요.</h2>
-    <p>공감이 많이 쌓인 것부터 만들어 드립니다.</p>
-    <div class="btns">
-      <a href="/lab/">불편한 거 알려주기</a>
-      <a class="ghost" href="/products/">제품 전체 보기</a>
-    </div>
+  <div class="vc-sort" id="vcsort">
+    <button type="button" data-f="all" aria-pressed="true">전체</button>
+    <button type="button" data-f="sell" aria-pressed="false">파는 사람</button>
+    <button type="button" data-f="brand" aria-pressed="false">브랜드</button>
+    <button type="button" data-f="me" aria-pressed="false">나를 위해</button>
   </div>
-</section>"""
+
+  <div class="vc-grid" id="vcgrid">
+    <article class="vc-item" data-cat="sell">
+      <a href="/products/quickpang/">
+        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000060/vinylc_tumbler.jpg" alt="들어가 보지 않아도 옵션과 재고가 보입니다"></div>
+        <h3>들어가 보지 않아도 옵션과 재고가 보입니다</h3>
+        <div class="cat">Coupang</div>
+      </a>
+    </article>
+    <article class="vc-item" data-cat="sell">
+      <a href="/products/insta-rank/">
+        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000072/VinylC_life.jpg" alt="이 계정, 대체 뭐가 제일 잘 됐나"></div>
+        <h3>이 계정, 대체 뭐가 제일 잘 됐나</h3>
+        <div class="cat">Instagram</div>
+      </a>
+    </article>
+    <article class="vc-item" data-cat="sell">
+      <a href="/products/youtube-rank/">
+        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000069/VinylC_010.jpg" alt="이 채널의 대표작이 뭔지, 5초 만에"></div>
+        <h3>이 채널의 대표작이 뭔지, 5초 만에</h3>
+        <div class="cat">YouTube</div>
+      </a>
+    </article>
+    <article class="vc-item big" data-cat="sell">
+      <a href="https://heyreci.com" target="_blank" rel="noopener">
+        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000007/01_thumb.jpg" alt="폰으로 찍은 사진이 30초 만에 판매용 컷이 됩니다" loading="lazy"></div>
+        <h3>폰으로 찍은 사진이 30초 만에 판매용 컷이 됩니다</h3>
+        <div class="cat">Product Photo</div>
+      </a>
+    </article>
+    <article class="vc-item" data-cat="brand">
+      <a href="/products/pinterest-grab/">
+        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000063/vinylc_ecobag_01.jpg" alt="저해상 썸네일 말고, 원본을 가져옵니다" loading="lazy"></div>
+        <h3>저해상 썸네일 말고, 원본을 가져옵니다</h3>
+        <div class="cat">Pinterest</div>
+      </a>
+    </article>
+    <article class="vc-item" data-cat="me">
+      <a href="/products/chatpage/">
+        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000030/07_thumb.jpg" alt="1시간 42분짜리를 끝까지 볼 필요는 없습니다" loading="lazy"></div>
+        <h3>1시간 42분짜리를 끝까지 볼 필요는 없습니다</h3>
+        <div class="cat">AI Summary</div>
+      </a>
+    </article>
+    <article class="vc-item" data-cat="me">
+      <a href="/products/her/">
+        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000033/02_thumb_pc.jpg" alt="손이 못 따라갈 만큼 생각이 빠를 때, 그냥 말하면 됩니다" loading="lazy"></div>
+        <h3>손이 못 따라갈 만큼 생각이 빠를 때, 그냥 말하면 됩니다</h3>
+        <div class="cat">Voice</div>
+      </a>
+    </article>
+    <article class="vc-item big" data-cat="brand">
+      <a href="https://mark.the-moment.us" target="_blank" rel="noopener">
+        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000009/03_thumb.jpg" alt="내 업종 로고를 먼저 보고 고릅니다" loading="lazy"></div>
+        <h3>내 업종 로고를 먼저 보고 고릅니다</h3>
+        <div class="cat">Logo</div>
+      </a>
+    </article>
+    <article class="vc-item" data-cat="me">
+      <a href="https://planner.the-moment.us" target="_blank" rel="noopener">
+        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000036/03_thumb.jpg" alt="내 손에 맞는 플래너를 골라서 씁니다" loading="lazy"></div>
+        <h3>내 손에 맞는 플래너를 골라서 씁니다</h3>
+        <div class="cat">Planner</div>
+      </a>
+    </article>
+    <article class="vc-item" data-cat="me">
+      <a href="https://cue.the-moment.us" target="_blank" rel="noopener">
+        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000039/vinylc_bag_00.jpg" alt="면접장에서 얼어붙지 않으려면 소리 내어 연습해야 합니다" loading="lazy"></div>
+        <h3>면접장에서 얼어붙지 않으려면 소리 내어 연습해야 합니다</h3>
+        <div class="cat">Interview</div>
+      </a>
+    </article>
+  </div>
+  <p class="vc-empty" id="vcempty" hidden>해당하는 제품이 없어요.</p>
+</div>"""
 
 LAND_JS = """<script>
 (function(){
-  var t=document.getElementById('gtrack'),
-      p=document.getElementById('gprev'), n=document.getElementById('gnext');
-  if(!t||!p||!n) return;
-  function step(){ var c=t.querySelector('.gcard'); return c ? c.offsetWidth+40 : 400; }
-  function sync(){
-    p.disabled = t.scrollLeft < 8;
-    n.disabled = t.scrollLeft > t.scrollWidth - t.clientWidth - 8;
-  }
-  p.addEventListener('click',function(){ t.scrollBy({left:-step(),behavior:'smooth'}); });
-  n.addEventListener('click',function(){ t.scrollBy({left: step(),behavior:'smooth'}); });
-  t.addEventListener('scroll', sync, {passive:true});
-  window.addEventListener('resize', sync);
-  sync();
+  var sort=document.getElementById('vcsort'), grid=document.getElementById('vcgrid'),
+      empty=document.getElementById('vcempty');
+  if(!sort||!grid) return;
+  var items=[].slice.call(grid.querySelectorAll('.vc-item'));
+  sort.addEventListener('click', function(e){
+    var btn=e.target.closest('button[data-f]'); if(!btn) return;
+    var f=btn.dataset.f, shown=0;
+    [].slice.call(sort.querySelectorAll('button')).forEach(function(b){
+      b.setAttribute('aria-pressed', String(b===btn));
+    });
+    items.forEach(function(it){
+      var ok = (f==='all') || it.dataset.cat===f;
+      it.hidden = !ok;
+      if(ok) shown++;
+    });
+    empty.hidden = shown>0;
+  });
 })();
 </script>"""
+
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다", "상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.", land_body, active="", extra=LAND_JS))
