@@ -555,6 +555,15 @@ body:has(.vd){padding-bottom:88px}
 .an-card a:hover .th{transform:scale(1.02)}
 /* 추상 그라디언트 썸네일 — 글마다 다른 결. 스톡 사진보다 정직하다. */
 .an-card .th::before{content:"";position:absolute;inset:-20%;filter:blur(28px)}
+.an-card .th.vid{background:#0E0E0E}
+.an-card .th.vid::before{display:none}
+.an-card .th.vid img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.an-card .th.vid .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
+  width:56px;height:56px;border-radius:50%;background:rgba(0,0,0,.62);backdrop-filter:blur(6px)}
+.an-card .th.vid .play::after{content:"";position:absolute;left:52%;top:50%;transform:translate(-50%,-50%);
+  border-left:15px solid #fff;border-top:9px solid transparent;border-bottom:9px solid transparent}
+.an-lsub{margin-top:18px;font-size:16px;line-height:1.7;color:#6B6862;max-width:56ch}
+.an-lsub a{color:#191919;text-decoration:underline;text-underline-offset:3px}
 .th.g1{background:#DDE7F5}
 .th.g1::before{background:
   radial-gradient(closest-side,#7BA7E8 0 40%,transparent 70%) 12% 22%/62% 62% no-repeat,
@@ -634,8 +643,13 @@ body:has(.vd){padding-bottom:88px}
 .an-cta{margin-top:100px;background:#191919;color:#fff;padding:96px 24px;text-align:center}
 .an-cta h2{font-size:clamp(26px,3.2vw,40px);font-weight:700;letter-spacing:-.015em;line-height:1.3;color:#fff;
   max-width:20ch;margin:0 auto}
-.an-cta .btn{display:inline-flex;align-items:center;height:46px;padding:0 28px;margin-top:32px;
+.an-cta .sub{margin:20px auto 0;font-size:16px;line-height:1.7;color:rgba(255,255,255,.72);max-width:46ch}
+.an-cta-btns{margin-top:32px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.an-cta .btn{display:inline-flex;align-items:center;height:46px;padding:0 28px;
   border-radius:99px;background:#fff;color:#191919;font-size:15px;font-weight:600}
+.an-cta .btn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35)}
+.an-cta .btn.ghost:hover{border-color:#fff}
+.an-cta .note{margin-top:26px;font-size:14px;color:rgba(255,255,255,.5)}
 .an-cta .btn:hover{background:#E5DED1}
 
 @media(max-width:900px){
@@ -655,9 +669,8 @@ def gnb(active=""):
     return f"""<header class="gnb">
   <a class="wm" href="/">MOMENTUS</a>
   <nav class="lk">
-    <a href="/blog/" class="{on('j').strip()}">블로그</a>
-    <a href="/lab/" class="hidem{on('l')}">만들어드려요</a>
-    <a href="/about/" class="hidem{on('a')}">소개</a>
+    <a href="/log/" class="{on('j').strip()}">로그</a>
+    <a href="/about/" class="{on('a').strip()}">소개</a>
   </nav>
 </header>"""
 
@@ -665,7 +678,7 @@ FOOTER = """<footer class="site">
   <div class="brand"><div class="wm">MOMENTUS</div><p>쓸모 있는 것만<br>만듭니다.</p></div>
   <div><h4>제품</h4><a href="/products/heyreci/">AI 상품사진 — 헤이레시</a><a href="/products/mark/">로고 디자인 — 마크</a><a href="/products/theplan/">디지털 플래너 — 더플랜</a><a href="/products/cue/">AI 모의면접 — 큐</a><a href="/products/quickpang/">쿠팡 옵션·재고 — 퀵팡</a></div>
   <div><h4>무료 도구</h4><a href="/products/insta-rank/">인스타 인기순 정렬</a><a href="/products/youtube-rank/">유튜브 인기순 정렬</a><a href="/products/pinterest-grab/">핀터레스트 원본 추출</a><a href="/products/chatpage/">유튜브 AI 요약 — ChatPage</a><a href="/products/her/">음성 입력 — her</a></div>
-  <div><h4>모멘터스</h4><a href="/blog/">블로그</a><a href="/lab/">만들어드려요</a><a href="/about/">소개</a><a href="mailto:hello@the-moment.us">hello@the-moment.us</a><a href="/apps/legal.html">이용약관</a><a href="/apps/privacy-policy.html">개인정보처리방침</a></div>
+  <div><h4>모멘터스</h4><a href="/log/">블로그</a><a href="/about/">소개</a><a href="mailto:hello@the-moment.us">hello@the-moment.us</a><a href="/apps/legal.html">이용약관</a><a href="/apps/privacy-policy.html">개인정보처리방침</a></div>
   <div class="legal"><span>© 2026 모멘터스</span><span>the-moment.us</span></div>
 </footer>"""
 
@@ -689,6 +702,42 @@ def page(title, desc, body, active="", extra=""):
 {FOOTER}
 {extra}</body>
 </html>"""
+
+YT_URL = "https://www.youtube.com/@momentus"   # TODO: 실제 채널 주소로 교체
+YT_CHANNEL_ID = ""                            # UC... 를 넣으면 RSS 자동 연동 켜짐
+
+
+def fetch_youtube(channel_id, limit=12):
+    """유튜브 공개 RSS에서 최신 영상을 읽는다. API 키 불필요.
+    채널 ID가 없거나 네트워크가 막히면 조용히 빈 목록 — 빌드는 절대 안 깨진다."""
+    if not channel_id:
+        return []
+    import urllib.request, xml.etree.ElementTree as ET
+    url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
+    try:
+        with urllib.request.urlopen(url, timeout=8) as r:
+            root = ET.fromstring(r.read())
+    except Exception as e:
+        print(f"  ⚠️ 유튜브 RSS 실패({e}) — 영상 없이 빌드합니다")
+        return []
+    ns = {"a": "http://www.w3.org/2005/Atom", "m": "http://search.yahoo.com/mrss/",
+          "yt": "http://www.youtube.com/xml/schemas/2015"}
+    out = []
+    for e in root.findall("a:entry", ns)[:limit]:
+        vid = e.findtext("yt:videoId", "", ns)
+        pub = e.findtext("a:published", "", ns)[:10].replace("-", ". ")
+        out.append(dict(
+            kind="video", id=vid,
+            title=e.findtext("a:title", "", ns),
+            date=pub,
+            url=f"https://www.youtube.com/watch?v={vid}",
+            thumb=f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg",
+            desc=(e.find("m:group/m:description", ns).text or "")[:110] if e.find("m:group/m:description", ns) is not None else "",
+        ))
+    return out
+
+
+VIDEOS = fetch_youtube(YT_CHANNEL_ID)
 
 DRAG_MSG = "클릭이 아니라, 이 버튼을 브라우저 북마크바로 드래그해서 등록하세요. 등록한 뒤 해당 사이트에서 누르면 작동합니다."
 DRAG_ATTR = f'onclick="alert(\'{DRAG_MSG}\');return false"'
@@ -1075,7 +1124,7 @@ for i, slug in enumerate(PORDER):
     ps = POSTS[slug]
     rel = [x for x in PORDER if x != slug][:3]
     relh = "".join(
-        f'<a href="/blog/{x}/"><b>{POSTS[x]["title"]}</b><p>{POSTS[x]["sub"]}</p>'
+        f'<a href="/log/{x}/"><b>{POSTS[x]["title"]}</b><p>{POSTS[x]["sub"]}</p>'
         f'<div class="more">더 읽기 →</div></a>' for x in rel)
     body = f"""<article class="an-post">
   <div class="top">
@@ -1091,36 +1140,56 @@ for i, slug in enumerate(PORDER):
 </div>
 
 <div class="an-share">
-  <a href="https://twitter.com/intent/tweet?url=https://the-moment.us/blog/{slug}/" target="_blank" rel="noopener">X에 공유</a>
-  <a href="/blog/">← 블로그 전체</a>
+  <a href="https://twitter.com/intent/tweet?url=https://the-moment.us/log/{slug}/" target="_blank" rel="noopener">X에 공유</a>
+  <a href="/log/">← 블로그 전체</a>
 </div>
 
 <section class="an-rel">
   <h2>이어서 읽기</h2>
   <div class="g">{relh}</div>
 </section>"""
-    os.makedirs(f"blog/{slug}", exist_ok=True)
-    with open(f"blog/{slug}/index.html", "w", encoding="utf-8") as fh:
-        fh.write(page(f"{ps['title']} — MOMENTUS 블로그", ps["sub"], body, active="j"))
+    os.makedirs(f"log/{slug}", exist_ok=True)
+    with open(f"log/{slug}/index.html", "w", encoding="utf-8") as fh:
+        fh.write(page(f"{ps['title']} — MOMENTUS 로그", ps["sub"], body, active="j"))
+
+# 로그 = 영상(유튜브) + 글. 같은 시간축, 같은 카드.
+entries = []
+for i, x in enumerate(PORDER):
+    p0 = POSTS[x]
+    entries.append(dict(kind="post", slug=x, title=p0["title"], date=p0["date"],
+                        cat=p0["cat"], desc=p0["sub"], grad=f"g{(i % 3) + 1}"))
+for v in VIDEOS:
+    entries.append(dict(kind="video", url=v["url"], title=v["title"], date=v["date"],
+                        cat="영상", desc=v["desc"], thumb=v["thumb"]))
+entries.sort(key=lambda e: e["date"], reverse=True)
 
 cats = []
-for x in PORDER:
-    c0 = POSTS[x]["cat"].split("·")[0].strip()
+for e in entries:
+    c0 = e["cat"].split("·")[0].strip()
     if c0 not in cats:
         cats.append(c0)
 tabs = '<button type="button" data-f="all" aria-pressed="true">전체</button>' + "".join(
     f'<button type="button" data-f="{c0}" aria-pressed="false">{c0}</button>' for c0 in cats)
-cards = "".join(
-    f'<div class="an-card" data-cat="{POSTS[x]["cat"].split("·")[0].strip()}">'
-    f'<a href="/blog/{x}/">'
-    f'<div class="th g{(i % 3) + 1}"></div>'
-    f'<h3>{POSTS[x]["title"]}</h3>'
-    f'<div class="m"><span class="cat">{POSTS[x]["cat"]}</span><span>{POSTS[x]["date"]}</span></div>'
-    f'<p>{POSTS[x]["sub"]}</p>'
-    f'</a></div>' for i, x in enumerate(PORDER))
+
+def card(e):
+    c0 = e["cat"].split("·")[0].strip()
+    if e["kind"] == "video":
+        th = f'<div class="th vid"><img src="{e["thumb"]}" alt="" loading="lazy"><span class="play"></span></div>'
+        href, ext = e["url"], ' target="_blank" rel="noopener"'
+    else:
+        th = f'<div class="th {e["grad"]}"></div>'
+        href, ext = f'/log/{e["slug"]}/', ''
+    return (f'<div class="an-card" data-cat="{c0}"><a href="{href}"{ext}>{th}'
+            f'<h3>{e["title"]}</h3>'
+            f'<div class="m"><span class="cat">{e["cat"]}</span><span>{e["date"]}</span></div>'
+            f'<p>{e["desc"]}</p></a></div>')
+
+cards = "".join(card(e) for e in entries)
 jbody = f"""<div class="an">
   <div class="an-lhead">
-    <h1>블로그</h1>
+    <h1>로그</h1>
+    <p class="an-lsub">만든 것, 안 된 것, 배운 것. 전부 남깁니다.<br>
+      얘기는 <a href="{YT_URL}" target="_blank" rel="noopener">유튜브 댓글</a>에서 합니다 — 거기서 다음에 뭘 만들지 정합니다.</p>
     <div class="an-tabs" id="bltabs">{tabs}</div>
   </div>
   <div class="an-grid" id="blgrid">{cards}</div>
@@ -1147,52 +1216,10 @@ BLOG_JS = """<script>
   });
 })();
 </script>"""
-with open("blog/index.html", "w", encoding="utf-8") as f:
-    f.write(page("블로그 — MOMENTUS", "AI로 제품을 만들며 알게 된 것들. 실측 데이터와 실패 기록.", jbody, active="j", extra=BLOG_JS))
+with open("log/index.html", "w", encoding="utf-8") as f:
+    f.write(page("로그 — MOMENTUS", "AI로 제품을 만들며 알게 된 것들. 실측 데이터와 실패 기록.", jbody, active="j", extra=BLOG_JS))
 
-# ---------- lab ----------
-lab_body = """<div class="lab-hero"><div class="kick pt">Lab · 만들어드려요</div>
-<h1>불편한 거 있으면,<br>말해주세요.</h1>
-<p class="lead">"이런 게 불편해요"를 남겨주세요. 다른 분들이 공감(▲)하고, 공감 많은 것부터 제가 만들어 드려요. <b style="color:var(--ink)">돈 받고 만드는 게 아니에요</b> — 많이 불편하다는 걸 제가 대신 풀어드리는 거예요.</p></div>
-<div class="lab-wrap">
-  <div class="submitb" id="submitb"><textarea id="ptext" placeholder="예: 네이버 블로그 이미지들 한 번에 다운로드하고 싶어요…"></textarea>
-  <div class="row"><span class="hint">기한 약속은 안 해요. 공감 많으면 만들 확률이 확 올라가요.</span><button class="btn" id="psend" style="padding:10px 22px;font-size:14px">제보하기</button></div></div>
-  <div class="ldone" id="ldone"><span>✓</span><div><b>접수됐어요, 고마워요.</b> 비슷한 불편을 겪는 분이 많으면 우선 만들게요. 만들면 여기서 알려드릴게요.</div></div>
-  <section class="board"><div class="board-head"><h2>지금 사람들이 원하는 것</h2><span>공감순</span></div><div id="list"></div></section>
-  <div class="hsteps">
-    <div class="hstep"><div class="n">01</div><b>제보</b><p>불편한 걸 한 줄 남겨요.</p></div>
-    <div class="hstep"><div class="n">02</div><b>공감(▲)</b><p>같은 불편이면 눌러요. 수요가 쌓여요.</p></div>
-    <div class="hstep"><div class="n">03</div><b>내가 픽</b><p>공감 많은 것부터 만듭니다.</p></div>
-    <div class="hstep"><div class="n">04</div><b>알림</b><p>완성되면 제품으로 등록 + 알림.</p></div>
-  </div>
-  <p class="note-c">이미 만들어진 건 <a href="/products/" style="color:var(--ink);text-decoration:underline">제품</a>에서, 만드는 과정은 <a href="/blog/" style="color:var(--ink);text-decoration:underline">저널</a>에서 볼 수 있어요.</p>
-</div>"""
-LAB_JS = """<script>
-document.getElementById('psend').addEventListener('click',function(){var t=document.getElementById('ptext').value.trim();if(!t)return;
-try{var k='momentus_lab_requests';var a=JSON.parse(localStorage.getItem(k)||'[]');a.push({text:t,ts:Date.now()});localStorage.setItem(k,JSON.stringify(a));}catch(e){}
-document.getElementById('submitb').style.display='none';document.getElementById('ldone').classList.add('show');});
-var items=[
- {id:'r1',t:'네이버 블로그 본문 이미지 한 번에 저장',d:'상세페이지 만들 때 이미지 긁는 게 너무 번거로워요.',v:128,tag:'리서치'},
- {id:'r2',t:'쿠팡 여러 상품 가격/재고 한눈에 비교',d:'소싱할 때 탭 여러 개 열어 비교하는 게 지쳐요.',v:94,tag:'커머스',state:'building'},
- {id:'r3',t:'유튜브 자막 통째로 복사',d:'요약 말고 원문 자막 자체가 필요할 때가 있어요.',v:61,tag:'생산성'},
- {id:'r4',t:'인스타 저장한 게시물 정리·내보내기',d:'저장만 하고 다시 못 찾아요.',v:47,tag:'리서치'},
- {id:'r5',t:'스레드/X 글타래 이미지로 저장',d:'캡처 여러 장 이어붙이기 귀찮아요.',v:33,tag:'콘텐츠'}];
-var voted={};try{voted=JSON.parse(localStorage.getItem('momentus_lab_votes')||'{}');}catch(e){}
-function render(){items.sort(function(a,b){return b.v-a.v;});
-document.getElementById('list').innerHTML=items.map(function(it){
-var on=voted[it.id]?' on':'';var st=it.state==='building'?'<span class="tagx building">만드는 중</span>':'';
-return '<div class="litem"><button class="vote'+on+'" data-id="'+it.id+'"><span class="ar">▲</span><span class="n">'+it.v+'</span></button><div><h3></h3><p></p><div class="tags"><span class="tagx">'+it.tag+'</span>'+st+'</div></div></div>';}).join('');
-var rows=document.querySelectorAll('#list .litem');
-items.forEach(function(it,i){if(rows[i]){rows[i].querySelector('h3').textContent=it.t;rows[i].querySelector('p').textContent=it.d;}});
-[].slice.call(document.querySelectorAll('.vote')).forEach(function(v){v.addEventListener('click',function(){
-var id=v.dataset.id,it=items.filter(function(x){return x.id===id;})[0];
-if(voted[id]){voted[id]=false;it.v--;}else{voted[id]=true;it.v++;}
-try{localStorage.setItem('momentus_lab_votes',JSON.stringify(voted));}catch(e){}render();});});}
-render();
-</script>"""
-os.makedirs("lab", exist_ok=True)
-with open("lab/index.html", "w", encoding="utf-8") as f:
-    f.write(page("만들어드려요 — MOMENTUS", "불편한 걸 말해주세요. 공감 많은 것부터 무료로 만들어 드려요.", lab_body, active="l", extra=LAB_JS))
+# (만들어드려요 폐기 — 요청은 유튜브 댓글에서 받는다)
 
 # ---------- about ----------
 about_body = """<div class="an-ahero">
@@ -1289,8 +1316,13 @@ about_body = """<div class="an-ahero">
 </section>
 
 <section class="an-cta">
-  <h2>불편한 게 있으면<br>말해 주세요.</h2>
-  <a class="btn" href="/lab/">불편한 거 알려주기 →</a>
+  <h2>대단한 걸 만들고 있진 않습니다.<br>다만 매일 만듭니다.</h2>
+  <p class="sub">만드는 과정을 전부 공개합니다. 뭐가 됐고 뭐가 안 됐는지, 숫자까지.<br>지켜봐 주시겠어요?</p>
+  <div class="an-cta-btns">
+    <a class="btn" href="{YT_URL}" target="_blank" rel="noopener">유튜브에서 지켜보기 →</a>
+    <a class="btn ghost" href="/log/">지금까지 한 것 보기</a>
+  </div>
+  <p class="note">뭘 만들면 좋을지도 거기서 말해 주세요. 댓글이 다음 제품이 됩니다.</p>
 </section>"""
 os.makedirs("about", exist_ok=True)
 with open("about/index.html", "w", encoding="utf-8") as f:
@@ -1412,7 +1444,7 @@ with open("index.html", "w", encoding="utf-8") as f:
     f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다", "상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.", land_body, active="", extra=LAND_JS))
 
 # ---------- sitemap ----------
-urls = ["", "blog/", "lab/", "about/"] + [f"products/{s}/" for s in ORDER] + [f"blog/{s}/" for s in PORDER]
+urls = ["", "log/", "about/"] + [f"products/{s}/" for s in ORDER] + [f"log/{s}/" for s in PORDER]
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for u in urls:
     sm += f"  <url><loc>https://the-moment.us/{u}</loc></url>\n"
@@ -1423,5 +1455,5 @@ with open("sitemap.xml", "w", encoding="utf-8") as f:
 print("SITE GENERATED:")
 print("  index.html, assets/site.css, sitemap.xml")
 print("  products/: index + " + ", ".join(ORDER))
-print("  blog/: index + " + ", ".join(PORDER))
+print("  log/: index + " + ", ".join(PORDER))
 print("  lab/, about/")
