@@ -1,0 +1,7 @@
+# chatpage 익스텐션이 크로스 도메인(heyreci.com 등)에서 remote-config JSON을 fetch한다.
+# the-moment.us로 옮기면서 same-origin이 아니게 됐다 → CORS 헤더 필수.
+# config는 공개 설정(민감정보 없음)이라 * 로 연다.
+/apps/chatpage/remote-config/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, OPTIONS
+  Access-Control-Allow-Headers: *
