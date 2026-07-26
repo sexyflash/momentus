@@ -209,6 +209,33 @@ cue는 헤더 아래에 네이비 공지 띠(`⏰ 면접이 코앞이신가요?`
 
 적용: `momentus@f99a4d6` · `planner-factory@00c3633` · `cue@5d4a1d0` · `mark@9df1250`
 
+### 2.8 — ⚠️ 런타임 주입 폐기, **소스에 박는 방식**으로 전환 ✅ 라이브 (구조 변경)
+
+**사장님 지적**: "스크립트가 로딩되면서 강제로 만들고 깜빡하면서 보정하는 느낌" — 맞는 지적이었고 원인이 둘이었다.
+
+1. `shell.js`가 **나중에** 토큰을 덮어써서, 첫 페인트는 제품 원래 값(예: 행간 1.65)으로 그려진 뒤 공용 값(1.6)으로 바뀌었다 → 깜빡임.
+2. 바를 **JS로 끼워 넣어** 페이지가 40px 밀렸다 → 레이아웃 시프트.
+
+**전환한 구조**
+```
+정본:  momentus/scripts/gen_site.py  (SHELL_TOKENS · SHELL_BAR_CSS · shell_bar_markup)
+반영:  momentus/scripts/sync_shell.py → 제품 소스의 MMT:BEGIN/END 마커 사이에 써넣는다
+결과:  런타임 보정 0 · 깜빡임 0 · 외부 의존 0 (제품 HTML/CSS 안에 실값이 박힘)
+```
+
+- 각 제품에서 **`<script src=shell.js>` 참조를 전부 제거**했다. 바 마크업과 토큰 실값이 소스에 있다.
+- **notes 헤더 `fixed` → `sticky`**. 바가 흐름 안에 있으니 JS 스크롤 보정(`--mmt-bar-h` rAF 갱신)이 필요 없어졌다 — 그 코드도 함께 사라졌다.
+- 활성 표시도 도메인별로 **빌드 시점에 박는다**(`aria-current`), 런타임 판정 없음.
+
+**바꾸는 법**: `gen_site.py`의 `SHELL_TOKENS` 수정 → `python3 scripts/sync_shell.py` → 각 제품 저장소 커밋·배포.
+자동 반영은 잃었지만(제품 재배포 필요), 애플·어도비도 글로벌 바를 각 자산에 빌드 타임으로 굽는다.
+
+**실측(라이브)**: 세 제품 모두 `바=HTML에 박힘 · shell.js 참조=0개 · 본문 16px/25.6px · 로고 left=51 · 활성표시 정상`.
+
+⚠️ **작업 중 사고 1건**: 동기화 스크립트가 CSS 블록을 `shop_ui.js` **맨 앞**에 넣어 JS 파일이 깨졌다(앵커 정규식 `^`가 0번째에 매치). `.css`는 파일 맨 앞, HTML/JS 템플릿은 `<style>` 뒤로 앵커를 분기해 수정.
+
+적용: `momentus@abed027` · `planner-factory@7d23c45` · `cue@f5fbcbc` · `mark@a8087e5`
+
 ---
 
 ## 4. Phase 3 — 블로그 승격 〔Phase 2와 병렬 가능 · 1~2일〕
