@@ -9,3 +9,5 @@ design-review/
 .gitignore
 wrangler.jsonc
 package*.json
+content/
+data/
