@@ -45,7 +45,13 @@ a{color:inherit;text-decoration:none}h1,h2,h3,h4,p{margin:0;font-weight:400}img{
 .gnb .drop a{display:block;padding:9px 18px;font-size:13px;color:var(--gray);white-space:nowrap}.gnb .drop a:hover{color:var(--ink);background:var(--soft)}
 @media(max-width:820px){.gnb .lk{gap:15px}.gnb .lk .hidem{display:none}}
 /* 1단 바(브랜드 바) — products.json 의 bar 를 그린다. shell.js 가 스포크에 그리는 것과 같은 문법. */
-.gnb{gap:14px}.gnb .wm{flex:0 0 auto}
+/* 브랜드 바는 콘텐츠 그리드에 맞추지 않는다 — '크롬(chrome) 층'이라 자기 여백을 쓴다.
+   실측 근거: apple.com/kr/mac 1280px 에서 글로벌 바 142px vs 페이지 콘텐츠 80px = 62px 어긋남.
+   제품마다 그리드(최대폭·거터)가 다르므로 맞추려 들면 어느 하나엔 반드시 어긋나고,
+   '살짝 어긋남'은 실수로 읽힌다. 그래서 전 사이트 공통 고정 여백으로 확실히 분리한다. */
+.gnb{gap:14px;padding:0 20px}
+@media(max-width:640px){.gnb{padding:0 16px}}
+.gnb .wm{flex:0 0 auto}
 .gnb .lk{flex-wrap:nowrap;min-width:0}
 .gnb .lk>a{white-space:nowrap;flex:0 0 auto}
 .gnb .lk .sep{width:1px;height:13px;background:var(--line);flex:0 0 auto}
@@ -936,8 +942,10 @@ SHELL_JS = """/* MOMENTUS shell.js — 1단 브랜드 바. 생성물(scripts/gen
       +   "background:var(--mmt-bg);color:var(--mmt-fg);position:relative;z-index:2147483000;"
       +   "font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Helvetica Neue','Segoe UI',sans-serif}"
       + "#mmt-bar *,#mmt-bar *::after{box-sizing:border-box}"
+      // 크롬 층이므로 제품 그리드에 맞추지 않고 고정 여백을 쓴다(애플 글로벌 바와 같은 원칙).
       + "#mmt-bar .mmt-in{display:flex;align-items:center;gap:16px;height:100%;"
-      +   "padding:0 max(16px,calc((100% - 1200px)/2));overflow-x:auto;scrollbar-width:none}"
+      +   "padding:0 20px;overflow-x:auto;scrollbar-width:none}"
+      + "@media(max-width:640px){#mmt-bar .mmt-in{padding:0 16px}}"
       + "#mmt-bar .mmt-in::-webkit-scrollbar{display:none}"
       + "#mmt-bar .mmt-wm{font-size:13px;font-weight:800;letter-spacing:-.01em;color:#fff;text-decoration:none;flex:0 0 auto}"
       + "#mmt-bar .mmt-nav{display:flex;align-items:center;gap:4px;flex:0 0 auto}"

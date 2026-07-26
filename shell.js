@@ -10,8 +10,10 @@
       +   "background:var(--mmt-bg);color:var(--mmt-fg);position:relative;z-index:2147483000;"
       +   "font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Helvetica Neue','Segoe UI',sans-serif}"
       + "#mmt-bar *,#mmt-bar *::after{box-sizing:border-box}"
+      // 크롬 층이므로 제품 그리드에 맞추지 않고 고정 여백을 쓴다(애플 글로벌 바와 같은 원칙).
       + "#mmt-bar .mmt-in{display:flex;align-items:center;gap:16px;height:100%;"
-      +   "padding:0 max(16px,calc((100% - 1200px)/2));overflow-x:auto;scrollbar-width:none}"
+      +   "padding:0 20px;overflow-x:auto;scrollbar-width:none}"
+      + "@media(max-width:640px){#mmt-bar .mmt-in{padding:0 16px}}"
       + "#mmt-bar .mmt-in::-webkit-scrollbar{display:none}"
       + "#mmt-bar .mmt-wm{font-size:13px;font-weight:800;letter-spacing:-.01em;color:#fff;text-decoration:none;flex:0 0 auto}"
       + "#mmt-bar .mmt-nav{display:flex;align-items:center;gap:4px;flex:0 0 auto}"
