@@ -36,14 +36,11 @@
     st.textContent = css;
     document.head.appendChild(st);
 
-    // 제품이 고정 헤더를 내릴 때 쓸 값 — 제품 CSS 한 줄로 오프셋할 수 있게 노출한다.
-    document.documentElement.style.setProperty("--mmt-bar-h", H + "px");
-
     var host = (location.hostname || "").replace(/^www\./, "");
     var html = '<div class="mmt-in"><a class="mmt-wm" href="https://the-moment.us">MOMENTUS</a><nav class="mmt-nav" aria-label="모멘터스">';
     for (var i = 0; i < ITEMS.length; i++) {
       var it = ITEMS[i], a = "";
-      if (it.mmt-sep) html += '<span class="mmt-sep" aria-hidden="true"></span>';
+      if (it.sep) html += '<span class="mmt-sep" aria-hidden="true"></span>';
       // ② 활성 표시 = 현재 도메인이 그 항목의 도메인과 같을 때만. 라벨 하드코딩 없음.
       var h = it.href.indexOf("//") > -1 ? it.href.split("//")[1].split("/")[0].replace(/^www\./, "") : "";
       if (h && h === host) a += ' aria-current="page"';
@@ -57,7 +54,12 @@
     var bar = document.createElement("div");
     bar.id = "mmt-bar";
     bar.innerHTML = html;
-    var put = function () { document.body.insertBefore(bar, document.body.firstChild); };
+    // 제품이 고정 헤더를 내릴 때 쓸 값 — ⚠️ 바를 실제로 붙인 뒤에만 세운다.
+    //   먼저 세우면 바가 실패했을 때 제품 헤더만 40px 내려가 빈 띠가 남는다(2026-07-27 실측).
+    var put = function () {
+      document.body.insertBefore(bar, document.body.firstChild);
+      document.documentElement.style.setProperty("--mmt-bar-h", H + "px");
+    };
     if (document.body) put();
     else document.addEventListener("DOMContentLoaded", put);
   } catch (e) {
