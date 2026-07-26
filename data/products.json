@@ -17,7 +17,7 @@
     ],
     "links": [
       { "key": "tools", "label": "무료 도구", "href": "/tools/" },
-      { "key": "story", "label": "이야기", "href": "/log/" },
+      { "key": "story", "label": "이야기", "href": "/stories/" },
       { "key": "about", "label": "소개", "href": "/about/" }
     ]
   },

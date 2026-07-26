@@ -40,6 +40,10 @@ pointer-events:none;transition:opacity .14s,transform .14s;box-shadow:0 10px 26p
 .gnb .lk::-webkit-scrollbar{display:none}.gnb .lk .sep{display:none}
 .gnb .lk a[data-sub]::after{display:none}}
 /* /tools/ 허브 — 무료 도구 목록 */
+/* 글 하단 태그 */
+.an-tags{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 0}
+.an-tag{font-size:13px;font-weight:600;color:var(--gray);background:var(--soft);padding:7px 13px;border-radius:99px}
+.an-tag:hover{background:var(--soft2);color:var(--ink)}
 .tls{padding:0 var(--gut);max-width:1200px;margin:0 auto}
 .tls-head{padding:86px 0 34px;display:flex;flex-direction:column;gap:10px}
 .tls-head .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--faint)}

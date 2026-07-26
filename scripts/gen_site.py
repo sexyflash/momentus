@@ -5,6 +5,7 @@
 import os
 import json
 import hashlib
+import re
 
 os.chdir(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -67,6 +68,10 @@ pointer-events:none;transition:opacity .14s,transform .14s;box-shadow:0 10px 26p
 .gnb .lk::-webkit-scrollbar{display:none}.gnb .lk .sep{display:none}
 .gnb .lk a[data-sub]::after{display:none}}
 /* /tools/ 허브 — 무료 도구 목록 */
+/* 글 하단 태그 */
+.an-tags{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 0}
+.an-tag{font-size:13px;font-weight:600;color:var(--gray);background:var(--soft);padding:7px 13px;border-radius:99px}
+.an-tag:hover{background:var(--soft2);color:var(--ink)}
 .tls{padding:0 var(--gut);max-width:1200px;margin:0 auto}
 .tls-head{padding:86px 0 34px;display:flex;flex-direction:column;gap:10px}
 .tls-head .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--faint)}
@@ -1285,116 +1290,48 @@ for idx, slug in enumerate(ORDER):
 
 # (제품 인덱스 페이지 제거 — 홈이 곧 제품 목록이다. 중복 폐지)
 
-POSTS = {
- "loud-ai-contest": dict(cat="실측 · AI", title="AI로 로고 공모에 524번 나가봤습니다",
-   sub="당선율을 가른 건 디자인이 아니라 '언제 냈느냐'였습니다. 마감 임박 56건의 당선은 0건이었습니다.",
-   date="2026. 07. 13", mins=7, img="jfeat",
-   toc=[("s1","524건의 기록"),("s2","언제 내느냐가 5배를 가른다"),("s3","마감 직전은 왜 0건인가"),("s4","그래서 얼마가 남나")],
-   body="""<p>디자인 공모 플랫폼에 <b>AI로 로고를 만들어 524건을 출품</b>했습니다. 사람 디자이너들과 같은 판에서 겨뤘고, 평균 당선율은 <b>5.9%</b>였습니다.</p>
+# ---------- 이야기(공용 블로그) — 글은 content/stories/*.html 에 산다 ----------
+#   ⚠️ 2026-07-27 전환: 전에는 본문이 이 파일 안 dict 에 박혀 있어 글 하나 쓰려면 1,800줄 코드를 고쳐야 했다.
+#      이제 새 글 = content/stories/<slug>.html 파일 하나 추가. 생성기는 손대지 않는다.
+#      형식 = frontmatter(--- 사이 key: value ---) + 본문 HTML. mark 저널의 콘텐츠 모델을 가져온 것.
+def load_stories():
+    out, d = {}, "content/stories"
+    if not os.path.isdir(d):
+        return out
+    for fn in sorted(os.listdir(d)):
+        if not fn.endswith(".html"):
+            continue
+        raw = open(os.path.join(d, fn), encoding="utf-8").read()
+        m = re.match(r"^---\n(.*?)\n---\n(.*)$", raw, re.S)
+        if not m:
+            print(f"  ⚠️ frontmatter 없음: {fn} — 건너뜀")
+            continue
+        meta = {}
+        for ln in m.group(1).split("\n"):
+            if ":" in ln:
+                k, v = ln.split(":", 1)
+                meta[k.strip()] = v.strip()
+        meta["slug"] = fn[:-5]
+        meta["body"] = m.group(2).strip()
+        meta["tags"] = [t.strip() for t in meta.get("tags", "").split(",") if t.strip()]
+        meta["mins"] = int(meta.get("mins", 5) or 5)
+        out[meta["slug"]] = meta
+    return out
 
-<p>흥미로운 건 결과가 아니라 <b>무엇이 당선을 갈랐는가</b>였습니다. 처음엔 당연히 디자인 퀄리티라고 생각했습니다. 아니었습니다.</p>
 
-<h2 id="s1">524건의 기록</h2>
-<p>초기 23일 동안 117건을 냈고 3건이 당선됐습니다. 당선율 2.6%. 워크플로우를 고치며 누적 524건까지 갔고, 평균 당선율은 5.9%로 올라갔습니다.</p>
-<p>AI로 만드니 <b>양을 늘리는 건 쉬웠습니다.</b> 하루 5건씩 낼 수 있었죠. 그런데 양을 늘려도 당선율은 잘 안 올랐습니다. 뭔가 다른 변수가 있었습니다.</p>
+POSTS = load_stories()
+# 최신순. 날짜(ISO)는 문자열 정렬로 충분하다.
+PORDER = sorted(POSTS, key=lambda s: POSTS[s].get("date", ""), reverse=True)
+# 태그 축 = 매니페스트 파생(제품) + 사람. 새 제품이 생기면 태그도 자동으로 생긴다.
+STORY_TAGS = [(s["slug"], s["tag"]) for s in BAR["spokes"] if s.get("tag")]
+STORY_TAGS += [("tools", "무료 도구"), ("people", "사람")]
+TAG_BY_LABEL = {lab: key for key, lab in STORY_TAGS}
 
-<h2 id="s2">언제 내느냐가 5배를 가른다</h2>
-<p>출품 시점으로 데이터를 갈라봤습니다. 결과가 명확했습니다.</p>
-<ul>
-<li><b>마감 5일 이상 남기고 출품</b> → 당선율 <b>8.3%</b></li>
-<li><b>마감 3일 이내 출품</b> → 당선율 <b>1.6%</b></li>
-</ul>
-<p><b>5배 차이입니다.</b> 카이제곱 검정 결과 p=0.010 — 우연으로 이런 차이가 날 확률은 1%입니다.</p>
-<p>같은 AI가, 같은 방식으로 만든 로고인데 <b>언제 냈느냐만으로 당선율이 5배</b> 갈립니다. 디자인이 아니라 타이밍이었습니다.</p>
 
-<h2 id="s3">마감 직전은 왜 0건인가</h2>
-<p>가장 충격적인 숫자는 이겁니다. <b>마감 하루 이내(D-0~1)에 낸 56건 중 당선은 0건이었습니다.</b></p>
-<p>왜일까요. 추정은 이렇습니다.</p>
-<ul>
-<li><b>클라이언트는 일찍 마음을 정합니다.</b> 초반 시안 중에서 후보를 좁히고, 그 뒤에 오는 건 거의 안 봅니다.</li>
-<li><b>피드백 사이클이 없습니다.</b> 일찍 내면 클라이언트가 "이 방향으로 조금만 더"라고 말해 줍니다. 마감 직전에 내면 고칠 시간이 없습니다.</li>
-<li><b>막판에 몰립니다.</b> 다들 마감에 맞춰 던지니 그 안에서 눈에 띌 확률이 떨어집니다.</li>
-</ul>
-<p>AI를 쓰면 <b>빨리 만들 수 있다는 게 최대 무기</b>인데, 정작 그 무기를 잘못 쓰고 있었던 겁니다. 빨리 만들 수 있으니 <b>빨리 내야</b> 했는데, 우리는 "더 많이 내자"에만 썼습니다.</p>
+def fmt_date(iso):
+    p = (iso or "").split("-")
+    return ". ".join(p) if len(p) == 3 else iso
 
-<h2 id="s4">그래서 얼마가 남나</h2>
-<p>돈 얘기를 하면 이렇습니다.</p>
-<ul>
-<li>당선 1건당 실비 약 <b>8만 5천 원</b> (낙선분 포함한 전체 원가를 당선 건수로 나눈 값)</li>
-<li>주력 공모의 상금이 35~40만 원이니 <b>원가율 21~24%, 마진 76~79%</b></li>
-</ul>
-<p>초기 23일 기준 순수익은 약 67만 원이었습니다. 대단한 돈은 아닙니다. 다만 <b>사람이 하던 일에 AI를 붙여서 실제로 돈이 나온다는 걸 확인</b>했습니다.</p>
-
-<h2>가져가실 것</h2>
-<p>공모전이든 제안서든, AI로 양을 늘릴 수 있는 판이라면 이걸 기억하세요.</p>
-<ul>
-<li><b>양보다 타이밍입니다.</b> 같은 결과물도 언제 내느냐로 5배가 갈립니다.</li>
-<li><b>마감 직전은 버리는 카드입니다.</b> 56건 내고 0건 당선이었습니다.</li>
-<li><b>AI의 진짜 무기는 "많이"가 아니라 "빨리"입니다.</b> 일찍 내고, 피드백을 받고, 고치세요.</li>
-</ul>"""),
-
- "ai-agent-lessons": dict(cat="가이드 · AI", title="AI 에이전트를 만들며 세 번 버린 것",
-   sub="LLM이 판단해야 할 자리에 규칙을 박으면 반드시 사고가 납니다. 세 번 겪고 나서야 알았습니다.",
-   date="2026. 07. 11", mins=6, img="jdesk",
-   toc=[("s1","첫 번째: 중단 명령"),("s2","두 번째: 위임 차단"),("s3","세 번째: 자동 분해"),("s4","규칙이 안 되는 이유")],
-   body="""<p>제품을 만드는 AI 팀을 슬랙에 두고 있습니다. 이 팀이 코드를 쓰고, 버그를 찾고, 자기 코드를 고쳐서 배포합니다.</p>
-<p>만들면서 <b>같은 실수를 세 번</b> 했습니다. 매번 다른 얼굴로 왔지만 병은 하나였습니다. <b>LLM이 판단해야 하는 자리에 규칙(키워드·정규식)을 박은 것</b>입니다.</p>
-
-<h2 id="s1">첫 번째: 중단 명령</h2>
-<p>작업을 멈추라는 지시를 감지하려고 "그만 / 멈춰 / 하지마 / stop"을 정규식으로 잡았습니다.</p>
-<p>사고가 났습니다. <b>"이거 어때?"</b> 같은 평범한 질문이 오탐에 걸려 <b>진행 중이던 작업을 죽였습니다.</b> 패치를 7번 쌓다가 결국 전부 버리고 LLM 판단으로 넘겼습니다.</p>
-
-<h2 id="s2">두 번째: 위임 차단</h2>
-<p>"분석만 하고 실행하지 마"를 구분하려고 동사 목록을 만들었습니다. 분석 동사와 실행 동사를 나눠서 매칭했습니다.</p>
-<p>이번엔 <b>"맞아?"</b> 같은 일반 질문이 분석 의도로 잡혔습니다. 그리고 차단 메시지에 내부 용어가 그대로 실려 사용자에게 노출됐습니다. 또 버렸습니다.</p>
-
-<h2 id="s3">세 번째: 자동 분해</h2>
-<p>여기서 <b>"이번엔 다르다"고 확신했습니다.</b> 키워드가 아니라 결정론적 신호를 쓰기로 했으니까요 — 글자 수 250자 이상, 번호 목록 3개 이상, 특정 단어 포함. 규칙이 아니라 수치니까 안전하다고 봤습니다.</p>
-<p>아니었습니다. 사용자가 <b>채용 공고를 붙여넣자</b> 그 안의 "1. 2. 3." 번호와 "기획"이라는 단어가 조건을 채웠습니다. 단순한 글쓰기 요청이 중장비 분해 작업으로 오발동했고, 결과는 빈손이었습니다.</p>
-<p>여기서 진짜 원인을 알았습니다. <b>사용자가 붙여넣는 자료가 신호를 오염시킵니다.</b> 우리는 "사용자의 의도"를 센 게 아니라 "붙여넣은 자료"를 센 거였습니다.</p>
-
-<h2 id="s4">규칙이 안 되는 이유</h2>
-<p>세 번 겪고 정리한 결론입니다.</p>
-<ul>
-<li><b>자연어는 열거할 수 없습니다.</b> "확인할까요?" "되는 거죠?" "맞나요?" — 사람이 어떻게 말할지 미리 다 적을 수 없습니다.</li>
-<li><b>부정문이 뒤집습니다.</b> "수정하지 마"라는 문장 안에 "수정"이 들어 있습니다.</li>
-<li><b>붙여넣은 자료가 신호를 오염시킵니다.</b> 이게 제일 무섭습니다. 결정론적 수치도 안전하지 않습니다.</li>
-</ul>
-
-<h2>그래서 어떻게 하나</h2>
-<p>지금은 이 기준으로 나눕니다.</p>
-<ul>
-<li><b>순수하게 기계적인 판단</b>(경로가 존재하나, 깊이 제한, DB 잠금) → 규칙으로 해도 됩니다.</li>
-<li><b>자연어의 의미를 판단</b> → 무조건 LLM에게 맡깁니다. 규칙은 프롬프트에 넣습니다.</li>
-<li><b>예외: 걸려도 손해가 0인 자리</b> → 규칙 OK. 예를 들어 "○○씨 있어요?" 같은 순수 호출을 정규식으로 잡아 인사만 하는 건, 틀려도 인사 한 마디라 무해합니다.</li>
-</ul>
-<p>판별 기준은 하나입니다. <b>오발동했을 때 파괴적인가.</b> 작업을 죽이거나, 차단하거나, 빈손으로 만든다면 — 거기엔 규칙을 넣지 마세요.</p>"""),
-
- "why-free": dict(cat="관점", title="왜 공짜로 푸는가",
-   sub="돈을 받을 이유가 없는 건 그냥 드립니다. 대신 받을 이유가 있는 걸 만듭니다.",
-   date="2026. 07. 05", mins=4, img="jfree",
-   toc=[("s1","만든 이유"),("s2","공짜로 푸는 기준"),("s3","그럼 뭘로 먹고사나")],
-   body="""<p>여기 있는 브라우저 도구 여섯 개는 전부 무료입니다. 로그인도, 결제도, 이메일 수집도 없습니다. 자주 받는 질문이라 이유를 적어둡니다.</p>
-
-<h2 id="s1">만든 이유</h2>
-<p>전부 <b>제가 쓰려고 만들었습니다.</b> 쿠팡에서 소싱하다 탭을 열두 개씩 여는 게 지겨워서 퀵팡을 만들었고, 인스타 레퍼런스를 감으로 찾는 게 못미더워서 좋아요순 정렬을 만들었습니다.</p>
-<p>내 불편에서 시작한 게 아니면 대체로 실패했습니다. "남들이 필요할 것 같아서" 만든 건 결국 저부터 안 쓰게 됩니다.</p>
-
-<h2 id="s2">공짜로 푸는 기준</h2>
-<p>기준은 단순합니다. <b>돈을 받을 이유가 있느냐.</b></p>
-<ul>
-<li><b>브라우저 도구</b> — 만드는 데 며칠, 유지비 0원. 서버도 안 씁니다. 여기서 돈을 받을 이유가 없습니다.</li>
-<li><b>상품 사진·로고·플래너</b> — 만들 때마다 원가가 듭니다. GPU를 돌리고, 시안을 그리고, 사람이 다듬습니다. 여기선 받습니다.</li>
-</ul>
-<p>무료 도구를 유료로 바꿀 계획은 없습니다. 원가가 0인 건 계속 0원입니다.</p>
-
-<h2 id="s3">그럼 뭘로 먹고사나</h2>
-<p>솔직히 아직 대단한 답을 못 찾았습니다. 어떤 달은 만 원, 어떤 달은 이만 원입니다.</p>
-<p>다만 확실한 건, <b>무료 도구가 우리 실력의 증명</b>이라는 것입니다. 쿠팡 재고를 그 자리에서 보여주는 도구를 만 명이 쓴다면, 그 사람들이 상품 사진이 필요할 때 우리를 떠올릴 겁니다.</p>
-<p>파는 걸 먼저 들이밀지 않습니다. 쓸모 있는 걸 먼저 드리고, 필요할 때 찾아오시면 됩니다.</p>"""),
-}
-
-PORDER = ["loud-ai-contest", "ai-agent-lessons", "why-free"]
 
 COMMENT_HTML = """<section class="comments"><h3>댓글</h3>
 <div class="cbox" id="cbox"><textarea id="ctext" placeholder="댓글을 남겨보세요…" rows="2"></textarea>
@@ -1416,17 +1353,40 @@ try{var k='momentus_comment_interest';localStorage.setItem(k,(+localStorage.getI
 document.getElementById('cbox').hidden=true;document.getElementById('cdone').hidden=false;});}
 </script>"""
 
+# ---------- 이야기 렌더 — 글 페이지 · 인덱스 · 태그별 정적 페이지 · RSS ----------
+#   URL 은 /stories/ (영문 = SEO), 화면 라벨은 '이야기' (한글 = voice).
+#   apex IA 문서 §A 원칙: "URL은 SEO용(검색어), 화면 라벨은 갤러리 voice. 둘을 분리한다."
+STORY_BASE = "/stories"
+
+
+def story_card(e, i=0):
+    if e["kind"] == "video":
+        th = f'<div class="th vid"><img src="{e["thumb"]}" alt="" loading="lazy"><span class="play"></span></div>'
+        href, ext = e["url"], ' target="_blank" rel="noopener"'
+    else:
+        th = f'<div class="th g{(i % 3) + 1}"></div>'
+        href, ext = f'{STORY_BASE}/{e["slug"]}/', ''
+    tg = " ".join(e.get("tags", []))
+    return (f'<div class="an-card" data-tags="{tg}"><a href="{href}"{ext}>{th}'
+            f'<h3>{e["title"]}</h3>'
+            f'<div class="m"><span class="cat">{e["cat"]}</span><span>{fmt_date(e["date"])}</span></div>'
+            f'<p>{e["desc"]}</p></a></div>')
+
+
+# 글 페이지
 for i, slug in enumerate(PORDER):
     ps = POSTS[slug]
     rel = [x for x in PORDER if x != slug][:3]
     relh = "".join(
-        f'<a href="/log/{x}/"><b>{POSTS[x]["title"]}</b><p>{POSTS[x]["sub"]}</p>'
+        f'<a href="{STORY_BASE}/{x}/"><b>{POSTS[x]["title"]}</b><p>{POSTS[x]["sub"]}</p>'
         f'<div class="more">더 읽기 →</div></a>' for x in rel)
+    tagh = "".join(f'<a class="an-tag" href="{STORY_BASE}/tag/{TAG_BY_LABEL[t]}/">{t}</a>'
+                   for t in ps["tags"] if t in TAG_BY_LABEL)
     body = f"""<article class="an-post">
   <div class="top">
     <div class="cat">{ps['cat']}</div>
     <h1>{ps['title']}</h1>
-    <div class="date">{ps['date']} · {ps['mins']}분 읽기</div>
+    <div class="date">{fmt_date(ps['date'])} · {ps['mins']}분 읽기</div>
   </div>
   <div class="cover th g{(i % 3) + 1}"></div>
 </article>
@@ -1436,61 +1396,30 @@ for i, slug in enumerate(PORDER):
 </div>
 
 <div class="an-share">
-  <a href="https://twitter.com/intent/tweet?url=https://the-moment.us/log/{slug}/" target="_blank" rel="noopener">X에 공유</a>
-  <a href="/log/">← 블로그 전체</a>
+  <a href="https://twitter.com/intent/tweet?url=https://the-moment.us{STORY_BASE}/{slug}/" target="_blank" rel="noopener">X에 공유</a>
+  <a href="{STORY_BASE}/">← 이야기 전체</a>
 </div>
+
+{'<div class="an-tags">' + tagh + '</div>' if tagh else ''}
 
 <section class="an-rel">
   <h2>이어서 읽기</h2>
   <div class="g">{relh}</div>
 </section>"""
-    os.makedirs(f"log/{slug}", exist_ok=True)
-    with open(f"log/{slug}/index.html", "w", encoding="utf-8") as fh:
-        fh.write(page(f"{ps['title']} — MOMENTUS 로그", ps["sub"], body, active="j"))
+    os.makedirs(f"stories/{slug}", exist_ok=True)
+    with open(f"stories/{slug}/index.html", "w", encoding="utf-8") as fh:
+        fh.write(page(f"{ps['title']} — MOMENTUS 이야기", ps["sub"], body, active="story"))
 
-# 로그 = 영상(유튜브) + 글. 같은 시간축, 같은 카드.
+# 스트림 = 글 + 영상(유튜브). 같은 시간축, 같은 카드. (PLATFORM_TOPOLOGY §10 '한 스트림')
 entries = []
 for i, x in enumerate(PORDER):
     p0 = POSTS[x]
     entries.append(dict(kind="post", slug=x, title=p0["title"], date=p0["date"],
-                        cat=p0["cat"], desc=p0["sub"], grad=f"g{(i % 3) + 1}"))
+                        cat=p0["cat"], desc=p0["sub"], tags=p0["tags"]))
 for v in VIDEOS:
     entries.append(dict(kind="video", url=v["url"], title=v["title"], date=v["date"],
-                        cat="영상", desc=v["desc"], thumb=v["thumb"]))
+                        cat="영상", desc=v["desc"], thumb=v["thumb"], tags=[]))
 entries.sort(key=lambda e: e["date"], reverse=True)
-
-cats = []
-for e in entries:
-    c0 = e["cat"].split("·")[0].strip()
-    if c0 not in cats:
-        cats.append(c0)
-tabs = '<button type="button" data-f="all" aria-pressed="true">전체</button>' + "".join(
-    f'<button type="button" data-f="{c0}" aria-pressed="false">{c0}</button>' for c0 in cats)
-
-def card(e):
-    c0 = e["cat"].split("·")[0].strip()
-    if e["kind"] == "video":
-        th = f'<div class="th vid"><img src="{e["thumb"]}" alt="" loading="lazy"><span class="play"></span></div>'
-        href, ext = e["url"], ' target="_blank" rel="noopener"'
-    else:
-        th = f'<div class="th {e["grad"]}"></div>'
-        href, ext = f'/log/{e["slug"]}/', ''
-    return (f'<div class="an-card" data-cat="{c0}"><a href="{href}"{ext}>{th}'
-            f'<h3>{e["title"]}</h3>'
-            f'<div class="m"><span class="cat">{e["cat"]}</span><span>{e["date"]}</span></div>'
-            f'<p>{e["desc"]}</p></a></div>')
-
-cards = "".join(card(e) for e in entries)
-jbody = f"""<div class="an">
-  <div class="an-lhead">
-    <h1>로그</h1>
-    <p class="an-lsub">만든 것, 안 된 것, 배운 것. 전부 남깁니다.<br>
-      얘기는 <a href="{YT_URL}" target="_blank" rel="noopener">유튜브 댓글</a>에서 합니다 — 거기서 다음에 뭘 만들지 정합니다.</p>
-    <div class="an-tabs" id="bltabs">{tabs}</div>
-  </div>
-  <div class="an-grid" id="blgrid">{cards}</div>
-  <p class="an-empty" id="blempty" hidden>해당하는 글이 없어요.</p>
-</div>"""
 
 BLOG_JS = """<script>
 (function(){
@@ -1505,15 +1434,63 @@ BLOG_JS = """<script>
       b.setAttribute('aria-pressed', String(b===btn));
     });
     items.forEach(function(it){
-      var ok=(f==='all')||it.dataset.cat===f;
+      var ok=(f==='all')||(' '+it.dataset.tags+' ').indexOf(' '+f+' ')>-1;
       it.hidden=!ok; if(ok) shown++;
     });
     empty.hidden = shown>0;
   });
 })();
 </script>"""
-with open("log/index.html", "w", encoding="utf-8") as f:
-    f.write(page("로그 — MOMENTUS", "AI로 제품을 만들며 알게 된 것들. 실측 데이터와 실패 기록.", jbody, active="j", extra=BLOG_JS))
+
+
+def stories_page(title, sub, sel_label="", items=None, chips=True):
+    its = items if items is not None else entries
+    tabs = ""
+    if chips:
+        tabs = '<button type="button" data-f="all" aria-pressed="true">전체</button>' + "".join(
+            f'<button type="button" data-f="{lab}" aria-pressed="false">{lab}</button>'
+            for _, lab in STORY_TAGS)
+    cards = "".join(story_card(e, i) for i, e in enumerate(its))
+    return f"""<div class="an">
+  <div class="an-lhead">
+    <h1>{title}</h1>
+    <p class="an-lsub">{sub}</p>
+    {'<div class="an-tabs" id="bltabs">' + tabs + '</div>' if tabs else ''}
+  </div>
+  <div class="an-grid" id="blgrid">{cards}</div>
+  <p class="an-empty" id="blempty" hidden>해당하는 글이 없어요.</p>
+</div>"""
+
+
+LSUB = ("만든 것, 안 된 것, 배운 것. 전부 남깁니다.<br>"
+        "플래너·로고·모의면접 — 제품이 달라도 이야기는 한 곳에 쌓입니다.")
+os.makedirs("stories", exist_ok=True)
+with open("stories/index.html", "w", encoding="utf-8") as f:
+    f.write(page("이야기 — MOMENTUS", "AI로 제품을 만들며 알게 된 것들. 실측 데이터와 실패 기록.",
+                 stories_page("이야기", LSUB), active="story", extra=BLOG_JS))
+
+# 태그별 정적 페이지 — 제품 2단 바의 '이야기'가 여기로 온다. 매니페스트에서 자동 생성.
+for key, lab in STORY_TAGS:
+    sel = [e for e in entries if lab in e.get("tags", [])]
+    os.makedirs(f"stories/tag/{key}", exist_ok=True)
+    body = stories_page(f"{lab} 이야기",
+                        f"‘{lab}’ 태그가 붙은 글 {len(sel)}편. <a href=\"{STORY_BASE}/\">전체 보기 →</a>",
+                        items=sel, chips=False)
+    with open(f"stories/tag/{key}/index.html", "w", encoding="utf-8") as fh:
+        fh.write(page(f"{lab} 이야기 — MOMENTUS", f"{lab} 관련 글 모음.", body, active="story"))
+
+# RSS — mark 저널과 같은 관행(구독 경로는 하나)
+_items = "".join(
+    f"<item><title>{POSTS[s]['title']}</title>"
+    f"<link>https://the-moment.us{STORY_BASE}/{s}/</link>"
+    f"<guid>https://the-moment.us{STORY_BASE}/{s}/</guid>"
+    f"<description>{POSTS[s]['sub']}</description></item>" for s in PORDER)
+with open("stories/rss.xml", "w", encoding="utf-8") as f:
+    f.write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel>'
+            "<title>MOMENTUS 이야기</title><link>https://the-moment.us/stories/</link>"
+            "<description>AI로 제품을 만들며 알게 된 것들.</description>"
+            f"{_items}</channel></rss>\n")
+
 
 # (만들어드려요 폐기 — 요청은 유튜브 댓글에서 받는다)
 
@@ -1914,10 +1891,18 @@ with open("_redirects", "w", encoding="utf-8") as f:
     for s in TOOLS:
         f.write(f"/products/{s}/* /tools/{s}/ 301\n")
         f.write(f"/products/{s} /tools/{s}/ 301\n")
+    # 블로그가 /log/ → /stories/ 로 승격(2026-07-27). 기존 링크·검색 결과 보존.
+    for s in PORDER:
+        # 슬래시로 끝나는 정확 경로도 따로 적는다 — `/log/x/*` 는 뒤가 빈 `/log/x/` 를 안 잡는다(실측).
+        f.write(f"/log/{s}/ /stories/{s}/ 301\n")
+        f.write(f"/log/{s} /stories/{s}/ 301\n")
+    # ⚠️ 와일드카드 /log/* 는 두지 않는다 — 실측에서 그게 개별 글 규칙을 덮어 전부 목록으로 보냈다.
+    f.write("/log/ /stories/ 301\n")
+    f.write("/log /stories/ 301\n")
 
 # ---------- sitemap ----------
-urls = ["", "log/", "about/", "tools/", "legal/privacy/", "legal/terms/", "legal/refund/"] \
-    + [purl(s).lstrip("/") for s in ORDER] + [f"log/{s}/" for s in PORDER]
+urls = ["", "about/", "tools/", "legal/privacy/", "legal/terms/", "legal/refund/"] \
+    + [purl(s).lstrip("/") for s in ORDER] + ["stories/"] + [f"stories/{s}/" for s in PORDER] + [f"stories/tag/{k}/" for k, _ in STORY_TAGS]
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for u in urls:
     sm += f"  <url><loc>https://the-moment.us/{u}</loc></url>\n"
@@ -1929,5 +1914,5 @@ print("SITE GENERATED:")
 print("  index.html, assets/site.css, shell.js, sitemap.xml, _redirects")
 print("  tools/: index + " + ", ".join(TOOLS))
 print("  products/: " + ", ".join(SPOKES))
-print("  log/: index + " + ", ".join(PORDER))
+print("  stories/: index + " + ", ".join(PORDER) + " + tag/" + ",".join(k for k,_ in STORY_TAGS))
 print("  lab/, about/")
