@@ -1,0 +1,11 @@
+.git/
+.github/
+node_modules/
+scripts/
+design-review/
+*.py
+*.md
+.assetsignore
+.gitignore
+wrangler.jsonc
+package*.json
