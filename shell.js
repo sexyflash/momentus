@@ -10,26 +10,26 @@
       +   "background:var(--mmt-bg);color:var(--mmt-fg);position:relative;z-index:2147483000;"
       +   "font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Helvetica Neue','Segoe UI',sans-serif}"
       + "#mmt-bar *,#mmt-bar *::after{box-sizing:border-box}"
-      + "#mmt-bar .in{display:flex;align-items:center;gap:16px;height:100%;"
+      + "#mmt-bar .mmt-in{display:flex;align-items:center;gap:16px;height:100%;"
       +   "padding:0 max(16px,calc((100% - 1200px)/2));overflow-x:auto;scrollbar-width:none}"
-      + "#mmt-bar .in::-webkit-scrollbar{display:none}"
-      + "#mmt-bar .wm{font-size:13px;font-weight:800;letter-spacing:-.01em;color:#fff;text-decoration:none;flex:0 0 auto}"
-      + "#mmt-bar nav{display:flex;align-items:center;gap:4px;flex:0 0 auto}"
-      + "#mmt-bar a.it{font-size:13px;font-weight:500;letter-spacing:-.01em;color:var(--mmt-fg);"
+      + "#mmt-bar .mmt-in::-webkit-scrollbar{display:none}"
+      + "#mmt-bar .mmt-wm{font-size:13px;font-weight:800;letter-spacing:-.01em;color:#fff;text-decoration:none;flex:0 0 auto}"
+      + "#mmt-bar .mmt-nav{display:flex;align-items:center;gap:4px;flex:0 0 auto}"
+      + "#mmt-bar a.mmt-it{font-size:13px;font-weight:500;letter-spacing:-.01em;color:var(--mmt-fg);"
       +   "text-decoration:none;padding:5px 9px;border-radius:7px;white-space:nowrap;position:relative}"
-      + "#mmt-bar a.it:hover{background:rgba(255,255,255,.1);color:#fff}"
-      + "#mmt-bar a.it[aria-current=page]{background:#fff;color:#14161a;font-weight:700}"
-      + "#mmt-bar .sep{width:1px;height:13px;background:rgba(255,255,255,.18);flex:0 0 auto;margin:0 5px}"
-      + "#mmt-bar i.ext{font-style:normal;font-size:9px;opacity:.55;margin-left:3px;vertical-align:super}"
-      + "#mmt-bar a.it[data-sub]::after{content:attr(data-sub);position:absolute;top:calc(100% + 7px);left:50%;"
+      + "#mmt-bar a.mmt-it:hover{background:rgba(255,255,255,.1);color:#fff}"
+      + "#mmt-bar a.mmt-it[aria-current=page]{background:#fff;color:#14161a;font-weight:700}"
+      + "#mmt-bar .mmt-sep{width:1px;height:13px;background:rgba(255,255,255,.18);flex:0 0 auto;margin:0 5px}"
+      + "#mmt-bar i.mmt-ext{font-style:normal;font-size:9px;opacity:.55;margin-left:3px;vertical-align:super}"
+      + "#mmt-bar a.mmt-it[data-sub]::after{content:attr(data-sub);position:absolute;top:calc(100% + 7px);left:50%;"
       +   "transform:translateX(-50%) translateY(-3px);white-space:nowrap;background:#14161a;color:#fff;"
       +   "font-size:12px;font-weight:500;padding:6px 11px;border-radius:8px;opacity:0;visibility:hidden;"
       +   "pointer-events:none;transition:opacity .14s,transform .14s;box-shadow:0 10px 26px -12px rgba(0,0,0,.45)}"
-      + "#mmt-bar a.it[data-sub]:hover::after,#mmt-bar a.it[data-sub]:focus-visible::after{"
+      + "#mmt-bar a.mmt-it[data-sub]:hover::after,#mmt-bar a.mmt-it[data-sub]:focus-visible::after{"
       +   "opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}"
-      + "@media(max-width:820px){#mmt-bar .in{gap:10px}#mmt-bar .sep{display:none}"
-      +   "#mmt-bar a.it{padding:5px 7px}#mmt-bar a.it[data-sub]::after{display:none}}"
-      + "@media(prefers-reduced-motion:reduce){#mmt-bar a.it[data-sub]::after{transition:none}}";
+      + "@media(max-width:820px){#mmt-bar .mmt-in{gap:10px}#mmt-bar .mmt-sep{display:none}"
+      +   "#mmt-bar a.mmt-it{padding:5px 7px}#mmt-bar a.mmt-it[data-sub]::after{display:none}}"
+      + "@media(prefers-reduced-motion:reduce){#mmt-bar a.mmt-it[data-sub]::after{transition:none}}";
 
     var st = document.createElement("style");
     st.setAttribute("data-mmt", "shell");
@@ -40,17 +40,17 @@
     document.documentElement.style.setProperty("--mmt-bar-h", H + "px");
 
     var host = (location.hostname || "").replace(/^www\./, "");
-    var html = '<div class="in"><a class="wm" href="https://the-moment.us">MOMENTUS</a><nav aria-label="모멘터스">';
+    var html = '<div class="mmt-in"><a class="mmt-wm" href="https://the-moment.us">MOMENTUS</a><nav class="mmt-nav" aria-label="모멘터스">';
     for (var i = 0; i < ITEMS.length; i++) {
       var it = ITEMS[i], a = "";
-      if (it.sep) html += '<span class="sep" aria-hidden="true"></span>';
+      if (it.mmt-sep) html += '<span class="mmt-sep" aria-hidden="true"></span>';
       // ② 활성 표시 = 현재 도메인이 그 항목의 도메인과 같을 때만. 라벨 하드코딩 없음.
       var h = it.href.indexOf("//") > -1 ? it.href.split("//")[1].split("/")[0].replace(/^www\./, "") : "";
       if (h && h === host) a += ' aria-current="page"';
       if (it.sub) a += ' data-sub="' + it.sub.replace(/"/g, "&quot;") + '"';
       if (it.ext) a += ' target="_blank" rel="noopener"';
       var href = it.href.indexOf("//") > -1 ? it.href : ("https://the-moment.us" + it.href);
-      html += '<a class="it" href="' + href + '"' + a + '>' + it.label + (it.ext ? '<i class="ext" aria-hidden="true">↗</i>' : "") + '</a>';
+      html += '<a class="mmt-it" href="' + href + '"' + a + '>' + it.label + (it.ext ? '<i class="mmt-ext" aria-hidden="true">↗</i>' : "") + '</a>';
     }
     html += "</nav></div>";
 
