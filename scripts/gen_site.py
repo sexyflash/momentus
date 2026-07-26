@@ -982,9 +982,26 @@ SHELL_JS = """/* MOMENTUS shell.js — 1단 브랜드 바. 생성물(scripts/gen
     bar.innerHTML = html;
     // 제품이 고정 헤더를 내릴 때 쓸 값 — ⚠️ 바를 실제로 붙인 뒤에만 세운다.
     //   먼저 세우면 바가 실패했을 때 제품 헤더만 40px 내려가 빈 띠가 남는다(2026-07-27 실측).
+    //
+    // 스크롤: 바는 흐름 안에 있어 위로 밀려 나간다(애플 글로벌 바와 같은 거동).
+    //   그때 제품의 고정 헤더도 같이 올라와 상단에 붙어야 한다 — 안 그러면 헤더가
+    //   40px 아래 떠서 내용 위에 겹친다(2026-07-27 사장님 지적).
+    //   → --mmt-bar-h 를 max(0, H - 스크롤) 로 갱신하면 제품은 CSS 한 줄 그대로 따라온다.
+    var setH = function (v) { document.documentElement.style.setProperty("--mmt-bar-h", v + "px"); };
+    var tick = 0;
+    var onScroll = function () {
+      if (tick) return;
+      tick = requestAnimationFrame(function () {
+        tick = 0;
+        var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+        setH(Math.max(0, H - y));
+      });
+    };
     var put = function () {
       document.body.insertBefore(bar, document.body.firstChild);
-      document.documentElement.style.setProperty("--mmt-bar-h", H + "px");
+      setH(H);
+      onScroll();                                            // 새로고침이 중간 위치에서 일어난 경우
+      window.addEventListener("scroll", onScroll, { passive: true });
     };
     if (document.body) put();
     else document.addEventListener("DOMContentLoaded", put);
