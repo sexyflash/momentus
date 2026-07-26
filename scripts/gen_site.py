@@ -1008,7 +1008,20 @@ SHELL_JS = """/* MOMENTUS shell.js — 1단 브랜드 바. 생성물(scripts/gen
       "--mmt-nav-gap": "26px",
       "--mmt-fs-cta": "14px",
       "--mmt-cta-pad": "9px 18px",
-      "--mmt-cta-r": "999px"
+      "--mmt-cta-r": "999px",
+      // ── 본문 타이포 ── 폰트는 셋 다 이미 Pretendard. 갈렸던 건 크기·행간·자간이었다
+      //   (notes 16/1.65/-0.02 · cue 16/1.5/-0.01 · mark 15~17/1.6/-0.011).
+      //   히어로·디스플레이 크기는 제품 브랜드 목소리라 건드리지 않는다.
+      "--mmt-fs-base": "16px",
+      "--mmt-lh-base": "1.6",
+      "--mmt-ls-base": "-0.015em",
+      "--mmt-fs-lead": "18px",         // 섹션 설명문
+      "--mmt-lh-lead": "1.65",
+      "--mmt-fs-sm": "14px",           // 캡션·보조
+      "--mmt-fs-h3": "19px",
+      "--mmt-fs-h2": "clamp(26px, 2.6vw, 34px)",   // 섹션 제목
+      "--mmt-lh-head": "1.28",
+      "--mmt-ls-head": "-0.035em"
     };
     var setH = function (v) { document.documentElement.style.setProperty("--mmt-bar-h", v + "px"); };
     var tick = 0;
