@@ -1,0 +1,13 @@
+# 생성물(scripts/gen_site.py). 손으로 고치지 말 것.
+/products/quickpang/* /tools/quickpang/ 301
+/products/quickpang /tools/quickpang/ 301
+/products/insta-rank/* /tools/insta-rank/ 301
+/products/insta-rank /tools/insta-rank/ 301
+/products/youtube-rank/* /tools/youtube-rank/ 301
+/products/youtube-rank /tools/youtube-rank/ 301
+/products/pinterest-grab/* /tools/pinterest-grab/ 301
+/products/pinterest-grab /tools/pinterest-grab/ 301
+/products/chatpage/* /tools/chatpage/ 301
+/products/chatpage /tools/chatpage/ 301
+/products/her/* /tools/her/ 301
+/products/her /tools/her/ 301

@@ -14,6 +14,17 @@ for k in ["insta-rank", "youtube-rank", "pinterest-grab", "quickpang"]:
         raw = f.read().strip()
     BM[k] = raw.replace("&", "&amp;").replace('"', "&quot;")
 
+# 제품 진실의 원천 = data/products.json (지그 매니페스트). 새 제품 = 거기 한 줄 추가.
+#   ⚠️ 바·푸터가 이걸 읽으므로 CSS/gnb 정의보다 먼저 로드해야 한다.
+with open("data/products.json", encoding="utf-8") as _mf:
+    _MANIFEST = json.load(_mf)
+ORDER = _MANIFEST["order"]
+P = _MANIFEST["products"]
+BAR = _MANIFEST["bar"]
+# 무료 도구 = 매니페스트에서 파생(free + 북마크릿/확장). 하드코딩 목록을 두지 않는다.
+TOOLS = [s for s in ORDER if P[s].get("free") and P[s].get("type") in ("bookmarklet", "extension")]
+SPOKES = [s for s in ORDER if s not in TOOLS]
+
 CSS = """/* MOMENTUS site.css — v1 */
 :root{--ink:#0b0c0e;--ink2:#3a4150;--paper:#fff;--soft:#f4f5f7;--soft2:#e9ebee;--gray:#5b6270;--faint:#9aa0a8;--line:#e6e8ec;
 --pt:#ff4b26;--ok:#12b76a;--ig:#e1306c;--yt:#ff0033;--pin:#e60023;--coup:#346aff;
@@ -33,6 +44,38 @@ a{color:inherit;text-decoration:none}h1,h2,h3,h4,p{margin:0;font-weight:400}img{
 .gnb .hasdrop:hover .drop{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
 .gnb .drop a{display:block;padding:9px 18px;font-size:13px;color:var(--gray);white-space:nowrap}.gnb .drop a:hover{color:var(--ink);background:var(--soft)}
 @media(max-width:820px){.gnb .lk{gap:15px}.gnb .lk .hidem{display:none}}
+/* 1단 바(브랜드 바) — products.json 의 bar 를 그린다. shell.js 가 스포크에 그리는 것과 같은 문법. */
+.gnb{gap:14px}.gnb .wm{flex:0 0 auto}
+.gnb .lk{flex-wrap:nowrap;min-width:0}
+.gnb .lk>a{white-space:nowrap;flex:0 0 auto}
+.gnb .lk .sep{width:1px;height:13px;background:var(--line);flex:0 0 auto}
+.gnb .lk a[aria-current="page"]{color:var(--ink);font-weight:700}
+.gnb .lk .ext i{font-style:normal;font-size:9px;opacity:.5;margin-left:3px;vertical-align:super}
+.gnb .lk a[data-sub]{position:relative}
+.gnb .lk a[data-sub]::after{content:attr(data-sub);position:absolute;top:calc(100% + 8px);left:50%;
+transform:translateX(-50%) translateY(-3px);white-space:nowrap;background:var(--ink);color:#fff;font-size:12px;
+font-weight:500;letter-spacing:-.01em;padding:6px 11px;border-radius:8px;opacity:0;visibility:hidden;
+pointer-events:none;transition:opacity .14s,transform .14s;box-shadow:0 10px 26px -12px rgba(0,0,0,.35);z-index:5}
+.gnb .lk a[data-sub]:hover::after,.gnb .lk a[data-sub]:focus-visible::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+@media(max-width:820px){.gnb .lk{gap:11px;font-size:13px;overflow-x:auto;scrollbar-width:none}
+.gnb .lk::-webkit-scrollbar{display:none}.gnb .lk .sep{display:none}
+.gnb .lk a[data-sub]::after{display:none}}
+/* /tools/ 허브 — 무료 도구 목록 */
+.tls{padding:0 var(--gut);max-width:1200px;margin:0 auto}
+.tls-head{padding:86px 0 34px;display:flex;flex-direction:column;gap:10px}
+.tls-head .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--faint)}
+.tls-head h1{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-.045em;line-height:1.15}
+.tls-head p{color:var(--gray);font-size:16px;max-width:56ch}
+.tls-list{display:flex;flex-direction:column;border-top:1px solid var(--line);margin-bottom:110px}
+.tls-row{display:flex;align-items:center;gap:18px;padding:20px 4px;border-bottom:1px solid var(--line);transition:background .14s}
+.tls-row:hover{background:var(--soft)}
+.tls-row .ic{width:38px;height:38px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+border-radius:10px;background:var(--soft2);font-size:17px}
+.tls-row .bd{flex:1 1 auto;min-width:0}
+.tls-row .nm{font-size:16px;font-weight:700;letter-spacing:-.025em}
+.tls-row .ds{color:var(--gray);font-size:14px;margin-top:2px}
+.tls-row .mt{flex:0 0 auto;font-family:var(--mono);font-size:11.5px;color:var(--faint);white-space:nowrap}
+@media(max-width:640px){.tls-row .mt{display:none}.tls-head{padding-top:64px}}
 main{padding-top:56px}
 .btn{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-size:14px;font-weight:600;padding:12px 22px;border-radius:99px;border:none;cursor:pointer}
 .btn:hover{opacity:.87}.btn.lg{font-size:15px;padding:14px 26px}
@@ -687,14 +730,51 @@ footer.site .biz{grid-column:1/-1;margin-top:36px;padding-top:24px;border-top:1p
 # 내용이 바뀌면 URL도 바뀌게 해서 즉시 반영시킨다.
 CSS_VER = hashlib.md5(CSS.encode("utf-8")).hexdigest()[:8]
 
+def purl(slug):
+    """제품 페이지 주소 — 무료 도구는 /tools/, 유료 스포크는 /products/.
+       무료 도구를 본 도메인 경로에 두는 이유는 PLATFORM_TOPOLOGY §5(미끼의 유입 권위)."""
+    return f"/tools/{slug}/" if slug in TOOLS else f"/products/{slug}/"
+
+
+def bar_items(active=""):
+    """1단 바 항목 = (라벨, href, 부제, 외부여부, 활성여부, 구분선앞).
+       active 는 apex 자기 페이지용(서버 렌더). 스포크는 shell.js 가 도메인으로 판정한다.
+       ⚠️ 활성 상태를 라벨로 하드코딩하지 않는다(nav-active-no-hardcode)."""
+    active = {"j": "story", "a": "about", "p": "tools"}.get(active, active)   # 레거시 코드 호환
+    out = []
+    for i, s in enumerate(BAR["spokes"]):
+        if s.get("hidden"):
+            continue
+        out.append(dict(label=s["label"], href=s["href"], sub=s.get("sub", ""),
+                        ext=bool(s.get("external")), on=False, sep=False))
+    for j, l in enumerate(BAR["links"]):
+        out.append(dict(label=l["label"], href=l["href"], sub="",
+                        ext=False, on=(active == l["key"]), sep=(j == 0 or l["key"] == "story")))
+    return out
+
+
+def bar_html(active=""):
+    parts = []
+    for it in bar_items(active):
+        if it["sep"]:
+            parts.append('<span class="sep" aria-hidden="true"></span>')
+        attrs = ""
+        if it["sub"]:
+            attrs += f' data-sub="{it["sub"]}"'
+        if it["ext"]:
+            attrs += ' target="_blank" rel="noopener" class="ext"'
+        if it["on"]:
+            attrs += ' aria-current="page"'
+        tail = '<i aria-hidden="true">↗</i>' if it["ext"] else ""
+        parts.append(f'<a href="{it["href"]}"{attrs}>{it["label"]}{tail}</a>')
+    return "\n    ".join(parts)
+
+
 def gnb(active=""):
-    def on(k):
-        return " on" if active == k else ""
     return f"""<header class="gnb">
   <a class="wm" href="/">MOMENTUS</a>
-  <nav class="lk">
-    <a href="/log/" class="{on('j').strip()}">로그</a>
-    <a href="/about/" class="{on('a').strip()}">소개</a>
+  <nav class="lk" aria-label="모멘터스">
+    {bar_html(active)}
   </nav>
 </header>"""
 
@@ -711,10 +791,14 @@ BIZ = dict(
     updated="2026. 07. 14",
 )
 
+# 푸터 제품·도구 목록도 매니페스트 파생 — 하드코딩 목록은 2026-07-27 폐기(새 제품 = 한 줄).
+_FT_SPOKES = "".join(f'<a href="{purl(s)}">{P[s]["name"]}</a>' for s in SPOKES)
+_FT_TOOLS = "".join(f'<a href="{purl(s)}">{P[s]["short"]}</a>' for s in TOOLS)
+
 FOOTER = f"""<footer class="site">
   <div class="brand"><div class="wm">MOMENTUS</div><p>쓸모 있는 것만<br>만듭니다.</p></div>
-  <div><h4>제품</h4><a href="/products/heyreci/">AI 상품사진 — 헤이레시</a><a href="/products/mark/">로고 디자인 — 마크</a><a href="/products/theplan/">디지털 플래너 — 더플랜</a><a href="/products/cue/">AI 모의면접 — 큐</a><a href="/products/quickpang/">쿠팡 옵션·재고 — 퀵팡</a></div>
-  <div><h4>무료 도구</h4><a href="/products/insta-rank/">인스타 인기순 정렬</a><a href="/products/youtube-rank/">유튜브 인기순 정렬</a><a href="/products/pinterest-grab/">핀터레스트 원본 추출</a><a href="/products/chatpage/">유튜브 AI 요약 — ChatPage</a><a href="/products/her/">음성 입력 — her</a></div>
+  <div><h4>제품</h4>{_FT_SPOKES}</div>
+  <div><h4>무료 도구</h4>{_FT_TOOLS}</div>
   <div><h4>모멘터스</h4><a href="/log/">로그</a><a href="/about/">소개</a><a href="mailto:{BIZ['email']}">문의하기</a><a href="/legal/terms/">이용약관</a><a href="/legal/privacy/">개인정보처리방침</a><a href="/legal/refund/">환불 규정</a></div>
   <div class="biz">
     <span>{BIZ['name']}</span><span>대표 {BIZ['ceo']}</span><span>사업자등록번호 {BIZ['reg']}</span><span>통신판매업신고 {BIZ['mail_order']}</span>
@@ -743,7 +827,16 @@ JSONLD = json.dumps({
 }, ensure_ascii=False)
 
 
+def _toolfix(html):
+    """무료 도구 주소가 /products/<slug>/ 로 하드코딩된 곳을 /tools/<slug>/ 로 정규화.
+       (랜딩 그리드 등 f-string 이 아닌 리터럴 블록에 남은 링크를 놓치지 않기 위한 안전망)"""
+    for t in TOOLS:
+        html = html.replace(f'"/products/{t}/"', f'"/tools/{t}/"')
+    return html
+
+
 def page(title, desc, body, active="", extra=""):
+    body = _toolfix(body)
     return f"""<!doctype html>
 <html lang="ko">
 <head>
@@ -804,11 +897,6 @@ VIDEOS = fetch_youtube(YT_CHANNEL_ID)
 DRAG_MSG = "클릭이 아니라, 이 버튼을 브라우저 북마크바로 드래그해서 등록하세요. 등록한 뒤 해당 사이트에서 누르면 작동합니다."
 DRAG_ATTR = f'onclick="alert(\'{DRAG_MSG}\');return false"'
 
-# 제품 진실의 원천 = data/products.json (지그 매니페스트). 새 제품 = 거기 한 줄 추가.
-with open("data/products.json", encoding="utf-8") as _mf:
-    _MANIFEST = json.load(_mf)
-ORDER = _MANIFEST["order"]
-P = _MANIFEST["products"]
 CATN = {"fast": "생산성", "sell": "커머스", "research": "리서치", "study": "스터디"}
 
 def cta(slug, big=False):
@@ -824,6 +912,89 @@ def cta(slug, big=False):
 os.makedirs("assets", exist_ok=True)
 with open("assets/site.css", "w", encoding="utf-8") as f:
     f.write(CSS)
+
+# ---------- shell.js — 스포크(notes·mark·cue…)에 1단 바를 배급 ----------
+#   제품이 부담하는 것: <script src="https://the-moment.us/shell.js" defer></script> 한 줄.
+#   규칙 3개(PLATFORM_TOPOLOGY §3):
+#     ① fail-open — 이 파일이 죽거나 못 뜨면 바만 없고 제품 사이트는 정상 작동해야 한다.
+#     ② 활성 표시는 현재 도메인으로 도출한다(하드코딩 금지).
+#     ③ 스타일은 #mmt-bar 로 스코프 — 제품 CSS를 오염시키지 않는다.
+#   제품의 고정 헤더가 바를 덮으면 그 제품에서 한 줄만 오프셋: top: var(--mmt-bar-h)
+SHELL_ITEMS = json.dumps(
+    [dict(label=i["label"], href=i["href"], sub=i["sub"], ext=i["ext"], sep=i["sep"]) for i in bar_items()],
+    ensure_ascii=False, separators=(",", ":"))
+
+SHELL_JS = """/* MOMENTUS shell.js — 1단 브랜드 바. 생성물(scripts/gen_site.py). 손으로 고치지 말 것. */
+(function () {
+  "use strict";
+  try {
+    if (document.getElementById("mmt-bar")) return;
+    var H = 40, ITEMS = __ITEMS__;
+    var css = ""
+      + "#mmt-bar{--mmt-bg:#14161a;--mmt-fg:#cfd4dc;--mmt-fg2:#8b93a1;"
+      +   "all:initial;display:block;box-sizing:border-box;width:100%;height:" + H + "px;"
+      +   "background:var(--mmt-bg);color:var(--mmt-fg);position:relative;z-index:2147483000;"
+      +   "font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Helvetica Neue','Segoe UI',sans-serif}"
+      + "#mmt-bar *,#mmt-bar *::after{box-sizing:border-box}"
+      + "#mmt-bar .in{display:flex;align-items:center;gap:16px;height:100%;"
+      +   "padding:0 max(16px,calc((100% - 1200px)/2));overflow-x:auto;scrollbar-width:none}"
+      + "#mmt-bar .in::-webkit-scrollbar{display:none}"
+      + "#mmt-bar .wm{font-size:13px;font-weight:800;letter-spacing:-.01em;color:#fff;text-decoration:none;flex:0 0 auto}"
+      + "#mmt-bar nav{display:flex;align-items:center;gap:4px;flex:0 0 auto}"
+      + "#mmt-bar a.it{font-size:13px;font-weight:500;letter-spacing:-.01em;color:var(--mmt-fg);"
+      +   "text-decoration:none;padding:5px 9px;border-radius:7px;white-space:nowrap;position:relative}"
+      + "#mmt-bar a.it:hover{background:rgba(255,255,255,.1);color:#fff}"
+      + "#mmt-bar a.it[aria-current=page]{background:#fff;color:#14161a;font-weight:700}"
+      + "#mmt-bar .sep{width:1px;height:13px;background:rgba(255,255,255,.18);flex:0 0 auto;margin:0 5px}"
+      + "#mmt-bar i.ext{font-style:normal;font-size:9px;opacity:.55;margin-left:3px;vertical-align:super}"
+      + "#mmt-bar a.it[data-sub]::after{content:attr(data-sub);position:absolute;top:calc(100% + 7px);left:50%;"
+      +   "transform:translateX(-50%) translateY(-3px);white-space:nowrap;background:#14161a;color:#fff;"
+      +   "font-size:12px;font-weight:500;padding:6px 11px;border-radius:8px;opacity:0;visibility:hidden;"
+      +   "pointer-events:none;transition:opacity .14s,transform .14s;box-shadow:0 10px 26px -12px rgba(0,0,0,.45)}"
+      + "#mmt-bar a.it[data-sub]:hover::after,#mmt-bar a.it[data-sub]:focus-visible::after{"
+      +   "opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}"
+      + "@media(max-width:820px){#mmt-bar .in{gap:10px}#mmt-bar .sep{display:none}"
+      +   "#mmt-bar a.it{padding:5px 7px}#mmt-bar a.it[data-sub]::after{display:none}}"
+      + "@media(prefers-reduced-motion:reduce){#mmt-bar a.it[data-sub]::after{transition:none}}";
+
+    var st = document.createElement("style");
+    st.setAttribute("data-mmt", "shell");
+    st.textContent = css;
+    document.head.appendChild(st);
+
+    // 제품이 고정 헤더를 내릴 때 쓸 값 — 제품 CSS 한 줄로 오프셋할 수 있게 노출한다.
+    document.documentElement.style.setProperty("--mmt-bar-h", H + "px");
+
+    var host = (location.hostname || "").replace(/^www\\./, "");
+    var html = '<div class="in"><a class="wm" href="https://the-moment.us">MOMENTUS</a><nav aria-label="모멘터스">';
+    for (var i = 0; i < ITEMS.length; i++) {
+      var it = ITEMS[i], a = "";
+      if (it.sep) html += '<span class="sep" aria-hidden="true"></span>';
+      // ② 활성 표시 = 현재 도메인이 그 항목의 도메인과 같을 때만. 라벨 하드코딩 없음.
+      var h = it.href.indexOf("//") > -1 ? it.href.split("//")[1].split("/")[0].replace(/^www\\./, "") : "";
+      if (h && h === host) a += ' aria-current="page"';
+      if (it.sub) a += ' data-sub="' + it.sub.replace(/"/g, "&quot;") + '"';
+      if (it.ext) a += ' target="_blank" rel="noopener"';
+      var href = it.href.indexOf("//") > -1 ? it.href : ("https://the-moment.us" + it.href);
+      html += '<a class="it" href="' + href + '"' + a + '>' + it.label + (it.ext ? '<i class="ext" aria-hidden="true">↗</i>' : "") + '</a>';
+    }
+    html += "</nav></div>";
+
+    var bar = document.createElement("div");
+    bar.id = "mmt-bar";
+    bar.innerHTML = html;
+    var put = function () { document.body.insertBefore(bar, document.body.firstChild); };
+    if (document.body) put();
+    else document.addEventListener("DOMContentLoaded", put);
+  } catch (e) {
+    // ① fail-open — 바를 못 그려도 제품 사이트는 그대로 산다.
+    if (window.console) console.warn("[momentus shell] 바를 건너뜁니다:", e);
+  }
+})();
+""".replace("__ITEMS__", SHELL_ITEMS)
+
+with open("shell.js", "w", encoding="utf-8") as f:
+    f.write(SHELL_JS)
 
 # ---------- product detail pages ----------
 DOCK_JS = """<script>
@@ -934,7 +1105,7 @@ for idx, slug in enumerate(ORDER):
     <div class="hint">{hint_text}</div>
   </div>
 
-  <a class="vd-next" href="/products/{nxt}/">
+  <a class="vd-next" href="{purl(nxt)}">
     <img src="{VIMG[(idx * 3 + 5) % len(VIMG)]}" alt="{P[nxt]['name']}" loading="lazy">
     <div class="cap">
       <div class="lbl">Next Product</div>
@@ -960,9 +1131,12 @@ for idx, slug in enumerate(ORDER):
     </div>
   </div>
 </div>"""
-    os.makedirs(f"products/{slug}", exist_ok=True)
-    with open(f"products/{slug}/index.html", "w", encoding="utf-8") as fh:
-        fh.write(page(f"{p['name']} — MOMENTUS", p["tagline"] + " 무료.", body, active="p", extra=DOCK_JS))
+    # 무료 도구는 /tools/<slug>/ (본 도메인 경로 = 미끼의 유입 권위), 유료 스포크는 /products/<slug>/.
+    _dir = purl(slug).strip("/")
+    os.makedirs(_dir, exist_ok=True)
+    with open(f"{_dir}/index.html", "w", encoding="utf-8") as fh:
+        fh.write(page(f"{p['name']} — MOMENTUS", p["tagline"] + " 무료.", body,
+                      active=("tools" if slug in TOOLS else ""), extra=DOCK_JS))
 
 # (제품 인덱스 페이지 제거 — 홈이 곧 제품 목록이다. 중복 폐지)
 
@@ -1568,8 +1742,37 @@ with open("apps/privacy-policy.html", "w", encoding="utf-8") as fh:
 with open("apps/legal.html", "w", encoding="utf-8") as fh:
     fh.write(page("이용약관 — MOMENTUS", "모멘터스 이용약관.", TERMS, active=""))
 
+# ---------- /tools/ 허브 (1단 바의 '무료 도구' 착지점) ----------
+_TYPEN = {"bookmarklet": "북마크릿", "extension": "크롬 확장"}
+_tls_rows = "".join(
+    f'''<a class="tls-row" href="{purl(s)}">
+    <div class="ic" aria-hidden="true">{P[s]["icon"]}</div>
+    <div class="bd"><div class="nm">{P[s]["short"]}</div><div class="ds">{P[s]["tagline"]}</div></div>
+    <div class="mt">{_TYPEN.get(P[s]["type"], P[s]["type"])} · 무료</div>
+  </a>''' for s in TOOLS)
+tools_body = f"""<div class="tls">
+  <div class="tls-head">
+    <div class="k">TOOLS</div>
+    <h1>설치 없이, 지금 되는 도구</h1>
+    <p>전부 무료입니다. 북마크바에 끌어놓거나 크롬에 추가하면 끝. 회원가입도, 결제도 없습니다.</p>
+  </div>
+  <div class="tls-list">{_tls_rows}</div>
+</div>"""
+os.makedirs("tools", exist_ok=True)
+with open("tools/index.html", "w", encoding="utf-8") as f:
+    f.write(page("무료 도구 — MOMENTUS", "설치 없이 바로 쓰는 무료 브라우저 도구. 쿠팡 옵션·재고, 인스타·유튜브 인기순 정렬, 핀터레스트 원본 추출, 유튜브 AI 요약, 음성 입력.", tools_body, active="tools"))
+
+# ---------- 리다이렉트 — 옮긴 무료 도구 주소 회수 ----------
+#   무료 도구가 /products/<slug>/ → /tools/<slug>/ 로 이동(2026-07-27). 기존 링크·검색 결과 보존.
+with open("_redirects", "w", encoding="utf-8") as f:
+    f.write("# 생성물(scripts/gen_site.py). 손으로 고치지 말 것.\n")
+    for s in TOOLS:
+        f.write(f"/products/{s}/* /tools/{s}/ 301\n")
+        f.write(f"/products/{s} /tools/{s}/ 301\n")
+
 # ---------- sitemap ----------
-urls = ["", "log/", "about/", "legal/privacy/", "legal/terms/", "legal/refund/"] + [f"products/{s}/" for s in ORDER] + [f"log/{s}/" for s in PORDER]
+urls = ["", "log/", "about/", "tools/", "legal/privacy/", "legal/terms/", "legal/refund/"] \
+    + [purl(s).lstrip("/") for s in ORDER] + [f"log/{s}/" for s in PORDER]
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for u in urls:
     sm += f"  <url><loc>https://the-moment.us/{u}</loc></url>\n"
@@ -1578,7 +1781,8 @@ with open("sitemap.xml", "w", encoding="utf-8") as f:
     f.write(sm)
 
 print("SITE GENERATED:")
-print("  index.html, assets/site.css, sitemap.xml")
-print("  products/: index + " + ", ".join(ORDER))
+print("  index.html, assets/site.css, shell.js, sitemap.xml, _redirects")
+print("  tools/: index + " + ", ".join(TOOLS))
+print("  products/: " + ", ".join(SPOKES))
 print("  log/: index + " + ", ".join(PORDER))
 print("  lab/, about/")

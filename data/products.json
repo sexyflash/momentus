@@ -6,6 +6,21 @@
     "type": "bookmarklet|extension|service",
     "hook": "귀환 갈고리(무료 도구에만)"
   },
+  "_bar_note": "1단 바(브랜드 바) 정본. 여기 한 줄 = 전 사이트 바·푸터·shell.js 동시 반영. label=기능어(한글) / sub=호버 부제(브랜드명 포함) / tag=블로그 태그 / feed=랜딩 스트림 수집 URL(없으면 null) / hidden=바에 아직 안 올림.",
+  "bar": {
+    "spokes": [
+      { "slug": "theplan", "label": "플래너", "sub": "notes — 내 손에 맞게 조립하는 디지털 플래너", "href": "https://notes.the-moment.us", "tag": "플래너", "feed": "https://notes.the-moment.us/api/shop" },
+      { "slug": "mark", "label": "로고", "sub": "mark — 내 업종 로고를 먼저 보고 고릅니다", "href": "https://mark.the-moment.us", "tag": "마크", "feed": "https://mark.the-moment.us/rss.xml" },
+      { "slug": "cue", "label": "모의면접", "sub": "cue — 입으로 답하고 AI가 짚어줍니다", "href": "https://cue.the-moment.us", "tag": "큐", "feed": null },
+      { "slug": "heyreci", "label": "상품사진", "sub": "heyreci.com으로 이동", "href": "https://heyreci.com", "tag": "헤이레시", "feed": null, "external": true },
+      { "slug": "kontext", "label": "AI 기억", "sub": "Kontext — 매번 설명하지 않아도 AI가 내 상황을 압니다", "href": "https://kontext.the-moment.us", "tag": "컨텍스트", "feed": null, "hidden": true }
+    ],
+    "links": [
+      { "key": "tools", "label": "무료 도구", "href": "/tools/" },
+      { "key": "story", "label": "이야기", "href": "/log/" },
+      { "key": "about", "label": "소개", "href": "/about/" }
+    ]
+  },
   "order": [
     "heyreci",
     "mark",
