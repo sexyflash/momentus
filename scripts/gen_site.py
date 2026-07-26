@@ -919,7 +919,96 @@ os.makedirs("assets", exist_ok=True)
 with open("assets/site.css", "w", encoding="utf-8") as f:
     f.write(CSS)
 
-# ---------- shell.js — 스포크(notes·mark·cue…)에 1단 바를 배급 ----------
+# ---------- 공용 셸 정본 — 제품 소스에 '직접 박는' 블록을 생성한다 ----------
+#   ⚠️ 2026-07-27 전환: 예전엔 shell.js 가 런타임에 바를 끼워 넣고 토큰을 덮어썼는데,
+#      첫 페인트가 제품 원래 값으로 그려진 뒤 바뀌어 '깜빡'이 보였고 바 삽입이 페이지를 40px 밀었다.
+#      → 이제 마크업·CSS 를 제품 소스에 박는다(런타임 보정 0). 정본은 여기, 반영은 sync_shell.py.
+SHELL_TOKENS = {
+    "--mmt-gut": "clamp(20px, 4vw, 56px)",
+    "--mmt-maxw": "1320px",
+    "--mmt-bar-h": "40px",
+    "--mmt-bar2-h": "64px",
+    "--mmt-fs-logo": "22px",
+    "--mmt-fs-nav": "14px",
+    "--mmt-fw-nav": "600",
+    "--mmt-nav-gap": "26px",
+    "--mmt-fs-cta": "14px",
+    "--mmt-cta-pad": "9px 18px",
+    "--mmt-cta-r": "999px",
+    "--mmt-fs-base": "16px",
+    "--mmt-lh-base": "1.6",
+    "--mmt-ls-base": "-0.015em",
+    "--mmt-fs-lead": "18px",
+    "--mmt-lh-lead": "1.65",
+    "--mmt-fs-sm": "14px",
+    "--mmt-fs-h3": "19px",
+    "--mmt-fs-h2": "clamp(26px, 2.6vw, 34px)",
+    "--mmt-lh-head": "1.28",
+    "--mmt-ls-head": "-0.035em",
+}
+
+SHELL_BAR_CSS = """#mmt-bar{display:block;box-sizing:border-box;width:100%;height:var(--mmt-bar-h,40px);
+background:#14161a;color:#cfd4dc;position:relative;z-index:2147483000;
+font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Helvetica Neue','Segoe UI',sans-serif;
+letter-spacing:normal;line-height:normal}
+#mmt-bar *,#mmt-bar *::after{box-sizing:border-box}
+#mmt-bar .mmt-in{display:flex;align-items:center;gap:16px;height:100%;padding:0 20px;overflow-x:auto;scrollbar-width:none}
+#mmt-bar .mmt-in::-webkit-scrollbar{display:none}
+#mmt-bar .mmt-wm{font-size:13px;font-weight:800;letter-spacing:-.01em;color:#fff;text-decoration:none;flex:0 0 auto}
+#mmt-bar .mmt-nav{display:flex;align-items:center;gap:4px;flex:0 0 auto}
+#mmt-bar a.mmt-it{font-size:13px;font-weight:500;letter-spacing:-.01em;color:#cfd4dc;text-decoration:none;
+padding:5px 9px;border-radius:7px;white-space:nowrap;position:relative}
+#mmt-bar a.mmt-it:hover{background:rgba(255,255,255,.1);color:#fff}
+#mmt-bar a.mmt-it[aria-current=page]{background:#fff;color:#14161a;font-weight:700}
+#mmt-bar .mmt-sep{width:1px;height:13px;background:rgba(255,255,255,.18);flex:0 0 auto;margin:0 5px}
+#mmt-bar i.mmt-ext{font-style:normal;font-size:9px;opacity:.55;margin-left:3px;vertical-align:super}
+#mmt-bar a.mmt-it[data-sub]::after{content:attr(data-sub);position:absolute;top:calc(100% + 7px);left:50%;
+transform:translateX(-50%) translateY(-3px);white-space:nowrap;background:#14161a;color:#fff;font-size:12px;
+font-weight:500;padding:6px 11px;border-radius:8px;opacity:0;visibility:hidden;pointer-events:none;
+transition:opacity .14s,transform .14s;box-shadow:0 10px 26px -12px rgba(0,0,0,.45)}
+#mmt-bar a.mmt-it[data-sub]:hover::after,#mmt-bar a.mmt-it[data-sub]:focus-visible::after{
+opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+@media(max-width:820px){#mmt-bar .mmt-in{gap:10px}#mmt-bar .mmt-sep{display:none}
+#mmt-bar a.mmt-it{padding:5px 7px}#mmt-bar a.mmt-it[data-sub]::after{display:none}}
+@media(prefers-reduced-motion:reduce){#mmt-bar a.mmt-it[data-sub]::after{transition:none}}"""
+
+
+def shell_css_block():
+    """제품 스타일시트에 그대로 박는 블록 — 토큰(실값) + 바 스타일. 런타임 덮어쓰기 없음."""
+    toks = "".join(f"{k}:{v};" for k, v in SHELL_TOKENS.items())
+    return ("/* MMT:BEGIN — 모멘터스 공용 셸(생성물). 손으로 고치지 말 것.\n"
+            "   정본: momentus/scripts/gen_site.py · 반영: momentus/scripts/sync_shell.py */\n"
+            f":root{{{toks}}}\n{SHELL_BAR_CSS}\n/* MMT:END */")
+
+
+def shell_bar_markup(host=""):
+    """제품 HTML의 <body> 바로 뒤에 박는 1단 바. host 를 주면 그 제품 항목에 활성 표시."""
+    parts = []
+    for it in bar_items():
+        if it["sep"]:
+            parts.append('<span class="mmt-sep" aria-hidden="true"></span>')
+        a = ""
+        h = it["href"].split("//")[1].split("/")[0] if "//" in it["href"] else ""
+        if host and h == host:
+            a += ' aria-current="page"'
+        if it["sub"]:
+            a += f' data-sub="{it["sub"]}"'
+        if it["ext"]:
+            a += ' target="_blank" rel="noopener"'
+        href = it["href"] if "//" in it["href"] else ("https://the-moment.us" + it["href"])
+        tail = '<i class="mmt-ext" aria-hidden="true">↗</i>' if it["ext"] else ""
+        parts.append(f'<a class="mmt-it" href="{href}"{a}>{it["label"]}{tail}</a>')
+    return ('<!-- MMT:BEGIN — 모멘터스 공용 1단 바(생성물). 손으로 고치지 말 것. -->\n'
+            '<div id="mmt-bar"><div class="mmt-in">'
+            '<a class="mmt-wm" href="https://the-moment.us">MOMENTUS</a>'
+            f'<nav class="mmt-nav" aria-label="모멘터스">{"".join(parts)}</nav>'
+            '</div></div>\n<!-- MMT:END -->')
+
+
+with open("shell.css", "w", encoding="utf-8") as f:
+    f.write(shell_css_block() + "\n")
+
+# ---------- shell.js — (레거시) 아직 소스에 박지 않은 곳을 위한 폴백 ----------
 #   제품이 부담하는 것: <script src="https://the-moment.us/shell.js" defer></script> 한 줄.
 #   규칙 3개(PLATFORM_TOPOLOGY §3):
 #     ① fail-open — 이 파일이 죽거나 못 뜨면 바만 없고 제품 사이트는 정상 작동해야 한다.
