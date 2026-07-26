@@ -737,7 +737,7 @@ JSONLD = json.dumps({
     "makesOffer": [
         {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "헤이레시 — AI 상품사진 생성", "applicationCategory": "DesignApplication", "url": "https://heyreci.com"}},
         {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "마크 — 업종별 로고 디자인", "url": "https://mark.the-moment.us"}},
-        {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "더플랜 — 디지털 플래너", "url": "https://planner.the-moment.us"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "더플랜 — 디지털 플래너", "url": "https://notes.the-moment.us"}},
         {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "큐 — AI 모의면접", "applicationCategory": "EducationalApplication", "url": "https://cue.the-moment.us"}},
     ],
 }, ensure_ascii=False)
@@ -1458,7 +1458,7 @@ PRIVACY = f"""{LEGAL_CSS_WRAP}
     </ul>
 
     <h3>1.3 유료 제품</h3>
-    <p>헤이레시(heyreci.com), 마크(mark.the-moment.us), 더플랜(planner.the-moment.us), 큐(cue.the-moment.us)는 <b>각 서비스에서 별도의 개인정보처리방침을 운영</b>합니다. 결제·회원 정보는 해당 서비스와 결제대행사가 처리하며, 모멘터스 웹사이트는 이를 수집·보관하지 않습니다.</p>
+    <p>헤이레시(heyreci.com), 마크(mark.the-moment.us), 더플랜(notes.the-moment.us), 큐(cue.the-moment.us)는 <b>각 서비스에서 별도의 개인정보처리방침을 운영</b>합니다. 결제·회원 정보는 해당 서비스와 결제대행사가 처리하며, 모멘터스 웹사이트는 이를 수집·보관하지 않습니다.</p>
 
     <h2>2. 이용 목적</h2>
     <p>수집된 통계 정보는 서비스 개선 목적으로만 사용하며, 제3자에게 판매하거나 제공하지 않습니다.</p>
