@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.sexyflash.momentus-rebuild</string>
+
+    <!-- the-moment.us 재빌드 — 제품 피드(스트림)를 다시 긁어 랜딩 갱신 후 배포.
+         생성 실패 시 배포하지 않고, 변경 없으면 건너뛴다. origin push 는 하지 않는다. -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/sexyflash/Projects/momentus/scripts/rebuild.sh</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/sexyflash/Projects/momentus</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/Users/sexyflash/.local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+
+    <!-- 05:30 능력 스캔 다음 -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>5</integer>
+        <key>Minute</key>
+        <integer>45</integer>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/sexyflash/Projects/momentus/.rebuild.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/sexyflash/Projects/momentus/.rebuild.log</string>
+</dict>
+</plist>
