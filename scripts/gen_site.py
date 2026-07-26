@@ -995,6 +995,21 @@ SHELL_JS = """/* MOMENTUS shell.js — 1단 브랜드 바. 생성물(scripts/gen
     //   그때 제품의 고정 헤더도 같이 올라와 상단에 붙어야 한다 — 안 그러면 헤더가
     //   40px 아래 떠서 내용 위에 겹친다(2026-07-27 사장님 지적).
     //   → --mmt-bar-h 를 max(0, H - 스크롤) 로 갱신하면 제품은 CSS 한 줄 그대로 따라온다.
+    // ── 패밀리 공용 디자인 토큰 ──
+    //   여기 숫자 하나를 고치면 notes·mark·cue 의 2단 바가 동시에 따라온다("중앙에서 통제").
+    //   제품은 반드시 var(--mmt-*, 자기값) 폴백 형태로 쓴다 → 이 파일이 못 떠도 원래 모습 유지(fail-open).
+    var TOKENS = {
+      "--mmt-gut": "clamp(20px, 4vw, 56px)",   // 로고 좌표(거터) — 세 사이트 동일해야 로고가 한 줄에 선다
+      "--mmt-maxw": "1320px",                  // 2단 바 컨테이너 최대폭
+      "--mmt-bar2-h": "64px",                  // 2단 제품 바 높이
+      "--mmt-fs-logo": "22px",
+      "--mmt-fs-nav": "14px",
+      "--mmt-fw-nav": "600",
+      "--mmt-nav-gap": "26px",
+      "--mmt-fs-cta": "14px",
+      "--mmt-cta-pad": "9px 18px",
+      "--mmt-cta-r": "999px"
+    };
     var setH = function (v) { document.documentElement.style.setProperty("--mmt-bar-h", v + "px"); };
     var tick = 0;
     var onScroll = function () {
@@ -1007,6 +1022,7 @@ SHELL_JS = """/* MOMENTUS shell.js — 1단 브랜드 바. 생성물(scripts/gen
     };
     var put = function () {
       document.body.insertBefore(bar, document.body.firstChild);
+      for (var k in TOKENS) document.documentElement.style.setProperty(k, TOKENS[k]);
       setH(H);
       onScroll();                                            // 새로고침이 중간 위치에서 일어난 경우
       window.addEventListener("scroll", onScroll, { passive: true });
