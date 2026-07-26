@@ -68,6 +68,20 @@ pointer-events:none;transition:opacity .14s,transform .14s;box-shadow:0 10px 26p
 .gnb .lk::-webkit-scrollbar{display:none}.gnb .lk .sep{display:none}
 .gnb .lk a[data-sub]::after{display:none}}
 /* /tools/ 허브 — 무료 도구 목록 */
+/* 랜딩 — 지금 새로 나온 것 */
+.nw{padding:54px 24px 8px;max-width:1245px;margin:0 auto}
+.nw-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-bottom:18px}
+.nw-head h2{font-size:20px;font-weight:800;letter-spacing:-.035em}
+.nw-more{font-size:13.5px;font-weight:700;color:var(--gray);white-space:nowrap}
+.nw-more:hover{color:var(--ink)}
+.nw-list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.nw-row{display:flex;align-items:center;gap:14px;padding:14px 2px;border-bottom:1px solid var(--line);transition:background .14s}
+.nw-row:hover{background:var(--soft)}
+.nw-k{flex:0 0 auto;font-size:11.5px;font-weight:700;color:var(--pt);background:#fff5f2;padding:3px 9px;border-radius:99px}
+.nw-t{flex:1 1 auto;font-size:15px;font-weight:650;letter-spacing:-.02em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nw-s{flex:0 0 auto;font-size:12.5px;color:var(--gray)}
+.nw-d{flex:0 0 auto;font-family:var(--mono);font-size:11.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+@media(max-width:640px){.nw{padding-top:48px}.nw-s{display:none}}
 /* 글 하단 태그 */
 .an-tags{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 0}
 .an-tag{font-size:13px;font-weight:600;color:var(--gray);background:var(--soft);padding:7px 13px;border-radius:99px}
@@ -1328,6 +1342,87 @@ STORY_TAGS += [("tools", "무료 도구"), ("people", "사람")]
 TAG_BY_LABEL = {lab: key for key, lab in STORY_TAGS}
 
 
+# ---------- 랜딩 스트림 수집기 (PLATFORM_TOPOLOGY §10) ----------
+#   허브가 스포크의 업데이트를 아는 법 = 푸시가 아니라 '풀'. 제품은 공개 피드 하나만 노출하면 되고,
+#   apex 가 빌드할 때 읽어 온다. 실패해도 직전 캐시를 쓰고 조용히 넘어간다(빌드는 절대 안 깨진다).
+#   자동화 상한은 2개 — 제품 피드 + 유튜브 RSS. 인스타·스레드는 손으로 한 줄(오버엔지니어링 방지선).
+import datetime
+import urllib.request
+import xml.etree.ElementTree as ET
+
+STREAM_CACHE = "data/stream_cache.json"
+
+
+def _get(url, timeout=8):
+    req = urllib.request.Request(url, headers={"user-agent": "momentus-site-generator"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return r.read()
+
+
+def _rss_items(raw, label, limit=4):
+    root = ET.fromstring(raw)
+    out = []
+    for it in root.iter("item"):
+        t = (it.findtext("title") or "").strip()
+        link = (it.findtext("link") or "").strip()
+        pub = (it.findtext("pubDate") or "").strip()
+        try:
+            d = datetime.datetime.strptime(pub[:16], "%a, %d %b %Y").date().isoformat()
+        except Exception:
+            continue
+        out.append(dict(kind="post", src=label, title=t, url=link, date=d))
+        if len(out) >= limit:
+            break
+    return out
+
+
+def _shop_items(raw, label, base, limit=4):
+    d = json.loads(raw)
+    out = []
+    for p0 in d.get("products", []):
+        c = (p0.get("created_at") or "")[:10]
+        if not c:
+            continue
+        out.append(dict(kind="release", src=label,
+                        title=(p0.get("name_kr") or p0.get("name_en") or p0.get("slug")),
+                        url=f"{base}/p/{p0.get('slug')}", date=c))
+    out.sort(key=lambda x: x["date"], reverse=True)
+    return out[:limit]
+
+
+def fetch_stream():
+    """제품 피드를 긁어 단일 스트림으로. 소스별로 캐시하고, 실패한 소스만 캐시를 쓴다."""
+    cache = {}
+    if os.path.exists(STREAM_CACHE):
+        try:
+            cache = json.load(open(STREAM_CACHE, encoding="utf-8"))
+        except Exception:
+            cache = {}
+    for sp in BAR["spokes"]:
+        feed, key, label = sp.get("feed"), sp["slug"], sp["label"]
+        if not feed:
+            continue
+        try:
+            raw = _get(feed)
+            base = feed.split("/")[0] + "//" + feed.split("/")[2]
+            got = _rss_items(raw, label) if feed.endswith(".xml") else _shop_items(raw, label, base)
+            if got:
+                cache[key] = got
+                print(f"  · 피드 {label}: {len(got)}건")
+            else:
+                print(f"  ⚠️ 피드 {label}: 항목 0 — 캐시 사용")
+        except Exception as e:
+            print(f"  ⚠️ 피드 {label} 실패({e}) — 캐시 사용")
+    try:
+        json.dump(cache, open(STREAM_CACHE, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    except Exception:
+        pass
+    return [x for v in cache.values() for x in v]
+
+
+STREAM = fetch_stream()
+
+
 def fmt_date(iso):
     p = (iso or "").split("-")
     return ". ".join(p) if len(p) == 3 else iso
@@ -1602,6 +1697,39 @@ with open("about/index.html", "w", encoding="utf-8") as f:
     f.write(page("소개 — MOMENTUS", "AI로 제품을 만드는 방법을 실험하는 스튜디오. 매일 만들고, 직접 쓰고, 알게 된 걸 공개합니다.", about_body, active="a"))
 
 # ---------- landing (root index.html) ----------
+# ---------- 랜딩: 지금 새로 나온 것 ----------
+#   신선도 규칙 — 최신 항목이 60일보다 오래되면 섹션을 통째로 숨긴다.
+#   빈 '최근 소식'이나 반년 전 날짜는 없는 것보다 나쁘다(PLATFORM_TOPOLOGY §10).
+KINDN = {"release": "새 제품", "post": "글", "video": "영상", "tool": "새 도구"}
+_now = datetime.date.today()
+_all_new = STREAM + [dict(kind="post", src="모멘터스", title=POSTS[x]["title"],
+                          url=f"{STORY_BASE}/{x}/", date=POSTS[x]["date"]) for x in PORDER]
+_all_new = [x for x in _all_new if x.get("date")]
+_all_new.sort(key=lambda x: x["date"], reverse=True)
+
+
+def _age(d):
+    try:
+        return (_now - datetime.date.fromisoformat(d)).days
+    except Exception:
+        return 9999
+
+
+NEW_ITEMS = _all_new[:4]
+NEW_FRESH = bool(NEW_ITEMS) and _age(NEW_ITEMS[0]["date"]) <= 60
+newsec = ""
+if NEW_FRESH:
+    rows = "".join(
+        f'<a class="nw-row" href="{x["url"]}"'
+        f'{" target=_blank rel=noopener" if x["url"].startswith("http") and "the-moment.us" not in x["url"] else ""}>'
+        f'<span class="nw-k">{KINDN.get(x["kind"], "소식")}</span>'
+        f'<span class="nw-t">{x["title"]}</span>'
+        f'<span class="nw-s">{x["src"]}</span>'
+        f'<span class="nw-d">{fmt_date(x["date"])}</span></a>' for x in NEW_ITEMS)
+    newsec = ('<section class="nw"><div class="nw-head"><h2>지금 새로 나온 것</h2>'
+              f'<a class="nw-more" href="{STORY_BASE}/">이야기 전체 →</a></div>'
+              f'<div class="nw-list">{rows}</div></section>')
+
 land_body = """<div class="vc">
   <div class="vc-head">
     <h1>쓸모 있는 것만 만듭니다.</h1>
@@ -1712,6 +1840,9 @@ LAND_JS = """<script>
 })();
 </script>"""
 
+
+# 스트림 섹션은 히어로(vc-head) 바로 아래 — 방문자가 먼저 욕망 카피를 보고, 그다음 최신 소식.
+land_body = land_body.replace('<div class="vc-sort"', newsec + '<div class="vc-sort"', 1)
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다", "상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.", land_body, active="", extra=LAND_JS))

@@ -1,0 +1,48 @@
+{
+ "theplan": [
+  {
+   "kind": "release",
+   "src": "플래너",
+   "title": "오르빗",
+   "url": "https://notes.the-moment.us/p/orbit-planner",
+   "date": "2026-07-24"
+  },
+  {
+   "kind": "release",
+   "src": "플래너",
+   "title": "보이드",
+   "url": "https://notes.the-moment.us/p/void",
+   "date": "2026-07-21"
+  }
+ ],
+ "mark": [
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "분식집 로고 비용, 5만원 싸게 골랐다가 12만원 더 쓰는 계산서",
+   "url": "https://mark.the-moment.us/insights/bunsik-logo-cost-hidden-reprint/",
+   "date": "2026-06-18"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "분식집 로고 디자인, 떡볶이 그림 넣기 전에 정할 5가지",
+   "url": "https://mark.the-moment.us/insights/bunsik-logo-design-before-tteokbokki-illustration/",
+   "date": "2026-06-17"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "분식집 로고 디자인, 빨간색부터 고르면 3개월 뒤 후회합니다",
+   "url": "https://mark.the-moment.us/insights/bunsik-logo-design-font-symbol-guide/",
+   "date": "2026-06-17"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "분식집 로고 디자인, 떡볶이 그림보다 먼저 잡아야 할 3가지",
+   "url": "https://mark.the-moment.us/insights/bunsik-logo-design-sales-three-points/",
+   "date": "2026-06-17"
+  }
+ ]
+}
