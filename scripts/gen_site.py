@@ -68,6 +68,47 @@ pointer-events:none;transition:opacity .14s,transform .14s;box-shadow:0 10px 26p
 .gnb .lk::-webkit-scrollbar{display:none}.gnb .lk .sep{display:none}
 .gnb .lk a[data-sub]::after{display:none}}
 /* /tools/ 허브 — 무료 도구 목록 */
+/* 랜딩 히어로 — 비주얼 중심. 아래 리스트·그리드보다 먼저·크게 잡아야 한다(사장님 2026-07-27).
+   이미지는 전부 우리 제품 실물(products.json bar.hero_shots). 외부 사이트 이미지 금지. */
+.hx{position:relative;overflow:hidden;background:linear-gradient(168deg,#fbfbfc 0%,#f2f4f7 52%,#eaeef5 100%)}
+.hx-in{max-width:1245px;margin:0 auto;padding:clamp(72px,9vw,132px) 24px clamp(64px,8vw,112px);
+display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center}
+.hx-cap .k{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.hx-cap h1{margin-top:18px;font-size:clamp(38px,6.2vw,80px);font-weight:800;letter-spacing:-.055em;
+line-height:1.02;color:var(--ink);word-break:keep-all}
+.hx-cap h1 em{font-style:normal;color:var(--pt)}
+.hx-cap p{margin-top:22px;font-size:clamp(16px,1.5vw,20px);line-height:1.66;color:var(--gray);max-width:34ch}
+.hx-act{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}
+.hx-act a{display:inline-flex;align-items:center;font-size:15px;font-weight:700;padding:14px 26px;border-radius:99px;transition:.15s}
+.hx-act .p{background:var(--ink);color:#fff}
+.hx-act .p:hover{transform:translateY(-2px)}
+.hx-act .g{background:rgba(255,255,255,.8);color:var(--ink);border:1px solid var(--line)}
+.hx-act .g:hover{background:#fff}
+.hx-stat{display:flex;gap:26px;margin-top:34px;flex-wrap:wrap}
+.hx-stat div{display:flex;flex-direction:column;gap:3px}
+.hx-stat b{font-size:22px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.hx-stat span{font-size:12.5px;color:var(--gray)}
+/* 제품 실물 콜라주 — 3장을 겹쳐 깊이감 */
+.hx-art{position:relative;height:clamp(330px,38vw,470px)}
+.hx-shot{position:absolute;border-radius:16px;overflow:hidden;aspect-ratio:16/10;
+box-shadow:0 34px 70px -34px rgba(16,24,40,.42),0 2px 8px rgba(16,24,40,.06);
+transition:transform .5s var(--ease)}
+.hx-shot img{width:100%;height:100%;display:block}
+.hx-shot i{position:absolute;left:12px;bottom:11px;font-style:normal;font-size:11px;font-weight:700;
+color:#fff;background:rgba(16,20,26,.72);backdrop-filter:blur(6px);padding:5px 10px;border-radius:99px}
+.hx-shot:nth-child(1){left:0;bottom:2%;width:55%;transform:rotate(-3deg);z-index:3}
+.hx-shot:nth-child(2){right:1%;top:2%;width:50%;transform:rotate(2.4deg);z-index:1}
+.hx-shot:nth-child(3){right:0;bottom:0;width:45%;transform:rotate(-1.4deg);z-index:2}
+.hx:hover .hx-shot:nth-child(1){transform:rotate(-2.2deg) translateY(-6px)}
+.hx:hover .hx-shot:nth-child(2){transform:rotate(1.6deg) translateY(-9px)}
+.hx:hover .hx-shot:nth-child(3){transform:rotate(-1deg) translateY(-4px)}
+@media(max-width:900px){.hx-in{grid-template-columns:1fr;padding-top:56px}
+.hx-art{height:clamp(260px,62vw,340px);order:-1}
+.hx-shot:nth-child(1){width:62%}.hx-shot:nth-child(2){width:54%}.hx-shot:nth-child(3){width:46%}}
+@media(prefers-reduced-motion:reduce){.hx-shot{transition:none}.hx:hover .hx-shot{transform:none}}
+/* 히어로가 커진 만큼 아래 리스트는 한 단계 낮춘다 */
+.vc-head--tight{padding-top:64px!important;padding-bottom:0}
+.vc-head--tight h2{font-size:clamp(22px,2.4vw,30px);font-weight:800;letter-spacing:-.04em;color:#202020}
 /* 랜딩 — 지금 새로 나온 것 */
 .nw{padding:54px 24px 8px;max-width:1245px;margin:0 auto}
 .nw-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-bottom:18px}
@@ -1697,6 +1738,34 @@ with open("about/index.html", "w", encoding="utf-8") as f:
     f.write(page("소개 — MOMENTUS", "AI로 제품을 만드는 방법을 실험하는 스튜디오. 매일 만들고, 직접 쓰고, 알게 된 걸 공개합니다.", about_body, active="a"))
 
 # ---------- landing (root index.html) ----------
+# ---------- 랜딩 히어로 ----------
+#   이미지는 매니페스트(bar.hero_shots)에서. 우리 제품 실물만 쓴다.
+_shots = "".join(
+    f'<div class="hx-shot" style="background:{x.get("bg", "#fff")}">'
+    f'<img src="{x["src"]}" alt="{x["alt"]}" loading="eager" decoding="async" '
+    f'style="object-fit:{x.get("fit", "cover")}">'
+    f'<i>{x["label"]}</i></div>' for x in BAR.get("hero_shots", []))
+_free_n = len(TOOLS)
+_prod_n = len(SPOKES)
+herosec = f"""<section class="hx"><div class="hx-in">
+  <div class="hx-cap">
+    <div class="k">MOMENTUS</div>
+    <h1>필요해서 만들었고,<br><em>매일 씁니다.</em></h1>
+    <p>플래너·로고·모의면접·상품사진 — 만들어 팔고, 브라우저 도구는 무료로 풉니다.</p>
+    <div class="hx-act">
+      <a class="p" href="/tools/">무료 도구 {_free_n}종 바로 쓰기</a>
+      <a class="g" href="{STORY_BASE}/">이야기 보기</a>
+    </div>
+    <div class="hx-stat">
+      <div><b>{_prod_n}</b><span>파는 제품</span></div>
+      <div><b>{_free_n}</b><span>무료 도구</span></div>
+      <div><b>1만+</b><span>퀵팡 사용자</span></div>
+    </div>
+  </div>
+  <div class="hx-art">{_shots}</div>
+</div></section>"""
+
+
 # ---------- 랜딩: 지금 새로 나온 것 ----------
 #   신선도 규칙 — 최신 항목이 60일보다 오래되면 섹션을 통째로 숨긴다.
 #   빈 '최근 소식'이나 반년 전 날짜는 없는 것보다 나쁘다(PLATFORM_TOPOLOGY §10).
@@ -1731,9 +1800,8 @@ if NEW_FRESH:
               f'<div class="nw-list">{rows}</div></section>')
 
 land_body = """<div class="vc">
-  <div class="vc-head">
-    <h1>쓸모 있는 것만 만듭니다.</h1>
-    <p>필요해서 만들었고, 매일 씁니다. 필요한 것만 골라 쓰세요.</p>
+  <div class="vc-head vc-head--tight">
+    <h2>골라 쓰세요</h2>
   </div>
 
   <div class="vc-sort" id="vcsort">
@@ -1842,7 +1910,7 @@ LAND_JS = """<script>
 
 
 # 스트림 섹션은 히어로(vc-head) 바로 아래 — 방문자가 먼저 욕망 카피를 보고, 그다음 최신 소식.
-land_body = land_body.replace('<div class="vc-sort"', newsec + '<div class="vc-sort"', 1)
+land_body = herosec + newsec + land_body
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다", "상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.", land_body, active="", extra=LAND_JS))
