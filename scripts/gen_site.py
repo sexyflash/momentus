@@ -68,47 +68,28 @@ pointer-events:none;transition:opacity .14s,transform .14s;box-shadow:0 10px 26p
 .gnb .lk::-webkit-scrollbar{display:none}.gnb .lk .sep{display:none}
 .gnb .lk a[data-sub]::after{display:none}}
 /* /tools/ 허브 — 무료 도구 목록 */
-/* 랜딩 히어로 — 비주얼 중심. 아래 리스트·그리드보다 먼저·크게 잡아야 한다(사장님 2026-07-27).
-   이미지는 전부 우리 제품 실물(products.json bar.hero_shots). 외부 사이트 이미지 금지. */
-.hx{position:relative;overflow:hidden;background:linear-gradient(168deg,#fbfbfc 0%,#f2f4f7 52%,#eaeef5 100%)}
-.hx-in{max-width:1245px;margin:0 auto;padding:clamp(72px,9vw,132px) 24px clamp(64px,8vw,112px);
-display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center}
-.hx-cap .k{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
-.hx-cap h1{margin-top:18px;font-size:clamp(38px,6.2vw,80px);font-weight:800;letter-spacing:-.055em;
-line-height:1.02;color:var(--ink);word-break:keep-all}
-.hx-cap h1 em{font-style:normal;color:var(--pt)}
-.hx-cap p{margin-top:22px;font-size:clamp(16px,1.5vw,20px);line-height:1.66;color:var(--gray);max-width:34ch}
-.hx-act{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}
-.hx-act a{display:inline-flex;align-items:center;font-size:15px;font-weight:700;padding:14px 26px;border-radius:99px;transition:.15s}
-.hx-act .p{background:var(--ink);color:#fff}
-.hx-act .p:hover{transform:translateY(-2px)}
-.hx-act .g{background:rgba(255,255,255,.8);color:var(--ink);border:1px solid var(--line)}
-.hx-act .g:hover{background:#fff}
-.hx-stat{display:flex;gap:26px;margin-top:34px;flex-wrap:wrap}
-.hx-stat div{display:flex;flex-direction:column;gap:3px}
-.hx-stat b{font-size:22px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.hx-stat span{font-size:12.5px;color:var(--gray)}
-/* 제품 실물 콜라주 — 3장을 겹쳐 깊이감 */
-.hx-art{position:relative;height:clamp(330px,38vw,470px)}
-.hx-shot{position:absolute;border-radius:16px;overflow:hidden;aspect-ratio:16/10;
-box-shadow:0 34px 70px -34px rgba(16,24,40,.42),0 2px 8px rgba(16,24,40,.06);
-transition:transform .5s var(--ease)}
-.hx-shot img{width:100%;height:100%;display:block}
-.hx-shot i{position:absolute;left:12px;bottom:11px;font-style:normal;font-size:11px;font-weight:700;
-color:#fff;background:rgba(16,20,26,.72);backdrop-filter:blur(6px);padding:5px 10px;border-radius:99px}
-.hx-shot:nth-child(1){left:0;bottom:2%;width:55%;transform:rotate(-3deg);z-index:3}
-.hx-shot:nth-child(2){right:1%;top:2%;width:50%;transform:rotate(2.4deg);z-index:1}
-.hx-shot:nth-child(3){right:0;bottom:0;width:45%;transform:rotate(-1.4deg);z-index:2}
-.hx:hover .hx-shot:nth-child(1){transform:rotate(-2.2deg) translateY(-6px)}
-.hx:hover .hx-shot:nth-child(2){transform:rotate(1.6deg) translateY(-9px)}
-.hx:hover .hx-shot:nth-child(3){transform:rotate(-1deg) translateY(-4px)}
-@media(max-width:900px){.hx-in{grid-template-columns:1fr;padding-top:56px}
-.hx-art{height:clamp(260px,62vw,340px);order:-1}
-.hx-shot:nth-child(1){width:62%}.hx-shot:nth-child(2){width:54%}.hx-shot:nth-child(3){width:46%}}
-@media(prefers-reduced-motion:reduce){.hx-shot{transition:none}.hx:hover .hx-shot{transform:none}}
-/* 히어로가 커진 만큼 아래 리스트는 한 단계 낮춘다 */
-.vc-head--tight{padding-top:64px!important;padding-bottom:0}
-.vc-head--tight h2{font-size:clamp(22px,2.4vw,30px);font-weight:800;letter-spacing:-.04em;color:#202020}
+/* 랜딩 히어로 — 한 번에 하나만 크게. 레퍼런스: samsung.com/sec · awwwards.com
+   공통 문법 = 텍스트 최소·초대형 / 압도적 여백 / CTA 한 개 / 큰 비주얼이 주인공. */
+.hz{position:relative;background:#fff}
+.hz-s{display:none;max-width:1245px;margin:0 auto;padding:clamp(44px,5.5vw,78px) 24px clamp(36px,4vw,60px)}
+.hz-s.on{display:block;animation:hzIn .6s var(--ease) both}
+@keyframes hzIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hz-cap{text-align:center;max-width:900px;margin:0 auto}
+.hz-k{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.hz-cap h1{margin-top:16px;font-size:clamp(38px,6.2vw,86px);font-weight:800;letter-spacing:-.055em;
+line-height:1.02;color:var(--ink);word-break:keep-all;text-wrap:balance}
+.hz-cap p{margin:22px auto 0;font-size:clamp(15px,1.5vw,19px);line-height:1.66;color:var(--gray);max-width:44ch}
+.hz-cta{display:inline-flex;align-items:center;margin-top:30px;background:var(--ink);color:#fff;
+font-size:15px;font-weight:700;padding:14px 30px;border-radius:99px;transition:transform .15s}
+.hz-cta:hover{transform:translateY(-2px)}
+.hz-art{margin-top:clamp(40px,5vw,68px);border-radius:20px;overflow:hidden;aspect-ratio:16/9;
+box-shadow:0 40px 80px -40px rgba(16,24,40,.34)}
+.hz-art img{width:100%;height:100%;display:block}
+.hz-dots{display:flex;justify-content:center;gap:9px;padding:26px 0 0}
+.hz-dots button{width:7px;height:7px;border-radius:50%;border:0;padding:0;cursor:pointer;
+background:var(--soft2);transition:.18s}
+.hz-dots button[aria-current]{background:var(--ink);width:22px;border-radius:99px}
+@media(max-width:640px){.hz-art{aspect-ratio:4/3}.hz-cap{max-width:none}}
 /* 랜딩 — 지금 새로 나온 것 */
 .nw{padding:54px 24px 8px;max-width:1245px;margin:0 auto}
 .nw-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-bottom:18px}
@@ -485,6 +466,9 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
 .vc-item{grid-column:span 1}
 .vc-item.big{grid-column:1 / -1}
 .vc-item[hidden]{display:none}
+.vc-thumb--g{background:linear-gradient(135deg,#e8eefc,#f6f7fb)}
+.vc-thumb--g.g2{background:linear-gradient(135deg,#e9f6ee,#f6faf7)}
+.vc-thumb--g.g3{background:linear-gradient(135deg,#fdeee6,#fbf7f4)}
 
 .vc-item a{display:block}
 .vc-thumb{width:100%;aspect-ratio:1;overflow:hidden;background:#F4F4F4}
@@ -901,6 +885,36 @@ def _toolfix(html):
     return html
 
 
+AGENTATION = """
+<!-- Agentation(UI 주석 → AI 에이전트 컨텍스트) — notes·mark 와 같은 옵트인 블록.
+     ?agent=1 로 켜면 유지, ?agent=0 로 끔. 옵트인 전에는 아무것도 로드하지 않아 방문자엔 무부담.
+     apex 에만 빠져 있었다(2026-07-27 사장님 지적). -->
+<script type="module">
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    if(q.has("agent")){var v=q.get("agent");localStorage.setItem("agentation",(v===""||v==="1"||v==="on")?"1":"0");}
+  }catch(e){}
+  if((localStorage.getItem("agentation")||"")!=="1")return;
+  var root=document.getElementById("agentation-root");
+  if(!root){root=document.createElement("div");root.id="agentation-root";document.body.appendChild(root);}
+  var V="18.3.1";
+  Promise.all([
+    import("https://esm.sh/react@"+V),
+    import("https://esm.sh/react-dom@"+V+"/client"),
+    import("https://esm.sh/agentation@3?deps=react@"+V+",react-dom@"+V)
+  ]).then(function(m){
+    var React=m[0].default||m[0];
+    var createRoot=(m[1].createRoot||(m[1].default&&m[1].default.createRoot));
+    var Ag=m[2].Agentation||(m[2].default&&(m[2].default.Agentation||m[2].default));
+    if(!createRoot||!Ag){console.warn("[agentation] API 형태 예상과 다름",m);return;}
+    createRoot(root).render(React.createElement(Ag));
+    console.log("[agentation] 설치됨(apex) — 끄려면 ?agent=0");
+  }).catch(function(err){console.warn("[agentation] 로드 실패(네트워크/CDN):",err);});
+})();
+</script>"""
+
+
 def page(title, desc, body, active="", extra=""):
     body = _toolfix(body)
     return f"""<!doctype html>
@@ -921,6 +935,7 @@ def page(title, desc, body, active="", extra=""):
 {body}
 </main>
 {FOOTER}
+{AGENTATION}
 {extra}</body>
 </html>"""
 
@@ -1424,9 +1439,11 @@ def _shop_items(raw, label, base, limit=4):
         c = (p0.get("created_at") or "")[:10]
         if not c:
             continue
+        _im = p0.get("hero") or p0.get("thumb")
         out.append(dict(kind="release", src=label,
                         title=(p0.get("name_kr") or p0.get("name_en") or p0.get("slug")),
-                        url=f"{base}/p/{p0.get('slug')}", date=c))
+                        url=f"{base}/p/{p0.get('slug')}", date=c,
+                        img=(f"{base}/img/{_im}" if _im else "")))
     out.sort(key=lambda x: x["date"], reverse=True)
     return out[:limit]
 
@@ -1739,40 +1756,51 @@ with open("about/index.html", "w", encoding="utf-8") as f:
 
 # ---------- landing (root index.html) ----------
 # ---------- 랜딩 히어로 ----------
-#   이미지는 매니페스트(bar.hero_shots)에서. 우리 제품 실물만 쓴다.
-_shots = "".join(
-    f'<div class="hx-shot" style="background:{x.get("bg", "#fff")}">'
-    f'<img src="{x["src"]}" alt="{x["alt"]}" loading="eager" decoding="async" '
-    f'style="object-fit:{x.get("fit", "cover")}">'
-    f'<i>{x["label"]}</i></div>' for x in BAR.get("hero_shots", []))
-_free_n = len(TOOLS)
-_prod_n = len(SPOKES)
-herosec = f"""<section class="hx"><div class="hx-in">
-  <div class="hx-cap">
-    <div class="k">MOMENTUS</div>
-    <h1>필요해서 만들었고,<br><em>매일 씁니다.</em></h1>
-    <p>플래너·로고·모의면접·상품사진 — 만들어 팔고, 브라우저 도구는 무료로 풉니다.</p>
-    <div class="hx-act">
-      <a class="p" href="/tools/">무료 도구 {_free_n}종 바로 쓰기</a>
-      <a class="g" href="{STORY_BASE}/">이야기 보기</a>
-    </div>
-    <div class="hx-stat">
-      <div><b>{_prod_n}</b><span>파는 제품</span></div>
-      <div><b>{_free_n}</b><span>무료 도구</span></div>
-      <div><b>1만+</b><span>퀵팡 사용자</span></div>
-    </div>
-  </div>
-  <div class="hx-art">{_shots}</div>
-</div></section>"""
+#   레퍼런스 공통 문법(samsung.com/sec · awwwards.com): ① 한 번에 하나만 크게 ② 텍스트 최소·초대형
+#   ③ 압도적 여백 ④ CTA 한 개 ⑤ 큰 비주얼이 주인공. 좌우 2단 콜라주는 폐기(산만했다).
+_slides = []
+for i, x in enumerate(BAR.get("hero_shots", [])):
+    _slides.append(
+        f'<article class="hz-s{" on" if i == 0 else ""}" data-i="{i}">'
+        f'<div class="hz-cap"><div class="hz-k">{x["label"]}</div>'
+        f'<h1>{x.get("title", x["label"])}</h1>'
+        f'<p>{x.get("sub", "")}</p>'
+        f'<a class="hz-cta" href="{x.get("href", "/")}">{x.get("cta", "보러 가기")}</a></div>'
+        f'<div class="hz-art" style="background:{x.get("bg", "#fff")}">'
+        f'<img src="{x["src"]}" alt="{x["alt"]}" loading="eager" decoding="async" '
+        f'style="object-fit:{x.get("fit", "cover")}"></div></article>')
+_dots = "".join(f'<button type="button" data-i="{i}" aria-label="{x["label"]}"'
+                f'{" aria-current=true" if i == 0 else ""}></button>'
+                for i, x in enumerate(BAR.get("hero_shots", [])))
+herosec = ('<section class="hz" id="hz">' + "".join(_slides) +
+           f'<div class="hz-dots">{_dots}</div></section>')
+
+HERO_JS = """<script>
+(function(){
+  var hz=document.getElementById('hz'); if(!hz) return;
+  var ss=[].slice.call(hz.querySelectorAll('.hz-s')), ds=[].slice.call(hz.querySelectorAll('.hz-dots button'));
+  if(ss.length<2) return;
+  var i=0, t=null;
+  function go(n){ i=(n+ss.length)%ss.length;
+    ss.forEach(function(s,k){ s.classList.toggle('on', k===i); });
+    ds.forEach(function(d,k){ if(k===i) d.setAttribute('aria-current','true'); else d.removeAttribute('aria-current'); }); }
+  function play(){ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    stop(); t=setInterval(function(){ go(i+1); }, 6000); }
+  function stop(){ if(t) clearInterval(t); t=null; }
+  ds.forEach(function(d){ d.addEventListener('click', function(){ go(+d.dataset.i); play(); }); });
+  hz.addEventListener('mouseenter', stop); hz.addEventListener('mouseleave', play);
+  play();
+})();
+</script>"""
 
 
-# ---------- 랜딩: 지금 새로 나온 것 ----------
-#   신선도 규칙 — 최신 항목이 60일보다 오래되면 섹션을 통째로 숨긴다.
-#   빈 '최근 소식'이나 반년 전 날짜는 없는 것보다 나쁘다(PLATFORM_TOPOLOGY §10).
+# ---------- 랜딩: '새로 나온 것' 탭 카드 ----------
+#   별도 섹션이 아니라 그리드 안 카드로 넣는다(탭으로 돌려 본다 — 사장님 2026-07-27).
+#   신선도 규칙: 최신 항목이 60일 초과면 이 탭 자체를 만들지 않는다.
 KINDN = {"release": "새 제품", "post": "글", "video": "영상", "tool": "새 도구"}
 _now = datetime.date.today()
 _all_new = STREAM + [dict(kind="post", src="모멘터스", title=POSTS[x]["title"],
-                          url=f"{STORY_BASE}/{x}/", date=POSTS[x]["date"]) for x in PORDER]
+                          url=f"{STORY_BASE}/{x}/", date=POSTS[x]["date"], img="") for x in PORDER]
 _all_new = [x for x in _all_new if x.get("date")]
 _all_new.sort(key=lambda x: x["date"], reverse=True)
 
@@ -1784,34 +1812,34 @@ def _age(d):
         return 9999
 
 
-NEW_ITEMS = _all_new[:4]
+NEW_ITEMS = _all_new[:6]
 NEW_FRESH = bool(NEW_ITEMS) and _age(NEW_ITEMS[0]["date"]) <= 60
-newsec = ""
+newcards = ""
 if NEW_FRESH:
-    rows = "".join(
-        f'<a class="nw-row" href="{x["url"]}"'
-        f'{" target=_blank rel=noopener" if x["url"].startswith("http") and "the-moment.us" not in x["url"] else ""}>'
-        f'<span class="nw-k">{KINDN.get(x["kind"], "소식")}</span>'
-        f'<span class="nw-t">{x["title"]}</span>'
-        f'<span class="nw-s">{x["src"]}</span>'
-        f'<span class="nw-d">{fmt_date(x["date"])}</span></a>' for x in NEW_ITEMS)
-    newsec = ('<section class="nw"><div class="nw-head"><h2>지금 새로 나온 것</h2>'
-              f'<a class="nw-more" href="{STORY_BASE}/">이야기 전체 →</a></div>'
-              f'<div class="nw-list">{rows}</div></section>')
+    newcards = "".join(
+        f'<article class="vc-item" data-cat="new">'
+        f'<a href="{x["url"]}"{" target=_blank rel=noopener" if x["url"].startswith("http") else ""}>'
+        + (f'<div class="vc-thumb"><img src="{x["img"]}" alt="{x["title"]}" loading="lazy"></div>'
+           if x.get("img") else f'<div class="vc-thumb vc-thumb--g g{(i % 3) + 1}"></div>')
+        + f'<h3>{x["title"]}</h3>'
+        f'<div class="cat">{KINDN.get(x["kind"], "소식")} · {x["src"]} · {fmt_date(x["date"])}</div>'
+        f'</a></article>' for i, x in enumerate(NEW_ITEMS))
+
 
 land_body = """<div class="vc">
   <div class="vc-head vc-head--tight">
-    <h2>골라 쓰세요</h2>
+    <h2>무엇을 하려고 오셨나요</h2>
   </div>
 
   <div class="vc-sort" id="vcsort">
-    <button type="button" data-f="all" aria-pressed="true">전체</button>
+    <button type="button" data-f="new" aria-pressed="true">새로 나온 것</button>
     <button type="button" data-f="sell" aria-pressed="false">파는 사람</button>
     <button type="button" data-f="brand" aria-pressed="false">브랜드</button>
     <button type="button" data-f="me" aria-pressed="false">나를 위해</button>
+    <button type="button" data-f="all" aria-pressed="false">전체</button>
   </div>
 
-  <div class="vc-grid" id="vcgrid">
+  <div class="vc-grid" id="vcgrid">""" + newcards + """
     <article class="vc-item" data-cat="sell">
       <a href="/products/quickpang/">
         <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000060/vinylc_tumbler.jpg" alt="들어가 보지 않아도 옵션과 재고가 보입니다"></div>
@@ -1892,6 +1920,10 @@ LAND_JS = """<script>
       empty=document.getElementById('vcempty');
   if(!sort||!grid) return;
   var items=[].slice.call(grid.querySelectorAll('.vc-item'));
+  function apply(f){ var shown=0;
+    items.forEach(function(it){ var ok=(f==='all')||it.dataset.cat===f; it.hidden=!ok; if(ok) shown++; });
+    empty.hidden = shown>0; }
+  apply((sort.querySelector('button[aria-pressed="true"]')||{dataset:{f:'all'}}).dataset.f);
   sort.addEventListener('click', function(e){
     var btn=e.target.closest('button[data-f]'); if(!btn) return;
     var f=btn.dataset.f, shown=0;
@@ -1910,10 +1942,10 @@ LAND_JS = """<script>
 
 
 # 스트림 섹션은 히어로(vc-head) 바로 아래 — 방문자가 먼저 욕망 카피를 보고, 그다음 최신 소식.
-land_body = herosec + newsec + land_body
+land_body = herosec + land_body
 
 with open("index.html", "w", encoding="utf-8") as f:
-    f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다", "상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.", land_body, active="", extra=LAND_JS))
+    f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다", "상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.", land_body, active="", extra=LAND_JS + HERO_JS))
 
 # ---------- 법적 페이지 (약관·개인정보·환불) ----------
 LEGAL_CSS_WRAP = '<div class="lg">'

@@ -75,21 +75,33 @@
         "alt": "VOID 플래너 커버",
         "label": "플래너",
         "fit": "contain",
-        "bg": "#f7f6f1"
+        "bg": "#f7f6f1",
+        "title": "VOID",
+        "sub": "여백이 일하는 플래너. 링크로 넘나드는 목차, 구글 캘린더 연동.",
+        "cta": "플래너 보러 가기",
+        "href": "https://notes.the-moment.us/p/void"
       },
       {
         "src": "https://mark.the-moment.us/og-default.png",
         "alt": "업종별 로고 시안",
         "label": "로고",
         "fit": "cover",
-        "bg": "#fff"
+        "bg": "#fff",
+        "title": "업종을 아는 로고",
+        "sub": "같은 업종만 깊이 판 시안 1,193건. 간판·명함에 얹어 보고 고릅니다.",
+        "cta": "업종별 시안 보기",
+        "href": "https://mark.the-moment.us"
       },
       {
         "src": "https://cue.the-moment.us/og.png",
         "alt": "AI 모의면접 화면",
         "label": "모의면접",
         "fit": "contain",
-        "bg": "#fff"
+        "bg": "#fff",
+        "title": "읽지 말고, 소리 내어",
+        "sub": "면접은 눈으로 아는 게 아니라 입으로 아는 겁니다. 회원가입 없이 지금.",
+        "cta": "한 판 해보기",
+        "href": "https://cue.the-moment.us"
       }
     ]
   },
