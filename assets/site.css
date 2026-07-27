@@ -438,6 +438,7 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
 .vc-item{grid-column:span 1}
 .vc-item.big{grid-column:1 / -1}
 .vc-item[hidden]{display:none}
+
 .vc-thumb--g{background:linear-gradient(135deg,#e8eefc,#f6f7fb)}
 .vc-thumb--g.g2{background:linear-gradient(135deg,#e9f6ee,#f6faf7)}
 .vc-thumb--g.g3{background:linear-gradient(135deg,#fdeee6,#fbf7f4)}
@@ -746,3 +747,25 @@ body:has(.vd){padding-bottom:88px}
 footer.site .biz{grid-column:1/-1;margin-top:36px;padding-top:24px;border-top:1px solid #EAEAEA;
   display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:#A8A8A8;line-height:1.8}
 
+
+/* ── 카드 오버레이(맨 뒤에 둔다 — 위쪽 기존 .vc-item 규칙을 이겨야 한다) ── */
+/* 카드 — 이미지 위 캡션 오버레이(레퍼런스: marieclairepicknview.com).
+   이미지가 주인공이고 글자는 그 위에 얹는다. 아래로 흐르던 캡션보다 밀도·시원함이 산다. */
+.vc-item>a{position:relative;display:block;border-radius:14px;overflow:hidden;background:var(--soft)}
+.vc-item .vc-thumb{aspect-ratio:4/3;margin:0;overflow:hidden}
+.vc-item .vc-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.vc-item>a:hover .vc-thumb img{transform:scale(1.045)}
+.vc-item>a::after{content:"";position:absolute;inset:auto 0 0 0;height:78%;pointer-events:none;z-index:1;
+background:linear-gradient(to top,rgba(10,12,16,.94) 0%,rgba(10,12,16,.78) 24%,rgba(10,12,16,.34) 56%,transparent 100%)}
+.vc-item h3{position:absolute;left:18px;right:18px;bottom:42px;z-index:2;color:#fff;
+font-size:17px;font-weight:750;letter-spacing:-.025em;line-height:1.35;margin:0;
+text-shadow:0 1px 12px rgba(0,0,0,.35)}
+.vc-item .cat{position:absolute;left:18px;right:18px;bottom:17px;z-index:2;
+color:rgba(255,255,255,.88);font-size:12.5px;font-weight:600;text-shadow:0 1px 10px rgba(0,0,0,.35)}
+.vc-thumb--g{background:linear-gradient(135deg,#dfe7fb,#eef1f8)}
+.vc-thumb--g.g2{background:linear-gradient(135deg,#dcf0e4,#eef7f1)}
+.vc-thumb--g.g3{background:linear-gradient(135deg,#fbe3d6,#f9efe9)}
+/* 섹션 헤더 — 큰 타이틀 + 한 줄 + 우측 더보기 */
+.vc-head--tight{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.vc-head--tight .more{font-size:14px;font-weight:700;color:var(--gray)}
+.vc-head--tight .more:hover{color:var(--ink)}
