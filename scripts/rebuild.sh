@@ -10,6 +10,15 @@ cd "$(dirname "$0")/.." || exit 1
 
 echo "───────── $(date '+%Y-%m-%d %H:%M:%S') 재빌드 시작"
 
+# ⚠️ 2026-07-28 사고 재발 방지 — 옛 상태로 배포해 사이트가 통째로 되돌아갔다.
+#    다른 곳(다른 세션·기기)에서 올린 커밋을 먼저 받고, 갈라져 있으면 배포하지 않는다.
+git fetch -q origin || echo "  ⚠️ fetch 실패 — 로컬 기준으로 진행"
+if ! git merge-base --is-ancestor origin/main HEAD 2>/dev/null; then
+  echo "❌ origin/main 에 로컬에 없는 커밋이 있다 — 사람이 병합해야 한다. 배포 중단."
+  echo "   해결: git pull --rebase origin main (또는 git merge origin/main) 후 다시 실행"
+  exit 1
+fi
+
 if ! python3 scripts/gen_site.py; then
   echo "❌ 생성 실패 — 배포하지 않고 중단"
   exit 1
@@ -25,6 +34,8 @@ git commit -q -m "chore(stream): 자동 재빌드 — 제품 피드 갱신 $(dat
 
 if npx --yes wrangler deploy; then
   echo "✅ 배포 완료"
+  # 로컬에만 남으면 다음에 다른 곳에서 옛 상태로 배포할 수 있다 → 올려서 항상 같게 유지.
+  git push -q origin main 2>/dev/null && echo "  ↑ origin 동기화 완료" || echo "  ⚠️ push 실패 — 수동 확인 필요"
 else
   echo "❌ 배포 실패 — 커밋은 남아 있음(다음 실행에서 재시도)"
   exit 1
