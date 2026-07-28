@@ -748,6 +748,8 @@ footer.site .biz{grid-column:1/-1;margin-top:36px;padding-top:24px;border-top:1p
   display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:#A8A8A8;line-height:1.8}
 
 
+.vc-ic{display:grid;place-items:center;background:linear-gradient(150deg,color-mix(in srgb,var(--ic) 16%,#fff),color-mix(in srgb,var(--ic) 5%,#fff))}
+.vc-ic span{font-size:clamp(52px,7vw,86px);color:var(--ic);line-height:1}
 /* ── 카드 오버레이(맨 뒤에 둔다 — 위쪽 기존 .vc-item 규칙을 이겨야 한다) ── */
 /* 카드 — 이미지 위 캡션 오버레이(레퍼런스: marieclairepicknview.com).
    이미지가 주인공이고 글자는 그 위에 얹는다. 아래로 흐르던 캡션보다 밀도·시원함이 산다. */

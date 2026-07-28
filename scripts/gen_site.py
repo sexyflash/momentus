@@ -776,6 +776,8 @@ footer.site .biz{grid-column:1/-1;margin-top:36px;padding-top:24px;border-top:1p
   display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:#A8A8A8;line-height:1.8}
 
 
+.vc-ic{display:grid;place-items:center;background:linear-gradient(150deg,color-mix(in srgb,var(--ic) 16%,#fff),color-mix(in srgb,var(--ic) 5%,#fff))}
+.vc-ic span{font-size:clamp(52px,7vw,86px);color:var(--ic);line-height:1}
 /* ── 카드 오버레이(맨 뒤에 둔다 — 위쪽 기존 .vc-item 규칙을 이겨야 한다) ── */
 /* 카드 — 이미지 위 캡션 오버레이(레퍼런스: marieclairepicknview.com).
    이미지가 주인공이고 글자는 그 위에 얹는다. 아래로 흐르던 캡션보다 밀도·시원함이 산다. */
@@ -1778,6 +1780,27 @@ with open("about/index.html", "w", encoding="utf-8") as f:
     f.write(page("소개 — MOMENTUS", "AI로 제품을 만드는 방법을 실험하는 스튜디오. 매일 만들고, 직접 쓰고, 알게 된 걸 공개합니다.", about_body, active="a"))
 
 # ---------- landing (root index.html) ----------
+# ---------- 랜딩 카드 이미지 — 남의 사이트 핫링크 제거 ----------
+#   2026-07-28: 랜딩 카드 10장이 vinylc.com(타사) 이미지를 핫링크하고 있었다.
+#   제품은 우리 자산(products[].shot), 무료 도구는 아이콘 카드로 그린다.
+def card_media(slug):
+    p0 = P.get(slug, {})
+    shot = p0.get("shot")
+    if shot:
+        return f'<div class="vc-thumb"><img src="{shot}" alt="{p0.get("tagline","")}" loading="lazy"></div>'
+    return (f'<div class="vc-thumb vc-ic" style="--ic:{p0.get("color","#3182f6")}">'
+            f'<span>{p0.get("icon","◆")}</span></div>')
+
+
+def fix_card_media(html):
+    """랜딩 리터럴 블록의 외부 이미지를 우리 자산/아이콘 카드로 치환."""
+    import re as _re
+    def _sub(m):
+        return m.group(1) + card_media(m.group(2))
+    return _re.sub(r'(<a href="/(?:tools|products)/([a-z-]+)/">\s*)<div class="vc-thumb"><img src="https://www\.vinylc[^>]*>\s*</div>',
+                   lambda m: m.group(1) + card_media(m.group(2)), html)
+
+
 # ---------- 랜딩 히어로 ----------
 #   레퍼런스 공통 문법(samsung.com/sec · awwwards.com): ① 한 번에 하나만 크게 ② 텍스트 최소·초대형
 #   ③ 압도적 여백 ④ CTA 한 개 ⑤ 큰 비주얼이 주인공. 좌우 2단 콜라주는 폐기(산만했다).
@@ -1967,7 +1990,7 @@ LAND_JS = """<script>
 
 
 # 스트림 섹션은 히어로(vc-head) 바로 아래 — 방문자가 먼저 욕망 카피를 보고, 그다음 최신 소식.
-land_body = herosec + land_body
+land_body = herosec + fix_card_media(land_body)
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다", "상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.", land_body, active="", extra=LAND_JS + HERO_JS))

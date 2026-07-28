@@ -6,7 +6,7 @@
     "type": "bookmarklet|extension|service",
     "hook": "귀환 갈고리(무료 도구에만)"
   },
-  "_bar_note": "1단 바(브랜드 바) 정본. 여기 한 줄 = 전 사이트 바·푸터·shell.js 동시 반영. label=기능어(한글) / sub=호버 부제(브랜드명 포함) / tag=블로그 태그 / feed=랜딩 스트림 수집 URL(없으면 null) / hidden=바에 아직 안 올림. hero_shots=랜딩 히어로에 쓰는 제품 실물 이미지(우리 자산만).",
+  "_bar_note": "1단 바(브랜드 바) 정본. 여기 한 줄 = 전 사이트 바·푸터·shell.js 동시 반영. label=기능어(한글) / sub=호버 부제(브랜드명 포함) / tag=블로그 태그 / feed=랜딩 스트림 수집 URL(없으면 null) / hidden=바에 아직 안 올림. hero_shots=랜딩 히어로에 쓰는 제품 실물 이미지(우리 자산만). products[].shot=랜딩 카드 이미지(우리 자산). 없으면 아이콘 카드.",
   "bar": {
     "spokes": [
       {
@@ -162,7 +162,8 @@
       "cta": "ext",
       "url": "https://heyreci.com",
       "ctatext": "heyreci.com에서 써보기 →",
-      "ctasub": "AI 상품사진 · 크레딧 충전제"
+      "ctasub": "AI 상품사진 · 크레딧 충전제",
+      "shot": "https://heyreci.com/og-default.png"
     },
     "mark": {
       "name": "마크 · 로고 디자인",
@@ -208,7 +209,8 @@
       "cta": "ext",
       "url": "https://mark.the-moment.us",
       "ctatext": "업종별 시안 보기 →",
-      "ctasub": "로고 · 간판 · 명함 · 무료 명함 제작"
+      "ctasub": "로고 · 간판 · 명함 · 무료 명함 제작",
+      "shot": "https://mark.the-moment.us/og-default.png"
     },
     "theplan": {
       "name": "더플랜 · 디지털 플래너",
@@ -254,7 +256,8 @@
       "cta": "ext",
       "url": "https://notes.the-moment.us",
       "ctatext": "플래너 고르러 가기 →",
-      "ctasub": "굿노트 · 아이패드 · PDF"
+      "ctasub": "굿노트 · 아이패드 · PDF",
+      "shot": "https://notes.the-moment.us/img/wizard/wz_9abd2186-233/draft_user_cover.png"
     },
     "cue": {
       "name": "큐 · AI 모의면접",
@@ -300,7 +303,8 @@
       "cta": "ext",
       "url": "https://cue.the-moment.us",
       "ctatext": "한 판 해보기 →",
-      "ctasub": "회원가입 없음 · 지금 바로"
+      "ctasub": "회원가입 없음 · 지금 바로",
+      "shot": "https://cue.the-moment.us/og.png"
     },
     "quickpang": {
       "name": "퀵팡 · 쿠팡 퀵보기",
