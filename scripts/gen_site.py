@@ -2036,7 +2036,7 @@ PRIVACY = f"""{LEGAL_CSS_WRAP}
     <p>헤이레시(heyreci.com), 마크(mark.the-moment.us), 더플랜(notes.the-moment.us), 큐(cue.the-moment.us)는 <b>각 서비스에서 별도의 개인정보처리방침을 운영</b>합니다. 결제·회원 정보는 해당 서비스와 결제대행사가 처리하며, 모멘터스 웹사이트는 이를 수집·보관하지 않습니다.</p>
 
     <h3>1.4 모바일 앱 — Flipper (Android)</h3>
-    <p>Flipper(<code>com.flipper.pagecontrol</code>)는 볼륨키 등 물리 키로 전자책·웹페이지·문서의 페이지를 넘겨 주는 Android 접근성 유틸리티입니다. <b>개인정보를 수집·저장·전송하지 않습니다.</b></p>
+    <p>Flipper(<code>us.themoment.flipper</code>)는 볼륨키 등 물리 키로 전자책·웹페이지·문서의 페이지를 넘겨 주는 Android 접근성 유틸리티입니다. <b>개인정보를 수집·저장·전송하지 않습니다.</b></p>
     <ul>
       <li>계정 가입·로그인이 없으며, 이름·이메일·전화번호·위치·연락처·사진을 요구하거나 접근하지 않습니다.</li>
       <li>분석 SDK와 광고 SDK가 포함되어 있지 않습니다. 광고 식별자(AD_ID)를 사용하지 않습니다.</li>
