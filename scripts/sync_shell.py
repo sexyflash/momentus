@@ -27,7 +27,7 @@ HOME = os.path.expanduser("~/Projects")
 
 # (저장소, CSS 파일들, HTML 파일들, 그 제품의 도메인)
 TARGETS = [
-    ("planner-factory", ["web/src/shop_ui.js"], ["web/src/shop_ui.js"], "notes.the-moment.us"),
+    ("notes", ["web/src/shop_ui.js"], ["web/src/shop_ui.js"], "notes.the-moment.us"),   # 구 planner-factory (2026-07-31 리네임)
     ("cue", ["public/landing.css", "public/jobs.css"],
      ["public/landing.html", "public/jobs.html", "public/privacy.html"], "cue.the-moment.us"),
     ("mark", ["src/styles/global.css"], ["src/layouts/Base.astro"], "mark.the-moment.us"),
