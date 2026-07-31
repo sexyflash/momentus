@@ -10,9 +10,16 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   },
-  // custom_domain은 쓸 수 없다 — the-moment.us에 GitHub Pages A 레코드가 남아 있어
+  // custom_domain은 아직 못 쓴다 — the-moment.us에 GitHub Pages A 레코드가 남아 있어
   // CF가 409(code 100117: externally managed DNS records)를 낸다.
   // 대신 Route를 쓴다: DNS는 그대로 두고, CF 엣지를 통과하는 트래픽을 Worker가 가로챈다.
+  //
+  // 2026-08-01 — GitHub Pages 자체는 껐다(gh api -X DELETE .../pages).
+  //   그전엔 www.the-moment.us 가 아직 GitHub Pages 오리진으로 흘렀다(x-github-request-id 실측).
+  //   apex 라우트가 www 를 안 잡기 때문. 이제 www 는 별도 워커가 잡는다
+  //   → workers/www-redirect/ (apex 자산·_redirects 처리 순서를 건드리지 않으려고 분리했다).
+  //   ⚠️ 남은 일: DNS 의 GitHub A 레코드(185.199.108~111.153) 제거 → 그때 custom_domain 전환 가능.
+  //      dns_records:edit 권한이 있는 토큰이 필요하다(현 wrangler OAuth는 zone:read 뿐).
   "routes": [
     { "pattern": "the-moment.us/*", "zone_name": "the-moment.us" }
   ],

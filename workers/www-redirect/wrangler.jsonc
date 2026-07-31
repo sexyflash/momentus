@@ -1,0 +1,9 @@
+{
+  "name": "momentus-www-redirect",
+  "main": "index.js",
+  "compatibility_date": "2026-07-13",
+  // www 만 잡는다. apex(the-moment.us/*)는 momentus 워커 소관 — 절대 여기 넣지 마라.
+  "routes": [
+    { "pattern": "www.the-moment.us/*", "zone_name": "the-moment.us" }
+  ]
+}
