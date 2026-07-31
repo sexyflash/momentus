@@ -2209,6 +2209,21 @@ with open("_redirects", "w", encoding="utf-8") as f:
     # ⚠️ 와일드카드 /log/* 는 두지 않는다 — 실측에서 그게 개별 글 규칙을 덮어 전부 목록으로 보냈다.
     f.write("/log/ /stories/ 301\n")
     f.write("/log /stories/ 301\n")
+    # 레거시 /apps/<슬러그>/ 회수(2026-08-01). 저장소를 비우고 외장 보관으로 옮긴 옛 앱 랜딩들.
+    #   퀵팡이 이 중 유일하게 외부 유입이 살아 있다(1만+). 드래그 버튼 payload가
+    #   /tools/quickpang/ 와 바이트 동일(14,796자)임을 실측 확인하고 넘긴다.
+    #   ⚠️ 규칙을 슬러그별로만 쓴다. /apps/* 같은 광역 규칙 금지 — 아래 넷이 프로덕션 생명줄이라
+    #      한 번에 죽는다: apps/chatpage/remote-config(확장이 실시간 조회) ·
+    #      apps/legal.html · apps/privacy-policy.html(크롬 웹스토어 참조) ·
+    #      apps/timer/support-page.html(맥 App Store 지원 URL).
+    f.write("/apps/quickpang/* /tools/quickpang/ 301\n")
+    f.write("/apps/quickpang/ /tools/quickpang/ 301\n")
+    f.write("/apps/quickpang /tools/quickpang/ 301\n")
+    # 대체재가 없는 레거시는 홈으로 회수한다(방문자에게 404보다 낫다).
+    for s in ("pion", "dokdo", "kidup", "openspot", "naver-talk-hub"):
+        f.write(f"/apps/{s}/* / 301\n")
+        f.write(f"/apps/{s}/ / 301\n")
+        f.write(f"/apps/{s} / 301\n")
 
 # ---------- sitemap ----------
 urls = ["", "about/", "tools/", "legal/privacy/", "legal/terms/", "legal/refund/"] \
