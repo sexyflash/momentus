@@ -583,7 +583,7 @@
       "cat": "fast study",
       "color": "#111",
       "icon": "✎",
-      "tag": "생산성 · 크롬 확장 · 별점 5.0",
+      "tag": "생산성 · 크롬 확장 · 사용자 4,000명",
       "tagline": "아무리 긴 유튜브도, 3초 요약.",
       "lead": "<b>긴 영상을 다 볼 필요 없어요.</b> 버튼 한 번이면 유튜브 영상이 ChatGPT·Claude·Gemini로 넘어가 요약됩니다. 무제한, 무료.",
       "feats": [
@@ -596,8 +596,8 @@
           "아무리 긴 영상도 자막을 통째로 넘겨 요약합니다."
         ],
         [
-          "스토어 별점 5.0",
-          "수천 명이 쓰고 만점을 준 확장. v2.9.7."
+          "스토어 별점 4.8",
+          "4,000명이 쓰고 있습니다. 평가 52개 · v2.9.7."
         ]
       ],
       "spec": [
@@ -619,7 +619,7 @@
         ],
         [
           "버전",
-          "v2.9.7 · 별점 5.0"
+          "v2.9.7 · 별점 4.8 (평가 52개)"
         ]
       ],
       "how": [
@@ -637,7 +637,7 @@
         ]
       ],
       "cta": "store",
-      "store": "https://chromewebstore.google.com/"
+      "store": "https://chromewebstore.google.com/detail/chatpage-youtube-summary/mcecffeookkllgkbflcdlbicolmfgifj"
     },
     "her": {
       "name": "her · 음성 입력",
@@ -710,7 +710,7 @@
         ]
       ],
       "cta": "store",
-      "store": "https://chromewebstore.google.com/"
+      "store": "https://chromewebstore.google.com/detail/her-%EB%B0%94%EC%9D%B4%EB%B8%8C%EC%BD%94%EB%94%A9-%ED%95%84%EC%88%98%ED%85%9C/dogofkfjcibfjgniophmfkcplocfellk"
     }
   }
 }
