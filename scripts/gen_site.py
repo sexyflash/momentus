@@ -2134,8 +2134,8 @@ PRIVACY = f"""{LEGAL_CSS_WRAP}
     <h4>사용하는 권한</h4>
     <ul>
       <li><code>BIND_ACCESSIBILITY_SERVICE</code> — 물리 키 감지 및 화면 스크롤 수행</li>
-      <li><code>FOREGROUND_SERVICE</code> — 독서 모드 실행 중 서비스 유지</li>
-      <li><code>POST_NOTIFICATIONS</code> — 독서 모드 상태 및 체험 기간 안내 표시</li>
+      <li><code>FOREGROUND_SERVICE</code> — 볼륨키가 ‘넘기기’인 동안 서비스 유지</li>
+      <li><code>POST_NOTIFICATIONS</code> — 볼륨키 상태(넘기기/소리) 및 체험 기간 안내 표시</li>
       <li><code>RECEIVE_BOOT_COMPLETED</code> — 자동 시작 옵션 사용 시 재부팅 후 복원</li>
       <li><code>VIBRATE</code> — 모드 전환 시 진동 피드백</li>
       <li><code>MODIFY_AUDIO_SETTINGS</code> — 볼륨키를 스크롤로 사용할 때 시스템 볼륨 변화 억제</li>
