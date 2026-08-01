@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>접근성 권한 켜는 법 — Flipper</title>
+<meta name="description" content="Flipper 접근성 권한을 기기별로 켜는 방법. 삼성 One UI·순정 안드로이드·E-ink 리더기.">
+<meta property="og:title" content="접근성 권한 켜는 법 — Flipper">
+<meta property="og:description" content="Flipper 접근성 권한을 기기별로 켜는 방법. 삼성 One UI·순정 안드로이드·E-ink 리더기.">
+<link rel="stylesheet" href="/assets/site.css?v=75303492">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "모멘터스", "alternateName": "MOMENTUS", "url": "https://the-moment.us", "email": "hello.momentus@gmail.com", "telephone": "070-8098-7367", "description": "AI로 제품을 만드는 스튜디오. AI 상품사진(헤이레시), 로고 디자인(마크), 디지털 플래너(더플랜), AI 모의면접(큐)을 만들어 팔고, 브라우저 도구 6종을 무료로 제공합니다.", "address": {"@type": "PostalAddress", "addressLocality": "서울", "streetAddress": "서울특별시 양천구 신월로 99", "addressCountry": "KR"}, "founder": {"@type": "Person", "name": "강형모"}, "makesOffer": [{"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "헤이레시 — AI 상품사진 생성", "applicationCategory": "DesignApplication", "url": "https://heyreci.com"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "마크 — 업종별 로고 디자인", "url": "https://mark.the-moment.us"}}, {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "더플랜 — 디지털 플래너", "url": "https://notes.the-moment.us"}}, {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "큐 — AI 모의면접", "applicationCategory": "EducationalApplication", "url": "https://cue.the-moment.us"}}]}</script>
+</head>
+<body>
+<header class="gnb">
+  <a class="wm" href="/">MOMENTUS</a>
+  <nav class="lk" aria-label="모멘터스">
+    <a href="https://notes.the-moment.us" data-sub="notes — 내 손에 맞게 조립하는 디지털 플래너">플래너</a>
+    <a href="https://mark.the-moment.us" data-sub="mark — 내 업종 로고를 먼저 보고 고릅니다">로고</a>
+    <a href="https://cue.the-moment.us" data-sub="cue — 입으로 답하고 AI가 짚어줍니다">모의면접</a>
+    <a href="https://heyreci.com" data-sub="heyreci.com으로 이동" target="_blank" rel="noopener" class="ext">상품사진<i aria-hidden="true">↗</i></a>
+    <span class="sep" aria-hidden="true"></span>
+    <a href="/tools/">무료 도구</a>
+    <span class="sep" aria-hidden="true"></span>
+    <a href="/stories/">이야기</a>
+    <a href="/about/">소개</a>
+  </nav>
+</header>
+<main>
+<div class="ap">
+  <div class="ap-kick">Flipper 설정</div>
+  <h1>접근성 권한 켜는 법</h1>
+  <div class="lead">Flipper는 접근성 서비스 권한이 있어야 동작합니다. 페이지를 대신 넘겨 주려면 안드로이드가 그 권한을 요구하기 때문입니다. <b>켜는 경로가 제조사마다 다릅니다.</b> 쓰시는 기기를 골라 주세요.</div>
+
+  <div class="ap-tabs" role="tablist"><button type="button" data-k="samsung" role="tab" aria-selected="true">삼성 (One UI)</button><button type="button" data-k="stock" role="tab" aria-selected="false">순정 안드로이드 (픽셀 등)</button><button type="button" data-k="hisense" role="tab" aria-selected="false">하이센스 · E-ink 리더기</button></div>
+  <div class="ap-dev" data-k="samsung"><div class="note">삼성은 접근성 목록에서 <b>‘설치된 앱’을 한 번 더 들어가야</b> Flipper가 보입니다. 여기서 많이들 막히십니다.</div><ol class="ap-steps"><li><div><div class="t">설정 열기</div><div class="d">홈에서 <b>설정</b> 앱을 엽니다.</div></div></li><li><div><div class="t">접근성</div><div class="d">아래로 내려 <b>접근성</b>을 누릅니다.</div></div></li><li><div><div class="t">설치된 앱</div><div class="d"><b>설치된 앱</b>을 누릅니다. 이 단계를 건너뛰면 Flipper가 목록에 안 보입니다.</div></div></li><li><div><div class="t">Flipper 선택</div><div class="d">목록에서 <b>Flipper</b>를 누릅니다.</div></div></li><li><div><div class="t">켜기</div><div class="d">스위치를 켜고 안내창에서 <b>허용</b>을 누릅니다.</div></div></li></ol></div><div class="ap-dev" data-k="stock" hidden><div class="note">구글 픽셀을 비롯한 순정 계열은 <b>‘다운로드한 앱’</b> 안에 있습니다.</div><ol class="ap-steps"><li><div><div class="t">설정 열기</div><div class="d">홈에서 <b>설정</b> 앱을 엽니다.</div></div></li><li><div><div class="t">접근성</div><div class="d"><b>접근성</b>을 누릅니다.</div></div></li><li><div><div class="t">다운로드한 앱</div><div class="d"><b>다운로드한 앱</b>을 누릅니다.</div></div></li><li><div><div class="t">Flipper 선택</div><div class="d">목록에서 <b>Flipper</b>를 누릅니다.</div></div></li><li><div><div class="t">켜기</div><div class="d">스위치를 켜고 <b>허용</b>을 누릅니다.</div></div></li></ol></div><div class="ap-dev" data-k="hisense" hidden><div class="note">E-ink 기기는 단계가 가장 짧습니다. 접근성 목록에 Flipper가 바로 보입니다.</div><ol class="ap-steps"><li><div><div class="t">설정 열기</div><div class="d"><b>설정</b> 앱을 엽니다.</div></div></li><li><div><div class="t">접근성</div><div class="d"><b>접근성</b>을 누릅니다.</div></div></li><li><div><div class="t">Flipper 선택</div><div class="d">목록에서 <b>Flipper</b>를 누릅니다.</div></div></li><li><div><div class="t">켜기</div><div class="d">스위치를 켜고 <b>허용</b>을 누릅니다.</div></div></li></ol></div>
+
+  <h2>잘 안 될 때</h2>
+  <div class="ap-qa"><details><summary>‘제한된 설정’이라며 못 켜게 합니다</summary><div class="a">Play 스토어가 아닌 경로로 APK를 설치하면 Android 13 이상에서 접근성 켜기가 막힙니다. <b>설정 → 앱 → Flipper → 오른쪽 위 ⋮ → 제한된 설정 허용</b>을 누른 뒤 다시 켜 주세요.</div></details><details><summary>권한을 켰는데 페이지가 안 넘어갑니다</summary><div class="a">먼저 앱에서 <b>독서 모드가 켜져 있는지</b> 확인해 주세요. 꺼져 있으면 볼륨키는 원래대로 소리만 조절합니다. 볼륨 업을 빠르게 두 번 누르면 전환됩니다.</div></details><details><summary>한동안 쓰다 보면 저절로 멈춥니다</summary><div class="a">배터리 절약 기능이 접근성 서비스를 정리한 경우입니다. <b>설정 → 앱 → Flipper → 배터리 → 제한 없음</b>으로 바꿔 주세요.</div></details><details><summary>특정 앱에서만 안 넘어갑니다</summary><div class="a">앱마다 화면을 그리는 방식이 달라 모든 앱을 보장하지는 못합니다. 넘김 세기를 <b>‘가장 크게’</b>로 올리면 되는 경우가 많습니다.</div></details></div>
+
+  <div class="ap-help">여기까지 해도 안 되면 <a href="mailto:hello.momentus@gmail.com">hello.momentus@gmail.com</a>로
+  쓰시는 기기 이름과 안드로이드 버전을 알려주세요. 확인해서 답변드리겠습니다.<br>
+  <a href="/apps/flipper/">Flipper 제품 페이지로 돌아가기</a></div>
+</div>
+</main>
+<footer class="site">
+  <div class="brand"><div class="wm">MOMENTUS</div><p>쓸모 있는 것만<br>만듭니다.</p></div>
+  <div><h4>제품</h4><a href="/products/heyreci/">헤이레시 · AI 상품사진</a><a href="/products/mark/">마크 · 로고 디자인</a><a href="/products/theplan/">더플랜 · 디지털 플래너</a><a href="/products/cue/">큐 · AI 모의면접</a></div>
+  <div><h4>무료 도구</h4><a href="/tools/quickpang/">퀵팡</a><a href="/tools/insta-rank/">인스타 인기순 정렬</a><a href="/tools/youtube-rank/">유튜브 인기순 정렬</a><a href="/tools/pinterest-grab/">핀터레스트 원본 추출</a><a href="/tools/chatpage/">ChatPage</a><a href="/tools/her/">her</a></div>
+  <div><h4>모멘터스</h4><a href="/log/">로그</a><a href="/about/">소개</a><a href="mailto:hello.momentus@gmail.com">문의하기</a><a href="/legal/terms/">이용약관</a><a href="/legal/privacy/">개인정보처리방침</a><a href="/legal/refund/">환불 규정</a></div>
+  <div class="biz">
+    <span>모멘터스 (MOMENTUS)</span><span>대표 박진이</span><span>사업자등록번호 113-34-00602</span><span>통신판매업신고 2024-서울양천-1300호</span>
+    <span>서울특별시 양천구 신월로 99</span><span>070-8098-7367</span><span>hello.momentus@gmail.com</span><span>개인정보보호책임자 강형모</span>
+  </div>
+  <div class="legal"><span>© 2026 모멘터스</span><span>the-moment.us</span></div>
+</footer>
+
+<!-- Agentation(UI 주석 → AI 에이전트 컨텍스트) — notes·mark 와 같은 옵트인 블록.
+     ?agent=1 로 켜면 유지, ?agent=0 로 끔. 옵트인 전에는 아무것도 로드하지 않아 방문자엔 무부담.
+     apex 에만 빠져 있었다(2026-07-27 사장님 지적). -->
+<script type="module">
+(function(){
+  try{
+    var q=new URLSearchParams(location.search);
+    if(q.has("agent")){var v=q.get("agent");localStorage.setItem("agentation",(v===""||v==="1"||v==="on")?"1":"0");}
+  }catch(e){}
+  if((localStorage.getItem("agentation")||"")!=="1")return;
+  var root=document.getElementById("agentation-root");
+  if(!root){root=document.createElement("div");root.id="agentation-root";document.body.appendChild(root);}
+  var V="18.3.1";
+  Promise.all([
+    import("https://esm.sh/react@"+V),
+    import("https://esm.sh/react-dom@"+V+"/client"),
+    import("https://esm.sh/agentation@3?deps=react@"+V+",react-dom@"+V)
+  ]).then(function(m){
+    var React=m[0].default||m[0];
+    var createRoot=(m[1].createRoot||(m[1].default&&m[1].default.createRoot));
+    var Ag=m[2].Agentation||(m[2].default&&(m[2].default.Agentation||m[2].default));
+    if(!createRoot||!Ag){console.warn("[agentation] API 형태 예상과 다름",m);return;}
+    createRoot(root).render(React.createElement(Ag));
+    console.log("[agentation] 설치됨(apex) — 끄려면 ?agent=0");
+  }).catch(function(err){console.warn("[agentation] 로드 실패(네트워크/CDN):",err);});
+})();
+</script>
+<script>
+(function(){var ts=document.querySelectorAll('.ap-tabs button');if(!ts.length)return;
+function sel(k){ts.forEach(function(b){var on=b.dataset.k===k;b.setAttribute('aria-selected',on?'true':'false');});
+document.querySelectorAll('.ap-dev').forEach(function(d){d.hidden=d.dataset.k!==k;});
+try{localStorage.setItem('ap-dev',k)}catch(e){}}
+ts.forEach(function(b){b.addEventListener('click',function(){sel(b.dataset.k)})});
+var saved=null;try{saved=localStorage.getItem('ap-dev')}catch(e){}
+// 삼성이 국내 점유율이 가장 높아 기본값. 저장된 선택이 있으면 그걸 우선한다.
+if(saved&&document.querySelector('.ap-dev[data-k="'+saved+'"]'))sel(saved);
+})();
+</script></body>
+</html>

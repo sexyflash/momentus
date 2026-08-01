@@ -771,3 +771,56 @@ color:rgba(255,255,255,.88);font-size:12.5px;font-weight:600;text-shadow:0 1px 1
 .vc-head--tight{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .vc-head--tight .more{font-size:14px;font-weight:700;color:var(--gray)}
 .vc-head--tight .more:hover{color:var(--ink)}
+
+.ap{max-width:760px;margin:0 auto;padding:96px 20px 80px}
+.ap-kick{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--faint);text-transform:uppercase}
+.ap h1{font-size:clamp(28px,5vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1.2;margin:10px 0 0}
+.ap .sub{font-size:17px;color:var(--gray);margin-top:14px;line-height:1.65}
+.ap .lead{font-size:16px;color:var(--ink2);line-height:1.75;margin-top:26px}
+.ap .lead b{font-weight:700;color:var(--ink)}
+.ap-badge{display:inline-flex;align-items:center;gap:7px;margin-top:20px;padding:7px 13px;border-radius:999px;
+background:var(--soft);font-size:13px;font-weight:600;color:var(--ink2)}
+.ap-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--pt)}
+.ap-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.ap-cta a{display:inline-flex;align-items:center;justify-content:center;padding:14px 22px;border-radius:12px;
+font-size:15px;font-weight:700;border:1px solid var(--line);transition:.16s var(--ease)}
+.ap-cta .go{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ap-cta .go:hover{transform:translateY(-1px);box-shadow:0 12px 26px -12px rgba(0,0,0,.4)}
+.ap-cta .sec:hover{background:var(--soft)}
+.ap h2{font-size:22px;font-weight:800;letter-spacing:-.02em;margin:64px 0 0}
+.ap h2+.hint{font-size:14px;color:var(--gray);margin-top:8px;line-height:1.6}
+.ap-feats{display:grid;gap:2px;margin-top:24px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.ap-feats>div{background:var(--paper);padding:22px}
+.ap-feats .t{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.ap-feats .d{font-size:14px;color:var(--gray);margin-top:7px;line-height:1.65}
+.ap-spec{width:100%;border-collapse:collapse;margin-top:24px;font-size:14px}
+.ap-spec th,.ap-spec td{text-align:left;padding:13px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.ap-spec th{width:34%;color:var(--gray);font-weight:600}
+.ap-spec td{font-family:var(--mono);font-size:13px}
+/* 기기 선택 탭 */
+.ap-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.ap-tabs button{padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--paper);
+font-family:inherit;font-size:14px;font-weight:600;color:var(--gray);cursor:pointer;transition:.14s var(--ease)}
+.ap-tabs button:hover{border-color:var(--ink2);color:var(--ink)}
+.ap-tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ap-dev[hidden]{display:none}
+.ap-dev .note{margin-top:22px;padding:15px 17px;border-radius:12px;background:#fff8f4;border:1px solid #ffd9c9;
+font-size:14px;line-height:1.65;color:var(--ink2)}
+.ap-steps{list-style:none;margin:24px 0 0;padding:0;counter-reset:s}
+.ap-steps li{counter-increment:s;display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+.ap-steps li::before{content:counter(s);flex:0 0 28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;
+font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.ap-steps .t{font-size:15px;font-weight:700}
+.ap-steps .d{font-size:14px;color:var(--gray);margin-top:5px;line-height:1.65}
+.ap-steps .shot{margin-top:12px;border-radius:10px;border:1px solid var(--line)}
+.ap-qa{margin-top:24px;border-top:1px solid var(--line)}
+.ap-qa details{border-bottom:1px solid var(--line)}
+.ap-qa summary{padding:18px 0;font-size:15px;font-weight:700;cursor:pointer;list-style:none;display:flex;
+align-items:center;justify-content:space-between;gap:14px}
+.ap-qa summary::-webkit-details-marker{display:none}
+.ap-qa summary::after{content:"+";font-size:19px;font-weight:400;color:var(--faint);flex:0 0 auto}
+.ap-qa details[open] summary::after{content:"−"}
+.ap-qa .a{font-size:14px;color:var(--ink2);line-height:1.75;padding:0 0 20px}
+.ap-help{margin-top:56px;padding:24px;border-radius:14px;background:var(--soft);font-size:14px;line-height:1.7;color:var(--ink2)}
+.ap-help a{font-weight:700;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:640px){.ap{padding:80px 18px 64px}.ap-cta a{width:100%}}

@@ -1,0 +1,202 @@
+<title>the-moment.us 랜딩 기획서 v2 — 실측 근거판</title>
+<style>
+  :root{--paper:#fff;--ink:#0E1013;--ink2:#39414B;--gray:#646B75;--faint:#9BA1A9;
+    --line:#E4E7EB;--wash:#F5F7F9;--blue:#3182f6;--warn:#D97706;--ok:#12A56C;
+    --sans:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace}
+  @media(prefers-color-scheme:dark){:root{--paper:#0C0E11;--ink:#ECEEF2;--ink2:#B8BEC7;--gray:#8A9099;
+    --faint:#5C636C;--line:#1E2228;--wash:#14171C;--blue:#5B9BFF}}
+  :root[data-theme="dark"]{--paper:#0C0E11;--ink:#ECEEF2;--ink2:#B8BEC7;--gray:#8A9099;
+    --faint:#5C636C;--line:#1E2228;--wash:#14171C;--blue:#5B9BFF}
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+    padding:52px clamp(20px,5vw,64px) 100px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto}
+  .mono{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  h1{font-size:clamp(28px,3.8vw,44px);font-weight:800;letter-spacing:-.035em;line-height:1.15;margin:10px 0 12px}
+  .lede{font-size:16.5px;color:var(--gray);max-width:72ch}
+  section{margin-top:52px;padding-top:24px;border-top:1px solid var(--line)}
+  h2{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:500;margin-bottom:8px}
+  h3{font-size:clamp(20px,2.3vw,28px);font-weight:700;letter-spacing:-.028em;line-height:1.35;margin:0 0 14px}
+  p{font-size:15px;color:var(--ink2);max-width:76ch;line-height:1.78}
+  p+p{margin-top:11px}
+  b{color:var(--ink);font-weight:600}
+  .hl{color:var(--blue);font-weight:600}
+
+  table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+  th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+     color:var(--faint);font-weight:500;padding:0 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:bottom}
+  td{padding:12px 12px 12px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink2);line-height:1.62}
+  td b{display:block;color:var(--ink);margin-bottom:2px}
+  .q{font-family:var(--mono);font-size:12.5px;color:var(--ink);background:var(--wash);
+     padding:2px 6px;border-radius:4px;display:inline-block;line-height:1.6}
+
+  .rule{margin-top:18px;padding:20px 22px;border-radius:12px;background:var(--ink);color:#fff}
+  .rule .k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+  .rule .t{margin-top:9px;font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.5;color:#fff}
+  .rule .s{margin-top:9px;font-size:14px;color:rgba(255,255,255,.7);line-height:1.7}
+
+  .stack{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+  .blk{border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:grid;
+       grid-template-columns:auto 1fr;gap:0 18px;align-items:start}
+  .blk.key{border-color:var(--blue);border-width:1.5px;background:color-mix(in srgb,var(--blue) 4%,transparent)}
+  .blk .num{font-family:var(--mono);font-size:12px;color:var(--faint);padding-top:3px;min-width:26px}
+  .blk .t{font-size:18px;font-weight:700;letter-spacing:-.02em;line-height:1.45}
+  .blk .d{margin-top:7px;font-size:14px;color:var(--gray);line-height:1.7}
+  .blk .why{grid-column:2;margin-top:11px;padding-top:10px;border-top:1px dashed var(--line);
+    font-size:13px;color:var(--ink2);line-height:1.7}
+  .blk .why em{font-style:normal;color:var(--blue);font-family:var(--mono);font-size:10px;
+    letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px}
+
+  .copy{margin-top:16px;padding:24px 26px;border-radius:14px;border:1.5px solid var(--ink)}
+  .copy .k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .copy .h{margin-top:10px;font-size:clamp(24px,3.2vw,38px);font-weight:800;letter-spacing:-.035em;line-height:1.2}
+  .copy .s{margin-top:12px;font-size:15.5px;color:var(--gray);line-height:1.7}
+  .copy .n{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:13.5px;color:var(--ink2);line-height:1.7}
+</style>
+
+<div class="wrap">
+  <span class="mono">the-moment.us — 랜딩 기획서 v2 · 실측 근거판</span>
+  <h1>인스타에서 온 사람을<br>어떻게 소화시킬 것인가</h1>
+  <p class="lede">전제 세 개가 확정됐다. ① 유입은 <b>인스타그램뿐</b>(검색 아님). ② 착지는 대개 <b>제품 상세</b>고, 메인은 "여기 뭐지?" 하고 둘러보다 온다. ③ 그 사람에게 <b>당장 결제를 요구할 수 없다</b>. 실제 사이트를 뜯어보고 근거로 다시 짰다.</p>
+
+  <!-- 근거 -->
+  <section>
+    <h2>실측 근거 — 다제품 회사는 랜딩에 제품을 나열하지 않는다</h2>
+    <table>
+      <tr><th style="width:15%">사이트</th><th style="width:36%">히어로 (원문)</th><th>제품 진열 방식</th></tr>
+      <tr><td><b>OpenAI</b></td><td class="q">What can I help with?<br>+ 진짜 입력창</td><td>설명 0. <b>그 자리에서 쓰게 함.</b> 아래는 전부 소식 피드(Recent news / Stories / Research), 각각 <span class="q">View all</span>. 제품 목록은 푸터.</td></tr>
+      <tr><td><b>Anthropic</b></td><td class="q">AI research and products that put safety at the frontier</td><td>정체성 한 문장 + 관점. 본문은 <b>Latest releases</b> 3장. 제품은 GNB <span class="q">Try Claude</span>와 푸터.</td></tr>
+      <tr><td><b>37signals</b></td><td>제품 얘기 0. <b>"37가지 신념"</b> 리스트</td><td>제품명은 <b>GNB에만</b> (Basecamp · HEY · ONCE).</td></tr>
+      <tr><td><b>알툴즈</b><span style="color:var(--faint);font-weight:400">한국</span></td><td class="q">알툴즈 — 내 PC 필수품<br>내 PC 사용을 간편하고 편리하게</td><td><b>무료를 전면</b>(알집·알약·알캡처…), 유료는 별도 <span class="q">구독</span> 메뉴. 하단은 <span class="q">꿀팁</span> → 블로그·인스타·유튜브로 회수.</td></tr>
+      <tr><td><b>토스</b><span style="color:var(--faint);font-weight:400">한국</span></td><td class="q">내 모든 금융 내역을 한눈에 조회하고 한 곳에서 관리하세요.</td><td><b>동사 순서로 세로 스크롤</b>(송금→대출→신용→투자→결제). <span class="q">수수료는 평생 무료로</span>가 2번째 섹션, 수익 상품은 그 바로 뒤.</td></tr>
+    </table>
+    <table style="margin-top:26px">
+      <tr><th style="width:15%">사이트</th><th style="width:36%">히어로 (원문)</th><th>제품 진열 방식</th></tr>
+      <tr><td><b>Panic</b><span style="color:var(--faint);font-weight:400">앱·게임·기기 15종</span></td><td class="q">We code apps, publish games, and make Playdate.</td><td><b>3동사 = 3섹션.</b> 히어로 한 문장을 그대로 섹션 헤딩으로 풀어씀. 제품 15개 <b>전부 한 페이지</b>. 제품마다 한 줄 + <b>서로 다른 CTA</b>(<span class="q">Buy Now</span> / <span class="q">Wishlist</span> / <span class="q">Download</span>).</td></tr>
+      <tr><td><b>marclou</b><span style="color:var(--faint);font-weight:400">1인 · 제품 38개</span></td><td class="q">Marc Lou · Bali · <b>$85.1k/month</b><br>I was fired everywhere, so I hired myself.</td><td>슬로건 대신 <b>MRR 숫자</b>. 제품 38개 <b>매출 내림차순으로 전부</b>. 죽은 제품도 <span class="q">Discontinued</span> 태그 달고 남김. 유일 CTA = <b>뉴스레터</b>(제품 리스트보다 위에).</td></tr>
+      <tr><td><b>levels.io</b><span style="color:var(--faint);font-weight:400">1인 · 다제품</span></td><td>없음. 자기소개조차 없음</td><td>글 스트림. 제품은 <b>글 제목 안에 숫자로</b> 등장(<span class="q">Photo AI ... making $61,808 per month</span>). <b>실패작 19개(17%)를 지우지 않고 카운트해서 진열.</b> 유일 CTA = 뉴스레터.</td></tr>
+    </table>
+
+    <div class="rule">
+      <span class="k">6곳 전수 — 숫자로 나온 결론</span>
+      <div class="t">무료/유료를 나눠 진열하는 곳 = <span style="color:#FF9C6E">0곳</span><br>“문의하기”를 CTA로 쓰는 곳 = <span style="color:#FF9C6E">0곳</span></div>
+      <p class="s">나누는 축은 <b style="color:#fff">따로 있다</b> — Panic은 <b style="color:#fff">용도</b>(앱/게임/기기), marclou·levels는 <b style="color:#fff">성과</b>(매출·성공/실패), OpenAI·Anthropic은 <b style="color:#fff">최신순</b>. 가격은 CTA 안에 흡수되거나(<span class="q" style="background:rgba(255,255,255,.12);color:#fff">Buy Now</span>) 푸터로 간다.</p>
+      <p class="s" style="margin-top:10px">그리고 <b style="color:#fff">전부 다 펼치거나(Panic 15 · marclou 38), 하나만 세우고 나머지는 푸터로 뺀다(Anthropic 1+11).</b> “몇 개 보여주고 더 보기”는 아무도 안 한다. <b style="color:#fff">모멘터스는 10개 — 다 펼치는 쪽이다.</b></p>
+    </div>
+
+    <div class="rule" style="background:var(--wash);color:var(--ink);border:1px solid var(--line)">
+      <span class="k" style="color:var(--faint)">알툴즈 — 무료 도구로 먹고사는 회사의 답</span>
+      <div class="t" style="color:var(--ink)">무료 제품은 절대 유료로 바꾸지 않는다.<br>무료 제품의 <span class="hl">마찰</span>과 <span class="hl">권리</span>를 판다.</div>
+      <p class="s" style="color:var(--ink2)">알집·알약은 20년째 공짜다. 대신 <b>광고 제거(AD-ZERO 월 5,900원)</b>와 <b>기업용 라이선스</b>를 판다. 무료 사용자를 유료로 “전환”시키는 게 아니라, <b>무료를 계속 무료로 두고 옆에서 판다.</b></p>
+    </div>
+  </section>
+
+  <!-- 관통 -->
+  <section>
+    <h2>모멘터스가 뭐 하는 곳인가 — 관통하는 한 줄</h2>
+    <h3>제품 넷을 억지로 묶지 않는다. <span class="hl">방문자가 뭘 얻는지</span>로 묶는다.</h3>
+    <p>한국 사이트의 히어로는 예외 없이 <b>"내 것"으로 시작</b>한다 — 알툴즈 <span class="q">내 PC 필수품</span>, 토스 <span class="q">내 모든 금융 내역을</span>, 카카오 <span class="q">나의 세계를 바꾸는</span>. 회사 소개형(라인프렌즈 <span class="q">IPX의 플랫폼 브랜드입니다</span>)은 <b>파는 게 없는 회사</b>만 쓴다.</p>
+    <p>그리고 인스타에서 온 사람은 <b>"공짜로 뭐 준다"</b>는 약속을 보고 왔다. 그 약속이 첫 화면에서 지켜져야 한다.</p>
+    <div class="copy">
+      <span class="k">히어로 — 후보 A (추천)</span>
+      <div class="h">일에 필요한 건<br>여기서 만들어 가세요.</div>
+      <p class="s">대부분 공짜예요. 설치도 로그인도 없이, 지금 바로.</p>
+      <p class="n"><b>왜</b> — ① <b>여기가 뭐 하는 곳인지</b> 즉답된다(뭔가 만들어 가는 곳). ② <b>"공짜"</b>가 인스타에서 온 사람이 기대한 그 단어다. ③ <b>"만들어 가세요"</b>는 명령형이라 다음 행동이 명확하다. ④ 토스 원칙(해요체·짧게·강요 금지)에 맞는다.</p>
+    </div>
+    <div class="copy" style="border-color:var(--line);border-width:1px">
+      <span class="k">후보 B — 알툴즈 어법</span>
+      <div class="h" style="font-size:clamp(22px,2.8vw,32px)">일하는 사람의 필수품.</div>
+      <p class="s">상품 사진부터 면접 연습까지. 대부분 공짜예요.</p>
+    </div>
+  </section>
+
+  <!-- 구성 -->
+  <section>
+    <h2>랜딩 구성 — 기승전결</h2>
+    <h3>인스타 릴스의 <span class="hl">착지점</span>으로 설계한다.</h3>
+    <div class="stack">
+      <div class="blk key">
+        <div class="num">01</div>
+        <div>
+          <div class="t">히어로 — 여기가 뭐 하는 곳 + 즉시 실행</div>
+          <div class="d">카피 한 줄 아래에, <b>도구 하나가 그 자리에서 작동</b>한다. OpenAI가 히어로에 입력창을 띄우듯. (예: 인스타 정렬 데모가 눈앞에서 돌아감 → 바로 드래그 설치)</div>
+        </div>
+        <div class="why"><em>기 · 3초</em>“내가 릴스에서 본 그거네” — 착지 확인. 설명을 읽게 하지 않는다.</div>
+      </div>
+
+      <div class="blk key">
+        <div class="num">02</div>
+        <div>
+          <div class="t">제품 10개 — 용도 3분할, 전부 펼침</div>
+          <div class="d"><b>무료/유료로 나누지 않는다.</b> Panic처럼 <b>히어로 문장을 그대로 섹션 헤딩으로 푼다.</b><br><br>
+            <b class="hl">파는 걸 돕습니다</b> — 상품 사진(heyreci) · 쿠팡 옵션·재고(퀵팡) · 인스타 인기 게시물(인스타 정렬) · 채널 대표작(유튜브 정렬)<br>
+            <b class="hl">브랜드를 만듭니다</b> — 로고 시안 600개(Mark) · 무료 명함 · 원본 이미지(핀터레스트)<br>
+            <b class="hl">나를 챙깁니다</b> — 플래너(THE PLAN) · 면접(Cue) · 3초 요약(ChatPage) · 말로 입력(her)
+          </div>
+        </div>
+        <div class="why"><em>승 · 실측 6/6</em>조사한 6곳 중 무료/유료를 나눠 진열하는 곳은 <b>0곳</b>. 축은 <b>용도</b>다(Panic). 제품명이 아니라 <b>한 줄 용도</b>로 부른다 — 알툴즈가 <span class="q">전국민 압축 프로그램</span>이라 쓰듯. “ChatPage”가 아니라 <b>“긴 유튜브, 3초 요약”</b>.<br>
+        <b>구분은 CTA가 알아서 한다</b> — 무료는 <span class="q">바로 열기</span>, 유료는 <span class="q">시안 보기</span>·<span class="q">고르러 가기</span>. 가격은 랜딩에 안 쓴다.</div>
+      </div>
+
+      <div class="blk key">
+        <div class="num">03</div>
+        <div>
+          <div class="t">숫자 — 슬로건보다 세다</div>
+          <div class="d">로고 시안 <b>600+</b> · 작업 <b>200건+</b> · 이미지 도구 <b>40종</b> · 별점 <b>5.0</b> · 제품 <b>10개</b></div>
+        </div>
+        <div class="why"><em>전 · 1인 다제품의 유일한 신뢰 장치</em>marclou는 슬로건 자리에 <span class="q">$85.1k/month</span>를 박는다. levels.io는 <span class="q">making $61,808 per month</span>를 글 제목에 넣는다. <b>브랜드 권위를 못 빌리니 실측 숫자로 산다.</b> 반대로 Panic·Anthropic은 숫자를 안 쓴다 — 이미 유명하니까.<br>
+        <b>“1인 스튜디오”는 쓰지 않는다.</b> 고객은 몇 명이 만들었는지 관심 없다. 대신 <b>만든 것의 개수</b>가 서사가 된다.</div>
+      </div>
+
+      <div class="blk key">
+        <div class="num">05</div>
+        <div>
+          <div class="t">인스타 — 다시 만날 유일한 통로</div>
+          <div class="d">최근 릴스/작업물 그리드 + <b>팔로우 버튼</b>. 지금 사이트엔 인스타 링크조차 없다.</div>
+        </div>
+        <div class="why"><em>전 · 재방문</em>알툴즈가 하단을 <span class="q">꿀팁 → 블로그·인스타·유튜브</span>로 회수하듯. <b>검색 유입이 없으면 블로그 자리를 인스타가 대신해야 한다.</b> 여기서 놓치면 그 사람은 영영 안 온다.</div>
+      </div>
+
+      <div class="blk">
+        <div class="num">06</div>
+        <div>
+          <div class="t">저널 — 3편이 놀고 있다</div>
+          <div class="d">지금 아무 데도 안 보낸다. <b>글 끝에서 제품으로 보내는 고리</b>를 단다.</div>
+        </div>
+        <div class="why"><em>전 · 체류</em>랜딩엔 <b>최신 2~3편만</b>. 나머지는 <span class="q">전체 보기</span>로 /journal/ 에.</div>
+      </div>
+
+      <div class="blk">
+        <div class="num">07</div>
+        <div>
+          <div class="t">Lab — 문의하기 대신</div>
+          <div class="d">“불편한 거 알려주세요.” 유입 0에서도 작동하는 유일한 CTA.</div>
+        </div>
+        <div class="why"><em>결</em><b>문의하기는 뺀다.</b> 아무도 문의 안 한다. 대신 부담 0인 제보를 받고, 그게 다음 제품의 수요가 된다.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 정렬/더보기 -->
+  <section>
+    <h2>정렬 기준 · 더 보기 처리</h2>
+    <table>
+      <tr><th style="width:24%">질문</th><th>답</th></tr>
+      <tr><td><b>분류 축</b></td><td><b>무료/유료가 아니다</b>(6곳 중 0곳). <span class="hl">용도</span>다 — 파는 걸 돕는다 / 브랜드를 만든다 / 나를 챙긴다. Panic이 <span class="q">apps · games · Playdate</span>로 나누듯.</td></tr>
+      <tr><td><b>랜딩에 몇 개</b></td><td><b>10개 전부.</b> Panic 15개, marclou 38개도 다 편다. “몇 개만 보여주고 더 보기”는 조사한 6곳 중 <b>0곳</b>. 크로스셀이 목적이니 다 펼치는 게 맞다.</td></tr>
+      <tr><td><b>“더 보기”는</b></td><td>제품이 아니라 <b>저널</b>에만 붙인다. <span class="q">전체 보기 →</span> /journal/</td></tr>
+      <tr><td><b>가격 표기</b></td><td><b>랜딩에 안 쓴다.</b> 6곳 전부 가격을 CTA에 흡수하거나 푸터로 뺐다. 결제는 각 서비스에서 일어난다. 인스타에서 온 사람에게 첫 화면 가격은 이탈 트리거다.</td></tr>
+      <tr><td><b>CTA</b></td><td>제품 성격에 붙는 <b>행동 동사</b> — 무료는 <span class="q">바로 열기</span>, 로고는 <span class="q">시안 보기</span>, 플래너는 <span class="q">고르러 가기</span>.<br><b>“문의하기”는 넣지 않는다</b> — 조사한 6곳 전부 <b>0건</b>이다. 스튜디오인데도 아무도 리드폼을 첫 CTA로 안 쓴다.</td></tr>
+      <tr><td><b>카피 문체</b></td><td>토스 원칙 그대로 — <b>해요체 · 한 문장 · 강요 금지 · 쉬운 말 · 의미 없는 단어 제거</b>.</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>확정이 필요한 것</h2>
+    <h3>이 셋만 정하면 바로 만든다.</h3>
+    <p><b>1. 히어로 카피</b> — A안 <span class="q">일에 필요한 건 여기서 만들어 가세요 / 대부분 공짜예요</span> vs B안 <span class="q">일하는 사람의 필수품</span></p>
+    <p><b>2. 무료 명함 · 플래너 무료 킷을 랜딩에 올리는가</b> — 지금 없다. 유료로 가는 다리라 <b>올리길 강력히 권한다.</b></p>
+    <p><b>3. 인스타 섹션</b> — 계정 주소를 주시면 최근 릴스 그리드 + 팔로우 CTA를 붙인다.</p>
+  </section>
+</div>

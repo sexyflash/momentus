@@ -32,7 +32,40 @@
 - ⚠️ **`/apps/*` 같은 광역 리다이렉트 규칙을 절대 쓰지 마라.** 위 생명줄 4개가 한 번에 죽는다.
   규칙은 반드시 슬러그별로 쓴다.
 
-## 새 네이티브 앱 페이지를 만들 때
+## 생성물 — `apps/<slug>/` (2026-08-01~)
 
-여기에 손으로 HTML을 놓지 마라. `data/products.json`에 한 줄 추가하고 `gen_site.py`를 돌린다
-(카드·1단 바·푸터·sitemap·JSON-LD가 자동 생성된다). 근거: `docs/PLATFORM_TOPOLOGY.md` §9.
+위 생명줄과 달리, **`apps/<slug>/` 하위는 `gen_site.py`가 만드는 생성물**이다. 손으로 고치지 마라.
+앱 하나당 3장이 나온다.
+
+| 경로 | 무엇 |
+|---|---|
+| `apps/<slug>/index.html` | 제품 소개·다운로드 |
+| `apps/<slug>/setup/index.html` | 권한 켜는 법 (기기별 탭) |
+| `apps/<slug>/support/index.html` | 지원·문의 |
+
+현재: `flipper`.
+
+## 🔗 앱에 박는 주소는 `/l/<키>`다 — 절대 실제 경로를 박지 마라
+
+앱은 스토어에 올라가면 **URL을 못 고친다**(재빌드+재심사). 반면 사이트 경로는 계속 바뀐다.
+그래서 그 사이에 이정표 층을 둔다.
+
+```
+앱에 박는 것 (불변)          실제 페이지 (자유롭게 이동)
+/l/flipper          ──302──▶  /apps/flipper/
+/l/flipper/setup    ──302──▶  /apps/flipper/setup/
+```
+
+- 매핑 원본 = `data/products.json` 의 `links.map`. 거기 한 줄 고치면 끝, 앱 재빌드 0.
+- 처리 = `workers/link-redirect/` (라우트 `the-moment.us/l/*`).
+  **`_redirects`에 두지 마라** — 개별 규칙을 catch-all보다 먼저 뒀는데도 catch-all이 전부 삼켰다(2026-08-01 실측).
+- **반드시 302.** 301은 브라우저·스토어가 목적지를 영구 캐시해서, 나중에 바꿔도 기존 설치본이 옛 주소로 간다.
+- 없는 키는 홈으로 302한다. **404를 내지 않는다** — 앱 웹뷰에서 404가 뜨는 게 최악이라서.
+
+법정 문서 `/legal/privacy/`·`/legal/terms/`는 이미 Flipper 앱(`LegalLinks.kt`)과 스토어에 박혀 있어
+**영구 고정 주소로 취급한다.** 옮기지 마라. (`/l/privacy`·`/l/terms` 별칭도 열려 있으니 새 앱은 그쪽을 쓴다.)
+
+## 새 앱을 추가할 때
+
+`data/products.json` 의 `apps` 에 항목 하나 + `links.map` 에 키 3개를 추가하고 `gen_site.py`를 돌린다.
+손으로 HTML을 놓지 마라. 근거: `docs/PLATFORM_TOPOLOGY.md` §9.

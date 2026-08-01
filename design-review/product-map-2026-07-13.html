@@ -1,0 +1,162 @@
+<title>모멘터스 — 파는 것 / 주는 것 지도</title>
+<style>
+  :root{
+    --paper:#fff; --ink:#0E1013; --ink-2:#5B6068; --ink-3:#9BA1A9;
+    --line:#E4E7EB; --wash:#F5F7F9; --blue:#3182f6;
+    --live:#10A56C; --soon:#E08A1E; --free:#8E96A0;
+    --sans:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);padding:52px 56px 72px;
+       -webkit-font-smoothing:antialiased;line-height:1.55;}
+  .mono{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);}
+  h1{font-size:40px;font-weight:800;letter-spacing:-.04em;line-height:1.1;margin:10px 0 8px;}
+  .lede{font-size:15px;color:var(--ink-2);max-width:70ch;}
+
+  h2{font-size:13px;font-weight:700;letter-spacing:.02em;margin:0;display:flex;align-items:center;gap:9px;}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  section{margin-top:38px;}
+  .shelf{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px;}
+  .shelf.one{grid-template-columns:1fr;}
+
+  .card{border:1px solid var(--line);border-radius:11px;padding:18px 20px;background:var(--paper);
+        display:grid;grid-template-columns:1fr auto;gap:14px 20px;align-items:start;}
+  .card .name{font-size:18px;font-weight:700;letter-spacing:-.02em;}
+  .card .name em{font-style:normal;color:var(--ink-3);font-weight:500;font-size:13px;margin-left:8px;}
+  .card .what{font-size:13.5px;color:var(--ink-2);margin-top:5px;max-width:52ch;}
+  .card .url{font-family:var(--mono);font-size:10.5px;color:var(--blue);margin-top:9px;}
+  .card .price{text-align:right;font-family:var(--mono);font-size:12px;line-height:1.85;
+               font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .card .price b{font-weight:600;font-size:13px;}
+  .card .price s{color:var(--ink-3);}
+  .card .block{grid-column:1/-1;margin-top:4px;padding-top:11px;border-top:1px dashed var(--line);
+               font-size:12.5px;color:var(--soon);}
+  .card .block b{color:var(--ink);}
+  .card .disk{grid-column:1/-1;font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.06em;}
+
+  .live{border-color:#BFE7D5;background:linear-gradient(180deg,#F4FBF8,var(--paper) 60%);}
+  .live .price b{color:var(--live);}
+  .soon{border-color:#F0DCB8;}
+  .freec{background:var(--wash);border-color:transparent;padding:14px 18px;}
+  .freec .name{font-size:14.5px;font-weight:600;}
+  .freec .what{font-size:12.5px;margin-top:3px;}
+
+  .gap{margin-top:44px;border:1.5px solid var(--ink);border-radius:12px;padding:24px 26px;}
+  .gap h3{margin:8px 0 10px;font-size:23px;font-weight:800;letter-spacing:-.03em;}
+  .gap p{font-size:14px;color:var(--ink-2);max-width:78ch;}
+  .gap p b{color:var(--ink);}
+  .bar{display:flex;gap:4px;margin-top:18px;height:34px;border-radius:6px;overflow:hidden;}
+  .seg{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;
+       letter-spacing:.06em;color:#fff;}
+  .seg.shown{background:var(--ink);flex:6;}
+  .seg.hidden{background:repeating-linear-gradient(45deg,#D8DDE3,#D8DDE3 5px,#E8ECF0 5px,#E8ECF0 10px);
+              color:var(--ink-2);flex:4;}
+</style>
+
+<span class="mono">Momentus — 2026.07.13 실측</span>
+<h1>파는 것 / 주는 것</h1>
+<p class="lede">라이브 응답과 코드·문서의 가격 근거만으로 작성. 추정 없음.</p>
+
+<section>
+  <h2><i class="dot" style="background:var(--live)"></i>지금 팔고 있다 — 실결제 열려 있음</h2>
+  <div class="shelf">
+    <div class="card live">
+      <div>
+        <div class="name">Rexx <em>구 Reci</em></div>
+        <div class="what">AI 크리에이티브 플랫폼 — 상세페이지·이미지 생성. 크레딧 충전제, 나이스페이 실결제.</div>
+        <div class="url">heyreci.com</div>
+      </div>
+      <div class="price">
+        <b>₩40,000</b> Starter<br>
+        <b>₩450,000</b> Basic<br>
+        <b>₩800,000</b> Pro
+      </div>
+      <div class="disk">⚠︎ 외장 · /Volumes/Seagate Backup/Projects/Reci</div>
+    </div>
+
+    <div class="card live">
+      <div>
+        <div class="name">Mark</div>
+        <div class="what">로고·간판·명함 제작 의뢰. 업종별 시안을 먼저 보여주고 제작을 수주. 네이버 스마트스토어 결제.</div>
+        <div class="url">mark.the-moment.us</div>
+      </div>
+      <div class="price">
+        <b>₩49,000</b> 라이트<br>
+        <b>₩390,000</b> 스탠다드<br>
+        <s>₩970,000</s> <b>₩759,000</b> 프리미엄
+      </div>
+      <div class="disk">내장 · ~/Projects/mark</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><i class="dot" style="background:var(--soon)"></i>제품은 이미 떠 있다 — 결제만 안 열렸다</h2>
+  <div class="shelf">
+    <div class="card soon">
+      <div>
+        <div class="name">THE MOMENTUS LINE <em>THE PLAN</em></div>
+        <div class="what">디지털 플래너 PDF 생성 공장. 스토어까지 라이브. 무료 미끼 5종 → 유료 라인.</div>
+        <div class="url">planner.the-moment.us/shop</div>
+      </div>
+      <div class="price">
+        <b>₩9,900</b> Solo<br>
+        <b>₩17,900</b> Full<br>
+        <b>₩22,900</b> Custom<br>
+        <b>₩700,000~</b> B2B
+      </div>
+      <div class="block">막힌 곳 — <b>roster.py 가격이 아직 None(TBD)</b>이고 <b>Paddle이 샌드박스 토큰</b>. 값만 넣으면 열린다.</div>
+      <div class="disk">내장 · ~/Projects/planner-factory · 85분 전에도 커밋</div>
+    </div>
+
+    <div class="card soon">
+      <div>
+        <div class="name">Cue <em>구 Reps</em></div>
+        <div class="what">AI 모의면접 훈련. 진단은 무료, D-day 훈련 패스가 유료. 제품은 완성돼 돌아가는 중.</div>
+        <div class="url">cue.the-moment.us</div>
+      </div>
+      <div class="price">
+        <b>₩9,900</b> 1개월<br>
+        <b>₩14,900</b> 3개월
+      </div>
+      <div class="block">막힌 곳 — <b>스마트스토어에 상품 2개만 등록</b>하면 즉시 열린다. 지금은 "준비 중" 모달.</div>
+      <div class="disk">내장 · ~/Projects/reps</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><i class="dot" style="background:var(--free)"></i>공짜로 준다 — 유입 깔때기</h2>
+  <div class="shelf">
+    <div class="card freec">
+      <div>
+        <div class="name">브라우저 도구 6종</div>
+        <div class="what">her · 인스타 인기순 · 유튜브 인기순 · 핀터레스트 원본 · 퀵팡 · ChatPage</div>
+        <div class="url" style="color:var(--ink-3)">the-moment.us</div>
+      </div>
+      <div class="price" style="color:var(--ink-3)">₩0</div>
+    </div>
+    <div class="card freec">
+      <div>
+        <div class="name">무료 명함 · Lab(만들어드려요) · 플래너 무료 킷 5종</div>
+        <div class="what">전부 유료 제품 앞단의 미끼 — Mark 로고로, THE PLAN으로 넘기는 다리</div>
+      </div>
+      <div class="price" style="color:var(--ink-3)">₩0</div>
+    </div>
+  </div>
+</section>
+
+<div class="gap">
+  <span class="mono">지금 the-moment.us가 보여주는 것</span>
+  <h3>파는 물건 4개가 메인에 하나도 없다.</h3>
+  <p>
+    본진 <b>the-moment.us</b>는 사이트 제목부터 <b>"브라우저에서 바로 쓰는 무료 제품들"</b>이고,
+    저널엔 <b>"여기 있는 제품은 전부 무료입니다"</b>, Lab엔 <b>"돈 받고 만드는 게 아니에요"</b>라고 못이 박혀 있다.
+    Rexx·Mark·THE PLAN·Cue는 <b>메인에서 링크조차 되지 않는다.</b> 각자 다른 주소에서 따로 살고 있다.
+  </p>
+  <div class="bar">
+    <div class="seg shown">무료 도구 6종 — 메인이 보여주는 전부</div>
+    <div class="seg hidden">Rexx · Mark · THE PLAN · Cue — 안 보임</div>
+  </div>
+</div>

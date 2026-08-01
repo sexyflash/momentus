@@ -1,0 +1,13 @@
+{
+  "_note": "생성물(scripts/gen_site.py). data/products.json 의 links 를 고쳐라.",
+  "map": {
+    "flipper": "/apps/flipper/",
+    "flipper/setup": "/apps/flipper/setup/",
+    "flipper/support": "/apps/flipper/support/",
+    "flipper/get": "/apps/flipper/",
+    "privacy": "/legal/privacy/",
+    "terms": "/legal/terms/",
+    "refund": "/legal/refund/"
+  },
+  "catchall": "/"
+}

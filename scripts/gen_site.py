@@ -25,6 +25,9 @@ BAR = _MANIFEST["bar"]
 # 무료 도구 = 매니페스트에서 파생(free + 북마크릿/확장). 하드코딩 목록을 두지 않는다.
 TOOLS = [s for s in ORDER if P[s].get("free") and P[s].get("type") in ("bookmarklet", "extension")]
 SPOKES = [s for s in ORDER if s not in TOOLS]
+# 네이티브 앱(/apps/<slug>/) + 영구 링크 층(/l/<키>). 둘 다 없으면 빈 값으로 넘어간다.
+APPS = {k: v for k, v in _MANIFEST.get("apps", {}).items() if not k.startswith("_")}
+LINKS = _MANIFEST.get("links", {})
 
 CSS = """/* MOMENTUS site.css — v1 */
 :root{--ink:#0b0c0e;--ink2:#3a4150;--paper:#fff;--soft:#f4f5f7;--soft2:#e9ebee;--gray:#5b6270;--faint:#9aa0a8;--line:#e6e8ec;
@@ -799,6 +802,64 @@ color:rgba(255,255,255,.88);font-size:12.5px;font-weight:600;text-shadow:0 1px 1
 .vc-head--tight{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .vc-head--tight .more{font-size:14px;font-weight:700;color:var(--gray)}
 .vc-head--tight .more:hover{color:var(--ink)}
+"""
+
+# ---------- 네이티브 앱 페이지(/apps/<slug>/) 전용 ----------
+#   기존 제품 상세(.vd)는 실물 사진 10여 장을 전제로 짜여 있다. 앱은 그 자산이 없고
+#   'setup(권한 켜는 법)'이라는 다른 목적의 화면이 필요해 별도 컴포넌트로 둔다.
+CSS += """
+.ap{max-width:760px;margin:0 auto;padding:96px 20px 80px}
+.ap-kick{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--faint);text-transform:uppercase}
+.ap h1{font-size:clamp(28px,5vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1.2;margin:10px 0 0}
+.ap .sub{font-size:17px;color:var(--gray);margin-top:14px;line-height:1.65}
+.ap .lead{font-size:16px;color:var(--ink2);line-height:1.75;margin-top:26px}
+.ap .lead b{font-weight:700;color:var(--ink)}
+.ap-badge{display:inline-flex;align-items:center;gap:7px;margin-top:20px;padding:7px 13px;border-radius:999px;
+background:var(--soft);font-size:13px;font-weight:600;color:var(--ink2)}
+.ap-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--pt)}
+.ap-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.ap-cta a{display:inline-flex;align-items:center;justify-content:center;padding:14px 22px;border-radius:12px;
+font-size:15px;font-weight:700;border:1px solid var(--line);transition:.16s var(--ease)}
+.ap-cta .go{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ap-cta .go:hover{transform:translateY(-1px);box-shadow:0 12px 26px -12px rgba(0,0,0,.4)}
+.ap-cta .sec:hover{background:var(--soft)}
+.ap h2{font-size:22px;font-weight:800;letter-spacing:-.02em;margin:64px 0 0}
+.ap h2+.hint{font-size:14px;color:var(--gray);margin-top:8px;line-height:1.6}
+.ap-feats{display:grid;gap:2px;margin-top:24px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.ap-feats>div{background:var(--paper);padding:22px}
+.ap-feats .t{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.ap-feats .d{font-size:14px;color:var(--gray);margin-top:7px;line-height:1.65}
+.ap-spec{width:100%;border-collapse:collapse;margin-top:24px;font-size:14px}
+.ap-spec th,.ap-spec td{text-align:left;padding:13px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.ap-spec th{width:34%;color:var(--gray);font-weight:600}
+.ap-spec td{font-family:var(--mono);font-size:13px}
+/* 기기 선택 탭 */
+.ap-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.ap-tabs button{padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--paper);
+font-family:inherit;font-size:14px;font-weight:600;color:var(--gray);cursor:pointer;transition:.14s var(--ease)}
+.ap-tabs button:hover{border-color:var(--ink2);color:var(--ink)}
+.ap-tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ap-dev[hidden]{display:none}
+.ap-dev .note{margin-top:22px;padding:15px 17px;border-radius:12px;background:#fff8f4;border:1px solid #ffd9c9;
+font-size:14px;line-height:1.65;color:var(--ink2)}
+.ap-steps{list-style:none;margin:24px 0 0;padding:0;counter-reset:s}
+.ap-steps li{counter-increment:s;display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+.ap-steps li::before{content:counter(s);flex:0 0 28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;
+font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.ap-steps .t{font-size:15px;font-weight:700}
+.ap-steps .d{font-size:14px;color:var(--gray);margin-top:5px;line-height:1.65}
+.ap-steps .shot{margin-top:12px;border-radius:10px;border:1px solid var(--line)}
+.ap-qa{margin-top:24px;border-top:1px solid var(--line)}
+.ap-qa details{border-bottom:1px solid var(--line)}
+.ap-qa summary{padding:18px 0;font-size:15px;font-weight:700;cursor:pointer;list-style:none;display:flex;
+align-items:center;justify-content:space-between;gap:14px}
+.ap-qa summary::-webkit-details-marker{display:none}
+.ap-qa summary::after{content:"+";font-size:19px;font-weight:400;color:var(--faint);flex:0 0 auto}
+.ap-qa details[open] summary::after{content:"−"}
+.ap-qa .a{font-size:14px;color:var(--ink2);line-height:1.75;padding:0 0 20px}
+.ap-help{margin-top:56px;padding:24px;border-radius:14px;background:var(--soft);font-size:14px;line-height:1.7;color:var(--ink2)}
+.ap-help a{font-weight:700;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:640px){.ap{padding:80px 18px 64px}.ap-cta a{width:100%}}
 """
 
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
@@ -2174,6 +2235,133 @@ with open("apps/privacy-policy.html", "w", encoding="utf-8") as fh:
 with open("apps/legal.html", "w", encoding="utf-8") as fh:
     fh.write(page("이용약관 — MOMENTUS", "모멘터스 이용약관.", TERMS, active=""))
 
+# ---------- 네이티브 앱 /apps/<slug>/ · /setup/ · /support/ ----------
+#   ⚠️ apps/ 에는 프로덕션 생명줄(크롬 확장 remote-config, 스토어가 참조하는 legal.html 등)이 산다.
+#      apps/README.md 를 반드시 읽고 손대라. 여기서 만드는 건 <slug>/ 하위뿐이다.
+APP_TAB_JS = """<script>
+(function(){var ts=document.querySelectorAll('.ap-tabs button');if(!ts.length)return;
+function sel(k){ts.forEach(function(b){var on=b.dataset.k===k;b.setAttribute('aria-selected',on?'true':'false');});
+document.querySelectorAll('.ap-dev').forEach(function(d){d.hidden=d.dataset.k!==k;});
+try{localStorage.setItem('ap-dev',k)}catch(e){}}
+ts.forEach(function(b){b.addEventListener('click',function(){sel(b.dataset.k)})});
+var saved=null;try{saved=localStorage.getItem('ap-dev')}catch(e){}
+// 삼성이 국내 점유율이 가장 높아 기본값. 저장된 선택이 있으면 그걸 우선한다.
+if(saved&&document.querySelector('.ap-dev[data-k="'+saved+'"]'))sel(saved);
+})();
+</script>"""
+
+EMAIL = "hello.momentus@gmail.com"
+
+for _slug, A in APPS.items():
+    _live = A.get("status") == "live" and A.get("store")
+    _base = f"/apps/{_slug}"
+
+    # ── 1) 제품 소개 ────────────────────────────────────────────
+    _feats = "".join(f'<div><div class="t">{t}</div><div class="d">{d}</div></div>'
+                     for t, d in A["feats"])
+    _spec = "".join(f"<tr><th>{k}</th><td>{v}</td></tr>" for k, v in A["spec"])
+    if _live:
+        _cta = (f'<a class="go" href="{A["store"]}" target="_blank" rel="noopener">Google Play에서 받기 →</a>'
+                f'<a class="sec" href="{_base}/setup/">권한 켜는 법</a>')
+        _badge = ""
+    else:
+        # 아직 공개 스토어 링크가 없다. 없는 버튼을 만들지 않고 상태를 정직하게 쓴다.
+        _cta = (f'<a class="go" href="{_base}/setup/">권한 켜는 법 보기</a>'
+                f'<a class="sec" href="{_base}/support/">문의하기</a>')
+        _badge = '<div class="ap-badge"><span class="dot"></span>비공개 테스트 중 · 정식 출시 준비 중입니다</div>'
+
+    _body = f"""<div class="ap">
+  <div class="ap-kick">{A['platform']}</div>
+  <h1>{A['tagline']}</h1>
+  <div class="sub">{A['desire']}</div>
+  {_badge}
+  <div class="ap-cta">{_cta}</div>
+  <div class="lead">{A['lead']}</div>
+
+  <h2>이런 점이 다릅니다</h2>
+  <div class="ap-feats">{_feats}</div>
+
+  <h2>제품 사양</h2>
+  <table class="ap-spec">{_spec}</table>
+
+  <h2>개인정보</h2>
+  <div class="hint">이 앱은 아무것도 수집하지 않습니다. 접근성 권한이 무엇에 쓰이는지,
+  화면 내용을 어떻게 다루는지 <a href="/legal/privacy/" style="text-decoration:underline">개인정보처리방침</a>에
+  적어 두었습니다. <a href="/legal/terms/" style="text-decoration:underline">이용약관</a>도 함께 보실 수 있습니다.</div>
+
+  <div class="ap-help">권한을 못 켜고 계신가요? <a href="{_base}/setup/">기기별 설정 방법</a>을 보세요.
+  그래도 안 되면 <a href="mailto:{EMAIL}">{EMAIL}</a>로 알려주시면 답변드리겠습니다.</div>
+</div>"""
+    os.makedirs(_base.strip("/"), exist_ok=True)
+    with open(f"{_base.strip('/')}/index.html", "w", encoding="utf-8") as fh:
+        fh.write(page(f"{A['full']} — MOMENTUS", A["desire"], _body, active=""))
+
+    # ── 2) 접근성 권한 켜는 법 ──────────────────────────────────
+    S = A["setup"]
+    _tabs = "".join(f'<button type="button" data-k="{dv["key"]}" role="tab" '
+                    f'aria-selected="{"true" if i == 0 else "false"}">{dv["label"]}</button>'
+                    for i, dv in enumerate(S["devices"]))
+    _panes = ""
+    for i, dv in enumerate(S["devices"]):
+        _steps = ""
+        for t, d, shot in dv["steps"]:
+            # shot 은 아직 비어 있다(실기기 촬영 대기). 채워지면 자동으로 그림이 붙는다.
+            _img = f'<img class="shot" src="{shot}" alt="{t} 화면" loading="lazy">' if shot else ""
+            _steps += f'<li><div><div class="t">{t}</div><div class="d">{d}</div>{_img}</div></li>'
+        _note = f'<div class="note">{dv["note"]}</div>' if dv.get("note") else ""
+        _panes += (f'<div class="ap-dev" data-k="{dv["key"]}"{"" if i == 0 else " hidden"}>'
+                   f'{_note}<ol class="ap-steps">{_steps}</ol></div>')
+    _qa = "".join(f"<details><summary>{q}</summary><div class=\"a\">{a}</div></details>"
+                  for q, a in S["trouble"])
+
+    _body = f"""<div class="ap">
+  <div class="ap-kick">{A['name']} 설정</div>
+  <h1>접근성 권한 켜는 법</h1>
+  <div class="lead">{S['lead']}</div>
+
+  <div class="ap-tabs" role="tablist">{_tabs}</div>
+  {_panes}
+
+  <h2>잘 안 될 때</h2>
+  <div class="ap-qa">{_qa}</div>
+
+  <div class="ap-help">여기까지 해도 안 되면 <a href="mailto:{EMAIL}">{EMAIL}</a>로
+  쓰시는 기기 이름과 안드로이드 버전을 알려주세요. 확인해서 답변드리겠습니다.<br>
+  <a href="{_base}/">{A['name']} 제품 페이지로 돌아가기</a></div>
+</div>"""
+    os.makedirs(f"{_base.strip('/')}/setup", exist_ok=True)
+    with open(f"{_base.strip('/')}/setup/index.html", "w", encoding="utf-8") as fh:
+        fh.write(page(f"접근성 권한 켜는 법 — {A['name']}",
+                      f"{A['name']} 접근성 권한을 기기별로 켜는 방법. 삼성 One UI·순정 안드로이드·E-ink 리더기.",
+                      _body, active="", extra=APP_TAB_JS))
+
+    # ── 3) 지원·문의 ────────────────────────────────────────────
+    _body = f"""<div class="ap">
+  <div class="ap-kick">{A['name']} 지원</div>
+  <h1>도움이 필요하신가요</h1>
+  <div class="lead">가장 많은 문의는 <b>접근성 권한이 안 켜진다</b>는 것입니다.
+  <a href="{_base}/setup/" style="text-decoration:underline">기기별 설정 방법</a>을 먼저 확인해 주세요.</div>
+
+  <h2>문의</h2>
+  <div class="hint"><a href="mailto:{EMAIL}" style="text-decoration:underline">{EMAIL}</a><br>
+  기기 이름과 안드로이드 버전을 함께 적어 주시면 훨씬 빨리 답변드릴 수 있습니다.</div>
+
+  <h2>구독·결제</h2>
+  <div class="hint">결제와 환불은 Google Play가 처리합니다. 구독 해지·환불은
+  <b>Play 스토어 → 프로필 → 결제 및 구독</b>에서 하실 수 있습니다.
+  자세한 내용은 <a href="/legal/refund/" style="text-decoration:underline">환불 규정</a>을 보세요.</div>
+
+  <h2>문서</h2>
+  <div class="hint"><a href="/legal/privacy/" style="text-decoration:underline">개인정보처리방침</a> ·
+  <a href="/legal/terms/" style="text-decoration:underline">이용약관</a></div>
+
+  <div class="ap-help"><a href="{_base}/">{A['name']} 제품 페이지로 돌아가기</a></div>
+</div>"""
+    os.makedirs(f"{_base.strip('/')}/support", exist_ok=True)
+    with open(f"{_base.strip('/')}/support/index.html", "w", encoding="utf-8") as fh:
+        fh.write(page(f"지원 — {A['name']} — MOMENTUS",
+                      f"{A['name']} 지원 · 문의 · 구독 및 환불 안내.", _body, active=""))
+
 # ---------- /tools/ 허브 (1단 바의 '무료 도구' 착지점) ----------
 _TYPEN = {"bookmarklet": "북마크릿", "extension": "크롬 확장"}
 _tls_rows = "".join(
@@ -2216,6 +2404,11 @@ with open("_redirects", "w", encoding="utf-8") as f:
     #      한 번에 죽는다: apps/chatpage/remote-config(확장이 실시간 조회) ·
     #      apps/legal.html · apps/privacy-policy.html(크롬 웹스토어 참조) ·
     #      apps/timer/support-page.html(맥 App Store 지원 URL).
+    # ⚠️ /l/<키>(영구 링크 층) 규칙을 여기에 두지 마라. 별도 워커가 처리한다.
+    #    2026-08-01 실측: 개별 규칙(/l/flipper …)을 catch-all(/l/*)보다 먼저 뒀는데도
+    #    catch-all 이 전부 삼켰다 — _redirects 는 선매치 승리를 보장하지 않는다.
+    #    앱은 배포 후 URL을 못 고치므로 그 층을 문서에 없는 동작에 걸 수 없다.
+    #    → workers/link-redirect/ (라우트 the-moment.us/l/* 가 더 구체적이라 apex보다 먼저 매칭)
     f.write("/apps/quickpang/* /tools/quickpang/ 301\n")
     f.write("/apps/quickpang/ /tools/quickpang/ 301\n")
     f.write("/apps/quickpang /tools/quickpang/ 301\n")
@@ -2225,9 +2418,24 @@ with open("_redirects", "w", encoding="utf-8") as f:
         f.write(f"/apps/{s}/ / 301\n")
         f.write(f"/apps/{s} / 301\n")
 
+# ---------- 영구 링크 층 워커의 매핑 생성 ----------
+#   data/products.json 의 links 가 원본. 워커는 이 파일을 import 해서 302를 쏜다.
+#   이 파일을 손으로 고치지 마라 — 다음 생성에서 덮어쓴다.
+if LINKS.get("map"):
+    os.makedirs("workers/link-redirect", exist_ok=True)
+    with open("workers/link-redirect/map.json", "w", encoding="utf-8") as f:
+        json.dump({"_note": "생성물(scripts/gen_site.py). data/products.json 의 links 를 고쳐라.",
+                   "map": LINKS["map"],
+                   "catchall": LINKS.get("_catchall", "/")},
+                  f, ensure_ascii=False, indent=2)
+        f.write("\n")
+
 # ---------- sitemap ----------
 urls = ["", "about/", "tools/", "legal/privacy/", "legal/terms/", "legal/refund/"] \
-    + [purl(s).lstrip("/") for s in ORDER] + ["stories/"] + [f"stories/{s}/" for s in PORDER] + [f"stories/tag/{k}/" for k, _ in STORY_TAGS]
+    + [purl(s).lstrip("/") for s in ORDER] \
+    + [f"apps/{s}/{sub}" for s in APPS for sub in ("", "setup/", "support/")] \
+    + ["stories/"] + [f"stories/{s}/" for s in PORDER] + [f"stories/tag/{k}/" for k, _ in STORY_TAGS]
+# ⚠️ /l/<키>는 sitemap 에 넣지 않는다 — 내용 없는 이정표(302)라 색인 대상이 아니다.
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for u in urls:
     sm += f"  <url><loc>https://the-moment.us/{u}</loc></url>\n"
