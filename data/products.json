@@ -785,94 +785,89 @@
         ]
       ],
       "setup": {
-        "lead": "Flipper는 접근성 서비스 권한이 있어야 동작합니다. 페이지를 대신 넘겨 주려면 안드로이드가 그 권한을 요구하기 때문입니다. <b>켜는 경로가 제조사마다 다릅니다.</b> 쓰시는 기기를 골라 주세요.",
+        "lead": "Flipper는 접근성 서비스 권한이 있어야 동작합니다. 페이지를 대신 넘겨 주려면 안드로이드가 그 권한을 요구하기 때문입니다. <b>메뉴 이름과 깊이가 제조사마다 다릅니다.</b> 쓰시는 기기를 골라 주세요.",
         "devices": [
           {
             "key": "samsung",
-            "label": "삼성 (One UI)",
-            "note": "삼성은 접근성 목록에서 <b>‘설치된 앱’을 한 번 더 들어가야</b> Flipper가 보입니다. 여기서 많이들 막히십니다.",
+            "label": "삼성 갤럭시 (One UI)",
+            "note": "삼성은 접근성 첫 화면에 Flipper가 <b>안 보입니다.</b> <b>‘설치된 앱’을 한 번 더 들어가야</b> 나옵니다. 여기서 가장 많이 막히십니다.",
             "steps": [
               [
-                "설정 열기",
-                "홈에서 <b>설정</b> 앱을 엽니다.",
-                null
+                "앱에서 볼륨키 카드 누르기",
+                "Flipper를 열고 볼륨키 카드를 누릅니다.",
+                "/assets/apps/flipper/setup/samsung-1-app-main.png"
               ],
               [
-                "접근성",
-                "아래로 내려 <b>접근성</b>을 누릅니다.",
-                null
+                "접근성 설정 열기",
+                "안내가 뜨면 <b>접근성 설정 열기</b>를 누릅니다.",
+                "/assets/apps/flipper/setup/samsung-2-permission-sheet.png"
               ],
               [
                 "설치된 앱",
-                "<b>설치된 앱</b>을 누릅니다. 이 단계를 건너뛰면 Flipper가 목록에 안 보입니다.",
-                null
+                "접근성 화면에서 <b>설치된 앱</b>을 누릅니다. 이 단계를 건너뛰면 Flipper가 목록에 없습니다.",
+                "/assets/apps/flipper/setup/samsung-3-accessibility.png"
               ],
               [
-                "Flipper 선택",
+                "Flipper 찾기",
                 "목록에서 <b>Flipper</b>를 누릅니다.",
-                null
+                "/assets/apps/flipper/setup/samsung-4-installed-apps.png"
               ],
               [
-                "켜기",
+                "스위치 켜기",
                 "스위치를 켜고 안내창에서 <b>허용</b>을 누릅니다.",
-                null
-              ]
-            ]
-          },
-          {
-            "key": "stock",
-            "label": "순정 안드로이드 (픽셀 등)",
-            "note": "구글 픽셀을 비롯한 순정 계열은 <b>‘다운로드한 앱’</b> 안에 있습니다.",
-            "steps": [
-              [
-                "설정 열기",
-                "홈에서 <b>설정</b> 앱을 엽니다.",
-                null
-              ],
-              [
-                "접근성",
-                "<b>접근성</b>을 누릅니다.",
-                null
-              ],
-              [
-                "다운로드한 앱",
-                "<b>다운로드한 앱</b>을 누릅니다.",
-                null
-              ],
-              [
-                "Flipper 선택",
-                "목록에서 <b>Flipper</b>를 누릅니다.",
-                null
-              ],
-              [
-                "켜기",
-                "스위치를 켜고 <b>허용</b>을 누릅니다.",
-                null
+                "/assets/apps/flipper/setup/samsung-5-flipper-detail.png"
               ]
             ]
           },
           {
             "key": "hisense",
             "label": "하이센스 · E-ink 리더기",
-            "note": "E-ink 기기는 단계가 가장 짧습니다. 접근성 목록에 Flipper가 바로 보입니다.",
+            "note": "하이센스는 접근성 목록의 <b>Downloaded services</b> 아래에 Flipper가 있습니다. 화면이 흑백에 가까운 것은 E-ink 기기의 특성입니다.",
             "steps": [
               [
-                "설정 열기",
-                "<b>설정</b> 앱을 엽니다.",
+                "앱에서 볼륨키 카드 누르기",
+                "Flipper를 열고 볼륨키 카드를 누릅니다.",
+                "/assets/apps/flipper/setup/hisense-1-app-main.png"
+              ],
+              [
+                "접근성 설정 열기",
+                "안내가 뜨면 <b>접근성 설정 열기</b>를 누릅니다.",
+                "/assets/apps/flipper/setup/hisense-2-permission-sheet.png"
+              ],
+              [
+                "Flipper 찾기",
+                "<b>Downloaded services</b> 아래의 <b>Flipper</b>를 누릅니다.",
+                "/assets/apps/flipper/setup/hisense-3-accessibility-downloaded-services.png"
+              ],
+              [
+                "스위치 켜기",
+                "스위치를 켜고 <b>허용</b>을 누릅니다.",
+                "/assets/apps/flipper/setup/hisense-4-flipper-detail.png"
+              ]
+            ]
+          },
+          {
+            "key": "other",
+            "label": "그 밖의 기기",
+            "note": "픽셀 등 다른 제조사 기기는 <b>아직 저희가 실제로 확인하지 못했습니다.</b> 메뉴 이름을 단정해서 알려드리지 않겠습니다. 대신 어디를 봐야 하는지 알려드립니다.",
+            "steps": [
+              [
+                "앱에서 볼륨키 카드 누르기",
+                "Flipper를 열고 볼륨키 카드를 누릅니다.",
                 null
               ],
               [
-                "접근성",
-                "<b>접근성</b>을 누릅니다.",
+                "접근성 설정 열기",
+                "안내가 뜨면 <b>접근성 설정 열기</b>를 누릅니다.",
                 null
               ],
               [
-                "Flipper 선택",
-                "목록에서 <b>Flipper</b>를 누릅니다.",
+                "목록에서 Flipper 찾기",
+                "접근성 화면에 <b>Flipper</b>가 바로 보이면 그걸 누르시면 됩니다. 안 보이면 <b>설치된 앱 · 다운로드한 앱 · Downloaded services</b>처럼 ‘설치한 앱을 모아 둔 항목’이 있는지 보시고 그 안으로 들어가 주세요.",
                 null
               ],
               [
-                "켜기",
+                "스위치 켜기",
                 "스위치를 켜고 <b>허용</b>을 누릅니다.",
                 null
               ]

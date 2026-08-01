@@ -848,7 +848,10 @@ font-size:14px;line-height:1.65;color:var(--ink2)}
 font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
 .ap-steps .t{font-size:15px;font-weight:700}
 .ap-steps .d{font-size:14px;color:var(--gray);margin-top:5px;line-height:1.65}
-.ap-steps .shot{margin-top:12px;border-radius:10px;border:1px solid var(--line)}
+/* 실기기 폰 스크린샷 — 세로로 매우 길다(840×2326 등). 폭을 묶지 않으면 한 단계가 화면을 다 먹는다. */
+.ap-steps .shot{margin-top:12px;width:100%;max-width:220px;height:auto;border-radius:10px;border:1px solid var(--line);
+background:var(--soft)}
+@media(max-width:640px){.ap-steps .shot{max-width:172px}}
 .ap-qa{margin-top:24px;border-top:1px solid var(--line)}
 .ap-qa details{border-bottom:1px solid var(--line)}
 .ap-qa summary{padding:18px 0;font-size:15px;font-weight:700;cursor:pointer;list-style:none;display:flex;
