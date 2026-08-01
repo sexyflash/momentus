@@ -8,3 +8,7 @@
 > 🧭 **제품을 만들고·묶고·전시하는 규칙은 [docs/PRODUCT_SYSTEM.md](docs/PRODUCT_SYSTEM.md) 가 정본.**
 > 새 제품 추가·리스트 개편·앱 페이지 작업 전에 먼저 읽어라. tools/apps/products 축 판단,
 > 리스트 정렬축, 에이전트용 전시 층(층 2), `/l/` 영구 링크 규칙, 접는 절차가 거기 있다.
+> 🗣 **아직 안 정해진 큰 질문(모멘터스 정체성·퍼널 방향·리스트 축)은
+> [docs/DISCUSSION_MOMENTUS_SHAPE.md](docs/DISCUSSION_MOMENTUS_SHAPE.md).**
+> 대표가 "그 마크다운 읽고 얘기하자"고 하면 그 문서의 §0 사용법대로 진행한다.
+> 잠정 입장에 동의부터 하지 말고 반박거리 편을 먼저 들어 볼 것.
