@@ -29,7 +29,10 @@ if git diff --quiet -- index.html stories tools products about legal apps sitema
   exit 0
 fi
 
-git add -A index.html stories tools products about legal apps sitemap.xml assets data/stream_cache.json _redirects 2>/dev/null
+# ⚠️ 생성물만 담고 소스(scripts/gen_site.py · data/products.json)를 빼면 안 된다.
+#    소스가 커밋되지 않으면 다른 세션·기기의 재빌드가 옛 소스로 생성해 **조용히 회귀**한다
+#    (2026-08-01 Flipper 교보 SAM 탭에서 발견). 생성물과 소스는 항상 같이 커밋한다.
+git add -A index.html stories tools products about legal apps sitemap.xml assets scripts data _redirects 2>/dev/null
 git commit -q -m "chore(stream): 자동 재빌드 — 제품 피드 갱신 $(date '+%Y-%m-%d')" || echo "  (커밋할 것 없음)"
 
 if npx --yes wrangler deploy; then

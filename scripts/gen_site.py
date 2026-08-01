@@ -852,6 +852,10 @@ font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:c
 .ap-steps .shot{margin-top:12px;width:100%;max-width:220px;height:auto;border-radius:10px;border:1px solid var(--line);
 background:var(--soft)}
 @media(max-width:640px){.ap-steps .shot{max-width:172px}}
+/* 가로로 찍힌 태블릿·리더기 화면(교보 SAM 1600×1200 등)은 세로 폰 기준 220px 로 묶으면
+   220×165 로 쪼그라들어 메뉴 글씨가 안 읽힌다. 생성기가 PNG 헤더를 읽어 가로가 길면 .wide 를 붙인다. */
+.ap-steps .shot.wide{max-width:420px}
+@media(max-width:640px){.ap-steps .shot.wide{max-width:100%}}
 .ap-qa{margin-top:24px;border-top:1px solid var(--line)}
 .ap-qa details{border-bottom:1px solid var(--line)}
 .ap-qa summary{padding:18px 0;font-size:15px;font-weight:700;cursor:pointer;list-style:none;display:flex;
@@ -2255,6 +2259,33 @@ if(saved&&document.querySelector('.ap-dev[data-k="'+saved+'"]'))sel(saved);
 
 EMAIL = "hello.momentus@gmail.com"
 
+
+def _shot_attrs(shot):
+    """단계 스크린샷 <img> 의 class·width·height 를 만든다.
+
+    가로가 세로보다 긴 그림(태블릿·리더기를 눕혀 찍은 것)은 `.wide` 를 붙여 크게 띄운다.
+    세로 폰 기준 max-width:220px 에 묶이면 220×165 로 줄어 메뉴 글씨가 안 읽힌다
+    (교보 SAM 10 Plus 1600×1200 실측, 2026-08-01).
+
+    PNG 헤더(IHDR)만 읽는 결정론 판정이다. 파일을 못 읽으면 조용히 기본값으로 둔다 —
+    스크린샷 하나 때문에 사이트 생성이 죽으면 안 된다.
+    """
+    cls, dim = "shot", ""
+    try:
+        with open(shot.lstrip("/"), "rb") as fh:
+            head = fh.read(24)
+        if head[:8] == b"\x89PNG\r\n\x1a\n" and head[12:16] == b"IHDR":
+            w = int.from_bytes(head[16:20], "big")
+            h = int.from_bytes(head[20:24], "big")
+            if w and h:
+                dim = f' width="{w}" height="{h}"'
+                if w > h:
+                    cls = "shot wide"
+    except OSError:
+        pass
+    return f'class="{cls}"{dim}'
+
+
 for _slug, A in APPS.items():
     _live = A.get("status") == "live" and A.get("store")
     _base = f"/apps/{_slug}"
@@ -2308,8 +2339,9 @@ for _slug, A in APPS.items():
     for i, dv in enumerate(S["devices"]):
         _steps = ""
         for t, d, shot in dv["steps"]:
-            # shot 은 아직 비어 있다(실기기 촬영 대기). 채워지면 자동으로 그림이 붙는다.
-            _img = f'<img class="shot" src="{shot}" alt="{t} 화면" loading="lazy">' if shot else ""
+            # shot 이 비어 있으면(실기기 촬영 대기) 그림 없이 글로만 안내한다.
+            _img = (f'<img {_shot_attrs(shot)} src="{shot}" alt="{t} 화면" loading="lazy">'
+                    if shot else "")
             _steps += f'<li><div><div class="t">{t}</div><div class="d">{d}</div>{_img}</div></li>'
         _note = f'<div class="note">{dv["note"]}</div>' if dv.get("note") else ""
         _panes += (f'<div class="ap-dev" data-k="{dv["key"]}"{"" if i == 0 else " hidden"}>'
@@ -2335,7 +2367,8 @@ for _slug, A in APPS.items():
     os.makedirs(f"{_base.strip('/')}/setup", exist_ok=True)
     with open(f"{_base.strip('/')}/setup/index.html", "w", encoding="utf-8") as fh:
         fh.write(page(f"접근성 권한 켜는 법 — {A['name']}",
-                      f"{A['name']} 접근성 권한을 기기별로 켜는 방법. 삼성 One UI·순정 안드로이드·E-ink 리더기.",
+                      # 실제 탭과 일치시킨다. '순정 안드로이드'는 실기기가 없어 확인 못 했으므로 쓰지 않는다.
+                      f"{A['name']} 접근성 권한을 기기별로 켜는 방법. 삼성 One UI·교보 SAM·하이센스 E-ink 리더기.",
                       _body, active="", extra=APP_TAB_JS))
 
     # ── 3) 지원·문의 ────────────────────────────────────────────

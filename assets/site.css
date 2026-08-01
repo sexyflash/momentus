@@ -816,6 +816,10 @@ font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:c
 .ap-steps .shot{margin-top:12px;width:100%;max-width:220px;height:auto;border-radius:10px;border:1px solid var(--line);
 background:var(--soft)}
 @media(max-width:640px){.ap-steps .shot{max-width:172px}}
+/* 가로로 찍힌 태블릿·리더기 화면(교보 SAM 1600×1200 등)은 세로 폰 기준 220px 로 묶으면
+   220×165 로 쪼그라들어 메뉴 글씨가 안 읽힌다. 생성기가 PNG 헤더를 읽어 가로가 길면 .wide 를 붙인다. */
+.ap-steps .shot.wide{max-width:420px}
+@media(max-width:640px){.ap-steps .shot.wide{max-width:100%}}
 .ap-qa{margin-top:24px;border-top:1px solid var(--line)}
 .ap-qa details{border-bottom:1px solid var(--line)}
 .ap-qa summary{padding:18px 0;font-size:15px;font-weight:700;cursor:pointer;list-style:none;display:flex;
