@@ -825,6 +825,10 @@ font-size:15px;font-weight:700;border:1px solid var(--line);transition:.16s var(
 .ap-cta .sec:hover{background:var(--soft)}
 .ap h2{font-size:22px;font-weight:800;letter-spacing:-.02em;margin:64px 0 0}
 .ap h2+.hint{font-size:14px;color:var(--gray);margin-top:8px;line-height:1.6}
+/* 문의 때 적어 달라고 할 항목. 기본 list-style 은 들여쓰기가 튀어 글머리표를 직접 그린다. */
+.ap .ask{list-style:none;margin:10px 0 0;padding:0}
+.ap .ask li{position:relative;padding-left:13px;margin-top:5px}
+.ap .ask li::before{content:"·";position:absolute;left:2px;color:var(--faint)}
 .ap-feats{display:grid;gap:2px;margin-top:24px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .ap-feats>div{background:var(--paper);padding:22px}
 .ap-feats .t{font-size:16px;font-weight:700;letter-spacing:-.01em}
@@ -840,7 +844,8 @@ font-family:inherit;font-size:14px;font-weight:600;color:var(--gray);cursor:poin
 .ap-tabs button:hover{border-color:var(--ink2);color:var(--ink)}
 .ap-tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
 .ap-dev[hidden]{display:none}
-.ap-dev .note{margin-top:22px;padding:15px 17px;border-radius:12px;background:#fff8f4;border:1px solid #ffd9c9;
+/* setup 의 기기별 경고 + support 의 자가진단 머리말이 같이 쓴다(.ap 안이면 어디서든). */
+.ap .note{margin-top:22px;padding:15px 17px;border-radius:12px;background:#fff8f4;border:1px solid #ffd9c9;
 font-size:14px;line-height:1.65;color:var(--ink2)}
 .ap-steps{list-style:none;margin:24px 0 0;padding:0;counter-reset:s}
 .ap-steps li{counter-increment:s;display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
@@ -848,6 +853,9 @@ font-size:14px;line-height:1.65;color:var(--ink2)}
 font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
 .ap-steps .t{font-size:15px;font-weight:700}
 .ap-steps .d{font-size:14px;color:var(--gray);margin-top:5px;line-height:1.65}
+/* 단계·경고 안의 링크는 본문과 같은 회색이라 링크인 줄 모른다. 밑줄과 굵기로 분리한다. */
+.ap-steps .d a,.ap .note a,.ap .ask a{font-weight:700;color:var(--ink);text-decoration:underline;
+text-underline-offset:3px}
 /* 실기기 폰 스크린샷 — 세로로 매우 길다(840×2326 등). 폭을 묶지 않으면 한 단계가 화면을 다 먹는다. */
 .ap-steps .shot{margin-top:12px;width:100%;max-width:220px;height:auto;border-radius:10px;border:1px solid var(--line);
 background:var(--soft)}
@@ -2372,15 +2380,39 @@ for _slug, A in APPS.items():
                       _body, active="", extra=APP_TAB_JS))
 
     # ── 3) 지원·문의 ────────────────────────────────────────────
+    #   앱이 이 페이지를 '고장났을 때 누르는 곳'으로 쓰기 시작하면(Flipper v27 메인 화면 하단
+    #   '도움받기'), 도착하는 사람은 결제 문의가 아니라 동작 불량 상태다. 그래서 자가진단이
+    #   맨 위에 온다. 내용은 매니페스트 apps.<slug>.support 에 있고 없으면 이 절을 통째로 건너뛴다.
+    SUP = A.get("support") or {}
+    _sc = SUP.get("selfcheck") or {}
+    if _sc:
+        _sc_steps = "".join(
+            f'<li><div><div class="t">{t}</div><div class="d">{d}</div></div></li>'
+            for t, d in _sc["steps"])
+        _selfcheck = (f'<h2>{_sc["title"]}</h2>'
+                      f'<ol class="ap-steps">{_sc_steps}</ol>'
+                      f'<div class="note">{_sc["fallback"]}</div>')
+    else:
+        _selfcheck = ""
+
+    _ask = SUP.get("ask") or []
+    _ask_html = (f"<br>메일에 아래 {len(_ask)}가지를 함께 적어 주시면 훨씬 빨리 답변드릴 수 있습니다."
+                 f'<ul class="ask">{"".join(f"<li>{a}</li>" for a in _ask)}</ul>') if _ask else \
+                "<br>기기 이름과 안드로이드 버전을 함께 적어 주시면 훨씬 빨리 답변드릴 수 있습니다."
+
+    _lead = SUP.get("lead") or (f'가장 많은 문의는 <b>접근성 권한이 안 켜진다</b>는 것입니다. '
+                                f'<a href="{_base}/setup/" style="text-decoration:underline">'
+                                f'기기별 설정 방법</a>을 먼저 확인해 주세요.')
+
     _body = f"""<div class="ap">
   <div class="ap-kick">{A['name']} 지원</div>
   <h1>도움이 필요하신가요</h1>
-  <div class="lead">가장 많은 문의는 <b>접근성 권한이 안 켜진다</b>는 것입니다.
-  <a href="{_base}/setup/" style="text-decoration:underline">기기별 설정 방법</a>을 먼저 확인해 주세요.</div>
+  <div class="lead">{_lead}</div>
+
+  {_selfcheck}
 
   <h2>문의</h2>
-  <div class="hint"><a href="mailto:{EMAIL}" style="text-decoration:underline">{EMAIL}</a><br>
-  기기 이름과 안드로이드 버전을 함께 적어 주시면 훨씬 빨리 답변드릴 수 있습니다.</div>
+  <div class="hint"><a href="mailto:{EMAIL}" style="text-decoration:underline">{EMAIL}</a>{_ask_html}</div>
 
   <h2>구독·결제</h2>
   <div class="hint">결제와 환불은 Google Play가 처리합니다. 구독 해지·환불은

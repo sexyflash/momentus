@@ -789,6 +789,10 @@ font-size:15px;font-weight:700;border:1px solid var(--line);transition:.16s var(
 .ap-cta .sec:hover{background:var(--soft)}
 .ap h2{font-size:22px;font-weight:800;letter-spacing:-.02em;margin:64px 0 0}
 .ap h2+.hint{font-size:14px;color:var(--gray);margin-top:8px;line-height:1.6}
+/* 문의 때 적어 달라고 할 항목. 기본 list-style 은 들여쓰기가 튀어 글머리표를 직접 그린다. */
+.ap .ask{list-style:none;margin:10px 0 0;padding:0}
+.ap .ask li{position:relative;padding-left:13px;margin-top:5px}
+.ap .ask li::before{content:"·";position:absolute;left:2px;color:var(--faint)}
 .ap-feats{display:grid;gap:2px;margin-top:24px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .ap-feats>div{background:var(--paper);padding:22px}
 .ap-feats .t{font-size:16px;font-weight:700;letter-spacing:-.01em}
@@ -804,7 +808,8 @@ font-family:inherit;font-size:14px;font-weight:600;color:var(--gray);cursor:poin
 .ap-tabs button:hover{border-color:var(--ink2);color:var(--ink)}
 .ap-tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
 .ap-dev[hidden]{display:none}
-.ap-dev .note{margin-top:22px;padding:15px 17px;border-radius:12px;background:#fff8f4;border:1px solid #ffd9c9;
+/* setup 의 기기별 경고 + support 의 자가진단 머리말이 같이 쓴다(.ap 안이면 어디서든). */
+.ap .note{margin-top:22px;padding:15px 17px;border-radius:12px;background:#fff8f4;border:1px solid #ffd9c9;
 font-size:14px;line-height:1.65;color:var(--ink2)}
 .ap-steps{list-style:none;margin:24px 0 0;padding:0;counter-reset:s}
 .ap-steps li{counter-increment:s;display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
@@ -812,6 +817,9 @@ font-size:14px;line-height:1.65;color:var(--ink2)}
 font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
 .ap-steps .t{font-size:15px;font-weight:700}
 .ap-steps .d{font-size:14px;color:var(--gray);margin-top:5px;line-height:1.65}
+/* 단계·경고 안의 링크는 본문과 같은 회색이라 링크인 줄 모른다. 밑줄과 굵기로 분리한다. */
+.ap-steps .d a,.ap .note a,.ap .ask a{font-weight:700;color:var(--ink);text-decoration:underline;
+text-underline-offset:3px}
 /* 실기기 폰 스크린샷 — 세로로 매우 길다(840×2326 등). 폭을 묶지 않으면 한 단계가 화면을 다 먹는다. */
 .ap-steps .shot{margin-top:12px;width:100%;max-width:220px;height:auto;border-radius:10px;border:1px solid var(--line);
 background:var(--soft)}
