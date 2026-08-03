@@ -8,6 +8,10 @@
 > 🧭 **제품을 만들고·묶고·전시하는 규칙은 [docs/PRODUCT_SYSTEM.md](docs/PRODUCT_SYSTEM.md) 가 정본.**
 > 새 제품 추가·리스트 개편·앱 페이지 작업 전에 먼저 읽어라. tools/apps/products 축 판단,
 > 리스트 정렬축, 에이전트용 전시 층(층 2), `/l/` 영구 링크 규칙, 접는 절차가 거기 있다.
+> 💳 **결제·계정(pay./id.) 구조는 [docs/PLAN_PAY_LAYER.md](docs/PLAN_PAY_LAYER.md) 가 정본.**
+> 결제 버튼·주문·이행·문의·로그인을 건드리기 전에 먼저 읽어라. PG(포스타트) 서면 확인 사항,
+> "sku만 넘긴다" 계약, 이메일=신원 결정, 하면 안 되는 것 목록(§8)이 거기 있다.
+> `PLATFORM_TOPOLOGY.md` §6·§7과 충돌하면 **PLAN_PAY_LAYER 가 최신**.
 > 🗣 **아직 안 정해진 큰 질문(모멘터스 정체성·퍼널 방향·리스트 축)은
 > [docs/DISCUSSION_MOMENTUS_SHAPE.md](docs/DISCUSSION_MOMENTUS_SHAPE.md).**
 > 대표가 "그 마크다운 읽고 얘기하자"고 하면 그 문서의 §0 사용법대로 진행한다.

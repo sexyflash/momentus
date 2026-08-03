@@ -1,0 +1,33 @@
+{
+  "name": "momentus-supabase-watchdog",
+  "main": "index.js",
+  "compatibility_date": "2026-07-13",
+  // 수동 확인용 주소(GET / → 지금 상태 JSON). 프로젝트 ref 는 클라이언트 번들에도 들어가는 공개값이라 노출돼도 무방.
+  "workers_dev": true,
+
+  // 감시를 Cloudflare 에 두는 이유: Vercel 과 독립시키기 위해서다.
+  // 2026-08-03 사고의 원인이 "Vercel 크론이 안 돌았다" 였는데,
+  // 감시까지 Vercel 에 두면 같이 죽어서 아무도 모른다.
+  //
+  // 💰 과금: 크론 24회/일. Workers 무료 한도 100,000회/일 의 0.024%.
+  //    아웃바운드 fetch 는 요청 수에 안 잡힌다. 실행당 fetch 는 프로젝트당 1회로 고정.
+  //    🚫 주기를 분 단위로 낮추지 마라. 얻는 게 없고 호출만 60배가 된다.
+  "triggers": {
+    "crons": ["0 * * * *"]
+  },
+
+  "vars": {
+    // 감시 대상. 서비스가 늘면 여기 한 줄 추가하면 끝이다.
+    // table = 예방용으로 1행 조회할 실존 테이블. 각 서비스 크론이 치는 것과 같은 테이블을 쓴다.
+    //         잘못된 이름이면 예방만 조용히 꺼지고 생사 판정은 그대로 돈다(오탐 없음).
+    "WATCH": [
+      { "name": "kontext",  "ref": "ktrpvvycyimfztguarax", "site": "kontext.the-moment.us", "table": "subscriptions" },
+      { "name": "heyreci",  "ref": "shcgprcvohdftmsyguss", "site": "heyreci.com",           "table": "fal_pricing" }
+    ]
+  },
+
+  // 시크릿(= wrangler secret put 으로 넣는다. 이 파일에 값 박지 마라):
+  //   SUPABASE_MGMT_TOKEN  sbp_...  자동복구용 Management API 토큰
+  //   SLACK_WEBHOOK_URL    https://hooks.slack.com/...  이상 시 알림
+  "observability": { "enabled": true }
+}
