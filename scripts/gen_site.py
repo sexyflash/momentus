@@ -2512,8 +2512,111 @@ sm += "</urlset>\n"
 with open("sitemap.xml", "w", encoding="utf-8") as f:
     f.write(sm)
 
+# ── robots.txt ─────────────────────────────────────────────────────────────
+# ⚠️ 이 파일이 없으면 **Cloudflare 가 자기 안내문을 자동 주입**한다(2026-08-04 실측):
+#    설명 주석만 1248B, 실제 지시문 0줄, **Sitemap 선언 0줄**. 봇에게 "우리 페이지 여기 있다"를
+#    못 알려주고 있었고 통제권도 우리에게 없었다. 파일을 두는 것만으로 회수된다.
+# 🚫 AI 봇(GPTBot·ClaudeBot·PerplexityBot·OAI-SearchBot)을 막지 마라 — GEO 노출이 목적이다.
+#    막고 싶어지면 그때 여기에 명시적으로 Disallow 를 적는다. 의도를 파일에 남긴다.
+robots = """User-agent: *
+Allow: /
+
+# 결제 도메인은 색인 대상이 아니다(pay.the-moment.us 는 자체 robots 로 Disallow).
+# apex 에는 비공개 경로가 없다.
+
+# AI 검색·요약 봇을 의도적으로 허용한다(GEO). 우리 제품이 AI 답변에 인용되는 것이 목표다.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://the-moment.us/sitemap.xml
+"""
+with open("robots.txt", "w", encoding="utf-8") as f:
+    f.write(robots)
+
+# ── llms.txt ───────────────────────────────────────────────────────────────
+# AI 가 "모멘터스가 뭐고 뭘 파는가"를 한 장으로 읽게 한다. mark·cue 는 이미 두고 있다.
+# 사람이 읽는 페이지와 달리 **군더더기 없이 사실만** 적는다 — 형용사·홍보 문구는 오히려 방해.
+prod_lines = "\n".join(
+    f"- [{P[s]['name']}]({P[s].get('url') or f'https://the-moment.us/products/{s}/'}): {P[s].get('tagline','')}"
+    for s in SPOKES if s in P
+)
+tool_lines = "\n".join(
+    f"- [{P[t]['name']}](https://the-moment.us/tools/{t}/): {P[t].get('tagline','')}"
+    for t in TOOLS if t in P
+)
+llms = f"""# 모멘터스 (MOMENTUS)
+
+> 강형모 1인 AI 스튜디오. 쓸모 있는 것만 만듭니다.
+> 사업자: {BIZ['name']} · 대표 {BIZ['ceo']} · 사업자등록번호 {BIZ['reg']} · 통신판매업신고 {BIZ['mail_order']}
+> 문의: {BIZ['email']}
+
+## 유료 제품
+{prod_lines}
+
+## 무료 브라우저 도구
+{tool_lines}
+
+## 결제
+- 결제는 https://pay.the-moment.us 한 곳에서만 이루어집니다. 판매 중인 전 상품을 그곳에서 확인할 수 있습니다.
+- 회원가입·로그인이 없습니다. 구매 시 입력한 이메일이 주문의 식별자입니다.
+- 구매내역 조회: https://pay.the-moment.us/orders
+
+## 정책
+- [이용약관](https://the-moment.us/legal/terms/)
+- [개인정보처리방침](https://the-moment.us/legal/privacy/)
+- [환불 및 청약철회](https://the-moment.us/legal/refund/)
+"""
+with open("llms.txt", "w", encoding="utf-8") as f:
+    f.write(llms)
+
+# ── canonical / og:url 후처리 ───────────────────────────────────────────────
+# page() 호출부가 17곳이라 인자를 하나 더 받게 하면 어딘가는 반드시 빠뜨린다.
+# canonical 은 본래 **출력 경로에서 기계적으로 도출되는 값**이므로 마지막에 한 번에 주입한다.
+# → 앞으로 페이지를 추가해도 자동으로 붙는다(빠뜨릴 수가 없다).
+# 🚫 손으로 canonical 을 박지 마라. 여기서 덮어쓴다.
+# ⚠️ 생성기 산출물만 건드린다(`/assets/site.css?v=` 서명으로 판별) — apps/ 아래에는
+#    크롬 확장·앱스토어가 실시간 참조하는 손관리 파일이 섞여 있다(apps/README.md).
+import glob as _glob, re as _re
+
+_canon_n = 0
+for _p in _glob.glob("**/*.html", recursive=True):
+    if _p.startswith(("node_modules/", "design-review/")) or "/404" in _p or _p.startswith("naver"):
+        continue
+    _s = open(_p, encoding="utf-8").read()
+    if "/assets/site.css?v=" not in _s:          # 생성기 산출물이 아니면 건너뛴다
+        continue
+    # ⚠️ canonical 은 **실제로 서빙되는 최종 주소**여야 한다. 리다이렉트되는 주소를 넣으면 신호가 흐려진다.
+    #    이 워커는 html_handling="auto-trailing-slash" 라 `/apps/legal.html` 은 `/apps/legal` 로 넘긴다.
+    #    (2026-08-04 실측: /apps/legal.html → 200이지만 url_effective 는 /apps/legal)
+    if _p == "index.html":
+        _rel = ""
+    elif _p.endswith("/index.html"):
+        _rel = _p[:-len("index.html")]          # foo/index.html → foo/
+    else:
+        _rel = _p[:-len(".html")]               # foo/bar.html   → foo/bar  (확장자 없이 서빙됨)
+    _url = "https://the-moment.us/" + _rel
+    _tags = f'<link rel="canonical" href="{_url}">\n<meta property="og:url" content="{_url}">'
+    _s2 = _re.sub(r'\n?<link rel="canonical"[^>]*>|\n?<meta property="og:url"[^>]*>', "", _s)
+    _s2 = _s2.replace('<meta property="og:title"', _tags + '\n<meta property="og:title"', 1)
+    if _s2 != _s:
+        open(_p, "w", encoding="utf-8").write(_s2)
+        _canon_n += 1
+
 print("SITE GENERATED:")
-print("  index.html, assets/site.css, shell.js, sitemap.xml, _redirects")
+print(f"  index.html, assets/site.css, shell.js, sitemap.xml, robots.txt, llms.txt, _redirects")
+print(f"  canonical/og:url 주입: {_canon_n}개 페이지")
 print("  tools/: index + " + ", ".join(TOOLS))
 print("  products/: " + ", ".join(SPOKES))
 print("  stories/: index + " + ", ".join(PORDER) + " + tag/" + ",".join(k for k,_ in STORY_TAGS))
