@@ -1,3 +1,6 @@
 .rebuild.log
 .DS_Store
 **/.DS_Store
+
+# wrangler 로컬 캐시(계정 정보) — 커밋 금지
+.wrangler/
