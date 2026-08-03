@@ -28,6 +28,7 @@
 
   // 시크릿(= wrangler secret put 으로 넣는다. 이 파일에 값 박지 마라):
   //   SUPABASE_MGMT_TOKEN  sbp_...  자동복구용 Management API 토큰
-  //   SLACK_WEBHOOK_URL    https://hooks.slack.com/...  이상 시 알림
+  //   SLACK_BOT_TOKEN      xoxb-...  ops(조은정 CD) 봇 토큰 — 이상 시 이 사람이 말한다
+  //   SLACK_CHANNEL        C0B4CQDHZCL (#운영실)
   "observability": { "enabled": true }
 }

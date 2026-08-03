@@ -138,14 +138,18 @@ async function tryRestore(env, ref) {
 }
 
 /**
- * ④ 슬랙 알림. jargon 없이, 지금 뭘 하면 되는지만.
- * 전송 경로 둘 중 있는 것을 쓴다 — Incoming Webhook, 또는 봇 토큰 + 채널(chat.postMessage).
- * 🚫 username/icon_emoji 를 넣지 마라. 봇 자기 정체성 그대로 나가야 한다(모멘터스 페르소나 룰 #3과 같은 취지).
+ * ④ 알림 — **조은정 CD(ops 페르소나)가 #운영실로 말한다.**
+ *
+ * 🚫 Incoming Webhook 을 쓰지 마라. 대표는 페르소나에게 보고받는다 —
+ *    웹훅으로 보내면 낯선 앱 이름·아바타로 떨어져 "이건 누가 보낸 거냐"가 된다.
+ *    ops 봇 토큰으로 chat.postMessage 하면 표시명·아바타가 조은정 CD 그대로다(2026-08-03 실측).
+ * 🚫 username/icon_emoji 를 넣지 마라. 봇 자기 정체성을 덮어쓰는 순간 정체성이 꼬인다
+ *    (slack-bot CLAUDE.md 룰 #3 과 같은 취지).
+ *
+ * 문구 규칙: jargon 0. 지금 뭘 하면 되는지만. 정상 회차엔 아예 말하지 않는다.
  */
 async function alert(env, t, health, restore) {
-  const hasWebhook = Boolean(env.SLACK_WEBHOOK_URL);
-  const hasBot = Boolean(env.SLACK_BOT_TOKEN && env.SLACK_CHANNEL);
-  if (!hasWebhook && !hasBot) return;
+  if (!env.SLACK_BOT_TOKEN || !env.SLACK_CHANNEL) return;
 
   const dash = `https://supabase.com/dashboard/project/${t.ref}`;
   const recovered = restore?.ok;
@@ -161,24 +165,15 @@ async function alert(env, t, health, restore) {
       `· 확인된 상태: ${health.status || "응답 없음"} ${health.body ? `(${health.body.slice(0, 120)})` : ""}`;
 
   try {
-    if (hasWebhook) {
-      await fetch(env.SLACK_WEBHOOK_URL, {
-        method: "POST",
-        signal: AbortSignal.timeout(TIMEOUT_MS),
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ text }),
-      });
-    } else {
-      await fetch("https://slack.com/api/chat.postMessage", {
-        method: "POST",
-        signal: AbortSignal.timeout(TIMEOUT_MS),
-        headers: {
-          authorization: `Bearer ${env.SLACK_BOT_TOKEN}`,
-          "content-type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify({ channel: env.SLACK_CHANNEL, text }),
-      });
-    }
+    await fetch("https://slack.com/api/chat.postMessage", {
+      method: "POST",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+      headers: {
+        authorization: `Bearer ${env.SLACK_BOT_TOKEN}`,
+        "content-type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({ channel: env.SLACK_CHANNEL, text }),
+    });
   } catch {
     // 알림 실패로 감시 자체를 죽이지 않는다.
   }
