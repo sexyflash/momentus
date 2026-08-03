@@ -954,6 +954,7 @@ FOOTER = f"""<footer class="site">
   <div class="biz">
     <span>{BIZ['name']}</span><span>대표 {BIZ['ceo']}</span><span>사업자등록번호 {BIZ['reg']}</span><span>통신판매업신고 {BIZ['mail_order']}</span>
     <span>{BIZ['addr']}</span><span>{BIZ['tel']}</span><span>{BIZ['email']}</span><span>개인정보보호책임자 {BIZ['privacy_officer']}</span>
+    <span>문의는 이메일로 주시면 가장 빠르게 도와드릴 수 있습니다.</span>
   </div>
   <div class="legal"><span>© 2026 모멘터스</span><span>the-moment.us</span></div>
 </footer>"""
