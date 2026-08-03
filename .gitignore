@@ -4,3 +4,7 @@
 
 # wrangler 로컬 캐시(계정 정보) — 커밋 금지
 .wrangler/
+
+# PG 심사 자료 — 스크린샷 원본(대용량)은 저장소에 두지 않는다. PDF·회신문만 남긴다.
+docs/pg-review/*.jpg
+docs/pg-review/결제경로.html
