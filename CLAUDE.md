@@ -8,7 +8,8 @@
 > 🏠 **랜딩(the-moment.us/)은 [docs/LANDING.md](docs/LANDING.md) 가 정본.**
 > `index.html` 은 생성물이다 — 직접 고치면 매일 05:45 재빌드가 지운다.
 > 랜딩 스타일·구조는 `scripts/gen_site.py` 의 `KB_CSS` + 랜딩 빌더에서만 고친다.
-> 로컬 미리보기 포트 함정과 cloudflared 주의사항(§5)도 거기 있다.
+> 브랜드 색은 `KB_CSS` 최상단 토큰 5개에만 산다(§3) — 개별 규칙에 색을 박지 마라.
+> 로컬 미리보기 포트 함정과 cloudflared 주의사항(§6)도 거기 있다.
 > 🧭 **제품을 만들고·묶고·전시하는 규칙은 [docs/PRODUCT_SYSTEM.md](docs/PRODUCT_SYSTEM.md) 가 정본.**
 > 새 제품 추가·리스트 개편·앱 페이지 작업 전에 먼저 읽어라. tools/apps/products 축 판단,
 > 리스트 정렬축, 에이전트용 전시 층(층 2), `/l/` 영구 링크 규칙, 접는 절차가 거기 있다.

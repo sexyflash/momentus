@@ -893,7 +893,25 @@ html[data-theme="dark"] body{background:var(--paper);color:var(--ink)}
 html[data-theme="dark"] footer.site .biz{border-top-color:var(--line)}
 html[data-theme="dark"] .kb-th,html[data-theme="dark"] .kb-rail-th{background:var(--soft2)}
 
-.kbp{--kb-max:1310px;--kb-pad:max(20px,calc((100% - 1310px)/2));--kb-r:16px}
+/* ── 랜딩 색 토큰 — 브랜드 색은 여기서만 바꾼다 ──────────────────────────────
+   팔레트 = 흰 + 블루 #3182f6 + 잉크. '미니멀'이라 파랑은 장식이 아니라
+   **행동과 현재 위치**에만 쓴다(CTA·활성 내비·활성 표식). 나머지는 잉크/무채색.
+
+   --brand      : 브랜드 정체성. 작은 면적 강조·표식용.
+   --brand-cta  : 흰 글자를 얹는 '채운 면'용. #3182f6 은 흰 글자 대비가 3.71:1 이라
+                  15px 굵은 글씨에서 WCAG AA(4.5:1) 에 못 미친다. 같은 계열을 한 단계
+                  내린 #1b64da 는 5.41:1 로 통과한다 — 눈으로는 같은 파랑으로 읽힌다.
+                  순정 #3182f6 을 고집하려면 이 줄만 --brand 와 같게 두면 된다.
+   --brand-tint : 파랑 위에 얹는 아주 옅은 배경(배지 등).
+   ────────────────────────────────────────────────────────────────────────── */
+.kbp{--kb-max:1310px;--kb-pad:max(20px,calc((100% - 1310px)/2));--kb-r:16px;
+--brand:#3182f6;--brand-cta:#1b64da;--brand-hover:#154fae;--brand-tint:#eef4ff;--on-brand:#fff}
+html[data-theme="dark"] .kbp{--brand:#6aa5ff;--brand-tint:#15213a}
+.kbp ::selection{background:var(--brand-tint);color:var(--brand-cta)}
+html[data-theme="dark"] .kbp ::selection{background:var(--brand-tint);color:var(--brand)}
+/* 키보드 이동 표시 — 브랜드 색으로 통일(기존엔 브라우저 기본값이라 제각각이었다). */
+.kbp a:focus-visible,.kbp button:focus-visible,.kbp input:focus-visible{
+outline:2px solid var(--brand);outline-offset:3px;border-radius:6px}
 .kbp main{padding-top:0}
 .kbp .gnb{display:none}                      /* 랜딩은 자체 헤더(kb-gnb)를 쓴다 */
 
@@ -909,7 +927,7 @@ background:var(--soft);border-radius:99px}
 .kb-nav a{padding:7px 16px;border-radius:99px;font-size:14px;font-weight:600;color:var(--gray);
 transition:background .18s var(--ease),color .18s var(--ease)}
 .kb-nav a:hover{color:var(--ink)}
-.kb-nav a.on{background:var(--ink);color:var(--paper)}
+.kb-nav a.on{background:var(--brand-cta);color:var(--on-brand)}
 .kb-act{justify-self:end;display:flex;align-items:center;gap:2px}
 .kb-ib{display:grid;place-items:center;width:38px;height:38px;padding:0;border:0;border-radius:50%;
 background:none;color:var(--ink);cursor:pointer;transition:background .18s}
@@ -971,6 +989,9 @@ gap:clamp(28px,5vw,72px);align-items:center}
 .kb-hero-art img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
 .kb-hero-art:hover img{transform:scale(1.03)}
 .kb-kick{font-size:14px;font-weight:600;color:var(--faint);letter-spacing:.01em}
+a.kb-kick{transition:color .18s var(--ease)}
+a.kb-kick:hover{color:var(--brand-cta)}
+html[data-theme="dark"] a.kb-kick:hover{color:var(--brand)}
 .kb-hero-meta h1{margin-top:14px;font-size:clamp(26px,3.2vw,40px);font-weight:700;
 letter-spacing:-.045em;line-height:1.3;color:var(--ink)}
 .kb-hero-meta p{margin-top:18px;font-size:16px;line-height:1.72;color:var(--gray);max-width:40ch}
@@ -978,12 +999,15 @@ letter-spacing:-.045em;line-height:1.3;color:var(--ink)}
 .kb-chips span{padding:7px 14px;border-radius:99px;background:var(--soft);
 font-size:13px;font-weight:600;color:var(--gray)}
 .kb-cta{display:inline-flex;align-items:center;gap:8px;margin-top:30px;padding:13px 24px;
-border-radius:99px;background:var(--ink);color:var(--paper);font-size:15px;font-weight:700}
-.kb-cta:hover{opacity:.85}
+border-radius:99px;background:var(--brand-cta);color:var(--on-brand);font-size:15px;font-weight:700;
+transition:background .18s var(--ease),transform .18s var(--ease)}
+.kb-cta:hover{background:var(--brand-hover);transform:translateY(-1px)}
+.kb-cta span{transition:transform .22s var(--ease)}
+.kb-cta:hover span{transform:translateX(3px)}
 .kb-dots{display:flex;gap:8px;justify-content:flex-end;padding-top:26px}
 .kb-dots button{width:7px;height:7px;padding:0;border:0;border-radius:99px;background:var(--soft2);
 cursor:pointer;transition:width .25s var(--ease),background .25s}
-.kb-dots button[aria-current]{width:22px;background:var(--ink)}
+.kb-dots button[aria-current]{width:22px;background:var(--brand)}
 @media(max-width:860px){
   .kb-slide.on{grid-template-columns:1fr}
   .kb-hero-art{aspect-ratio:16/10}
@@ -1003,7 +1027,8 @@ background:linear-gradient(150deg,color-mix(in srgb,var(--ic) 22%,var(--paper)),
 .kb-rail-card:hover .kb-rail-th img{transform:scale(1.06)}
 .kb-rail-tx h3{font-size:15px;font-weight:600;line-height:1.5;letter-spacing:-.02em;color:var(--ink);
 display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.kb-rail-card:hover .kb-rail-tx h3{color:var(--gray)}
+.kb-rail-card:hover .kb-rail-tx h3{color:var(--brand-cta)}
+html[data-theme="dark"] .kb-rail-card:hover .kb-rail-tx h3{color:var(--brand)}
 .kb-rail-tx time{display:block;margin-top:10px;font-size:13px;color:var(--faint)}
 
 /* ── 인기 콘텐츠: 3열 그리드 ── */
@@ -1018,7 +1043,8 @@ background:linear-gradient(150deg,color-mix(in srgb,var(--ic) 18%,var(--paper)),
 .kb-card time{display:block;margin-top:20px;font-size:14px;color:var(--faint)}
 .kb-card h3{margin-top:8px;font-size:clamp(17px,1.5vw,20px);font-weight:700;letter-spacing:-.035em;
 line-height:1.45;color:var(--ink)}
-.kb-card:hover h3{color:var(--gray)}
+.kb-card:hover h3{color:var(--brand-cta)}
+html[data-theme="dark"] .kb-card:hover h3{color:var(--brand)}
 .kb-card .kb-chips{margin-top:16px}
 .kb-card .kb-chips span{padding:6px 12px;font-size:12px}
 @media(max-width:1000px){.kb-grid{grid-template-columns:repeat(2,1fr)}}
@@ -1032,8 +1058,9 @@ scroll-behavior:smooth;scrollbar-width:none}
 .kb-spanel{width:clamp(300px,34vw,486px);min-height:clamp(360px,32vw,486px);
 display:flex;flex-direction:column;padding:28px;border-radius:var(--kb-r);
 background:var(--paper);border:1px solid var(--line)}
-.kb-badge{align-self:flex-start;padding:6px 14px;border-radius:99px;background:var(--soft);
-font-size:12px;font-weight:700;color:var(--gray);letter-spacing:.02em}
+.kb-badge{align-self:flex-start;padding:6px 14px;border-radius:99px;background:var(--brand-tint);
+font-size:12px;font-weight:700;color:var(--brand-cta);letter-spacing:.02em}
+html[data-theme="dark"] .kb-badge{color:var(--brand)}
 .kb-spanel h3{margin-top:18px;font-size:clamp(22px,2.4vw,30px);font-weight:700;
 letter-spacing:-.045em;color:var(--ink)}
 .kb-slist{margin-top:auto;padding-top:32px;list-style:none}
@@ -1042,7 +1069,8 @@ letter-spacing:-.045em;color:var(--ink)}
 .kb-slist .n{flex:0 0 auto;font-size:13px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
 .kb-slist .t{font-size:14px;font-weight:600;line-height:1.45;color:var(--ink);letter-spacing:-.02em;
 display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.kb-slist a:hover .t{color:var(--gray)}
+.kb-slist a:hover .t{color:var(--brand-cta)}
+html[data-theme="dark"] .kb-slist a:hover .t{color:var(--brand)}
 .kb-slist .sq{flex:0 0 auto;width:36px;height:36px;border-radius:9px;overflow:hidden;
 display:grid;place-items:center;font-size:15px;color:var(--ic,var(--gray));
 background:linear-gradient(150deg,color-mix(in srgb,var(--ic,#9aa0a8) 22%,var(--paper)),color-mix(in srgb,var(--ic,#9aa0a8) 7%,var(--paper)))}
@@ -1051,9 +1079,9 @@ background:linear-gradient(150deg,color-mix(in srgb,var(--ic,#9aa0a8) 22%,var(--
 display:grid;place-items:center;background:var(--sc,var(--soft))}
 .kb-scover img{width:100%;height:100%;object-fit:cover}
 .kb-srail-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:28px}
-.kb-pill{display:inline-flex;padding:12px 22px;border-radius:99px;background:var(--ink);
-color:var(--paper);font-size:14px;font-weight:700}
-.kb-pill:hover{opacity:.85}
+.kb-pill{display:inline-flex;padding:12px 22px;border-radius:99px;background:var(--brand-cta);
+color:var(--on-brand);font-size:14px;font-weight:700;transition:background .18s var(--ease)}
+.kb-pill:hover{background:var(--brand-hover)}
 @media(max-width:620px){.kb-spair{flex-direction:column}.kb-scover{min-height:260px}}
 
 /* ── 카테고리 스크롤러: 고정 카드(좌) + 큰 단어 목록(우) ── */
@@ -1072,10 +1100,14 @@ mask-image:linear-gradient(180deg,transparent,#000 26%,#000 74%,transparent)}
 .kb-cat-list{position:absolute;left:0;top:50%;width:100%;list-style:none;
 transition:transform .6s var(--ease)}
 .kb-cat-list li{height:56px;display:flex;align-items:center}
-.kb-cat-list button{border:0;background:none;padding:0;cursor:pointer;font-family:inherit;
+.kb-cat-list button{position:relative;border:0;background:none;padding:0;cursor:pointer;font-family:inherit;
 font-size:clamp(26px,3.4vw,42px);font-weight:600;letter-spacing:-.03em;color:var(--soft2);
-transition:color .35s var(--ease)}
-.kb-cat-list li[aria-current] button{color:var(--ink)}
+transition:color .35s var(--ease),padding-left .35s var(--ease)}
+.kb-cat-list button:hover{color:var(--gray)}
+/* 지금 어디인지 = 잉크 글자 + 브랜드 표식. 큰 글자를 통째로 파랗게 칠하면 미니멀이 깨진다. */
+.kb-cat-list li[aria-current] button{color:var(--ink);padding-left:30px}
+.kb-cat-list li[aria-current] button::before{content:"";position:absolute;left:0;top:50%;
+transform:translateY(-50%);width:18px;height:3px;border-radius:2px;background:var(--brand)}
 .kb-cat-ctl{position:absolute;right:0;bottom:6px;display:flex;gap:8px}
 .kb-cat-ctl button{display:grid;place-items:center;width:38px;height:38px;padding:0;border:0;
 border-radius:50%;background:var(--soft);color:var(--ink);cursor:pointer}
@@ -1098,6 +1130,7 @@ stroke-linecap:round;stroke-linejoin:round}
 width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:var(--paper);
 color:var(--ink);cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s}
 .kb-top[data-on]{opacity:1;pointer-events:auto}
+.kb-top:hover{border-color:var(--brand);color:var(--brand)}
 .kb-top svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.9;
 stroke-linecap:round;stroke-linejoin:round}
 .kbp footer.site{margin-top:clamp(80px,10vw,140px);background:var(--soft);border-top:0}
