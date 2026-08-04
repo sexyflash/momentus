@@ -877,6 +877,238 @@ align-items:center;justify-content:space-between;gap:14px}
 @media(max-width:640px){.ap{padding:80px 18px 64px}.ap-cta a{width:100%}}
 """
 
+# ─────────────────────────────────────────────────────────────────────────────
+# KB 랜딩 — 구성 클론(레퍼런스: blog.kakaobank.com/home)
+#   왜: 기존 랜딩(hz 히어로 + vc 그리드)은 "제품 카탈로그" 문법이라 콘텐츠가 쌓일 자리가 없었다.
+#   무엇을: 레퍼런스의 '구성'만 가져온다 — 섹션 순서(히어로 → 최신 레일 → 인기 그리드 →
+#           시리즈 레일 → 카테고리 스크롤러), 알약 GNB, 다크모드 토글, 검색 오버레이.
+#   무엇을 안 가져오나: 남의 카피·일러스트·로고. 내용물은 전부 우리 자산(products.json·스트림·이야기).
+#   이 층은 `body.kbp` 안에서만 산다 — 다른 페이지(제품·이야기·법적)는 손대지 않는다.
+# ─────────────────────────────────────────────────────────────────────────────
+KB_CSS = """
+/* ═══ KB 랜딩 (body.kbp 에서만 적용) ═══ */
+html[data-theme="dark"]{--ink:#f1f3f6;--ink2:#c4cad4;--paper:#0e1013;--soft:#181b20;--soft2:#22262d;
+--gray:#a0a7b3;--faint:#737b88;--line:#242931}
+html[data-theme="dark"] body{background:var(--paper);color:var(--ink)}
+html[data-theme="dark"] footer.site .biz{border-top-color:var(--line)}
+html[data-theme="dark"] .kb-th,html[data-theme="dark"] .kb-rail-th{background:var(--soft2)}
+
+.kbp{--kb-max:1310px;--kb-pad:max(20px,calc((100% - 1310px)/2));--kb-r:16px}
+.kbp main{padding-top:0}
+.kbp .gnb{display:none}                      /* 랜딩은 자체 헤더(kb-gnb)를 쓴다 */
+
+/* ── 헤더: 워드마크(좌) · 알약 내비(중앙) · 액션(우) ── */
+.kb-gnb{position:sticky;top:0;z-index:120;display:grid;grid-template-columns:1fr auto 1fr;
+align-items:center;gap:16px;height:66px;padding:0 var(--kb-pad);
+background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:blur(16px)}
+.kb-wm{justify-self:start;display:inline-flex;align-items:baseline;gap:7px;
+font-size:19px;font-weight:800;letter-spacing:-.03em;color:var(--ink)}
+.kb-wm span{font-size:15px;font-weight:500;color:var(--gray);letter-spacing:-.01em}
+.kb-nav{justify-self:center;display:flex;align-items:center;gap:2px;padding:4px;
+background:var(--soft);border-radius:99px}
+.kb-nav a{padding:7px 16px;border-radius:99px;font-size:14px;font-weight:600;color:var(--gray);
+transition:background .18s var(--ease),color .18s var(--ease)}
+.kb-nav a:hover{color:var(--ink)}
+.kb-nav a.on{background:var(--ink);color:var(--paper)}
+.kb-act{justify-self:end;display:flex;align-items:center;gap:2px}
+.kb-ib{display:grid;place-items:center;width:38px;height:38px;padding:0;border:0;border-radius:50%;
+background:none;color:var(--ink);cursor:pointer;transition:background .18s}
+.kb-ib:hover{background:var(--soft)}
+.kb-ib svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;
+stroke-linecap:round;stroke-linejoin:round}
+.kb-ib .moon{display:none}
+html[data-theme="dark"] .kb-ib .moon{display:block}
+html[data-theme="dark"] .kb-ib .sun{display:none}
+.kb-burger{display:none}
+@media(max-width:860px){
+  .kb-gnb{grid-template-columns:1fr auto}
+  .kb-nav{display:none}
+  .kb-burger{display:grid}
+}
+/* 모바일 시트 */
+.kb-sheet{position:fixed;inset:66px 0 auto;z-index:119;background:var(--paper);
+border-bottom:1px solid var(--line);padding:14px var(--kb-pad) 22px;display:none}
+.kb-sheet[data-open]{display:block}
+.kb-sheet a{display:block;padding:12px 0;font-size:17px;font-weight:600;color:var(--ink)}
+
+/* ── 검색 오버레이 ── */
+.kb-sr{position:fixed;inset:0;z-index:200;background:color-mix(in srgb,var(--paper) 96%,transparent);
+backdrop-filter:blur(10px);padding:14vh var(--kb-pad) 0;display:none}
+.kb-sr[data-open]{display:block}
+.kb-sr-in{max-width:640px;margin:0 auto}
+.kb-sr-box{display:flex;align-items:center;gap:12px;padding:0 4px 16px;border-bottom:2px solid var(--ink)}
+.kb-sr-box input{flex:1;min-width:0;border:0;background:none;outline:none;color:var(--ink);
+font-family:inherit;font-size:clamp(22px,3.4vw,34px);font-weight:700;letter-spacing:-.03em}
+.kb-sr-box input::placeholder{color:var(--faint)}
+.kb-sr-hits{margin-top:20px;max-height:52vh;overflow:auto}
+.kb-sr-hits a{display:flex;align-items:baseline;gap:10px;padding:13px 4px;border-radius:10px}
+.kb-sr-hits a:hover{background:var(--soft)}
+.kb-sr-hits b{font-size:15px;font-weight:600;color:var(--ink)}
+.kb-sr-hits i{font-style:normal;font-size:12px;font-weight:600;color:var(--faint)}
+.kb-sr-none{padding:16px 4px;color:var(--faint);font-size:14px}
+
+/* ── 공통 섹션 틀 ── */
+.kb-sec{padding:0 var(--kb-pad)}
+.kb-sec-head{display:flex;align-items:center;justify-content:space-between;gap:20px;
+margin:0 0 26px;padding-top:clamp(64px,8vw,110px)}
+.kb-sec-head h2{font-size:clamp(20px,2.1vw,26px);font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.kb-arrows{display:flex;gap:6px}
+.kb-arrows button{display:grid;place-items:center;width:38px;height:38px;padding:0;border:0;
+border-radius:50%;background:none;color:var(--ink);cursor:pointer;transition:opacity .18s,background .18s}
+.kb-arrows button:hover{background:var(--soft)}
+.kb-arrows button[disabled]{opacity:.25;cursor:default;background:none}
+.kb-arrows svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;
+stroke-linecap:round;stroke-linejoin:round}
+
+/* ── 히어로: 이미지(좌) + 메타(우) ── */
+/*  subgrid 는 쓰지 않는다 — 구형 사파리에서 2단이 통째로 무너진다. 슬라이드가 각자 격자를 가진다. */
+.kb-hero{padding:clamp(30px,4vw,56px) var(--kb-pad) 0}
+.kb-slide{display:none;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);
+gap:clamp(28px,5vw,72px);align-items:center}
+.kb-slide.on{display:grid;animation:kbIn .55s var(--ease) both}
+@keyframes kbIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kb-hero-art{display:block;border-radius:var(--kb-r);overflow:hidden;aspect-ratio:16/11;background:var(--soft)}
+.kb-hero-art img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.kb-hero-art:hover img{transform:scale(1.03)}
+.kb-kick{font-size:14px;font-weight:600;color:var(--faint);letter-spacing:.01em}
+.kb-hero-meta h1{margin-top:14px;font-size:clamp(26px,3.2vw,40px);font-weight:700;
+letter-spacing:-.045em;line-height:1.3;color:var(--ink)}
+.kb-hero-meta p{margin-top:18px;font-size:16px;line-height:1.72;color:var(--gray);max-width:40ch}
+.kb-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.kb-chips span{padding:7px 14px;border-radius:99px;background:var(--soft);
+font-size:13px;font-weight:600;color:var(--gray)}
+.kb-cta{display:inline-flex;align-items:center;gap:8px;margin-top:30px;padding:13px 24px;
+border-radius:99px;background:var(--ink);color:var(--paper);font-size:15px;font-weight:700}
+.kb-cta:hover{opacity:.85}
+.kb-dots{display:flex;gap:8px;justify-content:flex-end;padding-top:26px}
+.kb-dots button{width:7px;height:7px;padding:0;border:0;border-radius:99px;background:var(--soft2);
+cursor:pointer;transition:width .25s var(--ease),background .25s}
+.kb-dots button[aria-current]{width:22px;background:var(--ink)}
+@media(max-width:860px){
+  .kb-slide.on{grid-template-columns:1fr}
+  .kb-hero-art{aspect-ratio:16/10}
+}
+
+/* ── 최신 콘텐츠: 가로 레일(작은 카드) ── */
+.kb-rail{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;
+scroll-behavior:smooth;scrollbar-width:none;padding-bottom:4px}
+.kb-rail::-webkit-scrollbar{display:none}
+.kb-rail-card{flex:0 0 clamp(272px,29vw,400px);display:flex;gap:16px;align-items:center;
+scroll-snap-align:start}
+.kb-rail-th{flex:0 0 clamp(88px,9vw,110px);aspect-ratio:1;border-radius:12px;overflow:hidden;background:var(--soft)}
+.kb-rail-th img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.kb-rail-th.ic{display:grid;place-items:center;
+background:linear-gradient(150deg,color-mix(in srgb,var(--ic) 22%,var(--paper)),color-mix(in srgb,var(--ic) 6%,var(--paper)))}
+.kb-rail-th.ic span{font-size:15px;font-weight:700;color:var(--ic);letter-spacing:-.02em}
+.kb-rail-card:hover .kb-rail-th img{transform:scale(1.06)}
+.kb-rail-tx h3{font-size:15px;font-weight:600;line-height:1.5;letter-spacing:-.02em;color:var(--ink);
+display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.kb-rail-card:hover .kb-rail-tx h3{color:var(--gray)}
+.kb-rail-tx time{display:block;margin-top:10px;font-size:13px;color:var(--faint)}
+
+/* ── 인기 콘텐츠: 3열 그리드 ── */
+.kb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(40px,4.5vw,64px) clamp(20px,2.4vw,32px)}
+.kb-card{display:block}
+.kb-th{width:100%;aspect-ratio:16/10;border-radius:var(--kb-r);overflow:hidden;background:var(--soft)}
+.kb-th img{width:100%;height:100%;object-fit:cover;transition:transform .55s var(--ease)}
+.kb-card:hover .kb-th img{transform:scale(1.04)}
+.kb-th.ic{display:grid;place-items:center;
+background:linear-gradient(150deg,color-mix(in srgb,var(--ic) 18%,var(--paper)),color-mix(in srgb,var(--ic) 5%,var(--paper)))}
+.kb-th.ic span{font-size:clamp(44px,5vw,68px);color:var(--ic);line-height:1}
+.kb-card time{display:block;margin-top:20px;font-size:14px;color:var(--faint)}
+.kb-card h3{margin-top:8px;font-size:clamp(17px,1.5vw,20px);font-weight:700;letter-spacing:-.035em;
+line-height:1.45;color:var(--ink)}
+.kb-card:hover h3{color:var(--gray)}
+.kb-card .kb-chips{margin-top:16px}
+.kb-card .kb-chips span{padding:6px 12px;font-size:12px}
+@media(max-width:1000px){.kb-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.kb-grid{grid-template-columns:1fr}}
+
+/* ── 시리즈 레일: [목록 패널][커버 패널] 짝 ── */
+.kb-srail{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;
+scroll-behavior:smooth;scrollbar-width:none}
+.kb-srail::-webkit-scrollbar{display:none}
+.kb-spair{flex:0 0 auto;display:flex;gap:20px;scroll-snap-align:start}
+.kb-spanel{width:clamp(300px,34vw,486px);min-height:clamp(360px,32vw,486px);
+display:flex;flex-direction:column;padding:28px;border-radius:var(--kb-r);
+background:var(--paper);border:1px solid var(--line)}
+.kb-badge{align-self:flex-start;padding:6px 14px;border-radius:99px;background:var(--soft);
+font-size:12px;font-weight:700;color:var(--gray);letter-spacing:.02em}
+.kb-spanel h3{margin-top:18px;font-size:clamp(22px,2.4vw,30px);font-weight:700;
+letter-spacing:-.045em;color:var(--ink)}
+.kb-slist{margin-top:auto;padding-top:32px;list-style:none}
+.kb-slist li+li{border-top:1px solid var(--line)}
+.kb-slist a{display:flex;align-items:center;gap:14px;padding:13px 0}
+.kb-slist .n{flex:0 0 auto;font-size:13px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+.kb-slist .t{font-size:14px;font-weight:600;line-height:1.45;color:var(--ink);letter-spacing:-.02em;
+display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.kb-slist a:hover .t{color:var(--gray)}
+.kb-slist .sq{flex:0 0 auto;width:36px;height:36px;border-radius:9px;overflow:hidden;
+display:grid;place-items:center;font-size:15px;color:var(--ic,var(--gray));
+background:linear-gradient(150deg,color-mix(in srgb,var(--ic,#9aa0a8) 22%,var(--paper)),color-mix(in srgb,var(--ic,#9aa0a8) 7%,var(--paper)))}
+.kb-slist .sq img{width:100%;height:100%;object-fit:cover}
+.kb-scover{width:clamp(300px,34vw,486px);border-radius:var(--kb-r);overflow:hidden;
+display:grid;place-items:center;background:var(--sc,var(--soft))}
+.kb-scover img{width:100%;height:100%;object-fit:cover}
+.kb-srail-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:28px}
+.kb-pill{display:inline-flex;padding:12px 22px;border-radius:99px;background:var(--ink);
+color:var(--paper);font-size:14px;font-weight:700}
+.kb-pill:hover{opacity:.85}
+@media(max-width:620px){.kb-spair{flex-direction:column}.kb-scover{min-height:260px}}
+
+/* ── 카테고리 스크롤러: 고정 카드(좌) + 큰 단어 목록(우) ── */
+.kb-cats{position:relative;display:grid;grid-template-columns:clamp(240px,24vw,302px) 1fr;
+gap:clamp(28px,6vw,96px);align-items:center}
+.kb-cat-card{position:sticky;top:96px;align-self:center;display:block;padding:0 0 22px;
+border-radius:var(--kb-r);overflow:hidden;background:var(--cc,var(--soft));
+transition:background .5s var(--ease)}
+.kb-cat-art{width:100%;aspect-ratio:1;display:grid;place-items:center;font-size:64px;color:#fff}
+.kb-cat-art img{width:100%;height:100%;object-fit:cover}
+.kb-cat-card h3{padding:0 20px;font-size:16px;font-weight:700;line-height:1.45;letter-spacing:-.03em;color:#111}
+.kb-cat-card p{padding:0 20px;margin-top:9px;font-size:13px;line-height:1.6;color:#3b3b3b}
+.kb-cat-view{position:relative;height:min(62vh,520px);overflow:hidden;
+-webkit-mask-image:linear-gradient(180deg,transparent,#000 26%,#000 74%,transparent);
+mask-image:linear-gradient(180deg,transparent,#000 26%,#000 74%,transparent)}
+.kb-cat-list{position:absolute;left:0;top:50%;width:100%;list-style:none;
+transition:transform .6s var(--ease)}
+.kb-cat-list li{height:56px;display:flex;align-items:center}
+.kb-cat-list button{border:0;background:none;padding:0;cursor:pointer;font-family:inherit;
+font-size:clamp(26px,3.4vw,42px);font-weight:600;letter-spacing:-.03em;color:var(--soft2);
+transition:color .35s var(--ease)}
+.kb-cat-list li[aria-current] button{color:var(--ink)}
+.kb-cat-ctl{position:absolute;right:0;bottom:6px;display:flex;gap:8px}
+.kb-cat-ctl button{display:grid;place-items:center;width:38px;height:38px;padding:0;border:0;
+border-radius:50%;background:var(--soft);color:var(--ink);cursor:pointer}
+.kb-cat-ctl button:hover{background:var(--soft2)}
+.kb-cat-ctl svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;
+stroke-linecap:round;stroke-linejoin:round}
+.kb-cat-ctl .pauseoff{display:none}
+.kb-cat-ctl [data-paused] .pauseoff{display:block}
+.kb-cat-ctl [data-paused] .pauseon{display:none}
+@media(max-width:860px){
+  .kb-cats{grid-template-columns:1fr;gap:32px}
+  .kb-cat-card{position:static;display:grid;grid-template-columns:120px 1fr;align-items:center;padding:0 20px 0 0}
+  .kb-cat-art{aspect-ratio:1;font-size:40px}
+  .kb-cat-card h3,.kb-cat-card p{padding:0}
+  .kb-cat-view{height:340px}
+}
+
+/* ── 맨 위로 ── */
+.kb-top{position:fixed;right:22px;bottom:22px;z-index:110;display:grid;place-items:center;
+width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:var(--paper);
+color:var(--ink);cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s}
+.kb-top[data-on]{opacity:1;pointer-events:auto}
+.kb-top svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.9;
+stroke-linecap:round;stroke-linejoin:round}
+.kbp footer.site{margin-top:clamp(80px,10vw,140px);background:var(--soft);border-top:0}
+@media(prefers-reduced-motion:reduce){
+  .kb-rail,.kb-srail{scroll-behavior:auto}
+  .kb-cat-list{transition:none}
+  .kb-slide.on{animation:none}
+}
+"""
+CSS += KB_CSS
+
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
 # 내용이 바뀌면 URL도 바뀌게 해서 즉시 반영시킨다.
 CSS_VER = hashlib.md5(CSS.encode("utf-8")).hexdigest()[:8]
@@ -1017,8 +1249,12 @@ AGENTATION = """
 </script>"""
 
 
-def page(title, desc, body, active="", extra=""):
+def page(title, desc, body, active="", extra="", header=None, body_class="", head_extra=""):
+    """header/body_class/head_extra 는 랜딩(KB 구성 클론) 전용 훅 —
+       기본값이면 지금까지와 완전히 동일한 출력이라 다른 페이지엔 영향이 없다."""
     body = _toolfix(body)
+    _bc = f' class="{body_class}"' if body_class else ""
+    _hd = gnb(active) if header is None else header
     return f"""<!doctype html>
 <html lang="ko">
 <head>
@@ -1030,9 +1266,9 @@ def page(title, desc, body, active="", extra=""):
 <meta property="og:description" content="{desc}">
 <link rel="stylesheet" href="/assets/site.css?v={CSS_VER}">
 <script type="application/ld+json">{JSONLD}</script>
-</head>
-<body>
-{gnb(active)}
+{head_extra}</head>
+<body{_bc}>
+{_hd}
 <main>
 {body}
 </main>
@@ -1878,199 +2114,364 @@ def fix_card_media(html):
                    lambda m: m.group(1) + card_media(m.group(2)), html)
 
 
-# ---------- 랜딩 히어로 ----------
-#   레퍼런스 공통 문법(samsung.com/sec · awwwards.com): ① 한 번에 하나만 크게 ② 텍스트 최소·초대형
-#   ③ 압도적 여백 ④ CTA 한 개 ⑤ 큰 비주얼이 주인공. 좌우 2단 콜라주는 폐기(산만했다).
-_slides = []
-for i, x in enumerate(BAR.get("hero_shots", [])):
-    _slides.append(
-        f'<article class="hz-s{" on" if i == 0 else ""}" data-i="{i}">'
-        f'<div class="hz-cap"><div class="hz-k">{x["label"]}</div>'
-        f'<h1>{x.get("title", x["label"])}</h1>'
-        f'<p>{x.get("sub", "")}</p>'
-        f'<a class="hz-cta" href="{x.get("href", "/")}">{x.get("cta", "보러 가기")}</a></div>'
-        f'<div class="hz-art" style="background:{x.get("bg", "#fff")}">'
-        f'<img src="{x["src"]}" alt="{x["alt"]}" loading="eager" decoding="async" '
-        f'style="object-fit:{x.get("fit", "cover")}"></div></article>')
-_dots = "".join(f'<button type="button" data-i="{i}" aria-label="{x["label"]}"'
-                f'{" aria-current=true" if i == 0 else ""}></button>'
-                for i, x in enumerate(BAR.get("hero_shots", [])))
-herosec = ('<section class="hz" id="hz">' + "".join(_slides) +
-           f'<div class="hz-dots">{_dots}</div></section>')
+# ---------- 랜딩 (KB 구성 클론) ----------
+#   레퍼런스: blog.kakaobank.com/home — '구성'만 가져온다.
+#   섹션 순서 = 히어로(이미지+메타) → 최신 콘텐츠 레일 → 인기 콘텐츠 3열 → 시리즈 레일
+#              → 카테고리 스크롤러 → 푸터. 크롬 = 알약 GNB · 검색 오버레이 · 다크모드.
+#   ⚠️ 남의 카피·일러스트·로고는 한 조각도 쓰지 않는다. 내용물은 전부 우리 자산
+#      (products.json · 스트림 캐시 · content/stories). 스타일은 다음 단계에서 우리 색으로 갈아탄다.
 
-HERO_JS = """<script>
-(function(){
-  var hz=document.getElementById('hz'); if(!hz) return;
-  var ss=[].slice.call(hz.querySelectorAll('.hz-s')), ds=[].slice.call(hz.querySelectorAll('.hz-dots button'));
-  if(ss.length<2) return;
-  var i=0, t=null;
-  function go(n){ i=(n+ss.length)%ss.length;
-    ss.forEach(function(s,k){ s.classList.toggle('on', k===i); });
-    ds.forEach(function(d,k){ if(k===i) d.setAttribute('aria-current','true'); else d.removeAttribute('aria-current'); }); }
-  function play(){ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    stop(); t=setInterval(function(){ go(i+1); }, 6000); }
-  function stop(){ if(t) clearInterval(t); t=null; }
-  ds.forEach(function(d){ d.addEventListener('click', function(){ go(+d.dataset.i); play(); }); });
-  hz.addEventListener('mouseenter', stop); hz.addEventListener('mouseleave', play);
-  play();
-})();
-</script>"""
+# 제품 슬러그 → 카테고리 단어(스크롤러·칩에 쓰는 영문 라벨)
+KB_WORD = {
+    "heyreci": "Product Photo", "mark": "Logo", "theplan": "Planner", "cue": "Interview",
+    "quickpang": "Coupang", "insta-rank": "Instagram", "youtube-rank": "YouTube",
+    "pinterest-grab": "Pinterest", "chatpage": "Summary", "her": "Voice",
+}
 
-
-# ---------- 랜딩: '새로 나온 것' 탭 카드 ----------
-#   별도 섹션이 아니라 그리드 안 카드로 넣는다(탭으로 돌려 본다 — 사장님 2026-07-27).
-#   신선도 규칙: 최신 항목이 60일 초과면 이 탭 자체를 만들지 않는다.
 KINDN = {"release": "새 제품", "post": "글", "video": "영상", "tool": "새 도구"}
-_now = datetime.date.today()
 _all_new = STREAM + [dict(kind="post", src="모멘터스", title=POSTS[x]["title"],
                           url=f"{STORY_BASE}/{x}/", date=POSTS[x]["date"], img="") for x in PORDER]
 _all_new = [x for x in _all_new if x.get("date")]
 _all_new.sort(key=lambda x: x["date"], reverse=True)
 
 
-def _age(d):
-    try:
-        return (_now - datetime.date.fromisoformat(d)).days
-    except Exception:
-        return 9999
+def kb_media(slug, cls="kb-th"):
+    """카드 비주얼 — 우리 자산(shot)이 있으면 사진, 없으면 아이콘 타일.
+       (2026-07-28 사고: 랜딩 카드가 남의 사이트 이미지를 핫링크하고 있었다. 다시는.)"""
+    p0 = P.get(slug, {})
+    if p0.get("shot"):
+        return f'<div class="{cls}"><img src="{p0["shot"]}" alt="{esc(p0.get("tagline",""))}" loading="lazy"></div>'
+    return (f'<div class="{cls} ic" style="--ic:{p0.get("color","#3182f6")}">'
+            f'<span>{p0.get("icon","◆")}</span></div>')
 
 
-NEW_ITEMS = _all_new[:6]
-NEW_FRESH = bool(NEW_ITEMS) and _age(NEW_ITEMS[0]["date"]) <= 60
-newcards = ""
-if NEW_FRESH:
-    newcards = "".join(
-        f'<article class="vc-item" data-cat="new">'
-        f'<a href="{x["url"]}"{" target=_blank rel=noopener" if x["url"].startswith("http") else ""}>'
-        + (f'<div class="vc-thumb"><img src="{x["img"]}" alt="{x["title"]}" loading="lazy"></div>'
-           if x.get("img") else f'<div class="vc-thumb vc-thumb--g g{(i % 3) + 1}"></div>')
-        + f'<h3>{x["title"]}</h3>'
-        f'<div class="cat">{KINDN.get(x["kind"], "소식")} · {x["src"]} · {fmt_date(x["date"])}</div>'
-        f'</a></article>' for i, x in enumerate(NEW_ITEMS))
+def esc(s):
+    return (s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
 
 
-land_body = """<div class="vc">
-  <div class="vc-head vc-head--tight">
-    <div><h2>무엇을 하려고 오셨나요</h2>
-      <p class="sub">파는 사람도, 브랜드도, 나를 위한 것도 — 필요한 것만 골라 쓰세요.</p></div>
-    <a class="more" href="/tools/">무료 도구 전체 +</a>
+def _ext(url):
+    return ' target="_blank" rel="noopener"' if str(url).startswith("http") else ""
+
+
+# ── ① 히어로 ─────────────────────────────────────────────────────────────────
+_hero = BAR.get("hero_shots", [])
+_kb_slides = "".join(
+    f'<article class="kb-slide{" on" if i == 0 else ""}" data-i="{i}">'
+    f'<a class="kb-hero-art" href="{x.get("href","/")}"{_ext(x.get("href",""))}>'
+    f'<img src="{x["src"]}" alt="{esc(x["alt"])}" loading="{"eager" if i == 0 else "lazy"}" '
+    f'decoding="async" style="object-fit:{x.get("fit","cover")}"></a>'
+    f'<div class="kb-hero-meta"><div class="kb-kick">{esc(x["label"])}</div>'
+    f'<h1>{esc(x.get("title", x["label"]))}</h1>'
+    f'<p>{esc(x.get("sub",""))}</p>'
+    f'<a class="kb-cta" href="{x.get("href","/")}"{_ext(x.get("href",""))}>{esc(x.get("cta","보러 가기"))} <span aria-hidden="true">→</span></a>'
+    f'</div></article>' for i, x in enumerate(_hero))
+_kb_dots = "".join(
+    f'<button type="button" data-i="{i}" aria-label="{esc(x["label"])}"'
+    + (" aria-current=true" if i == 0 else "") + '></button>' for i, x in enumerate(_hero))
+kb_hero = (f'<section class="kb-hero" id="kbhero" aria-label="주요 소식">{_kb_slides}'
+           f'<div class="kb-dots">{_kb_dots}</div></section>') if _hero else ""
+
+
+# ── ② 최신 콘텐츠 (가로 레일) ────────────────────────────────────────────────
+_rail_items = _all_new[:10]
+_rail_cards = "".join(
+    f'<a class="kb-rail-card" href="{x["url"]}"{_ext(x["url"])}>'
+    + (f'<div class="kb-rail-th"><img src="{x["img"]}" alt="" loading="lazy"></div>'
+       if x.get("img") else
+       f'<div class="kb-rail-th ic" style="--ic:#3182f6"><span>{KINDN.get(x["kind"],"소식")[:1]}</span></div>')
+    + f'<div class="kb-rail-tx"><h3>{esc(x["title"])}</h3>'
+      f'<time>{fmt_date(x["date"])}</time></div></a>' for x in _rail_items)
+kb_latest = (f"""<section class="kb-sec" aria-labelledby="kb-latest-h">
+  <div class="kb-sec-head"><h2 id="kb-latest-h">최신 콘텐츠</h2>
+    <div class="kb-arrows" data-rail="kbrail">
+      <button type="button" data-dir="-1" aria-label="이전 슬라이드"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+      <button type="button" data-dir="1" aria-label="다음 슬라이드"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div></div>
+  <div class="kb-rail" id="kbrail">{_rail_cards}</div>
+</section>""") if _rail_cards else ""
+
+
+# ── ③ 인기 콘텐츠 (3열 그리드) ───────────────────────────────────────────────
+_grid_slugs = [s for s in ORDER if s in P][:6]
+_grid_cards = "".join(
+    f'<a class="kb-card" href="{purl(s)}">'
+    + kb_media(s)
+    + f'<time>{"무료 도구" if P[s].get("free") else "제품"} · {KB_WORD.get(s, P[s].get("short",""))}</time>'
+      f'<h3>{esc(P[s].get("tagline", P[s]["name"]))}</h3>'
+      f'<div class="kb-chips">'
+    + "".join(f'<span>{esc(t.strip())}</span>' for t in P[s].get("tag", "").split("·") if t.strip())
+    + '</div></a>' for s in _grid_slugs)
+kb_popular = f"""<section class="kb-sec" aria-labelledby="kb-pop-h">
+  <div class="kb-sec-head"><h2 id="kb-pop-h">많이 찾는 것</h2>
+    <a class="kb-kick" href="/tools/">무료 도구 전체 →</a></div>
+  <div class="kb-grid">{_grid_cards}</div>
+</section>"""
+
+
+# ── ④ 시리즈 레일 ────────────────────────────────────────────────────────────
+def _stream_by(src, n=3):
+    return [x for x in STREAM if x.get("src") == src][:n]
+
+
+_series = []
+_pl = _stream_by("플래너")
+if _pl:
+    _series.append(dict(title="새로 나온 플래너", href="https://notes.the-moment.us",
+                        cover=P.get("theplan", {}).get("shot", ""), color="#f7f6f1", items=_pl))
+_lg = _stream_by("로고")
+if _lg:
+    _series.append(dict(title="업종별 로고 이야기", href="https://mark.the-moment.us/insights/",
+                        cover=P.get("mark", {}).get("shot", ""), color="#eef3ff", items=_lg))
+if PORDER:
+    _series.append(dict(title="스튜디오의 기록", href=f"{STORY_BASE}/", cover="", color="#f2f4f7",
+                        items=[dict(title=POSTS[x]["title"], url=f"{STORY_BASE}/{x}/", img="")
+                               for x in PORDER[:3]]))
+_tl = [s for s in TOOLS if s in P][:3]
+if _tl:
+    _series.append(dict(title="브라우저에 붙이는 무료 도구", href="/tools/", cover="", color="#eafaf1",
+                        items=[dict(title=P[s].get("tagline", P[s]["name"]), url=purl(s),
+                                    img=P[s].get("shot", ""), icon=P[s].get("icon", "◆"),
+                                    color=P[s].get("color", "#3182f6")) for s in _tl]))
+
+
+def _series_pair(sr):
+    lis = "".join(
+        f'<li><a href="{it["url"]}"{_ext(it["url"])}>'
+        f'<span class="n">{i+1:02d}</span>'
+        + (f'<span class="sq"><img src="{it["img"]}" alt="" loading="lazy"></span>'
+           if it.get("img") else
+           f'<span class="sq" style="--ic:{it.get("color","#9aa0a8")}">{it.get("icon","·")}</span>')
+        + f'<span class="t">{esc(it["title"])}</span></a></li>' for i, it in enumerate(sr["items"]))
+    cover = (f'<img src="{sr["cover"]}" alt="" loading="lazy">' if sr.get("cover")
+             else f'<span class="kb-kick">{esc(sr["title"])}</span>')
+    return (f'<div class="kb-spair">'
+            f'<div class="kb-spanel"><span class="kb-badge">Series</span><h3>{esc(sr["title"])}</h3>'
+            f'<ul class="kb-slist">{lis}</ul></div>'
+            f'<a class="kb-scover" href="{sr["href"]}"{_ext(sr["href"])} '
+            f'style="--sc:{sr["color"]}" aria-label="{esc(sr["title"])}">{cover}</a></div>')
+
+
+kb_series = (f"""<section class="kb-sec" aria-labelledby="kb-ser-h">
+  <div class="kb-sec-head"><h2 id="kb-ser-h">묶어서 보면 더 좋은 것</h2>
+    <div class="kb-arrows" data-rail="kbsrail">
+      <button type="button" data-dir="-1" aria-label="이전 슬라이드"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+      <button type="button" data-dir="1" aria-label="다음 슬라이드"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div></div>
+  <div class="kb-srail" id="kbsrail">{"".join(_series_pair(s) for s in _series)}</div>
+  <div class="kb-srail-foot"><a class="kb-pill" href="/tools/">전체 보기</a></div>
+</section>""") if _series else ""
+
+
+# ── ⑤ 카테고리 스크롤러 ──────────────────────────────────────────────────────
+_cat_slugs = [s for s in ORDER if s in P]
+_cat_words = "".join(
+    '<li' + (" aria-current=true" if i == 0 else "") + '>'
+    + f'<button type="button" data-i="{i}">{KB_WORD.get(s, P[s].get("short",""))}</button></li>'
+    for i, s in enumerate(_cat_slugs))
+_cat_data = json.dumps([dict(
+    slug=s, url=purl(s), name=P[s].get("short", P[s]["name"]),
+    tagline=P[s].get("tagline", ""), shot=P[s].get("shot", ""),
+    icon=P[s].get("icon", "◆"), color=P[s].get("color", "#3182f6"),
+) for s in _cat_slugs], ensure_ascii=False)
+
+kb_cats = f"""<section class="kb-sec" aria-labelledby="kb-cat-h">
+  <div class="kb-sec-head"><h2 id="kb-cat-h">무엇을 하려고 오셨나요</h2></div>
+  <div class="kb-cats" id="kbcats">
+    <a class="kb-cat-card" id="kbcatcard" href="/"><span class="kb-cat-art"></span><h3></h3><p></p></a>
+    <div class="kb-cat-view">
+      <ul class="kb-cat-list" id="kbcatlist">{_cat_words}</ul>
+      <div class="kb-cat-ctl">
+        <button type="button" id="kbcatpause" aria-label="자동 넘김 멈춤">
+          <svg viewBox="0 0 24 24" class="pauseon"><path d="M9 5v14M15 5v14"/></svg>
+          <svg viewBox="0 0 24 24" class="pauseoff"><path d="M7 4l12 8-12 8z"/></svg></button>
+        <button type="button" data-dir="-1" aria-label="이전 카테고리"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+        <button type="button" data-dir="1" aria-label="다음 카테고리"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></button>
+      </div>
+    </div>
   </div>
+</section>"""
 
-  <div class="vc-sort" id="vcsort">
-    <button type="button" data-f="new" aria-pressed="true">새로 나온 것</button>
-    <button type="button" data-f="sell" aria-pressed="false">파는 사람</button>
-    <button type="button" data-f="brand" aria-pressed="false">브랜드</button>
-    <button type="button" data-f="me" aria-pressed="false">나를 위해</button>
-    <button type="button" data-f="all" aria-pressed="false">전체</button>
-  </div>
 
-  <div class="vc-grid" id="vcgrid">""" + newcards + """
-    <article class="vc-item" data-cat="sell">
-      <a href="/products/quickpang/">
-        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000060/vinylc_tumbler.jpg" alt="들어가 보지 않아도 옵션과 재고가 보입니다"></div>
-        <h3>들어가 보지 않아도 옵션과 재고가 보입니다</h3>
-        <div class="cat">Coupang</div>
-      </a>
-    </article>
-    <article class="vc-item" data-cat="sell">
-      <a href="/products/insta-rank/">
-        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000072/VinylC_life.jpg" alt="이 계정, 대체 뭐가 제일 잘 됐나"></div>
-        <h3>이 계정, 대체 뭐가 제일 잘 됐나</h3>
-        <div class="cat">Instagram</div>
-      </a>
-    </article>
-    <article class="vc-item" data-cat="sell">
-      <a href="/products/youtube-rank/">
-        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000069/VinylC_010.jpg" alt="이 채널의 대표작이 뭔지, 5초 만에"></div>
-        <h3>이 채널의 대표작이 뭔지, 5초 만에</h3>
-        <div class="cat">YouTube</div>
-      </a>
-    </article>
-    <article class="vc-item big" data-cat="sell">
-      <a href="/products/heyreci/">
-        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000007/01_thumb.jpg" alt="폰으로 찍은 사진이 30초 만에 판매용 컷이 됩니다" loading="lazy"></div>
-        <h3>폰으로 찍은 사진이 30초 만에 판매용 컷이 됩니다</h3>
-        <div class="cat">Product Photo</div>
-      </a>
-    </article>
-    <article class="vc-item" data-cat="brand">
-      <a href="/products/pinterest-grab/">
-        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000063/vinylc_ecobag_01.jpg" alt="저해상 썸네일 말고, 원본을 가져옵니다" loading="lazy"></div>
-        <h3>저해상 썸네일 말고, 원본을 가져옵니다</h3>
-        <div class="cat">Pinterest</div>
-      </a>
-    </article>
-    <article class="vc-item" data-cat="me">
-      <a href="/products/chatpage/">
-        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000030/07_thumb.jpg" alt="1시간 42분짜리를 끝까지 볼 필요는 없습니다" loading="lazy"></div>
-        <h3>1시간 42분짜리를 끝까지 볼 필요는 없습니다</h3>
-        <div class="cat">AI Summary</div>
-      </a>
-    </article>
-    <article class="vc-item" data-cat="me">
-      <a href="/products/her/">
-        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000033/02_thumb_pc.jpg" alt="손이 못 따라갈 만큼 생각이 빠를 때, 그냥 말하면 됩니다" loading="lazy"></div>
-        <h3>손이 못 따라갈 만큼 생각이 빠를 때, 그냥 말하면 됩니다</h3>
-        <div class="cat">Voice</div>
-      </a>
-    </article>
-    <article class="vc-item big" data-cat="brand">
-      <a href="/products/mark/">
-        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000009/03_thumb.jpg" alt="내 업종 로고를 먼저 보고 고릅니다" loading="lazy"></div>
-        <h3>내 업종 로고를 먼저 보고 고릅니다</h3>
-        <div class="cat">Logo</div>
-      </a>
-    </article>
-    <article class="vc-item" data-cat="me">
-      <a href="/products/theplan/">
-        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000036/03_thumb.jpg" alt="내 손에 맞는 플래너를 골라서 씁니다" loading="lazy"></div>
-        <h3>내 손에 맞는 플래너를 골라서 씁니다</h3>
-        <div class="cat">Planner</div>
-      </a>
-    </article>
-    <article class="vc-item" data-cat="me">
-      <a href="/products/cue/">
-        <div class="vc-thumb"><img src="https://www.vinylc.com/upload/goods/GD00000039/vinylc_bag_00.jpg" alt="면접장에서 얼어붙지 않으려면 소리 내어 연습해야 합니다" loading="lazy"></div>
-        <h3>면접장에서 얼어붙지 않으려면 소리 내어 연습해야 합니다</h3>
-        <div class="cat">Interview</div>
-      </a>
-    </article>
+# ── 헤더 · 검색 인덱스 ───────────────────────────────────────────────────────
+KB_INDEX = json.dumps(
+    [dict(t=P[s].get("name", s), k=KB_WORD.get(s, ""), u=purl(s)) for s in ORDER if s in P]
+    + [dict(t=POSTS[x]["title"], k="이야기", u=f"{STORY_BASE}/{x}/") for x in PORDER]
+    + [dict(t=x["title"], k=x.get("src", ""), u=x["url"]) for x in _all_new if x.get("url", "").startswith("http")][:20],
+    ensure_ascii=False)
+
+KB_HEAD = """<script>
+/* 다크모드 — 그리기 전에 결정해서 흰 화면 번쩍임(FOUC)을 막는다. */
+(function(){try{var t=localStorage.getItem('mmt-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.dataset.theme=t;}catch(e){}})();
+</script>"""
+
+KB_HEADER = """<header class="kb-gnb">
+  <a class="kb-wm" href="/">MOMENTUS<span>studio</span></a>
+  <nav class="kb-nav" aria-label="주 메뉴">
+    <a class="on" href="/">Home</a>
+    <a href="/tools/">Tools</a>
+    <a href="/stories/">Stories</a>
+    <a href="/about/">Studio</a>
+  </nav>
+  <div class="kb-act">
+    <button class="kb-ib" id="kbsearchbtn" aria-label="검색 열기">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>
+    <button class="kb-ib" id="kbthemebtn" aria-label="다크모드로 전환">
+      <svg viewBox="0 0 24 24" class="sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg viewBox="0 0 24 24" class="moon"><path d="M20 14.6A8.6 8.6 0 019.4 4 8.6 8.6 0 1020 14.6z"/></svg></button>
+    <button class="kb-ib kb-burger" id="kbburger" aria-label="메뉴 열기">
+      <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </div>
-  <p class="vc-empty" id="vcempty" hidden>해당하는 제품이 없어요.</p>
+</header>
+<nav class="kb-sheet" id="kbsheet" aria-label="모바일 메뉴">
+  <a href="/">Home</a><a href="/tools/">Tools</a><a href="/stories/">Stories</a><a href="/about/">Studio</a>
+</nav>
+<div class="kb-sr" id="kbsr" role="dialog" aria-modal="true" aria-label="검색">
+  <div class="kb-sr-in">
+    <div class="kb-sr-box">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+      <input id="kbsrq" type="search" placeholder="무엇을 찾으세요?" autocomplete="off">
+      <button class="kb-ib" id="kbsrclose" aria-label="검색 닫기">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="kb-sr-hits" id="kbsrhits"></div>
+  </div>
 </div>"""
 
-LAND_JS = """<script>
+KB_JS = """<button class="kb-top" id="kbtop" aria-label="맨 위로">
+<svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+<script>
 (function(){
-  var sort=document.getElementById('vcsort'), grid=document.getElementById('vcgrid'),
-      empty=document.getElementById('vcempty');
-  if(!sort||!grid) return;
-  var items=[].slice.call(grid.querySelectorAll('.vc-item'));
-  function apply(f){ var shown=0;
-    items.forEach(function(it){ var ok=(f==='all')||it.dataset.cat===f; it.hidden=!ok; if(ok) shown++; });
-    empty.hidden = shown>0; }
-  apply((sort.querySelector('button[aria-pressed="true"]')||{dataset:{f:'all'}}).dataset.f);
-  sort.addEventListener('click', function(e){
-    var btn=e.target.closest('button[data-f]'); if(!btn) return;
-    var f=btn.dataset.f, shown=0;
-    [].slice.call(sort.querySelectorAll('button')).forEach(function(b){
-      b.setAttribute('aria-pressed', String(b===btn));
-    });
-    items.forEach(function(it){
-      var ok = (f==='all') || it.dataset.cat===f;
-      it.hidden = !ok;
-      if(ok) shown++;
-    });
-    empty.hidden = shown>0;
+  var $=function(id){return document.getElementById(id);};
+
+  /* ── 다크모드 ── */
+  var tb=$('kbthemebtn');
+  if(tb) tb.addEventListener('click',function(){
+    var d=document.documentElement, next=d.dataset.theme==='dark'?'light':'dark';
+    d.dataset.theme=next;
+    try{localStorage.setItem('mmt-theme',next);}catch(e){}
+    tb.setAttribute('aria-label', next==='dark'?'라이트모드로 전환':'다크모드로 전환');
   });
+
+  /* ── 모바일 시트 ── */
+  var bg=$('kbburger'), sh=$('kbsheet');
+  if(bg&&sh) bg.addEventListener('click',function(){
+    if(sh.hasAttribute('data-open')) sh.removeAttribute('data-open'); else sh.setAttribute('data-open','');
+  });
+
+  /* ── 검색 오버레이 (페이지 안 인덱스를 훑는다 — 서버 없음) ── */
+  var IDX=__INDEX__;
+  var sr=$('kbsr'), q=$('kbsrq'), hits=$('kbsrhits');
+  function openSr(){ sr.setAttribute('data-open',''); q.value=''; render(''); setTimeout(function(){q.focus();},30); }
+  function closeSr(){ sr.removeAttribute('data-open'); }
+  function render(v){
+    v=v.trim().toLowerCase();
+    var list = v ? IDX.filter(function(x){return (x.t+' '+x.k).toLowerCase().indexOf(v)>=0;}) : IDX.slice(0,8);
+    if(!list.length){ hits.innerHTML='<p class="kb-sr-none">찾는 것이 없어요. 다른 말로 해보시겠어요?</p>'; return; }
+    hits.innerHTML=list.slice(0,12).map(function(x){
+      var ext=/^https?:/.test(x.u)?' target="_blank" rel="noopener"':'';
+      return '<a href="'+x.u+'"'+ext+'><b></b><i></i></a>';
+    }).join('');
+    [].forEach.call(hits.children,function(a,i){
+      a.querySelector('b').textContent=list[i].t;
+      a.querySelector('i').textContent=list[i].k||'';
+    });
+  }
+  if($('kbsearchbtn')) $('kbsearchbtn').addEventListener('click',openSr);
+  if($('kbsrclose')) $('kbsrclose').addEventListener('click',closeSr);
+  if(q) q.addEventListener('input',function(){render(q.value);});
+  addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&sr&&sr.hasAttribute('data-open')) closeSr();
+    if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();openSr();}
+  });
+  if(sr) sr.addEventListener('click',function(e){ if(e.target===sr) closeSr(); });
+
+  /* ── 히어로 슬라이드 ── */
+  var hz=$('kbhero');
+  if(hz){
+    var ss=[].slice.call(hz.querySelectorAll('.kb-slide')),
+        ds=[].slice.call(hz.querySelectorAll('.kb-dots button')), i=0, t=null;
+    function go(n){ i=(n+ss.length)%ss.length;
+      ss.forEach(function(s,k){s.classList.toggle('on',k===i);});
+      ds.forEach(function(d,k){ if(k===i) d.setAttribute('aria-current','true'); else d.removeAttribute('aria-current'); }); }
+    function play(){ if(ss.length<2) return;
+      if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      stop(); t=setInterval(function(){go(i+1);},7000); }
+    function stop(){ if(t) clearInterval(t); t=null; }
+    ds.forEach(function(d){ d.addEventListener('click',function(){ go(+d.dataset.i); play(); }); });
+    hz.addEventListener('mouseenter',stop); hz.addEventListener('mouseleave',play);
+    play();
+  }
+
+  /* ── 가로 레일 화살표 ── */
+  [].forEach.call(document.querySelectorAll('.kb-arrows[data-rail]'),function(box){
+    var rail=$(box.dataset.rail); if(!rail) return;
+    var btns=[].slice.call(box.querySelectorAll('button'));
+    function step(){ var c=rail.firstElementChild; return c?c.getBoundingClientRect().width+20:320; }
+    function sync(){
+      var max=rail.scrollWidth-rail.clientWidth-2;
+      btns[0].disabled = rail.scrollLeft<=2;
+      btns[1].disabled = rail.scrollLeft>=max;
+    }
+    btns.forEach(function(b){ b.addEventListener('click',function(){
+      rail.scrollBy({left:step()*(+b.dataset.dir),behavior:'smooth'}); }); });
+    rail.addEventListener('scroll',sync,{passive:true});
+    addEventListener('resize',sync); sync();
+  });
+
+  /* ── 카테고리 스크롤러 ── */
+  var CATS=__CATS__, list=$('kbcatlist'), card=$('kbcatcard');
+  if(list&&card&&CATS.length){
+    var lis=[].slice.call(list.children), ci=0, ct=null, paused=false,
+        art=card.querySelector('.kb-cat-art'), h3=card.querySelector('h3'), p=card.querySelector('p');
+    function paint(n){
+      ci=(n+CATS.length)%CATS.length;
+      var c=CATS[ci], h=lis[0]?lis[0].offsetHeight:56;
+      list.style.transform='translateY('+(-(ci*h)-h/2)+'px)';
+      lis.forEach(function(li,k){ if(k===ci) li.setAttribute('aria-current','true'); else li.removeAttribute('aria-current'); });
+      card.href=c.url;
+      card.style.setProperty('--cc','color-mix(in srgb,'+c.color+' 16%,#fff)');
+      art.style.background=c.color;
+      art.innerHTML = c.shot ? '<img src="'+c.shot+'" alt="" loading="lazy">' : c.icon;
+      h3.textContent=c.name; p.textContent=c.tagline;
+    }
+    function tick(){ if(!paused) paint(ci+1); }
+    function start(){ if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if(ct) clearInterval(ct); ct=setInterval(tick,3200); }
+    lis.forEach(function(li,k){ li.querySelector('button').addEventListener('click',function(){ paint(k); start(); }); });
+    [].forEach.call(document.querySelectorAll('.kb-cat-ctl button[data-dir]'),function(b){
+      b.addEventListener('click',function(){ paint(ci+(+b.dataset.dir)); start(); }); });
+    var pb=$('kbcatpause');
+    if(pb) pb.addEventListener('click',function(){
+      paused=!paused;
+      if(paused) pb.setAttribute('data-paused',''); else pb.removeAttribute('data-paused');
+      pb.setAttribute('aria-label', paused?'자동 넘김 재생':'자동 넘김 멈춤');
+    });
+    paint(0); start();
+  }
+
+  /* ── 맨 위로 ── */
+  var top=$('kbtop');
+  if(top){
+    top.addEventListener('click',function(){ scrollTo({top:0,behavior:'smooth'}); });
+    addEventListener('scroll',function(){
+      if(scrollY>600) top.setAttribute('data-on',''); else top.removeAttribute('data-on');
+    },{passive:true});
+  }
 })();
 </script>"""
 
+KB_JS = KB_JS.replace("__INDEX__", KB_INDEX).replace("__CATS__", _cat_data)
 
-# 스트림 섹션은 히어로(vc-head) 바로 아래 — 방문자가 먼저 욕망 카피를 보고, 그다음 최신 소식.
-land_body = herosec + fix_card_media(land_body)
+land_body = kb_hero + kb_latest + kb_popular + kb_series + kb_cats
 
 with open("index.html", "w", encoding="utf-8") as f:
-    f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다", "상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.", land_body, active="", extra=LAND_JS + HERO_JS))
+    f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다",
+                 "상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.",
+                 land_body, active="", extra=KB_JS,
+                 header=KB_HEADER, body_class="kbp", head_extra=KB_HEAD))
+
 
 # ---------- 법적 페이지 (약관·개인정보·환불) ----------
 LEGAL_CSS_WRAP = '<div class="lg">'
