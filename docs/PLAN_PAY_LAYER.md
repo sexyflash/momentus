@@ -264,9 +264,15 @@ pay 를 만든 이유는 "자사몰이 좋아서"가 아니라 **"플랫폼으�
 **버튼 배치**: `[네이버로 구매]` 옆에 `[해외에서 구매 — Etsy]`.
 ⚠️ 한국어 방문자에게 나란히 보여주면 혼란스럽다. 보조 버튼으로 낮추거나 언어·지역으로 가른다.
 
-**⚠️ 선행 확인(미확인)**: **Etsy 가 한국 셀러의 대금 지급을 지원하는가**가 진짜 관문이다.
-Etsy Payments 지원 국가에 한국이 포함되는지 확인되지 않았다 — **안 되면 입점 자체가 막힌다. 여기부터 확인할 것.**
-그 밖에 필요한 것: 상품 영문화(제목·설명·이미지) + 플래너 영문판(날짜 형식·주 시작 요일).
+**✅ 선행 관문 통과 (2026-08-04 Etsy 공식 도움말 실측)**
+[Countries Eligible for Etsy Payments](https://help.etsy.com/hc/en-us/articles/115015710408-Countries-Eligible-for-Etsy-Payments)
+목록에 **South Korea\*** 가 있다. 별표 주석: *"Sellers in countries with * next to their names can accept Etsy Payments with a **Payoneer Payment Account**."*
+→ **한국 셀러는 Payoneer 계정으로 대금을 받는다. 입점은 막히지 않는다.**
+💡 Payoneer 는 이미 Paddle 정산 경로로 검토했던 것이다(`notes/PLAN_PADDLE.md` §0) — 새로 뚫는 게 아니다.
+
+**이제 문제는 '가능한가'가 아니라 '팔릴 물건을 만드는가'다.** 남은 준비:
+Payoneer 계정 → Etsy 샵 개설 → **플래너 영문판**(날짜 형식·**주 시작 요일**·공휴일 현지화) →
+리스팅 영문화(Etsy 는 **제목 키워드가 곧 유입**) → USD 가격(국내가 환산 말고 경쟁 리스팅 시세부터).
 
 ---
 
