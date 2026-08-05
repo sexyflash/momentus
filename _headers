@@ -5,3 +5,8 @@
   Access-Control-Allow-Origin: *
   Access-Control-Allow-Methods: GET, OPTIONS
   Access-Control-Allow-Headers: *
+
+# Pretendard 서브셋(92청크)은 파일명이 곧 내용이라 절대 안 바뀐다 — 1년 immutable.
+# 갱신할 땐 파일이 통째로 교체되고 pretendard.css?v= 가 올라가므로 stale 위험이 없다.
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable

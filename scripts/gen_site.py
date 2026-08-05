@@ -33,7 +33,7 @@ CSS = """/* MOMENTUS site.css — v1 */
 :root{--ink:#0b0c0e;--ink2:#3a4150;--paper:#fff;--soft:#f4f5f7;--soft2:#e9ebee;--gray:#5b6270;--faint:#9aa0a8;--line:#e6e8ec;
 --pt:#ff4b26;--ok:#12b76a;--ig:#e1306c;--yt:#ff0033;--pin:#e60023;--coup:#346aff;
 --gut:max(20px,calc((100% - 1200px)/2));
---sans:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Helvetica Neue","Segoe UI",sans-serif;
+--sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Helvetica Neue","Segoe UI",sans-serif;
 --mono:"SF Mono",ui-monospace,Menlo,monospace;--ease:cubic-bezier(.16,1,.3,1)}
 *{box-sizing:border-box}
 body{margin:0;word-break:keep-all;overflow-wrap:break-word;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
@@ -1175,6 +1175,15 @@ CSS += KB_CSS
 # 내용이 바뀌면 URL도 바뀌게 해서 즉시 반영시킨다.
 CSS_VER = hashlib.md5(CSS.encode("utf-8")).hexdigest()[:8]
 
+# 본문 서체 = Pretendard(OFL-1.1) 자체 호스팅. assets/fonts/pretendard/ 는 정적 파일이라
+# 이 생성기가 만들지 않는다 — npm 패키지 dist 를 그대로 커밋해 둔 것이다.
+#   · 동적 서브셋(92청크)을 쓴다. 통짜 variable 은 2MB 라 모든 방문자가 다 받는다.
+#     서브셋은 페이지에 실제 나온 글자 구간만 받아 한글 랜딩 기준 200~350KB 수준.
+#   · 갱신 절차: npm pack pretendard → dist/web/variable/woff2-dynamic-subset/*.woff2 를
+#     assets/fonts/pretendard/ 로, 같은 폴더 CSS 의 url() 을 /assets/fonts/pretendard/ 로
+#     바꿔 assets/fonts/pretendard.css 로 저장 → 아래 FONT_VER 을 올린다.
+FONT_VER = "1.3.9"
+
 def purl(slug):
     """제품 페이지 주소 — 무료 도구는 /tools/, 유료 스포크는 /products/.
        무료 도구를 본 도메인 경로에 두는 이유는 PLATFORM_TOPOLOGY §5(미끼의 유입 권위)."""
@@ -1326,6 +1335,7 @@ def page(title, desc, body, active="", extra="", header=None, body_class="", hea
 <meta name="description" content="{desc}">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
+<link rel="stylesheet" href="/assets/fonts/pretendard.css?v={FONT_VER}">
 <link rel="stylesheet" href="/assets/site.css?v={CSS_VER}">
 <script type="application/ld+json">{JSONLD}</script>
 {head_extra}</head>

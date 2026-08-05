@@ -2,7 +2,7 @@
 
 > 2026-08-04 전면 교체. 제품 카탈로그형 → **콘텐츠 매체형** 구성으로 갈아탔다.
 > 구성 레퍼런스는 blog.kakaobank.com/home. **구성만** 가져왔고 카피·일러스트·로고는 안 썼다.
-> 골격 이식 → 브랜드 색(§3) → 타이포 척도(§4) 완료. 다음은 모바일 실측·이미지 무게(§5).
+> 골격 이식 → 브랜드 색(§3) → 타이포 척도·Pretendard(§4) 완료. 다음은 모바일 실측·이미지 무게(§5).
 
 ## 0. 손대기 전에 반드시
 
@@ -108,17 +108,43 @@
 **척도 밖에 두는 것**(토큰으로 바꾸지 마라): 워드마크 19px(로고에 가깝다),
 아이콘 타일·카테고리 이모지 글리프(텍스트가 아니다).
 
+### 서체 — Pretendard 자체 호스팅 (2026-08-05)
+
+`--sans` 맨 앞이 `"Pretendard Variable"` 이다. **전 사이트 공통**(랜딩만이 아니다).
+전엔 시스템 서체라 Windows 에서 맑은 고딕으로 떨어져 인상이 크게 달라졌다.
+
+- **CDN 을 쓰지 않는다.** `assets/fonts/pretendard/` 에 직접 얹었다. 남의 CDN 이 죽으면
+  우리 서체가 죽는다. OFL-1.1 이라 재배포가 허용된다 — `LICENSE.txt` 를 같이 뒀다.
+- **동적 서브셋 92청크**를 쓴다. 통짜 variable 은 2MB 라 모든 방문자가 전부 받는다.
+  서브셋은 페이지에 실제 나온 글자 구간만 받는다 — 랜딩 실측 **14청크 / 360KB**
+  (+CSS 55KB, 압축 전). 첫 방문만 받고 이후는 캐시.
+- **`_headers` 에 1년 immutable.** 파일명이 곧 내용이라 절대 안 바뀐다.
+  갱신 시엔 파일이 통째로 교체되고 `pretendard.css?v=` 가 올라가므로 stale 위험이 없다.
+- `font-display:swap` — 서체 오기 전엔 시스템 서체로 먼저 보여준다(글자 안 보이는 구간 없음).
+
+**갱신 절차** (`gen_site.py` 의 `FONT_VER` 주석에도 적어 뒀다):
+
+```bash
+npm pack pretendard && tar xzf pretendard-*.tgz
+cp package/dist/web/variable/woff2-dynamic-subset/*.woff2 assets/fonts/pretendard/
+cp package/dist/LICENSE.txt assets/fonts/pretendard/
+sed 's|url(\./woff2-dynamic-subset/|url(/assets/fonts/pretendard/|g' \
+  package/dist/web/variable/pretendardvariable-dynamic-subset.css > assets/fonts/pretendard.css
+# scripts/gen_site.py 의 FONT_VER 을 새 버전으로
+```
+
+⚠️ `assets/fonts/` 는 **생성기가 만들지 않는 정적 자산**이다. `gen_site.py` 에서 찾지 마라.
+
 ## 5. 남은 숙제 — 우선순위
 
 1. **모바일 실측** — 미디어쿼리(860 / 1000 / 620px)는 넣었지만 **실기기로 못 봤다.** 미검증 상태.
 2. **이미지 무게** — `mark.the-moment.us/og-default.png` 가 **2.86MB**이고 화면에선 거의 검게
    보인다. 랜딩 카드·카테고리 카드에 그대로 물려 있어 첫 로딩을 잡아먹는다. 리사이즈하거나
    카드 전용 컷을 따로 만들어야 한다. (히어로의 `draft_user_cover.png` 도 878KB)
-3. **한글 서체** — 지금은 시스템 서체(`--sans`)다. macOS 는 Apple SD Gothic Neo 로 괜찮지만
-   **Windows 는 맑은 고딕으로 떨어져 인상이 크게 달라진다.** Pretendard(OFL) 자체 호스팅이
-   정석이지만 폰트 파일 무게·의존성이 생기므로 대표님 결정 사항으로 남긴다.
-4. **섹션 카피** — "많이 찾는 것", "묶어서 보면 더 좋은 것" 은 임시로 붙인 제목이다.
-5. **시리즈의 빈 썸네일** — 로고 피드 항목엔 이미지가 없어 그라데이션 타일로 때웠다.
+3. **섹션 카피** — "많이 찾는 것", "묶어서 보면 더 좋은 것" 은 임시로 붙인 제목이다.
+4. **시리즈의 빈 썸네일** — 로고 피드 항목엔 이미지가 없어 그라데이션 타일로 때웠다.
+5. **서체 교체 후 미세조정** — 척도·자간은 시스템 서체 기준으로 잡은 값이다.
+   Pretendard 는 메트릭이 달라 자간을 조금 더 열어도 될 수 있다. 실사용 보고 판단.
 
 ## 6. 배포
 
