@@ -139,6 +139,7 @@ optionId가 안정적이므로 **없어도 된다.** 나중에 값어치가 생�
 | `saleStartDate` 사용 시 | `saleEndDate` **필수** (없으면 400) |
 | 날짜 포맷 | `2026-09-05` ❌ → `2026-09-05T12:00:00.000+09:00` ✅ |
 | 옵션 관리코드 길이 | **20자 미만** |
+| **스토어 slug** | `momentus_store` — 상품 URL 은 `https://smartstore.naver.com/momentus_store/products/<channelProductNo>`. **커머스 API 로는 못 얻는다**(판매자 채널 API 403). 저장소에 이미 있었다 — `mark/src/config/site.ts` 의 실제 결제 URL 에 박힌 상품번호가 우리 스토어 것과 일치(2026-08-06 대조 확인). `slack-bot/.env` 의 `NAVER_STORE_SLUG` |
 | 판매상태 변경 전용 엔드포인트 | ❌ 없음(`change-status` 404). **전체수정 PUT**으로 한다 |
 | 전체수정 PUT | GET 결과를 되돌려 넣되 **`statusType` 은 그대로 쓰면 안 된다** — GET 이 주는 `WAIT` 은 파생 상태라 PUT 이 `400 NotValidEnum` 으로 거부한다(2026-08-06 실측). 쓰기 가능한 값으로 정규화하고, 판매대기는 `saleStartDate` 가 유지하게 한다 |
 
