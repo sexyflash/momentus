@@ -133,14 +133,14 @@ optionId가 안정적이므로 **없어도 된다.** 나중에 값어치가 생�
 | 상품 등록 `POST /v2/products` | ✅ **권한 있음** (403 아니라 400 필드요구) |
 | 등록 응답 | `originProductNo` · `smartstoreChannelProductNo` · `originProduct`(옵션 id 포함) |
 | 상품 삭제 `DELETE /v2/products/origin-products/{no}` | ✅ 동작 |
-| **판매상태 지정** | ❌ **`statusType`이 무시된다. 무조건 `SALE`·노출 ON으로 생성** |
+| **판매상태 지정** | ❌ **`statusType`으로는 판매대기를 못 만든다.** 값을 줘도 무시돼 `SALE`·노출 ON 으로 생성되고, `"WAIT"`을 넣으면 아예 **400 `NotValidEnum`** (2026-08-06 추가 실측 — 넣어도 되는 값은 `SALE` 계열뿐) |
 | **재고 0 등록** | ❌ 거부 — *"옵션가 0원·재고 1개 이상·사용여부 Y인 옵션이 최소 1개 필요"* |
 | **판매시작일 미래** | ✅ **`statusType=WAIT`(판매대기)로 태어남** ← 벌크 안전장치 |
 | `saleStartDate` 사용 시 | `saleEndDate` **필수** (없으면 400) |
 | 날짜 포맷 | `2026-09-05` ❌ → `2026-09-05T12:00:00.000+09:00` ✅ |
 | 옵션 관리코드 길이 | **20자 미만** |
 | 판매상태 변경 전용 엔드포인트 | ❌ 없음(`change-status` 404). **전체수정 PUT**으로 한다 |
-| 전체수정 PUT | GET 결과를 그대로 되돌려 넣고 바꿀 필드만 교체하면 안전 |
+| 전체수정 PUT | GET 결과를 되돌려 넣되 **`statusType` 은 그대로 쓰면 안 된다** — GET 이 주는 `WAIT` 은 파생 상태라 PUT 이 `400 NotValidEnum` 으로 거부한다(2026-08-06 실측). 쓰기 가능한 값으로 정규화하고, 판매대기는 `saleStartDate` 가 유지하게 한다 |
 
 ### 4-1. 주문 조회 쪽 제약 (2026-08-05 실측, `slack-bot/naver_commerce.py`)
 
