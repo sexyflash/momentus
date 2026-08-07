@@ -8,3 +8,6 @@
 # PG 심사 자료 — 스크린샷 원본(대용량)은 저장소에 두지 않는다. PDF·회신문만 남긴다.
 docs/pg-review/*.jpg
 docs/pg-review/결제경로.html
+
+# 개인 권한 설정(기기별로 다름). 훅·스킬은 팀 공용이라 커밋한다.
+.claude/settings.local.json

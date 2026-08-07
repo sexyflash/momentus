@@ -13,6 +13,10 @@
 > 🧭 **제품을 만들고·묶고·전시하는 규칙은 [docs/PRODUCT_SYSTEM.md](docs/PRODUCT_SYSTEM.md) 가 정본.**
 > 새 제품 추가·리스트 개편·앱 페이지 작업 전에 먼저 읽어라. tools/apps/products 축 판단,
 > 리스트 정렬축, 에이전트용 전시 층(층 2), `/l/` 영구 링크 규칙, 접는 절차가 거기 있다.
+> 🔍 **SEO/GEO(검색·AI 노출)는 [docs/SEO_GEO.md](docs/SEO_GEO.md) 가 정본 — 전 도메인 공통.**
+> 페이지를 새로 만들거나 `<head>` 를 건드리기 전에 먼저 읽어라. `<head>` 필수 9종,
+> 페이지 유형별 JSON-LD 표, "봇은 JS 를 안 돌린다" 규칙, 배포 전 검증 명령, 금지 목록이 거기 있다.
+> **개별 저장소(notes·cue·mark·heyreci)에 SEO 규칙을 따로 적지 마라 — 그 문서로 링크해라.**
 > 💳 **결제·계정(pay./id.) 구조는 [docs/PLAN_PAY_LAYER.md](docs/PLAN_PAY_LAYER.md) 가 정본.**
 > 결제 버튼·주문·이행·문의·로그인을 건드리기 전에 먼저 읽어라. PG(포스타트) 서면 확인 사항,
 > "sku만 넘긴다" 계약, 이메일=신원 결정, 하면 안 되는 것 목록(§8)이 거기 있다.

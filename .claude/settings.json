@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/scripts/hook_seo_check.py\"",
+            "timeout": 60,
+            "statusMessage": "SEO 점검 중"
+          }
+        ]
+      }
+    ]
+  }
+}
