@@ -33,7 +33,9 @@
   --mmt-fs-ctrl: 15px;
   --mmt-fw-ctrl: 700;
   --mmt-ctrl-pad: 14px 28px;
-  --mmt-ctrl-pad-lg: 17px 40px;   /* 히어로 CTA */
+  /* 히어로 CTA 는 **일부러 크다** — 사장님 확정(2026-08-07): "히어로만 크게 두는 게 맞아".
+     🚫 "통일이 안 됐다"고 --mmt-ctrl-pad 로 합치지 마라. 크기 계층은 두되 값만 공유한다. */
+  --mmt-ctrl-pad-lg: 17px 40px;
   --mmt-ctrl-pad-sm: 10px 18px;   /* 보조·인라인 */
   --mmt-ctrl-gap: 8px;            /* 아이콘 ↔ 글자 */
 
