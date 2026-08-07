@@ -1253,7 +1253,9 @@ FOOTER = f"""<footer class="site">
   <div class="brand"><div class="wm">MOMENTUS</div><p>쓸모 있는 것만<br>만듭니다.</p></div>
   <div><h4>제품</h4>{_FT_SPOKES}</div>
   <div><h4>무료 도구</h4>{_FT_TOOLS}</div>
-  <div><h4>모멘터스</h4><a href="/log/">로그</a><a href="/about/">소개</a><a href="mailto:{BIZ['email']}">문의하기</a><a href="/legal/terms/">이용약관</a><a href="/legal/privacy/">개인정보처리방침</a><a href="/legal/refund/">환불 규정</a></div>
+  <!-- 🚫 문의하기를 mailto 로 되돌리지 마라 — 2026-08-07. mailto 는 기록이 아무 데도 안 남아
+       봇도 못 보고 이력도 없었다. 창구는 /inquiry/ 하나다(단일 원장 inquiries). -->
+  <div><h4>모멘터스</h4><a href="/log/">로그</a><a href="/about/">소개</a><a href="/inquiry/">문의하기</a><a href="/how-to-pay/">결제 안내</a><a href="/legal/terms/">이용약관</a><a href="/legal/privacy/">개인정보처리방침</a><a href="/legal/refund/">환불 규정</a></div>
   <div class="biz">
     <span>{BIZ['name']}</span><span>대표 {BIZ['ceo']}</span><span>사업자등록번호 {BIZ['reg']}</span><span>통신판매업신고 {BIZ['mail_order']}</span>
     <span>{BIZ['addr']}</span><span>{BIZ['tel']}</span><span>{BIZ['email']}</span><span>개인정보보호책임자 {BIZ['privacy_officer']}</span>
@@ -1333,8 +1335,14 @@ def page(title, desc, body, active="", extra="", header=None, body_class="", hea
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MOMENTUS">
+<meta property="og:locale" content="ko_KR">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{desc}">
 <link rel="stylesheet" href="/assets/fonts/pretendard.css?v={FONT_VER}">
 <link rel="stylesheet" href="/assets/site.css?v={CSS_VER}">
 <script type="application/ld+json">{JSONLD}</script>
@@ -2717,6 +2725,216 @@ for slug, title, body, desc in [
     with open(f"legal/{slug}/index.html", "w", encoding="utf-8") as fh:
         fh.write(page(f"{title} — MOMENTUS", desc, body, active=""))
 
+# ---------- 문의 단일 창구 /inquiry/ · 스레드 /i/ · 결제 안내 /how-to-pay/ ----------
+# 사장님 2026-08-07: "각기 전투할 게 아니라 하나가 돼야 된다."
+#   그전엔 mark=자체 폼, notes /business=mailto, apex 푸터=mailto 로 셋이 제각각이었고
+#   mailto 둘은 **기록이 안 남아** 봇도 못 보고 이력도 없었다. 창구를 여기 하나로 모은다.
+#
+# 설계: 대화의 본체는 **웹 스레드**, 이메일은 "새 답변 왔어요" 봉투.
+#   발송은 Resend(발신 전용)라 "이메일이 본체"인 설계는 반드시 반쪽이 된다 —
+#   고객 회신이 원장 밖으로 흩어져 신청 내역과 끊긴다. 본체를 웹에 두면 그 약점이 사라진다.
+# 🚫 여기(정적 페이지)에 가격을 박지 마라. 맞춤 제작은 상담에서 견적을 낸다(mark 룰과 같은 이유).
+INQ_API = "https://pay.the-moment.us/api/inquiry"
+
+INQ_CSS = """<style>
+.iq{max-width:640px;margin:0 auto;padding:0 24px}
+.iq h1{font-size:30px;letter-spacing:-.02em;margin:0 0 10px}
+.iq .sub{color:#909090;margin:0 0 30px}
+.iq label{display:block;margin:0 0 18px;font-size:14px;font-weight:600}
+.iq label>span{display:block;margin:0 0 7px}
+.iq input[type=text],.iq input[type=email],.iq textarea,.iq select{
+  width:100%;padding:13px 14px;border:1px solid #E4E4E4;border-radius:10px;font:inherit;
+  font-weight:400;background:#fff;color:#111}
+.iq textarea{min-height:150px;resize:vertical;line-height:1.7}
+.iq .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.iq .go{display:inline-block;background:#111;color:#fff;border:0;border-radius:10px;
+  padding:14px 30px;font:inherit;font-weight:700;cursor:pointer}
+.iq .go[disabled]{opacity:.5;cursor:default}
+.iq .err{color:#D33;font-size:14px;margin:0 0 14px;min-height:20px}
+.iq .note{color:#909090;font-size:13px;line-height:1.8;margin:18px 0 0}
+.iq .done{background:#F7F8F9;border-radius:14px;padding:26px}
+.iq .done b{font-size:18px;display:block;margin:0 0 8px}
+.iq .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:700}
+.iq .thr{display:grid;gap:14px;margin:26px 0}
+.iq .msg{border-radius:14px;padding:16px 18px;white-space:pre-wrap;line-height:1.75}
+.iq .msg.me{background:#F7F8F9}
+.iq .msg.us{background:#111;color:#fff}
+.iq .msg .who{font-size:12px;font-weight:700;opacity:.6;margin:0 0 6px}
+html[data-theme="dark"] .iq input,html[data-theme="dark"] .iq textarea,
+html[data-theme="dark"] .iq select{background:#151515;color:#EAEAEA;border-color:#2A2A2A}
+html[data-theme="dark"] .iq .done,html[data-theme="dark"] .iq .msg.me{background:#151515}
+html[data-theme="dark"] .iq .go{background:#EAEAEA;color:#111}
+html[data-theme="dark"] .iq .msg.us{background:#EAEAEA;color:#111}
+</style>"""
+
+INQUIRY = f"""<div class="iq">
+  <h1>문의하기</h1>
+  <p class="sub">로고 제작, 기업·단체 플래너, 그 밖에 무엇이든 남겨주세요.<br>영업일 기준 <b>하루 안에</b> 답변드립니다.</p>
+  <div class="err" id="err"></div>
+  <form id="f">
+    <label><span>무엇을 도와드릴까요?</span>
+      <select name="topic" id="topic">
+        <option>로고 제작 (마크)</option>
+        <option>기업·단체 플래너 (노트)</option>
+        <option>플래너 구매·다운로드</option>
+        <option>그 외</option>
+      </select></label>
+    <label><span>회신받을 이메일</span>
+      <input type="email" name="email" required placeholder="hello@example.com" autocomplete="email"></label>
+    <label><span>회사·가게 이름 <em style="font-weight:400;color:#909090">(선택)</em></span>
+      <input type="text" name="name" maxlength="60" autocomplete="organization"></label>
+    <label><span>내용</span>
+      <textarea name="body" required placeholder="어떤 걸 찾으시는지, 일정이나 예산이 있다면 함께 적어주세요."></textarea></label>
+    <label class="hp" aria-hidden="true" tabindex="-1"><span>이 칸은 비워두세요</span>
+      <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+    <button class="go" type="submit" id="go">문의 보내기</button>
+  </form>
+  <p class="note">보내주신 이메일은 답변을 드리는 데에만 씁니다.<br>
+    결제가 어떻게 진행되는지는 <a href="/how-to-pay/">결제 안내</a>에서 미리 보실 수 있습니다.</p>
+</div>
+<script>
+(function(){{
+  var qs=new URLSearchParams(location.search);
+  var pre=qs.get('topic'); if(pre){{ var o=[].find.call(document.getElementById('topic').options,
+    function(x){{return x.text.indexOf(pre)>=0}}); if(o) o.selected=true; }}
+  var ctx=null; try{{ ctx=qs.get('ctx')?JSON.parse(decodeURIComponent(qs.get('ctx'))):null }}catch(e){{}}
+  // 유입 페이지에서 이미 적은 말이 있으면 옮겨 담는다 — 같은 걸 두 번 쓰게 하지 않는다.
+  var pf=qs.get('prefill'); if(pf) document.querySelector('[name=body]').value=pf;
+  // 무엇을 보고 왔는지 화면에도 보여준다. 안 보여주면 "내 선택이 전달됐나?" 불안해진다.
+  if(ctx){{
+    var rows=Object.keys(ctx).filter(function(k){{var v=ctx[k];return v&&v.length}})
+      .map(function(k){{var v=ctx[k];return '<div style="display:flex;gap:10px"><span style="color:#909090;min-width:64px">'+k+'</span><span>'+
+        (Array.isArray(v)?v.length+'개':String(v))+'</span></div>'}}).join('');
+    if(rows) document.getElementById('f').insertAdjacentHTML('beforebegin',
+      '<div class="done" style="margin:0 0 24px;font-size:14px"><b style="font-size:14px">고르신 내용이 함께 전달됩니다</b>'+rows+'</div>');
+  }}
+  document.getElementById('f').addEventListener('submit',async function(e){{
+    e.preventDefault();
+    var f=e.target,b=document.getElementById('go'),err=document.getElementById('err');
+    err.textContent=''; b.disabled=true; b.textContent='보내는 중…';
+    var payload={{source:qs.get('from')||'apex',topic:f.topic.value,email:f.email.value,
+      name:f.name.value,body:f.body.value,website:f.website.value,context:ctx,page:location.href}};
+    try{{
+      var r=await fetch('{INQ_API}',{{method:'POST',headers:{{'Content-Type':'application/json'}},
+        body:JSON.stringify(payload)}});
+      var d=await r.json();
+      if(!r.ok){{ throw new Error(d.error||'잠시 후 다시 시도해 주세요.') }}
+      document.querySelector('.iq').innerHTML=
+        '<div class="done"><b>문의가 접수되었습니다 ✓</b>'+
+        '<p style="margin:0 0 14px">접수번호 <span class="code">'+d.id+'</span> · 영업일 기준 하루 안에 답변드립니다.</p>'+
+        '<p style="margin:0 0 18px">접수 확인 메일을 보내드렸습니다. 아래에서 <b>진행 상황을 보고 이어서 대화</b>하실 수 있어요.</p>'+
+        '<p style="margin:0"><a class="go" href="'+d.url+'" style="text-decoration:none">문의 내용 보기 · 대화하기</a></p>'+
+        '<p class="note">결제 진행 방법은 <a href="/how-to-pay/">결제 안내</a>를 참고해 주세요.</p></div>';
+      window.scrollTo({{top:0,behavior:'smooth'}});
+    }}catch(ex){{
+      err.textContent=ex.message; b.disabled=false; b.textContent='문의 보내기';
+    }}
+  }});
+}})();
+</script>"""
+
+THREAD = f"""<div class="iq">
+  <h1 id="h">문의 내용</h1>
+  <p class="sub" id="meta">불러오는 중…</p>
+  <div class="thr" id="thr"></div>
+  <div id="box" hidden>
+    <div class="err" id="err"></div>
+    <label><span>이어서 말씀해 주세요</span>
+      <textarea id="body" placeholder="추가로 알려주실 내용이 있으면 적어주세요."></textarea></label>
+    <button class="go" id="go" type="button">보내기</button>
+  </div>
+  <p class="note">이 페이지 주소가 곧 열쇠입니다. 회원가입 없이 언제든 다시 열어 확인하실 수 있어요.<br>
+    <a href="/how-to-pay/">결제는 이렇게 진행됩니다 →</a></p>
+</div>
+<script>
+(function(){{
+  var qs=new URLSearchParams(location.search),id=qs.get('id')||'',k=qs.get('k')||'';
+  var thr=document.getElementById('thr'),meta=document.getElementById('meta');
+  function esc(s){{var d=document.createElement('div');d.textContent=s;return d.innerHTML}}
+  function when(ms){{var d=new Date(ms);return d.getFullYear()+'.'+(d.getMonth()+1)+'.'+d.getDate()+
+    ' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}}
+  async function load(){{
+    if(!id||!k){{ meta.textContent='주소가 올바르지 않습니다. 접수 확인 메일의 링크로 들어와 주세요.'; return }}
+    var r=await fetch('{INQ_API}/thread?id='+encodeURIComponent(id)+'&k='+encodeURIComponent(k));
+    if(!r.ok){{ meta.textContent='문의를 찾을 수 없습니다. 링크가 정확한지 확인해 주세요.'; return }}
+    var d=await r.json();
+    document.getElementById('h').textContent='문의 '+d.id;
+    meta.innerHTML=esc(d.topic)+' · 접수 '+when(d.created_at)+
+      (d.status==='replied'?' · <b>답변 완료</b>':' · 답변 준비 중');
+    thr.innerHTML=d.messages.map(function(m){{
+      return '<div class="msg '+(m.author==='momentus'?'us':'me')+'">'+
+        '<div class="who">'+(m.author==='momentus'?'모멘터스':'보내신 내용')+' · '+when(m.created_at)+'</div>'+
+        esc(m.body)+'</div>' }}).join('');
+    document.getElementById('box').hidden=false;
+  }}
+  document.getElementById('go').addEventListener('click',async function(){{
+    var t=document.getElementById('body'),b=this,err=document.getElementById('err');
+    if(!t.value.trim()) return t.focus();
+    err.textContent=''; b.disabled=true; b.textContent='보내는 중…';
+    try{{
+      var r=await fetch('{INQ_API}/reply',{{method:'POST',headers:{{'Content-Type':'application/json'}},
+        body:JSON.stringify({{id:id,k:k,body:t.value}})}});
+      var d=await r.json(); if(!r.ok) throw new Error(d.error||'잠시 후 다시 시도해 주세요.');
+      t.value=''; await load();
+    }}catch(ex){{ err.textContent=ex.message }}
+    b.disabled=false; b.textContent='보내기';
+  }});
+  load();
+}})();
+</script>"""
+
+HOW_TO_PAY = """<div class="lg">
+  <div class="lg-head">
+    <h1>결제는 이렇게 진행됩니다</h1>
+    <p class="upd">상품 성격에 따라 두 갈래입니다.</p>
+  </div>
+  <div class="lg-body">
+    <h2>1. 바로 살 수 있는 것 — 플래너 · 이용권</h2>
+    <p>이미 만들어져 있어 <b>결제 즉시 받으시는</b> 상품입니다. 각 서비스에서 바로 구매하시면 됩니다.</p>
+    <ul>
+      <li><b>디지털 플래너</b> — <a href="https://notes.the-moment.us/shop">노트에서 보기</a>. 결제 후 다운로드 링크를 바로 보내드립니다.</li>
+      <li><b>큐 이용권</b> — <a href="https://cue.the-moment.us/pricing">큐에서 보기</a>. 결제 후 이용권 코드를 메일로 보내드립니다.</li>
+    </ul>
+
+    <h2>2. 맞춤으로 만드는 것 — 로고 · 기업 플래너</h2>
+    <p>사람이 직접 작업하는 상품이라 <b>가격을 미리 걸어두지 않습니다.</b> 무엇을 만드시는지에 따라 범위와 일정이 달라지기 때문입니다. 순서는 이렇습니다.</p>
+    <ol>
+      <li><b>문의</b> — <a href="/inquiry/">문의하기</a>에 원하시는 것을 남겨주세요.</li>
+      <li><b>상담</b> — 영업일 하루 안에 답변드립니다. 범위·일정·견적을 함께 정리해 드립니다.
+        대화는 문의 페이지에서 이어지고, 새 답변이 달리면 메일로 알려드립니다.</li>
+      <li><b>확정</b> — 내용이 정해지면 <b>결제 링크를 보내드립니다.</b></li>
+      <li><b>결제</b> — 보내드린 링크(네이버 스마트스토어)에서 결제하시면 됩니다.
+        카드·계좌이체·네이버페이 모두 되고, 구매확정 전까지 네이버가 결제를 보관합니다.</li>
+      <li><b>작업 시작</b> — 결제가 확인되면 바로 착수합니다.</li>
+    </ol>
+    <p>맞춤 제작을 문의 없이 바로 결제하시는 길은 따로 두지 않았습니다. 무엇을 받으실지 서로 합의되기 전에 돈이 오가지 않는 편이 안전하기 때문입니다.</p>
+
+    <h2>3. 영수증 · 세금계산서</h2>
+    <p>네이버 스마트스토어 결제는 구매 내역에서 영수증을 바로 받으실 수 있습니다.
+      세금계산서가 필요하시면 사업자등록증을 <a href="/inquiry/">문의하기</a>로 보내주세요.</p>
+
+    <h2>4. 환불</h2>
+    <p>상품별 환불·청약철회 기준은 <a href="/legal/refund/">환불 규정</a>에 있습니다.</p>
+
+    <h2>5. 사업자 정보</h2>
+    """ + BIZ_TABLE + """
+  </div>
+</div>"""
+
+for _slug, _title, _body, _desc, _noindex in [
+    ("inquiry", "문의하기", INQUIRY,
+     "로고 제작·기업 플래너·그 밖의 문의를 남겨주세요. 영업일 기준 하루 안에 답변드립니다.", False),
+    ("i", "문의 내용", THREAD,
+     "접수하신 문의의 진행 상황을 확인하고 이어서 대화하실 수 있습니다.", True),
+    ("how-to-pay", "결제 안내", HOW_TO_PAY,
+     "모멘터스 상품의 결제 방법 — 바로 구매하는 상품과 맞춤 제작 상품의 진행 순서.", False),
+]:
+    os.makedirs(_slug, exist_ok=True)
+    # /i/ 는 개인 스레드라 색인 대상이 아니다. 링크 토큰이 검색에 노출되면 안 된다.
+    _extra_head = INQ_CSS + ('<meta name="robots" content="noindex,nofollow">' if _noindex else "")
+    with open(f"{_slug}/index.html", "w", encoding="utf-8") as fh:
+        fh.write(page(f"{_title} — MOMENTUS", _desc, _body, active="", head_extra=_extra_head))
+
 # 크롬 웹스토어가 참조하는 기존 URL 유지 (내용만 교체)
 os.makedirs("apps", exist_ok=True)
 with open("apps/privacy-policy.html", "w", encoding="utf-8") as fh:
@@ -2973,7 +3191,9 @@ if LINKS.get("map"):
         f.write("\n")
 
 # ---------- sitemap ----------
-urls = ["", "about/", "tools/", "legal/privacy/", "legal/terms/", "legal/refund/"] \
+# /i/ 는 개인 스레드라 뺀다(링크 토큰 노출 금지).
+urls = ["", "about/", "tools/", "inquiry/", "how-to-pay/",
+        "legal/privacy/", "legal/terms/", "legal/refund/"] \
     + [purl(s).lstrip("/") for s in ORDER] \
     + [f"apps/{s}/{sub}" for s in APPS for sub in ("", "setup/", "support/")] \
     + ["stories/"] + [f"stories/{s}/" for s in PORDER] + [f"stories/tag/{k}/" for k, _ in STORY_TAGS]
@@ -3054,7 +3274,14 @@ llms = f"""# 모멘터스 (MOMENTUS)
 with open("llms.txt", "w", encoding="utf-8") as f:
     f.write(llms)
 
-# ── canonical / og:url 후처리 ───────────────────────────────────────────────
+# ── OG 이미지 생성 (og/*.png) ──────────────────────────────────────────────
+# 매니페스트에서 1200×630 을 굽는다. 실패해도 빌드를 죽이지 않는다(gen_og.py 참조).
+import subprocess as _sp, sys as _sys
+_sp.run([_sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), "gen_og.py")],
+        check=False)
+
+
+# ── canonical / og:url / og:image 후처리 ───────────────────────────────────
 # page() 호출부가 17곳이라 인자를 하나 더 받게 하면 어딘가는 반드시 빠뜨린다.
 # canonical 은 본래 **출력 경로에서 기계적으로 도출되는 값**이므로 마지막에 한 번에 주입한다.
 # → 앞으로 페이지를 추가해도 자동으로 붙는다(빠뜨릴 수가 없다).
@@ -3065,7 +3292,9 @@ import glob as _glob, re as _re
 
 _canon_n = 0
 for _p in _glob.glob("**/*.html", recursive=True):
-    if _p.startswith(("node_modules/", "design-review/")) or "/404" in _p or _p.startswith("naver"):
+    # `_` 로 시작하는 경로는 실험용 로컬 산출물이다(배포 안 됨, 라이브 404 확인 2026-08-07).
+    if (_p.startswith(("node_modules/", "design-review/", "_")) or "/404" in _p
+            or _p.startswith("naver")):
         continue
     _s = open(_p, encoding="utf-8").read()
     if "/assets/site.css?v=" not in _s:          # 생성기 산출물이 아니면 건너뛴다
@@ -3080,8 +3309,26 @@ for _p in _glob.glob("**/*.html", recursive=True):
     else:
         _rel = _p[:-len(".html")]               # foo/bar.html   → foo/bar  (확장자 없이 서빙됨)
     _url = "https://the-moment.us/" + _rel
-    _tags = f'<link rel="canonical" href="{_url}">\n<meta property="og:url" content="{_url}">'
-    _s2 = _re.sub(r'\n?<link rel="canonical"[^>]*>|\n?<meta property="og:url"[^>]*>', "", _s)
+
+    # og:image 도 **경로에서 기계적으로 도출한다** — canonical 과 같은 이유다.
+    # `/products/cue/` · `/tools/cue/` → og/cue.png, 없으면 og/default.png.
+    # 새 페이지를 추가해도 최소한 기본 이미지는 반드시 붙는다(빠뜨릴 수가 없다).
+    # 🚫 손으로 og:image 를 박지 마라. 여기서 덮어쓴다.
+    _seg = [x for x in _rel.split("/") if x]
+    _cand = next((s for s in reversed(_seg)
+                  if os.path.exists(os.path.join("og", f"{s}.png"))), None)
+    if _cand is None and _seg:
+        _cand = {"stories": "stories", "about": "about", "tools": "tools"}.get(_seg[0])
+    _img = f"https://the-moment.us/og/{_cand or 'default'}.png"
+
+    _tags = (f'<link rel="canonical" href="{_url}">\n'
+             f'<meta property="og:url" content="{_url}">\n'
+             f'<meta property="og:image" content="{_img}">\n'
+             f'<meta name="twitter:image" content="{_img}">')
+    _s2 = _re.sub(r'\n?<link rel="canonical"[^>]*>'
+                  r'|\n?<meta property="og:url"[^>]*>'
+                  r'|\n?<meta property="og:image"[^>]*>'
+                  r'|\n?<meta name="twitter:image"[^>]*>', "", _s)
     _s2 = _s2.replace('<meta property="og:title"', _tags + '\n<meta property="og:title"', 1)
     if _s2 != _s:
         open(_p, "w", encoding="utf-8").write(_s2)
