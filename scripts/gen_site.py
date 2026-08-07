@@ -1239,7 +1239,7 @@ BIZ = dict(
     reg="113-34-00602",
     mail_order="2024-서울양천-1300호",
     addr="서울특별시 양천구 신월로 99",
-    tel="010-7613-7327",
+    tel="010-7613-7327",  # 표기는 유지(통신판매업 표시사항) — 단, 상담 채널은 이메일 전용으로 안내
     email="hello.momentus@gmail.com",
     privacy_officer="강형모",
     updated="2026. 07. 28",
@@ -1257,7 +1257,7 @@ FOOTER = f"""<footer class="site">
   <div class="biz">
     <span>{BIZ['name']}</span><span>대표 {BIZ['ceo']}</span><span>사업자등록번호 {BIZ['reg']}</span><span>통신판매업신고 {BIZ['mail_order']}</span>
     <span>{BIZ['addr']}</span><span>{BIZ['tel']}</span><span>{BIZ['email']}</span><span>개인정보보호책임자 {BIZ['privacy_officer']}</span>
-    <span>문의는 이메일로 주시면 가장 빠르게 도와드릴 수 있습니다.</span>
+    <span>고객 문의는 이메일로만 받습니다. 이메일로 주시면 가장 빠르게 도와드릴 수 있습니다.</span>
   </div>
   <div class="legal"><span>© 2026 모멘터스</span><span>the-moment.us</span></div>
 </footer>"""
@@ -2555,7 +2555,7 @@ BIZ_TABLE = f"""<table class="lg-biz">
 <tr><th>통신판매업신고</th><td>{BIZ['mail_order']}</td></tr>
 <tr><th>사업장 주소</th><td>{BIZ['addr']}</td></tr>
 <tr><th>전화</th><td>{BIZ['tel']}</td></tr>
-<tr><th>이메일</th><td><a href="mailto:{BIZ['email']}">{BIZ['email']}</a></td></tr>
+<tr><th>이메일</th><td><a href="mailto:{BIZ['email']}">{BIZ['email']}</a> (고객 문의는 이메일로만 받습니다)</td></tr>
 <tr><th>개인정보보호책임자</th><td>{BIZ['privacy_officer']}</td></tr>
 </table>"""
 
@@ -2701,7 +2701,7 @@ REFUND = f"""{LEGAL_CSS_WRAP}
 
     <h2>4. 환불 절차</h2>
     <p>아래로 연락 주시면 3영업일 이내 회신하고, 승인 시 7영업일 이내 결제 수단으로 환불합니다.</p>
-    <p><a href="mailto:{BIZ['email']}">{BIZ['email']}</a> · {BIZ['tel']}</p>
+    <p><a href="mailto:{BIZ['email']}">{BIZ['email']}</a> (환불 문의는 이메일로만 받습니다)</p>
 
     <h2>5. 사업자 정보</h2>
     {BIZ_TABLE}
