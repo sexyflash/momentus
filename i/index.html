@@ -18,7 +18,8 @@
 <meta name="twitter:title" content="문의 내용 — MOMENTUS">
 <meta name="twitter:description" content="접수하신 문의의 진행 상황을 확인하고 이어서 대화하실 수 있는 페이지입니다. 회원가입 없이 접수 시 받은 링크로 바로 들어옵니다.">
 <link rel="stylesheet" href="/assets/fonts/pretendard.css?v=1.3.9">
-<link rel="stylesheet" href="/assets/site.css?v=50a6a0ec">
+<link rel="stylesheet" href="/assets/momentus.css">
+<link rel="stylesheet" href="/assets/site.css?v=96794ddb">
 <style>
 /* 폼 컨트롤만 정의한다. 페이지 골격(여백·제목·본문)은 apex 의 .lg/.lg-head/.lg-body 를
    그대로 쓴다 — 2026-08-07 사고: 자체 컨테이너를 만들었더니 고정 헤더(56px) 보정이 빠져
@@ -29,13 +30,17 @@
 .iq-f label>span{display:block;margin:0 0 8px}
 .iq-f label em{font-weight:400;color:#909090;font-style:normal}
 .iq-f input[type=text],.iq-f input[type=email],.iq-f textarea,.iq-f select{
-  width:100%;padding:13px 14px;border:1px solid #E4E4E4;border-radius:10px;
-  font:inherit;font-weight:400;background:#fff;color:#202020}
+  width:100%;padding:var(--mmt-field-pad,14px 16px);
+  border:var(--mmt-field-bw,1px) solid var(--mmt-line,#e9e9e9);
+  border-radius:var(--mmt-r-field,12px);font:inherit;
+  font-size:var(--mmt-fs-field,15px);font-weight:400;background:#fff;color:#202020}
 .iq-f textarea{min-height:150px;resize:vertical;line-height:1.7}
 .iq-f input:focus,.iq-f textarea:focus,.iq-f select:focus{outline:none;border-color:#202020}
 .iq-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.iq-go{display:inline-block;background:#202020;color:#fff;border:0;border-radius:10px;
-  padding:14px 30px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none}
+.iq-go{display:inline-block;background:#202020;color:#fff;border:0;
+  border-radius:var(--mmt-r-ctrl,999px);padding:var(--mmt-ctrl-pad,14px 28px);
+  font:inherit;font-size:var(--mmt-fs-ctrl,15px);font-weight:var(--mmt-fw-ctrl,700);
+  cursor:pointer;text-decoration:none}
 .iq-go[disabled]{opacity:.5;cursor:default}
 .iq-err{color:#D33;font-size:14px;min-height:20px}
 .iq-card{background:#F7F8F9;border-radius:14px;padding:26px}

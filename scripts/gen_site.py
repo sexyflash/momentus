@@ -127,7 +127,7 @@ border-radius:10px;background:var(--soft2);font-size:17px}
 .tls-row .mt{flex:0 0 auto;font-family:var(--mono);font-size:11.5px;color:var(--faint);white-space:nowrap}
 @media(max-width:640px){.tls-row .mt{display:none}.tls-head{padding-top:64px}}
 main{padding-top:56px}
-.vd-qa{max-width:760px;margin:64px auto 0;padding:0 20px}.vd-qa>h2{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:0 0 24px;color:var(--ink)}.vd-qa-i{padding:20px 0;border-top:1px solid var(--line)}.vd-qa-i h3{font-size:17px;font-weight:700;margin:0 0 8px;color:var(--ink);letter-spacing:-.01em}.vd-qa-i p{margin:0;font-size:15px;line-height:1.7;color:var(--gray)}.btn{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-size:14px;font-weight:600;padding:12px 22px;border-radius:99px;border:none;cursor:pointer}
+.vd-qa{max-width:760px;margin:64px auto 0;padding:0 20px}.vd-qa>h2{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:0 0 24px;color:var(--ink)}.vd-qa-i{padding:20px 0;border-top:1px solid var(--line)}.vd-qa-i h3{font-size:17px;font-weight:700;margin:0 0 8px;color:var(--ink);letter-spacing:-.01em}.vd-qa-i p{margin:0;font-size:15px;line-height:1.7;color:var(--gray)}.btn{display:inline-flex;align-items:center;gap:var(--mmt-ctrl-gap,8px);background:var(--ink);color:#fff;font-size:var(--mmt-fs-ctrl,15px);font-weight:var(--mmt-fw-ctrl,700);padding:var(--mmt-ctrl-pad,14px 28px);border-radius:var(--mmt-r-ctrl,999px);border:none;cursor:pointer}
 .btn:hover{opacity:.87}.btn.lg{font-size:15px;padding:14px 26px}
 .btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
 .btn.drag{border:2px dashed var(--pt);color:var(--pt);background:#fff5f2;cursor:grab;font-weight:800}
@@ -759,7 +759,7 @@ body:has(.vd){padding-bottom:88px}
 /* ---- 법적 페이지 (약관·개인정보·환불) + 푸터 사업자 표기 ---- */
 .lg{max-width:760px;margin:0 auto;padding:0 24px}
 .lg-head{padding:calc(56px + 90px) 0 0;border-bottom:1px solid #EAEAEA;padding-bottom:32px}
-.lg-head h1{font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-.03em;color:#202020}
+.lg-head h1{font-size:var(--mmt-fs-page-title,clamp(28px,3.4vw,40px));font-weight:var(--mmt-fw-page-title,700);letter-spacing:var(--mmt-ls-page-title,-.03em);color:#202020}
 .lg-head .upd{margin-top:12px;font-size:14px;color:#909090}
 .lg-body{padding:48px 0 120px}
 .lg-body p{font-size:16px;line-height:1.85;color:#5A5A5A}
@@ -1375,6 +1375,7 @@ def page(title, desc, body, active="", extra="", header=None, body_class="", hea
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{desc}">
 <link rel="stylesheet" href="/assets/fonts/pretendard.css?v={FONT_VER}">
+<link rel="stylesheet" href="/assets/momentus.css">
 <link rel="stylesheet" href="/assets/site.css?v={CSS_VER}">
 <script type="application/ld+json">{JSONLD}</script>
 {head_extra}</head>
@@ -2801,13 +2802,17 @@ INQ_CSS = """<style>
 .iq-f label>span{display:block;margin:0 0 8px}
 .iq-f label em{font-weight:400;color:#909090;font-style:normal}
 .iq-f input[type=text],.iq-f input[type=email],.iq-f textarea,.iq-f select{
-  width:100%;padding:13px 14px;border:1px solid #E4E4E4;border-radius:10px;
-  font:inherit;font-weight:400;background:#fff;color:#202020}
+  width:100%;padding:var(--mmt-field-pad,14px 16px);
+  border:var(--mmt-field-bw,1px) solid var(--mmt-line,#e9e9e9);
+  border-radius:var(--mmt-r-field,12px);font:inherit;
+  font-size:var(--mmt-fs-field,15px);font-weight:400;background:#fff;color:#202020}
 .iq-f textarea{min-height:150px;resize:vertical;line-height:1.7}
 .iq-f input:focus,.iq-f textarea:focus,.iq-f select:focus{outline:none;border-color:#202020}
 .iq-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.iq-go{display:inline-block;background:#202020;color:#fff;border:0;border-radius:10px;
-  padding:14px 30px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none}
+.iq-go{display:inline-block;background:#202020;color:#fff;border:0;
+  border-radius:var(--mmt-r-ctrl,999px);padding:var(--mmt-ctrl-pad,14px 28px);
+  font:inherit;font-size:var(--mmt-fs-ctrl,15px);font-weight:var(--mmt-fw-ctrl,700);
+  cursor:pointer;text-decoration:none}
 .iq-go[disabled]{opacity:.5;cursor:default}
 .iq-err{color:#D33;font-size:14px;min-height:20px}
 .iq-card{background:#F7F8F9;border-radius:14px;padding:26px}
