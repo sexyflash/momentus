@@ -8,6 +8,11 @@
 set -uo pipefail
 cd "$(dirname "$0")/.." || exit 1
 
+# ⚠️ 생성물 경로는 **한 곳에만** 적는다. 두 군데(diff 검사 / git add)에 따로 적었더니
+#    how-to-pay·i·inquiry 가 add 목록에서만 빠져 **생성은 되는데 커밋은 안 되는** 상태로
+#    방치됐다(2026-08-07 발견). 새 최상위 생성 경로를 만들면 여기 한 줄만 추가해라.
+GEN_PATHS="index.html stories tools products about legal apps og how-to-pay inquiry i sitemap.xml robots.txt llms.txt"
+
 echo "───────── $(date '+%Y-%m-%d %H:%M:%S') 재빌드 시작"
 
 # ⚠️ 2026-07-28 사고 재발 방지 — 옛 상태로 배포해 사이트가 통째로 되돌아갔다.
@@ -24,7 +29,7 @@ if ! python3 scripts/gen_site.py; then
   exit 1
 fi
 
-if git diff --quiet -- index.html stories tools products about legal apps og sitemap.xml data/stream_cache.json 2>/dev/null; then
+if git diff --quiet -- $GEN_PATHS data/stream_cache.json 2>/dev/null; then
   echo "= 변경 없음 — 커밋·배포 건너뜀"
   exit 0
 fi
@@ -32,7 +37,7 @@ fi
 # ⚠️ 생성물만 담고 소스(scripts/gen_site.py · data/products.json)를 빼면 안 된다.
 #    소스가 커밋되지 않으면 다른 세션·기기의 재빌드가 옛 소스로 생성해 **조용히 회귀**한다
 #    (2026-08-01 Flipper 교보 SAM 탭에서 발견). 생성물과 소스는 항상 같이 커밋한다.
-git add -A index.html stories tools products about legal apps og sitemap.xml assets scripts data _redirects 2>/dev/null
+git add -A $GEN_PATHS assets scripts data _redirects 2>/dev/null
 git commit -q -m "chore(stream): 자동 재빌드 — 제품 피드 갱신 $(date '+%Y-%m-%d')" || echo "  (커밋할 것 없음)"
 
 # SEO/GEO 점검 — docs/SEO_GEO.md 의 집행부.
