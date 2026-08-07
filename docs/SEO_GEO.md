@@ -450,19 +450,46 @@ for m in re.findall(r'<script type=\"application/ld\+json\">(.*?)</script>',sys.
 
 ---
 
-## §12. 우선순위 — 이 순서로 고쳐라
+## §12. 백로그 — 남은 일
 
-| 순위 | 할 일 | 근거 | 비용 |
-|---|---|---|---|
-| 1 | **GSC 도메인 속성 등록 + sitemap 제출** (the-moment.us · heyreci.com) | 이거 없이는 나머지가 무의미. 소유확인 수단이 아예 없다 | 30분 · **사람만 가능** |
-| 2 | **배포** — apex 의 og:image·JSON-LD·description 개선이 아직 로컬에만 있다 | 고쳐 놓고 안 올리면 0 | 5분 |
-| 3 | **`notes` 프리렌더 본문** — 344자로는 유료 상품이 봇에게 안 보인다. `seo.js` 의 `seoBody()` 확장 | 매출 도메인이 사실상 미색인 | 반나절 |
-| 4 | **`heyreci.com` 에 canonical + JSON-LD** | 매출 도메인인데 둘 다 0건 | 반나절 |
-| 5 | **`mark` 에 업종별 랜딩** — sitemap URL 이 1개뿐이라 검색에 낼 표면이 없다 | 색인 물량 자체가 없음 | 별건, 크다 |
-| 6 | **제품 상세 본문 늘리기** — apex 제품 상세가 917~968자(기준 1,000). 질문형 헤딩+FAQ 추가 | GEO 인용 단위 | 반나절 |
-| 7 | `cue` 의 `/jobs`·`/blog` JSON-LD 0건 보완 | 623 URL 중 큰 축이 비어 있음 | 2시간 |
-| 8 | sitemap `lastmod`(전 도메인), RSS `<link rel="alternate">`, `h1` 1개 정리 | 마감 | 2시간 |
-| 9 | `notes`·`heyreci` 에 `llms.txt` | GEO 보조 (기대치는 낮게) | 30분 |
+> 2026-08-07 apex 작업분은 배포 완료(커밋 `122b012`). 아래는 **아직 안 한 것**이다.
+> 착수 전 `python3 ~/bin/seo_check.py --live` 로 현재 상태부터 다시 재라 — 숫자가 낡았을 수 있다.
+
+### 🔴 사람만 할 수 있는 것
+
+- [ ] **구글 서치 콘솔 등록 + sitemap 제출.** 소유확인 수단이 저장소·`<head>` 양쪽에 0건이라
+      GSC 속성이 아예 없다. **이게 "검색에 안 잡힌다"의 1순위 원인이다**(§11).
+      → **도메인 속성(DNS 인증)** 으로 등록하면 `notes.`·`cue.`·`mark.` 가 한 번에 커버된다.
+      `heyreci.com` 은 별도 도메인이라 따로. sitemap: `https://the-moment.us/sitemap.xml`
+
+### 🟠 매출 도메인 — 여기가 제일 아프다
+
+- [ ] **`notes` 프리렌더 본문 늘리기.** `seo.js` 의 `seoBody()` 가 344자만 낸다.
+      장치는 있는데 내용이 없어 유료 플래너가 봇에게 안 보인다. 점검기가 FAIL 로 잡는다.
+      → `python3 ~/bin/seo_check.py --live --domain notes.the-moment.us`
+- [ ] **`heyreci.com` 에 canonical + JSON-LD.** 둘 다 **0건**이다. 매출 도메인인데 기본이 없다.
+- [ ] **`mark` 에 업종별 랜딩.** sitemap URL 이 **1개**뿐이라 검색에 낼 표면 자체가 없다.
+      "업종별 로고를 가장 많이 만든 곳"이라는 포지션과 어긋난다. (별건, 크다)
+
+### 🟡 마감 작업
+
+- [ ] `cue` 의 `/jobs`·`/blog` JSON-LD 0건 보완 (623 URL 중 큰 축이 비어 있다)
+- [ ] sitemap `lastmod` — apex·cue·heyreci 전부 없다 (notes 는 이미 냄)
+- [ ] `stories/rss.xml` 을 `<link rel="alternate">` 로 선언 + sitemap 등록
+- [ ] `h1` 1개로 정리 — apex 랜딩 3개(캐러셀 슬라이드), cue 4개, notes 7~8개
+- [ ] `notes`·`heyreci` 에 `llms.txt` (GEO 보조. 기대치는 낮게 — §2 과투자 금지선)
+- [ ] `products.json` 공개 엔드포인트 (`.assetsignore` 가 `data/` 를 막고 있다)
+- [ ] `makesOffer` 하드코딩 4개를 `products.json` 파생으로 (`gen_site.py`)
+
+### ✅ 2026-08-07 완료 (apex, 배포됨)
+
+`og:image`(14장 자동생성) · `twitter:card` · `og:type/site_name/locale` ·
+**페이지 유형별 JSON-LD**(`_schema_for()`, 35페이지) · **제품 FAQ 40개**(본문 + `FAQPage`) ·
+`description` 자동생성(10~29자 → 70~120자) · 빈 태그 `noindex`+sitemap 제외 ·
+별칭 canonical 통합 · 레거시 타이머 페이지 · 점검기·스킬·훅 ·
+`rebuild.sh` 생성물 경로 단일화(`how-to-pay`·`i`·`inquiry` 가 커밋에서 누락돼 있었다)
+
+결과: 점검기 **FAIL 70건 → 0건, warn 71건 → 4건**. 제품 상세 본문 917자 → 1,226~1,378자.
 
 ---
 
