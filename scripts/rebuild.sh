@@ -24,7 +24,7 @@ if ! python3 scripts/gen_site.py; then
   exit 1
 fi
 
-if git diff --quiet -- index.html stories tools products about legal apps sitemap.xml data/stream_cache.json 2>/dev/null; then
+if git diff --quiet -- index.html stories tools products about legal apps og sitemap.xml data/stream_cache.json 2>/dev/null; then
   echo "= 변경 없음 — 커밋·배포 건너뜀"
   exit 0
 fi
@@ -32,8 +32,13 @@ fi
 # ⚠️ 생성물만 담고 소스(scripts/gen_site.py · data/products.json)를 빼면 안 된다.
 #    소스가 커밋되지 않으면 다른 세션·기기의 재빌드가 옛 소스로 생성해 **조용히 회귀**한다
 #    (2026-08-01 Flipper 교보 SAM 탭에서 발견). 생성물과 소스는 항상 같이 커밋한다.
-git add -A index.html stories tools products about legal apps sitemap.xml assets scripts data _redirects 2>/dev/null
+git add -A index.html stories tools products about legal apps og sitemap.xml assets scripts data _redirects 2>/dev/null
 git commit -q -m "chore(stream): 자동 재빌드 — 제품 피드 갱신 $(date '+%Y-%m-%d')" || echo "  (커밋할 것 없음)"
+
+# SEO/GEO 점검 — docs/SEO_GEO.md 의 집행부.
+# ⚠️ 배포를 막지 않는다(경고만). 매일 도는 자동 빌드를 SEO 결함으로 죽이면
+#    사이트가 통째로 낡는 게 더 큰 손해다. 사람이 로그를 보고 고친다.
+python3 scripts/seo_check.py || echo "  ⚠️ SEO 점검 미달 — docs/SEO_GEO.md §3 참조 (배포는 계속)"
 
 if npx --yes wrangler deploy; then
   echo "✅ 배포 완료"

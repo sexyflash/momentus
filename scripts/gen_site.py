@@ -127,7 +127,7 @@ border-radius:10px;background:var(--soft2);font-size:17px}
 .tls-row .mt{flex:0 0 auto;font-family:var(--mono);font-size:11.5px;color:var(--faint);white-space:nowrap}
 @media(max-width:640px){.tls-row .mt{display:none}.tls-head{padding-top:64px}}
 main{padding-top:56px}
-.btn{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-size:14px;font-weight:600;padding:12px 22px;border-radius:99px;border:none;cursor:pointer}
+.vd-qa{max-width:760px;margin:64px auto 0;padding:0 20px}.vd-qa>h2{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:0 0 24px;color:var(--ink)}.vd-qa-i{padding:20px 0;border-top:1px solid var(--line)}.vd-qa-i h3{font-size:17px;font-weight:700;margin:0 0 8px;color:var(--ink);letter-spacing:-.01em}.vd-qa-i p{margin:0;font-size:15px;line-height:1.7;color:var(--gray)}.btn{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-size:14px;font-weight:600;padding:12px 22px;border-radius:99px;border:none;cursor:pointer}
 .btn:hover{opacity:.87}.btn.lg{font-size:15px;padding:14px 26px}
 .btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
 .btn.drag{border:2px dashed var(--pt);color:var(--pt);background:#fff5f2;cursor:grab;font-weight:800}
@@ -1322,6 +1322,37 @@ AGENTATION = """
 </script>"""
 
 
+
+
+def _faq_html(p):
+    """제품 FAQ 를 본문에 렌더한다. 소재는 data/products.json 의 faq.
+
+       왜 본문에 넣나: GEO 는 '답이 페이지에 그대로 박혀 있는가'로 갈린다.
+       질문형 헤딩 + 40~60단어 답이 AI 가 인용하는 단위다(docs/SEO_GEO.md §6).
+       ⚠️ FAQPage 스키마만 넣고 화면에 안 보이면 구글 스팸 정책 위반이다 —
+          그래서 스키마가 아니라 **본문이 먼저**다. 스키마는 이 HTML 에서 파생된다."""
+    faq = p.get("faq") or []
+    if not faq:
+        return ""
+    items = "".join(
+        f'<div class="vd-qa-i"><h3>{q}</h3><p>{a}</p></div>' for q, a in faq)
+    return f'<section class="vd-qa"><h2>자주 묻는 질문</h2>{items}</section>'
+
+
+def _re_desc(t, lo=70, hi=120):
+    """meta description 만들기 — 태그를 벗기고 문장 경계에서 자른다.
+       hi 를 넘기면 검색결과에서 잘리고, lo 에 못 미치면 구글이 무시한다."""
+    t = " ".join(re.sub(r"<[^>]+>", " ", t or "").split()).replace('"', "'")
+    if len(t) <= hi:
+        return t
+    cut = t[:hi]
+    for mark in (". ", "? ", "! ", "다. ", " "):     # 문장 끝 우선, 없으면 어절 경계
+        i = cut.rfind(mark)
+        if i >= lo:
+            return cut[:i + len(mark)].strip()
+    return cut.strip()
+
+
 def page(title, desc, body, active="", extra="", header=None, body_class="", head_extra=""):
     """header/body_class/head_extra 는 랜딩(KB 구성 클론) 전용 훅 —
        기본값이면 지금까지와 완전히 동일한 출력이라 다른 페이지엔 영향이 없다."""
@@ -1743,6 +1774,8 @@ for idx, slug in enumerate(ORDER):
     <div class="hint">{hint_text}</div>
   </div>
 
+  {_faq_html(p)}
+
   <a class="vd-next" href="{purl(nxt)}">
     <img src="{VIMG[(idx * 3 + 5) % len(VIMG)]}" alt="{P[nxt]['name']}" loading="lazy">
     <div class="cap">
@@ -1773,7 +1806,11 @@ for idx, slug in enumerate(ORDER):
     _dir = purl(slug).strip("/")
     os.makedirs(_dir, exist_ok=True)
     with open(f"{_dir}/index.html", "w", encoding="utf-8") as fh:
-        fh.write(page(f"{p['name']} — MOMENTUS", p["tagline"] + " 무료.", body,
+        # description 은 70~120자여야 검색결과에서 제 몫을 한다(docs/SEO_GEO.md §3).
+        # tagline 만 쓰면 10~29자라 구글이 무시하고 본문에서 임의 발췌한다(2026-08-07 실측).
+        # 그래서 `desire`(방문자 욕망) + `lead`(무엇이 되는가)를 이어 붙여 만든다.
+        _d = _re_desc(f"{p.get('desire') or p['tagline']} {p.get('lead') or ''}")
+        fh.write(page(f"{p['name']} — MOMENTUS", _d, body,
                       active=("tools" if slug in TOOLS else ""), extra=DOCK_JS))
 
 # (제품 인덱스 페이지 제거 — 홈이 곧 제품 목록이다. 중복 폐지)
@@ -1979,7 +2016,9 @@ for i, slug in enumerate(PORDER):
 </section>"""
     os.makedirs(f"stories/{slug}", exist_ok=True)
     with open(f"stories/{slug}/index.html", "w", encoding="utf-8") as fh:
-        fh.write(page(f"{ps['title']} — MOMENTUS 이야기", ps["sub"], body, active="story"))
+        # sub 가 짧으면(35자 미만) 제목을 앞세워 문맥을 보강한다 — 70자 미만이면 구글이 무시한다.
+        _sd = ps["sub"] if len(ps["sub"]) >= 70 else _re_desc(f"{ps['sub']} {ps['title']} — 모멘터스가 제품을 만들며 알게 된 것을 실측과 함께 적은 글입니다.")
+        fh.write(page(f"{ps['title']} — MOMENTUS 이야기", _sd, body, active="story"))
 
 # 스트림 = 글 + 영상(유튜브). 같은 시간축, 같은 카드. (PLATFORM_TOPOLOGY §10 '한 스트림')
 entries = []
@@ -2037,7 +2076,7 @@ LSUB = ("만든 것, 안 된 것, 배운 것. 전부 남깁니다.<br>"
         "플래너·로고·모의면접 — 제품이 달라도 이야기는 한 곳에 쌓입니다.")
 os.makedirs("stories", exist_ok=True)
 with open("stories/index.html", "w", encoding="utf-8") as f:
-    f.write(page("이야기 — MOMENTUS", "AI로 제품을 만들며 알게 된 것들. 실측 데이터와 실패 기록.",
+    f.write(page("이야기 — MOMENTUS", "AI로 제품을 만들며 알게 된 것들을 적습니다. 잘된 자랑이 아니라 실측 데이터와 실패 기록입니다. 로고 공모 524회 참가 결과, 에이전트를 만들며 세 번 버린 것 같은 이야기가 있습니다.",
                  stories_page("이야기", LSUB), active="story", extra=BLOG_JS))
 
 # 태그별 정적 페이지 — 제품 2단 바의 '이야기'가 여기로 온다. 매니페스트에서 자동 생성.
@@ -2047,8 +2086,16 @@ for key, lab in STORY_TAGS:
     body = stories_page(f"{lab} 이야기",
                         f"‘{lab}’ 태그가 붙은 글 {len(sel)}편. <a href=\"{STORY_BASE}/\">전체 보기 →</a>",
                         items=sel, chips=False)
+    # 글이 0편인 태그는 색인시키지 않는다 — thin content 는 사이트 품질 신호를 깎는다.
+    # 페이지 자체는 남긴다(링크가 죽으면 안 된다). 글이 붙으면 다음 빌드에 자동으로 색인 복귀.
+    _nx = '<meta name="robots" content="noindex,follow">\n' if not sel else ""
     with open(f"stories/tag/{key}/index.html", "w", encoding="utf-8") as fh:
-        fh.write(page(f"{lab} 이야기 — MOMENTUS", f"{lab} 관련 글 모음.", body, active="story"))
+        fh.write(page(f"{lab} 이야기 — MOMENTUS",
+                      _re_desc(f"‘{lab}’ 태그가 붙은 모멘터스 이야기 {len(sel)}편. "
+                               f"제품을 만들며 실제로 겪은 것과 실측 데이터를 적습니다.")
+                      if sel else _re_desc(f"‘{lab}’ 태그의 모멘터스 이야기입니다. 아직 이 태그로 발행한 글이 없습니다. "
+                               f"전체 이야기에서 실측 데이터와 실패 기록을 보실 수 있습니다."),
+                      body, active="story", head_extra=_nx))
 
 # RSS — mark 저널과 같은 관행(구독 경로는 하나)
 _items = "".join(
@@ -2170,7 +2217,7 @@ about_body = """<div class="an-ahero">
 </section>"""
 os.makedirs("about", exist_ok=True)
 with open("about/index.html", "w", encoding="utf-8") as f:
-    f.write(page("소개 — MOMENTUS", "AI로 제품을 만드는 방법을 실험하는 스튜디오. 매일 만들고, 직접 쓰고, 알게 된 걸 공개합니다.", about_body, active="a"))
+    f.write(page("소개 — MOMENTUS", "모멘터스는 AI로 제품을 만드는 방법을 실험하는 1인 스튜디오입니다. 매일 만들고, 직접 쓰고, 알게 된 것을 실측과 함께 공개합니다. 무엇을 만들고 왜 만드는지 적어 두었습니다.", about_body, active="a"))
 
 # ---------- landing (root index.html) ----------
 # ---------- 랜딩 카드 이미지 — 남의 사이트 핫링크 제거 ----------
@@ -2548,7 +2595,8 @@ land_body = kb_hero + kb_latest + kb_popular + kb_series + kb_cats
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다",
-                 "상품 사진, 로고, 플래너, 면접 연습. 매일 쓰는 브라우저 도구까지.",
+                 "모멘터스는 강형모 1인 AI 스튜디오입니다. AI 상품사진·로고 디자인·디지털 플래너·AI 모의면접을 만들어 팔고, "
+                 "설치 없이 쓰는 무료 브라우저 도구 6종을 함께 제공합니다.",
                  land_body, active="", extra=KB_JS,
                  header=KB_HEADER, body_class="kbp", head_extra=KB_HEAD))
 
@@ -2716,10 +2764,17 @@ REFUND = f"""{LEGAL_CSS_WRAP}
   </div>
 </div>"""
 
+# 설명 문구는 상수로 둔다 — apps/ 아래 별칭 페이지가 같은 값을 쓴다(두 벌이 갈라지면 안 된다).
+LEGAL_DESC = {
+    "privacy": "모멘터스는 개인정보를 수집하지 않습니다. 브라우저 도구 6종은 모든 처리를 사용자 기기 안에서 수행하며 서버로 데이터를 보내지 않습니다. 수집 항목과 보관 기간을 명시했습니다.",
+    "terms": "모멘터스 무료 브라우저 도구 6종과 유료 제품의 이용약관입니다. 서비스 범위, 이용자의 권리와 의무, 책임의 한계를 정리했습니다.",
+    "refund": "모멘터스 유료 제품의 환불 규정과 청약철회 안내입니다. 무료 브라우저 도구는 결제가 없어 환불이 발생하지 않습니다. 디지털 상품의 청약철회 조건을 확인하세요.",
+}
+
 for slug, title, body, desc in [
-    ("privacy", "개인정보처리방침", PRIVACY, "모멘터스는 개인정보를 수집하지 않습니다. 브라우저 도구는 모든 처리를 기기 안에서 수행합니다."),
-    ("terms", "이용약관", TERMS, "모멘터스 무료 브라우저 도구 및 유료 제품 이용약관."),
-    ("refund", "환불 규정", REFUND, "모멘터스 유료 제품의 환불 규정 및 청약철회 안내."),
+    ("privacy", "개인정보처리방침", PRIVACY, LEGAL_DESC["privacy"]),
+    ("terms", "이용약관", TERMS, LEGAL_DESC["terms"]),
+    ("refund", "환불 규정", REFUND, LEGAL_DESC["refund"]),
 ]:
     os.makedirs(f"legal/{slug}", exist_ok=True)
     with open(f"legal/{slug}/index.html", "w", encoding="utf-8") as fh:
@@ -2923,11 +2978,11 @@ HOW_TO_PAY = """<div class="lg">
 
 for _slug, _title, _body, _desc, _noindex in [
     ("inquiry", "문의하기", INQUIRY,
-     "로고 제작·기업 플래너·그 밖의 문의를 남겨주세요. 영업일 기준 하루 안에 답변드립니다.", False),
+     "로고 제작·기업용 플래너·그 밖의 문의를 남겨주세요. 영업일 기준 하루 안에 답변드립니다. 접수 후에는 진행 상황을 확인하고 이어서 대화하실 수 있습니다.", False),
     ("i", "문의 내용", THREAD,
-     "접수하신 문의의 진행 상황을 확인하고 이어서 대화하실 수 있습니다.", True),
+     "접수하신 문의의 진행 상황을 확인하고 이어서 대화하실 수 있는 페이지입니다. 회원가입 없이 접수 시 받은 링크로 바로 들어옵니다.", True),
     ("how-to-pay", "결제 안내", HOW_TO_PAY,
-     "모멘터스 상품의 결제 방법 — 바로 구매하는 상품과 맞춤 제작 상품의 진행 순서.", False),
+     "모멘터스 상품의 결제 방법을 안내합니다. 바로 구매하는 상품과 맞춤 제작 상품의 진행 순서가 다릅니다. 결제는 pay.the-moment.us 한 곳에서만 이루어집니다.", False),
 ]:
     os.makedirs(_slug, exist_ok=True)
     # /i/ 는 개인 스레드라 색인 대상이 아니다. 링크 토큰이 검색에 노출되면 안 된다.
@@ -2938,9 +2993,9 @@ for _slug, _title, _body, _desc, _noindex in [
 # 크롬 웹스토어가 참조하는 기존 URL 유지 (내용만 교체)
 os.makedirs("apps", exist_ok=True)
 with open("apps/privacy-policy.html", "w", encoding="utf-8") as fh:
-    fh.write(page("개인정보처리방침 — MOMENTUS", "모멘터스는 개인정보를 수집하지 않습니다.", PRIVACY, active=""))
+    fh.write(page("개인정보처리방침 — MOMENTUS", LEGAL_DESC["privacy"], PRIVACY, active=""))
 with open("apps/legal.html", "w", encoding="utf-8") as fh:
-    fh.write(page("이용약관 — MOMENTUS", "모멘터스 이용약관.", TERMS, active=""))
+    fh.write(page("이용약관 — MOMENTUS", LEGAL_DESC["terms"], TERMS, active=""))
 
 # ---------- 네이티브 앱 /apps/<slug>/ · /setup/ · /support/ ----------
 #   ⚠️ apps/ 에는 프로덕션 생명줄(크롬 확장 remote-config, 스토어가 참조하는 legal.html 등)이 산다.
@@ -3028,7 +3083,8 @@ for _slug, A in APPS.items():
 </div>"""
     os.makedirs(_base.strip("/"), exist_ok=True)
     with open(f"{_base.strip('/')}/index.html", "w", encoding="utf-8") as fh:
-        fh.write(page(f"{A['full']} — MOMENTUS", A["desire"], _body, active=""))
+        fh.write(page(f"{A['full']} — MOMENTUS",
+                      _re_desc(f"{A['desire']} {A.get('lead') or ''}"), _body, active=""))
 
     # ── 2) 접근성 권한 켜는 법 ──────────────────────────────────
     S = A["setup"]
@@ -3068,7 +3124,7 @@ for _slug, A in APPS.items():
     with open(f"{_base.strip('/')}/setup/index.html", "w", encoding="utf-8") as fh:
         fh.write(page(f"접근성 권한 켜는 법 — {A['name']}",
                       # 실제 탭과 일치시킨다. '순정 안드로이드'는 실기기가 없어 확인 못 했으므로 쓰지 않는다.
-                      f"{A['name']} 접근성 권한을 기기별로 켜는 방법. 삼성 One UI·교보 SAM·하이센스 E-ink 리더기.",
+                      f"{A['name']} 접근성 권한을 기기별로 켜는 방법입니다. 삼성 One UI·교보 SAM·하이센스 E-ink 리더기의 실제 화면을 단계별로 보여드립니다. 권한이 안 켜질 때 확인할 것도 함께 적었습니다.",
                       _body, active="", extra=APP_TAB_JS))
 
     # ── 3) 지원·문의 ────────────────────────────────────────────
@@ -3120,7 +3176,9 @@ for _slug, A in APPS.items():
     os.makedirs(f"{_base.strip('/')}/support", exist_ok=True)
     with open(f"{_base.strip('/')}/support/index.html", "w", encoding="utf-8") as fh:
         fh.write(page(f"지원 — {A['name']} — MOMENTUS",
-                      f"{A['name']} 지원 · 문의 · 구독 및 환불 안내.", _body, active=""))
+                      _re_desc(f"{A['name']} 지원 페이지입니다. 자가진단으로 흔한 문제를 먼저 "
+                               f"확인하고, 해결되지 않으면 이메일로 문의하세요. 구독 해지와 환불 방법도 "
+                               f"함께 안내합니다."), _body, active=""))
 
 # ---------- /tools/ 허브 (1단 바의 '무료 도구' 착지점) ----------
 _TYPEN = {"bookmarklet": "북마크릿", "extension": "크롬 확장"}
@@ -3196,7 +3254,9 @@ urls = ["", "about/", "tools/", "inquiry/", "how-to-pay/",
         "legal/privacy/", "legal/terms/", "legal/refund/"] \
     + [purl(s).lstrip("/") for s in ORDER] \
     + [f"apps/{s}/{sub}" for s in APPS for sub in ("", "setup/", "support/")] \
-    + ["stories/"] + [f"stories/{s}/" for s in PORDER] + [f"stories/tag/{k}/" for k, _ in STORY_TAGS]
+    + ["stories/"] + [f"stories/{s}/" for s in PORDER] \
+    + [f"stories/tag/{k}/" for k, lab in STORY_TAGS
+       if any(lab in e.get("tags", []) for e in entries)]   # 빈 태그는 sitemap 에서 뺀다
 # ⚠️ /l/<키>는 sitemap 에 넣지 않는다 — 내용 없는 이정표(302)라 색인 대상이 아니다.
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for u in urls:
@@ -3290,7 +3350,156 @@ _sp.run([_sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)
 #    크롬 확장·앱스토어가 실시간 참조하는 손관리 파일이 섞여 있다(apps/README.md).
 import glob as _glob, re as _re
 
+# ── 페이지 유형별 JSON-LD ──────────────────────────────────────────────────
+# 정본 표: docs/SEO_GEO.md §4.
+# 전 페이지에 Organization 하나를 복붙하던 걸 대체한다. 여기도 **경로에서 유형을 판별**하므로
+# 새 페이지를 추가해도 자동으로 맞는 스키마가 붙는다(빠뜨릴 수가 없다).
+#
+# ⚠️ 화면에 없는 걸 스키마에 적지 않는다(구글 스팸 정책 = 리치결과 영구 박탈).
+#    그래서 제목·날짜·목록은 **생성된 HTML 에서 뽑고**, 가격은 확실한 것만 쓴다:
+#    무료 도구만 price "0", 유료 제품은 가격을 안 적는다(정본이 pay 의 sku 라 여기선 모른다).
+
+_ORG = {"@type": "Organization", "@id": "https://the-moment.us/#org",
+        "name": "모멘터스", "alternateName": "MOMENTUS",
+        "url": "https://the-moment.us", "email": BIZ["email"]}
+_PUB = {"@id": "https://the-moment.us/#org"}
+
+
+def _txt(h):
+    """HTML 조각 → 사람이 보는 텍스트. 스키마에 넣기 전 태그를 턴다."""
+    return " ".join(_re.sub(r"<[^>]+>", " ", h).split())
+
+
+def _h1(html):
+    m = _re.search(r"<h1[^>]*>(.*?)</h1>", html, _re.S | _re.I)
+    return _txt(m.group(1)) if m else ""
+
+
+def _desc_of(html):
+    m = _re.search(r'<meta name="description" content="([^"]*)"', html)
+    return m.group(1) if m else ""
+
+
+def _date_of(html):
+    """이야기 글의 발행일. 화면에 '2026. 07. 05' 로 찍혀 있는 값만 쓴다."""
+    m = _re.search(r"(20\d\d)\.\s*(\d\d)\.\s*(\d\d)", html)
+    return f"{m.group(1)}-{m.group(2)}-{m.group(3)}" if m else ""
+
+
+def _links(html, prefix):
+    """본문에 실제로 있는 링크만 ItemList 로 낸다(없는 항목을 지어내지 않는다)."""
+    seen, out = set(), []
+    for href, label in _re.findall(r'<a[^>]+href="(' + prefix + r'[^"]*)"[^>]*>(.*?)</a>',
+                                   html, _re.S | _re.I):
+        t = _txt(label)
+        if href in seen or not t or href.rstrip("/") == prefix.rstrip("/"):
+            continue
+        seen.add(href)
+        out.append({"@type": "ListItem", "position": len(out) + 1,
+                    "url": "https://the-moment.us" + href, "name": t[:80]})
+    return out
+
+
+def _crumbs(seg, html):
+    if not seg:
+        return None
+    items, acc = [{"@type": "ListItem", "position": 1, "name": "홈",
+                   "item": "https://the-moment.us/"}], ""
+    for i, s in enumerate(seg):
+        acc += s + "/"
+        items.append({"@type": "ListItem", "position": i + 2,
+                      "name": (_h1(html) if i == len(seg) - 1 else s) or s,
+                      "item": "https://the-moment.us/" + acc})
+    return {"@type": "BreadcrumbList", "itemListElement": items}
+
+
+def _faq_schema(html):
+    """화면의 FAQ 블록에서 FAQPage 를 만든다. 스키마가 본문에서 파생되므로
+       '화면에 없는 걸 스키마에 적지 않는다'가 구조적으로 보장된다."""
+    qa = _re.findall(r'<div class="vd-qa-i"><h3>(.*?)</h3><p>(.*?)</p></div>', html, _re.S)
+    if not qa:
+        return None
+    return {"@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": _txt(q),
+         "acceptedAnswer": {"@type": "Answer", "text": _txt(a)}} for q, a in qa]}
+
+
+def _schema_for(rel, url, html, img):
+    """그 페이지의 @graph 를 만든다. docs/SEO_GEO.md §4 표와 1:1로 대응한다."""
+    seg = [x for x in rel.split("/") if x]
+    h1, desc = _h1(html) or "", _desc_of(html)
+    node = None
+
+    if not seg:                                                   # 랜딩
+        node = {"@type": "WebSite", "name": "MOMENTUS", "alternateName": "모멘터스",
+                "url": "https://the-moment.us/", "inLanguage": "ko",
+                "publisher": _PUB, "description": desc}
+    elif seg[0] == "products" and len(seg) == 2:                  # 유료 제품 상세
+        p = P.get(seg[1], {})
+        node = {"@type": "SoftwareApplication" if p.get("type") != "product" else "Product",
+                "name": h1 or p.get("name", seg[1]), "description": desc,
+                "applicationCategory": "BusinessApplication",
+                "operatingSystem": "Web", "image": img,
+                "brand": {"@type": "Brand", "name": "MOMENTUS"}, "publisher": _PUB}
+        if p.get("url"):
+            # 가격은 안 적는다 — 정본이 pay 의 sku 다. 틀린 가격은 상품 노출이 끊긴다.
+            node["offers"] = {"@type": "Offer", "url": p["url"],
+                              "availability": "https://schema.org/InStock",
+                              "seller": _PUB}
+    elif seg[0] == "tools" and len(seg) == 2:                     # 무료 브라우저 도구
+        node = {"@type": "SoftwareApplication", "name": h1 or seg[1], "description": desc,
+                "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web",
+                "image": img, "publisher": _PUB,
+                "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW",
+                           "availability": "https://schema.org/InStock", "url": url}}
+    elif seg == ["tools"]:                                        # 도구 허브
+        node = {"@type": "CollectionPage", "name": h1 or "무료 도구", "description": desc,
+                "url": url, "publisher": _PUB,
+                "mainEntity": {"@type": "ItemList",
+                               "itemListElement": _links(html, "/tools/")}}
+    elif seg[0] == "apps" and len(seg) == 2 and seg[1] in APPS:   # 네이티브 앱
+        # ⚠️ `seg[1] in APPS` 가 필수다. /apps/ 아래엔 앱이 아닌 별칭 페이지가 섞여 있다
+        #    (apps/legal.html·apps/privacy-policy.html → 앱스토어가 참조하는 법적 문서 사본).
+        a = APPS.get(seg[1], {})
+        node = {"@type": "MobileApplication", "name": h1 or a.get("name", seg[1]),
+                "description": desc, "applicationCategory": "UtilitiesApplication",
+                "operatingSystem": a.get("platform") or "Android",
+                "image": img, "publisher": _PUB}
+    elif seg[:1] == ["stories"] and len(seg) == 2 and seg[1] != "tag":   # 이야기 글
+        node = {"@type": "BlogPosting", "headline": h1 or desc, "description": desc,
+                "image": img, "url": url, "inLanguage": "ko",
+                "author": {"@type": "Person", "name": "강형모"}, "publisher": _PUB,
+                "mainEntityOfPage": {"@type": "WebPage", "@id": url}}
+        d = _date_of(html)
+        if d:
+            node["datePublished"] = node["dateModified"] = d
+    elif seg[0] == "stories":                                     # 이야기 인덱스·태그
+        node = {"@type": "CollectionPage", "name": h1 or "이야기", "description": desc,
+                "url": url, "publisher": _PUB,
+                "mainEntity": {"@type": "ItemList",
+                               "itemListElement": _links(html, "/stories/")}}
+    elif seg[0] == "about":
+        node = {"@type": "AboutPage", "name": h1 or "소개", "description": desc,
+                "url": url, "publisher": _PUB, "mainEntity": _PUB}
+    else:                                                          # 법적 문서·앱 하위 등
+        node = {"@type": "WebPage", "name": h1 or "", "description": desc,
+                "url": url, "inLanguage": "ko", "publisher": _PUB}
+
+    graph = [_ORG, node]
+    cr = _crumbs(seg, html)
+    if cr:
+        graph.append(cr)
+    fq = _faq_schema(html)
+    if fq:
+        graph.append(fq)
+    # 빈 값은 스키마에서 뺀다 — 빈 문자열을 넣으면 검증기가 경고한다.
+    graph = [{k: v for k, v in n.items() if v not in ("", [], {}, None)} for n in graph]
+    return json.dumps({"@context": "https://schema.org", "@graph": graph},
+                      ensure_ascii=False)
+
+
 _canon_n = 0
+_ld_n = 0
 for _p in _glob.glob("**/*.html", recursive=True):
     # `_` 로 시작하는 경로는 실험용 로컬 산출물이다(배포 안 됨, 라이브 404 확인 2026-08-07).
     if (_p.startswith(("node_modules/", "design-review/", "_")) or "/404" in _p
@@ -3309,6 +3518,11 @@ for _p in _glob.glob("**/*.html", recursive=True):
     else:
         _rel = _p[:-len(".html")]               # foo/bar.html   → foo/bar  (확장자 없이 서빙됨)
     _url = "https://the-moment.us/" + _rel
+    # 별칭 페이지는 canonical 을 **원본으로 몰아준다.** 내용이 같은 두 URL 이 각자
+    # 자기참조 canonical 을 들면 중복 콘텐츠 신호가 갈린다(2026-08-07 실측).
+    # 앱스토어·크롬웹스토어가 이 주소를 참조하므로 URL 자체는 살려 둔다.
+    _url = {"apps/legal": "https://the-moment.us/legal/terms/",
+            "apps/privacy-policy": "https://the-moment.us/legal/privacy/"}.get(_rel, _url)
 
     # og:image 도 **경로에서 기계적으로 도출한다** — canonical 과 같은 이유다.
     # `/products/cue/` · `/tools/cue/` → og/cue.png, 없으면 og/default.png.
@@ -3330,13 +3544,28 @@ for _p in _glob.glob("**/*.html", recursive=True):
                   r'|\n?<meta property="og:image"[^>]*>'
                   r'|\n?<meta name="twitter:image"[^>]*>', "", _s)
     _s2 = _s2.replace('<meta property="og:title"', _tags + '\n<meta property="og:title"', 1)
+
+    # 페이지 유형별 JSON-LD 로 교체. page() 가 넣은 Organization 단일 블록을 덮어쓴다.
+    # 🚫 손으로 ld+json 을 박지 마라. 여기서 통째로 갈아끼운다.
+    try:
+        _ld = _schema_for(_rel, _url, _s2, _img)
+        _s3 = _re.sub(r'\n?<script type="application/ld\+json">.*?</script>', "",
+                      _s2, flags=_re.S)
+        _s3 = _s3.replace("</head>",
+                          f'<script type="application/ld+json">{_ld}</script>\n</head>', 1)
+        if _s3 != _s2:
+            _ld_n += 1
+        _s2 = _s3
+    except Exception as _e:   # 스키마 하나 때문에 사이트 생성을 죽이지 않는다
+        print(f"  ⚠️ JSON-LD 생성 실패({_p}): {_e}")
+
     if _s2 != _s:
         open(_p, "w", encoding="utf-8").write(_s2)
         _canon_n += 1
 
 print("SITE GENERATED:")
 print(f"  index.html, assets/site.css, shell.js, sitemap.xml, robots.txt, llms.txt, _redirects")
-print(f"  canonical/og:url 주입: {_canon_n}개 페이지")
+print(f"  canonical/og:url/og:image 주입: {_canon_n}개 · JSON-LD 유형별 주입: {_ld_n}개")
 print("  tools/: index + " + ", ".join(TOOLS))
 print("  products/: " + ", ".join(SPOKES))
 print("  stories/: index + " + ", ".join(PORDER) + " + tag/" + ",".join(k for k,_ in STORY_TAGS))
