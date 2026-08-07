@@ -2792,60 +2792,67 @@ for slug, title, body, desc in [
 INQ_API = "https://pay.the-moment.us/api/inquiry"
 
 INQ_CSS = """<style>
-.iq{max-width:640px;margin:0 auto;padding:0 24px}
-.iq h1{font-size:30px;letter-spacing:-.02em;margin:0 0 10px}
-.iq .sub{color:#909090;margin:0 0 30px}
-.iq label{display:block;margin:0 0 18px;font-size:14px;font-weight:600}
-.iq label>span{display:block;margin:0 0 7px}
-.iq input[type=text],.iq input[type=email],.iq textarea,.iq select{
-  width:100%;padding:13px 14px;border:1px solid #E4E4E4;border-radius:10px;font:inherit;
-  font-weight:400;background:#fff;color:#111}
-.iq textarea{min-height:150px;resize:vertical;line-height:1.7}
-.iq .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.iq .go{display:inline-block;background:#111;color:#fff;border:0;border-radius:10px;
-  padding:14px 30px;font:inherit;font-weight:700;cursor:pointer}
-.iq .go[disabled]{opacity:.5;cursor:default}
-.iq .err{color:#D33;font-size:14px;margin:0 0 14px;min-height:20px}
-.iq .note{color:#909090;font-size:13px;line-height:1.8;margin:18px 0 0}
-.iq .done{background:#F7F8F9;border-radius:14px;padding:26px}
-.iq .done b{font-size:18px;display:block;margin:0 0 8px}
-.iq .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:700}
-.iq .thr{display:grid;gap:14px;margin:26px 0}
-.iq .msg{border-radius:14px;padding:16px 18px;white-space:pre-wrap;line-height:1.75}
-.iq .msg.me{background:#F7F8F9}
-.iq .msg.us{background:#111;color:#fff}
-.iq .msg .who{font-size:12px;font-weight:700;opacity:.6;margin:0 0 6px}
-html[data-theme="dark"] .iq input,html[data-theme="dark"] .iq textarea,
-html[data-theme="dark"] .iq select{background:#151515;color:#EAEAEA;border-color:#2A2A2A}
-html[data-theme="dark"] .iq .done,html[data-theme="dark"] .iq .msg.me{background:#151515}
-html[data-theme="dark"] .iq .go{background:#EAEAEA;color:#111}
-html[data-theme="dark"] .iq .msg.us{background:#EAEAEA;color:#111}
+/* 폼 컨트롤만 정의한다. 페이지 골격(여백·제목·본문)은 apex 의 .lg/.lg-head/.lg-body 를
+   그대로 쓴다 — 2026-08-07 사고: 자체 컨테이너를 만들었더니 고정 헤더(56px) 보정이 빠져
+   제목이 헤더에 달라붙고 제목 크기도 다른 페이지와 어긋났다.
+   🚫 여기에 컨테이너·h1 스타일을 다시 만들지 마라. 기존 패턴을 먼저 찾아 써라. */
+.iq-f{display:grid;gap:20px;margin:0 0 8px}
+.iq-f label{display:block;font-size:14px;font-weight:600;color:#202020}
+.iq-f label>span{display:block;margin:0 0 8px}
+.iq-f label em{font-weight:400;color:#909090;font-style:normal}
+.iq-f input[type=text],.iq-f input[type=email],.iq-f textarea,.iq-f select{
+  width:100%;padding:13px 14px;border:1px solid #E4E4E4;border-radius:10px;
+  font:inherit;font-weight:400;background:#fff;color:#202020}
+.iq-f textarea{min-height:150px;resize:vertical;line-height:1.7}
+.iq-f input:focus,.iq-f textarea:focus,.iq-f select:focus{outline:none;border-color:#202020}
+.iq-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.iq-go{display:inline-block;background:#202020;color:#fff;border:0;border-radius:10px;
+  padding:14px 30px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none}
+.iq-go[disabled]{opacity:.5;cursor:default}
+.iq-err{color:#D33;font-size:14px;min-height:20px}
+.iq-card{background:#F7F8F9;border-radius:14px;padding:26px}
+.iq-card b{font-size:18px;display:block;margin:0 0 8px}
+.iq-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:700}
+.iq-thr{display:grid;gap:14px;margin:0 0 34px}
+.iq-msg{border-radius:14px;padding:16px 18px;white-space:pre-wrap;line-height:1.75;font-size:15px}
+.iq-msg.me{background:#F7F8F9;color:#202020}
+.iq-msg.us{background:#202020;color:#fff}
+.iq-msg .who{font-size:12px;font-weight:700;opacity:.6;margin:0 0 6px}
+html[data-theme="dark"] .iq-f label{color:#EAEAEA}
+html[data-theme="dark"] .iq-f input,html[data-theme="dark"] .iq-f textarea,
+html[data-theme="dark"] .iq-f select{background:#151515;color:#EAEAEA;border-color:#2A2A2A}
+html[data-theme="dark"] .iq-card,html[data-theme="dark"] .iq-msg.me{background:#151515;color:#EAEAEA}
+html[data-theme="dark"] .iq-go,html[data-theme="dark"] .iq-msg.us{background:#EAEAEA;color:#111}
 </style>"""
 
-INQUIRY = f"""<div class="iq">
-  <h1>문의하기</h1>
-  <p class="sub">로고 제작, 기업·단체 플래너, 그 밖에 무엇이든 남겨주세요.<br>영업일 기준 <b>하루 안에</b> 답변드립니다.</p>
-  <div class="err" id="err"></div>
-  <form id="f">
-    <label><span>무엇을 도와드릴까요?</span>
-      <select name="topic" id="topic">
-        <option>로고 제작 (마크)</option>
-        <option>기업·단체 플래너 (노트)</option>
-        <option>플래너 구매·다운로드</option>
-        <option>그 외</option>
-      </select></label>
-    <label><span>회신받을 이메일</span>
-      <input type="email" name="email" required placeholder="hello@example.com" autocomplete="email"></label>
-    <label><span>회사·가게 이름 <em style="font-weight:400;color:#909090">(선택)</em></span>
-      <input type="text" name="name" maxlength="60" autocomplete="organization"></label>
-    <label><span>내용</span>
-      <textarea name="body" required placeholder="어떤 걸 찾으시는지, 일정이나 예산이 있다면 함께 적어주세요."></textarea></label>
-    <label class="hp" aria-hidden="true" tabindex="-1"><span>이 칸은 비워두세요</span>
-      <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-    <button class="go" type="submit" id="go">문의 보내기</button>
-  </form>
-  <p class="note">보내주신 이메일은 답변을 드리는 데에만 씁니다.<br>
-    결제가 어떻게 진행되는지는 <a href="/how-to-pay/">결제 안내</a>에서 미리 보실 수 있습니다.</p>
+INQUIRY = f"""<div class="lg">
+  <div class="lg-head">
+    <h1>문의하기</h1>
+    <p class="upd">로고 제작, 기업·단체 플래너, 그 밖에 무엇이든 남겨주세요. 영업일 기준 하루 안에 답변드립니다.</p>
+  </div>
+  <div class="lg-body" id="iqRoot">
+    <div class="iq-err" id="err"></div>
+    <form class="iq-f" id="f">
+      <label><span>무엇을 도와드릴까요?</span>
+        <select name="topic" id="topic">
+          <option>로고 제작 (마크)</option>
+          <option>기업·단체 플래너 (노트)</option>
+          <option>플래너 구매·다운로드</option>
+          <option>그 외</option>
+        </select></label>
+      <label><span>회신받을 이메일</span>
+        <input type="email" name="email" required placeholder="hello@example.com" autocomplete="email"></label>
+      <label><span>회사·가게 이름 <em>(선택)</em></span>
+        <input type="text" name="name" maxlength="60" autocomplete="organization"></label>
+      <label><span>내용</span>
+        <textarea name="body" required placeholder="어떤 걸 찾으시는지, 일정이나 예산이 있다면 함께 적어주세요."></textarea></label>
+      <label class="iq-hp" aria-hidden="true" tabindex="-1"><span>이 칸은 비워두세요</span>
+        <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+      <div><button class="iq-go" type="submit" id="go">문의 보내기</button></div>
+    </form>
+    <p>보내주신 이메일은 답변을 드리는 데에만 씁니다.<br>
+      결제가 어떻게 진행되는지는 <a href="/how-to-pay/">결제 안내</a>에서 미리 보실 수 있습니다.</p>
+  </div>
 </div>
 <script>
 (function(){{
@@ -2861,7 +2868,7 @@ INQUIRY = f"""<div class="iq">
       .map(function(k){{var v=ctx[k];return '<div style="display:flex;gap:10px"><span style="color:#909090;min-width:64px">'+k+'</span><span>'+
         (Array.isArray(v)?v.length+'개':String(v))+'</span></div>'}}).join('');
     if(rows) document.getElementById('f').insertAdjacentHTML('beforebegin',
-      '<div class="done" style="margin:0 0 24px;font-size:14px"><b style="font-size:14px">고르신 내용이 함께 전달됩니다</b>'+rows+'</div>');
+      '<div class="iq-card" style="margin:0 0 24px;font-size:14px"><b style="font-size:14px">고르신 내용이 함께 전달됩니다</b>'+rows+'</div>');
   }}
   document.getElementById('f').addEventListener('submit',async function(e){{
     e.preventDefault();
@@ -2874,12 +2881,12 @@ INQUIRY = f"""<div class="iq">
         body:JSON.stringify(payload)}});
       var d=await r.json();
       if(!r.ok){{ throw new Error(d.error||'잠시 후 다시 시도해 주세요.') }}
-      document.querySelector('.iq').innerHTML=
-        '<div class="done"><b>문의가 접수되었습니다 ✓</b>'+
-        '<p style="margin:0 0 14px">접수번호 <span class="code">'+d.id+'</span> · 영업일 기준 하루 안에 답변드립니다.</p>'+
+      document.getElementById('iqRoot').innerHTML=
+        '<div class="iq-card"><b>문의가 접수되었습니다 ✓</b>'+
+        '<p style="margin:0 0 14px">접수번호 <span class="iq-code">'+d.id+'</span> · 영업일 기준 하루 안에 답변드립니다.</p>'+
         '<p style="margin:0 0 18px">접수 확인 메일을 보내드렸습니다. 아래에서 <b>진행 상황을 보고 이어서 대화</b>하실 수 있어요.</p>'+
-        '<p style="margin:0"><a class="go" href="'+d.url+'" style="text-decoration:none">문의 내용 보기 · 대화하기</a></p>'+
-        '<p class="note">결제 진행 방법은 <a href="/how-to-pay/">결제 안내</a>를 참고해 주세요.</p></div>';
+        '<p style="margin:0"><a class="iq-go" href="'+d.url+'">문의 내용 보기 · 대화하기</a></p></div>'+
+        '<p>결제 진행 방법은 <a href="/how-to-pay/">결제 안내</a>를 참고해 주세요.</p>';
       window.scrollTo({{top:0,behavior:'smooth'}});
     }}catch(ex){{
       err.textContent=ex.message; b.disabled=false; b.textContent='문의 보내기';
@@ -2888,18 +2895,24 @@ INQUIRY = f"""<div class="iq">
 }})();
 </script>"""
 
-THREAD = f"""<div class="iq">
-  <h1 id="h">문의 내용</h1>
-  <p class="sub" id="meta">불러오는 중…</p>
-  <div class="thr" id="thr"></div>
-  <div id="box" hidden>
-    <div class="err" id="err"></div>
-    <label><span>이어서 말씀해 주세요</span>
-      <textarea id="body" placeholder="추가로 알려주실 내용이 있으면 적어주세요."></textarea></label>
-    <button class="go" id="go" type="button">보내기</button>
+THREAD = f"""<div class="lg">
+  <div class="lg-head">
+    <h1 id="h">문의 내용</h1>
+    <p class="upd" id="meta">불러오는 중…</p>
   </div>
-  <p class="note">이 페이지 주소가 곧 열쇠입니다. 회원가입 없이 언제든 다시 열어 확인하실 수 있어요.<br>
-    <a href="/how-to-pay/">결제는 이렇게 진행됩니다 →</a></p>
+  <div class="lg-body">
+    <div class="iq-thr" id="thr"></div>
+    <div id="box" hidden>
+      <div class="iq-err" id="err"></div>
+      <div class="iq-f">
+        <label><span>이어서 말씀해 주세요</span>
+          <textarea id="body" placeholder="추가로 알려주실 내용이 있으면 적어주세요."></textarea></label>
+        <div><button class="iq-go" id="go" type="button">보내기</button></div>
+      </div>
+    </div>
+    <p>이 페이지 주소가 곧 열쇠입니다. 회원가입 없이 언제든 다시 열어 확인하실 수 있어요.<br>
+      <a href="/how-to-pay/">결제는 이렇게 진행됩니다 →</a></p>
+  </div>
 </div>
 <script>
 (function(){{
@@ -2917,7 +2930,7 @@ THREAD = f"""<div class="iq">
     meta.innerHTML=esc(d.topic)+' · 접수 '+when(d.created_at)+
       (d.status==='replied'?' · <b>답변 완료</b>':' · 답변 준비 중');
     thr.innerHTML=d.messages.map(function(m){{
-      return '<div class="msg '+(m.author==='momentus'?'us':'me')+'">'+
+      return '<div class="iq-msg '+(m.author==='momentus'?'us':'me')+'">'+
         '<div class="who">'+(m.author==='momentus'?'모멘터스':'보내신 내용')+' · '+when(m.created_at)+'</div>'+
         esc(m.body)+'</div>' }}).join('');
     document.getElementById('box').hidden=false;
