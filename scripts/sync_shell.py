@@ -32,10 +32,12 @@ HOME = os.path.expanduser("~/Projects")
 #   ⬜ cue·mark 는 아직 마커가 없다. 각 저장소 푸터를 MMT:LEGAL 마커로 감싸면 목록에 넣는다.
 TARGETS = [
     ("notes", ["web/src/shop_ui.js"], ["web/src/shop_ui.js"], "notes.the-moment.us",
-     ["web/src/legal.js"]),   # 구 planner-factory (2026-07-31 리네임)
+     ["web/src/legal.js"], "<br>"),   # 구 planner-factory (2026-07-31 리네임)
     ("cue", ["public/landing.css", "public/jobs.css"],
-     ["public/landing.html", "public/jobs.html", "public/privacy.html"], "cue.the-moment.us", []),
-    ("mark", ["src/styles/global.css"], ["src/layouts/Base.astro"], "mark.the-moment.us", []),
+     ["public/landing.html", "public/jobs.html", "public/privacy.html"], "cue.the-moment.us",
+     ["public/landing.html", "public/jobs.html", "public/privacy.html", "src/index.js"], " · "),  # cue 푸터는 한 줄
+    ("mark", ["src/styles/global.css"], ["src/layouts/Base.astro"], "mark.the-moment.us",
+     ["src/components/Footer.astro"], "<br />"),
 ]
 
 CSS_RE = re.compile(r"/\* MMT:BEGIN.*?/\* MMT:END \*/", re.S)
@@ -44,14 +46,16 @@ HTML_RE = re.compile(r"<!-- MMT:BEGIN.*?<!-- MMT:END -->", re.S)
 LEGAL_RE = re.compile(r"<!-- MMT:LEGAL:BEGIN.*?<!-- MMT:LEGAL:END -->", re.S)
 
 
-def put(path, block, pattern, anchor_re, anchor_fmt):
+def put(path, block, pattern, anchor_re, anchor_fmt, count=1):
     """마커가 있으면 교체, 없으면 앵커 뒤에 삽입."""
     if not os.path.exists(path):
         print(f"  ⚠️ 없음: {path}")
         return False
     s = open(path, encoding="utf-8").read()
     if pattern.search(s):
-        s2 = pattern.sub(lambda _: block, s, count=1)
+        # ⚠️ count=1 이면 **한 파일에 마커가 여럿일 때 첫 개만 갈리고 나머지는 조용히 남는다.**
+        #   cue/src/index.js 에 전자상거래 표기가 10곳 있었다(2026-08-08). 법적 표기는 전부여야 한다.
+        s2 = pattern.sub(lambda _: block, s, count=count)
     else:
         m = anchor_re.search(s)
         if not m:
@@ -69,8 +73,8 @@ def put(path, block, pattern, anchor_re, anchor_fmt):
 def main():
     css = shell_css_block()
     changed = 0
-    legal = shell_legal_markup()
-    for repo, css_files, html_files, host, legal_files in TARGETS:
+    for repo, css_files, html_files, host, legal_files, legal_sep in TARGETS:
+        legal = shell_legal_markup(legal_sep)
         print(f"[{repo}]")
         bar = shell_bar_markup(host)
         for rel in css_files:
@@ -84,7 +88,7 @@ def main():
         for rel in legal_files:
             # 마커가 반드시 있어야 한다 — 앵커를 못 찾으면 put 이 경고만 하고 지나간다.
             changed += put(os.path.join(HOME, repo, rel), legal, LEGAL_RE,
-                           re.compile(r"\A"), "{block}")
+                           re.compile(r"\A"), "{block}", count=0)   # 0 = 그 파일의 **모든** 마커
     print(f"\n반영 {changed}건 — 각 제품 저장소에서 커밋·배포하세요.")
 
 
