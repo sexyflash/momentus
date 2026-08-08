@@ -1495,6 +1495,23 @@ transition:opacity .14s,transform .14s;box-shadow:0 10px 26px -12px rgba(0,0,0,.
 opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
 @media(max-width:820px){#mmt-bar .mmt-in{gap:10px}#mmt-bar .mmt-sep{display:none}
 #mmt-bar a.mmt-it{padding:5px 7px}#mmt-bar a.mmt-it[data-sub]::after{display:none}}
+/* 모바일 셀렉션 — 좁은 화면에서 링크 7개를 가로로 흘리면 상단이 정신없고 잘린다.
+   현재 제품 이름만 보이고 누르면 목록이 뜬다. <details> 라 **JS 없이도 동작**한다(바의 fail-open 규칙). */
+#mmt-bar .mmt-pick{display:none;position:relative;margin-left:auto;flex:0 0 auto}
+#mmt-bar .mmt-pick>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:5px;
+font-size:13px;font-weight:700;color:#fff;padding:5px 11px;border-radius:999px;
+background:rgba(255,255,255,.14);white-space:nowrap}
+#mmt-bar .mmt-pick>summary::-webkit-details-marker{display:none}
+#mmt-bar .mmt-pick>summary::after{content:"";width:0;height:0;border:4px solid transparent;
+border-top-color:currentColor;margin-top:2px;opacity:.7}
+#mmt-bar .mmt-menu{position:absolute;right:0;top:calc(100% + 9px);background:#14161a;border-radius:13px;
+padding:6px;min-width:196px;box-shadow:0 18px 44px -14px rgba(0,0,0,.6);z-index:2147483001}
+#mmt-bar .mmt-menu a{display:block;padding:10px 13px;border-radius:9px;color:#cfd4dc;
+font-size:14px;font-weight:500;text-decoration:none;white-space:nowrap}
+#mmt-bar .mmt-menu a[aria-current=page]{background:#fff;color:#14161a;font-weight:700}
+#mmt-bar .mmt-menu hr{border:0;border-top:1px solid rgba(255,255,255,.12);margin:5px 8px}
+@media(max-width:640px){#mmt-bar .mmt-in{overflow:visible}
+#mmt-bar .mmt-nav{display:none}#mmt-bar .mmt-pick{display:block}}
 @media(prefers-reduced-motion:reduce){#mmt-bar a.mmt-it[data-sub]::after{transition:none}}"""
 
 
@@ -1523,10 +1540,26 @@ def shell_bar_markup(host=""):
         href = it["href"] if "//" in it["href"] else ("https://the-moment.us" + it["href"])
         tail = '<i class="mmt-ext" aria-hidden="true">↗</i>' if it["ext"] else ""
         parts.append(f'<a class="mmt-it" href="{href}"{a}>{it["label"]}{tail}</a>')
+    # 모바일용 셀렉션 — 같은 항목을 세로 목록으로. 요약칸에는 **지금 있는 제품 이름**만 보인다.
+    here, mparts = "모멘터스", []
+    for it in bar_items():
+        if it["sep"]:
+            mparts.append("<hr>")     # ⚠️ sep 은 "이 항목 **앞에** 구분선"이라는 뜻이다. continue 하면 링크가 사라진다.
+        h = it["href"].split("//")[1].split("/")[0] if "//" in it["href"] else ""
+        cur = bool(host and h == host)
+        if cur:
+            here = it["label"]
+        href = it["href"] if "//" in it["href"] else ("https://the-moment.us" + it["href"])
+        ext = ' target="_blank" rel="noopener"' if it["ext"] else ""
+        act = ' aria-current="page"' if cur else ""
+        mparts.append(f'<a href="{href}"{act}{ext}>{it["label"]}</a>')
+    pick = ('<details class="mmt-pick"><summary aria-label="모멘터스 제품 고르기">'
+            f'{here}</summary><div class="mmt-menu">{"".join(mparts)}</div></details>')
     return ('<!-- MMT:BEGIN — 모멘터스 공용 1단 바(생성물). 손으로 고치지 말 것. -->\n'
             '<div id="mmt-bar"><div class="mmt-in">'
             '<a class="mmt-wm" href="https://the-moment.us">MOMENTUS</a>'
             f'<nav class="mmt-nav" aria-label="모멘터스">{"".join(parts)}</nav>'
+            f'{pick}'
             '</div></div>\n<!-- MMT:END -->')
 
 
