@@ -22,19 +22,26 @@ _ns = {"__name__": "gen_site_partial", "__file__": os.path.abspath("scripts/gen_
 exec(compile(_src, "scripts/gen_site.py", "exec"), _ns)
 shell_css_block = _ns["shell_css_block"]
 shell_bar_markup = _ns["shell_bar_markup"]
+shell_legal_markup = _ns["shell_legal_markup"]
 
 HOME = os.path.expanduser("~/Projects")
 
-# (저장소, CSS 파일들, HTML 파일들, 그 제품의 도메인)
+# (저장소, CSS 파일들, 바 HTML 파일들, 도메인, 법적표기 파일들)
+#   법적표기 = 전자상거래 6종. 종전엔 제품 저장소가 손으로 베꼈다(notes 2곳·cue 4곳·mark 1곳).
+#   틀리면 PG 심사에서 잡히는 문장이라 손복사로 두면 안 된다 — 2026-08-08 부터 여기서 밀어 넣는다.
+#   ⬜ cue·mark 는 아직 마커가 없다. 각 저장소 푸터를 MMT:LEGAL 마커로 감싸면 목록에 넣는다.
 TARGETS = [
-    ("notes", ["web/src/shop_ui.js"], ["web/src/shop_ui.js"], "notes.the-moment.us"),   # 구 planner-factory (2026-07-31 리네임)
+    ("notes", ["web/src/shop_ui.js"], ["web/src/shop_ui.js"], "notes.the-moment.us",
+     ["web/src/legal.js"]),   # 구 planner-factory (2026-07-31 리네임)
     ("cue", ["public/landing.css", "public/jobs.css"],
-     ["public/landing.html", "public/jobs.html", "public/privacy.html"], "cue.the-moment.us"),
-    ("mark", ["src/styles/global.css"], ["src/layouts/Base.astro"], "mark.the-moment.us"),
+     ["public/landing.html", "public/jobs.html", "public/privacy.html"], "cue.the-moment.us", []),
+    ("mark", ["src/styles/global.css"], ["src/layouts/Base.astro"], "mark.the-moment.us", []),
 ]
 
 CSS_RE = re.compile(r"/\* MMT:BEGIN.*?/\* MMT:END \*/", re.S)
 HTML_RE = re.compile(r"<!-- MMT:BEGIN.*?<!-- MMT:END -->", re.S)
+# 법적 표기 — 제품 저장소가 손으로 베끼던 것을 여기서 갈아 끼운다(2026-08-08).
+LEGAL_RE = re.compile(r"<!-- MMT:LEGAL:BEGIN.*?<!-- MMT:LEGAL:END -->", re.S)
 
 
 def put(path, block, pattern, anchor_re, anchor_fmt):
@@ -62,7 +69,8 @@ def put(path, block, pattern, anchor_re, anchor_fmt):
 def main():
     css = shell_css_block()
     changed = 0
-    for repo, css_files, html_files, host in TARGETS:
+    legal = shell_legal_markup()
+    for repo, css_files, html_files, host, legal_files in TARGETS:
         print(f"[{repo}]")
         bar = shell_bar_markup(host)
         for rel in css_files:
@@ -73,6 +81,10 @@ def main():
         for rel in html_files:
             changed += put(os.path.join(HOME, repo, rel), bar, HTML_RE,
                            re.compile(r"<body[^>]*>"), "\n{block}")
+        for rel in legal_files:
+            # 마커가 반드시 있어야 한다 — 앵커를 못 찾으면 put 이 경고만 하고 지나간다.
+            changed += put(os.path.join(HOME, repo, rel), legal, LEGAL_RE,
+                           re.compile(r"\A"), "{block}")
     print(f"\n반영 {changed}건 — 각 제품 저장소에서 커밋·배포하세요.")
 
 

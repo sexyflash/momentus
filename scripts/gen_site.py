@@ -1523,6 +1523,31 @@ def shell_css_block():
             f":root{{{toks}}}\n{SHELL_BAR_CSS}\n/* MMT:END */")
 
 
+# ── 법적 표기(전자상거래 6종) — **여기가 정본이다.** ────────────────────────────
+# 종전엔 제품 저장소가 이 문장을 손으로 베꼈다(notes 2곳·cue 4곳·mark 1곳). 값이 지금 맞는 건
+# 우연이고, 한 곳만 고치는 순간 갈린다 — 패밀리 바에서 이미 겪은 그 사고다(그래서 sync_shell 이 있다).
+# 법적 표기는 **틀리면 심사에서 잡히는** 문장이라 더더욱 손복사로 두면 안 된다.
+#   반영: sync_shell.py 가 제품 저장소의 MMT:LEGAL 마커 사이를 갈아 끼운다.
+#   🚫 제품 저장소에서 이 문장을 고치지 마라 — 다음 동기화 때 덮어쓴다. 여기(BIZ)를 고쳐라.
+def shell_legal_html():
+    """제품 사이트 푸터에 들어가는 한 덩어리(마커 없음). 스타일은 제품이 준다."""
+    return (f"{BIZ['name']} · 대표 {BIZ['ceo']} · 사업자등록번호 {BIZ['reg']}"
+            f" · 통신판매업신고 {BIZ['mail_order']}<br>"
+            f"{BIZ['addr']} · {BIZ['tel']} · {BIZ['email']}<br>"
+            "고객 문의는 이메일로만 받습니다. 이메일로 주시면 가장 빠르게 도와드릴 수 있습니다.<br>"
+            '<a href="https://the-moment.us/legal/terms/" target="_blank" rel="noopener">이용약관</a> · '
+            '<a href="https://the-moment.us/legal/privacy/" target="_blank" rel="noopener">개인정보처리방침</a> · '
+            '<a href="https://the-moment.us/legal/refund/" target="_blank" rel="noopener">환불 및 청약철회</a>')
+
+
+def shell_legal_markup():
+    """마커로 감싼 형태 — sync_shell 이 이 사이를 통째로 갈아 끼운다."""
+    return ("<!-- MMT:LEGAL:BEGIN — 전자상거래 표기(생성물). 손으로 고치지 말 것.\n"
+            "     정본: momentus/scripts/gen_site.py BIZ · 반영: momentus/scripts/sync_shell.py -->\n"
+            + shell_legal_html()
+            + "\n<!-- MMT:LEGAL:END -->")
+
+
 def shell_bar_markup(host=""):
     """제품 HTML의 <body> 바로 뒤에 박는 1단 바. host 를 주면 그 제품 항목에 활성 표시."""
     parts = []
