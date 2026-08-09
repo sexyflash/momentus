@@ -1538,7 +1538,11 @@ def shell_legal_html(sep="<br>"):
     """
     lines = [
         f"{BIZ['name']} · 대표 {BIZ['ceo']} · 사업자등록번호 {BIZ['reg']} · 통신판매업신고 {BIZ['mail_order']}",
-        f"{BIZ['addr']} · {BIZ['tel']} · {BIZ['email']}",
+        # ⚠️ Cloudflare 이메일 난독화 우회 — Pages 로 나가는 사이트(mark)에서 이메일이
+        #    [email protected] 로 바뀌어 **로봇이 못 읽었다**(2026-08-08 실측). 법적 고지의
+        #    연락처이고 GEO(AI 답변) 대상이라 읽혀야 한다. 대시보드를 끄지 않고 이 주석으로 푼다
+        #    — 설정에 기대면 나중에 누가 켜도 모른다. 코드가 스스로 보장하게 둔다.
+        f"{BIZ['addr']} · {BIZ['tel']} · <!--email_off-->{BIZ['email']}<!--/email_off-->",
         "고객 문의는 이메일로만 받습니다. 이메일로 주시면 가장 빠르게 도와드릴 수 있습니다.",
         ('<a href="https://the-moment.us/legal/terms/" target="_blank" rel="noopener">이용약관</a> · '
          '<a href="https://the-moment.us/legal/privacy/" target="_blank" rel="noopener">개인정보처리방침</a> · '
