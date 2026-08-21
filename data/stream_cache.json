@@ -3,37 +3,44 @@
   {
    "kind": "release",
    "src": "플래너",
+   "title": "독서 기록 공책",
+   "url": "https://notes.the-moment.us/p/reading-note",
+   "date": "2026-08-21",
+   "img": "https://notes.the-moment.us/img/wizard/wz_dfeeddc8-086/draft_tabs_cover.png"
+  },
+  {
+   "kind": "release",
+   "src": "플래너",
+   "title": "30일 운동 챌린지",
+   "url": "https://notes.the-moment.us/p/move30",
+   "date": "2026-08-21",
+   "img": "https://notes.the-moment.us/img/wizard/wz_7f0f47db-0d4/draft_tabs_cover.png"
+  },
+  {
+   "kind": "release",
+   "src": "플래너",
+   "title": "코넬식 필기 공책",
+   "url": "https://notes.the-moment.us/p/cornell-note",
+   "date": "2026-08-21",
+   "img": "https://notes.the-moment.us/img/wizard/wz_8cd9ff52-34a/draft_tabs_cover.png"
+  },
+  {
+   "kind": "release",
+   "src": "플래너",
    "title": "5년 만년일기",
    "url": "https://notes.the-moment.us/p/diary5y",
    "date": "2026-08-18",
    "img": "https://notes.the-moment.us/img/wizard/wz_d42614b1-8dd/draft_user_cover.png"
-  },
-  {
-   "kind": "release",
-   "src": "플래너",
-   "title": "디데이 챌린지 스터디플래너",
-   "url": "https://notes.the-moment.us/p/dday100",
-   "date": "2026-08-18",
-   "img": "https://notes.the-moment.us/img/wizard/wz_337a35da-15a/draft_user_cover.png"
-  },
-  {
-   "kind": "release",
-   "src": "플래너",
-   "title": "디지털 교무수첩",
-   "url": "https://notes.the-moment.us/p/teachernote",
-   "date": "2026-08-18",
-   "img": "https://notes.the-moment.us/img/wizard/wz_8548ebe7-9b2/draft_user_cover.png"
-  },
-  {
-   "kind": "release",
-   "src": "플래너",
-   "title": "머니 플래너 · 만년 가계부",
-   "url": "https://notes.the-moment.us/p/moneybook",
-   "date": "2026-08-18",
-   "img": "https://notes.the-moment.us/img/wizard/wz_bbf51bee-50b/draft_user_cover.png"
   }
  ],
  "mark": [
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "간판 디자인 전, 옆 가게 로고 5분만 비교하세요",
+   "url": "https://mark.the-moment.us/insights/compare-nearby-store-logo-before-signboard-design/",
+   "date": "2026-08-21"
+  },
   {
    "kind": "post",
    "src": "로고",
@@ -54,13 +61,6 @@
    "title": "생명을 지키는 신뢰 반려동물 브랜드 로고",
    "url": "https://mark.the-moment.us/%EB%B0%98%EB%A0%A4%EB%8F%99%EB%AC%BC-%EB%A1%9C%EA%B3%A0/work-208756/",
    "date": "2026-08-18"
-  },
-  {
-   "kind": "post",
-   "src": "로고",
-   "title": "금색·홍색 의료 명함, 로고만 흑백이면 왜 싸 보여질까",
-   "url": "https://mark.the-moment.us/insights/medical-business-card-color-logo-guide/",
-   "date": "2026-08-17"
   }
  ]
 }
