@@ -1466,7 +1466,10 @@ POST_CSS = """
 /* 폭은 목록(/stories/, .nws max-width 1224)과 **똑같이** 맞춘다 — 상세만 좁으면
    같은 페이지를 오간다는 느낌이 깨지고 양옆 레일 정렬이 어긋나 보인다(2026-08-23 대표 지적).
    1224 = 목차 180 + 32 + 본문 1fr + 32 + 이어서읽기 220. 제목은 본문 칸에 얹어 좌변을 맞춘다. */
-.pst{max-width:1224px;margin:0 auto;padding:0 24px}
+/* 본문 칸은 **목록의 본문 폭(1176 = .nws 1224 − 좌우 24)** 과 항상 같다.
+   레일(목차·이어서읽기)은 그 바깥에 두고, 바깥에 자리가 없으면 접는다.
+   ⚠️ 레일을 본문과 같은 폭 안에 욱여넣으면 본문이 712 로 쪼그라든다(2026-08-23 대표 지적). */
+.pst{max-width:none;margin:0;padding:0}
 .pst-top{grid-column:2;padding:clamp(40px,6vw,84px) 0 0}
 .pst-badges{display:flex;flex-wrap:wrap;gap:8px}
 .pst-chip{display:inline-flex;align-items:center;height:34px;padding:0 15px;border-radius:99px;
@@ -1476,8 +1479,8 @@ font-size:13.5px;font-weight:600;white-space:nowrap;background:var(--soft);color
 line-height:1.22;color:var(--ink);text-wrap:balance}
 .pst-sub{margin-top:18px;font-size:clamp(16px,1.6vw,23px);line-height:1.6;color:var(--gray);
 letter-spacing:-.02em}
-.pst-grid{display:grid;grid-template-columns:180px minmax(0,1fr) 220px;
-gap:0 32px;align-items:start}
+.pst-grid{display:grid;grid-template-columns:200px minmax(0,1176px) 200px;
+gap:0 32px;align-items:start;max-width:1688px;margin:0 auto;padding:0 24px;justify-content:center}
 .pst-toc{grid-column:1;grid-row:2;align-self:start;position:sticky;top:64px}
 .pst-toc .rt{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:12px}
 .pst-toc a{display:block;padding:7px 0 7px 14px;border-left:2px solid var(--line);
@@ -1525,8 +1528,9 @@ padding-top:26px;border-top:1px solid var(--line)}
 background:var(--soft);font-size:13px;font-weight:600;color:var(--gray)}
 .pst-tags a:hover{background:var(--ink);color:#fff}
 .pst-back{display:inline-block;margin-top:22px;font-size:14.5px;font-weight:600;color:var(--brand-cta)}
-@media(max-width:1120px){
-  .pst-grid{grid-template-columns:minmax(0,1fr)}
+/* 레일을 본문 바깥에 세울 자리(1640+48)가 없으면 접는다 — 본문 폭은 그대로 1176. */
+@media(max-width:1700px){
+  .pst-grid{grid-template-columns:minmax(0,1176px)}
   .pst-toc,.pst-aside{display:none}
   .pst-top,.pst-main,.pst-end{grid-column:1}
 }
