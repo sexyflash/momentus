@@ -1232,34 +1232,50 @@ AP_CSS = """
    무엇을 하려고 오셨나요 로 이어지는 '콘텐츠 허브'였다. 대표: "잡스러운 거 치우고
    이 업체 제대로 뭔가 제품 만드는 곳이구나 느끼게 해줘야." 목록을 쌓는 대신
    제품 하나에 화면 하나를 준다 — 이름 · 한 줄 · 행동 둘 · 큰 그림. 그게 전부다. */
-.stg-stack{display:flex;flex-direction:column;gap:12px;padding:12px 12px 0}
-.stg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* 애플 타일 실측(apple.com/kr/airpods, 1440 뷰포트):
+     카드 폭 1380 · 좌우 여백 30px · 모서리 18px · 높이 756(≈1.83:1)
+     그림은 카드 안에서 꽉 참(object-fit:cover), 글은 그림 **위** 좌하단 x=48 y=539,
+     제품명 80px/600, 한 줄 21px, 버튼 둘은 우하단 같은 줄.
+   ⚠️ 종전엔 카드를 뷰포트에 거의 붙이고(12px) 글을 그림 아래 띠에 뒀다 — 둘 다 애플과 다르다. */
+.stg-stack{display:flex;flex-direction:column;gap:clamp(12px,2.1vw,30px);
+padding:clamp(12px,2.1vw,30px) clamp(12px,2.1vw,30px) 0}
+.stg-row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2.1vw,30px)}
 .stg{position:relative;display:flex;flex-direction:column;text-align:left;
-border-radius:var(--kb-r);overflow:hidden;background:var(--soft)}
+border-radius:18px;overflow:hidden;background:var(--soft)}
 .stg--paper{background:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}
 .stg--ink{background:#0b0c0e;color:#fff}
 .stg--ink .stg-claim{color:#aeb5c0}
 .stg--ink .stg-eyebrow{color:#79828f}
-/* 그림이 카드 폭을 꽉 채운다(2026-08-23 대표: "이미지도 풀로 쓰고 해야지"). */
-.stg-art{width:100%;aspect-ratio:16/9;overflow:hidden;background:rgba(0,0,0,.04)}
-.stg-art img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;
+
+/* ── 전면 타일: 그림이 카드를 채우고 글이 그 위에 얹힌다 ── */
+.stg--hero{aspect-ratio:1380/756;min-height:340px}
+.stg--hero .stg-art{position:absolute;inset:0;aspect-ratio:auto;z-index:0}
+.stg--hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:62%;z-index:1;
+pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.62),rgba(0,0,0,.28) 42%,transparent)}
+.stg--hero .stg-bd{position:relative;z-index:2;padding:clamp(24px,3.3vw,48px)}
+.stg--hero .stg-name{color:#fff;font-size:clamp(34px,5.6vw,80px);letter-spacing:-.055em}
+.stg--hero .stg-claim{color:rgba(255,255,255,.88);font-size:clamp(15px,1.5vw,21px);font-weight:600}
+.stg--hero .stg-eyebrow{color:rgba(255,255,255,.72)}
+.stg--hero .stg-pill--line{color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.75)}
+
+/* ── 2단 타일: 그림 위, 글 아래(애플 '모델 비교하기' 배치). 우리 og 배너는
+      글자가 박혀 있어 그림 위에 글을 얹으면 겹친다 — 그래서 이쪽만 아래 띠. ── */
+.stg-art{width:100%;aspect-ratio:16/9;overflow:hidden;background:var(--paper)}
+.stg-art img{width:100%;height:100%;object-fit:contain;display:block;
 transition:transform .6s var(--ease)}
+.stg--hero .stg-art img{object-fit:cover}
 .stg:hover .stg-art img{transform:scale(1.02)}
-.stg--ink .stg-art{background:none}
-/* 2단 칸 그림은 제품 og 배너(글자가 박혀 있다) — cover 로 자르면 문구가 잘린다. */
-.stg-row .stg-art{background:var(--paper)}
-.stg-row .stg-art img{object-fit:contain}
 .stg--paper .stg-art{background:var(--soft)}
+.stg--ink .stg-art{background:none}
 .stg-bd{margin-top:auto;display:grid;grid-template-columns:1fr auto;align-items:end;gap:18px 26px;
-padding:clamp(20px,2.4vw,30px) clamp(20px,2.6vw,36px) clamp(24px,2.8vw,36px)}
+padding:clamp(20px,2.4vw,30px) clamp(20px,2.6vw,34px) clamp(24px,2.8vw,34px)}
 .stg-eyebrow{font-size:12.5px;font-weight:600;letter-spacing:-.01em;color:var(--faint)}
 .stg-eyebrow em{font-style:normal;margin-left:8px;padding:3px 8px;border-radius:99px;
 font-size:10px;font-weight:800;letter-spacing:.07em;color:#fff;background:var(--brand-cta);
 vertical-align:2px}
-.stg-name{font-weight:800;letter-spacing:-.05em;line-height:1.05;margin-top:9px;
-font-size:clamp(28px,3.4vw,46px)}
-.stg-row .stg-name{font-size:clamp(24px,2.3vw,32px)}
-.stg-claim{margin-top:9px;font-size:clamp(14.5px,1.15vw,18px);color:var(--gray);letter-spacing:-.02em}
+.stg-name{font-weight:800;letter-spacing:-.05em;line-height:1.04;margin-top:9px;
+font-size:clamp(24px,2.3vw,32px)}
+.stg-claim{margin-top:9px;font-size:clamp(14.5px,1.05vw,17px);color:var(--gray);letter-spacing:-.02em}
 .stg-cta{display:flex;gap:9px;flex-wrap:wrap}
 .stg-pill{display:inline-flex;align-items:center;height:40px;padding:0 20px;border-radius:99px;
 font-size:14.5px;font-weight:600;background:var(--brand-cta);color:#fff;white-space:nowrap;
@@ -1268,9 +1284,10 @@ transition:opacity .18s var(--ease)}
 .stg-pill--line{background:transparent;color:var(--brand-cta);box-shadow:inset 0 0 0 1px currentColor}
 .stg--ink .stg-pill--line{color:#8fc0ff}
 .stg-icons{flex:1;display:flex;gap:10px;flex-wrap:wrap;align-items:center;align-content:center;
-padding:clamp(30px,3.6vw,52px) clamp(20px,2.6vw,36px)}
+padding:clamp(30px,3.6vw,52px) clamp(20px,2.6vw,34px)}
 .stg-icons span{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;
 font-size:22px;background:var(--soft);color:var(--ink)}
+.stg--paper .stg-icons span{background:var(--soft)}
 .stg-note{padding:clamp(52px,6.5vw,92px) 24px;text-align:center;color:var(--gray);
 font-size:15px;letter-spacing:-.01em}
 .stg-note b{display:block;font-size:clamp(19px,2vw,26px);font-weight:800;color:var(--ink);
@@ -1278,8 +1295,8 @@ letter-spacing:-.04em;margin-bottom:10px}
 .stg-note a{color:var(--ink);font-weight:600}
 .stg-note a:hover{color:var(--brand-cta)}
 .stg-note .sep{margin:0 8px;color:var(--faint)}
-@media(max-width:820px){.stg-row{grid-template-columns:1fr}.stg-stack{padding:8px 8px 0;gap:8px}
-.stg-row{gap:8px}.stg-bd{grid-template-columns:1fr}}
+@media(max-width:820px){.stg-row{grid-template-columns:1fr}.stg-bd{grid-template-columns:1fr}
+.stg--hero{aspect-ratio:4/5}}
 @media(prefers-reduced-motion:no-preference){
 .stg{opacity:0;transform:translateY(16px);
 transition:opacity .65s var(--ease),transform .65s var(--ease)}
@@ -1621,7 +1638,11 @@ background:#14161a;color:#cfd4dc;position:relative;z-index:2147483000;
 font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Helvetica Neue','Segoe UI',sans-serif;
 letter-spacing:normal;line-height:normal}
 #mmt-bar *,#mmt-bar *::after{box-sizing:border-box}
-#mmt-bar .mmt-in{display:flex;align-items:center;gap:16px;height:100%;padding:0 20px;overflow-x:auto;scrollbar-width:none}
+/* 애플 글로벌 내비 실측(2026-08-23, 1440 뷰포트): .globalnav-content max-width 1024px,
+   좌우 padding 22px, 바 높이 44px. 뷰포트 끝에 붙이면 넓은 화면에서 왼쪽만 붙고
+   오른쪽이 휑해진다 — 가운데로 모으고 그 안에서 좌측 정렬한다. */
+#mmt-bar .mmt-in{display:flex;align-items:center;gap:14px;height:100%;
+max-width:1024px;margin:0 auto;padding:0 22px;overflow-x:auto;scrollbar-width:none}
 #mmt-bar .mmt-in::-webkit-scrollbar{display:none}
 #mmt-bar .mmt-wm{font-size:13px;font-weight:800;letter-spacing:-.01em;color:#fff;text-decoration:none;flex:0 0 auto}
 #mmt-bar .mmt-nav{display:flex;align-items:center;gap:4px;flex:0 0 auto}
@@ -1673,7 +1694,7 @@ transition:opacity .17s ease,transform .17s ease,visibility .17s}
 #mmt-bar:has(.mmt-fly:hover) .mmt-fly,
 #mmt-bar:has(.mmt-trg:focus-visible) .mmt-fly,
 #mmt-bar:has(.mmt-fly a:focus-visible) .mmt-fly{opacity:1;visibility:visible;transform:none}
-#mmt-bar .mmt-fly-in{max-width:1060px;margin:0 auto;padding:26px 20px 6px;
+#mmt-bar .mmt-fly-in{max-width:1024px;margin:0 auto;padding:26px 22px 6px;
 display:grid;grid-template-columns:1.1fr .9fr;gap:34px}
 #mmt-bar .mmt-fly-h{font-size:10.5px;font-weight:700;letter-spacing:.11em;color:#79828f;
 margin:0 0 9px;padding:0 8px}
@@ -1692,7 +1713,7 @@ line-height:1.35;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-spa
 #mmt-bar .mmt-fly-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 4px}
 #mmt-bar .mmt-fly-grid .mmt-fly-it i{display:none}
 #mmt-bar .mmt-fly-grid .mmt-fly-it .th{width:30px;height:30px;border-radius:8px}
-#mmt-bar .mmt-fly-foot{max-width:1060px;margin:0 auto;padding:8px 28px 20px}
+#mmt-bar .mmt-fly-foot{max-width:1024px;margin:0 auto;padding:8px 30px 20px}
 #mmt-bar .mmt-fly-foot a{font-size:12.5px;font-weight:600;color:#8fc0ff;text-decoration:none}
 #mmt-bar .mmt-fly-foot a:hover{text-decoration:underline}
 @media(max-width:820px){#mmt-bar .mmt-fly{display:none}}
@@ -2931,7 +2952,7 @@ def ap_stage(slug, tone="", badge=""):
     art = (f'<div class="stg-art"><img src="{shot}" alt="{esc(pr["short"])} 화면" '
            f'loading="lazy" decoding="async"></div>') if shot else ""
     bdg = f'<em>{badge}</em>' if badge else ""
-    cls = f" stg--{tone}" if tone else ""
+    cls = "".join(f" stg--{t}" for t in tone.split()) if tone else ""
     return (f'<section class="stg{cls}">{art}<div class="stg-bd"><div>'
             f'<p class="stg-eyebrow">{esc(pr.get("tag", ""))}{bdg}</p>'
             f'<h2 class="stg-name">{esc(pr["short"])}</h2>'
@@ -2954,8 +2975,8 @@ def ap_tools_stage():
 
 ap_body = (
     '<div class="stg-stack">'
-    + ap_stage("binbang", "", "NEW")
-    + ap_stage("heyreci", "ink")
+    + ap_stage("binbang", "hero", "NEW")
+    + ap_stage("heyreci", "hero ink")
     + '<div class="stg-row">' + ap_stage("mark", "paper") + ap_stage("cue") + '</div>'
     + '<div class="stg-row">' + ap_stage("theplan") + ap_tools_stage() + '</div>'
     + '</div>'
