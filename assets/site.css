@@ -139,7 +139,7 @@ border-radius:10px;background:var(--soft2);font-size:17px}
 .tls-row .ds{color:var(--gray);font-size:14px;margin-top:2px}
 .tls-row .mt{flex:0 0 auto;font-family:var(--mono);font-size:11.5px;color:var(--faint);white-space:nowrap}
 @media(max-width:640px){.tls-row .mt{display:none}.tls-head{padding-top:64px}}
-main{padding-top:56px}
+main{padding-top:0}
 .vd-qa{max-width:760px;margin:64px auto 0;padding:0 20px}.vd-qa>h2{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:0 0 24px;color:var(--ink)}.vd-qa-i{padding:20px 0;border-top:1px solid var(--line)}.vd-qa-i h3{font-size:17px;font-weight:700;margin:0 0 8px;color:var(--ink);letter-spacing:-.01em}.vd-qa-i p{margin:0;font-size:15px;line-height:1.7;color:var(--gray)}.btn{display:inline-flex;align-items:center;gap:var(--mmt-ctrl-gap,8px);background:var(--ink);color:#fff;font-size:var(--mmt-fs-ctrl,15px);font-weight:var(--mmt-fw-ctrl,700);padding:var(--mmt-ctrl-pad,14px 28px);border-radius:var(--mmt-r-ctrl,999px);border:none;cursor:pointer}
 .btn:hover{opacity:.87}.btn.lg{font-size:15px;padding:14px 26px}
 .btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
@@ -978,11 +978,22 @@ backdrop-filter:blur(10px);padding:14vh var(--kb-pad) 0;display:none}
 .kb-sr-box input{flex:1;min-width:0;border:0;background:none;outline:none;color:var(--ink);
 font-family:inherit;font-size:var(--f-display);font-weight:700;letter-spacing:var(--ls-title)}
 .kb-sr-box input::placeholder{color:var(--faint)}
-.kb-sr-hits{margin-top:20px;max-height:52vh;overflow:auto}
-.kb-sr-hits a{display:flex;align-items:baseline;gap:10px;padding:13px 4px;border-radius:10px}
+.kb-sr-box input::-webkit-search-cancel-button{-webkit-appearance:none;display:none}
+.kb-sr-hits{margin-top:18px;max-height:56vh;overflow:auto}
+.kb-sr-hits a{display:flex;align-items:center;gap:13px;padding:9px 8px;border-radius:12px}
 .kb-sr-hits a:hover{background:var(--soft)}
-.kb-sr-hits b{font-size:var(--f-ui-lg);font-weight:600;color:var(--ink)}
-.kb-sr-hits i{font-style:normal;font-size:var(--f-micro);font-weight:600;color:var(--faint)}
+.kb-sr-hits .th{width:56px;height:36px;border-radius:8px;overflow:hidden;flex:0 0 auto;
+background:var(--soft2);display:grid;place-items:center;font-size:16px;color:var(--gray)}
+.kb-sr-hits .th img{width:100%;height:100%;object-fit:cover;display:block}
+.kb-sr-hits .tx{min-width:0}
+.kb-sr-hits b{display:block;font-size:15px;font-weight:700;color:var(--ink);
+overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kb-sr-hits i{display:block;font-style:normal;font-size:12px;font-weight:600;
+color:var(--faint);margin-top:2px}
+/* 입력칸은 테두리 하이라이트 대신 **커서만** 깜빡인다(2026-08-23 대표 지적).
+   ⚠️ .kbp input:focus-visible 전역 규칙을 여기서 되돌린다 — 순서상 뒤에 와야 이긴다. */
+.kb-sr-box input,.kbp .kb-sr-box input:focus,.kbp .kb-sr-box input:focus-visible{
+outline:none;box-shadow:none;caret-color:var(--brand-cta)}
 .kb-sr-none{padding:16px 4px;color:var(--faint);font-size:var(--f-ui)}
 
 /* ── 공통 섹션 틀 ── */
@@ -1174,34 +1185,43 @@ stroke-linecap:round;stroke-linejoin:round}
    제품 하나에 화면 하나를 준다 — 이름 · 한 줄 · 행동 둘 · 큰 그림. 그게 전부다. */
 .stg-stack{display:flex;flex-direction:column;gap:12px;padding:12px 12px 0}
 .stg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.stg{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;
-border-radius:var(--kb-r);overflow:hidden;background:var(--soft);padding:clamp(46px,5.4vw,82px) 24px 0}
+.stg{position:relative;display:flex;flex-direction:column;text-align:left;
+border-radius:var(--kb-r);overflow:hidden;background:var(--soft)}
 .stg--paper{background:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}
 .stg--ink{background:#0b0c0e;color:#fff}
 .stg--ink .stg-claim{color:#aeb5c0}
+.stg--ink .stg-eyebrow{color:#79828f}
+/* 그림이 카드 폭을 꽉 채운다(2026-08-23 대표: "이미지도 풀로 쓰고 해야지"). */
+.stg-art{width:100%;aspect-ratio:16/9;overflow:hidden;background:rgba(0,0,0,.04)}
+.stg-art img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;
+transition:transform .6s var(--ease)}
+.stg:hover .stg-art img{transform:scale(1.02)}
 .stg--ink .stg-art{background:none}
-.stg-eyebrow{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--brand)}
-.stg-name{font-weight:800;letter-spacing:-.05em;line-height:1.04;margin-top:8px;
-font-size:clamp(32px,4.6vw,58px)}
-.stg-row .stg-name{font-size:clamp(27px,3vw,38px)}
-.stg-claim{margin-top:12px;font-size:clamp(15px,1.35vw,20px);color:var(--gray);letter-spacing:-.02em}
-.stg-cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
-.stg-pill{display:inline-flex;align-items:center;height:42px;padding:0 22px;border-radius:99px;
-font-size:15px;font-weight:600;background:var(--brand-cta);color:#fff;transition:opacity .18s var(--ease)}
+/* 2단 칸 그림은 제품 og 배너(글자가 박혀 있다) — cover 로 자르면 문구가 잘린다. */
+.stg-row .stg-art{background:var(--paper)}
+.stg-row .stg-art img{object-fit:contain}
+.stg--paper .stg-art{background:var(--soft)}
+.stg-bd{margin-top:auto;display:grid;grid-template-columns:1fr auto;align-items:end;gap:18px 26px;
+padding:clamp(20px,2.4vw,30px) clamp(20px,2.6vw,36px) clamp(24px,2.8vw,36px)}
+.stg-eyebrow{font-size:12.5px;font-weight:600;letter-spacing:-.01em;color:var(--faint)}
+.stg-eyebrow em{font-style:normal;margin-left:8px;padding:3px 8px;border-radius:99px;
+font-size:10px;font-weight:800;letter-spacing:.07em;color:#fff;background:var(--brand-cta);
+vertical-align:2px}
+.stg-name{font-weight:800;letter-spacing:-.05em;line-height:1.05;margin-top:9px;
+font-size:clamp(28px,3.4vw,46px)}
+.stg-row .stg-name{font-size:clamp(24px,2.3vw,32px)}
+.stg-claim{margin-top:9px;font-size:clamp(14.5px,1.15vw,18px);color:var(--gray);letter-spacing:-.02em}
+.stg-cta{display:flex;gap:9px;flex-wrap:wrap}
+.stg-pill{display:inline-flex;align-items:center;height:40px;padding:0 20px;border-radius:99px;
+font-size:14.5px;font-weight:600;background:var(--brand-cta);color:#fff;white-space:nowrap;
+transition:opacity .18s var(--ease)}
 .stg-pill:hover{opacity:.88}
 .stg-pill--line{background:transparent;color:var(--brand-cta);box-shadow:inset 0 0 0 1px currentColor}
 .stg--ink .stg-pill--line{color:#8fc0ff}
-.stg-art{width:100%;max-width:1040px;margin-top:clamp(28px,3.4vw,46px);aspect-ratio:16/9;
-border-radius:14px 14px 0 0;overflow:hidden;background:rgba(0,0,0,.04)}
-/* 2단 칸의 그림은 제품 og 배너(글자가 박혀 있다) — cover 로 자르면 문구가 잘린다.
-   contain 으로 통째로 보여 준다. 전면 무대 두 장만 실사진이라 cover 를 쓴다. */
-.stg-row .stg-art{aspect-ratio:16/9;max-width:560px;background:none;border-radius:12px}
-.stg-row .stg-art img{object-fit:contain}
-.stg-art img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-.stg-icons{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
-margin:clamp(30px,3.6vw,46px) 0 clamp(38px,4.4vw,58px)}
-.stg-icons span{width:54px;height:54px;border-radius:15px;display:grid;place-items:center;
-font-size:23px;background:var(--soft);color:var(--ink)}
+.stg-icons{flex:1;display:flex;gap:10px;flex-wrap:wrap;align-items:center;align-content:center;
+padding:clamp(30px,3.6vw,52px) clamp(20px,2.6vw,36px)}
+.stg-icons span{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;
+font-size:22px;background:var(--soft);color:var(--ink)}
 .stg-note{padding:clamp(52px,6.5vw,92px) 24px;text-align:center;color:var(--gray);
 font-size:15px;letter-spacing:-.01em}
 .stg-note b{display:block;font-size:clamp(19px,2vw,26px);font-weight:800;color:var(--ink);
@@ -1209,7 +1229,8 @@ letter-spacing:-.04em;margin-bottom:10px}
 .stg-note a{color:var(--ink);font-weight:600}
 .stg-note a:hover{color:var(--brand-cta)}
 .stg-note .sep{margin:0 8px;color:var(--faint)}
-@media(max-width:820px){.stg-row{grid-template-columns:1fr}.stg-stack{padding:8px 8px 0;gap:8px}.stg-row{gap:8px}}
+@media(max-width:820px){.stg-row{grid-template-columns:1fr}.stg-stack{padding:8px 8px 0;gap:8px}
+.stg-row{gap:8px}.stg-bd{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:no-preference){
 .stg{opacity:0;transform:translateY(16px);
 transition:opacity .65s var(--ease),transform .65s var(--ease)}

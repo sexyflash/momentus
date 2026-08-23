@@ -38,6 +38,9 @@ TARGETS = [
      ["public/landing.html", "public/jobs.html", "public/privacy.html", "src/index.js"], " · "),  # cue 푸터는 한 줄
     ("mark", ["src/styles/global.css"], ["src/layouts/Base.astro"], "mark.the-moment.us",
      ["src/components/Footer.astro"], "<br />"),
+    # 빈방은 정적 HTML 2장 — 종전엔 바를 손으로 베껴 다른 제품과 어긋났다(2026-08-23).
+    ("binbang", ["site/index.html", "site/status.html"],
+     ["site/index.html", "site/status.html"], "bb.the-moment.us", [], "<br>"),
 ]
 
 CSS_RE = re.compile(r"/\* MMT:BEGIN.*?/\* MMT:END \*/", re.S)

@@ -170,7 +170,7 @@ border-radius:10px;background:var(--soft2);font-size:17px}
 .tls-row .ds{color:var(--gray);font-size:14px;margin-top:2px}
 .tls-row .mt{flex:0 0 auto;font-family:var(--mono);font-size:11.5px;color:var(--faint);white-space:nowrap}
 @media(max-width:640px){.tls-row .mt{display:none}.tls-head{padding-top:64px}}
-main{padding-top:56px}
+main{padding-top:0}
 .vd-qa{max-width:760px;margin:64px auto 0;padding:0 20px}.vd-qa>h2{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:0 0 24px;color:var(--ink)}.vd-qa-i{padding:20px 0;border-top:1px solid var(--line)}.vd-qa-i h3{font-size:17px;font-weight:700;margin:0 0 8px;color:var(--ink);letter-spacing:-.01em}.vd-qa-i p{margin:0;font-size:15px;line-height:1.7;color:var(--gray)}.btn{display:inline-flex;align-items:center;gap:var(--mmt-ctrl-gap,8px);background:var(--ink);color:#fff;font-size:var(--mmt-fs-ctrl,15px);font-weight:var(--mmt-fw-ctrl,700);padding:var(--mmt-ctrl-pad,14px 28px);border-radius:var(--mmt-r-ctrl,999px);border:none;cursor:pointer}
 .btn:hover{opacity:.87}.btn.lg{font-size:15px;padding:14px 26px}
 .btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
@@ -1024,11 +1024,22 @@ backdrop-filter:blur(10px);padding:14vh var(--kb-pad) 0;display:none}
 .kb-sr-box input{flex:1;min-width:0;border:0;background:none;outline:none;color:var(--ink);
 font-family:inherit;font-size:var(--f-display);font-weight:700;letter-spacing:var(--ls-title)}
 .kb-sr-box input::placeholder{color:var(--faint)}
-.kb-sr-hits{margin-top:20px;max-height:52vh;overflow:auto}
-.kb-sr-hits a{display:flex;align-items:baseline;gap:10px;padding:13px 4px;border-radius:10px}
+.kb-sr-box input::-webkit-search-cancel-button{-webkit-appearance:none;display:none}
+.kb-sr-hits{margin-top:18px;max-height:56vh;overflow:auto}
+.kb-sr-hits a{display:flex;align-items:center;gap:13px;padding:9px 8px;border-radius:12px}
 .kb-sr-hits a:hover{background:var(--soft)}
-.kb-sr-hits b{font-size:var(--f-ui-lg);font-weight:600;color:var(--ink)}
-.kb-sr-hits i{font-style:normal;font-size:var(--f-micro);font-weight:600;color:var(--faint)}
+.kb-sr-hits .th{width:56px;height:36px;border-radius:8px;overflow:hidden;flex:0 0 auto;
+background:var(--soft2);display:grid;place-items:center;font-size:16px;color:var(--gray)}
+.kb-sr-hits .th img{width:100%;height:100%;object-fit:cover;display:block}
+.kb-sr-hits .tx{min-width:0}
+.kb-sr-hits b{display:block;font-size:15px;font-weight:700;color:var(--ink);
+overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kb-sr-hits i{display:block;font-style:normal;font-size:12px;font-weight:600;
+color:var(--faint);margin-top:2px}
+/* 입력칸은 테두리 하이라이트 대신 **커서만** 깜빡인다(2026-08-23 대표 지적).
+   ⚠️ .kbp input:focus-visible 전역 규칙을 여기서 되돌린다 — 순서상 뒤에 와야 이긴다. */
+.kb-sr-box input,.kbp .kb-sr-box input:focus,.kbp .kb-sr-box input:focus-visible{
+outline:none;box-shadow:none;caret-color:var(--brand-cta)}
 .kb-sr-none{padding:16px 4px;color:var(--faint);font-size:var(--f-ui)}
 
 /* ── 공통 섹션 틀 ── */
@@ -1223,34 +1234,43 @@ AP_CSS = """
    제품 하나에 화면 하나를 준다 — 이름 · 한 줄 · 행동 둘 · 큰 그림. 그게 전부다. */
 .stg-stack{display:flex;flex-direction:column;gap:12px;padding:12px 12px 0}
 .stg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.stg{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;
-border-radius:var(--kb-r);overflow:hidden;background:var(--soft);padding:clamp(46px,5.4vw,82px) 24px 0}
+.stg{position:relative;display:flex;flex-direction:column;text-align:left;
+border-radius:var(--kb-r);overflow:hidden;background:var(--soft)}
 .stg--paper{background:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}
 .stg--ink{background:#0b0c0e;color:#fff}
 .stg--ink .stg-claim{color:#aeb5c0}
+.stg--ink .stg-eyebrow{color:#79828f}
+/* 그림이 카드 폭을 꽉 채운다(2026-08-23 대표: "이미지도 풀로 쓰고 해야지"). */
+.stg-art{width:100%;aspect-ratio:16/9;overflow:hidden;background:rgba(0,0,0,.04)}
+.stg-art img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;
+transition:transform .6s var(--ease)}
+.stg:hover .stg-art img{transform:scale(1.02)}
 .stg--ink .stg-art{background:none}
-.stg-eyebrow{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--brand)}
-.stg-name{font-weight:800;letter-spacing:-.05em;line-height:1.04;margin-top:8px;
-font-size:clamp(32px,4.6vw,58px)}
-.stg-row .stg-name{font-size:clamp(27px,3vw,38px)}
-.stg-claim{margin-top:12px;font-size:clamp(15px,1.35vw,20px);color:var(--gray);letter-spacing:-.02em}
-.stg-cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
-.stg-pill{display:inline-flex;align-items:center;height:42px;padding:0 22px;border-radius:99px;
-font-size:15px;font-weight:600;background:var(--brand-cta);color:#fff;transition:opacity .18s var(--ease)}
+/* 2단 칸 그림은 제품 og 배너(글자가 박혀 있다) — cover 로 자르면 문구가 잘린다. */
+.stg-row .stg-art{background:var(--paper)}
+.stg-row .stg-art img{object-fit:contain}
+.stg--paper .stg-art{background:var(--soft)}
+.stg-bd{margin-top:auto;display:grid;grid-template-columns:1fr auto;align-items:end;gap:18px 26px;
+padding:clamp(20px,2.4vw,30px) clamp(20px,2.6vw,36px) clamp(24px,2.8vw,36px)}
+.stg-eyebrow{font-size:12.5px;font-weight:600;letter-spacing:-.01em;color:var(--faint)}
+.stg-eyebrow em{font-style:normal;margin-left:8px;padding:3px 8px;border-radius:99px;
+font-size:10px;font-weight:800;letter-spacing:.07em;color:#fff;background:var(--brand-cta);
+vertical-align:2px}
+.stg-name{font-weight:800;letter-spacing:-.05em;line-height:1.05;margin-top:9px;
+font-size:clamp(28px,3.4vw,46px)}
+.stg-row .stg-name{font-size:clamp(24px,2.3vw,32px)}
+.stg-claim{margin-top:9px;font-size:clamp(14.5px,1.15vw,18px);color:var(--gray);letter-spacing:-.02em}
+.stg-cta{display:flex;gap:9px;flex-wrap:wrap}
+.stg-pill{display:inline-flex;align-items:center;height:40px;padding:0 20px;border-radius:99px;
+font-size:14.5px;font-weight:600;background:var(--brand-cta);color:#fff;white-space:nowrap;
+transition:opacity .18s var(--ease)}
 .stg-pill:hover{opacity:.88}
 .stg-pill--line{background:transparent;color:var(--brand-cta);box-shadow:inset 0 0 0 1px currentColor}
 .stg--ink .stg-pill--line{color:#8fc0ff}
-.stg-art{width:100%;max-width:1040px;margin-top:clamp(28px,3.4vw,46px);aspect-ratio:16/9;
-border-radius:14px 14px 0 0;overflow:hidden;background:rgba(0,0,0,.04)}
-/* 2단 칸의 그림은 제품 og 배너(글자가 박혀 있다) — cover 로 자르면 문구가 잘린다.
-   contain 으로 통째로 보여 준다. 전면 무대 두 장만 실사진이라 cover 를 쓴다. */
-.stg-row .stg-art{aspect-ratio:16/9;max-width:560px;background:none;border-radius:12px}
-.stg-row .stg-art img{object-fit:contain}
-.stg-art img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-.stg-icons{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
-margin:clamp(30px,3.6vw,46px) 0 clamp(38px,4.4vw,58px)}
-.stg-icons span{width:54px;height:54px;border-radius:15px;display:grid;place-items:center;
-font-size:23px;background:var(--soft);color:var(--ink)}
+.stg-icons{flex:1;display:flex;gap:10px;flex-wrap:wrap;align-items:center;align-content:center;
+padding:clamp(30px,3.6vw,52px) clamp(20px,2.6vw,36px)}
+.stg-icons span{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;
+font-size:22px;background:var(--soft);color:var(--ink)}
 .stg-note{padding:clamp(52px,6.5vw,92px) 24px;text-align:center;color:var(--gray);
 font-size:15px;letter-spacing:-.01em}
 .stg-note b{display:block;font-size:clamp(19px,2vw,26px);font-weight:800;color:var(--ink);
@@ -1258,7 +1278,8 @@ letter-spacing:-.04em;margin-bottom:10px}
 .stg-note a{color:var(--ink);font-weight:600}
 .stg-note a:hover{color:var(--brand-cta)}
 .stg-note .sep{margin:0 8px;color:var(--faint)}
-@media(max-width:820px){.stg-row{grid-template-columns:1fr}.stg-stack{padding:8px 8px 0;gap:8px}.stg-row{gap:8px}}
+@media(max-width:820px){.stg-row{grid-template-columns:1fr}.stg-stack{padding:8px 8px 0;gap:8px}
+.stg-row{gap:8px}.stg-bd{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:no-preference){
 .stg{opacity:0;transform:translateY(16px);
 transition:opacity .65s var(--ease),transform .65s var(--ease)}
@@ -1298,28 +1319,21 @@ def purl(slug):
 
 
 def bar_items(active=""):
-    """1단 바 항목 = (라벨, href, 부제, 외부여부, 활성여부, 구분선앞).
-       active 는 apex 자기 페이지용(서버 렌더). 스포크는 shell.js 가 도메인으로 판정한다.
+    """1단 바 **최상위** 항목 = (라벨, href, 트리거여부, 활성여부, 구분선앞).
+       제품 이름들은 여기 없다 — '제품' 플라이아웃 안에 있다(2026-08-23).
        ⚠️ 활성 상태를 라벨로 하드코딩하지 않는다(nav-active-no-hardcode)."""
-    active = {"j": "story", "a": "about", "p": "products"}.get(active, active)  # 레거시 코드 호환
+    active = {"j": "story", "a": "about", "p": "products"}.get(active, active)
     out = []
-    # '제품'을 스포크 **앞**에 세운다 — 뒤에 두면 플래너·로고·빈방이 제품 밖의 딴 것처럼 읽힌다
-    # (2026-08-23 대표 지적: "걔는 결국 제품이잖아, 왜 이렇게 나눠지지").
-    # 무료 도구는 더 이상 바에 없다 — 제품과 대등한 범주가 아니라 /products/ 안의 한 섹션이다.
-    for l in BAR["links"]:
-        if l["key"] == "products":
-            out.append(dict(label=l["label"], href=l["href"], sub="",
-                            ext=False, on=(active == l["key"]), sep=False))
-    for s in BAR["spokes"]:
-        if s.get("hidden"):
-            continue
-        out.append(dict(label=s["label"], href=s["href"], sub=s.get("sub", ""),
-                        ext=bool(s.get("external")), on=False, sep=False))
-    rest = [l for l in BAR["links"] if l["key"] != "products"]
-    for j, l in enumerate(rest):
-        out.append(dict(label=l["label"], href=l["href"], sub="",
-                        ext=False, on=(active == l["key"]), sep=(j == 0)))
+    for i, l in enumerate(BAR["links"]):
+        out.append(dict(label=l["label"], href=l["href"], sub="", ext=False,
+                        on=(active == l["key"]), sep=(l["key"] == "story"),
+                        trg=(l["key"] == "products")))
     return out
+
+
+def bar_products():
+    """플라이아웃·모바일 목록에 들어갈 제품 = 바 스포크(숨김 제외)."""
+    return [sp for sp in BAR["spokes"] if not sp.get("hidden")]
 
 
 def bar_html(active=""):
@@ -1468,12 +1482,23 @@ def _re_desc(t, lo=70, hi=120):
     return cut.strip()
 
 
-def page(title, desc, body, active="", extra="", header=None, body_class="", head_extra=""):
+# 다크모드 — 그리기 전에 결정해서 흰 화면 번쩍임(FOUC)을 막는다. 반드시 blocking.
+THEME_BOOT = """<script>
+(function(){try{var t=localStorage.getItem('mmt-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.dataset.theme=t;}catch(e){}})();
+</script>"""
+
+TOP_BTN = ('<button class="kb-top" id="kbtop" aria-label="맨 위로">'
+           '<svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>')
+
+
+def page(title, desc, body, active="", extra="", header=None, body_class="kbp", head_extra=""):
     """header/body_class/head_extra 는 랜딩(KB 구성 클론) 전용 훅 —
        기본값이면 지금까지와 완전히 동일한 출력이라 다른 페이지엔 영향이 없다."""
     body = _toolfix(body)
     _bc = f' class="{body_class}"' if body_class else ""
-    _hd = gnb(active) if header is None else header
+    _hd = APEX_HEADER if header is None else header
     return f"""<!doctype html>
 <html lang="ko">
 <head>
@@ -1492,7 +1517,10 @@ def page(title, desc, body, active="", extra="", header=None, body_class="", hea
 <link rel="stylesheet" href="/assets/fonts/pretendard.css?v={FONT_VER}">
 <link rel="stylesheet" href="/assets/momentus.css">
 <link rel="stylesheet" href="/assets/site.css?v={CSS_VER}">
+<link rel="stylesheet" href="/shell.css">
 <script type="application/ld+json">{JSONLD}</script>
+{THEME_BOOT}
+<script defer src="/assets/apex.js?v={CSS_VER}"></script>
 {head_extra}</head>
 <body{_bc}>
 {_hd}
@@ -1500,6 +1528,7 @@ def page(title, desc, body, active="", extra="", header=None, body_class="", hea
 {body}
 </main>
 {FOOTER}
+{TOP_BTN}
 {AGENTATION}
 {extra}</body>
 </html>"""
@@ -1627,7 +1656,47 @@ font-size:14px;font-weight:500;text-decoration:none;white-space:nowrap}
 #mmt-bar .mmt-menu hr{border:0;border-top:1px solid rgba(255,255,255,.12);margin:5px 8px}
 @media(max-width:640px){#mmt-bar .mmt-in{overflow:visible}
 #mmt-bar .mmt-nav{display:none}#mmt-bar .mmt-pick{display:block}}
-@media(prefers-reduced-motion:reduce){#mmt-bar a.mmt-it[data-sub]::after{transition:none}}"""
+@media(prefers-reduced-motion:reduce){#mmt-bar a.mmt-it[data-sub]::after{transition:none}}
+/* ── 제품 플라이아웃 ──────────────────────────────────────────────────────
+   제품 이름을 바에 하나씩 늘어놓으면 제품이 늘 때마다 바가 길어지고 결국 잘린다
+   (2026-08-23 대표: "제품이 늘어난다고 해서 이걸 다 올릴 순 없잖아").
+   애플 글로벌 내비와 같은 방식 — 바에는 '제품' 하나, 목록은 호버 패널이 연다.
+   ⚠️ JS 0. :has() 로만 연다. 지원 안 되는 브라우저에선 패널이 안 열리고 '제품'이
+      그냥 /products/ 로 가는 평범한 링크가 된다(바의 fail-open 규칙). */
+#mmt-bar .mmt-trg::after{content:"";display:inline-block;width:0;height:0;margin-left:5px;
+border:3.5px solid transparent;border-top-color:currentColor;vertical-align:middle;opacity:.55}
+#mmt-bar .mmt-fly{position:absolute;left:0;right:0;top:100%;background:#14161a;
+border-top:1px solid rgba(255,255,255,.09);box-shadow:0 30px 64px -26px rgba(0,0,0,.7);
+opacity:0;visibility:hidden;transform:translateY(-6px);z-index:2147483002;
+transition:opacity .17s ease,transform .17s ease,visibility .17s}
+#mmt-bar:has(.mmt-trg:hover) .mmt-fly,
+#mmt-bar:has(.mmt-fly:hover) .mmt-fly,
+#mmt-bar:has(.mmt-trg:focus-visible) .mmt-fly,
+#mmt-bar:has(.mmt-fly a:focus-visible) .mmt-fly{opacity:1;visibility:visible;transform:none}
+#mmt-bar .mmt-fly-in{max-width:1060px;margin:0 auto;padding:26px 20px 6px;
+display:grid;grid-template-columns:1.1fr .9fr;gap:34px}
+#mmt-bar .mmt-fly-h{font-size:10.5px;font-weight:700;letter-spacing:.11em;color:#79828f;
+margin:0 0 9px;padding:0 8px}
+#mmt-bar .mmt-fly-it{display:flex;align-items:center;gap:11px;padding:7px 8px;border-radius:10px;
+text-decoration:none;color:#cfd4dc}
+#mmt-bar .mmt-fly-it:hover{background:rgba(255,255,255,.08)}
+#mmt-bar .mmt-fly-it .th{width:46px;height:31px;border-radius:7px;overflow:hidden;flex:0 0 auto;
+background:rgba(255,255,255,.09);display:grid;place-items:center;font-size:15px;color:#e6e9ee}
+#mmt-bar .mmt-fly-it .th img{width:100%;height:100%;object-fit:cover;display:block}
+#mmt-bar .mmt-fly-it .tx{min-width:0}
+#mmt-bar .mmt-fly-it b{font-size:13.5px;font-weight:700;color:#fff;display:block;line-height:1.3}
+#mmt-bar .mmt-fly-it i{font-style:normal;font-size:11.5px;color:#89919e;display:block;
+line-height:1.35;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mmt-bar .mmt-fly-it[aria-current=page]{background:rgba(255,255,255,.1)}
+#mmt-bar .mmt-fly-it[aria-current=page] b{color:#8fc0ff}
+#mmt-bar .mmt-fly-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 4px}
+#mmt-bar .mmt-fly-grid .mmt-fly-it i{display:none}
+#mmt-bar .mmt-fly-grid .mmt-fly-it .th{width:30px;height:30px;border-radius:8px}
+#mmt-bar .mmt-fly-foot{max-width:1060px;margin:0 auto;padding:8px 28px 20px}
+#mmt-bar .mmt-fly-foot a{font-size:12.5px;font-weight:600;color:#8fc0ff;text-decoration:none}
+#mmt-bar .mmt-fly-foot a:hover{text-decoration:underline}
+@media(max-width:820px){#mmt-bar .mmt-fly{display:none}}
+@media(prefers-reduced-motion:reduce){#mmt-bar .mmt-fly{transition:none}}"""
 
 
 def shell_css_block():
@@ -1674,44 +1743,102 @@ def shell_legal_markup(sep="<br>"):
             + "\n<!-- MMT:LEGAL:END -->")
 
 
+def esc(s):
+    return (s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+
+
 def shell_bar_markup(host=""):
-    """제품 HTML의 <body> 바로 뒤에 박는 1단 바. host 를 주면 그 제품 항목에 활성 표시."""
+    """제품 HTML의 <body> 바로 뒤에 박는 공용 1단 바. host 를 주면 그 제품에 활성 표시.
+
+    구조 = 애플 글로벌 내비: [MOMENTUS] [제품 ▾] [이야기] [소개] [문의]
+    제품 목록은 '제품'에 호버할 때 열리는 패널(.mmt-fly)에 들어간다 — 바는 안 길어진다.
+    """
+    def _abs(h):
+        return h if "//" in h else ("https://the-moment.us" + h)
+
+    def _host_of(h):
+        return h.split("//")[1].split("/")[0] if "//" in h else ""
+
     parts = []
     for it in bar_items():
         if it["sep"]:
             parts.append('<span class="mmt-sep" aria-hidden="true"></span>')
-        a = ""
-        h = it["href"].split("//")[1].split("/")[0] if "//" in it["href"] else ""
-        if host and h == host:
-            a += ' aria-current="page"'
-        if it["sub"]:
-            a += f' data-sub="{it["sub"]}"'
-        if it["ext"]:
-            a += ' target="_blank" rel="noopener"'
-        href = it["href"] if "//" in it["href"] else ("https://the-moment.us" + it["href"])
-        tail = '<i class="mmt-ext" aria-hidden="true">↗</i>' if it["ext"] else ""
-        parts.append(f'<a class="mmt-it" href="{href}"{a}>{it["label"]}{tail}</a>')
-    # 모바일용 셀렉션 — 같은 항목을 세로 목록으로. 요약칸에는 **지금 있는 제품 이름**만 보인다.
+        cls = "mmt-it mmt-trg" if it.get("trg") else "mmt-it"
+        parts.append(f'<a class="{cls}" href="{_abs(it["href"])}">{it["label"]}</a>')
+
+    # ── 플라이아웃: 제품(썸네일+한 줄) + 무료 도구(아이콘 격자) ──
+    prods = []
+    for sp in bar_products():
+        sl = sp.get("slug", "")
+        pr = P.get(sl, {})
+        cur = ' aria-current="page"' if host and _host_of(sp["href"]) == host else ""
+        shot = pr.get("shot") or ""
+        th = (f'<span class="th"><img src="{shot}" alt="" loading="lazy"></span>'
+              if shot else f'<span class="th">{pr.get("icon", "")}</span>')
+        line = esc(pr.get("tagline", "")) or esc(sp.get("sub", ""))
+        ext = ' target="_blank" rel="noopener"' if sp.get("external") else ""
+        prods.append(f'<a class="mmt-fly-it" href="{sp["href"]}"{ext}{cur}>{th}'
+                     f'<span class="tx"><b>{sp["label"]}</b><i>{line}</i></span></a>')
+    tools = "".join(
+        f'<a class="mmt-fly-it" href="https://the-moment.us/tools/{t}/">'
+        f'<span class="th">{P[t]["icon"]}</span>'
+        f'<span class="tx"><b>{P[t]["short"]}</b></span></a>' for t in TOOLS)
+    fly = ('<div class="mmt-fly"><div class="mmt-fly-in">'
+           f'<div><p class="mmt-fly-h">제품</p>{"".join(prods)}</div>'
+           f'<div><p class="mmt-fly-h">무료 도구</p><div class="mmt-fly-grid">{tools}</div></div>'
+           '</div><div class="mmt-fly-foot">'
+           '<a href="https://the-moment.us/products/">전체 제품 보기 →</a></div></div>')
+
+    # ── 모바일 셀렉션 — 좁은 화면엔 플라이아웃이 없으니 여기에 전부 담는다 ──
     here, mparts = "모멘터스", []
-    for it in bar_items():
-        if it["sep"]:
-            mparts.append("<hr>")     # ⚠️ sep 은 "이 항목 **앞에** 구분선"이라는 뜻이다. continue 하면 링크가 사라진다.
-        h = it["href"].split("//")[1].split("/")[0] if "//" in it["href"] else ""
-        cur = bool(host and h == host)
+    for sp in bar_products():
+        cur = bool(host and _host_of(sp["href"]) == host)
         if cur:
-            here = it["label"]
-        href = it["href"] if "//" in it["href"] else ("https://the-moment.us" + it["href"])
-        ext = ' target="_blank" rel="noopener"' if it["ext"] else ""
+            here = sp["label"]
+        ext = ' target="_blank" rel="noopener"' if sp.get("external") else ""
         act = ' aria-current="page"' if cur else ""
-        mparts.append(f'<a href="{href}"{act}{ext}>{it["label"]}</a>')
+        mparts.append(f'<a href="{sp["href"]}"{act}{ext}>{sp["label"]}</a>')
+    mparts.append("<hr>")
+    for it in bar_items():
+        mparts.append(f'<a href="{_abs(it["href"])}">{it["label"]}</a>')
     pick = ('<details class="mmt-pick"><summary aria-label="모멘터스 제품 고르기">'
             f'{here}</summary><div class="mmt-menu">{"".join(mparts)}</div></details>')
+
     return ('<!-- MMT:BEGIN — 모멘터스 공용 1단 바(생성물). 손으로 고치지 말 것. -->\n'
             '<div id="mmt-bar"><div class="mmt-in">'
             '<a class="mmt-wm" href="https://the-moment.us">MOMENTUS</a>'
             f'<nav class="mmt-nav" aria-label="모멘터스">{"".join(parts)}</nav>'
             f'{pick}'
-            '</div></div>\n<!-- MMT:END -->')
+            f'</div>{fly}</div>\n<!-- MMT:END -->')
+
+
+# ── apex 헤더 = 스포크와 **같은** 공용 1단 바 + 검색·다크모드 ────────────────
+#   2026-08-23. 그전엔 apex 만 별도 헤더(.gnb 흰 바 / 홈은 영문 kb-gnb)를 써서
+#   제품 페이지와 말도 간격도 달랐다(대표: "각각 간격과 방식 모두 맞춰야지").
+#   이제 the-moment.us 의 모든 페이지가 제품 사이트와 같은 바를 쓴다.
+_MMT_ACT = ('<div class="mmt-act">'
+            '<button class="mmt-ib" id="kbsearchbtn" aria-label="검색 열기">'
+            '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>'
+            '<button class="mmt-ib" id="kbthemebtn" aria-label="다크모드로 전환">'
+            '<svg viewBox="0 0 24 24" class="sun"><circle cx="12" cy="12" r="4"/>'
+            '<path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2'
+            'M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
+            '<svg viewBox="0 0 24 24" class="moon"><path d="M20 14.6A8.6 8.6 0 019.4 4 8.6 8.6 0 1020 14.6z"/>'
+            '</svg></button></div>')
+
+SEARCH_OVERLAY = """<div class="kb-sr" id="kbsr" role="dialog" aria-modal="true" aria-label="검색">
+  <div class="kb-sr-in">
+    <div class="kb-sr-box">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+      <input id="kbsrq" type="search" placeholder="무엇을 찾으세요?" autocomplete="off" spellcheck="false">
+      <button class="kb-ib" id="kbsrclose" aria-label="검색 닫기">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="kb-sr-hits" id="kbsrhits"></div>
+  </div>
+</div>"""
+
+APEX_HEADER = shell_bar_markup().replace("</nav>", "</nav>" + _MMT_ACT, 1) + SEARCH_OVERLAY
 
 
 with open("shell.css", "w", encoding="utf-8") as f:
@@ -2457,10 +2584,6 @@ def kb_media(slug, cls="kb-th"):
             f'<span>{p0.get("icon","◆")}</span></div>')
 
 
-def esc(s):
-    return (s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
-
-
 def _ext(url):
     return ' target="_blank" rel="noopener"' if str(url).startswith("http") else ""
 
@@ -2605,10 +2728,20 @@ kb_cats = f"""<section class="kb-sec" aria-labelledby="kb-cat-h">
 
 
 # ── 헤더 · 검색 인덱스 ───────────────────────────────────────────────────────
+# 검색 결과는 **무엇인지 알아볼 수 있어야 한다** — 글자만 나열하면 뭐가 뭔지 모른다
+# (2026-08-23 대표: "썸네일도 좀 나와 주면서 저게 나와야지"). 그림·종류·부제를 같이 싣는다.
+def _kb_row(sl):
+    pr = P[sl]
+    return dict(t=pr.get("short") or pr.get("name", sl),
+                k="무료 도구" if pr.get("free") else "제품",
+                g=pr.get("tag", ""), u=purl(sl),
+                im=pr.get("shot") or "", ic=pr.get("icon", ""))
+
+
 KB_INDEX = json.dumps(
-    [dict(t=P[s].get("name", s), k=KB_WORD.get(s, ""), u=purl(s)) for s in ORDER if s in P]
-    + [dict(t=POSTS[x]["title"], k="이야기", u=f"{STORY_BASE}/{x}/") for x in PORDER]
-    + [dict(t=x["title"], k=x.get("src", ""), u=x["url"]) for x in _all_new if x.get("url", "").startswith("http")][:20],
+    [_kb_row(s) for s in ORDER if s in P]
+    + [dict(t=POSTS[x]["title"], k="이야기", g=POSTS[x].get("date", ""),
+            u=f"{STORY_BASE}/{x}/", im=POSTS[x].get("cover", "") or "", ic="✎") for x in PORDER],
     ensure_ascii=False)
 
 KB_HEAD = """<script>
@@ -2617,40 +2750,6 @@ KB_HEAD = """<script>
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.dataset.theme=t;}catch(e){}})();
 </script>"""
-
-KB_HEADER = """<header class="kb-gnb">
-  <a class="kb-wm" href="/">MOMENTUS<span>studio</span></a>
-  <nav class="kb-nav" aria-label="주 메뉴">
-    <a class="on" href="/">Home</a>
-    <a href="/products/">Products</a>
-    <a href="/stories/">Stories</a>
-    <a href="/about/">Studio</a>
-    <a href="/inquiry/">Contact</a>
-  </nav>
-  <div class="kb-act">
-    <button class="kb-ib" id="kbsearchbtn" aria-label="검색 열기">
-      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>
-    <button class="kb-ib" id="kbthemebtn" aria-label="다크모드로 전환">
-      <svg viewBox="0 0 24 24" class="sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-      <svg viewBox="0 0 24 24" class="moon"><path d="M20 14.6A8.6 8.6 0 019.4 4 8.6 8.6 0 1020 14.6z"/></svg></button>
-    <button class="kb-ib kb-burger" id="kbburger" aria-label="메뉴 열기">
-      <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-  </div>
-</header>
-<nav class="kb-sheet" id="kbsheet" aria-label="모바일 메뉴">
-  <a href="/">Home</a><a href="/products/">Products</a><a href="/stories/">Stories</a><a href="/about/">Studio</a><a href="/inquiry/">Contact</a>
-</nav>
-<div class="kb-sr" id="kbsr" role="dialog" aria-modal="true" aria-label="검색">
-  <div class="kb-sr-in">
-    <div class="kb-sr-box">
-      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
-      <input id="kbsrq" type="search" placeholder="무엇을 찾으세요?" autocomplete="off">
-      <button class="kb-ib" id="kbsrclose" aria-label="검색 닫기">
-        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    </div>
-    <div class="kb-sr-hits" id="kbsrhits"></div>
-  </div>
-</div>"""
 
 KB_JS = """<button class="kb-top" id="kbtop" aria-label="맨 위로">
 <svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
@@ -2680,15 +2779,17 @@ KB_JS = """<button class="kb-top" id="kbtop" aria-label="맨 위로">
   function closeSr(){ sr.removeAttribute('data-open'); }
   function render(v){
     v=v.trim().toLowerCase();
-    var list = v ? IDX.filter(function(x){return (x.t+' '+x.k).toLowerCase().indexOf(v)>=0;}) : IDX.slice(0,8);
+    var list = v ? IDX.filter(function(x){return (x.t+' '+x.k+' '+(x.g||'')).toLowerCase().indexOf(v)>=0;}) : IDX.slice(0,8);
     if(!list.length){ hits.innerHTML='<p class="kb-sr-none">찾는 것이 없어요. 다른 말로 해보시겠어요?</p>'; return; }
-    hits.innerHTML=list.slice(0,12).map(function(x){
+    hits.innerHTML=list.slice(0,10).map(function(x){
       var ext=/^https?:/.test(x.u)?' target="_blank" rel="noopener"':'';
-      return '<a href="'+x.u+'"'+ext+'><b></b><i></i></a>';
+      var th=x.im?'<span class="th"><img src="'+x.im+'" alt="" loading="lazy"></span>'
+                 :'<span class="th">'+(x.ic||'·')+'</span>';
+      return '<a href="'+x.u+'"'+ext+'>'+th+'<span class="tx"><b></b><i></i></span></a>';
     }).join('');
     [].forEach.call(hits.children,function(a,i){
       a.querySelector('b').textContent=list[i].t;
-      a.querySelector('i').textContent=list[i].k||'';
+      a.querySelector('i').textContent=(list[i].k||'')+(list[i].g?' · '+list[i].g:'');
     });
   }
   if($('kbsearchbtn')) $('kbsearchbtn').addEventListener('click',openSr);
@@ -2777,58 +2878,22 @@ KB_JS = """<button class="kb-top" id="kbtop" aria-label="맨 위로">
 
 KB_JS = KB_JS.replace("__INDEX__", KB_INDEX).replace("__CATS__", _cat_data)
 
-# ---------- 홈 — 제품 무대(Apple 문법) ----------
-#   ⚠️ 옛 구성(kb_hero/kb_latest/kb_popular/kb_series/kb_cats)은 더 이상 홈에 싣지 않는다.
-#      변수 자체는 남겨 둔다 — 다른 데서 참조하거나 되돌릴 때를 위해.
-_SPOKE_HREF = {sp["slug"]: sp["href"] for sp in BAR["spokes"] if sp.get("slug")}
-# 두 번째 버튼은 '알아보기'가 아니라 **그 제품에서 하는 일**을 말한다(애플의 '구입하기' 자리).
-AP_GO = {"binbang": "빈방 알림 등록", "heyreci": "헤이레시 열기", "mark": "로고 만들어 보기",
-         "cue": "모의면접 시작하기", "theplan": "플래너 보러 가기"}
+# ── 공용 스크립트 파일 — 37개 페이지에 같은 스크립트를 인라인으로 복사하지 않는다.
+#    page() 가 <script defer src="/assets/apex.js?v=CSS_VER"> 로 건다.
+def _strip_tags(js):
+    out, i = [], 0
+    while True:
+        a = js.find("<script>", i)
+        if a < 0:
+            break
+        b = js.index("</script>", a)
+        out.append(js[a + len("<script>"):b])
+        i = b + len("</script>")
+    return "\n".join(out)
 
 
-def ap_stage(slug, tone="", eyebrow=""):
-    pr = P[slug]
-    go = _SPOKE_HREF.get(slug, "")
-    cta = f'<a class="stg-pill" href="{purl(slug)}">더 알아보기</a>'
-    if go:
-        cta += (f'<a class="stg-pill stg-pill--line" href="{go}"{_ext(go)}>'
-                f'{AP_GO.get(slug, "바로 가기")}</a>')
-    shot = pr.get("shot") or ""
-    art = (f'<div class="stg-art"><img src="{shot}" alt="{esc(pr["short"])} 화면" '
-           f'loading="lazy" decoding="async"></div>') if shot else ""
-    eye = f'<p class="stg-eyebrow">{eyebrow}</p>' if eyebrow else ""
-    cls = f" stg--{tone}" if tone else ""
-    return (f'<section class="stg{cls}">{eye}'
-            f'<h2 class="stg-name">{esc(pr["short"])}</h2>'
-            f'<p class="stg-claim">{esc(pr["tagline"])}</p>'
-            f'<div class="stg-cta">{cta}</div>{art}</section>')
-
-
-def ap_tools_stage():
-    icons = "".join(f'<span aria-hidden="true">{P[t]["icon"]}</span>' for t in TOOLS)
-    return ('<section class="stg stg--paper">'
-            '<p class="stg-eyebrow">무료</p>'
-            f'<h2 class="stg-name">브라우저 도구 {len(TOOLS)}종</h2>'
-            '<p class="stg-claim">북마크바에 끌어놓거나 크롬에 추가하면 끝. 회원가입도 결제도 없습니다.</p>'
-            '<div class="stg-cta"><a class="stg-pill" href="/products/">전부 보기</a></div>'
-            f'<div class="stg-icons">{icons}</div></section>')
-
-
-ap_body = (
-    '<div class="stg-stack">'
-    + ap_stage("binbang", "", "새로 나왔습니다")
-    + ap_stage("heyreci", "ink")
-    + '<div class="stg-row">' + ap_stage("mark", "paper") + ap_stage("cue") + '</div>'
-    + '<div class="stg-row">' + ap_stage("theplan") + ap_tools_stage() + '</div>'
-    + '</div>'
-    + '<section class="stg-note"><b>만든 것만 팝니다.</b>'
-      '모멘터스는 1인 AI 스튜디오입니다. 기획도 개발도 운영도 한 사람이 합니다.'
-      '<br><a href="/about/">소개</a><span class="sep">·</span>'
-      '<a href="/stories/">이야기</a><span class="sep">·</span>'
-      '<a href="/inquiry/">문의</a></section>')
-
-AP_JS = """<script>
-/* 무대는 스크롤을 따라 한 장씩 올라온다. 첫 장은 기다리지 않는다. */
+_apex_js = _strip_tags(KB_JS) + """
+/* 홈 제품 무대 — 스크롤을 따라 한 장씩 올라온다. 첫 장은 기다리지 않는다. */
 (function(){
   var els=[].slice.call(document.querySelectorAll('.stg'));
   if(!els.length) return;
@@ -2840,22 +2905,65 @@ AP_JS = """<script>
   els.forEach(function(e){io.observe(e);});
   els[0].classList.add('in');
 })();
-</script>"""
+"""
+with open("assets/apex.js", "w", encoding="utf-8") as f:
+    f.write(_apex_js)
 
-# 홈 헤더 = 스포크와 **같은** 공용 1단 바. 영문 kb-gnb(Home/Products/Stories/Studio)는 폐기 —
-# 제품 페이지와 말이 달라 패밀리로 안 읽혔다(2026-08-23 대표 지적).
-# 검색 오버레이 마크업은 KB_HEADER 에서 그대로 가져다 쓴다(중복 정의 금지).
-_MMT_ACT = ('<div class="mmt-act">'
-            '<button class="mmt-ib" id="kbsearchbtn" aria-label="검색 열기">'
-            '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>'
-            '<button class="mmt-ib" id="kbthemebtn" aria-label="다크모드로 전환">'
-            '<svg viewBox="0 0 24 24" class="sun"><circle cx="12" cy="12" r="4"/>'
-            '<path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2'
-            'M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
-            '<svg viewBox="0 0 24 24" class="moon"><path d="M20 14.6A8.6 8.6 0 019.4 4 8.6 8.6 0 1020 14.6z"/>'
-            '</svg></button></div>')
-APEX_HEADER = (shell_bar_markup().replace("</nav>", "</nav>" + _MMT_ACT, 1)
-               + KB_HEADER[KB_HEADER.index('<div class="kb-sr"'):])
+# ---------- 홈 — 제품 무대(Apple 문법) ----------
+#   ⚠️ 옛 구성(kb_hero/kb_latest/kb_popular/kb_series/kb_cats)은 더 이상 홈에 싣지 않는다.
+#      변수 자체는 남겨 둔다 — 다른 데서 참조하거나 되돌릴 때를 위해.
+_SPOKE_HREF = {sp["slug"]: sp["href"] for sp in BAR["spokes"] if sp.get("slug")}
+# 두 번째 버튼은 '알아보기'가 아니라 **그 제품에서 하는 일**을 말한다(애플의 '구입하기' 자리).
+AP_GO = {"binbang": "빈방 알림 등록", "heyreci": "헤이레시 열기", "mark": "로고 만들어 보기",
+         "cue": "모의면접 시작하기", "theplan": "플래너 보러 가기"}
+
+
+def ap_stage(slug, tone="", badge=""):
+    """제품 카드 = 그림(꽉 참) → 업종 한 줄 → 이름 → 한 줄 → 버튼 둘(우하단).
+       애플 제품 카드(apple.com/airpods)의 배치 그대로."""
+    pr = P[slug]
+    go = _SPOKE_HREF.get(slug, "")
+    cta = f'<a class="stg-pill" href="{purl(slug)}">더 알아보기</a>'
+    if go:
+        cta += (f'<a class="stg-pill stg-pill--line" href="{go}"{_ext(go)}>'
+                f'{AP_GO.get(slug, "바로 가기")}</a>')
+    shot = pr.get("shot") or ""
+    art = (f'<div class="stg-art"><img src="{shot}" alt="{esc(pr["short"])} 화면" '
+           f'loading="lazy" decoding="async"></div>') if shot else ""
+    bdg = f'<em>{badge}</em>' if badge else ""
+    cls = f" stg--{tone}" if tone else ""
+    return (f'<section class="stg{cls}">{art}<div class="stg-bd"><div>'
+            f'<p class="stg-eyebrow">{esc(pr.get("tag", ""))}{bdg}</p>'
+            f'<h2 class="stg-name">{esc(pr["short"])}</h2>'
+            f'<p class="stg-claim">{esc(pr["tagline"])}</p></div>'
+            f'<div class="stg-cta">{cta}</div></div></section>')
+
+
+def ap_tools_stage():
+    icons = "".join(f'<span aria-hidden="true">{P[t]["icon"]}</span>' for t in TOOLS)
+    return ('<section class="stg stg--paper">'
+            f'<div class="stg-icons">{icons}</div>'
+            '<div class="stg-bd"><div>'
+            '<p class="stg-eyebrow">북마크릿 · 크롬 확장</p>'
+            f'<h2 class="stg-name">무료 도구 {len(TOOLS)}종</h2>'
+            '<p class="stg-claim">북마크바에 끌어놓거나 크롬에 추가하면 끝. '
+            '회원가입도 결제도 없습니다.</p></div>'
+            '<div class="stg-cta"><a class="stg-pill" href="/products/">전부 보기</a></div>'
+            '</div></section>')
+
+
+ap_body = (
+    '<div class="stg-stack">'
+    + ap_stage("binbang", "", "NEW")
+    + ap_stage("heyreci", "ink")
+    + '<div class="stg-row">' + ap_stage("mark", "paper") + ap_stage("cue") + '</div>'
+    + '<div class="stg-row">' + ap_stage("theplan") + ap_tools_stage() + '</div>'
+    + '</div>'
+    + '<section class="stg-note"><b>만든 것만 팝니다.</b>'
+      '모멘터스는 1인 AI 스튜디오입니다. 기획도 개발도 운영도 한 사람이 합니다.'
+      '<br><a href="/about/">소개</a><span class="sep">·</span>'
+      '<a href="/stories/">이야기</a><span class="sep">·</span>'
+      '<a href="/inquiry/">문의</a></section>')
 
 land_body = ap_body
 
@@ -2863,9 +2971,7 @@ with open("index.html", "w", encoding="utf-8") as f:
     f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다",
                  "모멘터스는 1인 AI 스튜디오입니다. 펜션 빈방 알림·AI 상품사진·로고 디자인·AI 모의면접·"
                  "디지털 플래너를 만들어 팔고, 설치 없이 쓰는 무료 브라우저 도구 6종을 함께 제공합니다.",
-                 land_body, active="", extra=KB_JS + AP_JS,
-                 header=APEX_HEADER, body_class="kbp",
-                 head_extra=KB_HEAD + '<link rel="stylesheet" href="/shell.css">'))
+                 land_body, active=""))
 
 
 # ---------- 법적 페이지 (약관·개인정보·환불) ----------
