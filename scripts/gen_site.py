@@ -1392,6 +1392,69 @@ font-size:15px;font-weight:600;background:var(--brand-cta);color:#fff}
 """
 CSS += ABOUT_CSS
 
+NEWS_CSS = """
+/* ═══ /stories/ — toss.im/newsroom 구조 실측 이식(2026-08-23) ═════════════
+   토스 실측(1440): 컨테이너 x=108 · h1 '뉴스룸' 56px/700/ls-1.12px
+   · 상단 피처 카드 596x456(1.307:1) 라운드 큼 · 아래 목록은
+     좌측 라벨 레일(● 보도자료·534건) + 우측 3단 그리드
+   · **모든 카드 그림이 같은 비율** — 그전 우리 카드는 4:3·1:1·그라디언트가 섞여 있었다. */
+.nws{max-width:1224px;margin:0 auto;padding:0 24px}
+.nws-head{padding:clamp(64px,9vw,132px) 0 clamp(26px,3.4vw,44px)}
+.nws-head h1{font-size:clamp(34px,4.6vw,56px);font-weight:800;letter-spacing:-.045em;
+line-height:1.08;color:var(--ink)}
+.nws-head p{margin-top:14px;font-size:16px;line-height:1.7;color:var(--gray);max-width:52ch}
+
+.nws-feat{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2.2vw,32px)}
+.nws-fcard{position:relative;display:block;border-radius:28px;overflow:hidden;
+aspect-ratio:596/456;background:var(--soft)}
+.nws-fcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+transition:transform .6s var(--ease)}
+.nws-fcard:hover img{transform:scale(1.03)}
+.nws-fcard::after{content:"";position:absolute;left:0;right:0;bottom:0;height:66%;
+background:linear-gradient(to top,rgba(16,14,12,.66),rgba(16,14,12,.2) 46%,transparent)}
+.nws-fcard .tx{position:absolute;left:0;right:0;bottom:0;z-index:2;
+padding:clamp(20px,2.6vw,34px);color:#fff}
+.nws-fcard .m{font-size:13px;font-weight:600;color:rgba(255,255,255,.78)}
+.nws-fcard h2{margin-top:9px;font-size:clamp(18px,1.9vw,25px);font-weight:800;
+letter-spacing:-.04em;line-height:1.35}
+
+.nws-sec{margin-top:clamp(56px,7vw,104px)}
+.nws-sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+padding-bottom:14px;border-bottom:1px solid var(--line)}
+.nws-sec-h h2{font-size:clamp(20px,2vw,28px);font-weight:800;letter-spacing:-.04em;color:var(--ink)}
+.nws-row{display:grid;grid-template-columns:1fr 2.6fr;gap:clamp(20px,3.4vw,48px);
+padding-top:clamp(26px,3.4vw,44px)}
+.nws-rail{display:flex;align-items:center;gap:9px;font-size:14.5px;font-weight:600;
+color:var(--ink);align-self:start}
+.nws-rail::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink);flex:0 0 auto}
+.nws-grid{display:grid;grid-template-columns:repeat(3,1fr);
+gap:clamp(34px,4.6vw,64px) clamp(18px,2.6vw,36px)}
+.nws-card{display:block}
+.nws-card .th{width:100%;aspect-ratio:16/10;border-radius:16px;overflow:hidden;
+background:var(--soft);display:block}
+.nws-card .th img{width:100%;height:100%;object-fit:cover;display:block;
+transition:transform .55s var(--ease)}
+.nws-card:hover .th img{transform:scale(1.04)}
+.nws-card h3{margin-top:16px;font-size:17px;font-weight:700;letter-spacing:-.03em;
+line-height:1.45;color:var(--ink)}
+.nws-card .d{margin-top:12px;font-size:14px;color:var(--faint);font-variant-numeric:tabular-nums}
+.nws-card:hover h3{color:var(--brand-cta)}
+.nws-empty{padding:40px 0;color:var(--faint);font-size:15px}
+.nws-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-top:22px}
+.nws-tabs button{border:0;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:600;
+padding:8px 15px;border-radius:99px;background:var(--soft);color:var(--gray)}
+.nws-tabs button[aria-pressed=true]{background:var(--ink);color:#fff}
+@media(max-width:960px){
+  .nws-grid{grid-template-columns:1fr 1fr}
+  .nws-row{grid-template-columns:1fr;gap:16px}
+}
+@media(max-width:640px){
+  .nws-feat{grid-template-columns:1fr}
+  .nws-grid{grid-template-columns:1fr;gap:34px}
+}
+"""
+CSS += NEWS_CSS
+
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
 # 내용이 바뀌면 URL도 바뀌게 해서 즉시 반영시킨다.
 # ── 클래스 충돌 감시 ───────────────────────────────────────────────────────
@@ -1755,7 +1818,7 @@ SHELL_BAR_CSS = """/* 2026-08-23 실측 교정. 애플 globalnav 는 **검정이
 #mmt-bar{display:block;box-sizing:border-box;width:100%;height:var(--mmt-bar-h,44px);
 background:rgba(250,250,252,.82);backdrop-filter:saturate(1.8) blur(20px);
 -webkit-backdrop-filter:saturate(1.8) blur(20px);
-border-bottom:1px solid rgba(0,0,0,.07);color:rgba(0,0,0,.8);position:relative;z-index:2147483000;
+border-bottom:1px solid rgba(0,0,0,.07);color:rgba(0,0,0,.8);position:relative;z-index:2147483002;
 font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Helvetica Neue','Segoe UI',sans-serif;
 letter-spacing:normal;line-height:normal}
 #mmt-bar *,#mmt-bar *::after{box-sizing:border-box}
@@ -1811,6 +1874,20 @@ font-size:14.5px;font-weight:600;text-decoration:none;white-space:nowrap}
 border:3.5px solid transparent;border-top-color:currentColor;vertical-align:middle;opacity:.5}
 /* 패널은 밝게, 썸네일은 크게, 설명 줄은 뺀다 — 목록은 고르라고 있는 것이지 읽으라고 있는 게 아니다
    (2026-08-23 대표: "심플하지만 썸네일도 큼직하게, 중요한 건 더 크게 간결하게"). */
+/* 애플 실측: 플라이아웃이 열리면 .globalnav-curtain 이 화면 전체를 덮는다 —
+   background rgba(232,232,237,.4) + backdrop-filter blur(20px), z 9998, opacity 0→1.
+   흐려지는 건 **메뉴가 아니라 뒤 페이지**다(2026-08-23 대표 지적). */
+.mmt-curtain{position:fixed;left:0;right:0;bottom:0;top:var(--mmt-bar-h,44px);
+background:rgba(232,232,237,.4);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+opacity:0;visibility:hidden;pointer-events:none;z-index:2147483001;
+transition:opacity .25s ease,visibility .25s}
+#mmt-bar:has(.mmt-trg:hover) ~ .mmt-curtain,
+#mmt-bar:has(.mmt-fly:hover) ~ .mmt-curtain,
+#mmt-bar:has(.mmt-trg:focus-visible) ~ .mmt-curtain,
+#mmt-bar:has(.mmt-fly a:focus-visible) ~ .mmt-curtain{opacity:1;visibility:visible}
+html[data-theme="dark"] .mmt-curtain{background:rgba(18,18,20,.45)}
+@media(max-width:820px){.mmt-curtain{display:none}}
+@media(prefers-reduced-motion:reduce){.mmt-curtain{transition:none}}
 #mmt-bar .mmt-fly{position:absolute;left:0;right:0;top:100%;
 background:rgba(250,250,252,.97);backdrop-filter:saturate(1.8) blur(20px);
 -webkit-backdrop-filter:saturate(1.8) blur(20px);
@@ -1954,7 +2031,7 @@ def shell_bar_markup(host=""):
             '<a class="mmt-wm" href="https://the-moment.us">MOMENTUS</a>'
             f'<nav class="mmt-nav" aria-label="모멘터스">{"".join(parts)}</nav>'
             f'{pick}'
-            f'</div>{fly}</div>\n<!-- MMT:END -->')
+            f'</div>{fly}</div><div class="mmt-curtain" aria-hidden="true"></div>\n<!-- MMT:END -->')
 
 
 # ── apex 헤더 = 스포크와 **같은** 공용 1단 바 + 검색·다크모드 ────────────────
@@ -2493,7 +2570,7 @@ BLOG_JS = """<script>
   var tabs=document.getElementById('bltabs'), grid=document.getElementById('blgrid'),
       empty=document.getElementById('blempty');
   if(!tabs||!grid) return;
-  var items=[].slice.call(grid.querySelectorAll('.an-card'));
+  var items=[].slice.call(document.querySelectorAll('.nws-card,.nws-fcard'));
   tabs.addEventListener('click', function(e){
     var btn=e.target.closest('button[data-f]'); if(!btn) return;
     var f=btn.dataset.f, shown=0;
@@ -2501,7 +2578,7 @@ BLOG_JS = """<script>
       b.setAttribute('aria-pressed', String(b===btn));
     });
     items.forEach(function(it){
-      var ok=(f==='all')||(' '+it.dataset.tags+' ').indexOf(' '+f+' ')>-1;
+      var ok=(f==='all')||(' '+(it.dataset.tags||'')+' ').indexOf(' '+f+' ')>-1;
       it.hidden=!ok; if(ok) shown++;
     });
     empty.hidden = shown>0;
@@ -2510,27 +2587,68 @@ BLOG_JS = """<script>
 </script>"""
 
 
+def _story_cover(e):
+    """표지 = /assets/stories/<slug>.png. 없으면 부드러운 단색 판(비율은 항상 같다)."""
+    if e["kind"] == "video":
+        return e.get("thumb", "")
+    return f'/assets/stories/{e["slug"]}.png'
+
+
+def _news_card(e):
+    href = e["url"] if e["kind"] == "video" else f'{STORY_BASE}/{e["slug"]}/'
+    ext = ' target="_blank" rel="noopener"' if e["kind"] == "video" else ''
+    cov = _story_cover(e)
+    th = (f'<span class="th"><img src="{cov}" alt="" loading="lazy" decoding="async"></span>'
+          if cov else '<span class="th"></span>')
+    return (f'<a class="nws-card" href="{href}"{ext} data-tags="{" ".join(e.get("tags", []))}">'
+            f'{th}<h3>{esc(e["title"])}</h3>'
+            f'<div class="d">{esc(e["cat"])} · {fmt_date(e["date"])}</div></a>')
+
+
+def _news_feature(e):
+    href = e["url"] if e["kind"] == "video" else f'{STORY_BASE}/{e["slug"]}/'
+    ext = ' target="_blank" rel="noopener"' if e["kind"] == "video" else ''
+    cov = _story_cover(e)
+    img = f'<img src="{cov}" alt="" loading="lazy" decoding="async">' if cov else ''
+    return (f'<a class="nws-fcard" href="{href}"{ext} data-tags="{" ".join(e.get("tags", []))}">{img}'
+            f'<span class="tx"><span class="m">{esc(e["cat"])} · {fmt_date(e["date"])}</span>'
+            f'<h2>{esc(e["title"])}</h2></span></a>')
+
+
 def stories_page(title, sub, sel_label="", items=None, chips=True):
     its = items if items is not None else entries
+    feat, rest = its[:2], its[2:]
     tabs = ""
     if chips:
-        tabs = '<button type="button" data-f="all" aria-pressed="true">전체</button>' + "".join(
-            f'<button type="button" data-f="{lab}" aria-pressed="false">{lab}</button>'
-            for _, lab in STORY_TAGS)
-    cards = "".join(story_card(e, i) for i, e in enumerate(its))
-    return f"""<div class="an">
-  <div class="an-lhead">
+        tabs = ('<div class="nws-tabs" id="bltabs">'
+                '<button type="button" data-f="all" aria-pressed="true">전체</button>'
+                + "".join(f'<button type="button" data-f="{lab}" aria-pressed="false">{lab}</button>'
+                          for _, lab in STORY_TAGS) + '</div>')
+    feath = ('<div class="nws-feat">' + "".join(_news_feature(e) for e in feat) + '</div>') if feat else ''
+    listh = "".join(_news_card(e) for e in rest)
+    sec = ''
+    if rest:
+        sec = (f'<section class="nws-sec"><div class="nws-sec-h"><h2>글</h2></div>'
+               f'<div class="nws-row"><div class="nws-rail">전체 {len(its)}편</div>'
+               f'<div class="nws-grid" id="blgrid">{listh}</div></div>'
+               f'<p class="nws-empty" id="blempty" hidden>해당하는 글이 없어요.</p></section>')
+    else:
+        sec = ('<section class="nws-sec"><div class="nws-row">'
+               f'<div class="nws-rail">전체 {len(its)}편</div>'
+               f'<div class="nws-grid" id="blgrid"></div></div>'
+               '<p class="nws-empty" id="blempty" hidden>해당하는 글이 없어요.</p></section>')
+    return f"""<div class="nws">
+  <header class="nws-head">
     <h1>{title}</h1>
-    <p class="an-lsub">{sub}</p>
-    {'<div class="an-tabs" id="bltabs">' + tabs + '</div>' if tabs else ''}
-  </div>
-  <div class="an-grid" id="blgrid">{cards}</div>
-  <p class="an-empty" id="blempty" hidden>해당하는 글이 없어요.</p>
+    <p>{sub}</p>
+    {tabs}
+  </header>
+  {feath}
+  {sec}
 </div>"""
 
 
-LSUB = ("만든 것, 안 된 것, 배운 것. 전부 남깁니다.<br>"
-        "플래너·로고·모의면접 — 제품이 달라도 이야기는 한 곳에 쌓입니다.")
+LSUB = ("만든 것, 안 된 것, 배운 것을 그대로 적습니다. 자랑이 아니라 실측입니다.")
 os.makedirs("stories", exist_ok=True)
 with open("stories/index.html", "w", encoding="utf-8") as f:
     f.write(page("이야기 — MOMENTUS", "AI로 제품을 만들며 알게 된 것들을 적습니다. 잘된 자랑이 아니라 실측 데이터와 실패 기록입니다. 로고 공모 524회 참가 결과, 에이전트를 만들며 세 번 버린 것 같은 이야기가 있습니다.",
