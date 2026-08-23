@@ -1,34 +1,34 @@
 /* MMT:BEGIN — 모멘터스 공용 셸(생성물). 손으로 고치지 말 것.
    정본: momentus/scripts/gen_site.py · 반영: momentus/scripts/sync_shell.py */
-:root{--mmt-gut:clamp(20px, 4vw, 56px);--mmt-maxw:1320px;--mmt-wm-font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Helvetica Neue","Segoe UI",sans-serif;--mmt-wm-fw:800;--mmt-wm-ls:-.035em;--mmt-wm-sm:17px;--mmt-wm-md:19px;--mmt-wm-lg:24px;--mmt-bar-h:44px;--mmt-bar2-h:64px;--mmt-fs-logo:22px;--mmt-fs-nav:14px;--mmt-fw-nav:600;--mmt-nav-gap:26px;--mmt-fs-cta:14px;--mmt-cta-pad:9px 18px;--mmt-cta-r:999px;--mmt-fs-base:16px;--mmt-lh-base:1.6;--mmt-ls-base:-0.015em;--mmt-fs-lead:18px;--mmt-lh-lead:1.65;--mmt-fs-sm:14px;--mmt-fs-h3:19px;--mmt-fs-h2:clamp(26px, 2.6vw, 34px);--mmt-lh-head:1.28;--mmt-ls-head:-0.035em;}
-/* 2026-08-23 실측 교정. 애플 globalnav 는 **검정이 아니다** —
-   background rgba(250,250,252,.8) + backdrop-filter saturate(1.8) blur(20px),
-   링크색 rgba(0,0,0,.8), 높이 44px, 내용 폭 1024px 중앙(2560 에서도 그대로).
-   배치는 토스 헤더식 3분할: 워드마크(좌) · 메뉴(중앙) · 액션(우). */
+:root{--mmt-gut:clamp(20px, 4vw, 56px);--mmt-maxw:1320px;--mmt-wm-font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Helvetica Neue","Segoe UI",sans-serif;--mmt-wm-fw:800;--mmt-wm-ls:-.035em;--mmt-wm-sm:17px;--mmt-wm-md:19px;--mmt-wm-lg:24px;--mmt-ink:#0b0c0e;--mmt-faint:#9aa0a8;--mmt-soft:#f4f5f7;--mmt-bar-h:44px;--mmt-bar2-h:64px;--mmt-fs-logo:22px;--mmt-fs-nav:14px;--mmt-fw-nav:600;--mmt-nav-gap:26px;--mmt-fs-cta:14px;--mmt-cta-pad:9px 18px;--mmt-cta-r:999px;--mmt-fs-base:16px;--mmt-lh-base:1.6;--mmt-ls-base:-0.015em;--mmt-fs-lead:18px;--mmt-lh-lead:1.65;--mmt-fs-sm:14px;--mmt-fs-h3:19px;--mmt-fs-h2:clamp(26px, 2.6vw, 34px);--mmt-lh-head:1.28;--mmt-ls-head:-0.035em;}
+/* 2026-08-23 재교정 — **검정으로 되돌린다.**
+   밝게 바꿨더니 제품 사이트(마크·큐)의 흰 헤더와 위아래로 겹쳐 어느 게 무슨 메뉴인지
+   구분이 안 됐다(대표: "색깔도 위아래가 비슷하니 이게 무슨 메뉴인지 모르겠고").
+   패밀리 바는 뒤로 물러나고 제품 브랜드가 앞에 서야 한다 — 그게 검정이었던 이유다.
+   정렬도 가운데가 아니라 **좌측**. 제품마다 본문 폭이 달라(마크 1208 / apex 1176)
+   가운데 정렬로는 로고 기준선이 영원히 안 맞는다. 아예 다른 층으로 둔다. */
 #mmt-bar{display:block;box-sizing:border-box;width:100%;height:var(--mmt-bar-h,44px);
-background:rgba(250,250,252,.82);backdrop-filter:saturate(1.8) blur(20px);
--webkit-backdrop-filter:saturate(1.8) blur(20px);
-border-bottom:1px solid rgba(0,0,0,.07);color:rgba(0,0,0,.8);position:relative;z-index:2147483002;
+background:#14161a;color:#cfd4dc;position:relative;z-index:2147483002;
 font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Helvetica Neue','Segoe UI',sans-serif;
 letter-spacing:normal;line-height:normal}
 #mmt-bar *,#mmt-bar *::after{box-sizing:border-box}
 /* 애플 글로벌 내비 실측(2026-08-23, 1440 뷰포트): .globalnav-content max-width 1024px,
    좌우 padding 22px, 바 높이 44px. 뷰포트 끝에 붙이면 넓은 화면에서 왼쪽만 붙고
    오른쪽이 휑해진다 — 가운데로 모으고 그 안에서 좌측 정렬한다. */
-#mmt-bar .mmt-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:100%;
-max-width:1224px;margin:0 auto;padding:0 24px;gap:14px}
+#mmt-bar .mmt-in{display:flex;align-items:center;height:100%;gap:18px;
+padding:0 clamp(16px,2.2vw,28px)}
 #mmt-bar .mmt-in::-webkit-scrollbar{display:none}
 /* 워드마크는 바의 시스템 폰트를 상속하면 안 된다 — 본문(Pretendard)과 글자꼴이 갈린다. */
-#mmt-bar .mmt-wm{justify-self:start;
+#mmt-bar .mmt-wm{flex:0 0 auto;
 font-family:var(--mmt-wm-font,"Pretendard Variable",Pretendard,-apple-system,sans-serif);
 font-size:var(--mmt-wm-sm,15px);font-weight:var(--mmt-wm-fw,800);
-letter-spacing:var(--mmt-wm-ls,-.035em);color:#111;text-decoration:none}
-#mmt-bar .mmt-nav{justify-self:center;display:flex;align-items:center;gap:2px}
-#mmt-bar a.mmt-it{font-size:14px;font-weight:600;letter-spacing:-.02em;color:rgba(0,0,0,.8);
-text-decoration:none;padding:6px 13px;border-radius:99px;white-space:nowrap;position:relative}
-#mmt-bar a.mmt-it:hover{background:rgba(0,0,0,.055);color:#000}
-#mmt-bar a.mmt-it[aria-current=page]{background:#111;color:#fff;font-weight:700}
-#mmt-bar .mmt-sep{display:none}
+letter-spacing:var(--mmt-wm-ls,-.035em);color:#fff;text-decoration:none}
+#mmt-bar .mmt-nav{display:flex;align-items:center;gap:2px;flex:0 0 auto}
+#mmt-bar a.mmt-it{font-size:13.5px;font-weight:600;letter-spacing:-.02em;color:#cfd4dc;
+text-decoration:none;padding:6px 11px;border-radius:99px;white-space:nowrap;position:relative}
+#mmt-bar a.mmt-it:hover{background:rgba(255,255,255,.12);color:#fff}
+#mmt-bar a.mmt-it[aria-current=page]{background:#fff;color:#14161a;font-weight:700}
+#mmt-bar .mmt-sep{width:1px;height:14px;background:rgba(255,255,255,.2);flex:0 0 auto;margin:0 6px}
 #mmt-bar i.mmt-ext{font-style:normal;font-size:9px;opacity:.55;margin-left:3px;vertical-align:super}
 #mmt-bar a.mmt-it[data-sub]::after{content:none;position:absolute;top:calc(100% + 7px);left:50%;
 transform:translateX(-50%) translateY(-3px);white-space:nowrap;background:#14161a;color:#fff;font-size:12px;
@@ -40,21 +40,20 @@ opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
 #mmt-bar a.mmt-it{padding:5px 7px}#mmt-bar a.mmt-it[data-sub]::after{display:none}}
 /* 모바일 셀렉션 — 좁은 화면에서 링크 7개를 가로로 흘리면 상단이 정신없고 잘린다.
    현재 제품 이름만 보이고 누르면 목록이 뜬다. <details> 라 **JS 없이도 동작**한다(바의 fail-open 규칙). */
-#mmt-bar .mmt-pick{display:none;position:relative;justify-self:end}
+#mmt-bar .mmt-pick{display:none;position:relative;margin-left:auto}
 #mmt-bar .mmt-pick>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:5px;
-font-size:13.5px;font-weight:700;color:#111;padding:6px 13px;border-radius:999px;
-background:rgba(0,0,0,.06);white-space:nowrap}
+font-size:13.5px;font-weight:700;color:#fff;padding:6px 13px;border-radius:999px;
+background:rgba(255,255,255,.14);white-space:nowrap}
 #mmt-bar .mmt-pick>summary::-webkit-details-marker{display:none}
 #mmt-bar .mmt-pick>summary::after{content:"";width:0;height:0;border:4px solid transparent;
 border-top-color:currentColor;margin-top:2px;opacity:.7}
-#mmt-bar .mmt-menu{position:absolute;right:0;top:calc(100% + 9px);background:#fff;border-radius:14px;
-padding:6px;min-width:206px;box-shadow:0 18px 44px -14px rgba(0,0,0,.28);
-border:1px solid rgba(0,0,0,.07);z-index:2147483001}
-#mmt-bar .mmt-menu a{display:block;padding:10px 13px;border-radius:10px;color:#111;
+#mmt-bar .mmt-menu{position:absolute;right:0;top:calc(100% + 9px);background:#14161a;border-radius:14px;
+padding:6px;min-width:206px;box-shadow:0 18px 44px -14px rgba(0,0,0,.6);z-index:2147483001}
+#mmt-bar .mmt-menu a{display:block;padding:10px 13px;border-radius:10px;color:#cfd4dc;
 font-size:14.5px;font-weight:600;text-decoration:none;white-space:nowrap}
-#mmt-bar .mmt-menu a[aria-current=page]{background:#111;color:#fff;font-weight:700}
-#mmt-bar .mmt-menu hr{border:0;border-top:1px solid rgba(0,0,0,.08);margin:5px 8px}
-@media(max-width:640px){#mmt-bar .mmt-in{grid-template-columns:auto 1fr auto}
+#mmt-bar .mmt-menu a[aria-current=page]{background:#fff;color:#14161a;font-weight:700}
+#mmt-bar .mmt-menu hr{border:0;border-top:1px solid rgba(255,255,255,.12);margin:5px 8px}
+@media(max-width:640px){#mmt-bar .mmt-in{gap:10px}
 #mmt-bar .mmt-nav{display:none}#mmt-bar .mmt-pick{display:block}}
 @media(prefers-reduced-motion:reduce){#mmt-bar a.mmt-it[data-sub]::after{transition:none}}
 /* ── 제품 플라이아웃 ──────────────────────────────────────────────────────
@@ -82,34 +81,52 @@ html[data-theme="dark"] .mmt-curtain{background:rgba(18,18,20,.45)}
 @media(max-width:820px){.mmt-curtain{display:none}}
 @media(prefers-reduced-motion:reduce){.mmt-curtain{transition:none}}
 #mmt-bar .mmt-fly{position:absolute;left:0;right:0;top:100%;
-background:rgba(250,250,252,.97);backdrop-filter:saturate(1.8) blur(20px);
--webkit-backdrop-filter:saturate(1.8) blur(20px);
-border-bottom:1px solid rgba(0,0,0,.08);box-shadow:0 24px 48px -28px rgba(0,0,0,.3);
+background:#14161a;border-bottom:1px solid rgba(255,255,255,.08);
+box-shadow:0 28px 56px -30px rgba(0,0,0,.7);
 opacity:0;visibility:hidden;transform:translateY(-6px);z-index:2147483002;
 transition:opacity .17s ease,transform .17s ease,visibility .17s}
 #mmt-bar:has(.mmt-trg:hover) .mmt-fly,
 #mmt-bar:has(.mmt-fly:hover) .mmt-fly,
 #mmt-bar:has(.mmt-trg:focus-visible) .mmt-fly,
 #mmt-bar:has(.mmt-fly a:focus-visible) .mmt-fly{opacity:1;visibility:visible;transform:none}
-#mmt-bar .mmt-fly-in{max-width:1224px;margin:0 auto;padding:30px 24px 10px;
+#mmt-bar .mmt-fly-in{max-width:1224px;margin:0;padding:30px clamp(16px,2.2vw,28px) 10px;
 display:grid;grid-template-columns:1.05fr .95fr;gap:40px}
-#mmt-bar .mmt-fly-h{font-size:12px;font-weight:600;letter-spacing:-.01em;color:#86868b;
+#mmt-bar .mmt-fly-h{font-size:12px;font-weight:600;letter-spacing:-.01em;color:#79828f;
 margin:0 0 14px;padding:0 6px}
 #mmt-bar .mmt-fly-it{display:flex;align-items:center;gap:13px;padding:8px 6px;border-radius:12px;
-text-decoration:none;color:#111}
-#mmt-bar .mmt-fly-it:hover{background:rgba(0,0,0,.05)}
+text-decoration:none;color:#cfd4dc}
+#mmt-bar .mmt-fly-it:hover{background:rgba(255,255,255,.08)}
 #mmt-bar .mmt-fly-it .th{width:68px;height:44px;border-radius:9px;overflow:hidden;flex:0 0 auto;
-background:rgba(0,0,0,.05);display:grid;place-items:center;font-size:19px;color:#333}
+background:rgba(255,255,255,.09);display:grid;place-items:center;font-size:19px;color:#e6e9ee}
 #mmt-bar .mmt-fly-it .th img{width:100%;height:100%;object-fit:cover;display:block}
-#mmt-bar .mmt-fly-it b{font-size:17px;font-weight:700;letter-spacing:-.03em;color:#111}
+#mmt-bar .mmt-fly-it b{font-size:17px;font-weight:700;letter-spacing:-.03em;color:#fff}
 #mmt-bar .mmt-fly-it i{display:none}
-#mmt-bar .mmt-fly-it[aria-current=page] b{color:#0071e3}
+#mmt-bar .mmt-fly-it[aria-current=page] b{color:#8fc0ff}
 #mmt-bar .mmt-fly-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 6px}
 #mmt-bar .mmt-fly-grid .mmt-fly-it b{font-size:14.5px;font-weight:600}
 #mmt-bar .mmt-fly-grid .mmt-fly-it .th{width:38px;height:38px;border-radius:10px;font-size:16px}
-#mmt-bar .mmt-fly-foot{max-width:1224px;margin:0 auto;padding:10px 30px 24px}
-#mmt-bar .mmt-fly-foot a{font-size:14px;font-weight:600;color:#0071e3;text-decoration:none}
+#mmt-bar .mmt-fly-foot{max-width:1224px;margin:0;padding:10px clamp(22px,2.6vw,34px) 24px}
+#mmt-bar .mmt-fly-foot a{font-size:14px;font-weight:600;color:#8fc0ff;text-decoration:none}
 #mmt-bar .mmt-fly-foot a:hover{text-decoration:underline}
 @media(max-width:820px){#mmt-bar .mmt-fly{display:none}}
 @media(prefers-reduced-motion:reduce){#mmt-bar .mmt-fly{transition:none}}
+
+/* 카드 그림은 제품 og(1200x630) 비율 그대로 — 다른 비율로 자르면 글자가 잘린다 */
+.nws-card .th,.dg-card .th{width:100%;aspect-ratio:1200/630;border-radius:16px;overflow:hidden;
+background:var(--mmt-soft,#f4f5f7);display:block;margin:0}
+.nws-card .th img,.dg-card .th img{width:100%;height:100%;object-fit:cover;display:block;
+transition:transform .55s cubic-bezier(.2,.7,.3,1)}
+.nws-card:hover .th img,.dg-card:hover .th img{transform:scale(1.04)}
+.nws-card h3,.dg-card h3{margin-top:16px;font-size:17px;font-weight:700;letter-spacing:-.03em;
+line-height:1.45;color:var(--mmt-ink,#0b0c0e);display:-webkit-box;-webkit-line-clamp:2;
+-webkit-box-orient:vertical;overflow:hidden}
+.nws-card .d,.dg-card .cat{margin-top:12px;font-size:14px;color:var(--mmt-faint,#9aa0a8);
+font-variant-numeric:tabular-nums}
+.dg-card .cat{margin-top:12px;order:2}
+.dg-card p{display:none}                     /* 카드엔 제목·날짜만 — 요약은 목록을 무겁게 한다 */
+.nws-grid,.dg-grid{display:grid;grid-template-columns:repeat(3,1fr);
+gap:clamp(34px,4.6vw,64px) clamp(18px,2.6vw,36px)}
+@media(max-width:960px){.nws-grid,.dg-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.nws-grid,.dg-grid{grid-template-columns:1fr;gap:34px}}
+
 /* MMT:END */

@@ -1247,17 +1247,19 @@ transition:opacity .65s var(--ease),transform .65s var(--ease)}
 .stg.in{opacity:1;transform:none}}
 
 /* 홈 상단 바 = 스포크와 같은 공용 1단 바(패밀리룩). 검색·테마만 우측에 얹는다. */
-#mmt-bar .mmt-act{justify-self:end;display:flex;align-items:center;gap:4px}
+#mmt-bar .mmt-act{margin-left:auto;display:flex;align-items:center;gap:4px;flex:0 0 auto}
 /* 문의는 '메뉴'가 아니라 '행동'이다 — 토스 헤더가 앱 다운로드를 버튼으로 두는 자리.
    글자 수를 줄이려고 '문의'로 쓰던 것을 '문의하기'로 되돌린다(2026-08-23 대표 지적). */
+/* 버튼도 내비와 같은 글자꼴·크기 — 하나만 튀면 메뉴가 아니라 광고로 읽힌다. */
 #mmt-bar .mmt-cta{display:inline-flex;align-items:center;height:30px;padding:0 14px;
-border-radius:99px;background:#111;color:#fff;font-size:13.5px;font-weight:700;
-letter-spacing:-.02em;text-decoration:none;white-space:nowrap;margin-right:4px}
-#mmt-bar .mmt-cta:hover{opacity:.85}
+border-radius:99px;background:#fff;color:#14161a;
+font-size:13.5px;font-weight:700;letter-spacing:-.02em;
+text-decoration:none;white-space:nowrap;margin-right:4px}
+#mmt-bar .mmt-cta:hover{opacity:.86}
 @media(max-width:640px){#mmt-bar .mmt-cta{display:none}}
 #mmt-bar .mmt-ib{display:grid;place-items:center;width:30px;height:30px;padding:0;border:0;
-border-radius:50%;background:none;color:rgba(0,0,0,.8);cursor:pointer;transition:background .18s,color .18s}
-#mmt-bar .mmt-ib:hover{background:rgba(0,0,0,.06);color:#000}
+border-radius:50%;background:none;color:#cfd4dc;cursor:pointer;transition:background .18s,color .18s}
+#mmt-bar .mmt-ib:hover{background:rgba(255,255,255,.12);color:#fff}
 #mmt-bar .mmt-ib svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;
 stroke-linecap:round;stroke-linejoin:round}
 #mmt-bar .mmt-ib .moon{display:none}
