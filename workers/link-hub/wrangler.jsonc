@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "link-hub",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-01",
+  // 알림톡 버튼 도메인 고정용 단일 허브. apex·pay 를 건드리지 않으려고 워커를 분리했다.
+  "routes": [{ "pattern": "r.the-moment.us", "custom_domain": true }],
+  "d1_databases": [
+    { "binding": "DB", "database_name": "momentus-studio",
+      "database_id": "66555e7d-be18-4a6a-a4c1-c33a1bdafbfb" }
+  ],
+  "observability": { "enabled": true }
+}
