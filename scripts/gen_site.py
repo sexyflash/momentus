@@ -2507,7 +2507,7 @@ kb_series = (f"""<section class="kb-sec" aria-labelledby="kb-ser-h">
       <button type="button" data-dir="1" aria-label="다음 슬라이드"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </div></div>
   <div class="kb-srail" id="kbsrail">{"".join(_series_pair(s) for s in _series)}</div>
-  <div class="kb-srail-foot"><a class="kb-pill" href="/tools/">전체 보기</a></div>
+  <div class="kb-srail-foot"><a class="kb-pill" href="/products/">전체 보기</a></div>
 </section>""") if _series else ""
 
 
