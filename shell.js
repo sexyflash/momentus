@@ -3,7 +3,7 @@
   "use strict";
   try {
     if (document.getElementById("mmt-bar")) return;
-    var H = 40, ITEMS = [{"label":"제품","href":"/products/","sub":"","ext":false,"sep":false},{"label":"이야기","href":"/stories/","sub":"","ext":false,"sep":true},{"label":"회사소개","href":"/about/","sub":"","ext":false,"sep":false}];
+    var H = 40, ITEMS = [{"label":"제품","href":"/products/","sub":"","ext":false,"sep":false},{"label":"인사이트","href":"/stories/","sub":"","ext":false,"sep":true},{"label":"소개","href":"/about/","sub":"","ext":false,"sep":false}];
     var css = ""
       + "#mmt-bar{--mmt-bg:#14161a;--mmt-fg:#cfd4dc;--mmt-fg2:#8b93a1;"
       +   "all:initial;display:block;box-sizing:border-box;width:100%;height:" + H + "px;"

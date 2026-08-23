@@ -68,12 +68,12 @@
       },
       {
         "key": "story",
-        "label": "이야기",
+        "label": "인사이트",
         "href": "/stories/"
       },
       {
         "key": "about",
-        "label": "회사소개",
+        "label": "소개",
         "href": "/about/"
       }
     ],

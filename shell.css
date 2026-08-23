@@ -1,6 +1,6 @@
 /* MMT:BEGIN — 모멘터스 공용 셸(생성물). 손으로 고치지 말 것.
    정본: momentus/scripts/gen_site.py · 반영: momentus/scripts/sync_shell.py */
-:root{--mmt-gut:clamp(20px, 4vw, 56px);--mmt-maxw:1320px;--mmt-wm-font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Helvetica Neue","Segoe UI",sans-serif;--mmt-wm-fw:800;--mmt-wm-ls:-.035em;--mmt-wm-sm:17px;--mmt-wm-md:19px;--mmt-wm-lg:24px;--mmt-ink:#0b0c0e;--mmt-faint:#9aa0a8;--mmt-soft:#f4f5f7;--mmt-bar-h:44px;--mmt-bar2-h:64px;--mmt-fs-logo:22px;--mmt-fs-nav:14px;--mmt-fw-nav:600;--mmt-nav-gap:26px;--mmt-fs-cta:14px;--mmt-cta-pad:9px 18px;--mmt-cta-r:999px;--mmt-fs-base:16px;--mmt-lh-base:1.6;--mmt-ls-base:-0.015em;--mmt-fs-lead:18px;--mmt-lh-lead:1.65;--mmt-fs-sm:14px;--mmt-fs-h3:19px;--mmt-fs-h2:clamp(26px, 2.6vw, 34px);--mmt-lh-head:1.28;--mmt-ls-head:-0.035em;}
+:root{--mmt-gut:clamp(20px, 4vw, 56px);--mmt-maxw:1320px;--mmt-wm-font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Helvetica Neue","Segoe UI",sans-serif;--mmt-wm-fw:800;--mmt-wm-ls:-.035em;--mmt-wm-sm:16px;--mmt-wm-md:19px;--mmt-wm-lg:24px;--mmt-ink:#0b0c0e;--mmt-faint:#9aa0a8;--mmt-soft:#f4f5f7;--mmt-bar-h:44px;--mmt-bar2-h:64px;--mmt-fs-logo:22px;--mmt-fs-nav:14px;--mmt-fw-nav:600;--mmt-nav-gap:26px;--mmt-fs-cta:14px;--mmt-cta-pad:9px 18px;--mmt-cta-r:999px;--mmt-fs-base:16px;--mmt-lh-base:1.6;--mmt-ls-base:-0.015em;--mmt-fs-lead:18px;--mmt-lh-lead:1.65;--mmt-fs-sm:14px;--mmt-fs-h3:19px;--mmt-fs-h2:clamp(26px, 2.6vw, 34px);--mmt-lh-head:1.28;--mmt-ls-head:-0.035em;}
 /* 2026-08-23 재교정 — **검정으로 되돌린다.**
    밝게 바꿨더니 제품 사이트(마크·큐)의 흰 헤더와 위아래로 겹쳐 어느 게 무슨 메뉴인지
    구분이 안 됐다(대표: "색깔도 위아래가 비슷하니 이게 무슨 메뉴인지 모르겠고").
@@ -15,8 +15,35 @@ letter-spacing:normal;line-height:normal}
 /* 애플 글로벌 내비 실측(2026-08-23, 1440 뷰포트): .globalnav-content max-width 1024px,
    좌우 padding 22px, 바 높이 44px. 뷰포트 끝에 붙이면 넓은 화면에서 왼쪽만 붙고
    오른쪽이 휑해진다 — 가운데로 모으고 그 안에서 좌측 정렬한다. */
-#mmt-bar .mmt-in{display:flex;align-items:center;height:100%;gap:18px;
+#mmt-bar .mmt-in{display:flex;align-items:center;height:100%;gap:16px;
 padding:0 clamp(16px,2.2vw,28px)}
+/* 랜딩(apex)엔 아래에 제품 헤더가 없다 — 검정일 이유가 없고 가운데로 모은다.
+   검정·좌측은 **제품 사이트**용이다: 그 아래 흰 제품 헤더가 오니 물러나 있어야 한다.
+   (2026-08-23 대표: "검은색으로 하는 건 제품 페이지 들어갔을 때만") */
+#mmt-bar[data-v=apex]{background:rgba(250,250,252,.86);color:rgba(0,0,0,.78);
+backdrop-filter:saturate(1.8) blur(20px);-webkit-backdrop-filter:saturate(1.8) blur(20px);
+border-bottom:1px solid rgba(0,0,0,.07)}
+#mmt-bar[data-v=apex] .mmt-in{max-width:1224px;margin:0 auto;padding:0 24px}
+#mmt-bar[data-v=apex] .mmt-wm{color:#111}
+#mmt-bar[data-v=apex] .mmt-nav{margin:0 auto}
+#mmt-bar[data-v=apex] a.mmt-it{color:rgba(0,0,0,.78)}
+#mmt-bar[data-v=apex] a.mmt-it:hover{background:rgba(0,0,0,.055);color:#000}
+#mmt-bar[data-v=apex] a.mmt-it[aria-current=page]{background:#111;color:#fff}
+#mmt-bar[data-v=apex] .mmt-sep{background:rgba(0,0,0,.14)}
+#mmt-bar[data-v=apex] .mmt-cta{background:transparent;color:rgba(0,0,0,.78);
+box-shadow:inset 0 0 0 1px rgba(0,0,0,.18);font-weight:600}
+#mmt-bar[data-v=apex] .mmt-cta:hover{background:rgba(0,0,0,.05);color:#000}
+#mmt-bar[data-v=apex] .mmt-ib{color:rgba(0,0,0,.7)}
+#mmt-bar[data-v=apex] .mmt-ib:hover{background:rgba(0,0,0,.06);color:#000}
+#mmt-bar[data-v=apex] .mmt-fly{background:rgba(250,250,252,.98);
+border-bottom:1px solid rgba(0,0,0,.08);box-shadow:0 24px 48px -28px rgba(0,0,0,.28)}
+#mmt-bar[data-v=apex] .mmt-fly-in,#mmt-bar[data-v=apex] .mmt-fly-foot{max-width:1224px;margin:0 auto}
+#mmt-bar[data-v=apex] .mmt-fly-h{color:#86868b}
+#mmt-bar[data-v=apex] .mmt-fly-it{color:#111}
+#mmt-bar[data-v=apex] .mmt-fly-it:hover{background:rgba(0,0,0,.05)}
+#mmt-bar[data-v=apex] .mmt-fly-it b{color:#111}
+#mmt-bar[data-v=apex] .mmt-fly-it .th{background:rgba(0,0,0,.05);color:#333}
+#mmt-bar[data-v=apex] .mmt-fly-foot a{color:#0071e3}
 #mmt-bar .mmt-in::-webkit-scrollbar{display:none}
 /* 워드마크는 바의 시스템 폰트를 상속하면 안 된다 — 본문(Pretendard)과 글자꼴이 갈린다. */
 #mmt-bar .mmt-wm{flex:0 0 auto;
@@ -24,7 +51,7 @@ font-family:var(--mmt-wm-font,"Pretendard Variable",Pretendard,-apple-system,san
 font-size:var(--mmt-wm-sm,15px);font-weight:var(--mmt-wm-fw,800);
 letter-spacing:var(--mmt-wm-ls,-.035em);color:#fff;text-decoration:none}
 #mmt-bar .mmt-nav{display:flex;align-items:center;gap:2px;flex:0 0 auto}
-#mmt-bar a.mmt-it{font-size:13.5px;font-weight:600;letter-spacing:-.02em;color:#cfd4dc;
+#mmt-bar a.mmt-it{font-size:12.5px;font-weight:600;letter-spacing:-.02em;color:#cfd4dc;
 text-decoration:none;padding:6px 11px;border-radius:99px;white-space:nowrap;position:relative}
 #mmt-bar a.mmt-it:hover{background:rgba(255,255,255,.12);color:#fff}
 #mmt-bar a.mmt-it[aria-current=page]{background:#fff;color:#14161a;font-weight:700}
@@ -112,7 +139,7 @@ background:rgba(255,255,255,.09);display:grid;place-items:center;font-size:19px;
 @media(prefers-reduced-motion:reduce){#mmt-bar .mmt-fly{transition:none}}
 
 /* 카드 그림은 제품 og(1200x630) 비율 그대로 — 다른 비율로 자르면 글자가 잘린다 */
-.nws-card .th,.dg-card .th{width:100%;aspect-ratio:1200/630;border-radius:16px;overflow:hidden;
+.nws-card .th,.dg-card .th{display:block;width:100%;aspect-ratio:1200/630;border-radius:16px;overflow:hidden;
 background:var(--mmt-soft,#f4f5f7);display:block;margin:0}
 .nws-card .th img,.dg-card .th img{width:100%;height:100%;object-fit:cover;display:block;
 transition:transform .55s cubic-bezier(.2,.7,.3,1)}

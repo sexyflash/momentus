@@ -120,6 +120,21 @@
   }
 })();
 
+/* 홈 하단 레일 — 좌우 버튼으로 한 화면씩 민다. */
+(function(){
+  document.querySelectorAll('.rl-nav[data-rail]').forEach(function(box){
+    var rail=document.getElementById(box.dataset.rail); if(!rail) return;
+    var btns=[].slice.call(box.querySelectorAll('button'));
+    function step(){ var c=rail.firstElementChild;
+      return c?(c.getBoundingClientRect().width+16)*Math.max(1,Math.floor(rail.clientWidth/(c.getBoundingClientRect().width+16))):320; }
+    function sync(){ btns[0].disabled=rail.scrollLeft<=2;
+      btns[1].disabled=rail.scrollLeft+rail.clientWidth>=rail.scrollWidth-2; }
+    btns.forEach(function(b){ b.addEventListener('click',function(){
+      rail.scrollBy({left:step()*(+b.dataset.d),behavior:'smooth'}); }); });
+    rail.addEventListener('scroll',sync); addEventListener('resize',sync); sync();
+  });
+})();
+
 /* 홈 제품 무대 — 스크롤을 따라 한 장씩 올라온다. 첫 장은 기다리지 않는다. */
 (function(){
   var els=[].slice.call(document.querySelectorAll('.stg'));

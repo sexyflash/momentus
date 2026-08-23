@@ -1257,6 +1257,11 @@ pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.62),rgba(0,0,0
 .stg--hero .stg-claim{color:rgba(255,255,255,.88);font-size:clamp(15px,1.5vw,21px);font-weight:600}
 .stg--hero .stg-eyebrow{color:rgba(255,255,255,.72)}
 .stg--hero .stg-pill--line{color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.75)}
+/* 2단 칸도 같은 전면 타일 문법. 폭이 절반이라 글자만 한 단계 작아진다
+   (2026-08-23 대표: "크기는 다 똑같이 하라고"). */
+.stg-row .stg--hero{aspect-ratio:1380/900}
+.stg-row .stg--hero .stg-name{font-size:clamp(26px,3vw,46px)}
+.stg-row .stg--hero .stg-claim{font-size:clamp(14.5px,1.25vw,19px)}
 
 /* ── 2단 타일: 그림 위, 글 아래(애플 '모델 비교하기' 배치). 우리 og 배너는
       글자가 박혀 있어 그림 위에 글을 얹으면 겹친다 — 그래서 이쪽만 아래 띠. ── */
@@ -1285,6 +1290,31 @@ transition:opacity .18s var(--ease)}
 .stg--ink .stg-pill--line{color:#8fc0ff}
 .stg-icons{flex:1;display:flex;gap:10px;flex-wrap:wrap;align-items:center;align-content:center;
 padding:clamp(30px,3.6vw,52px) clamp(20px,2.6vw,34px)}
+/* 홈 하단 레일 — apple.com/airpods 아래쪽 '더 알아보기' 캐러셀과 같은 문법:
+   가로로 흐르고 좌우 버튼으로 한 장씩 민다. 스냅으로 카드가 정확히 선다. */
+.rl{max-width:1520px;margin:clamp(40px,5vw,72px) auto 0;padding:0 clamp(12px,2.1vw,30px)}
+.rl-h{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.rl-h h2{font-size:clamp(20px,2vw,28px);font-weight:800;letter-spacing:-.04em;color:var(--ink)}
+.rl-nav{display:flex;gap:8px}
+.rl-nav button{width:38px;height:38px;border:0;border-radius:50%;background:var(--soft);
+color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:background .18s}
+.rl-nav button:hover{background:var(--soft2)}
+.rl-nav button[disabled]{opacity:.35;cursor:default}
+.rl-nav svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;
+stroke-linecap:round;stroke-linejoin:round}
+.rl-track{display:flex;gap:clamp(12px,1.6vw,20px);overflow-x:auto;scroll-snap-type:x mandatory;
+scroll-behavior:smooth;scrollbar-width:none;padding-bottom:4px}
+.rl-track::-webkit-scrollbar{display:none}
+.rl-it{flex:0 0 clamp(240px,25vw,330px);scroll-snap-align:start;display:block}
+.rl-it .th{display:block;width:100%;aspect-ratio:1200/630;border-radius:14px;
+overflow:hidden;background:var(--soft)}
+.rl-it .th img{width:100%;height:100%;object-fit:cover;display:block;
+transition:transform .5s var(--ease)}
+.rl-it:hover .th img{transform:scale(1.04)}
+.rl-it h3{margin-top:13px;font-size:15.5px;font-weight:700;letter-spacing:-.03em;line-height:1.45;
+color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rl-it .d{margin-top:8px;font-size:13px;color:var(--faint)}
+@media(prefers-reduced-motion:reduce){.rl-track{scroll-behavior:auto}}
 .stg-icons span{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;
 font-size:22px;background:var(--soft);color:var(--ink)}
 .stg--paper .stg-icons span{background:var(--soft)}
@@ -1300,11 +1330,13 @@ transition:opacity .65s var(--ease),transform .65s var(--ease)}
 /* 문의는 '메뉴'가 아니라 '행동'이다 — 토스 헤더가 앱 다운로드를 버튼으로 두는 자리.
    글자 수를 줄이려고 '문의'로 쓰던 것을 '문의하기'로 되돌린다(2026-08-23 대표 지적). */
 /* 버튼도 내비와 같은 글자꼴·크기 — 하나만 튀면 메뉴가 아니라 광고로 읽힌다. */
-#mmt-bar .mmt-cta{display:inline-flex;align-items:center;height:30px;padding:0 14px;
-border-radius:99px;background:#fff;color:#14161a;
-font-size:13.5px;font-weight:700;letter-spacing:-.02em;
+/* 문의하기는 '있다'만 알리면 된다 — 꽉 채우면 광고처럼 튄다(2026-08-23 대표 지적). */
+#mmt-bar .mmt-cta{display:inline-flex;align-items:center;height:28px;padding:0 13px;
+border-radius:99px;background:transparent;color:#e6e9ee;
+box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);
+font-size:12.5px;font-weight:600;letter-spacing:-.02em;
 text-decoration:none;white-space:nowrap;margin-right:4px}
-#mmt-bar .mmt-cta:hover{opacity:.86}
+#mmt-bar .mmt-cta:hover{background:rgba(255,255,255,.12);color:#fff}
 @media(max-width:640px){#mmt-bar .mmt-cta{display:none}}
 #mmt-bar .mmt-ib{display:grid;place-items:center;width:30px;height:30px;padding:0;border:0;
 border-radius:50%;background:none;color:#cfd4dc;cursor:pointer;transition:background .18s,color .18s}
@@ -1705,7 +1737,7 @@ FOOTER = f"""<footer class="site">
   <div><h4>무료 도구</h4>{_FT_TOOLS}</div>
   <!-- 🚫 문의하기를 mailto 로 되돌리지 마라 — 2026-08-07. mailto 는 기록이 아무 데도 안 남아
        봇도 못 보고 이력도 없었다. 창구는 /inquiry/ 하나다(단일 원장 inquiries). -->
-  <div><h4>모멘터스</h4><a href="/stories/">이야기</a><a href="/about/">회사소개</a><a href="/inquiry/">문의하기</a><a href="/how-to-pay/">결제 안내</a><a href="/legal/terms/">이용약관</a><a href="/legal/privacy/">개인정보처리방침</a><a href="/legal/refund/">환불 규정</a></div>
+  <div><h4>모멘터스</h4><a href="/stories/">인사이트</a><a href="/about/">소개</a><a href="/inquiry/">문의하기</a><a href="/how-to-pay/">결제 안내</a><a href="/legal/terms/">이용약관</a><a href="/legal/privacy/">개인정보처리방침</a><a href="/legal/refund/">환불 규정</a></div>
   <div class="biz">
     <span>{BIZ['name']}</span><span>대표 {BIZ['ceo']}</span><span>사업자등록번호 {BIZ['reg']}</span><span>통신판매업신고 {BIZ['mail_order']}</span>
     <span>{BIZ['addr']}</span><span>{BIZ['tel']}</span><span>{BIZ['email']}</span><span>개인정보보호책임자 {BIZ['privacy_officer']}</span>
@@ -1922,7 +1954,7 @@ SHELL_TOKENS = {
                      '"Apple SD Gothic Neo","Helvetica Neue","Segoe UI",sans-serif',
     "--mmt-wm-fw": "800",
     "--mmt-wm-ls": "-.035em",
-    "--mmt-wm-sm": "17px",
+    "--mmt-wm-sm": "16px",
     "--mmt-wm-md": "19px",
     "--mmt-wm-lg": "24px",
     "--mmt-ink": "#0b0c0e",
@@ -1963,8 +1995,35 @@ letter-spacing:normal;line-height:normal}
 /* 애플 글로벌 내비 실측(2026-08-23, 1440 뷰포트): .globalnav-content max-width 1024px,
    좌우 padding 22px, 바 높이 44px. 뷰포트 끝에 붙이면 넓은 화면에서 왼쪽만 붙고
    오른쪽이 휑해진다 — 가운데로 모으고 그 안에서 좌측 정렬한다. */
-#mmt-bar .mmt-in{display:flex;align-items:center;height:100%;gap:18px;
+#mmt-bar .mmt-in{display:flex;align-items:center;height:100%;gap:16px;
 padding:0 clamp(16px,2.2vw,28px)}
+/* 랜딩(apex)엔 아래에 제품 헤더가 없다 — 검정일 이유가 없고 가운데로 모은다.
+   검정·좌측은 **제품 사이트**용이다: 그 아래 흰 제품 헤더가 오니 물러나 있어야 한다.
+   (2026-08-23 대표: "검은색으로 하는 건 제품 페이지 들어갔을 때만") */
+#mmt-bar[data-v=apex]{background:rgba(250,250,252,.86);color:rgba(0,0,0,.78);
+backdrop-filter:saturate(1.8) blur(20px);-webkit-backdrop-filter:saturate(1.8) blur(20px);
+border-bottom:1px solid rgba(0,0,0,.07)}
+#mmt-bar[data-v=apex] .mmt-in{max-width:1224px;margin:0 auto;padding:0 24px}
+#mmt-bar[data-v=apex] .mmt-wm{color:#111}
+#mmt-bar[data-v=apex] .mmt-nav{margin:0 auto}
+#mmt-bar[data-v=apex] a.mmt-it{color:rgba(0,0,0,.78)}
+#mmt-bar[data-v=apex] a.mmt-it:hover{background:rgba(0,0,0,.055);color:#000}
+#mmt-bar[data-v=apex] a.mmt-it[aria-current=page]{background:#111;color:#fff}
+#mmt-bar[data-v=apex] .mmt-sep{background:rgba(0,0,0,.14)}
+#mmt-bar[data-v=apex] .mmt-cta{background:transparent;color:rgba(0,0,0,.78);
+box-shadow:inset 0 0 0 1px rgba(0,0,0,.18);font-weight:600}
+#mmt-bar[data-v=apex] .mmt-cta:hover{background:rgba(0,0,0,.05);color:#000}
+#mmt-bar[data-v=apex] .mmt-ib{color:rgba(0,0,0,.7)}
+#mmt-bar[data-v=apex] .mmt-ib:hover{background:rgba(0,0,0,.06);color:#000}
+#mmt-bar[data-v=apex] .mmt-fly{background:rgba(250,250,252,.98);
+border-bottom:1px solid rgba(0,0,0,.08);box-shadow:0 24px 48px -28px rgba(0,0,0,.28)}
+#mmt-bar[data-v=apex] .mmt-fly-in,#mmt-bar[data-v=apex] .mmt-fly-foot{max-width:1224px;margin:0 auto}
+#mmt-bar[data-v=apex] .mmt-fly-h{color:#86868b}
+#mmt-bar[data-v=apex] .mmt-fly-it{color:#111}
+#mmt-bar[data-v=apex] .mmt-fly-it:hover{background:rgba(0,0,0,.05)}
+#mmt-bar[data-v=apex] .mmt-fly-it b{color:#111}
+#mmt-bar[data-v=apex] .mmt-fly-it .th{background:rgba(0,0,0,.05);color:#333}
+#mmt-bar[data-v=apex] .mmt-fly-foot a{color:#0071e3}
 #mmt-bar .mmt-in::-webkit-scrollbar{display:none}
 /* 워드마크는 바의 시스템 폰트를 상속하면 안 된다 — 본문(Pretendard)과 글자꼴이 갈린다. */
 #mmt-bar .mmt-wm{flex:0 0 auto;
@@ -1972,7 +2031,7 @@ font-family:var(--mmt-wm-font,"Pretendard Variable",Pretendard,-apple-system,san
 font-size:var(--mmt-wm-sm,15px);font-weight:var(--mmt-wm-fw,800);
 letter-spacing:var(--mmt-wm-ls,-.035em);color:#fff;text-decoration:none}
 #mmt-bar .mmt-nav{display:flex;align-items:center;gap:2px;flex:0 0 auto}
-#mmt-bar a.mmt-it{font-size:13.5px;font-weight:600;letter-spacing:-.02em;color:#cfd4dc;
+#mmt-bar a.mmt-it{font-size:12.5px;font-weight:600;letter-spacing:-.02em;color:#cfd4dc;
 text-decoration:none;padding:6px 11px;border-radius:99px;white-space:nowrap;position:relative}
 #mmt-bar a.mmt-it:hover{background:rgba(255,255,255,.12);color:#fff}
 #mmt-bar a.mmt-it[aria-current=page]{background:#fff;color:#14161a;font-weight:700}
@@ -2069,7 +2128,7 @@ background:rgba(255,255,255,.09);display:grid;place-items:center;font-size:19px;
 #   반영: sync_shell.py 가 제품 스타일시트의 MMT 블록에 함께 밀어 넣는다.
 SHELL_POST_CSS = """
 /* 카드 그림은 제품 og(1200x630) 비율 그대로 — 다른 비율로 자르면 글자가 잘린다 */
-.nws-card .th,.dg-card .th{width:100%;aspect-ratio:1200/630;border-radius:16px;overflow:hidden;
+.nws-card .th,.dg-card .th{display:block;width:100%;aspect-ratio:1200/630;border-radius:16px;overflow:hidden;
 background:var(--mmt-soft,#f4f5f7);display:block;margin:0}
 .nws-card .th img,.dg-card .th img{width:100%;height:100%;object-fit:cover;display:block;
 transition:transform .55s cubic-bezier(.2,.7,.3,1)}
@@ -2241,7 +2300,9 @@ SEARCH_OVERLAY = """<div class="kb-sr" id="kbsr" role="dialog" aria-modal="true"
   </div>
 </div>"""
 
-APEX_HEADER = shell_bar_markup(act_extra=_MMT_ICONS) + SEARCH_OVERLAY
+APEX_HEADER = (shell_bar_markup(act_extra=_MMT_ICONS)
+               .replace('<div id="mmt-bar">', '<div id="mmt-bar" data-v="apex">', 1)
+               + SEARCH_OVERLAY)
 
 
 with open("shell.css", "w", encoding="utf-8") as f:
@@ -3407,6 +3468,21 @@ def _strip_tags(js):
 
 
 _apex_js = _strip_tags(KB_JS) + """
+/* 홈 하단 레일 — 좌우 버튼으로 한 화면씩 민다. */
+(function(){
+  document.querySelectorAll('.rl-nav[data-rail]').forEach(function(box){
+    var rail=document.getElementById(box.dataset.rail); if(!rail) return;
+    var btns=[].slice.call(box.querySelectorAll('button'));
+    function step(){ var c=rail.firstElementChild;
+      return c?(c.getBoundingClientRect().width+16)*Math.max(1,Math.floor(rail.clientWidth/(c.getBoundingClientRect().width+16))):320; }
+    function sync(){ btns[0].disabled=rail.scrollLeft<=2;
+      btns[1].disabled=rail.scrollLeft+rail.clientWidth>=rail.scrollWidth-2; }
+    btns.forEach(function(b){ b.addEventListener('click',function(){
+      rail.scrollBy({left:step()*(+b.dataset.d),behavior:'smooth'}); }); });
+    rail.addEventListener('scroll',sync); addEventListener('resize',sync); sync();
+  });
+})();
+
 /* 홈 제품 무대 — 스크롤을 따라 한 장씩 올라온다. 첫 장은 기다리지 않는다. */
 (function(){
   var els=[].slice.call(document.querySelectorAll('.stg'));
@@ -3432,6 +3508,15 @@ AP_GO = {"binbang": "빈방 알림 등록", "heyreci": "헤이레시 열기", "m
          "cue": "모의면접 시작하기", "theplan": "플래너 보러 가기"}
 
 
+# 홈 타일은 **글자가 없는 사진**을 쓴다. og 배너를 깔면 우리 제목과 겹친다.
+#   더플랜은 notes 쇼룸(히어로 슬라이드) 이미지를 그대로 가져다 쓴다(2026-08-23 대표 지시).
+HOME_SHOT = {
+    "mark": "/assets/home/mark.png",
+    "cue": "/assets/home/cue.png",
+    "theplan": "https://notes.the-moment.us/img/showroom/shr_void/v4_03.png",
+}
+
+
 def ap_stage(slug, tone="", badge=""):
     """제품 카드 = 그림(꽉 참) → 업종 한 줄 → 이름 → 한 줄 → 버튼 둘(우하단).
        애플 제품 카드(apple.com/airpods)의 배치 그대로."""
@@ -3441,8 +3526,8 @@ def ap_stage(slug, tone="", badge=""):
     if go:
         cta += (f'<a class="stg-pill stg-pill--line" href="{go}"{_ext(go)}>'
                 f'{AP_GO.get(slug, "바로 가기")}</a>')
-    shot = pr.get("shot") or ""
-    art = (f'<div class="stg-art"><img src="{shot}" alt="{esc(pr["short"])} 화면" '
+    shot = HOME_SHOT.get(slug) or pr.get("shot") or ""
+    art = (f'<div class="stg-art"><img src="{shot}" alt="{esc(pr["short"])}" '
            f'loading="lazy" decoding="async"></div>') if shot else ""
     bdg = f'<em>{badge}</em>' if badge else ""
     cls = "".join(f" stg--{t}" for t in tone.split()) if tone else ""
@@ -3470,13 +3555,26 @@ ap_body = (
     '<div class="stg-stack">'
     + ap_stage("binbang", "hero", "NEW")
     + ap_stage("heyreci", "hero ink")
-    + '<div class="stg-row">' + ap_stage("mark", "paper") + ap_stage("cue") + '</div>'
-    + '<div class="stg-row">' + ap_stage("theplan") + ap_tools_stage() + '</div>'
+    + '<div class="stg-row">' + ap_stage("mark", "hero") + ap_stage("cue", "hero") + '</div>'
+    + '<div class="stg-row">' + ap_stage("theplan", "hero") + ap_tools_stage() + '</div>'
     + '</div>'
     )
 
 
-land_body = ap_body
+_rail_items = "".join(
+    f'<a class="rl-it" href="{e["url"] if e["kind"] in ("video", "ext") else STORY_BASE + "/" + e["slug"] + "/"}">'
+    f'<span class="th"><img src="{_story_cover(e)}" alt="" loading="lazy"></span>'
+    f'<h3>{esc(e["title"])}</h3><div class="d">{esc(e["cat"])} · {fmt_date(e["date"])}</div></a>'
+    for e in entries[:10] if _story_cover(e))
+_rail = ('<section class="rl"><div class="rl-h"><h2>읽어 볼 만한 것</h2>'
+         '<div class="rl-nav" data-rail="homerail">'
+         '<button type="button" data-d="-1" aria-label="이전"><svg viewBox="0 0 24 24">'
+         '<path d="M15 6l-6 6 6 6"/></svg></button>'
+         '<button type="button" data-d="1" aria-label="다음"><svg viewBox="0 0 24 24">'
+         '<path d="M9 6l6 6-6 6"/></svg></button></div></div>'
+         f'<div class="rl-track" id="homerail">{_rail_items}</div></section>')
+
+land_body = ap_body + _rail
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다",

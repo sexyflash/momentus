@@ -1208,6 +1208,11 @@ pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.62),rgba(0,0,0
 .stg--hero .stg-claim{color:rgba(255,255,255,.88);font-size:clamp(15px,1.5vw,21px);font-weight:600}
 .stg--hero .stg-eyebrow{color:rgba(255,255,255,.72)}
 .stg--hero .stg-pill--line{color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.75)}
+/* 2단 칸도 같은 전면 타일 문법. 폭이 절반이라 글자만 한 단계 작아진다
+   (2026-08-23 대표: "크기는 다 똑같이 하라고"). */
+.stg-row .stg--hero{aspect-ratio:1380/900}
+.stg-row .stg--hero .stg-name{font-size:clamp(26px,3vw,46px)}
+.stg-row .stg--hero .stg-claim{font-size:clamp(14.5px,1.25vw,19px)}
 
 /* ── 2단 타일: 그림 위, 글 아래(애플 '모델 비교하기' 배치). 우리 og 배너는
       글자가 박혀 있어 그림 위에 글을 얹으면 겹친다 — 그래서 이쪽만 아래 띠. ── */
@@ -1236,6 +1241,31 @@ transition:opacity .18s var(--ease)}
 .stg--ink .stg-pill--line{color:#8fc0ff}
 .stg-icons{flex:1;display:flex;gap:10px;flex-wrap:wrap;align-items:center;align-content:center;
 padding:clamp(30px,3.6vw,52px) clamp(20px,2.6vw,34px)}
+/* 홈 하단 레일 — apple.com/airpods 아래쪽 '더 알아보기' 캐러셀과 같은 문법:
+   가로로 흐르고 좌우 버튼으로 한 장씩 민다. 스냅으로 카드가 정확히 선다. */
+.rl{max-width:1520px;margin:clamp(40px,5vw,72px) auto 0;padding:0 clamp(12px,2.1vw,30px)}
+.rl-h{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.rl-h h2{font-size:clamp(20px,2vw,28px);font-weight:800;letter-spacing:-.04em;color:var(--ink)}
+.rl-nav{display:flex;gap:8px}
+.rl-nav button{width:38px;height:38px;border:0;border-radius:50%;background:var(--soft);
+color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:background .18s}
+.rl-nav button:hover{background:var(--soft2)}
+.rl-nav button[disabled]{opacity:.35;cursor:default}
+.rl-nav svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;
+stroke-linecap:round;stroke-linejoin:round}
+.rl-track{display:flex;gap:clamp(12px,1.6vw,20px);overflow-x:auto;scroll-snap-type:x mandatory;
+scroll-behavior:smooth;scrollbar-width:none;padding-bottom:4px}
+.rl-track::-webkit-scrollbar{display:none}
+.rl-it{flex:0 0 clamp(240px,25vw,330px);scroll-snap-align:start;display:block}
+.rl-it .th{display:block;width:100%;aspect-ratio:1200/630;border-radius:14px;
+overflow:hidden;background:var(--soft)}
+.rl-it .th img{width:100%;height:100%;object-fit:cover;display:block;
+transition:transform .5s var(--ease)}
+.rl-it:hover .th img{transform:scale(1.04)}
+.rl-it h3{margin-top:13px;font-size:15.5px;font-weight:700;letter-spacing:-.03em;line-height:1.45;
+color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rl-it .d{margin-top:8px;font-size:13px;color:var(--faint)}
+@media(prefers-reduced-motion:reduce){.rl-track{scroll-behavior:auto}}
 .stg-icons span{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;
 font-size:22px;background:var(--soft);color:var(--ink)}
 .stg--paper .stg-icons span{background:var(--soft)}
@@ -1251,11 +1281,13 @@ transition:opacity .65s var(--ease),transform .65s var(--ease)}
 /* 문의는 '메뉴'가 아니라 '행동'이다 — 토스 헤더가 앱 다운로드를 버튼으로 두는 자리.
    글자 수를 줄이려고 '문의'로 쓰던 것을 '문의하기'로 되돌린다(2026-08-23 대표 지적). */
 /* 버튼도 내비와 같은 글자꼴·크기 — 하나만 튀면 메뉴가 아니라 광고로 읽힌다. */
-#mmt-bar .mmt-cta{display:inline-flex;align-items:center;height:30px;padding:0 14px;
-border-radius:99px;background:#fff;color:#14161a;
-font-size:13.5px;font-weight:700;letter-spacing:-.02em;
+/* 문의하기는 '있다'만 알리면 된다 — 꽉 채우면 광고처럼 튄다(2026-08-23 대표 지적). */
+#mmt-bar .mmt-cta{display:inline-flex;align-items:center;height:28px;padding:0 13px;
+border-radius:99px;background:transparent;color:#e6e9ee;
+box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);
+font-size:12.5px;font-weight:600;letter-spacing:-.02em;
 text-decoration:none;white-space:nowrap;margin-right:4px}
-#mmt-bar .mmt-cta:hover{opacity:.86}
+#mmt-bar .mmt-cta:hover{background:rgba(255,255,255,.12);color:#fff}
 @media(max-width:640px){#mmt-bar .mmt-cta{display:none}}
 #mmt-bar .mmt-ib{display:grid;place-items:center;width:30px;height:30px;padding:0;border:0;
 border-radius:50%;background:none;color:#cfd4dc;cursor:pointer;transition:background .18s,color .18s}
