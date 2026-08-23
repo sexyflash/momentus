@@ -3,7 +3,7 @@
   "use strict";
   try {
     if (document.getElementById("mmt-bar")) return;
-    var H = 40, ITEMS = [{"label":"플래너","href":"https://notes.the-moment.us","sub":"notes — 내 손에 맞게 조립하는 디지털 플래너","ext":false,"sep":false},{"label":"로고","href":"https://mark.the-moment.us","sub":"mark — 내 업종 로고를 먼저 보고 고릅니다","ext":false,"sep":false},{"label":"모의면접","href":"https://cue.the-moment.us","sub":"cue — 입으로 답하고 AI가 짚어줍니다","ext":false,"sep":false},{"label":"상품사진","href":"https://heyreci.com","sub":"heyreci.com으로 이동","ext":true,"sep":false},{"label":"무료 도구","href":"/tools/","sub":"","ext":false,"sep":true},{"label":"이야기","href":"/stories/","sub":"","ext":false,"sep":true},{"label":"소개","href":"/about/","sub":"","ext":false,"sep":false}];
+    var H = 40, ITEMS = [{"label":"플래너","href":"https://notes.the-moment.us","sub":"notes — 내 손에 맞게 조립하는 디지털 플래너","ext":false,"sep":false},{"label":"로고","href":"https://mark.the-moment.us","sub":"mark — 내 업종 로고를 먼저 보고 고릅니다","ext":false,"sep":false},{"label":"모의면접","href":"https://cue.the-moment.us","sub":"cue — 입으로 답하고 AI가 짚어줍니다","ext":false,"sep":false},{"label":"빈방","href":"https://bb.the-moment.us","sub":"빈방 — 취소표가 나오면 바로 알려드립니다","ext":false,"sep":false},{"label":"상품사진","href":"https://heyreci.com","sub":"heyreci.com으로 이동","ext":true,"sep":false},{"label":"무료 도구","href":"/tools/","sub":"","ext":false,"sep":true},{"label":"이야기","href":"/stories/","sub":"","ext":false,"sep":true},{"label":"소개","href":"/about/","sub":"","ext":false,"sep":false}];
     var css = ""
       + "#mmt-bar{--mmt-bg:#14161a;--mmt-fg:#cfd4dc;--mmt-fg2:#8b93a1;"
       +   "all:initial;display:block;box-sizing:border-box;width:100%;height:" + H + "px;"
