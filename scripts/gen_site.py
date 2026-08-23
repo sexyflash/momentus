@@ -156,7 +156,7 @@ background:var(--soft2);transition:.18s}
 .an-tag{font-size:13px;font-weight:600;color:var(--gray);background:var(--soft);padding:7px 13px;border-radius:99px}
 .an-tag:hover{background:var(--soft2);color:var(--ink)}
 .tls{padding:0 var(--gut)}
-.tls-head{padding:86px 0 34px;display:flex;flex-direction:column;gap:10px}
+.tls-head{padding:var(--pg-top) 0 var(--pg-head-gap);display:flex;flex-direction:column;gap:10px}
 .tls-head .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--faint)}
 .tls-head h1{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-.045em;line-height:1.15}
 .tls-head p{color:var(--gray);font-size:16px;max-width:56ch}
@@ -1394,7 +1394,7 @@ ABOUT_CSS = """
    그전 소개는 이미지 0장에 글만 빼곡했고(대표: "읽고 싶지 않은데?"),
    마지막이 '유튜브 지켜봐 주세요' 였다 — 소개하러 온 사람에게 할 말이 아니다. */
 .abt{max-width:1224px;margin:0 auto;padding:0 24px}
-.abt-hero{padding:clamp(72px,11vw,150px) 0 clamp(56px,7vw,96px);position:relative;overflow:hidden}
+.abt-hero{padding:var(--pg-top) 0 clamp(56px,7vw,96px);position:relative;overflow:hidden}
 .abt-hero::before{content:"";position:absolute;right:-8%;top:-40%;width:78%;height:150%;
 border-radius:50%;z-index:0;pointer-events:none;
 background:radial-gradient(closest-side,rgba(49,130,246,.16),transparent 72%)}
@@ -1477,10 +1477,10 @@ NEWS_CSS = """
      좌측 라벨 레일(● 보도자료·534건) + 우측 3단 그리드
    · **모든 카드 그림이 같은 비율** — 그전 우리 카드는 4:3·1:1·그라디언트가 섞여 있었다. */
 .nws{max-width:1224px;margin:0 auto;padding:0 24px}
-.nws-head{padding:clamp(64px,9vw,132px) 0 clamp(26px,3.4vw,44px)}
-.nws-head h1{font-size:clamp(34px,4.6vw,56px);font-weight:800;letter-spacing:-.045em;
+.nws-head{padding:var(--pg-top) 0 var(--pg-head-gap)}
+.nws-head h1{font-size:var(--pg-h1);font-weight:800;letter-spacing:-.045em;
 line-height:1.08;color:var(--ink)}
-.nws-head p{margin-top:14px;font-size:16px;line-height:1.7;color:var(--gray);max-width:52ch}
+.nws-head p{margin-top:var(--pg-sub-gap);font-size:16px;line-height:1.7;color:var(--gray);max-width:52ch}
 
 .nws-feat{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2.2vw,32px)}
 .nws-fcard{position:relative;display:block;border-radius:28px;overflow:hidden;
@@ -1548,11 +1548,11 @@ POST_CSS = """
    레일(목차·이어서읽기)은 그 바깥에 두고, 바깥에 자리가 없으면 접는다.
    ⚠️ 레일을 본문과 같은 폭 안에 욱여넣으면 본문이 712 로 쪼그라든다(2026-08-23 대표 지적). */
 .pst{max-width:none;margin:0;padding:0}
-.pst-top{grid-column:2;padding:clamp(40px,6vw,84px) 0 0}
+.pst-top{grid-column:2;padding:var(--pg-top) 0 0}
 /* 태그 줄은 위에 두지 않는다 — 아래 '이야기 전체 보기' 자리에 이미 있고, 제목 위에서
    가장 먼저 읽히기엔 정보가 아니다(2026-08-23 대표 지적). 분류만 한 줄. */
 .pst-kick{font-size:13.5px;font-weight:700;letter-spacing:-.01em;color:var(--brand-cta)}
-.pst-h1{margin-top:12px;font-size:clamp(30px,4.4vw,64px);font-weight:800;letter-spacing:-.05em;
+.pst-h1{margin-top:var(--pg-sub-gap);font-size:var(--pg-h1-post);font-weight:800;letter-spacing:-.05em;
 line-height:1.22;color:var(--ink);text-wrap:balance}
 /* 부제는 제목 바로 밑이 아니라 **표지 아래**에 — 큰 글씨가 연달아 두 덩이면 안 읽힌다. */
 .pst-sub{margin-top:22px;font-size:clamp(16px,1.35vw,19px);line-height:1.72;color:var(--gray);
@@ -1564,7 +1564,7 @@ gap:0 32px;align-items:start;max-width:1688px;margin:0 auto;padding:0 24px;justi
 .pst-toc a{display:block;padding:7px 0 7px 14px;border-left:2px solid var(--line);
 font-size:13.5px;line-height:1.5;color:var(--gray)}
 .pst-toc a:hover{color:var(--ink);border-left-color:var(--ink)}
-.pst-main{grid-column:2;grid-row:2;min-width:0;padding-top:clamp(20px,2.6vw,34px)}
+.pst-main{grid-column:2;grid-row:2;min-width:0;padding-top:var(--pg-head-gap)}
 .pst-aside{grid-column:3;grid-row:2;align-self:start;position:sticky;top:64px}
 .pst-aside .rt{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:14px}
 .pst-aside a{display:flex;gap:11px;padding:9px 0;align-items:flex-start}
@@ -1627,7 +1627,7 @@ INQP_CSS = """
    컨테이너·제목 크기를 abt/nws 와 맞추고, 왼쪽에 '무엇을 물어도 되는지'를 둔다.
    ⚠️ 폼 마크업과 스크립트(#f · #go · #err · #iqRoot)는 손대지 않는다 — 제출이 그걸로 돈다. */
 .iqp{max-width:1224px;margin:0 auto;padding:0 24px}
-.iqp-head{padding:clamp(64px,9vw,132px) 0 clamp(26px,3.4vw,44px)}
+.iqp-head{padding:var(--pg-top) 0 var(--pg-head-gap)}
 .iqp-head h1{font-size:clamp(32px,4.4vw,54px);font-weight:800;letter-spacing:-.05em;
 line-height:1.1;color:var(--ink)}
 .iqp-head p{margin-top:16px;font-size:17px;line-height:1.72;color:var(--gray);max-width:46ch}
@@ -2072,6 +2072,8 @@ letter-spacing:var(--mmt-wm-ls,-.035em);color:#fff;text-decoration:none}
 #mmt-bar a.mmt-it{font-size:12.5px;font-weight:600;letter-spacing:-.02em;color:#cfd4dc;
 text-decoration:none;padding:6px 11px;border-radius:99px;white-space:nowrap;position:relative}
 #mmt-bar a.mmt-it:hover{background:rgba(255,255,255,.12);color:#fff}
+#mmt-bar a.mmt-it .nb{font-style:normal;margin-left:5px;padding:1px 5px;border-radius:99px;
+font-size:8.5px;font-weight:800;letter-spacing:.05em;background:#0071e3;color:#fff;vertical-align:1.5px}
 #mmt-bar a.mmt-it[aria-current=page]{background:#fff;color:#14161a;font-weight:700}
 #mmt-bar .mmt-sep{width:1px;height:14px;background:rgba(255,255,255,.2);flex:0 0 auto;margin:0 6px}
 #mmt-bar i.mmt-ext{font-style:normal;font-size:9px;opacity:.55;margin-left:3px;vertical-align:super}
@@ -2184,6 +2186,18 @@ font-size:9px;font-weight:800;letter-spacing:.05em;background:#0071e3;color:#fff
 #   같은 규격을 받게 한다(마크 .post-*, 큐 .dg-*). 이름 통일은 그다음 단계.
 #   반영: sync_shell.py 가 제품 스타일시트의 MMT 블록에 함께 밀어 넣는다.
 SHELL_POST_CSS = """
+/* ── 글 페이지 공통 간격·크기 (목록 = 상세) ─────────────────────────────
+   2026-08-24 대표: "목록은 상단 여백이 있는데 상세로 가면 굉장히 좁다.
+   목록에 있는 간격 규칙이 상세에도 적용됐으면 좋겠다."
+   실측 차이: 목록 상단 129.6px vs 상세 84px. 값을 각자 적어 두니 갈렸다 → 토큰 하나로.
+   제목만 상세가 한 단계 크다(글의 주인공이라) — 그것도 여기서 정한다. */
+:root{
+--pg-top:clamp(64px,9vw,132px);      /* 바 아래 첫 요소까지 */
+--pg-head-gap:clamp(26px,3.4vw,44px);/* 제목 블록 → 본문/목록 */
+--pg-sub-gap:14px;                   /* 제목 → 부제 */
+--pg-h1:clamp(34px,4.6vw,56px);      /* 목록 제목 */
+--pg-h1-post:clamp(30px,4.4vw,64px); /* 글 제목 */
+}
 /* 카드 그림은 제품 og(1200x630) 비율 그대로 — 다른 비율로 자르면 글자가 잘린다 */
 .nws-card .th,.dg-card .th{display:block;width:100%;aspect-ratio:1200/630;border-radius:16px;overflow:hidden;
 background:var(--mmt-soft,#f4f5f7);display:block;margin:0}
@@ -2197,6 +2211,14 @@ line-height:1.45;color:var(--mmt-ink,#0b0c0e);display:-webkit-box;-webkit-line-c
 font-variant-numeric:tabular-nums}
 .dg-card .cat{margin-top:12px;order:2}
 .dg-card p{display:none}                     /* 카드엔 제목·날짜만 — 요약은 목록을 무겁게 한다 */
+/* 제품 사이트의 글 목록·상세도 같은 간격을 본다(큐 .dg-hero, 마크 .post-top). */
+.dg-hero{padding:var(--pg-top) 0 var(--pg-head-gap) !important}
+.dg-hero h1{font-size:var(--pg-h1) !important;line-height:1.08}
+.dg-hero p{margin-top:var(--pg-sub-gap) !important}
+.post-top{padding-top:var(--pg-top) !important}
+.post-h1{font-size:var(--pg-h1-post) !important}
+.post-sub{margin-top:var(--pg-sub-gap) !important}
+.post-grid{margin-top:var(--pg-head-gap) !important}
 .nws-grid,.dg-grid{display:grid;grid-template-columns:repeat(3,1fr);
 gap:clamp(34px,4.6vw,64px) clamp(18px,2.6vw,36px)}
 @media(max-width:960px){.nws-grid,.dg-grid{grid-template-columns:1fr 1fr}}
@@ -2259,10 +2281,7 @@ _FLY_SHOT = {          # 랜딩 배너와 같은 그림(정본은 HOME_SHOT — 
     "heyreci": "/assets/home/heyreci.jpg",
     "binbang": "https://bb.the-moment.us/assets/hero.jpg",
 }
-_NEWB = {"binbang": '<em class="nb">NEW</em>'}   # 플라이아웃에서 새 제품 표시
-BAR_TOP_N = 3          # 바에 직접 꺼내는 제품 수. 나머지는 더보기 안으로.
-
-
+_NEWB = {"binbang": '<em class="nb">NEW</em>'}   # 바·플라이아웃에서 새 제품 표시
 def shell_bar_markup(host="", act_extra=""):
     """제품 HTML의 <body> 바로 뒤에 박는 공용 1단 바. host 를 주면 그 제품에 활성 표시.
 
@@ -2278,11 +2297,15 @@ def shell_bar_markup(host="", act_extra=""):
     # 제품 전체를 플라이아웃에만 두니 자주 가는 곳이 한 번 더 걸렸다(2026-08-23 대표 지적).
     # 앞의 3개는 바에 꺼내고, 나머지는 '더보기'가 연다.
     parts = []
-    tops = bar_products()[:BAR_TOP_N]
+    # 규칙: 바에 이름을 꺼내는 건 **이 패밀리 바를 달고 있는 사이트**(플래너·로고·모의면접·빈방).
+    #   헤이레시·컨텍스트처럼 따로 개발돼 그냥 점프하는 서비스는 '더보기' 안에 둔다
+    #   — 눌렀을 때 돌아올 길(패밀리 바)이 있느냐로 가른다(2026-08-24 대표 정리).
+    tops = [sp for sp in bar_products() if not sp.get("external")]
     for sp in tops:
         cur = ' aria-current="page"' if host and _host_of(sp["href"]) == host else ""
         ext = ' target="_blank" rel="noopener"' if sp.get("external") else ""
-        parts.append(f'<a class="mmt-it" href="{sp["href"]}"{ext}{cur}>{sp["label"]}</a>')
+        parts.append(f'<a class="mmt-it" href="{sp["href"]}"{ext}{cur}>'
+                     f'{sp["label"]}{_NEWB.get(sp.get("slug"), "")}</a>')
     parts.append("__DROP__")
     parts.append('<span class="mmt-sep" aria-hidden="true"></span>')
     for it in bar_items():
