@@ -30,19 +30,40 @@ APPS = {k: v for k, v in _MANIFEST.get("apps", {}).items() if not k.startswith("
 LINKS = _MANIFEST.get("links", {})
 
 CSS = """/* MOMENTUS site.css — v1 */
-.plist{max-width:1100px;margin:0 auto;padding:0 var(--gut) 80px}
-.pgroup{margin-top:44px}
-.pgroup h2{font-size:22px;letter-spacing:-.02em;margin:0}
-.pgroup .gsub{color:var(--gray);font-size:14px;margin:6px 0 16px}
-.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
-.pcard{display:block;border:1px solid var(--line);border-radius:16px;padding:20px;text-decoration:none;color:inherit;background:var(--paper)}
-.pcard:hover{border-color:var(--ink);transform:translateY(-1px)}
-.pcard .ic{font-size:22px;line-height:1}
-.pcard .nm{font-size:18px;font-weight:800;letter-spacing:-.02em;margin-top:10px}
-.pcard .tg{font-size:12px;color:var(--faint);margin-top:2px}
-.pcard .ds{font-size:14px;color:var(--ink2);margin-top:10px;line-height:1.5}
-.pcard .mt{font-size:12px;color:var(--gray);margin-top:12px;padding-top:10px;border-top:1px dashed var(--line)}
-.plist-foot{margin-top:44px;color:var(--gray);font-size:14px}
+/* /products/ 제품 허브 — /tools/(.tls-*) 와 같은 골격의 형제 페이지.
+   ⚠️ 클래스 접두사를 prh- 로 못박은 이유: 처음엔 .pcard/.pgrid 로 지었다가
+   아래쪽 레거시 .pcard/.pgrid 규칙과 정면 충돌해 레이아웃이 깨졌다(2026-08-23).
+   같은 파일 안에서 뒤에 오는 규칙이 이겨 카드가 flex 컬럼으로 뒤집히고 그리드가
+   3분할 + 자체 패딩을 먹었다. 새 컴포넌트는 반드시 안 쓰는 접두사로 시작해라. */
+.prh{padding:0 var(--gut)}
+.prh-g{margin-top:52px}
+.prh-gh{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+padding-bottom:12px;border-bottom:1.5px solid var(--ink)}
+.prh-gh h2{font-size:19px;font-weight:800;letter-spacing:-.035em}
+.prh-gh .s{font-size:13.5px;color:var(--faint)}
+.prh-list{display:flex;flex-direction:column;margin-bottom:0}
+.prh-row{display:flex;align-items:center;gap:22px;padding:18px 4px;
+border-bottom:1px solid var(--line);transition:background .14s}
+.prh-row:hover{background:var(--soft)}
+.prh-row .th{width:136px;aspect-ratio:16/10;flex:0 0 auto;border-radius:11px;
+overflow:hidden;background:var(--soft2)}
+.prh-row .th img{width:100%;height:100%;object-fit:cover;display:block;
+transition:transform .45s var(--ease)}
+.prh-row:hover .th img{transform:scale(1.04)}
+.prh-row .bd{flex:1 1 auto;min-width:0}
+.prh-row .nm{font-size:17px;font-weight:700;letter-spacing:-.03em}
+.prh-row .tg{font-size:12.5px;color:var(--faint);margin-top:3px}
+.prh-row .ds{font-size:14.5px;color:var(--gray);margin-top:8px;line-height:1.5}
+.prh-row .mt{flex:0 0 auto;font-family:var(--mono);font-size:11.5px;color:var(--faint);white-space:nowrap}
+.prh-foot{margin:44px 0 110px;padding-top:22px;border-top:1px solid var(--line);
+font-size:14px;color:var(--gray)}
+.prh-foot a{text-decoration:underline;text-underline-offset:3px}
+@media(max-width:640px){
+  .prh-row{gap:14px;padding:15px 2px}
+  .prh-row .th{width:86px;border-radius:9px}
+  .prh-row .ds{font-size:13.5px;margin-top:5px}
+  .prh-row .mt{display:none}
+}
 
 :root{--ink:#0b0c0e;--ink2:#3a4150;--paper:#fff;--soft:#f4f5f7;--soft2:#e9ebee;--gray:#5b6270;--faint:#9aa0a8;--line:#e6e8ec;
 --pt:#ff4b26;--ok:#12b76a;--ig:#e1306c;--yt:#ff0033;--pin:#e60023;--coup:#346aff;
@@ -125,7 +146,7 @@ background:var(--soft2);transition:.18s}
 .an-tags{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 0}
 .an-tag{font-size:13px;font-weight:600;color:var(--gray);background:var(--soft);padding:7px 13px;border-radius:99px}
 .an-tag:hover{background:var(--soft2);color:var(--ink)}
-.tls{padding:0 var(--gut);max-width:1200px;margin:0 auto}
+.tls{padding:0 var(--gut)}
 .tls-head{padding:86px 0 34px;display:flex;flex-direction:column;gap:10px}
 .tls-head .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--faint)}
 .tls-head h1{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-.045em;line-height:1.15}
@@ -3314,27 +3335,32 @@ PROD_GROUPS = [
 
 def _prod_card(s_):
     pr = P[s_]
-    free = "무료 주기 있음" if s_ == "binbang" else ("무료" if pr.get("free") else "유료")
-    return (f'<a class="pcard" href="{purl(s_)}">'
-            f'<div class="ic" aria-hidden="true">{pr["icon"]}</div>'
+    # 무료/유료 표기는 실제 과금 형태를 그대로 — 빈방만 무료 주기가 따로 있다.
+    price = "무료 주기 있음" if s_ == "binbang" else ("무료" if pr.get("free") else "유료")
+    shot = pr.get("shot") or ""
+    th = (f'<div class="th"><img src="{shot}" alt="" loading="lazy" decoding="async"></div>'
+          if shot else '<div class="th"></div>')
+    return (f'<a class="prh-row" href="{purl(s_)}">{th}'
+            f'<div class="bd">'
             f'<div class="nm">{pr["short"]}</div>'
             f'<div class="tg">{pr["tag"]}</div>'
             f'<div class="ds">{pr["tagline"]}</div>'
-            f'<div class="mt">{free}</div></a>')
+            f'</div>'
+            f'<div class="mt">{price}</div></a>')
 
 _pg = "".join(
-    f'<section class="pgroup"><h2>{t}</h2><p class="gsub">{sub}</p>'
-    f'<div class="pgrid">{"".join(_prod_card(x) for x in items if x in P)}</div></section>'
+    f'<section class="prh-g"><div class="prh-gh"><h2>{t}</h2><span class="s">{sub}</span></div>'
+    f'<div class="prh-list">{"".join(_prod_card(x) for x in items if x in P)}</div></section>'
     for t, sub, items in PROD_GROUPS)
 
-products_body = f"""<div class="plist">
+products_body = f"""<div class="prh">
   <div class="tls-head">
     <div class="k">PRODUCTS</div>
     <h1>필요한 순간에 꺼내 쓰는 것들</h1>
     <p>1인 AI 스튜디오가 직접 만들어 직접 팝니다. 회원가입 없이 쓰는 것부터, 결제하면 바로 시작되는 것까지.</p>
   </div>
   {_pg}
-  <p class="plist-foot">설치 없이 바로 쓰는 <a href="/tools/">무료 도구 6종</a>도 있습니다.</p>
+  <p class="prh-foot">설치 없이 바로 쓰는 <a href="/tools/">무료 도구 6종</a>도 있습니다.</p>
 </div>"""
 os.makedirs("products", exist_ok=True)
 with open("products/index.html", "w", encoding="utf-8") as f:
