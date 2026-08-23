@@ -1188,6 +1188,8 @@ stroke-linecap:round;stroke-linejoin:round}
      그림은 카드 안에서 꽉 참(object-fit:cover), 글은 그림 **위** 좌하단 x=48 y=539,
      제품명 80px/600, 한 줄 21px, 버튼 둘은 우하단 같은 줄.
    ⚠️ 종전엔 카드를 뷰포트에 거의 붙이고(12px) 글을 그림 아래 띠에 뒀다 — 둘 다 애플과 다르다. */
+/* 배너·레일이 같은 좌변에서 시작하도록 여백을 한 변수로 묶는다. */
+:root{--stack-pad:max(clamp(12px,2.1vw,30px),calc((100vw - 1520px)/2 + clamp(12px,2.1vw,30px)))}
 .stg-stack{display:flex;flex-direction:column;gap:clamp(12px,2.1vw,30px);
 max-width:1520px;margin:0 auto;padding:clamp(12px,2.1vw,30px) clamp(12px,2.1vw,30px) 0}
 .stg-row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2.1vw,30px)}
@@ -1270,12 +1272,14 @@ display:flex;flex-wrap:wrap;gap:8px 20px}
 /* ── 무료 도구 = 애플 스토어 'The latest' 카드 레일 ── */
 .tsec{padding:clamp(56px,7vw,104px) 0 clamp(20px,2.6vw,40px)}
 .tsec-h{display:flex;align-items:baseline;justify-content:space-between;gap:20px;
-max-width:1520px;margin:0 auto;padding:0 clamp(16px,2.4vw,40px)}
+padding:0 clamp(12px,2.1vw,30px) 0 var(--stack-pad)}
 .tsec-h h2{font-size:clamp(22px,2.6vw,34px);font-weight:800;letter-spacing:-.05em;color:var(--ink)}
 .tsec-h h2 span{color:var(--faint)}
+/* 애플은 레일을 컨테이너 안에 가두지 않는다 — 카드가 화면 끝까지 흘러간다.
+   왼쪽 시작점만 위 배너와 같은 그리드에 맞춘다(--stack-pad). */
 .tcards{display:flex;gap:clamp(12px,1.4vw,20px);overflow-x:auto;scroll-snap-type:x mandatory;
-scroll-behavior:smooth;scrollbar-width:none;
-max-width:1520px;margin:clamp(20px,2.4vw,32px) auto 0;padding:0 clamp(16px,2.4vw,40px) 6px}
+scroll-behavior:smooth;scrollbar-width:none;scroll-padding-left:var(--stack-pad);
+margin:clamp(20px,2.4vw,32px) 0 0;padding:0 clamp(12px,2.1vw,30px) 6px var(--stack-pad)}
 .tcards::-webkit-scrollbar{display:none}
 .tcard{flex:0 0 clamp(260px,27vw,400px);scroll-snap-align:start;position:relative;
 display:flex;flex-direction:column;aspect-ratio:4/5;border-radius:18px;overflow:hidden;
@@ -1291,10 +1295,10 @@ color:var(--ink)}
 .tcard i{margin-top:8px;font-style:normal;font-size:14.5px;line-height:1.6;color:var(--gray)}
 .tcard--ink i{color:#aeb5c0}
 .tcard .art{margin-top:auto;display:grid;place-items:center;padding-bottom:6px}
-.tcard .gl{display:grid;place-items:center;width:clamp(96px,11vw,148px);aspect-ratio:1;
-border-radius:32px;font-size:clamp(40px,4.6vw,64px);color:#fff;
-background:linear-gradient(150deg,var(--c),color-mix(in srgb,var(--c) 55%,#0b0c0e));
-box-shadow:0 22px 48px -22px color-mix(in srgb,var(--c) 70%,transparent)}
+.tcard .gl{display:grid;place-items:center;width:clamp(84px,9.5vw,124px);aspect-ratio:1}
+.tcard .gl img{width:100%;height:100%;object-fit:contain;display:block}
+.tcard .gl--tx{border-radius:28px;font-size:clamp(36px,4vw,56px);color:var(--ink);background:var(--soft)}
+.tcard--ink .gl--tx{color:#fff;background:rgba(255,255,255,.1)}
 .stg-icons{flex:1;display:flex;gap:10px;flex-wrap:wrap;align-items:center;align-content:center;
 padding:clamp(30px,3.6vw,52px) clamp(20px,2.6vw,34px)}
 /* 홈 하단 레일 — apple.com/airpods 아래쪽 '더 알아보기' 캐러셀과 같은 문법:

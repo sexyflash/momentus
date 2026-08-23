@@ -1237,6 +1237,8 @@ AP_CSS = """
      그림은 카드 안에서 꽉 참(object-fit:cover), 글은 그림 **위** 좌하단 x=48 y=539,
      제품명 80px/600, 한 줄 21px, 버튼 둘은 우하단 같은 줄.
    ⚠️ 종전엔 카드를 뷰포트에 거의 붙이고(12px) 글을 그림 아래 띠에 뒀다 — 둘 다 애플과 다르다. */
+/* 배너·레일이 같은 좌변에서 시작하도록 여백을 한 변수로 묶는다. */
+:root{--stack-pad:max(clamp(12px,2.1vw,30px),calc((100vw - 1520px)/2 + clamp(12px,2.1vw,30px)))}
 .stg-stack{display:flex;flex-direction:column;gap:clamp(12px,2.1vw,30px);
 max-width:1520px;margin:0 auto;padding:clamp(12px,2.1vw,30px) clamp(12px,2.1vw,30px) 0}
 .stg-row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2.1vw,30px)}
@@ -1319,12 +1321,14 @@ display:flex;flex-wrap:wrap;gap:8px 20px}
 /* ── 무료 도구 = 애플 스토어 'The latest' 카드 레일 ── */
 .tsec{padding:clamp(56px,7vw,104px) 0 clamp(20px,2.6vw,40px)}
 .tsec-h{display:flex;align-items:baseline;justify-content:space-between;gap:20px;
-max-width:1520px;margin:0 auto;padding:0 clamp(16px,2.4vw,40px)}
+padding:0 clamp(12px,2.1vw,30px) 0 var(--stack-pad)}
 .tsec-h h2{font-size:clamp(22px,2.6vw,34px);font-weight:800;letter-spacing:-.05em;color:var(--ink)}
 .tsec-h h2 span{color:var(--faint)}
+/* 애플은 레일을 컨테이너 안에 가두지 않는다 — 카드가 화면 끝까지 흘러간다.
+   왼쪽 시작점만 위 배너와 같은 그리드에 맞춘다(--stack-pad). */
 .tcards{display:flex;gap:clamp(12px,1.4vw,20px);overflow-x:auto;scroll-snap-type:x mandatory;
-scroll-behavior:smooth;scrollbar-width:none;
-max-width:1520px;margin:clamp(20px,2.4vw,32px) auto 0;padding:0 clamp(16px,2.4vw,40px) 6px}
+scroll-behavior:smooth;scrollbar-width:none;scroll-padding-left:var(--stack-pad);
+margin:clamp(20px,2.4vw,32px) 0 0;padding:0 clamp(12px,2.1vw,30px) 6px var(--stack-pad)}
 .tcards::-webkit-scrollbar{display:none}
 .tcard{flex:0 0 clamp(260px,27vw,400px);scroll-snap-align:start;position:relative;
 display:flex;flex-direction:column;aspect-ratio:4/5;border-radius:18px;overflow:hidden;
@@ -1340,10 +1344,10 @@ color:var(--ink)}
 .tcard i{margin-top:8px;font-style:normal;font-size:14.5px;line-height:1.6;color:var(--gray)}
 .tcard--ink i{color:#aeb5c0}
 .tcard .art{margin-top:auto;display:grid;place-items:center;padding-bottom:6px}
-.tcard .gl{display:grid;place-items:center;width:clamp(96px,11vw,148px);aspect-ratio:1;
-border-radius:32px;font-size:clamp(40px,4.6vw,64px);color:#fff;
-background:linear-gradient(150deg,var(--c),color-mix(in srgb,var(--c) 55%,#0b0c0e));
-box-shadow:0 22px 48px -22px color-mix(in srgb,var(--c) 70%,transparent)}
+.tcard .gl{display:grid;place-items:center;width:clamp(84px,9.5vw,124px);aspect-ratio:1}
+.tcard .gl img{width:100%;height:100%;object-fit:contain;display:block}
+.tcard .gl--tx{border-radius:28px;font-size:clamp(36px,4vw,56px);color:var(--ink);background:var(--soft)}
+.tcard--ink .gl--tx{color:#fff;background:rgba(255,255,255,.1)}
 .stg-icons{flex:1;display:flex;gap:10px;flex-wrap:wrap;align-items:center;align-content:center;
 padding:clamp(30px,3.6vw,52px) clamp(20px,2.6vw,34px)}
 /* 홈 하단 레일 — apple.com/airpods 아래쪽 '더 알아보기' 캐러셀과 같은 문법:
@@ -3591,10 +3595,10 @@ def ap_stage(slug, tone="", badge=""):
        애플 제품 카드(apple.com/airpods)의 배치 그대로."""
     pr = P[slug]
     go = _SPOKE_HREF.get(slug, "")
-    cta = f'<a class="stg-pill" href="{purl(slug)}">더 알아보기</a>'
-    if go:
-        cta += (f'<a class="stg-pill stg-pill--line" href="{go}"{_ext(go)}>'
-                f'{AP_GO.get(slug, "바로 가기")}</a>')
+    # 버튼은 하나다. '더 알아보기'와 '열기'는 결국 같은 말이라 둘을 나란히 두면 고민만 는다
+    # (2026-08-23 대표: "여기는 메뉴가 두 개가 아니잖아"). 바로 그 제품에서 할 일 하나만 둔다.
+    cta = (f'<a class="stg-pill" href="{go}"{_ext(go)}>{AP_GO.get(slug, "바로 가기")}</a>'
+           if go else f'<a class="stg-pill" href="{purl(slug)}">더 알아보기</a>')
     vid = HOME_VIDEO.get(slug)
     shot = HOME_SHOT.get(slug) or pr.get("shot") or ""
     if vid:
@@ -3648,13 +3652,17 @@ def ap_tools_section():
     for i, t in enumerate(TOOLS):
         pr = P[t]
         dark = i % 2 == 0
+        # 그림은 그 도구가 **어느 서비스에서 도는지**를 바로 알려주는 게 낫다 — 우리 글리프보다
+        # 쿠팡·유튜브 로고 한 장이 빠르다(2026-08-23 대표 지적). 지명적 사용.
+        logo = pr.get("logo")
+        art = (f'<span class="art"><span class="gl"><img src="{logo}" alt="" loading="lazy"></span></span>'
+               if logo else f'<span class="art"><span class="gl gl--tx">{pr["icon"]}</span></span>')
         cards.append(
-            f'<a class="tcard{" tcard--ink" if dark else ""}" href="/tools/{t}/" '
-            f'style="--c:{pr.get("color", "#3182f6")}">'
+            f'<a class="tcard{" tcard--ink" if dark else ""}" href="/tools/{t}/">'
             f'<span class="k">무료</span>'
             f'<b>{esc(pr["short"])}</b>'
-            f'<i>{esc(pr["tagline"])}</i>'
-            f'<span class="art" aria-hidden="true"><span class="gl">{pr["icon"]}</span></span></a>')
+            f'<i>{esc(pr.get("tagline2") or pr["tagline"])}</i>'
+            f'{art}</a>')
     return ('<section class="tsec"><div class="tsec-h">'
             '<h2>설치 없이. <span>지금 바로 쓰는 도구 여섯 개.</span></h2>'
             '<div class="rl-nav" data-rail="toolrail">'
@@ -4017,20 +4025,7 @@ AP_GO = {"binbang": "빈방 알림 등록", "heyreci": "헤이레시 열기", "m
          "cue": "모의면접 시작하기", "theplan": "플래너 보러 가기"}
 
 
-_home_rail = "".join(
-    f'<a class="rl-it" href="{e["url"] if e["kind"] in ("video", "ext") else STORY_BASE + "/" + e["slug"] + "/"}">'
-    f'<span class="th"><img src="{_story_cover(e)}" alt="" loading="lazy"></span>'
-    f'<h3>{esc(e["title"])}</h3><div class="d">{esc(e["cat"])} · {fmt_date(e["date"])}</div></a>'
-    for e in entries[:10] if _story_cover(e))
-_rail = ('<section class="rl"><div class="rl-h"><h2>읽어 볼 만한 것</h2>'
-         '<div class="rl-nav" data-rail="homerail">'
-         '<button type="button" data-d="-1" aria-label="이전"><svg viewBox="0 0 24 24">'
-         '<path d="M15 6l-6 6 6 6"/></svg></button>'
-         '<button type="button" data-d="1" aria-label="다음"><svg viewBox="0 0 24 24">'
-         '<path d="M9 6l6 6-6 6"/></svg></button></div></div>'
-         f'<div class="rl-track" id="homerail">{_home_rail}</div></section>')
-
-land_body = ap_body + _rail
+land_body = ap_body
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다",
