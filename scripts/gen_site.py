@@ -30,6 +30,20 @@ APPS = {k: v for k, v in _MANIFEST.get("apps", {}).items() if not k.startswith("
 LINKS = _MANIFEST.get("links", {})
 
 CSS = """/* MOMENTUS site.css — v1 */
+.plist{max-width:1100px;margin:0 auto;padding:0 var(--gut) 80px}
+.pgroup{margin-top:44px}
+.pgroup h2{font-size:22px;letter-spacing:-.02em;margin:0}
+.pgroup .gsub{color:var(--gray);font-size:14px;margin:6px 0 16px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.pcard{display:block;border:1px solid var(--line);border-radius:16px;padding:20px;text-decoration:none;color:inherit;background:var(--paper)}
+.pcard:hover{border-color:var(--ink);transform:translateY(-1px)}
+.pcard .ic{font-size:22px;line-height:1}
+.pcard .nm{font-size:18px;font-weight:800;letter-spacing:-.02em;margin-top:10px}
+.pcard .tg{font-size:12px;color:var(--faint);margin-top:2px}
+.pcard .ds{font-size:14px;color:var(--ink2);margin-top:10px;line-height:1.5}
+.pcard .mt{font-size:12px;color:var(--gray);margin-top:12px;padding-top:10px;border-top:1px dashed var(--line)}
+.plist-foot{margin-top:44px;color:var(--gray);font-size:14px}
+
 :root{--ink:#0b0c0e;--ink2:#3a4150;--paper:#fff;--soft:#f4f5f7;--soft2:#e9ebee;--gray:#5b6270;--faint:#9aa0a8;--line:#e6e8ec;
 --pt:#ff4b26;--ok:#12b76a;--ig:#e1306c;--yt:#ff0033;--pin:#e60023;--coup:#346aff;
 --gut:max(20px,calc((100% - 1200px)/2));
@@ -2507,6 +2521,7 @@ KB_HEADER = """<header class="kb-gnb">
   <a class="kb-wm" href="/">MOMENTUS<span>studio</span></a>
   <nav class="kb-nav" aria-label="주 메뉴">
     <a class="on" href="/">Home</a>
+    <a href="/products/">Products</a>
     <a href="/tools/">Tools</a>
     <a href="/stories/">Stories</a>
     <a href="/about/">Studio</a>
@@ -2522,7 +2537,7 @@ KB_HEADER = """<header class="kb-gnb">
   </div>
 </header>
 <nav class="kb-sheet" id="kbsheet" aria-label="모바일 메뉴">
-  <a href="/">Home</a><a href="/tools/">Tools</a><a href="/stories/">Stories</a><a href="/about/">Studio</a>
+  <a href="/">Home</a><a href="/products/">Products</a><a href="/tools/">Tools</a><a href="/stories/">Stories</a><a href="/about/">Studio</a>
 </nav>
 <div class="kb-sr" id="kbsr" role="dialog" aria-modal="true" aria-label="검색">
   <div class="kb-sr-in">
@@ -3286,6 +3301,46 @@ tools_body = f"""<div class="tls">
 os.makedirs("tools", exist_ok=True)
 with open("tools/index.html", "w", encoding="utf-8") as f:
     f.write(page("무료 도구 — MOMENTUS", "설치 없이 바로 쓰는 무료 브라우저 도구. 쿠팡 옵션·재고, 인스타·유튜브 인기순 정렬, 핀터레스트 원본 추출, 유튜브 AI 요약, 음성 입력.", tools_body, active="tools"))
+
+# ---------- /products/ 허브 (유료 제품 리스팅) ----------
+#   무료 도구엔 /tools/ 허브가 있는데 유료 제품엔 모아 보는 자리가 없었다(2026-08-23 실측: /products/ 404).
+#   그래서 GNB '전체 제품'이 갈 데가 없고, 제품이 늘어도 걸 자리가 없었다.
+#   ⚠️ 그룹은 "무엇을 파느냐"가 아니라 "언제 쓰느냐"로 나눈다 — 제품이 늘어도 칸이 안 늘어난다.
+PROD_GROUPS = [
+    ("사업을 시작할 때", "가게를 열고 브랜드를 세울 때 필요한 것", ["heyreci", "mark"]),
+    ("일과 성장", "일하는 나를 준비시키는 것", ["cue", "theplan"]),
+    ("일상을 편하게", "기다리고 챙기는 일을 대신 맡기는 것", ["binbang"]),
+]
+
+def _prod_card(s_):
+    pr = P[s_]
+    free = "무료 주기 있음" if s_ == "binbang" else ("무료" if pr.get("free") else "유료")
+    return (f'<a class="pcard" href="{purl(s_)}">'
+            f'<div class="ic" aria-hidden="true">{pr["icon"]}</div>'
+            f'<div class="nm">{pr["short"]}</div>'
+            f'<div class="tg">{pr["tag"]}</div>'
+            f'<div class="ds">{pr["tagline"]}</div>'
+            f'<div class="mt">{free}</div></a>')
+
+_pg = "".join(
+    f'<section class="pgroup"><h2>{t}</h2><p class="gsub">{sub}</p>'
+    f'<div class="pgrid">{"".join(_prod_card(x) for x in items if x in P)}</div></section>'
+    for t, sub, items in PROD_GROUPS)
+
+products_body = f"""<div class="plist">
+  <div class="tls-head">
+    <div class="k">PRODUCTS</div>
+    <h1>필요한 순간에 꺼내 쓰는 것들</h1>
+    <p>1인 AI 스튜디오가 직접 만들어 직접 팝니다. 회원가입 없이 쓰는 것부터, 결제하면 바로 시작되는 것까지.</p>
+  </div>
+  {_pg}
+  <p class="plist-foot">설치 없이 바로 쓰는 <a href="/tools/">무료 도구 6종</a>도 있습니다.</p>
+</div>"""
+os.makedirs("products", exist_ok=True)
+with open("products/index.html", "w", encoding="utf-8") as f:
+    f.write(page("제품 — MOMENTUS",
+                 "모멘터스가 만든 제품 — AI 상품사진(헤이레시), 로고 디자인(마크), AI 모의면접(큐), 디지털 플래너(더플랜), 펜션 빈방 알림(빈방).",
+                 products_body, active=""))
 
 # ---------- 리다이렉트 — 옮긴 무료 도구 주소 회수 ----------
 #   무료 도구가 /products/<slug>/ → /tools/<slug>/ 로 이동(2026-07-27). 기존 링크·검색 결과 보존.

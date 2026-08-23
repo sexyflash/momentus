@@ -62,6 +62,11 @@
     ],
     "links": [
       {
+        "key": "products",
+        "label": "전체 제품",
+        "href": "/products/"
+      },
+      {
         "key": "tools",
         "label": "무료 도구",
         "href": "/tools/"
