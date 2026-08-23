@@ -1296,7 +1296,14 @@ transition:opacity .65s var(--ease),transform .65s var(--ease)}
 .stg.in{opacity:1;transform:none}}
 
 /* 홈 상단 바 = 스포크와 같은 공용 1단 바(패밀리룩). 검색·테마만 우측에 얹는다. */
-#mmt-bar .mmt-act{justify-self:end;display:flex;align-items:center;gap:2px}
+#mmt-bar .mmt-act{justify-self:end;display:flex;align-items:center;gap:4px}
+/* 문의는 '메뉴'가 아니라 '행동'이다 — 토스 헤더가 앱 다운로드를 버튼으로 두는 자리.
+   글자 수를 줄이려고 '문의'로 쓰던 것을 '문의하기'로 되돌린다(2026-08-23 대표 지적). */
+#mmt-bar .mmt-cta{display:inline-flex;align-items:center;height:30px;padding:0 14px;
+border-radius:99px;background:#111;color:#fff;font-size:13.5px;font-weight:700;
+letter-spacing:-.02em;text-decoration:none;white-space:nowrap;margin-right:4px}
+#mmt-bar .mmt-cta:hover{opacity:.85}
+@media(max-width:640px){#mmt-bar .mmt-cta{display:none}}
 #mmt-bar .mmt-ib{display:grid;place-items:center;width:30px;height:30px;padding:0;border:0;
 border-radius:50%;background:none;color:rgba(0,0,0,.8);cursor:pointer;transition:background .18s,color .18s}
 #mmt-bar .mmt-ib:hover{background:rgba(0,0,0,.06);color:#000}
@@ -1471,14 +1478,14 @@ POST_CSS = """
    ⚠️ 레일을 본문과 같은 폭 안에 욱여넣으면 본문이 712 로 쪼그라든다(2026-08-23 대표 지적). */
 .pst{max-width:none;margin:0;padding:0}
 .pst-top{grid-column:2;padding:clamp(40px,6vw,84px) 0 0}
-.pst-badges{display:flex;flex-wrap:wrap;gap:8px}
-.pst-chip{display:inline-flex;align-items:center;height:34px;padding:0 15px;border-radius:99px;
-font-size:13.5px;font-weight:600;white-space:nowrap;background:var(--soft);color:var(--gray)}
-.pst-chip--solid{background:var(--ink);color:#fff}
-.pst-h1{margin-top:20px;font-size:clamp(30px,4.4vw,64px);font-weight:800;letter-spacing:-.05em;
+/* 태그 줄은 위에 두지 않는다 — 아래 '이야기 전체 보기' 자리에 이미 있고, 제목 위에서
+   가장 먼저 읽히기엔 정보가 아니다(2026-08-23 대표 지적). 분류만 한 줄. */
+.pst-kick{font-size:13.5px;font-weight:700;letter-spacing:-.01em;color:var(--brand-cta)}
+.pst-h1{margin-top:12px;font-size:clamp(30px,4.4vw,64px);font-weight:800;letter-spacing:-.05em;
 line-height:1.22;color:var(--ink);text-wrap:balance}
-.pst-sub{margin-top:18px;font-size:clamp(16px,1.6vw,23px);line-height:1.6;color:var(--gray);
-letter-spacing:-.02em}
+/* 부제는 제목 바로 밑이 아니라 **표지 아래**에 — 큰 글씨가 연달아 두 덩이면 안 읽힌다. */
+.pst-sub{margin-top:22px;font-size:clamp(16px,1.35vw,19px);line-height:1.72;color:var(--gray);
+letter-spacing:-.02em;padding-left:16px;border-left:3px solid var(--line)}
 .pst-grid{display:grid;grid-template-columns:200px minmax(0,1176px) 200px;
 gap:0 32px;align-items:start;max-width:1688px;margin:0 auto;padding:0 24px;justify-content:center}
 .pst-toc{grid-column:1;grid-row:2;align-self:start;position:sticky;top:64px}
@@ -1494,8 +1501,9 @@ font-size:13.5px;line-height:1.5;color:var(--gray)}
 .pst-aside .th img{width:100%;height:100%;object-fit:cover;display:block}
 .pst-aside b{font-size:13px;font-weight:600;line-height:1.45;color:var(--ink)}
 .pst-aside a:hover b{color:var(--brand-cta)}
-.pst-meta{display:flex;align-items:center;justify-content:space-between;gap:16px;
-padding:6px 0 22px}
+/* 지은이·날짜·공유는 글을 다 읽은 뒤에 온다. 읽기 전에 필요한 정보가 아니다. */
+.pst-meta{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+margin-top:clamp(34px,4vw,54px);padding-top:22px;border-top:1px solid var(--line)}
 .pst-by{display:flex;align-items:center;gap:11px}
 .pst-by .av{width:38px;height:38px;border-radius:50%;background:var(--ink);color:#fff;
 display:grid;place-items:center;font-size:15px;font-weight:800}
@@ -1522,12 +1530,17 @@ color:var(--gray)}
 overflow-x:auto}
 .pst-prose th,.pst-prose td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left}
 .pst-end{grid-column:2;grid-row:3;margin:clamp(44px,5vw,72px) 0 clamp(64px,8vw,110px);
-padding-top:26px;border-top:1px solid var(--line)}
-.pst-tags{display:flex;flex-wrap:wrap;gap:8px}
-.pst-tags a{display:inline-flex;align-items:center;height:32px;padding:0 13px;border-radius:99px;
-background:var(--soft);font-size:13px;font-weight:600;color:var(--gray)}
-.pst-tags a:hover{background:var(--ink);color:#fff}
-.pst-back{display:inline-block;margin-top:22px;font-size:14.5px;font-weight:600;color:var(--brand-cta)}
+padding-top:26px;border-top:1px solid var(--line);text-align:center}
+/* 태그는 버튼이 아니다 — 배경을 깔지 않고 선만 준다(2026-08-23 대표 지적). */
+.pst-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.pst-tags a{display:inline-flex;align-items:center;height:34px;padding:0 14px;border-radius:99px;
+background:none;box-shadow:inset 0 0 0 1px var(--line);
+font-size:13.5px;font-weight:600;color:var(--gray)}
+.pst-tags a:hover{box-shadow:inset 0 0 0 1px var(--ink);color:var(--ink)}
+.pst-backwrap{display:flex;justify-content:center;margin-top:30px}
+.pst-back{display:inline-flex;align-items:center;height:50px;padding:0 30px;border-radius:99px;
+background:var(--ink);color:#fff;font-size:15.5px;font-weight:700;letter-spacing:-.02em}
+.pst-back:hover{opacity:.86}
 /* 레일을 본문 바깥에 세울 자리(1640+48)가 없으면 접는다 — 본문 폭은 그대로 1176. */
 @media(max-width:1700px){
   .pst-grid{grid-template-columns:minmax(0,1176px)}
@@ -1907,7 +1920,7 @@ SHELL_TOKENS = {
                      '"Apple SD Gothic Neo","Helvetica Neue","Segoe UI",sans-serif',
     "--mmt-wm-fw": "800",
     "--mmt-wm-ls": "-.035em",
-    "--mmt-wm-sm": "15px",
+    "--mmt-wm-sm": "17px",
     "--mmt-wm-md": "19px",
     "--mmt-wm-lg": "24px",
     "--mmt-bar-h": "44px",
@@ -1946,7 +1959,7 @@ letter-spacing:normal;line-height:normal}
    좌우 padding 22px, 바 높이 44px. 뷰포트 끝에 붙이면 넓은 화면에서 왼쪽만 붙고
    오른쪽이 휑해진다 — 가운데로 모으고 그 안에서 좌측 정렬한다. */
 #mmt-bar .mmt-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:100%;
-max-width:1024px;margin:0 auto;padding:0 22px;gap:14px}
+max-width:1224px;margin:0 auto;padding:0 24px;gap:14px}
 #mmt-bar .mmt-in::-webkit-scrollbar{display:none}
 /* 워드마크는 바의 시스템 폰트를 상속하면 안 된다 — 본문(Pretendard)과 글자꼴이 갈린다. */
 #mmt-bar .mmt-wm{justify-self:start;
@@ -2021,7 +2034,7 @@ transition:opacity .17s ease,transform .17s ease,visibility .17s}
 #mmt-bar:has(.mmt-fly:hover) .mmt-fly,
 #mmt-bar:has(.mmt-trg:focus-visible) .mmt-fly,
 #mmt-bar:has(.mmt-fly a:focus-visible) .mmt-fly{opacity:1;visibility:visible;transform:none}
-#mmt-bar .mmt-fly-in{max-width:1024px;margin:0 auto;padding:30px 22px 10px;
+#mmt-bar .mmt-fly-in{max-width:1224px;margin:0 auto;padding:30px 24px 10px;
 display:grid;grid-template-columns:1.05fr .95fr;gap:40px}
 #mmt-bar .mmt-fly-h{font-size:12px;font-weight:600;letter-spacing:-.01em;color:#86868b;
 margin:0 0 14px;padding:0 6px}
@@ -2037,7 +2050,7 @@ background:rgba(0,0,0,.05);display:grid;place-items:center;font-size:19px;color:
 #mmt-bar .mmt-fly-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 6px}
 #mmt-bar .mmt-fly-grid .mmt-fly-it b{font-size:14.5px;font-weight:600}
 #mmt-bar .mmt-fly-grid .mmt-fly-it .th{width:38px;height:38px;border-radius:10px;font-size:16px}
-#mmt-bar .mmt-fly-foot{max-width:1024px;margin:0 auto;padding:10px 28px 24px}
+#mmt-bar .mmt-fly-foot{max-width:1224px;margin:0 auto;padding:10px 30px 24px}
 #mmt-bar .mmt-fly-foot a{font-size:14px;font-weight:600;color:#0071e3;text-decoration:none}
 #mmt-bar .mmt-fly-foot a:hover{text-decoration:underline}
 @media(max-width:820px){#mmt-bar .mmt-fly{display:none}}
@@ -2092,7 +2105,7 @@ def esc(s):
     return (s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
 
 
-def shell_bar_markup(host=""):
+def shell_bar_markup(host="", act_extra=""):
     """제품 HTML의 <body> 바로 뒤에 박는 공용 1단 바. host 를 주면 그 제품에 활성 표시.
 
     구조 = 애플 글로벌 내비: [MOMENTUS] [제품 ▾] [이야기] [소개] [문의]
@@ -2146,14 +2159,18 @@ def shell_bar_markup(host=""):
     mparts.append("<hr>")
     for it in bar_items():
         mparts.append(f'<a href="{_abs(it["href"])}">{it["label"]}</a>')
+    mparts.append('<a href="https://the-moment.us/inquiry/">문의하기</a>')
     pick = ('<details class="mmt-pick"><summary aria-label="모멘터스 제품 고르기">'
             f'{here}</summary><div class="mmt-menu">{"".join(mparts)}</div></details>')
+    act = ('<div class="mmt-act">'
+           '<a class="mmt-cta" href="https://the-moment.us/inquiry/">문의하기</a>'
+           f'{act_extra}</div>')
 
     return ('<!-- MMT:BEGIN — 모멘터스 공용 1단 바(생성물). 손으로 고치지 말 것. -->\n'
             '<div id="mmt-bar"><div class="mmt-in">'
             '<a class="mmt-wm" href="https://the-moment.us">MOMENTUS</a>'
             f'<nav class="mmt-nav" aria-label="모멘터스">{"".join(parts)}</nav>'
-            f'{pick}'
+            f'{act}{pick}'
             f'</div>{fly}</div><div class="mmt-curtain" aria-hidden="true"></div>\n<!-- MMT:END -->')
 
 
@@ -2161,7 +2178,7 @@ def shell_bar_markup(host=""):
 #   2026-08-23. 그전엔 apex 만 별도 헤더(.gnb 흰 바 / 홈은 영문 kb-gnb)를 써서
 #   제품 페이지와 말도 간격도 달랐다(대표: "각각 간격과 방식 모두 맞춰야지").
 #   이제 the-moment.us 의 모든 페이지가 제품 사이트와 같은 바를 쓴다.
-_MMT_ACT = ('<div class="mmt-act">'
+_MMT_ICONS = (
             '<button class="mmt-ib" id="kbsearchbtn" aria-label="검색 열기">'
             '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>'
             '<button class="mmt-ib" id="kbthemebtn" aria-label="다크모드로 전환">'
@@ -2169,7 +2186,7 @@ _MMT_ACT = ('<div class="mmt-act">'
             '<path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2'
             'M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
             '<svg viewBox="0 0 24 24" class="moon"><path d="M20 14.6A8.6 8.6 0 019.4 4 8.6 8.6 0 1020 14.6z"/>'
-            '</svg></button></div>')
+            '</svg></button>')
 
 SEARCH_OVERLAY = """<div class="kb-sr" id="kbsr" role="dialog" aria-modal="true" aria-label="검색">
   <div class="kb-sr-in">
@@ -2183,7 +2200,7 @@ SEARCH_OVERLAY = """<div class="kb-sr" id="kbsr" role="dialog" aria-modal="true"
   </div>
 </div>"""
 
-APEX_HEADER = shell_bar_markup().replace("</nav>", "</nav>" + _MMT_ACT, 1) + SEARCH_OVERLAY
+APEX_HEADER = shell_bar_markup(act_extra=_MMT_ICONS) + SEARCH_OVERLAY
 
 
 with open("shell.css", "w", encoding="utf-8") as f:
@@ -2705,29 +2722,27 @@ for i, slug in enumerate(PORDER):
               f' target="_blank" rel="noopener" aria-label="X에 공유">X</a>'
               f'<a href="https://www.facebook.com/sharer/sharer.php?u=https://the-moment.us{STORY_BASE}/{slug}/"'
               f' target="_blank" rel="noopener" aria-label="페이스북에 공유">f</a>')
-    _chips = ('<span class="pst-chip pst-chip--solid">' + esc(ps["cat"]) + '</span>'
-              + "".join(f'<span class="pst-chip">#{esc(t)}</span>' for t in ps["tags"]))
     body = f"""<div class="pst">
   <div class="pst-grid">
   <header class="pst-top">
-    <div class="pst-badges">{_chips}</div>
+    <p class="pst-kick">{esc(ps['cat'])}</p>
     <h1 class="pst-h1">{esc(ps['title'])}</h1>
-    <p class="pst-sub">{esc(ps['sub'])}</p>
   </header>
     {_toc}
     <article class="pst-main">
+      <div class="pst-cover"><img src="/assets/stories/{slug}.png" alt="" loading="lazy"></div>
+      <p class="pst-sub">{esc(ps['sub'])}</p>
+      <div class="pst-prose">{ps['body']}</div>
       <div class="pst-meta">
         <div class="pst-by"><span class="av">M</span>
           <span><span class="nm">모멘터스</span><br><span class="dt">{fmt_date(ps['date'])} · {ps['mins']}분 읽기</span></span></div>
         <div class="pst-share">{_share}</div>
       </div>
-      <div class="pst-cover"><img src="/assets/stories/{slug}.png" alt="" loading="lazy"></div>
-      <div class="pst-prose">{ps['body']}</div>
     </article>
     <aside class="pst-aside"><div class="rt">이어서 읽기</div>{_relaside}</aside>
   <div class="pst-end">
     {'<div class="pst-tags">' + tagh + '</div>' if tagh else ''}
-    <a class="pst-back" href="{STORY_BASE}/">← 이야기 전체 보기</a>
+    <div class="pst-backwrap"><a class="pst-back" href="{STORY_BASE}/">이야기 전체 보기</a></div>
   </div>
   </div>
 </div>"""

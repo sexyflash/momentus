@@ -75,11 +75,6 @@
         "key": "about",
         "label": "회사소개",
         "href": "/about/"
-      },
-      {
-        "key": "inquiry",
-        "label": "문의",
-        "href": "/inquiry/"
       }
     ],
     "hero_shots": [
