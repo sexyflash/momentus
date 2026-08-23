@@ -35,14 +35,15 @@ box-shadow:inset 0 0 0 1px rgba(0,0,0,.18);font-weight:600}
 #mmt-bar[data-v=apex] .mmt-cta:hover{background:rgba(0,0,0,.05);color:#000}
 #mmt-bar[data-v=apex] .mmt-ib{color:rgba(0,0,0,.7)}
 #mmt-bar[data-v=apex] .mmt-ib:hover{background:rgba(0,0,0,.06);color:#000}
-#mmt-bar[data-v=apex] .mmt-fly{background:rgba(250,250,252,.98);
-border-bottom:1px solid rgba(0,0,0,.08);box-shadow:0 24px 48px -28px rgba(0,0,0,.28)}
-#mmt-bar[data-v=apex] .mmt-fly-in,#mmt-bar[data-v=apex] .mmt-fly-foot{max-width:1224px;margin:0 auto}
+#mmt-bar[data-v=apex] .mmt-fly{background:#fff;border:1px solid rgba(0,0,0,.09);
+box-shadow:0 24px 48px -22px rgba(0,0,0,.24)}
 #mmt-bar[data-v=apex] .mmt-fly-h{color:#86868b}
 #mmt-bar[data-v=apex] .mmt-fly-it{color:#111}
 #mmt-bar[data-v=apex] .mmt-fly-it:hover{background:rgba(0,0,0,.05)}
 #mmt-bar[data-v=apex] .mmt-fly-it b{color:#111}
 #mmt-bar[data-v=apex] .mmt-fly-it .th{background:rgba(0,0,0,.05);color:#333}
+#mmt-bar[data-v=apex] .mmt-fly-grid .mmt-fly-it b{color:#3a4150}
+#mmt-bar[data-v=apex] .mmt-fly-grid .mmt-fly-it .th{background:var(--soft,#f4f5f7)}
 #mmt-bar[data-v=apex] .mmt-fly-foot a{color:#0071e3}
 #mmt-bar .mmt-in::-webkit-scrollbar{display:none}
 /* 워드마크는 바의 시스템 폰트를 상속하면 안 된다 — 본문(Pretendard)과 글자꼴이 갈린다. */
@@ -116,51 +117,43 @@ html[data-theme="dark"] #mmt-bar .mmt-ib .sun{display:none}
 border:3.5px solid transparent;border-top-color:currentColor;vertical-align:middle;opacity:.5}
 /* 패널은 밝게, 썸네일은 크게, 설명 줄은 뺀다 — 목록은 고르라고 있는 것이지 읽으라고 있는 게 아니다
    (2026-08-23 대표: "심플하지만 썸네일도 큼직하게, 중요한 건 더 크게 간결하게"). */
-/* 애플 실측: 플라이아웃이 열리면 .globalnav-curtain 이 화면 전체를 덮는다 —
-   background rgba(232,232,237,.4) + backdrop-filter blur(20px), z 9998, opacity 0→1.
-   흐려지는 건 **메뉴가 아니라 뒤 페이지**다(2026-08-23 대표 지적). */
-.mmt-curtain{position:fixed;left:0;right:0;bottom:0;top:var(--mmt-bar-h,44px);
-background:rgba(232,232,237,.4);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-opacity:0;visibility:hidden;pointer-events:none;z-index:2147483001;
-transition:opacity .25s ease,visibility .25s}
-#mmt-bar:has(.mmt-trg:hover) ~ .mmt-curtain,
-#mmt-bar:has(.mmt-fly:hover) ~ .mmt-curtain,
-#mmt-bar:has(.mmt-trg:focus-visible) ~ .mmt-curtain,
-#mmt-bar:has(.mmt-fly a:focus-visible) ~ .mmt-curtain{opacity:1;visibility:visible}
-html[data-theme="dark"] .mmt-curtain{background:rgba(18,18,20,.45)}
-@media(max-width:820px){.mmt-curtain{display:none}}
-@media(prefers-reduced-motion:reduce){.mmt-curtain{transition:none}}
-#mmt-bar .mmt-fly{position:absolute;left:0;right:0;top:100%;
-background:#14161a;border-bottom:1px solid rgba(255,255,255,.08);
-box-shadow:0 28px 56px -30px rgba(0,0,0,.7);
-opacity:0;visibility:hidden;transform:translateY(-6px);z-index:2147483002;
-transition:opacity .17s ease,transform .17s ease,visibility .17s}
+/* ⚠️ 커튼(전체 화면 블러)은 걷어냈다. 이건 제품 사이트 위에 얹히는 **패밀리 메뉴**지
+   그 사이트의 주 내비가 아니다 — 화면 전체를 덮으면 남의 집에서 주인 행세를 하는 꼴이다
+   (2026-08-24 대표: "여전히 전체적으로 헤비한데"). 패널도 전체폭 → '더보기' 아래 작은 카드로. */
+#mmt-bar .mmt-drop{position:relative;display:inline-flex}
+#mmt-bar .mmt-fly{position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%) translateY(-4px);
+width:min(620px,calc(100vw - 24px));background:#1a1d22;border:1px solid rgba(255,255,255,.1);
+border-radius:16px;box-shadow:0 24px 48px -20px rgba(0,0,0,.65);
+opacity:0;visibility:hidden;z-index:2147483003;
+transition:opacity .15s ease,transform .15s ease,visibility .15s}
 #mmt-bar:has(.mmt-trg:hover) .mmt-fly,
 #mmt-bar:has(.mmt-fly:hover) .mmt-fly,
 #mmt-bar:has(.mmt-trg:focus-visible) .mmt-fly,
-#mmt-bar:has(.mmt-fly a:focus-visible) .mmt-fly{opacity:1;visibility:visible;transform:none}
-#mmt-bar .mmt-fly-in{max-width:1224px;margin:0;padding:22px clamp(16px,2.2vw,28px) 6px;
-display:grid;grid-template-columns:1.05fr .95fr;gap:40px}
-#mmt-bar .mmt-fly-h{font-size:12px;font-weight:600;letter-spacing:-.01em;color:#79828f;
-margin:0 0 14px;padding:0 6px}
-#mmt-bar .mmt-fly-it{display:flex;align-items:center;gap:13px;padding:7px 7px;border-radius:12px;
+#mmt-bar:has(.mmt-fly a:focus-visible) .mmt-fly{opacity:1;visibility:visible;
+transform:translateX(-50%) translateY(0)}
+#mmt-bar .mmt-fly-in{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;padding:14px 14px 4px}
+#mmt-bar .mmt-fly-h{font-size:11px;font-weight:600;letter-spacing:.02em;color:#79828f;
+margin:0 0 6px;padding:0 8px}
+#mmt-bar .mmt-fly-it{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:9px;
 text-decoration:none;color:#cfd4dc}
-#mmt-bar .mmt-fly-it:hover{background:rgba(255,255,255,.08)}
-#mmt-bar .mmt-fly-it .th{width:96px;height:60px;border-radius:10px;overflow:hidden;flex:0 0 auto;
-background:rgba(255,255,255,.09);display:grid;place-items:center;font-size:19px;color:#e6e9ee}
+#mmt-bar .mmt-fly-it:hover{background:rgba(255,255,255,.09)}
+#mmt-bar .mmt-fly-it .th{width:44px;height:28px;border-radius:6px;overflow:hidden;flex:0 0 auto;
+background:rgba(255,255,255,.08);display:grid;place-items:center;font-size:13px;color:#e6e9ee}
 #mmt-bar .mmt-fly-it .th img{width:100%;height:100%;object-fit:cover;display:block}
-#mmt-bar .mmt-fly-it b{font-size:15.5px;font-weight:700;letter-spacing:-.03em;color:#fff}
-#mmt-bar .mmt-fly-it b .nb{font-style:normal;margin-left:7px;padding:2px 7px;border-radius:99px;
-font-size:9.5px;font-weight:800;letter-spacing:.06em;background:#0071e3;color:#fff;vertical-align:2px}
+#mmt-bar .mmt-fly-it .tx{min-width:0}
+#mmt-bar .mmt-fly-it b{font-size:13.5px;font-weight:600;letter-spacing:-.02em;color:#fff;
+white-space:nowrap}
+#mmt-bar .mmt-fly-it b .nb{font-style:normal;margin-left:6px;padding:1px 6px;border-radius:99px;
+font-size:9px;font-weight:800;letter-spacing:.05em;background:#0071e3;color:#fff;vertical-align:1px}
 #mmt-bar .mmt-fly-it i{display:none}
+#mmt-bar .mmt-fly-it[aria-current=page]{background:rgba(255,255,255,.1)}
 #mmt-bar .mmt-fly-it[aria-current=page] b{color:#8fc0ff}
-#mmt-bar .mmt-fly-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 6px}
-#mmt-bar .mmt-fly-grid .mmt-fly-it b{font-size:15px;font-weight:600}
-#mmt-bar .mmt-fly-grid .mmt-fly-it .th{width:40px;height:40px;border-radius:11px;font-size:16px;
-background:#fff;padding:6px}
+#mmt-bar .mmt-fly-grid{display:flex;flex-direction:column;gap:0}
+#mmt-bar .mmt-fly-grid .mmt-fly-it .th{width:26px;height:26px;border-radius:7px;background:#fff;padding:4px}
 #mmt-bar .mmt-fly-grid .mmt-fly-it .th img{object-fit:contain}
-#mmt-bar .mmt-fly-foot{max-width:1224px;margin:0;padding:6px clamp(22px,2.6vw,34px) 18px}
-#mmt-bar .mmt-fly-foot a{font-size:14px;font-weight:600;color:#8fc0ff;text-decoration:none}
+#mmt-bar .mmt-fly-grid .mmt-fly-it b{font-size:13px;font-weight:500;color:#cfd4dc}
+#mmt-bar .mmt-fly-foot{padding:6px 22px 14px}
+#mmt-bar .mmt-fly-foot a{font-size:12.5px;font-weight:600;color:#8fc0ff;text-decoration:none}
 #mmt-bar .mmt-fly-foot a:hover{text-decoration:underline}
 @media(max-width:820px){#mmt-bar .mmt-fly{display:none}}
 @media(prefers-reduced-motion:reduce){#mmt-bar .mmt-fly{transition:none}}
