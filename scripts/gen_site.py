@@ -2211,6 +2211,22 @@ line-height:1.45;color:var(--mmt-ink,#0b0c0e);display:-webkit-box;-webkit-line-c
 font-variant-numeric:tabular-nums}
 .dg-card .cat{margin-top:12px;order:2}
 .dg-card p{display:none}                     /* 카드엔 제목·날짜만 — 요약은 목록을 무겁게 한다 */
+/* ── 글 본문(상세) 공통 타이포 ─────────────────────────────────────────
+   모멘터스 .pst-prose / 마크 .prose / 큐 .dg-post 가 각자 다른 크기·행간을 쓰고 있었다
+   (실측 16.5/1.78 · 16/1.6 · 18.5/1.75). 읽는 글은 같은 리듬이어야 한다 → 토큰 하나로.
+   ⚠️ 큐는 페이지 CSS 가 공용 블록보다 뒤에 실려서 !important 가 필요하다. */
+:root{--art-fs:17px;--art-lh:1.75;--art-h2:clamp(20px,1.9vw,24px);--art-h2-mt:40px;
+--art-p-mt:16px;--art-r:16px}
+.pst-prose,.prose,.dg-post p,.dg-post li{font-size:var(--art-fs);line-height:var(--art-lh)}
+.dg-post p{font-size:var(--art-fs) !important;line-height:var(--art-lh) !important;
+margin:0 0 var(--art-p-mt) !important}
+.pst-prose h2,.prose h2,.dg-post h2{font-size:var(--art-h2);font-weight:800;
+letter-spacing:-.035em;margin-top:var(--art-h2-mt)}
+.dg-post h2{font-size:var(--art-h2) !important;margin:var(--art-h2-mt) 0 14px !important}
+.pst-prose p,.prose p{margin-top:var(--art-p-mt)}
+.pst-cover,.post-cover,.dg-post .cover{border-radius:var(--art-r)}
+.dg-post .cover{border-radius:var(--art-r) !important}
+
 /* 제품 사이트의 글 목록·상세도 같은 간격을 본다(큐 .dg-hero, 마크 .post-top). */
 .dg-hero{padding:var(--pg-top) 0 var(--pg-head-gap) !important}
 .dg-hero h1{font-size:var(--pg-h1) !important;line-height:1.08}
