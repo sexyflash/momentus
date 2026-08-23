@@ -63,13 +63,8 @@
     "links": [
       {
         "key": "products",
-        "label": "전체 제품",
+        "label": "제품",
         "href": "/products/"
-      },
-      {
-        "key": "tools",
-        "label": "무료 도구",
-        "href": "/tools/"
       },
       {
         "key": "story",
@@ -80,6 +75,11 @@
         "key": "about",
         "label": "소개",
         "href": "/about/"
+      },
+      {
+        "key": "inquiry",
+        "label": "문의",
+        "href": "/inquiry/"
       }
     ],
     "hero_shots": [

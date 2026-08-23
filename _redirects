@@ -11,6 +11,8 @@
 /products/chatpage /tools/chatpage/ 301
 /products/her/* /tools/her/ 301
 /products/her /tools/her/ 301
+/tools/ /products/ 301
+/tools /products/ 301
 /log/loud-ai-contest/ /stories/loud-ai-contest/ 301
 /log/loud-ai-contest /stories/loud-ai-contest/ 301
 /log/ai-agent-lessons/ /stories/ai-agent-lessons/ 301

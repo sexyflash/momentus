@@ -10,28 +10,37 @@
 padding-bottom:12px;border-bottom:1.5px solid var(--ink)}
 .prh-gh h2{font-size:19px;font-weight:800;letter-spacing:-.035em}
 .prh-gh .s{font-size:13.5px;color:var(--faint)}
-.prh-list{display:flex;flex-direction:column;margin-bottom:0}
-.prh-row{display:flex;align-items:center;gap:22px;padding:18px 4px;
+.prh-list{display:flex;flex-direction:column}
+.prh-row{display:flex;align-items:center;gap:24px;padding:20px 4px;
 border-bottom:1px solid var(--line);transition:background .14s}
 .prh-row:hover{background:var(--soft)}
-.prh-row .th{width:136px;aspect-ratio:16/10;flex:0 0 auto;border-radius:11px;
+.prh-row .th{width:172px;aspect-ratio:16/10;flex:0 0 auto;border-radius:12px;
 overflow:hidden;background:var(--soft2)}
 .prh-row .th img{width:100%;height:100%;object-fit:cover;display:block;
 transition:transform .45s var(--ease)}
 .prh-row:hover .th img{transform:scale(1.04)}
+/* 무료 도구는 우리 스크린샷이 없다 — 아이콘 타일로 그린다(제품 색 그대로). */
+.prh-row .th.ic{display:flex;align-items:center;justify-content:center;
+background:var(--soft);background:color-mix(in srgb,var(--c,#888) 9%,var(--soft));
+color:var(--c,var(--ink));font-size:40px;line-height:1}
 .prh-row .bd{flex:1 1 auto;min-width:0}
 .prh-row .nm{font-size:17px;font-weight:700;letter-spacing:-.03em}
 .prh-row .tg{font-size:12.5px;color:var(--faint);margin-top:3px}
 .prh-row .ds{font-size:14.5px;color:var(--gray);margin-top:8px;line-height:1.5}
-.prh-row .mt{flex:0 0 auto;font-family:var(--mono);font-size:11.5px;color:var(--faint);white-space:nowrap}
+/* 과금 표기 — 옅은 mono 회색이라 안 보였다(2026-08-23). 알약 + 굵기로 올린다. */
+.prh-row .mt{flex:0 0 auto;font-size:12px;font-weight:700;letter-spacing:-.01em;
+padding:6px 12px;border-radius:99px;background:var(--soft2);color:var(--ink2);white-space:nowrap}
+.prh-row:hover .mt{background:var(--paper)}
+.prh-row .mt.free{background:rgba(18,183,106,.12);color:#0b8f52}
 .prh-foot{margin:44px 0 110px;padding-top:22px;border-top:1px solid var(--line);
 font-size:14px;color:var(--gray)}
 .prh-foot a{text-decoration:underline;text-underline-offset:3px}
 @media(max-width:640px){
   .prh-row{gap:14px;padding:15px 2px}
-  .prh-row .th{width:86px;border-radius:9px}
+  .prh-row .th{width:112px;border-radius:9px}
+  .prh-row .th.ic{font-size:23px}
   .prh-row .ds{font-size:13.5px;margin-top:5px}
-  .prh-row .mt{display:none}
+  .prh-row .mt{padding:4px 9px;font-size:11px}
 }
 
 :root{--ink:#0b0c0e;--ink2:#3a4150;--paper:#fff;--soft:#f4f5f7;--soft2:#e9ebee;--gray:#5b6270;--faint:#9aa0a8;--line:#e6e8ec;

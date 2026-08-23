@@ -41,28 +41,37 @@ CSS = """/* MOMENTUS site.css — v1 */
 padding-bottom:12px;border-bottom:1.5px solid var(--ink)}
 .prh-gh h2{font-size:19px;font-weight:800;letter-spacing:-.035em}
 .prh-gh .s{font-size:13.5px;color:var(--faint)}
-.prh-list{display:flex;flex-direction:column;margin-bottom:0}
-.prh-row{display:flex;align-items:center;gap:22px;padding:18px 4px;
+.prh-list{display:flex;flex-direction:column}
+.prh-row{display:flex;align-items:center;gap:24px;padding:20px 4px;
 border-bottom:1px solid var(--line);transition:background .14s}
 .prh-row:hover{background:var(--soft)}
-.prh-row .th{width:136px;aspect-ratio:16/10;flex:0 0 auto;border-radius:11px;
+.prh-row .th{width:172px;aspect-ratio:16/10;flex:0 0 auto;border-radius:12px;
 overflow:hidden;background:var(--soft2)}
 .prh-row .th img{width:100%;height:100%;object-fit:cover;display:block;
 transition:transform .45s var(--ease)}
 .prh-row:hover .th img{transform:scale(1.04)}
+/* 무료 도구는 우리 스크린샷이 없다 — 아이콘 타일로 그린다(제품 색 그대로). */
+.prh-row .th.ic{display:flex;align-items:center;justify-content:center;
+background:var(--soft);background:color-mix(in srgb,var(--c,#888) 9%,var(--soft));
+color:var(--c,var(--ink));font-size:40px;line-height:1}
 .prh-row .bd{flex:1 1 auto;min-width:0}
 .prh-row .nm{font-size:17px;font-weight:700;letter-spacing:-.03em}
 .prh-row .tg{font-size:12.5px;color:var(--faint);margin-top:3px}
 .prh-row .ds{font-size:14.5px;color:var(--gray);margin-top:8px;line-height:1.5}
-.prh-row .mt{flex:0 0 auto;font-family:var(--mono);font-size:11.5px;color:var(--faint);white-space:nowrap}
+/* 과금 표기 — 옅은 mono 회색이라 안 보였다(2026-08-23). 알약 + 굵기로 올린다. */
+.prh-row .mt{flex:0 0 auto;font-size:12px;font-weight:700;letter-spacing:-.01em;
+padding:6px 12px;border-radius:99px;background:var(--soft2);color:var(--ink2);white-space:nowrap}
+.prh-row:hover .mt{background:var(--paper)}
+.prh-row .mt.free{background:rgba(18,183,106,.12);color:#0b8f52}
 .prh-foot{margin:44px 0 110px;padding-top:22px;border-top:1px solid var(--line);
 font-size:14px;color:var(--gray)}
 .prh-foot a{text-decoration:underline;text-underline-offset:3px}
 @media(max-width:640px){
   .prh-row{gap:14px;padding:15px 2px}
-  .prh-row .th{width:86px;border-radius:9px}
+  .prh-row .th{width:112px;border-radius:9px}
+  .prh-row .th.ic{font-size:23px}
   .prh-row .ds{font-size:13.5px;margin-top:5px}
-  .prh-row .mt{display:none}
+  .prh-row .mt{padding:4px 9px;font-size:11px}
 }
 
 :root{--ink:#0b0c0e;--ink2:#3a4150;--paper:#fff;--soft:#f4f5f7;--soft2:#e9ebee;--gray:#5b6270;--faint:#9aa0a8;--line:#e6e8ec;
@@ -1229,16 +1238,24 @@ def bar_items(active=""):
     """1단 바 항목 = (라벨, href, 부제, 외부여부, 활성여부, 구분선앞).
        active 는 apex 자기 페이지용(서버 렌더). 스포크는 shell.js 가 도메인으로 판정한다.
        ⚠️ 활성 상태를 라벨로 하드코딩하지 않는다(nav-active-no-hardcode)."""
-    active = {"j": "story", "a": "about", "p": "tools"}.get(active, active)   # 레거시 코드 호환
+    active = {"j": "story", "a": "about", "p": "products"}.get(active, active)  # 레거시 코드 호환
     out = []
-    for i, s in enumerate(BAR["spokes"]):
+    # '제품'을 스포크 **앞**에 세운다 — 뒤에 두면 플래너·로고·빈방이 제품 밖의 딴 것처럼 읽힌다
+    # (2026-08-23 대표 지적: "걔는 결국 제품이잖아, 왜 이렇게 나눠지지").
+    # 무료 도구는 더 이상 바에 없다 — 제품과 대등한 범주가 아니라 /products/ 안의 한 섹션이다.
+    for l in BAR["links"]:
+        if l["key"] == "products":
+            out.append(dict(label=l["label"], href=l["href"], sub="",
+                            ext=False, on=(active == l["key"]), sep=False))
+    for s in BAR["spokes"]:
         if s.get("hidden"):
             continue
         out.append(dict(label=s["label"], href=s["href"], sub=s.get("sub", ""),
                         ext=bool(s.get("external")), on=False, sep=False))
-    for j, l in enumerate(BAR["links"]):
+    rest = [l for l in BAR["links"] if l["key"] != "products"]
+    for j, l in enumerate(rest):
         out.append(dict(label=l["label"], href=l["href"], sub="",
-                        ext=False, on=(active == l["key"]), sep=(j == 0 or l["key"] == "story")))
+                        ext=False, on=(active == l["key"]), sep=(j == 0)))
     return out
 
 
@@ -2435,7 +2452,7 @@ _grid_cards = "".join(
     + '</div></a>' for s in _grid_slugs)
 kb_popular = f"""<section class="kb-sec" aria-labelledby="kb-pop-h">
   <div class="kb-sec-head"><h2 id="kb-pop-h">많이 찾는 것</h2>
-    <a class="kb-kick" href="/tools/">무료 도구 전체 →</a></div>
+    <a class="kb-kick" href="/products/">제품 전체 →</a></div>
   <div class="kb-grid">{_grid_cards}</div>
 </section>"""
 
@@ -2460,7 +2477,7 @@ if PORDER:
                                for x in PORDER[:3]]))
 _tl = [s for s in TOOLS if s in P][:3]
 if _tl:
-    _series.append(dict(title="브라우저에 붙이는 무료 도구", href="/tools/", cover="", color="#eafaf1",
+    _series.append(dict(title="브라우저에 붙이는 무료 도구", href="/products/", cover="", color="#eafaf1",
                         items=[dict(title=P[s].get("tagline", P[s]["name"]), url=purl(s),
                                     img=P[s].get("shot", ""), icon=P[s].get("icon", "◆"),
                                     color=P[s].get("color", "#3182f6")) for s in _tl]))
@@ -2543,9 +2560,9 @@ KB_HEADER = """<header class="kb-gnb">
   <nav class="kb-nav" aria-label="주 메뉴">
     <a class="on" href="/">Home</a>
     <a href="/products/">Products</a>
-    <a href="/tools/">Tools</a>
     <a href="/stories/">Stories</a>
     <a href="/about/">Studio</a>
+    <a href="/inquiry/">Contact</a>
   </nav>
   <div class="kb-act">
     <button class="kb-ib" id="kbsearchbtn" aria-label="검색 열기">
@@ -2558,7 +2575,7 @@ KB_HEADER = """<header class="kb-gnb">
   </div>
 </header>
 <nav class="kb-sheet" id="kbsheet" aria-label="모바일 메뉴">
-  <a href="/">Home</a><a href="/products/">Products</a><a href="/tools/">Tools</a><a href="/stories/">Stories</a><a href="/about/">Studio</a>
+  <a href="/">Home</a><a href="/products/">Products</a><a href="/stories/">Stories</a><a href="/about/">Studio</a><a href="/inquiry/">Contact</a>
 </nav>
 <div class="kb-sr" id="kbsr" role="dialog" aria-modal="true" aria-label="검색">
   <div class="kb-sr-in">
@@ -3303,25 +3320,15 @@ for _slug, A in APPS.items():
                                f"확인하고, 해결되지 않으면 이메일로 문의하세요. 구독 해지와 환불 방법도 "
                                f"함께 안내합니다."), _body, active=""))
 
-# ---------- /tools/ 허브 (1단 바의 '무료 도구' 착지점) ----------
+# ---------- /tools/ 허브는 폐지(2026-08-23) ----------
+#   '제품'과 '무료 도구'를 나란히 놓으니 사용자에게 우리만 아는 구분을 강요하게 됐다
+#   (대표: "전체 제품에는 도구는 전체 제품이 아니야, 이것도 웃기고").
+#   목록은 /products/ 마지막 섹션으로 흡수하고 /tools/ 는 301 로 넘긴다.
+#   ⚠️ 개별 도구 페이지 /tools/<slug>/ 는 그대로 — 무료 도구의 유입 권위(PLATFORM_TOPOLOGY §5).
 _TYPEN = {"bookmarklet": "북마크릿", "extension": "크롬 확장"}
-_tls_rows = "".join(
-    f'''<a class="tls-row" href="{purl(s)}">
-    <div class="ic" aria-hidden="true">{P[s]["icon"]}</div>
-    <div class="bd"><div class="nm">{P[s]["short"]}</div><div class="ds">{P[s]["tagline"]}</div></div>
-    <div class="mt">{_TYPEN.get(P[s]["type"], P[s]["type"])} · 무료</div>
-  </a>''' for s in TOOLS)
-tools_body = f"""<div class="tls">
-  <div class="tls-head">
-    <div class="k">TOOLS</div>
-    <h1>설치 없이, 지금 되는 도구</h1>
-    <p>전부 무료입니다. 북마크바에 끌어놓거나 크롬에 추가하면 끝. 회원가입도, 결제도 없습니다.</p>
-  </div>
-  <div class="tls-list">{_tls_rows}</div>
-</div>"""
-os.makedirs("tools", exist_ok=True)
-with open("tools/index.html", "w", encoding="utf-8") as f:
-    f.write(page("무료 도구 — MOMENTUS", "설치 없이 바로 쓰는 무료 브라우저 도구. 쿠팡 옵션·재고, 인스타·유튜브 인기순 정렬, 핀터레스트 원본 추출, 유튜브 AI 요약, 음성 입력.", tools_body, active="tools"))
+import shutil as _sh
+if os.path.exists("tools/index.html"):
+    os.remove("tools/index.html")
 
 # ---------- /products/ 허브 (유료 제품 리스팅) ----------
 #   무료 도구엔 /tools/ 허브가 있는데 유료 제품엔 모아 보는 자리가 없었다(2026-08-23 실측: /products/ 404).
@@ -3335,32 +3342,43 @@ PROD_GROUPS = [
 
 def _prod_card(s_):
     pr = P[s_]
-    # 무료/유료 표기는 실제 과금 형태를 그대로 — 빈방만 무료 주기가 따로 있다.
-    price = "무료 주기 있음" if s_ == "binbang" else ("무료" if pr.get("free") else "유료")
+    free = bool(pr.get("free"))
+    # 과금 표기는 실제 형태 그대로 — 빈방만 무료 주기가 따로 있다.
+    price = "무료" if free else ("무료 있음" if s_ == "binbang" else "유료")
     shot = pr.get("shot") or ""
     th = (f'<div class="th"><img src="{shot}" alt="" loading="lazy" decoding="async"></div>'
-          if shot else '<div class="th"></div>')
+          if shot else
+          f'<div class="th ic" style="--c:{pr.get("color", "#0b0c0e")}" aria-hidden="true">{pr["icon"]}</div>')
     return (f'<a class="prh-row" href="{purl(s_)}">{th}'
             f'<div class="bd">'
             f'<div class="nm">{pr["short"]}</div>'
             f'<div class="tg">{pr["tag"]}</div>'
             f'<div class="ds">{pr["tagline"]}</div>'
             f'</div>'
-            f'<div class="mt">{price}</div></a>')
+            f'<div class="mt{" free" if free else ""}">{price}</div></a>')
 
-_pg = "".join(
-    f'<section class="prh-g"><div class="prh-gh"><h2>{t}</h2><span class="s">{sub}</span></div>'
-    f'<div class="prh-list">{"".join(_prod_card(x) for x in items if x in P)}</div></section>'
-    for t, sub, items in PROD_GROUPS)
+def _prod_group(t, sub, items):
+    rows = "".join(_prod_card(x) for x in items if x in P)
+    return (f'<section class="prh-g"><div class="prh-gh"><h2>{t}</h2><span class="s">{sub}</span></div>'
+            f'<div class="prh-list">{rows}</div></section>')
+
+_pg = "".join(_prod_group(t, sub, items) for t, sub, items in PROD_GROUPS)
+# 무료 도구도 결국 우리가 만들어 내놓은 것이다 — 별도 페이지로 갈라 두니 사용자에게
+# '제품 vs 도구'라는 우리만 아는 구분을 강요하게 됐다(2026-08-23 대표 지적). 같은 목록의 마지막 칸.
+_pg += _prod_group("지금 바로, 무료로",
+                   "북마크바에 끌어놓거나 크롬에 추가하면 끝. 회원가입도 결제도 없습니다",
+                   TOOLS)
 
 products_body = f"""<div class="prh">
   <div class="tls-head">
     <div class="k">PRODUCTS</div>
     <h1>필요한 순간에 꺼내 쓰는 것들</h1>
-    <p>1인 AI 스튜디오가 직접 만들어 직접 팝니다. 회원가입 없이 쓰는 것부터, 결제하면 바로 시작되는 것까지.</p>
+    <p>1인 AI 스튜디오가 직접 만들어 직접 팝니다. 결제하면 바로 시작되는 것부터,
+      설치 없이 그냥 쓰는 무료 도구까지 여기 다 있습니다.</p>
   </div>
   {_pg}
-  <p class="prh-foot">설치 없이 바로 쓰는 <a href="/tools/">무료 도구 6종</a>도 있습니다.</p>
+  <p class="prh-foot">찾으시는 게 없거나 만들었으면 하는 게 있으면
+    <a href="/inquiry/">문의해 주세요</a>. 직접 읽고 답합니다.</p>
 </div>"""
 os.makedirs("products", exist_ok=True)
 with open("products/index.html", "w", encoding="utf-8") as f:
@@ -3375,6 +3393,9 @@ with open("_redirects", "w", encoding="utf-8") as f:
     for s in TOOLS:
         f.write(f"/products/{s}/* /tools/{s}/ 301\n")
         f.write(f"/products/{s} /tools/{s}/ 301\n")
+    # /tools/ 허브 폐지(2026-08-23) — 목록은 /products/ 안으로 흡수. 개별 도구 페이지는 그대로.
+    f.write("/tools/ /products/ 301\n")
+    f.write("/tools /products/ 301\n")
     # 블로그가 /log/ → /stories/ 로 승격(2026-07-27). 기존 링크·검색 결과 보존.
     for s in PORDER:
         # 슬래시로 끝나는 정확 경로도 따로 적는다 — `/log/x/*` 는 뒤가 빈 `/log/x/` 를 안 잡는다(실측).
