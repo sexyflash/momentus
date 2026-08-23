@@ -1406,7 +1406,7 @@ line-height:1.08;color:var(--ink)}
 
 .nws-feat{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2.2vw,32px)}
 .nws-fcard{position:relative;display:block;border-radius:28px;overflow:hidden;
-aspect-ratio:596/456;background:var(--soft)}
+aspect-ratio:1200/700;background:var(--soft)}
 .nws-fcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 transition:transform .6s var(--ease)}
 .nws-fcard:hover img{transform:scale(1.03)}
@@ -1430,13 +1430,15 @@ color:var(--ink);align-self:start}
 .nws-grid{display:grid;grid-template-columns:repeat(3,1fr);
 gap:clamp(34px,4.6vw,64px) clamp(18px,2.6vw,36px)}
 .nws-card{display:block}
-.nws-card .th{width:100%;aspect-ratio:16/10;border-radius:16px;overflow:hidden;
+.nws-card .th{width:100%;aspect-ratio:1200/630;border-radius:16px;overflow:hidden;
 background:var(--soft);display:block}
 .nws-card .th img{width:100%;height:100%;object-fit:cover;display:block;
 transition:transform .55s var(--ease)}
 .nws-card:hover .th img{transform:scale(1.04)}
+/* 제목 2줄 고정 — 줄 수가 들쭉날쭉하면 날짜 줄이 카드마다 다른 높이에 앉는다. */
 .nws-card h3{margin-top:16px;font-size:17px;font-weight:700;letter-spacing:-.03em;
-line-height:1.45;color:var(--ink)}
+line-height:1.45;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;
+-webkit-box-orient:vertical;overflow:hidden;min-height:calc(1.45em * 2)}
 .nws-card .d{margin-top:12px;font-size:14px;color:var(--faint);font-variant-numeric:tabular-nums}
 .nws-card:hover h3{color:var(--brand-cta)}
 .nws-empty{padding:40px 0;color:var(--faint);font-size:15px}
@@ -2739,7 +2741,8 @@ def _story_cover(e):
 
 def _news_card(e):
     href = e["url"] if e["kind"] in ("video", "ext") else f'{STORY_BASE}/{e["slug"]}/'
-    ext = ' target="_blank" rel="noopener"' if e["kind"] in ("video", "ext") else ''
+    # 영상만 새 탭(유튜브). 제품 사이트 글은 같은 탭 — 거기에도 공용 바가 있어 바로 돌아온다.
+    ext = ' target="_blank" rel="noopener"' if e["kind"] == "video" else ''
     cov = _story_cover(e)
     th = (f'<span class="th"><img src="{cov}" alt="" loading="lazy" decoding="async"></span>'
           if cov else '<span class="th"></span>')
@@ -2750,7 +2753,7 @@ def _news_card(e):
 
 def _news_feature(e):
     href = e["url"] if e["kind"] in ("video", "ext") else f'{STORY_BASE}/{e["slug"]}/'
-    ext = ' target="_blank" rel="noopener"' if e["kind"] in ("video", "ext") else ''
+    ext = ' target="_blank" rel="noopener"' if e["kind"] == "video" else ''
     cov = _story_cover(e)
     img = f'<img src="{cov}" alt="" loading="lazy" decoding="async">' if cov else ''
     return (f'<a class="nws-fcard" href="{href}"{ext} data-tags="{" ".join(e.get("tags", []))}">{img}'
@@ -2760,7 +2763,10 @@ def _news_feature(e):
 
 def stories_page(title, sub, sel_label="", items=None, chips=True):
     its = items if items is not None else entries
-    feat, rest = its[:2], its[2:]
+    # 피처는 우리 글 우선 — 바깥 글 표지는 글자가 박힌 배너라 큰 화면에 깔면 잘린다.
+    _own = [e for e in its if e.get("kind") == "post"][:2]
+    feat = _own if len(_own) == 2 else its[:2]
+    rest = [e for e in its if e not in feat]
     tabs = ""
     if chips:
         tabs = ('<div class="nws-tabs" id="bltabs">'
