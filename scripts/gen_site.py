@@ -1238,7 +1238,7 @@ AP_CSS = """
      제품명 80px/600, 한 줄 21px, 버튼 둘은 우하단 같은 줄.
    ⚠️ 종전엔 카드를 뷰포트에 거의 붙이고(12px) 글을 그림 아래 띠에 뒀다 — 둘 다 애플과 다르다. */
 .stg-stack{display:flex;flex-direction:column;gap:clamp(12px,2.1vw,30px);
-padding:clamp(12px,2.1vw,30px) clamp(12px,2.1vw,30px) 0}
+max-width:1520px;margin:0 auto;padding:clamp(12px,2.1vw,30px) clamp(12px,2.1vw,30px) 0}
 .stg-row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2.1vw,30px)}
 .stg{position:relative;display:flex;flex-direction:column;text-align:left;
 border-radius:18px;overflow:hidden;background:var(--soft)}
@@ -1288,13 +1288,6 @@ padding:clamp(30px,3.6vw,52px) clamp(20px,2.6vw,34px)}
 .stg-icons span{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;
 font-size:22px;background:var(--soft);color:var(--ink)}
 .stg--paper .stg-icons span{background:var(--soft)}
-.stg-note{padding:clamp(52px,6.5vw,92px) 24px;text-align:center;color:var(--gray);
-font-size:15px;letter-spacing:-.01em}
-.stg-note b{display:block;font-size:clamp(19px,2vw,26px);font-weight:800;color:var(--ink);
-letter-spacing:-.04em;margin-bottom:10px}
-.stg-note a{color:var(--ink);font-weight:600}
-.stg-note a:hover{color:var(--brand-cta)}
-.stg-note .sep{margin:0 8px;color:var(--faint)}
 @media(max-width:820px){.stg-row{grid-template-columns:1fr}.stg-bd{grid-template-columns:1fr}
 .stg--hero{aspect-ratio:4/5}}
 @media(prefers-reduced-motion:no-preference){
@@ -1303,10 +1296,10 @@ transition:opacity .65s var(--ease),transform .65s var(--ease)}
 .stg.in{opacity:1;transform:none}}
 
 /* 홈 상단 바 = 스포크와 같은 공용 1단 바(패밀리룩). 검색·테마만 우측에 얹는다. */
-#mmt-bar .mmt-act{margin-left:auto;display:flex;align-items:center;gap:2px;flex:0 0 auto}
-#mmt-bar .mmt-ib{display:grid;place-items:center;width:28px;height:28px;padding:0;border:0;
-border-radius:50%;background:none;color:#cfd4dc;cursor:pointer;transition:background .18s,color .18s}
-#mmt-bar .mmt-ib:hover{background:rgba(255,255,255,.12);color:#fff}
+#mmt-bar .mmt-act{justify-self:end;display:flex;align-items:center;gap:2px}
+#mmt-bar .mmt-ib{display:grid;place-items:center;width:30px;height:30px;padding:0;border:0;
+border-radius:50%;background:none;color:rgba(0,0,0,.8);cursor:pointer;transition:background .18s,color .18s}
+#mmt-bar .mmt-ib:hover{background:rgba(0,0,0,.06);color:#000}
 #mmt-bar .mmt-ib svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;
 stroke-linecap:round;stroke-linejoin:round}
 #mmt-bar .mmt-ib .moon{display:none}
@@ -1612,7 +1605,7 @@ with open("assets/site.css", "w", encoding="utf-8") as f:
 SHELL_TOKENS = {
     "--mmt-gut": "clamp(20px, 4vw, 56px)",
     "--mmt-maxw": "1320px",
-    "--mmt-bar-h": "40px",
+    "--mmt-bar-h": "44px",
     "--mmt-bar2-h": "64px",
     "--mmt-fs-logo": "22px",
     "--mmt-fs-nav": "14px",
@@ -1633,26 +1626,33 @@ SHELL_TOKENS = {
     "--mmt-ls-head": "-0.035em",
 }
 
-SHELL_BAR_CSS = """#mmt-bar{display:block;box-sizing:border-box;width:100%;height:var(--mmt-bar-h,40px);
-background:#14161a;color:#cfd4dc;position:relative;z-index:2147483000;
+SHELL_BAR_CSS = """/* 2026-08-23 실측 교정. 애플 globalnav 는 **검정이 아니다** —
+   background rgba(250,250,252,.8) + backdrop-filter saturate(1.8) blur(20px),
+   링크색 rgba(0,0,0,.8), 높이 44px, 내용 폭 1024px 중앙(2560 에서도 그대로).
+   배치는 토스 헤더식 3분할: 워드마크(좌) · 메뉴(중앙) · 액션(우). */
+#mmt-bar{display:block;box-sizing:border-box;width:100%;height:var(--mmt-bar-h,44px);
+background:rgba(250,250,252,.82);backdrop-filter:saturate(1.8) blur(20px);
+-webkit-backdrop-filter:saturate(1.8) blur(20px);
+border-bottom:1px solid rgba(0,0,0,.07);color:rgba(0,0,0,.8);position:relative;z-index:2147483000;
 font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Helvetica Neue','Segoe UI',sans-serif;
 letter-spacing:normal;line-height:normal}
 #mmt-bar *,#mmt-bar *::after{box-sizing:border-box}
 /* 애플 글로벌 내비 실측(2026-08-23, 1440 뷰포트): .globalnav-content max-width 1024px,
    좌우 padding 22px, 바 높이 44px. 뷰포트 끝에 붙이면 넓은 화면에서 왼쪽만 붙고
    오른쪽이 휑해진다 — 가운데로 모으고 그 안에서 좌측 정렬한다. */
-#mmt-bar .mmt-in{display:flex;align-items:center;gap:14px;height:100%;
-max-width:1024px;margin:0 auto;padding:0 22px;overflow-x:auto;scrollbar-width:none}
+#mmt-bar .mmt-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:100%;
+max-width:1024px;margin:0 auto;padding:0 22px;gap:14px}
 #mmt-bar .mmt-in::-webkit-scrollbar{display:none}
-#mmt-bar .mmt-wm{font-size:13px;font-weight:800;letter-spacing:-.01em;color:#fff;text-decoration:none;flex:0 0 auto}
-#mmt-bar .mmt-nav{display:flex;align-items:center;gap:4px;flex:0 0 auto}
-#mmt-bar a.mmt-it{font-size:13px;font-weight:500;letter-spacing:-.01em;color:#cfd4dc;text-decoration:none;
-padding:5px 9px;border-radius:7px;white-space:nowrap;position:relative}
-#mmt-bar a.mmt-it:hover{background:rgba(255,255,255,.1);color:#fff}
-#mmt-bar a.mmt-it[aria-current=page]{background:#fff;color:#14161a;font-weight:700}
-#mmt-bar .mmt-sep{width:1px;height:13px;background:rgba(255,255,255,.18);flex:0 0 auto;margin:0 5px}
+#mmt-bar .mmt-wm{justify-self:start;font-size:15px;font-weight:800;letter-spacing:-.03em;
+color:#111;text-decoration:none}
+#mmt-bar .mmt-nav{justify-self:center;display:flex;align-items:center;gap:2px}
+#mmt-bar a.mmt-it{font-size:14px;font-weight:600;letter-spacing:-.02em;color:rgba(0,0,0,.8);
+text-decoration:none;padding:6px 13px;border-radius:99px;white-space:nowrap;position:relative}
+#mmt-bar a.mmt-it:hover{background:rgba(0,0,0,.055);color:#000}
+#mmt-bar a.mmt-it[aria-current=page]{background:#111;color:#fff;font-weight:700}
+#mmt-bar .mmt-sep{display:none}
 #mmt-bar i.mmt-ext{font-style:normal;font-size:9px;opacity:.55;margin-left:3px;vertical-align:super}
-#mmt-bar a.mmt-it[data-sub]::after{content:attr(data-sub);position:absolute;top:calc(100% + 7px);left:50%;
+#mmt-bar a.mmt-it[data-sub]::after{content:none;position:absolute;top:calc(100% + 7px);left:50%;
 transform:translateX(-50%) translateY(-3px);white-space:nowrap;background:#14161a;color:#fff;font-size:12px;
 font-weight:500;padding:6px 11px;border-radius:8px;opacity:0;visibility:hidden;pointer-events:none;
 transition:opacity .14s,transform .14s;box-shadow:0 10px 26px -12px rgba(0,0,0,.45)}
@@ -1662,20 +1662,21 @@ opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
 #mmt-bar a.mmt-it{padding:5px 7px}#mmt-bar a.mmt-it[data-sub]::after{display:none}}
 /* 모바일 셀렉션 — 좁은 화면에서 링크 7개를 가로로 흘리면 상단이 정신없고 잘린다.
    현재 제품 이름만 보이고 누르면 목록이 뜬다. <details> 라 **JS 없이도 동작**한다(바의 fail-open 규칙). */
-#mmt-bar .mmt-pick{display:none;position:relative;margin-left:auto;flex:0 0 auto}
+#mmt-bar .mmt-pick{display:none;position:relative;justify-self:end}
 #mmt-bar .mmt-pick>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:5px;
-font-size:13px;font-weight:700;color:#fff;padding:5px 11px;border-radius:999px;
-background:rgba(255,255,255,.14);white-space:nowrap}
+font-size:13.5px;font-weight:700;color:#111;padding:6px 13px;border-radius:999px;
+background:rgba(0,0,0,.06);white-space:nowrap}
 #mmt-bar .mmt-pick>summary::-webkit-details-marker{display:none}
 #mmt-bar .mmt-pick>summary::after{content:"";width:0;height:0;border:4px solid transparent;
 border-top-color:currentColor;margin-top:2px;opacity:.7}
-#mmt-bar .mmt-menu{position:absolute;right:0;top:calc(100% + 9px);background:#14161a;border-radius:13px;
-padding:6px;min-width:196px;box-shadow:0 18px 44px -14px rgba(0,0,0,.6);z-index:2147483001}
-#mmt-bar .mmt-menu a{display:block;padding:10px 13px;border-radius:9px;color:#cfd4dc;
-font-size:14px;font-weight:500;text-decoration:none;white-space:nowrap}
-#mmt-bar .mmt-menu a[aria-current=page]{background:#fff;color:#14161a;font-weight:700}
-#mmt-bar .mmt-menu hr{border:0;border-top:1px solid rgba(255,255,255,.12);margin:5px 8px}
-@media(max-width:640px){#mmt-bar .mmt-in{overflow:visible}
+#mmt-bar .mmt-menu{position:absolute;right:0;top:calc(100% + 9px);background:#fff;border-radius:14px;
+padding:6px;min-width:206px;box-shadow:0 18px 44px -14px rgba(0,0,0,.28);
+border:1px solid rgba(0,0,0,.07);z-index:2147483001}
+#mmt-bar .mmt-menu a{display:block;padding:10px 13px;border-radius:10px;color:#111;
+font-size:14.5px;font-weight:600;text-decoration:none;white-space:nowrap}
+#mmt-bar .mmt-menu a[aria-current=page]{background:#111;color:#fff;font-weight:700}
+#mmt-bar .mmt-menu hr{border:0;border-top:1px solid rgba(0,0,0,.08);margin:5px 8px}
+@media(max-width:640px){#mmt-bar .mmt-in{grid-template-columns:auto 1fr auto}
 #mmt-bar .mmt-nav{display:none}#mmt-bar .mmt-pick{display:block}}
 @media(prefers-reduced-motion:reduce){#mmt-bar a.mmt-it[data-sub]::after{transition:none}}
 /* ── 제품 플라이아웃 ──────────────────────────────────────────────────────
@@ -1685,36 +1686,37 @@ font-size:14px;font-weight:500;text-decoration:none;white-space:nowrap}
    ⚠️ JS 0. :has() 로만 연다. 지원 안 되는 브라우저에선 패널이 안 열리고 '제품'이
       그냥 /products/ 로 가는 평범한 링크가 된다(바의 fail-open 규칙). */
 #mmt-bar .mmt-trg::after{content:"";display:inline-block;width:0;height:0;margin-left:5px;
-border:3.5px solid transparent;border-top-color:currentColor;vertical-align:middle;opacity:.55}
-#mmt-bar .mmt-fly{position:absolute;left:0;right:0;top:100%;background:#14161a;
-border-top:1px solid rgba(255,255,255,.09);box-shadow:0 30px 64px -26px rgba(0,0,0,.7);
+border:3.5px solid transparent;border-top-color:currentColor;vertical-align:middle;opacity:.5}
+/* 패널은 밝게, 썸네일은 크게, 설명 줄은 뺀다 — 목록은 고르라고 있는 것이지 읽으라고 있는 게 아니다
+   (2026-08-23 대표: "심플하지만 썸네일도 큼직하게, 중요한 건 더 크게 간결하게"). */
+#mmt-bar .mmt-fly{position:absolute;left:0;right:0;top:100%;
+background:rgba(250,250,252,.97);backdrop-filter:saturate(1.8) blur(20px);
+-webkit-backdrop-filter:saturate(1.8) blur(20px);
+border-bottom:1px solid rgba(0,0,0,.08);box-shadow:0 24px 48px -28px rgba(0,0,0,.3);
 opacity:0;visibility:hidden;transform:translateY(-6px);z-index:2147483002;
 transition:opacity .17s ease,transform .17s ease,visibility .17s}
 #mmt-bar:has(.mmt-trg:hover) .mmt-fly,
 #mmt-bar:has(.mmt-fly:hover) .mmt-fly,
 #mmt-bar:has(.mmt-trg:focus-visible) .mmt-fly,
 #mmt-bar:has(.mmt-fly a:focus-visible) .mmt-fly{opacity:1;visibility:visible;transform:none}
-#mmt-bar .mmt-fly-in{max-width:1024px;margin:0 auto;padding:26px 22px 6px;
-display:grid;grid-template-columns:1.1fr .9fr;gap:34px}
-#mmt-bar .mmt-fly-h{font-size:10.5px;font-weight:700;letter-spacing:.11em;color:#79828f;
-margin:0 0 9px;padding:0 8px}
-#mmt-bar .mmt-fly-it{display:flex;align-items:center;gap:11px;padding:7px 8px;border-radius:10px;
-text-decoration:none;color:#cfd4dc}
-#mmt-bar .mmt-fly-it:hover{background:rgba(255,255,255,.08)}
-#mmt-bar .mmt-fly-it .th{width:46px;height:31px;border-radius:7px;overflow:hidden;flex:0 0 auto;
-background:rgba(255,255,255,.09);display:grid;place-items:center;font-size:15px;color:#e6e9ee}
+#mmt-bar .mmt-fly-in{max-width:1024px;margin:0 auto;padding:30px 22px 10px;
+display:grid;grid-template-columns:1.05fr .95fr;gap:40px}
+#mmt-bar .mmt-fly-h{font-size:12px;font-weight:600;letter-spacing:-.01em;color:#86868b;
+margin:0 0 14px;padding:0 6px}
+#mmt-bar .mmt-fly-it{display:flex;align-items:center;gap:13px;padding:8px 6px;border-radius:12px;
+text-decoration:none;color:#111}
+#mmt-bar .mmt-fly-it:hover{background:rgba(0,0,0,.05)}
+#mmt-bar .mmt-fly-it .th{width:68px;height:44px;border-radius:9px;overflow:hidden;flex:0 0 auto;
+background:rgba(0,0,0,.05);display:grid;place-items:center;font-size:19px;color:#333}
 #mmt-bar .mmt-fly-it .th img{width:100%;height:100%;object-fit:cover;display:block}
-#mmt-bar .mmt-fly-it .tx{min-width:0}
-#mmt-bar .mmt-fly-it b{font-size:13.5px;font-weight:700;color:#fff;display:block;line-height:1.3}
-#mmt-bar .mmt-fly-it i{font-style:normal;font-size:11.5px;color:#89919e;display:block;
-line-height:1.35;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#mmt-bar .mmt-fly-it[aria-current=page]{background:rgba(255,255,255,.1)}
-#mmt-bar .mmt-fly-it[aria-current=page] b{color:#8fc0ff}
-#mmt-bar .mmt-fly-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 4px}
-#mmt-bar .mmt-fly-grid .mmt-fly-it i{display:none}
-#mmt-bar .mmt-fly-grid .mmt-fly-it .th{width:30px;height:30px;border-radius:8px}
-#mmt-bar .mmt-fly-foot{max-width:1024px;margin:0 auto;padding:8px 30px 20px}
-#mmt-bar .mmt-fly-foot a{font-size:12.5px;font-weight:600;color:#8fc0ff;text-decoration:none}
+#mmt-bar .mmt-fly-it b{font-size:17px;font-weight:700;letter-spacing:-.03em;color:#111}
+#mmt-bar .mmt-fly-it i{display:none}
+#mmt-bar .mmt-fly-it[aria-current=page] b{color:#0071e3}
+#mmt-bar .mmt-fly-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 6px}
+#mmt-bar .mmt-fly-grid .mmt-fly-it b{font-size:14.5px;font-weight:600}
+#mmt-bar .mmt-fly-grid .mmt-fly-it .th{width:38px;height:38px;border-radius:10px;font-size:16px}
+#mmt-bar .mmt-fly-foot{max-width:1024px;margin:0 auto;padding:10px 28px 24px}
+#mmt-bar .mmt-fly-foot a{font-size:14px;font-weight:600;color:#0071e3;text-decoration:none}
 #mmt-bar .mmt-fly-foot a:hover{text-decoration:underline}
 @media(max-width:820px){#mmt-bar .mmt-fly{display:none}}
 @media(prefers-reduced-motion:reduce){#mmt-bar .mmt-fly{transition:none}}"""
@@ -1901,7 +1903,7 @@ SHELL_JS = """/* MOMENTUS shell.js — 1단 브랜드 바. 생성물(scripts/gen
       + "#mmt-bar a.mmt-it[aria-current=page]{background:#fff;color:#14161a;font-weight:700}"
       + "#mmt-bar .mmt-sep{width:1px;height:13px;background:rgba(255,255,255,.18);flex:0 0 auto;margin:0 5px}"
       + "#mmt-bar i.mmt-ext{font-style:normal;font-size:9px;opacity:.55;margin-left:3px;vertical-align:super}"
-      + "#mmt-bar a.mmt-it[data-sub]::after{content:attr(data-sub);position:absolute;top:calc(100% + 7px);left:50%;"
+      + "#mmt-bar a.mmt-it[data-sub]::after{content:none;position:absolute;top:calc(100% + 7px);left:50%;"
       +   "transform:translateX(-50%) translateY(-3px);white-space:nowrap;background:#14161a;color:#fff;"
       +   "font-size:12px;font-weight:500;padding:6px 11px;border-radius:8px;opacity:0;visibility:hidden;"
       +   "pointer-events:none;transition:opacity .14s,transform .14s;box-shadow:0 10px 26px -12px rgba(0,0,0,.45)}"
@@ -2980,11 +2982,8 @@ ap_body = (
     + '<div class="stg-row">' + ap_stage("mark", "paper") + ap_stage("cue") + '</div>'
     + '<div class="stg-row">' + ap_stage("theplan") + ap_tools_stage() + '</div>'
     + '</div>'
-    + '<section class="stg-note"><b>만든 것만 팝니다.</b>'
-      '모멘터스는 1인 AI 스튜디오입니다. 기획도 개발도 운영도 한 사람이 합니다.'
-      '<br><a href="/about/">소개</a><span class="sep">·</span>'
-      '<a href="/stories/">이야기</a><span class="sep">·</span>'
-      '<a href="/inquiry/">문의</a></section>')
+    )
+
 
 land_body = ap_body
 

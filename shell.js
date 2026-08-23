@@ -23,7 +23,7 @@
       + "#mmt-bar a.mmt-it[aria-current=page]{background:#fff;color:#14161a;font-weight:700}"
       + "#mmt-bar .mmt-sep{width:1px;height:13px;background:rgba(255,255,255,.18);flex:0 0 auto;margin:0 5px}"
       + "#mmt-bar i.mmt-ext{font-style:normal;font-size:9px;opacity:.55;margin-left:3px;vertical-align:super}"
-      + "#mmt-bar a.mmt-it[data-sub]::after{content:attr(data-sub);position:absolute;top:calc(100% + 7px);left:50%;"
+      + "#mmt-bar a.mmt-it[data-sub]::after{content:none;position:absolute;top:calc(100% + 7px);left:50%;"
       +   "transform:translateX(-50%) translateY(-3px);white-space:nowrap;background:#14161a;color:#fff;"
       +   "font-size:12px;font-weight:500;padding:6px 11px;border-radius:8px;opacity:0;visibility:hidden;"
       +   "pointer-events:none;transition:opacity .14s,transform .14s;box-shadow:0 10px 26px -12px rgba(0,0,0,.45)}"
