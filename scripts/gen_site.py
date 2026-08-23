@@ -1272,6 +1272,11 @@ pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.62),rgba(0,0,0
 /* ── 2단 타일: 그림 위, 글 아래(애플 '모델 비교하기' 배치). 우리 og 배너는
       글자가 박혀 있어 그림 위에 글을 얹으면 겹친다 — 그래서 이쪽만 아래 띠. ── */
 .stg-art{width:100%;aspect-ratio:16/9;overflow:hidden;background:var(--paper)}
+/* ⚠️ video 는 자기 고유 크기(1600x900)로 그려진다 — width/height 100% 를 명시하지 않으면
+   창을 좁혀도 안 줄어들고 카드 밖으로 넘친다(2026-08-24 실측: 430px 화면에서 영상 폭 1600). */
+.stg-art img,.stg-art video{width:100%;height:100%;object-fit:cover;object-position:center;
+display:block;transition:transform .6s var(--ease)}
+.stg-art video{transition:none}
 .stg-art img{width:100%;height:100%;object-fit:contain;display:block;
 transition:transform .6s var(--ease)}
 .stg--hero .stg-art img,.stg--hero .stg-art video{object-fit:cover}
@@ -1306,21 +1311,13 @@ line-height:1.1;color:var(--ink)}
 .idx-cta .b{display:inline-flex;align-items:center;height:44px;padding:0 22px;border-radius:99px;
 font-size:15px;font-weight:600;background:var(--brand-cta);color:#fff}
 .idx-cta .b.line{background:transparent;color:var(--brand-cta);box-shadow:inset 0 0 0 1px currentColor}
-.idx-list{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
-.idx-it{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;
-transition:background .16s}
-.idx-it:hover{background:var(--paper)}
-.idx-it .ic{width:40px;height:40px;flex:0 0 auto;border-radius:11px;display:grid;place-items:center;
-font-size:17px;color:#fff;background:var(--c)}
-.idx-it .tx{min-width:0}
-.idx-it b{display:block;font-size:15px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
-.idx-it i{display:block;font-style:normal;font-size:13px;color:var(--gray);margin-top:2px;
-overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.idx-links{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);
-display:flex;flex-wrap:wrap;gap:8px 20px}
-.idx-links a{font-size:14px;font-weight:600;color:var(--ink)}
-.idx-links a:hover{color:var(--brand-cta)}
-@media(max-width:900px){.idx-in{grid-template-columns:1fr}.idx-list{grid-template-columns:1fr}}
+.idx-r{display:flex;flex-direction:column;gap:10px;align-self:center}
+.idx-go{display:block;padding:18px 22px;border-radius:14px;background:var(--paper);
+transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.idx-go:hover{transform:translateY(-2px);box-shadow:0 14px 30px -20px rgba(0,0,0,.35)}
+.idx-go b{display:block;font-size:17px;font-weight:700;letter-spacing:-.035em;color:var(--ink)}
+.idx-go i{display:block;font-style:normal;font-size:14px;color:var(--gray);margin-top:5px}
+@media(max-width:900px){.idx-in{grid-template-columns:1fr}}
 
 /* ── 무료 도구 = 애플 스토어 'The latest' 카드 레일 ── */
 .tsec{padding:clamp(56px,7vw,104px) 0 clamp(20px,2.6vw,40px)}
@@ -1386,26 +1383,6 @@ transition:opacity .65s var(--ease),transform .65s var(--ease)}
 .stg.in{opacity:1;transform:none}}
 
 /* 홈 상단 바 = 스포크와 같은 공용 1단 바(패밀리룩). 검색·테마만 우측에 얹는다. */
-#mmt-bar .mmt-act{margin-left:auto;display:flex;align-items:center;gap:4px;flex:0 0 auto}
-/* 문의는 '메뉴'가 아니라 '행동'이다 — 토스 헤더가 앱 다운로드를 버튼으로 두는 자리.
-   글자 수를 줄이려고 '문의'로 쓰던 것을 '문의하기'로 되돌린다(2026-08-23 대표 지적). */
-/* 버튼도 내비와 같은 글자꼴·크기 — 하나만 튀면 메뉴가 아니라 광고로 읽힌다. */
-/* 문의하기는 '있다'만 알리면 된다 — 꽉 채우면 광고처럼 튄다(2026-08-23 대표 지적). */
-#mmt-bar .mmt-cta{display:inline-flex;align-items:center;height:28px;padding:0 13px;
-border-radius:99px;background:transparent;color:#e6e9ee;
-box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);
-font-size:12.5px;font-weight:600;letter-spacing:-.02em;
-text-decoration:none;white-space:nowrap;margin-right:4px}
-#mmt-bar .mmt-cta:hover{background:rgba(255,255,255,.12);color:#fff}
-@media(max-width:640px){#mmt-bar .mmt-cta{display:none}}
-#mmt-bar .mmt-ib{display:grid;place-items:center;width:30px;height:30px;padding:0;border:0;
-border-radius:50%;background:none;color:#cfd4dc;cursor:pointer;transition:background .18s,color .18s}
-#mmt-bar .mmt-ib:hover{background:rgba(255,255,255,.12);color:#fff}
-#mmt-bar .mmt-ib svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;
-stroke-linecap:round;stroke-linejoin:round}
-#mmt-bar .mmt-ib .moon{display:none}
-html[data-theme="dark"] #mmt-bar .mmt-ib .moon{display:block}
-html[data-theme="dark"] #mmt-bar .mmt-ib .sun{display:none}
 #mmt-bar+.kb-sr{position:fixed}
 """
 CSS += AP_CSS
@@ -2122,6 +2099,29 @@ font-size:14.5px;font-weight:600;text-decoration:none;white-space:nowrap}
 #mmt-bar .mmt-menu hr{border:0;border-top:1px solid rgba(255,255,255,.12);margin:5px 8px}
 @media(max-width:640px){#mmt-bar .mmt-in{gap:10px}
 #mmt-bar .mmt-nav{display:none}#mmt-bar .mmt-pick{display:block}}
+/* ⚠️ 액션(문의하기·검색·테마) 스타일은 **공용 셸**에 있어야 한다.
+   apex 전용 CSS 에 두었더니 제품 사이트에서 문의하기가 스타일 없는 파란 밑줄 링크로
+   나왔다(2026-08-24 빈방 실측). 마크업이 공용이면 스타일도 공용이다. */
+#mmt-bar .mmt-act{margin-left:auto;display:flex;align-items:center;gap:4px;flex:0 0 auto}
+/* 문의는 '메뉴'가 아니라 '행동'이다 — 토스 헤더가 앱 다운로드를 버튼으로 두는 자리.
+   글자 수를 줄이려고 '문의'로 쓰던 것을 '문의하기'로 되돌린다(2026-08-23 대표 지적). */
+/* 버튼도 내비와 같은 글자꼴·크기 — 하나만 튀면 메뉴가 아니라 광고로 읽힌다. */
+/* 문의하기는 '있다'만 알리면 된다 — 꽉 채우면 광고처럼 튄다(2026-08-23 대표 지적). */
+#mmt-bar .mmt-cta{display:inline-flex;align-items:center;height:28px;padding:0 13px;
+border-radius:99px;background:transparent;color:#e6e9ee;
+box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);
+font-size:12.5px;font-weight:600;letter-spacing:-.02em;
+text-decoration:none;white-space:nowrap;margin-right:4px}
+#mmt-bar .mmt-cta:hover{background:rgba(255,255,255,.12);color:#fff}
+@media(max-width:640px){#mmt-bar .mmt-cta{display:none}}
+#mmt-bar .mmt-ib{display:grid;place-items:center;width:30px;height:30px;padding:0;border:0;
+border-radius:50%;background:none;color:#cfd4dc;cursor:pointer;transition:background .18s,color .18s}
+#mmt-bar .mmt-ib:hover{background:rgba(255,255,255,.12);color:#fff}
+#mmt-bar .mmt-ib svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;
+stroke-linecap:round;stroke-linejoin:round}
+#mmt-bar .mmt-ib .moon{display:none}
+html[data-theme="dark"] #mmt-bar .mmt-ib .moon{display:block}
+html[data-theme="dark"] #mmt-bar .mmt-ib .sun{display:none}
 @media(prefers-reduced-motion:reduce){#mmt-bar a.mmt-it[data-sub]::after{transition:none}}
 /* ── 제품 플라이아웃 ──────────────────────────────────────────────────────
    제품 이름을 바에 하나씩 늘어놓으면 제품이 늘 때마다 바가 길어지고 결국 잘린다
@@ -2156,27 +2156,27 @@ transition:opacity .17s ease,transform .17s ease,visibility .17s}
 #mmt-bar:has(.mmt-fly:hover) .mmt-fly,
 #mmt-bar:has(.mmt-trg:focus-visible) .mmt-fly,
 #mmt-bar:has(.mmt-fly a:focus-visible) .mmt-fly{opacity:1;visibility:visible;transform:none}
-#mmt-bar .mmt-fly-in{max-width:1224px;margin:0;padding:30px clamp(16px,2.2vw,28px) 10px;
+#mmt-bar .mmt-fly-in{max-width:1224px;margin:0;padding:22px clamp(16px,2.2vw,28px) 6px;
 display:grid;grid-template-columns:1.05fr .95fr;gap:40px}
 #mmt-bar .mmt-fly-h{font-size:12px;font-weight:600;letter-spacing:-.01em;color:#79828f;
 margin:0 0 14px;padding:0 6px}
-#mmt-bar .mmt-fly-it{display:flex;align-items:center;gap:15px;padding:9px 7px;border-radius:13px;
+#mmt-bar .mmt-fly-it{display:flex;align-items:center;gap:13px;padding:7px 7px;border-radius:12px;
 text-decoration:none;color:#cfd4dc}
 #mmt-bar .mmt-fly-it:hover{background:rgba(255,255,255,.08)}
-#mmt-bar .mmt-fly-it .th{width:132px;height:84px;border-radius:12px;overflow:hidden;flex:0 0 auto;
+#mmt-bar .mmt-fly-it .th{width:96px;height:60px;border-radius:10px;overflow:hidden;flex:0 0 auto;
 background:rgba(255,255,255,.09);display:grid;place-items:center;font-size:19px;color:#e6e9ee}
 #mmt-bar .mmt-fly-it .th img{width:100%;height:100%;object-fit:cover;display:block}
-#mmt-bar .mmt-fly-it b{font-size:17px;font-weight:700;letter-spacing:-.03em;color:#fff}
+#mmt-bar .mmt-fly-it b{font-size:15.5px;font-weight:700;letter-spacing:-.03em;color:#fff}
 #mmt-bar .mmt-fly-it b .nb{font-style:normal;margin-left:7px;padding:2px 7px;border-radius:99px;
 font-size:9.5px;font-weight:800;letter-spacing:.06em;background:#0071e3;color:#fff;vertical-align:2px}
 #mmt-bar .mmt-fly-it i{display:none}
 #mmt-bar .mmt-fly-it[aria-current=page] b{color:#8fc0ff}
 #mmt-bar .mmt-fly-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 6px}
 #mmt-bar .mmt-fly-grid .mmt-fly-it b{font-size:15px;font-weight:600}
-#mmt-bar .mmt-fly-grid .mmt-fly-it .th{width:48px;height:48px;border-radius:12px;font-size:18px;
-background:#fff;padding:8px}
+#mmt-bar .mmt-fly-grid .mmt-fly-it .th{width:40px;height:40px;border-radius:11px;font-size:16px;
+background:#fff;padding:6px}
 #mmt-bar .mmt-fly-grid .mmt-fly-it .th img{object-fit:contain}
-#mmt-bar .mmt-fly-foot{max-width:1224px;margin:0;padding:10px clamp(22px,2.6vw,34px) 24px}
+#mmt-bar .mmt-fly-foot{max-width:1224px;margin:0;padding:6px clamp(22px,2.6vw,34px) 18px}
 #mmt-bar .mmt-fly-foot a{font-size:14px;font-weight:600;color:#8fc0ff;text-decoration:none}
 #mmt-bar .mmt-fly-foot a:hover{text-decoration:underline}
 @media(max-width:820px){#mmt-bar .mmt-fly{display:none}}
@@ -2258,6 +2258,14 @@ def esc(s):
     return (s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
 
 
+_FLY_SHOT = {          # 랜딩 배너와 같은 그림(정본은 HOME_SHOT — 여기선 경로만 재기재)
+    "mark": "/assets/home/mark.webp",
+    "cue": "/assets/home/cue.png",
+    "theplan": "/assets/home/theplan.png",
+    "kontext": "/assets/home/kontext.jpg",
+    "heyreci": "/assets/home/heyreci.jpg",
+    "binbang": "https://bb.the-moment.us/assets/hero.jpg",
+}
 _NEWB = {"binbang": '<em class="nb">NEW</em>'}   # 플라이아웃에서 새 제품 표시
 BAR_TOP_N = 3          # 바에 직접 꺼내는 제품 수. 나머지는 더보기 안으로.
 
@@ -2295,9 +2303,13 @@ def shell_bar_markup(host="", act_extra=""):
         sl = sp.get("slug", "")
         pr = P.get(sl, {})
         cur = ' aria-current="page"' if host and _host_of(sp["href"]) == host else ""
-        shot = pr.get("shot") or ""
-        th = (f'<span class="th"><img src="{shot}" alt="" loading="lazy"></span>'
-              if shot else f'<span class="th">{pr.get("icon", "")}</span>')
+        # 랜딩 배너와 **같은 그림**을 쓴다 — 메뉴와 본문이 다른 그림이면 다른 것으로 읽힌다
+        # (2026-08-24 대표 지적). 헤이레시는 배너가 영상이라 첫 프레임을 떠서 넣었다.
+        shot = _FLY_SHOT.get(sl) or pr.get("shot") or ""
+        th = (f'<span class="th"><img src="https://the-moment.us{shot}" alt="" loading="lazy"></span>'
+              if shot.startswith("/") else
+              (f'<span class="th"><img src="{shot}" alt="" loading="lazy"></span>'
+               if shot else f'<span class="th">{pr.get("icon", "")}</span>'))
         line = esc(pr.get("tagline", "")) or esc(sp.get("sub", ""))
         ext = ' target="_blank" rel="noopener"' if sp.get("external") else ""
         prods.append(f'<a class="mmt-fly-it" href="{sp["href"]}"{ext}{cur}>{th}'
@@ -3626,28 +3638,23 @@ def ap_stage(slug, tone="", badge=""):
 
 
 def ap_index_section():
-    """애플 services 의 'Apple One 에 뭐가 묶여 있나' 섹션 문법:
-       왼쪽에 무엇을 하는 곳인지 한 문장, 오른쪽에 그 안에 뭐가 있는지 목록.
-       (2026-08-23 대표: "모멘터스가 어떤 철학으로 만드는지 + 오른쪽엔 제품들이 뭔지")"""
-    prods = "".join(
-        f'<a class="idx-it" href="{purl(sl)}"><span class="ic" style="--c:{P[sl].get("color", "#0b0c0e")}">'
-        f'{P[sl]["icon"]}</span><span class="tx"><b>{esc(P[sl]["short"])}</b>'
-        f'<i>{esc(P[sl]["tagline"])}</i></span></a>'
-        for sl in ["binbang", "heyreci", "mark", "cue", "theplan", "kontext"] if sl in P)
-    links = "".join(f'<a href="{h}">{t}</a>' for t, h in [
-        ("문의하기", "/inquiry/"), ("결제 내역 조회", "https://pay.the-moment.us/orders"),
-        ("결제 안내", "/how-to-pay/"), ("무료 도구", "/products/")])
+    """왼쪽에 무엇을 하는 곳인지 한 문장, 오른쪽엔 다음에 갈 곳 셋.
+       ⚠️ 제품 목록·결제 링크를 여기 다시 늘어놓지 마라 — 위 배너가 이미 그 일을 했고,
+          결제는 이 자리에서 할 일이 아니다(2026-08-24 대표 지적)."""
     return ('<section class="idx"><div class="idx-in">'
             '<div class="idx-l"><p class="k">모멘터스</p>'
             '<h2>나머지는 저희가 합니다.</h2>'
             '<p class="s">기다리고, 찾고, 정리하는 일은 기계가 더 잘합니다. '
             '그 시간을 돌려드리려고 하나씩 만듭니다. 무엇을 왜 만드는지, '
-            '무엇이 됐고 무엇이 안 됐는지 그대로 적어 둡니다.</p>'
-            '<div class="idx-cta"><a class="b" href="/about/">소개 보기</a>'
-            '<a class="b line" href="/stories/">인사이트 읽기</a></div></div>'
-            f'<div class="idx-r"><p class="k">제품</p><div class="idx-list">{prods}</div>'
-            f'<div class="idx-links">{links}</div></div>'
-            '</div></section>')
+            '무엇이 됐고 무엇이 안 됐는지 그대로 적어 둡니다.</p></div>'
+            '<div class="idx-r">'
+            '<a class="idx-go" href="/about/"><b>소개 보기</b>'
+            '<i>어떤 기준으로 만들고 무엇을 안 만드는지</i></a>'
+            '<a class="idx-go" href="/stories/"><b>인사이트 읽기</b>'
+            '<i>만들며 알게 된 것을 실측과 함께</i></a>'
+            '<a class="idx-go" href="/inquiry/"><b>문의하기</b>'
+            '<i>덜어 드릴 게 있으면 직접 읽고 답합니다</i></a>'
+            '</div></div></section>')
 
 
 def ap_tools_section():

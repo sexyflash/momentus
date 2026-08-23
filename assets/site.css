@@ -1223,6 +1223,11 @@ pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.62),rgba(0,0,0
 /* ── 2단 타일: 그림 위, 글 아래(애플 '모델 비교하기' 배치). 우리 og 배너는
       글자가 박혀 있어 그림 위에 글을 얹으면 겹친다 — 그래서 이쪽만 아래 띠. ── */
 .stg-art{width:100%;aspect-ratio:16/9;overflow:hidden;background:var(--paper)}
+/* ⚠️ video 는 자기 고유 크기(1600x900)로 그려진다 — width/height 100% 를 명시하지 않으면
+   창을 좁혀도 안 줄어들고 카드 밖으로 넘친다(2026-08-24 실측: 430px 화면에서 영상 폭 1600). */
+.stg-art img,.stg-art video{width:100%;height:100%;object-fit:cover;object-position:center;
+display:block;transition:transform .6s var(--ease)}
+.stg-art video{transition:none}
 .stg-art img{width:100%;height:100%;object-fit:contain;display:block;
 transition:transform .6s var(--ease)}
 .stg--hero .stg-art img,.stg--hero .stg-art video{object-fit:cover}
@@ -1257,21 +1262,13 @@ line-height:1.1;color:var(--ink)}
 .idx-cta .b{display:inline-flex;align-items:center;height:44px;padding:0 22px;border-radius:99px;
 font-size:15px;font-weight:600;background:var(--brand-cta);color:#fff}
 .idx-cta .b.line{background:transparent;color:var(--brand-cta);box-shadow:inset 0 0 0 1px currentColor}
-.idx-list{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
-.idx-it{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;
-transition:background .16s}
-.idx-it:hover{background:var(--paper)}
-.idx-it .ic{width:40px;height:40px;flex:0 0 auto;border-radius:11px;display:grid;place-items:center;
-font-size:17px;color:#fff;background:var(--c)}
-.idx-it .tx{min-width:0}
-.idx-it b{display:block;font-size:15px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
-.idx-it i{display:block;font-style:normal;font-size:13px;color:var(--gray);margin-top:2px;
-overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.idx-links{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);
-display:flex;flex-wrap:wrap;gap:8px 20px}
-.idx-links a{font-size:14px;font-weight:600;color:var(--ink)}
-.idx-links a:hover{color:var(--brand-cta)}
-@media(max-width:900px){.idx-in{grid-template-columns:1fr}.idx-list{grid-template-columns:1fr}}
+.idx-r{display:flex;flex-direction:column;gap:10px;align-self:center}
+.idx-go{display:block;padding:18px 22px;border-radius:14px;background:var(--paper);
+transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.idx-go:hover{transform:translateY(-2px);box-shadow:0 14px 30px -20px rgba(0,0,0,.35)}
+.idx-go b{display:block;font-size:17px;font-weight:700;letter-spacing:-.035em;color:var(--ink)}
+.idx-go i{display:block;font-style:normal;font-size:14px;color:var(--gray);margin-top:5px}
+@media(max-width:900px){.idx-in{grid-template-columns:1fr}}
 
 /* ── 무료 도구 = 애플 스토어 'The latest' 카드 레일 ── */
 .tsec{padding:clamp(56px,7vw,104px) 0 clamp(20px,2.6vw,40px)}
@@ -1337,26 +1334,6 @@ transition:opacity .65s var(--ease),transform .65s var(--ease)}
 .stg.in{opacity:1;transform:none}}
 
 /* 홈 상단 바 = 스포크와 같은 공용 1단 바(패밀리룩). 검색·테마만 우측에 얹는다. */
-#mmt-bar .mmt-act{margin-left:auto;display:flex;align-items:center;gap:4px;flex:0 0 auto}
-/* 문의는 '메뉴'가 아니라 '행동'이다 — 토스 헤더가 앱 다운로드를 버튼으로 두는 자리.
-   글자 수를 줄이려고 '문의'로 쓰던 것을 '문의하기'로 되돌린다(2026-08-23 대표 지적). */
-/* 버튼도 내비와 같은 글자꼴·크기 — 하나만 튀면 메뉴가 아니라 광고로 읽힌다. */
-/* 문의하기는 '있다'만 알리면 된다 — 꽉 채우면 광고처럼 튄다(2026-08-23 대표 지적). */
-#mmt-bar .mmt-cta{display:inline-flex;align-items:center;height:28px;padding:0 13px;
-border-radius:99px;background:transparent;color:#e6e9ee;
-box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);
-font-size:12.5px;font-weight:600;letter-spacing:-.02em;
-text-decoration:none;white-space:nowrap;margin-right:4px}
-#mmt-bar .mmt-cta:hover{background:rgba(255,255,255,.12);color:#fff}
-@media(max-width:640px){#mmt-bar .mmt-cta{display:none}}
-#mmt-bar .mmt-ib{display:grid;place-items:center;width:30px;height:30px;padding:0;border:0;
-border-radius:50%;background:none;color:#cfd4dc;cursor:pointer;transition:background .18s,color .18s}
-#mmt-bar .mmt-ib:hover{background:rgba(255,255,255,.12);color:#fff}
-#mmt-bar .mmt-ib svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;
-stroke-linecap:round;stroke-linejoin:round}
-#mmt-bar .mmt-ib .moon{display:none}
-html[data-theme="dark"] #mmt-bar .mmt-ib .moon{display:block}
-html[data-theme="dark"] #mmt-bar .mmt-ib .sun{display:none}
 #mmt-bar+.kb-sr{position:fixed}
 
 /* ═══ /about/ — toss.im/company 구조 실측 이식(2026-08-23) ══════════════════
