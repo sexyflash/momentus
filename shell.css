@@ -1,6 +1,6 @@
 /* MMT:BEGIN — 모멘터스 공용 셸(생성물). 손으로 고치지 말 것.
    정본: momentus/scripts/gen_site.py · 반영: momentus/scripts/sync_shell.py */
-:root{--mmt-gut:clamp(20px, 4vw, 56px);--mmt-maxw:1320px;--mmt-bar-h:44px;--mmt-bar2-h:64px;--mmt-fs-logo:22px;--mmt-fs-nav:14px;--mmt-fw-nav:600;--mmt-nav-gap:26px;--mmt-fs-cta:14px;--mmt-cta-pad:9px 18px;--mmt-cta-r:999px;--mmt-fs-base:16px;--mmt-lh-base:1.6;--mmt-ls-base:-0.015em;--mmt-fs-lead:18px;--mmt-lh-lead:1.65;--mmt-fs-sm:14px;--mmt-fs-h3:19px;--mmt-fs-h2:clamp(26px, 2.6vw, 34px);--mmt-lh-head:1.28;--mmt-ls-head:-0.035em;}
+:root{--mmt-gut:clamp(20px, 4vw, 56px);--mmt-maxw:1320px;--mmt-wm-font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Helvetica Neue","Segoe UI",sans-serif;--mmt-wm-fw:800;--mmt-wm-ls:-.035em;--mmt-wm-sm:15px;--mmt-wm-md:19px;--mmt-wm-lg:24px;--mmt-bar-h:44px;--mmt-bar2-h:64px;--mmt-fs-logo:22px;--mmt-fs-nav:14px;--mmt-fw-nav:600;--mmt-nav-gap:26px;--mmt-fs-cta:14px;--mmt-cta-pad:9px 18px;--mmt-cta-r:999px;--mmt-fs-base:16px;--mmt-lh-base:1.6;--mmt-ls-base:-0.015em;--mmt-fs-lead:18px;--mmt-lh-lead:1.65;--mmt-fs-sm:14px;--mmt-fs-h3:19px;--mmt-fs-h2:clamp(26px, 2.6vw, 34px);--mmt-lh-head:1.28;--mmt-ls-head:-0.035em;}
 /* 2026-08-23 실측 교정. 애플 globalnav 는 **검정이 아니다** —
    background rgba(250,250,252,.8) + backdrop-filter saturate(1.8) blur(20px),
    링크색 rgba(0,0,0,.8), 높이 44px, 내용 폭 1024px 중앙(2560 에서도 그대로).
@@ -18,8 +18,11 @@ letter-spacing:normal;line-height:normal}
 #mmt-bar .mmt-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:100%;
 max-width:1024px;margin:0 auto;padding:0 22px;gap:14px}
 #mmt-bar .mmt-in::-webkit-scrollbar{display:none}
-#mmt-bar .mmt-wm{justify-self:start;font-size:15px;font-weight:800;letter-spacing:-.03em;
-color:#111;text-decoration:none}
+/* 워드마크는 바의 시스템 폰트를 상속하면 안 된다 — 본문(Pretendard)과 글자꼴이 갈린다. */
+#mmt-bar .mmt-wm{justify-self:start;
+font-family:var(--mmt-wm-font,"Pretendard Variable",Pretendard,-apple-system,sans-serif);
+font-size:var(--mmt-wm-sm,15px);font-weight:var(--mmt-wm-fw,800);
+letter-spacing:var(--mmt-wm-ls,-.035em);color:#111;text-decoration:none}
 #mmt-bar .mmt-nav{justify-self:center;display:flex;align-items:center;gap:2px}
 #mmt-bar a.mmt-it{font-size:14px;font-weight:600;letter-spacing:-.02em;color:rgba(0,0,0,.8);
 text-decoration:none;padding:6px 13px;border-radius:99px;white-space:nowrap;position:relative}

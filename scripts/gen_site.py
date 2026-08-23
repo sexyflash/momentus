@@ -183,7 +183,7 @@ footer.site{border-top:1px solid var(--line);margin-top:clamp(70px,10vh,120px);p
 @media(max-width:760px){footer.site{grid-template-columns:1fr 1fr}}
 footer.site h4{margin:0 0 12px;font-size:11px;color:var(--faint);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
 footer.site a{display:block;padding:4px 0;color:var(--gray)}footer.site a:hover{color:var(--ink)}
-footer.site .brand .wm{font-size:18px;font-weight:800}footer.site .brand p{margin-top:10px;color:var(--faint);font-size:12px;line-height:1.6}
+footer.site .brand .wm{font-family:var(--mmt-wm-font,var(--sans));font-size:var(--mmt-wm-md,19px);font-weight:var(--mmt-wm-fw,800);letter-spacing:var(--mmt-wm-ls,-.035em)}footer.site .brand p{margin-top:10px;color:var(--faint);font-size:12px;line-height:1.6}
 footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:1px solid var(--line);color:var(--faint);font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .hero{padding:clamp(48px,9vh,100px) var(--gut) 0;text-align:center;display:flex;flex-direction:column;align-items:center}
 .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);display:inline-flex;gap:8px;align-items:center}
@@ -1463,8 +1463,11 @@ POST_CSS = """
    toc x=56 w=200 · main x=321 w=780 · aside x=1144 w=240
    h1 64px/800/lh78 · sub 23.2px/lh37 · prose 16px/lh25.6 · h2 23.2px/800/mt38
    그전 우리 글은 본문이 좁고 태그 줄이 밖으로 튀어나갔다(대표 지적). */
-.pst{max-width:1560px;margin:0 auto;padding:0 clamp(20px,4vw,56px)}
-.pst-top{max-width:780px;margin:0 auto;padding:clamp(40px,6vw,84px) 0 0}
+/* 폭은 목록(/stories/, .nws max-width 1224)과 **똑같이** 맞춘다 — 상세만 좁으면
+   같은 페이지를 오간다는 느낌이 깨지고 양옆 레일 정렬이 어긋나 보인다(2026-08-23 대표 지적).
+   1224 = 목차 180 + 32 + 본문 1fr + 32 + 이어서읽기 220. 제목은 본문 칸에 얹어 좌변을 맞춘다. */
+.pst{max-width:1224px;margin:0 auto;padding:0 24px}
+.pst-top{grid-column:2;padding:clamp(40px,6vw,84px) 0 0}
 .pst-badges{display:flex;flex-wrap:wrap;gap:8px}
 .pst-chip{display:inline-flex;align-items:center;height:34px;padding:0 15px;border-radius:99px;
 font-size:13.5px;font-weight:600;white-space:nowrap;background:var(--soft);color:var(--gray)}
@@ -1473,15 +1476,15 @@ font-size:13.5px;font-weight:600;white-space:nowrap;background:var(--soft);color
 line-height:1.22;color:var(--ink);text-wrap:balance}
 .pst-sub{margin-top:18px;font-size:clamp(16px,1.6vw,23px);line-height:1.6;color:var(--gray);
 letter-spacing:-.02em}
-.pst-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,780px) 240px;
-gap:0 clamp(20px,3vw,43px);margin-top:clamp(26px,3.4vw,44px)}
-.pst-toc{grid-column:1;align-self:start;position:sticky;top:64px;max-width:200px;justify-self:end}
+.pst-grid{display:grid;grid-template-columns:180px minmax(0,1fr) 220px;
+gap:0 32px;align-items:start}
+.pst-toc{grid-column:1;grid-row:2;align-self:start;position:sticky;top:64px}
 .pst-toc .rt{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:12px}
 .pst-toc a{display:block;padding:7px 0 7px 14px;border-left:2px solid var(--line);
 font-size:13.5px;line-height:1.5;color:var(--gray)}
 .pst-toc a:hover{color:var(--ink);border-left-color:var(--ink)}
-.pst-main{grid-column:2;min-width:0}
-.pst-aside{grid-column:3;align-self:start;position:sticky;top:64px}
+.pst-main{grid-column:2;grid-row:2;min-width:0;padding-top:clamp(20px,2.6vw,34px)}
+.pst-aside{grid-column:3;grid-row:2;align-self:start;position:sticky;top:64px}
 .pst-aside .rt{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:14px}
 .pst-aside a{display:flex;gap:11px;padding:9px 0;align-items:flex-start}
 .pst-aside .th{width:56px;height:42px;flex:0 0 auto;border-radius:8px;overflow:hidden;background:var(--soft)}
@@ -1515,17 +1518,17 @@ color:var(--gray)}
 .pst-prose table{width:100%;border-collapse:collapse;margin-top:18px;font-size:15px;display:block;
 overflow-x:auto}
 .pst-prose th,.pst-prose td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left}
-.pst-end{max-width:780px;margin:clamp(44px,5vw,72px) auto clamp(64px,8vw,110px);
+.pst-end{grid-column:2;grid-row:3;margin:clamp(44px,5vw,72px) 0 clamp(64px,8vw,110px);
 padding-top:26px;border-top:1px solid var(--line)}
 .pst-tags{display:flex;flex-wrap:wrap;gap:8px}
 .pst-tags a{display:inline-flex;align-items:center;height:32px;padding:0 13px;border-radius:99px;
 background:var(--soft);font-size:13px;font-weight:600;color:var(--gray)}
 .pst-tags a:hover{background:var(--ink);color:#fff}
 .pst-back{display:inline-block;margin-top:22px;font-size:14.5px;font-weight:600;color:var(--brand-cta)}
-@media(max-width:1180px){
+@media(max-width:1120px){
   .pst-grid{grid-template-columns:minmax(0,1fr)}
   .pst-toc,.pst-aside{display:none}
-  .pst-main{grid-column:1;max-width:780px;margin:0 auto}
+  .pst-top,.pst-main,.pst-end{grid-column:1}
 }
 """
 CSS += POST_CSS
@@ -1894,6 +1897,15 @@ with open("assets/site.css", "w", encoding="utf-8") as f:
 SHELL_TOKENS = {
     "--mmt-gut": "clamp(20px, 4vw, 56px)",
     "--mmt-maxw": "1320px",
+    # 워드마크 — 자리마다 크기·자간이 달랐다(바 15/-.03em, 푸터 18/기본, apex 헤더 또 다름).
+    # 로고가 없을수록 워드마크가 로고 역할을 하니 규격을 한 곳에서 정한다(2026-08-23).
+    "--mmt-wm-font": '"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,'
+                     '"Apple SD Gothic Neo","Helvetica Neue","Segoe UI",sans-serif',
+    "--mmt-wm-fw": "800",
+    "--mmt-wm-ls": "-.035em",
+    "--mmt-wm-sm": "15px",
+    "--mmt-wm-md": "19px",
+    "--mmt-wm-lg": "24px",
     "--mmt-bar-h": "44px",
     "--mmt-bar2-h": "64px",
     "--mmt-fs-logo": "22px",
@@ -1932,8 +1944,11 @@ letter-spacing:normal;line-height:normal}
 #mmt-bar .mmt-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:100%;
 max-width:1024px;margin:0 auto;padding:0 22px;gap:14px}
 #mmt-bar .mmt-in::-webkit-scrollbar{display:none}
-#mmt-bar .mmt-wm{justify-self:start;font-size:15px;font-weight:800;letter-spacing:-.03em;
-color:#111;text-decoration:none}
+/* 워드마크는 바의 시스템 폰트를 상속하면 안 된다 — 본문(Pretendard)과 글자꼴이 갈린다. */
+#mmt-bar .mmt-wm{justify-self:start;
+font-family:var(--mmt-wm-font,"Pretendard Variable",Pretendard,-apple-system,sans-serif);
+font-size:var(--mmt-wm-sm,15px);font-weight:var(--mmt-wm-fw,800);
+letter-spacing:var(--mmt-wm-ls,-.035em);color:#111;text-decoration:none}
 #mmt-bar .mmt-nav{justify-self:center;display:flex;align-items:center;gap:2px}
 #mmt-bar a.mmt-it{font-size:14px;font-weight:600;letter-spacing:-.02em;color:rgba(0,0,0,.8);
 text-decoration:none;padding:6px 13px;border-radius:99px;white-space:nowrap;position:relative}
@@ -2198,7 +2213,8 @@ SHELL_JS = """/* MOMENTUS shell.js — 1단 브랜드 바. 생성물(scripts/gen
       +   "padding:0 20px;overflow-x:auto;scrollbar-width:none}"
       + "@media(max-width:640px){#mmt-bar .mmt-in{padding:0 16px}}"
       + "#mmt-bar .mmt-in::-webkit-scrollbar{display:none}"
-      + "#mmt-bar .mmt-wm{font-size:13px;font-weight:800;letter-spacing:-.01em;color:#fff;text-decoration:none;flex:0 0 auto}"
+      + "#mmt-bar .mmt-wm{font-family:var(--mmt-wm-font,inherit);font-size:var(--mmt-wm-sm,15px);"
+      + "font-weight:var(--mmt-wm-fw,800);letter-spacing:var(--mmt-wm-ls,-.035em);color:#111;text-decoration:none}"
       + "#mmt-bar .mmt-nav{display:flex;align-items:center;gap:4px;flex:0 0 auto}"
       + "#mmt-bar a.mmt-it{font-size:13px;font-weight:500;letter-spacing:-.01em;color:var(--mmt-fg);"
       +   "text-decoration:none;padding:5px 9px;border-radius:7px;white-space:nowrap;position:relative}"
@@ -2688,12 +2704,12 @@ for i, slug in enumerate(PORDER):
     _chips = ('<span class="pst-chip pst-chip--solid">' + esc(ps["cat"]) + '</span>'
               + "".join(f'<span class="pst-chip">#{esc(t)}</span>' for t in ps["tags"]))
     body = f"""<div class="pst">
+  <div class="pst-grid">
   <header class="pst-top">
     <div class="pst-badges">{_chips}</div>
     <h1 class="pst-h1">{esc(ps['title'])}</h1>
     <p class="pst-sub">{esc(ps['sub'])}</p>
   </header>
-  <div class="pst-grid">
     {_toc}
     <article class="pst-main">
       <div class="pst-meta">
@@ -2705,10 +2721,10 @@ for i, slug in enumerate(PORDER):
       <div class="pst-prose">{ps['body']}</div>
     </article>
     <aside class="pst-aside"><div class="rt">이어서 읽기</div>{_relaside}</aside>
-  </div>
   <div class="pst-end">
     {'<div class="pst-tags">' + tagh + '</div>' if tagh else ''}
     <a class="pst-back" href="{STORY_BASE}/">← 이야기 전체 보기</a>
+  </div>
   </div>
 </div>"""
     os.makedirs(f"stories/{slug}", exist_ok=True)
