@@ -1288,26 +1288,62 @@ transition:opacity .18s var(--ease)}
 .stg-pill:hover{opacity:.88}
 .stg-pill--line{background:transparent;color:var(--brand-cta);box-shadow:inset 0 0 0 1px currentColor}
 .stg--ink .stg-pill--line{color:#8fc0ff}
-/* 무료 도구 섹션 — 배너 아래, 한 단 낮은 무게로. */
-.tsec{background:var(--soft);margin-top:clamp(12px,2.1vw,30px)}
-.tsec-in{max-width:1520px;margin:0 auto;padding:clamp(48px,6vw,88px) clamp(20px,2.6vw,44px)}
-.tsec-h .k{font-size:12.5px;font-weight:700;color:var(--brand-cta)}
-.tsec-h h2{margin-top:10px;font-size:clamp(24px,3vw,40px);font-weight:800;letter-spacing:-.05em;
-line-height:1.12;color:var(--ink)}
-.tsec-h .s{margin-top:12px;font-size:16px;line-height:1.7;color:var(--gray);max-width:52ch}
-.tsec-grid{margin-top:clamp(26px,3.2vw,44px);display:grid;
-grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.4vw,16px)}
-.tsec-it{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:14px;
-background:var(--paper);transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
-.tsec-it:hover{transform:translateY(-2px);box-shadow:0 12px 28px -18px rgba(0,0,0,.35)}
-.tsec-it .ic{width:44px;height:44px;flex:0 0 auto;border-radius:12px;display:grid;
-place-items:center;font-size:19px;background:var(--soft);color:var(--ink)}
-.tsec-it .tx{min-width:0}
-.tsec-it b{display:block;font-size:15.5px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
-.tsec-it i{display:block;font-style:normal;font-size:13.5px;color:var(--gray);margin-top:3px;
+/* ── 철학 + 제품 색인(애플 서비스 번들 섹션 문법) ── */
+.idx{background:var(--soft);margin-top:clamp(20px,2.6vw,40px)}
+.idx-in{max-width:1520px;margin:0 auto;padding:clamp(52px,6.5vw,96px) clamp(16px,2.4vw,40px);
+display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(28px,5vw,80px)}
+.idx .k{font-size:12.5px;font-weight:700;color:var(--brand-cta)}
+.idx-l h2{margin-top:12px;font-size:clamp(26px,3.4vw,46px);font-weight:800;letter-spacing:-.055em;
+line-height:1.1;color:var(--ink)}
+.idx-l .s{margin-top:16px;font-size:16px;line-height:1.75;color:var(--gray);max-width:44ch}
+.idx-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.idx-cta .b{display:inline-flex;align-items:center;height:44px;padding:0 22px;border-radius:99px;
+font-size:15px;font-weight:600;background:var(--brand-cta);color:#fff}
+.idx-cta .b.line{background:transparent;color:var(--brand-cta);box-shadow:inset 0 0 0 1px currentColor}
+.idx-list{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+.idx-it{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;
+transition:background .16s}
+.idx-it:hover{background:var(--paper)}
+.idx-it .ic{width:40px;height:40px;flex:0 0 auto;border-radius:11px;display:grid;place-items:center;
+font-size:17px;color:#fff;background:var(--c)}
+.idx-it .tx{min-width:0}
+.idx-it b{display:block;font-size:15px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.idx-it i{display:block;font-style:normal;font-size:13px;color:var(--gray);margin-top:2px;
 overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-@media(max-width:900px){.tsec-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.tsec-grid{grid-template-columns:1fr}}
+.idx-links{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);
+display:flex;flex-wrap:wrap;gap:8px 20px}
+.idx-links a{font-size:14px;font-weight:600;color:var(--ink)}
+.idx-links a:hover{color:var(--brand-cta)}
+@media(max-width:900px){.idx-in{grid-template-columns:1fr}.idx-list{grid-template-columns:1fr}}
+
+/* ── 무료 도구 = 애플 스토어 'The latest' 카드 레일 ── */
+.tsec{padding:clamp(56px,7vw,104px) 0 clamp(20px,2.6vw,40px)}
+.tsec-h{display:flex;align-items:baseline;justify-content:space-between;gap:20px;
+max-width:1520px;margin:0 auto;padding:0 clamp(16px,2.4vw,40px)}
+.tsec-h h2{font-size:clamp(22px,2.6vw,34px);font-weight:800;letter-spacing:-.05em;color:var(--ink)}
+.tsec-h h2 span{color:var(--faint)}
+.tcards{display:flex;gap:clamp(12px,1.4vw,20px);overflow-x:auto;scroll-snap-type:x mandatory;
+scroll-behavior:smooth;scrollbar-width:none;
+max-width:1520px;margin:clamp(20px,2.4vw,32px) auto 0;padding:0 clamp(16px,2.4vw,40px) 6px}
+.tcards::-webkit-scrollbar{display:none}
+.tcard{flex:0 0 clamp(260px,27vw,400px);scroll-snap-align:start;position:relative;
+display:flex;flex-direction:column;aspect-ratio:4/5;border-radius:18px;overflow:hidden;
+background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);
+padding:clamp(20px,2vw,28px);transition:transform .2s var(--ease)}
+.tcard:hover{transform:translateY(-3px)}
+.tcard--ink{background:#0b0c0e;box-shadow:none}
+.tcard .k{font-size:12px;font-weight:800;letter-spacing:.04em;color:var(--brand-cta)}
+.tcard--ink .k{color:#8fc0ff}
+.tcard b{margin-top:10px;font-size:clamp(20px,1.9vw,26px);font-weight:800;letter-spacing:-.045em;
+color:var(--ink)}
+.tcard--ink b{color:#fff}
+.tcard i{margin-top:8px;font-style:normal;font-size:14.5px;line-height:1.6;color:var(--gray)}
+.tcard--ink i{color:#aeb5c0}
+.tcard .art{margin-top:auto;display:grid;place-items:center;padding-bottom:6px}
+.tcard .gl{display:grid;place-items:center;width:clamp(96px,11vw,148px);aspect-ratio:1;
+border-radius:32px;font-size:clamp(40px,4.6vw,64px);color:#fff;
+background:linear-gradient(150deg,var(--c),color-mix(in srgb,var(--c) 55%,#0b0c0e));
+box-shadow:0 22px 48px -22px color-mix(in srgb,var(--c) 70%,transparent)}
 .stg-icons{flex:1;display:flex;gap:10px;flex-wrap:wrap;align-items:center;align-content:center;
 padding:clamp(30px,3.6vw,52px) clamp(20px,2.6vw,34px)}
 /* 홈 하단 레일 — apple.com/airpods 아래쪽 '더 알아보기' 캐러셀과 같은 문법:
@@ -2120,13 +2156,15 @@ transition:opacity .17s ease,transform .17s ease,visibility .17s}
 display:grid;grid-template-columns:1.05fr .95fr;gap:40px}
 #mmt-bar .mmt-fly-h{font-size:12px;font-weight:600;letter-spacing:-.01em;color:#79828f;
 margin:0 0 14px;padding:0 6px}
-#mmt-bar .mmt-fly-it{display:flex;align-items:center;gap:13px;padding:8px 6px;border-radius:12px;
+#mmt-bar .mmt-fly-it{display:flex;align-items:center;gap:15px;padding:9px 7px;border-radius:13px;
 text-decoration:none;color:#cfd4dc}
 #mmt-bar .mmt-fly-it:hover{background:rgba(255,255,255,.08)}
-#mmt-bar .mmt-fly-it .th{width:68px;height:44px;border-radius:9px;overflow:hidden;flex:0 0 auto;
+#mmt-bar .mmt-fly-it .th{width:104px;height:66px;border-radius:11px;overflow:hidden;flex:0 0 auto;
 background:rgba(255,255,255,.09);display:grid;place-items:center;font-size:19px;color:#e6e9ee}
 #mmt-bar .mmt-fly-it .th img{width:100%;height:100%;object-fit:cover;display:block}
 #mmt-bar .mmt-fly-it b{font-size:17px;font-weight:700;letter-spacing:-.03em;color:#fff}
+#mmt-bar .mmt-fly-it b .nb{font-style:normal;margin-left:7px;padding:2px 7px;border-radius:99px;
+font-size:9.5px;font-weight:800;letter-spacing:.06em;background:#0071e3;color:#fff;vertical-align:2px}
 #mmt-bar .mmt-fly-it i{display:none}
 #mmt-bar .mmt-fly-it[aria-current=page] b{color:#8fc0ff}
 #mmt-bar .mmt-fly-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 6px}
@@ -2214,6 +2252,7 @@ def esc(s):
     return (s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
 
 
+_NEWB = {"binbang": '<em class="nb">NEW</em>'}   # 플라이아웃에서 새 제품 표시
 BAR_TOP_N = 3          # 바에 직접 꺼내는 제품 수. 나머지는 더보기 안으로.
 
 
@@ -2256,7 +2295,7 @@ def shell_bar_markup(host="", act_extra=""):
         line = esc(pr.get("tagline", "")) or esc(sp.get("sub", ""))
         ext = ' target="_blank" rel="noopener"' if sp.get("external") else ""
         prods.append(f'<a class="mmt-fly-it" href="{sp["href"]}"{ext}{cur}>{th}'
-                     f'<span class="tx"><b>{sp["label"]}</b><i>{line}</i></span></a>')
+                     f'<span class="tx"><b>{sp["label"]}{_NEWB.get(sl, "")}</b><i>{line}</i></span></a>')
     tools = "".join(
         f'<a class="mmt-fly-it" href="https://the-moment.us/tools/{t}/">'
         f'<span class="th">{P[t]["icon"]}</span>'
@@ -3528,7 +3567,8 @@ with open("assets/apex.js", "w", encoding="utf-8") as f:
 _SPOKE_HREF = {sp["slug"]: sp["href"] for sp in BAR["spokes"] if sp.get("slug")}
 # 두 번째 버튼은 '알아보기'가 아니라 **그 제품에서 하는 일**을 말한다(애플의 '구입하기' 자리).
 AP_GO = {"binbang": "빈방 알림 등록", "heyreci": "헤이레시 열기", "mark": "로고 만들어 보기",
-         "cue": "모의면접 시작하기", "theplan": "플래너 보러 가기"}
+         "cue": "모의면접 시작하기", "theplan": "플래너 보러 가기",
+         "kontext": "컨텍스트 열기"}
 
 
 # 홈 타일은 **글자가 없는 사진**을 쓴다. og 배너를 깔면 우리 제목과 겹친다.
@@ -3541,6 +3581,7 @@ HOME_SHOT = {
     "mark": "/assets/home/mark.webp",
     "cue": "/assets/home/cue.png",
     "theplan": "/assets/home/theplan.png",
+    "kontext": "/assets/home/kontext.jpg",
 }
 HOME_VIDEO = {"heyreci": "/assets/home/heyreci-hero.mp4"}
 
@@ -3573,19 +3614,55 @@ def ap_stage(slug, tone="", badge=""):
             f'<div class="stg-cta">{cta}</div></div></section>')
 
 
+def ap_index_section():
+    """애플 services 의 'Apple One 에 뭐가 묶여 있나' 섹션 문법:
+       왼쪽에 무엇을 하는 곳인지 한 문장, 오른쪽에 그 안에 뭐가 있는지 목록.
+       (2026-08-23 대표: "모멘터스가 어떤 철학으로 만드는지 + 오른쪽엔 제품들이 뭔지")"""
+    prods = "".join(
+        f'<a class="idx-it" href="{purl(sl)}"><span class="ic" style="--c:{P[sl].get("color", "#0b0c0e")}">'
+        f'{P[sl]["icon"]}</span><span class="tx"><b>{esc(P[sl]["short"])}</b>'
+        f'<i>{esc(P[sl]["tagline"])}</i></span></a>'
+        for sl in ["binbang", "heyreci", "mark", "cue", "theplan", "kontext"] if sl in P)
+    links = "".join(f'<a href="{h}">{t}</a>' for t, h in [
+        ("문의하기", "/inquiry/"), ("결제 내역 조회", "https://pay.the-moment.us/orders"),
+        ("결제 안내", "/how-to-pay/"), ("무료 도구", "/products/")])
+    return ('<section class="idx"><div class="idx-in">'
+            '<div class="idx-l"><p class="k">모멘터스</p>'
+            '<h2>나머지는 저희가 합니다.</h2>'
+            '<p class="s">기다리고, 찾고, 정리하는 일은 기계가 더 잘합니다. '
+            '그 시간을 돌려드리려고 하나씩 만듭니다. 무엇을 왜 만드는지, '
+            '무엇이 됐고 무엇이 안 됐는지 그대로 적어 둡니다.</p>'
+            '<div class="idx-cta"><a class="b" href="/about/">소개 보기</a>'
+            '<a class="b line" href="/stories/">인사이트 읽기</a></div></div>'
+            f'<div class="idx-r"><p class="k">제품</p><div class="idx-list">{prods}</div>'
+            f'<div class="idx-links">{links}</div></div>'
+            '</div></section>')
+
+
 def ap_tools_section():
-    """무료 도구는 배너가 아니라 **아래 섹션**으로 — 파는 제품과 같은 무게로 놓을 게 아니다
-       (2026-08-23 대표: "무료도구 6종은 섹션을 아래로 내려서")."""
-    items = "".join(
-        f'<a class="tsec-it" href="/tools/{t}/">'
-        f'<span class="ic">{P[t]["icon"]}</span>'
-        f'<span class="tx"><b>{esc(P[t]["short"])}</b>'
-        f'<i>{esc(P[t]["tagline"])}</i></span></a>' for t in TOOLS)
-    return ('<section class="tsec"><div class="tsec-in">'
-            '<div class="tsec-h"><p class="k">무료</p>'
-            f'<h2>설치 없이 바로 쓰는 도구 {len(TOOLS)}종</h2>'
-            '<p class="s">북마크바에 끌어놓거나 크롬에 추가하면 끝. 회원가입도 결제도 없습니다.</p></div>'
-            f'<div class="tsec-grid">{items}</div></div></section>')
+    """애플 스토어 'The latest' 실측(apple.com/store, 1440):
+       카드 400x500(4:5) · 모서리 18px · 배경이 검정↔흰색 교차 · 가로 스크롤 · 좌우 여백은 그리드 정렬.
+       구성 = 작은 머리말 → 굵은 제목 → 한 줄 → 아래쪽에 큰 그림.
+       (2026-08-23 대표: "이미지 쓰지 말고 카드 형태로, 높이가 좀 있게, 애플 스토어처럼")"""
+    cards = []
+    for i, t in enumerate(TOOLS):
+        pr = P[t]
+        dark = i % 2 == 0
+        cards.append(
+            f'<a class="tcard{" tcard--ink" if dark else ""}" href="/tools/{t}/" '
+            f'style="--c:{pr.get("color", "#3182f6")}">'
+            f'<span class="k">무료</span>'
+            f'<b>{esc(pr["short"])}</b>'
+            f'<i>{esc(pr["tagline"])}</i>'
+            f'<span class="art" aria-hidden="true"><span class="gl">{pr["icon"]}</span></span></a>')
+    return ('<section class="tsec"><div class="tsec-h">'
+            '<h2>설치 없이. <span>지금 바로 쓰는 도구 여섯 개.</span></h2>'
+            '<div class="rl-nav" data-rail="toolrail">'
+            '<button type="button" data-d="-1" aria-label="이전"><svg viewBox="0 0 24 24">'
+            '<path d="M15 6l-6 6 6 6"/></svg></button>'
+            '<button type="button" data-d="1" aria-label="다음"><svg viewBox="0 0 24 24">'
+            '<path d="M9 6l6 6-6 6"/></svg></button></div></div>'
+            f'<div class="tcards" id="toolrail">{"".join(cards)}</div></section>')
 
 
 def ap_tools_stage():
@@ -3608,8 +3685,10 @@ ap_body = (
     + ap_stage("mark", "hero")
     + ap_stage("cue", "hero")
     + ap_stage("theplan", "hero")
+    + ap_stage("kontext", "hero ink")
     + '</div>'
     + ap_tools_section()
+    + ap_index_section()
     )
 
 

@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>문의 내용 — MOMENTUS</title>
-<meta name="description" content="접수하신 문의의 진행 상황을 확인하고 이어서 대화하실 수 있는 페이지입니다. 회원가입 없이 접수 시 받은 링크로 바로 들어옵니다.">
+<title>컨텍스트 — MOMENTUS</title>
+<meta name="description" content="매번 상황을 다시 설명하는 것 워드·PPT는 사람이 읽으라고 만든 문서입니다. AI는 그 안의 배치와 숨은 뜻을 잘 못 읽습니다.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MOMENTUS">
 <meta property="og:locale" content="ko_KR">
-<link rel="canonical" href="https://the-moment.us/i/">
-<meta property="og:url" content="https://the-moment.us/i/">
+<link rel="canonical" href="https://the-moment.us/products/kontext/">
+<meta property="og:url" content="https://the-moment.us/products/kontext/">
 <meta property="og:image" content="https://the-moment.us/og/default.png">
 <meta name="twitter:image" content="https://the-moment.us/og/default.png">
-<meta property="og:title" content="문의 내용 — MOMENTUS">
-<meta property="og:description" content="접수하신 문의의 진행 상황을 확인하고 이어서 대화하실 수 있는 페이지입니다. 회원가입 없이 접수 시 받은 링크로 바로 들어옵니다.">
+<meta property="og:title" content="컨텍스트 — MOMENTUS">
+<meta property="og:description" content="매번 상황을 다시 설명하는 것 워드·PPT는 사람이 읽으라고 만든 문서입니다. AI는 그 안의 배치와 숨은 뜻을 잘 못 읽습니다.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="문의 내용 — MOMENTUS">
-<meta name="twitter:description" content="접수하신 문의의 진행 상황을 확인하고 이어서 대화하실 수 있는 페이지입니다. 회원가입 없이 접수 시 받은 링크로 바로 들어옵니다.">
+<meta name="twitter:title" content="컨텍스트 — MOMENTUS">
+<meta name="twitter:description" content="매번 상황을 다시 설명하는 것 워드·PPT는 사람이 읽으라고 만든 문서입니다. AI는 그 안의 배치와 숨은 뜻을 잘 못 읽습니다.">
 <link rel="stylesheet" href="/assets/fonts/pretendard.css?v=1.3.9">
 <link rel="stylesheet" href="/assets/momentus.css">
 <link rel="stylesheet" href="/assets/site.css?v=29a5b28b">
@@ -27,43 +27,7 @@ if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.dataset.theme=t;}catch(e){}})();
 </script>
 <script defer src="/assets/apex.js?v=29a5b28b"></script>
-<style>
-/* 폼 컨트롤만 정의한다. 페이지 골격(여백·제목·본문)은 apex 의 .lg/.lg-head/.lg-body 를
-   그대로 쓴다 — 2026-08-07 사고: 자체 컨테이너를 만들었더니 고정 헤더(56px) 보정이 빠져
-   제목이 헤더에 달라붙고 제목 크기도 다른 페이지와 어긋났다.
-   🚫 여기에 컨테이너·h1 스타일을 다시 만들지 마라. 기존 패턴을 먼저 찾아 써라. */
-.iq-f{display:grid;gap:20px;margin:0 0 8px}
-.iq-f label{display:block;font-size:14px;font-weight:600;color:#202020}
-.iq-f label>span{display:block;margin:0 0 8px}
-.iq-f label em{font-weight:400;color:#909090;font-style:normal}
-.iq-f input[type=text],.iq-f input[type=email],.iq-f textarea,.iq-f select{
-  width:100%;padding:var(--mmt-field-pad,14px 16px);
-  border:var(--mmt-field-bw,1px) solid var(--mmt-line,#e9e9e9);
-  border-radius:var(--mmt-r-field,12px);font:inherit;
-  font-size:var(--mmt-fs-field,15px);font-weight:400;background:#fff;color:#202020}
-.iq-f textarea{min-height:150px;resize:vertical;line-height:1.7}
-.iq-f input:focus,.iq-f textarea:focus,.iq-f select:focus{outline:none;border-color:#202020}
-.iq-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.iq-go{display:inline-block;background:var(--brand-cta,#1b64da);color:#fff;border:0;
-  border-radius:var(--mmt-r-ctrl,999px);padding:var(--mmt-ctrl-pad,14px 28px);
-  font:inherit;font-size:var(--mmt-fs-ctrl,15px);font-weight:var(--mmt-fw-ctrl,700);
-  cursor:pointer;text-decoration:none}
-.iq-go[disabled]{opacity:.5;cursor:default}
-.iq-err{color:#D33;font-size:14px;min-height:20px}
-.iq-card{background:#F7F8F9;border-radius:14px;padding:26px}
-.iq-card b{font-size:18px;display:block;margin:0 0 8px}
-.iq-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:700}
-.iq-thr{display:grid;gap:14px;margin:0 0 34px}
-.iq-msg{border-radius:14px;padding:16px 18px;white-space:pre-wrap;line-height:1.75;font-size:15px}
-.iq-msg.me{background:#F7F8F9;color:#202020}
-.iq-msg.us{background:#202020;color:#fff}
-.iq-msg .who{font-size:12px;font-weight:700;opacity:.6;margin:0 0 6px}
-html[data-theme="dark"] .iq-f label{color:#EAEAEA}
-html[data-theme="dark"] .iq-f input,html[data-theme="dark"] .iq-f textarea,
-html[data-theme="dark"] .iq-f select{background:#151515;color:#EAEAEA;border-color:#2A2A2A}
-html[data-theme="dark"] .iq-card,html[data-theme="dark"] .iq-msg.me{background:#151515;color:#EAEAEA}
-html[data-theme="dark"] .iq-go,html[data-theme="dark"] .iq-msg.us{background:#EAEAEA;color:#111}
-</style><meta name="robots" content="noindex,nofollow"><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://the-moment.us/#org", "name": "모멘터스", "alternateName": "MOMENTUS", "url": "https://the-moment.us", "email": "hello.momentus@gmail.com"}, {"@type": "WebPage", "name": "문의 내용", "description": "접수하신 문의의 진행 상황을 확인하고 이어서 대화하실 수 있는 페이지입니다. 회원가입 없이 접수 시 받은 링크로 바로 들어옵니다.", "url": "https://the-moment.us/i/", "inLanguage": "ko", "publisher": {"@id": "https://the-moment.us/#org"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "홈", "item": "https://the-moment.us/"}, {"@type": "ListItem", "position": 2, "name": "문의 내용", "item": "https://the-moment.us/i/"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://the-moment.us/#org", "name": "모멘터스", "alternateName": "MOMENTUS", "url": "https://the-moment.us", "email": "hello.momentus@gmail.com"}, {"@type": "SoftwareApplication", "name": "AI가 알아먹는 형태로 생각을 쌓습니다.", "description": "매번 상황을 다시 설명하는 것 워드·PPT는 사람이 읽으라고 만든 문서입니다. AI는 그 안의 배치와 숨은 뜻을 잘 못 읽습니다.", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "image": "https://the-moment.us/og/default.png", "brand": {"@type": "Brand", "name": "MOMENTUS"}, "publisher": {"@id": "https://the-moment.us/#org"}, "offers": {"@type": "Offer", "url": "https://kontext.the-moment.us", "availability": "https://schema.org/InStock", "seller": {"@id": "https://the-moment.us/#org"}}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "홈", "item": "https://the-moment.us/"}, {"@type": "ListItem", "position": 2, "name": "products", "item": "https://the-moment.us/products/"}, {"@type": "ListItem", "position": 3, "name": "AI가 알아먹는 형태로 생각을 쌓습니다.", "item": "https://the-moment.us/products/kontext/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "무엇이 다른가요?", "acceptedAnswer": {"@type": "Answer", "text": "문서를 사람이 읽기 좋게 쓰는 대신, AI가 이해하는 구조(노드와 관계)로 쌓습니다."}}, {"@type": "Question", "name": "지금 쓸 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "베타로 열려 있고 무료로 시작할 수 있습니다."}}]}]}</script>
 </head>
 <body class="kbp">
 <!-- MMT:BEGIN — 모멘터스 공용 1단 바(생성물). 손으로 고치지 말 것. -->
@@ -80,61 +44,83 @@ html[data-theme="dark"] .iq-go,html[data-theme="dark"] .iq-msg.us{background:#EA
   </div>
 </div>
 <main>
-<div class="lg">
-  <div class="lg-head">
-    <h1 id="h">문의 내용</h1>
-    <p class="upd" id="meta">불러오는 중…</p>
-  </div>
-  <div class="lg-body">
-    <div class="iq-thr" id="thr"></div>
-    <div id="box" hidden>
-      <div class="iq-err" id="err"></div>
-      <div class="iq-f">
-        <label><span>이어서 말씀해 주세요</span>
-          <textarea id="body" placeholder="추가로 알려주실 내용이 있으면 적어주세요."></textarea></label>
-        <div><button class="iq-go" id="go" type="button">보내기</button></div>
-      </div>
+<div class="vd">
+  <div class="vd-hero">
+    <img src="https://www.vinylc.com/upload/module/MD00004416/vinylc_2021_calendar_diary_03.jpg" alt="컨텍스트">
+    <div class="cap">
+      <div class="kick">AI 컨텍스트 · 무한 캔버스</div>
+      <h1>AI가 알아먹는 형태로 생각을 쌓습니다.</h1>
     </div>
-    <p>이 페이지 주소가 곧 열쇠입니다. 회원가입 없이 언제든 다시 열어 확인하실 수 있어요.<br>
-      <a href="/how-to-pay/">결제는 이렇게 진행됩니다 →</a></p>
+  </div>
+
+  <div class="vd-note"><p>워드·PPT는 사람이 읽으라고 만든 문서입니다. AI는 그 안의 배치와 숨은 뜻을 잘 못 읽습니다. 컨텍스트는 생각을 노드로 잇는 무한 캔버스에 쌓아, AI가 그대로 따라 읽을 수 있는 구조로 만듭니다.</p></div>
+
+  <div class="vd-full"><img src="https://www.vinylc.com/upload/module/MD00004417/vinylc_2021_calendar_diary_033.jpg" alt="" loading="lazy"></div>
+
+  <div class="vd-note"><p><b>무</b></p><p>한</p></div>
+
+  <div class="vd-flow">
+    <div class="vd-duo">
+      <img src="https://www.vinylc.com/upload/module/MD00004418/vinylc_2021_calendar_diary_04.jpg" alt="" loading="lazy">
+      <img src="https://www.vinylc.com/upload/module/MD00004420/vinylc_2021_calendar_diary_05.jpg" alt="" loading="lazy">
+    </div>
+  </div>
+
+  <div class="vd-note"><p><b>A</b></p><p>I</p></div>
+
+  <div class="vd-flow">
+    <div class="vd-pair">
+      <img src="https://www.vinylc.com/upload/module/MD00004421/vinylc_2021_calendar_diary_06.jpg" alt="" loading="lazy">
+      <img src="https://www.vinylc.com/upload/module/MD00004422/vinylc_2021_calendar_diary_07.jpg" alt="" loading="lazy">
+    </div>
+    <div class="vd-wide"><img src="https://www.vinylc.com/upload/module/MD00004425/vinylc_2021_calendar_diary_08.jpg" alt="" loading="lazy"></div>
+  </div>
+
+  <div class="vd-note"><p><b>프</b></p><p>리</p></div>
+
+  <div class="vd-flow">
+    <div class="vd-duo rev">
+      <img src="https://www.vinylc.com/upload/goods/GD00000066/vinylc_2021_calendar_diary_00.jpg" alt="" loading="lazy">
+      <img src="https://www.vinylc.com/upload/module/MD00004426/vinylc_2021_calendar_diary_09.jpg" alt="" loading="lazy">
+    </div>
+    <div class="vd-wide"><img src="https://www.vinylc.com/upload/module/MD00004413/vinylc_2021_calendar_diary_01.jpg" alt="" loading="lazy"></div>
+  </div>
+
+  <div class="vd-full"><img src="https://www.vinylc.com/upload/module/MD00004415/vinylc_2021_calendar_diary_02.jpg" alt="" loading="lazy"></div>
+
+  <div class="vd-cta">
+    <a class="btn lg cta-main" href="https://kontext.the-moment.us" target="_blank" rel="noopener">컨텍스트 열기</a>
+    <div class="hint">베타 — 무료로 시작합니다</div>
+  </div>
+
+  <section class="vd-qa"><h2>자주 묻는 질문</h2><div class="vd-qa-i"><h3>무엇이 다른가요?</h3><p>문서를 사람이 읽기 좋게 쓰는 대신, AI가 이해하는 구조(노드와 관계)로 쌓습니다.</p></div><div class="vd-qa-i"><h3>지금 쓸 수 있나요?</h3><p>베타로 열려 있고 무료로 시작할 수 있습니다.</p></div></section>
+
+  <a class="vd-next" href="/tools/quickpang/">
+    <img src="https://www.vinylc.com/upload/module/MD00004422/vinylc_2021_calendar_diary_07.jpg" alt="퀵팡 · 쿠팡 퀵보기" loading="lazy">
+    <div class="cap">
+      <div class="lbl">Next Product</div>
+      <div class="ttl">클릭 없이 옵션·재고 확인.</div>
+    </div>
+  </a>
+</div>
+
+<div class="vd-dock">
+  <div class="vd-guide" id="vdguide">
+    <div class="inner"><div class="st"><div class="k">STEP 1</div><b>빈 캔버스에서 시작</b><p>폴더도 파일명도 없습니다. 눌러서 생각을 놓습니다.</p></div><div class="st"><div class="k">STEP 2</div><b>노드로 잇기</b><p>텍스트·어시스턴트·결과 노드가 서로를 이어 처리합니다.</p></div><div class="st"><div class="k">STEP 3</div><b>누르기만</b><p>확장·딥다이브·피벗. 프롬프트를 쓰지 않고 방향만 고릅니다.</p></div></div>
+  </div>
+  <div class="bar">
+    <div class="id">
+      <div class="n">컨텍스트</div>
+      <div class="s">베타 — 무료로 시작합니다</div>
+    </div>
+    <div class="acts">
+      <button class="how" type="button" id="vdhow" aria-expanded="false" aria-controls="vdguide">
+        설치 방법 <span class="car">▾</span>
+      </button>
+      <a class="go" href="https://kontext.the-moment.us" target="_blank" rel="noopener">컨텍스트 열기</a>
+    </div>
   </div>
 </div>
-<script>
-(function(){
-  var qs=new URLSearchParams(location.search),id=qs.get('id')||'',k=qs.get('k')||'';
-  var thr=document.getElementById('thr'),meta=document.getElementById('meta');
-  function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
-  function when(ms){var d=new Date(ms);return d.getFullYear()+'.'+(d.getMonth()+1)+'.'+d.getDate()+
-    ' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
-  async function load(){
-    if(!id||!k){ meta.textContent='주소가 올바르지 않습니다. 접수 확인 메일의 링크로 들어와 주세요.'; return }
-    var r=await fetch('https://pay.the-moment.us/api/inquiry/thread?id='+encodeURIComponent(id)+'&k='+encodeURIComponent(k));
-    if(!r.ok){ meta.textContent='문의를 찾을 수 없습니다. 링크가 정확한지 확인해 주세요.'; return }
-    var d=await r.json();
-    document.getElementById('h').textContent='문의 '+d.id;
-    meta.innerHTML=esc(d.topic)+' · 접수 '+when(d.created_at)+
-      (d.status==='replied'?' · <b>답변 완료</b>':' · 답변 준비 중');
-    thr.innerHTML=d.messages.map(function(m){
-      return '<div class="iq-msg '+(m.author==='momentus'?'us':'me')+'">'+
-        '<div class="who">'+(m.author==='momentus'?'모멘터스':'보내신 내용')+' · '+when(m.created_at)+'</div>'+
-        esc(m.body)+'</div>' }).join('');
-    document.getElementById('box').hidden=false;
-  }
-  document.getElementById('go').addEventListener('click',async function(){
-    var t=document.getElementById('body'),b=this,err=document.getElementById('err');
-    if(!t.value.trim()) return t.focus();
-    err.textContent=''; b.disabled=true; b.textContent='보내는 중…';
-    try{
-      var r=await fetch('https://pay.the-moment.us/api/inquiry/reply',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({id:id,k:k,body:t.value})});
-      var d=await r.json(); if(!r.ok) throw new Error(d.error||'잠시 후 다시 시도해 주세요.');
-      t.value=''; await load();
-    }catch(ex){ err.textContent=ex.message }
-    b.disabled=false; b.textContent='보내기';
-  });
-  load();
-})();
-</script>
 </main>
 <footer class="site">
   <div class="brand"><div class="wm">MOMENTUS</div><p>쓸모 있는 것만<br>만듭니다.</p></div>
@@ -179,5 +165,14 @@ html[data-theme="dark"] .iq-go,html[data-theme="dark"] .iq-msg.us{background:#EA
   }).catch(function(err){console.warn("[agentation] 로드 실패(네트워크/CDN):",err);});
 })();
 </script>
-</body>
+<script>
+(function(){
+  var btn=document.getElementById('vdhow'), g=document.getElementById('vdguide');
+  if(!btn||!g) return;
+  btn.addEventListener('click', function(){
+    var open = g.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+  });
+})();
+</script></body>
 </html>

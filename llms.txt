@@ -10,6 +10,7 @@
 - [더플랜 · 디지털 플래너](https://notes.the-moment.us): 내 손에 맞는 플래너를 골라서 씁니다.
 - [큐 · AI 모의면접](https://cue.the-moment.us): 면접장에서 얼어붙지 않게 잡아 줍니다.
 - [빈방 · 취소표 알림](https://bb.the-moment.us): 다 찬 숙소도 취소는 나옵니다.
+- [컨텍스트](https://kontext.the-moment.us): AI가 알아먹는 형태로 생각을 쌓습니다.
 
 ## 무료 브라우저 도구
 - [퀵팡 · 쿠팡 퀵보기](https://the-moment.us/tools/quickpang/): 클릭 없이 옵션·재고 확인.

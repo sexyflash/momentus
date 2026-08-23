@@ -1239,26 +1239,62 @@ transition:opacity .18s var(--ease)}
 .stg-pill:hover{opacity:.88}
 .stg-pill--line{background:transparent;color:var(--brand-cta);box-shadow:inset 0 0 0 1px currentColor}
 .stg--ink .stg-pill--line{color:#8fc0ff}
-/* 무료 도구 섹션 — 배너 아래, 한 단 낮은 무게로. */
-.tsec{background:var(--soft);margin-top:clamp(12px,2.1vw,30px)}
-.tsec-in{max-width:1520px;margin:0 auto;padding:clamp(48px,6vw,88px) clamp(20px,2.6vw,44px)}
-.tsec-h .k{font-size:12.5px;font-weight:700;color:var(--brand-cta)}
-.tsec-h h2{margin-top:10px;font-size:clamp(24px,3vw,40px);font-weight:800;letter-spacing:-.05em;
-line-height:1.12;color:var(--ink)}
-.tsec-h .s{margin-top:12px;font-size:16px;line-height:1.7;color:var(--gray);max-width:52ch}
-.tsec-grid{margin-top:clamp(26px,3.2vw,44px);display:grid;
-grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.4vw,16px)}
-.tsec-it{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:14px;
-background:var(--paper);transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
-.tsec-it:hover{transform:translateY(-2px);box-shadow:0 12px 28px -18px rgba(0,0,0,.35)}
-.tsec-it .ic{width:44px;height:44px;flex:0 0 auto;border-radius:12px;display:grid;
-place-items:center;font-size:19px;background:var(--soft);color:var(--ink)}
-.tsec-it .tx{min-width:0}
-.tsec-it b{display:block;font-size:15.5px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
-.tsec-it i{display:block;font-style:normal;font-size:13.5px;color:var(--gray);margin-top:3px;
+/* ── 철학 + 제품 색인(애플 서비스 번들 섹션 문법) ── */
+.idx{background:var(--soft);margin-top:clamp(20px,2.6vw,40px)}
+.idx-in{max-width:1520px;margin:0 auto;padding:clamp(52px,6.5vw,96px) clamp(16px,2.4vw,40px);
+display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(28px,5vw,80px)}
+.idx .k{font-size:12.5px;font-weight:700;color:var(--brand-cta)}
+.idx-l h2{margin-top:12px;font-size:clamp(26px,3.4vw,46px);font-weight:800;letter-spacing:-.055em;
+line-height:1.1;color:var(--ink)}
+.idx-l .s{margin-top:16px;font-size:16px;line-height:1.75;color:var(--gray);max-width:44ch}
+.idx-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.idx-cta .b{display:inline-flex;align-items:center;height:44px;padding:0 22px;border-radius:99px;
+font-size:15px;font-weight:600;background:var(--brand-cta);color:#fff}
+.idx-cta .b.line{background:transparent;color:var(--brand-cta);box-shadow:inset 0 0 0 1px currentColor}
+.idx-list{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+.idx-it{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;
+transition:background .16s}
+.idx-it:hover{background:var(--paper)}
+.idx-it .ic{width:40px;height:40px;flex:0 0 auto;border-radius:11px;display:grid;place-items:center;
+font-size:17px;color:#fff;background:var(--c)}
+.idx-it .tx{min-width:0}
+.idx-it b{display:block;font-size:15px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.idx-it i{display:block;font-style:normal;font-size:13px;color:var(--gray);margin-top:2px;
 overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-@media(max-width:900px){.tsec-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.tsec-grid{grid-template-columns:1fr}}
+.idx-links{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);
+display:flex;flex-wrap:wrap;gap:8px 20px}
+.idx-links a{font-size:14px;font-weight:600;color:var(--ink)}
+.idx-links a:hover{color:var(--brand-cta)}
+@media(max-width:900px){.idx-in{grid-template-columns:1fr}.idx-list{grid-template-columns:1fr}}
+
+/* ── 무료 도구 = 애플 스토어 'The latest' 카드 레일 ── */
+.tsec{padding:clamp(56px,7vw,104px) 0 clamp(20px,2.6vw,40px)}
+.tsec-h{display:flex;align-items:baseline;justify-content:space-between;gap:20px;
+max-width:1520px;margin:0 auto;padding:0 clamp(16px,2.4vw,40px)}
+.tsec-h h2{font-size:clamp(22px,2.6vw,34px);font-weight:800;letter-spacing:-.05em;color:var(--ink)}
+.tsec-h h2 span{color:var(--faint)}
+.tcards{display:flex;gap:clamp(12px,1.4vw,20px);overflow-x:auto;scroll-snap-type:x mandatory;
+scroll-behavior:smooth;scrollbar-width:none;
+max-width:1520px;margin:clamp(20px,2.4vw,32px) auto 0;padding:0 clamp(16px,2.4vw,40px) 6px}
+.tcards::-webkit-scrollbar{display:none}
+.tcard{flex:0 0 clamp(260px,27vw,400px);scroll-snap-align:start;position:relative;
+display:flex;flex-direction:column;aspect-ratio:4/5;border-radius:18px;overflow:hidden;
+background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);
+padding:clamp(20px,2vw,28px);transition:transform .2s var(--ease)}
+.tcard:hover{transform:translateY(-3px)}
+.tcard--ink{background:#0b0c0e;box-shadow:none}
+.tcard .k{font-size:12px;font-weight:800;letter-spacing:.04em;color:var(--brand-cta)}
+.tcard--ink .k{color:#8fc0ff}
+.tcard b{margin-top:10px;font-size:clamp(20px,1.9vw,26px);font-weight:800;letter-spacing:-.045em;
+color:var(--ink)}
+.tcard--ink b{color:#fff}
+.tcard i{margin-top:8px;font-style:normal;font-size:14.5px;line-height:1.6;color:var(--gray)}
+.tcard--ink i{color:#aeb5c0}
+.tcard .art{margin-top:auto;display:grid;place-items:center;padding-bottom:6px}
+.tcard .gl{display:grid;place-items:center;width:clamp(96px,11vw,148px);aspect-ratio:1;
+border-radius:32px;font-size:clamp(40px,4.6vw,64px);color:#fff;
+background:linear-gradient(150deg,var(--c),color-mix(in srgb,var(--c) 55%,#0b0c0e));
+box-shadow:0 22px 48px -22px color-mix(in srgb,var(--c) 70%,transparent)}
 .stg-icons{flex:1;display:flex;gap:10px;flex-wrap:wrap;align-items:center;align-content:center;
 padding:clamp(30px,3.6vw,52px) clamp(20px,2.6vw,34px)}
 /* 홈 하단 레일 — apple.com/airpods 아래쪽 '더 알아보기' 캐러셀과 같은 문법:
