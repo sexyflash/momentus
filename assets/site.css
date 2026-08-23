@@ -1219,7 +1219,7 @@ pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.62),rgba(0,0,0
 .stg-art{width:100%;aspect-ratio:16/9;overflow:hidden;background:var(--paper)}
 .stg-art img{width:100%;height:100%;object-fit:contain;display:block;
 transition:transform .6s var(--ease)}
-.stg--hero .stg-art img{object-fit:cover}
+.stg--hero .stg-art img,.stg--hero .stg-art video{object-fit:cover}
 .stg:hover .stg-art img{transform:scale(1.02)}
 .stg--paper .stg-art{background:var(--soft)}
 .stg--ink .stg-art{background:none}
@@ -1239,6 +1239,26 @@ transition:opacity .18s var(--ease)}
 .stg-pill:hover{opacity:.88}
 .stg-pill--line{background:transparent;color:var(--brand-cta);box-shadow:inset 0 0 0 1px currentColor}
 .stg--ink .stg-pill--line{color:#8fc0ff}
+/* 무료 도구 섹션 — 배너 아래, 한 단 낮은 무게로. */
+.tsec{background:var(--soft);margin-top:clamp(12px,2.1vw,30px)}
+.tsec-in{max-width:1520px;margin:0 auto;padding:clamp(48px,6vw,88px) clamp(20px,2.6vw,44px)}
+.tsec-h .k{font-size:12.5px;font-weight:700;color:var(--brand-cta)}
+.tsec-h h2{margin-top:10px;font-size:clamp(24px,3vw,40px);font-weight:800;letter-spacing:-.05em;
+line-height:1.12;color:var(--ink)}
+.tsec-h .s{margin-top:12px;font-size:16px;line-height:1.7;color:var(--gray);max-width:52ch}
+.tsec-grid{margin-top:clamp(26px,3.2vw,44px);display:grid;
+grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.4vw,16px)}
+.tsec-it{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:14px;
+background:var(--paper);transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.tsec-it:hover{transform:translateY(-2px);box-shadow:0 12px 28px -18px rgba(0,0,0,.35)}
+.tsec-it .ic{width:44px;height:44px;flex:0 0 auto;border-radius:12px;display:grid;
+place-items:center;font-size:19px;background:var(--soft);color:var(--ink)}
+.tsec-it .tx{min-width:0}
+.tsec-it b{display:block;font-size:15.5px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.tsec-it i{display:block;font-style:normal;font-size:13.5px;color:var(--gray);margin-top:3px;
+overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:900px){.tsec-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.tsec-grid{grid-template-columns:1fr}}
 .stg-icons{flex:1;display:flex;gap:10px;flex-wrap:wrap;align-items:center;align-content:center;
 padding:clamp(30px,3.6vw,52px) clamp(20px,2.6vw,34px)}
 /* 홈 하단 레일 — apple.com/airpods 아래쪽 '더 알아보기' 캐러셀과 같은 문법:
