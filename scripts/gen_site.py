@@ -1530,6 +1530,35 @@ background:var(--soft);font-size:13px;font-weight:600;color:var(--gray)}
 """
 CSS += POST_CSS
 
+INQP_CSS = """
+/* ═══ /inquiry/ — 소개·이야기와 같은 골격(2026-08-23) ══════════════════════
+   그전엔 760px 짜리 폼 한 덩이가 허공에 떠 있어 다른 페이지와 따로 놀았다.
+   컨테이너·제목 크기를 abt/nws 와 맞추고, 왼쪽에 '무엇을 물어도 되는지'를 둔다.
+   ⚠️ 폼 마크업과 스크립트(#f · #go · #err · #iqRoot)는 손대지 않는다 — 제출이 그걸로 돈다. */
+.iqp{max-width:1224px;margin:0 auto;padding:0 24px}
+.iqp-head{padding:clamp(64px,9vw,132px) 0 clamp(26px,3.4vw,44px)}
+.iqp-head h1{font-size:clamp(32px,4.4vw,54px);font-weight:800;letter-spacing:-.05em;
+line-height:1.1;color:var(--ink)}
+.iqp-head p{margin-top:16px;font-size:17px;line-height:1.72;color:var(--gray);max-width:46ch}
+.iqp-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:clamp(24px,4vw,64px);
+padding-bottom:clamp(72px,9vw,130px)}
+.iqp-side{align-self:start}
+.iqp-fact{display:flex;align-items:baseline;gap:10px;padding:14px 0;border-top:1px solid var(--line)}
+.iqp-fact b{font-size:20px;font-weight:800;letter-spacing:-.04em;color:var(--ink);white-space:nowrap}
+.iqp-fact span{font-size:14.5px;color:var(--gray)}
+.iqp-ex{margin-top:26px;list-style:none;padding:0;display:flex;flex-direction:column;gap:9px}
+.iqp-ex li{position:relative;padding-left:16px;font-size:15px;line-height:1.6;color:var(--ink2)}
+.iqp-ex li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;
+border-radius:50%;background:var(--faint)}
+.iqp-mail{margin-top:26px;font-size:14px;color:var(--faint)}
+.iqp-mail a{color:var(--ink);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.iqp-form{background:var(--soft);border-radius:18px;padding:clamp(22px,2.8vw,36px)}
+.iqp-form>p{margin-top:18px;font-size:13.5px;line-height:1.7;color:var(--faint)}
+.iqp-form>p a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:860px){.iqp-grid{grid-template-columns:1fr;gap:26px}}
+"""
+CSS += INQP_CSS
+
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
 # 내용이 바뀌면 URL도 바뀌게 해서 즉시 반영시킨다.
 # ── 클래스 충돌 감시 ───────────────────────────────────────────────────────
@@ -1654,7 +1683,7 @@ FOOTER = f"""<footer class="site">
   <div><h4>무료 도구</h4>{_FT_TOOLS}</div>
   <!-- 🚫 문의하기를 mailto 로 되돌리지 마라 — 2026-08-07. mailto 는 기록이 아무 데도 안 남아
        봇도 못 보고 이력도 없었다. 창구는 /inquiry/ 하나다(단일 원장 inquiries). -->
-  <div><h4>모멘터스</h4><a href="/log/">로그</a><a href="/about/">소개</a><a href="/inquiry/">문의하기</a><a href="/how-to-pay/">결제 안내</a><a href="/legal/terms/">이용약관</a><a href="/legal/privacy/">개인정보처리방침</a><a href="/legal/refund/">환불 규정</a></div>
+  <div><h4>모멘터스</h4><a href="/stories/">이야기</a><a href="/about/">회사소개</a><a href="/inquiry/">문의하기</a><a href="/how-to-pay/">결제 안내</a><a href="/legal/terms/">이용약관</a><a href="/legal/privacy/">개인정보처리방침</a><a href="/legal/refund/">환불 규정</a></div>
   <div class="biz">
     <span>{BIZ['name']}</span><span>대표 {BIZ['ceo']}</span><span>사업자등록번호 {BIZ['reg']}</span><span>통신판매업신고 {BIZ['mail_order']}</span>
     <span>{BIZ['addr']}</span><span>{BIZ['tel']}</span><span>{BIZ['email']}</span><span>개인정보보호책임자 {BIZ['privacy_officer']}</span>
@@ -3587,7 +3616,7 @@ INQ_CSS = """<style>
 .iq-f textarea{min-height:150px;resize:vertical;line-height:1.7}
 .iq-f input:focus,.iq-f textarea:focus,.iq-f select:focus{outline:none;border-color:#202020}
 .iq-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.iq-go{display:inline-block;background:#202020;color:#fff;border:0;
+.iq-go{display:inline-block;background:var(--brand-cta,#1b64da);color:#fff;border:0;
   border-radius:var(--mmt-r-ctrl,999px);padding:var(--mmt-ctrl-pad,14px 28px);
   font:inherit;font-size:var(--mmt-fs-ctrl,15px);font-weight:var(--mmt-fw-ctrl,700);
   cursor:pointer;text-decoration:none}
@@ -3608,12 +3637,26 @@ html[data-theme="dark"] .iq-card,html[data-theme="dark"] .iq-msg.me{background:#
 html[data-theme="dark"] .iq-go,html[data-theme="dark"] .iq-msg.us{background:#EAEAEA;color:#111}
 </style>"""
 
-INQUIRY = f"""<div class="lg">
-  <div class="lg-head">
-    <h1>문의하기</h1>
-    <p class="upd">로고 제작, 기업·단체 플래너, 그 밖에 무엇이든 남겨주세요. 영업일 기준 하루 안에 답변드립니다.</p>
-  </div>
-  <div class="lg-body" id="iqRoot">
+INQUIRY = f"""<div class="iqp">
+  <header class="iqp-head">
+    <h1>무엇을 덜어 드릴까요.</h1>
+    <p>제품에 대한 것도, 제휴나 협업도 여기로 오시면 됩니다.
+      지금 없는 것을 만들어 달라는 이야기도 좋습니다.</p>
+  </header>
+  <div class="iqp-grid">
+    <aside class="iqp-side">
+      <div class="iqp-fact"><b>영업일 하루</b><span>안에 답을 드립니다</span></div>
+      <div class="iqp-fact"><b>직접</b><span>읽고 직접 답합니다</span></div>
+      <div class="iqp-fact"><b>기록</b><span>웹 스레드로 이어서 대화합니다</span></div>
+      <ul class="iqp-ex">
+        <li>로고·명함을 새로 만들고 싶어요</li>
+        <li>기업·단체용 플래너를 맞추고 싶어요</li>
+        <li>이런 걸 만들어 주실 수 있나요</li>
+        <li>같이 해볼 만한 게 있을까요</li>
+      </ul>
+      <p class="iqp-mail">폼이 불편하시면 <a href="mailto:hello.momentus@gmail.com">hello.momentus@gmail.com</a> 으로 주셔도 됩니다.</p>
+    </aside>
+    <div class="iqp-form" id="iqRoot">
     <div class="iq-err" id="err"></div>
     <form class="iq-f" id="f">
       <label><span>무엇을 도와드릴까요?</span>
@@ -3633,8 +3676,9 @@ INQUIRY = f"""<div class="lg">
         <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
       <div><button class="iq-go" type="submit" id="go">문의 보내기</button></div>
     </form>
-    <p>보내주신 이메일은 답변을 드리는 데에만 씁니다.<br>
+    <p>보내주신 이메일은 답변을 드리는 데에만 씁니다.
       결제가 어떻게 진행되는지는 <a href="/how-to-pay/">결제 안내</a>에서 미리 보실 수 있습니다.</p>
+    </div>
   </div>
 </div>
 <script>

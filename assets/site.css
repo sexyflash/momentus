@@ -1469,3 +1469,29 @@ background:var(--soft);font-size:13px;font-weight:600;color:var(--gray)}
   .pst-toc,.pst-aside{display:none}
   .pst-main{grid-column:1;max-width:780px;margin:0 auto}
 }
+
+/* ═══ /inquiry/ — 소개·이야기와 같은 골격(2026-08-23) ══════════════════════
+   그전엔 760px 짜리 폼 한 덩이가 허공에 떠 있어 다른 페이지와 따로 놀았다.
+   컨테이너·제목 크기를 abt/nws 와 맞추고, 왼쪽에 '무엇을 물어도 되는지'를 둔다.
+   ⚠️ 폼 마크업과 스크립트(#f · #go · #err · #iqRoot)는 손대지 않는다 — 제출이 그걸로 돈다. */
+.iqp{max-width:1224px;margin:0 auto;padding:0 24px}
+.iqp-head{padding:clamp(64px,9vw,132px) 0 clamp(26px,3.4vw,44px)}
+.iqp-head h1{font-size:clamp(32px,4.4vw,54px);font-weight:800;letter-spacing:-.05em;
+line-height:1.1;color:var(--ink)}
+.iqp-head p{margin-top:16px;font-size:17px;line-height:1.72;color:var(--gray);max-width:46ch}
+.iqp-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:clamp(24px,4vw,64px);
+padding-bottom:clamp(72px,9vw,130px)}
+.iqp-side{align-self:start}
+.iqp-fact{display:flex;align-items:baseline;gap:10px;padding:14px 0;border-top:1px solid var(--line)}
+.iqp-fact b{font-size:20px;font-weight:800;letter-spacing:-.04em;color:var(--ink);white-space:nowrap}
+.iqp-fact span{font-size:14.5px;color:var(--gray)}
+.iqp-ex{margin-top:26px;list-style:none;padding:0;display:flex;flex-direction:column;gap:9px}
+.iqp-ex li{position:relative;padding-left:16px;font-size:15px;line-height:1.6;color:var(--ink2)}
+.iqp-ex li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;
+border-radius:50%;background:var(--faint)}
+.iqp-mail{margin-top:26px;font-size:14px;color:var(--faint)}
+.iqp-mail a{color:var(--ink);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.iqp-form{background:var(--soft);border-radius:18px;padding:clamp(22px,2.8vw,36px)}
+.iqp-form>p{margin-top:18px;font-size:13.5px;line-height:1.7;color:var(--faint)}
+.iqp-form>p a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:860px){.iqp-grid{grid-template-columns:1fr;gap:26px}}
