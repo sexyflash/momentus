@@ -1455,6 +1455,79 @@ padding:8px 15px;border-radius:99px;background:var(--soft);color:var(--gray)}
 """
 CSS += NEWS_CSS
 
+POST_CSS = """
+/* ═══ 글 상세 — mark.the-moment.us/insights/ 구조 실측 이식(2026-08-23) ══════
+   실측(1440): .post-grid cols 1fr/780px/240px · gap 43.2px · max-width 1560 · padding 0 56px
+   toc x=56 w=200 · main x=321 w=780 · aside x=1144 w=240
+   h1 64px/800/lh78 · sub 23.2px/lh37 · prose 16px/lh25.6 · h2 23.2px/800/mt38
+   그전 우리 글은 본문이 좁고 태그 줄이 밖으로 튀어나갔다(대표 지적). */
+.pst{max-width:1560px;margin:0 auto;padding:0 clamp(20px,4vw,56px)}
+.pst-top{max-width:780px;margin:0 auto;padding:clamp(40px,6vw,84px) 0 0}
+.pst-badges{display:flex;flex-wrap:wrap;gap:8px}
+.pst-chip{display:inline-flex;align-items:center;height:34px;padding:0 15px;border-radius:99px;
+font-size:13.5px;font-weight:600;white-space:nowrap;background:var(--soft);color:var(--gray)}
+.pst-chip--solid{background:var(--ink);color:#fff}
+.pst-h1{margin-top:20px;font-size:clamp(30px,4.4vw,64px);font-weight:800;letter-spacing:-.05em;
+line-height:1.22;color:var(--ink);text-wrap:balance}
+.pst-sub{margin-top:18px;font-size:clamp(16px,1.6vw,23px);line-height:1.6;color:var(--gray);
+letter-spacing:-.02em}
+.pst-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,780px) 240px;
+gap:0 clamp(20px,3vw,43px);margin-top:clamp(26px,3.4vw,44px)}
+.pst-toc{grid-column:1;align-self:start;position:sticky;top:64px;max-width:200px;justify-self:end}
+.pst-toc .rt{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:12px}
+.pst-toc a{display:block;padding:7px 0 7px 14px;border-left:2px solid var(--line);
+font-size:13.5px;line-height:1.5;color:var(--gray)}
+.pst-toc a:hover{color:var(--ink);border-left-color:var(--ink)}
+.pst-main{grid-column:2;min-width:0}
+.pst-aside{grid-column:3;align-self:start;position:sticky;top:64px}
+.pst-aside .rt{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:14px}
+.pst-aside a{display:flex;gap:11px;padding:9px 0;align-items:flex-start}
+.pst-aside .th{width:56px;height:42px;flex:0 0 auto;border-radius:8px;overflow:hidden;background:var(--soft)}
+.pst-aside .th img{width:100%;height:100%;object-fit:cover;display:block}
+.pst-aside b{font-size:13px;font-weight:600;line-height:1.45;color:var(--ink)}
+.pst-aside a:hover b{color:var(--brand-cta)}
+.pst-meta{display:flex;align-items:center;justify-content:space-between;gap:16px;
+padding:6px 0 22px}
+.pst-by{display:flex;align-items:center;gap:11px}
+.pst-by .av{width:38px;height:38px;border-radius:50%;background:var(--ink);color:#fff;
+display:grid;place-items:center;font-size:15px;font-weight:800}
+.pst-by .nm{font-size:14.5px;font-weight:700;color:var(--ink)}
+.pst-by .dt{font-size:13.5px;color:var(--faint)}
+.pst-share{display:flex;gap:7px}
+.pst-share a{width:34px;height:34px;border-radius:50%;background:var(--soft);
+display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--gray)}
+.pst-share a:hover{background:var(--ink);color:#fff}
+.pst-cover{width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:var(--soft)}
+.pst-cover img{width:100%;height:100%;object-fit:cover;display:block}
+.pst-prose{margin-top:clamp(26px,3vw,40px);font-size:16.5px;line-height:1.78;color:var(--ink2)}
+.pst-prose h2{margin:38px 0 0;font-size:clamp(20px,1.9vw,23px);font-weight:800;
+letter-spacing:-.035em;color:var(--ink)}
+.pst-prose h3{margin:28px 0 0;font-size:18px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.pst-prose p{margin-top:14px}
+.pst-prose ul,.pst-prose ol{margin-top:14px;padding-left:20px}
+.pst-prose li{margin-top:7px}
+.pst-prose b,.pst-prose strong{color:var(--ink);font-weight:700}
+.pst-prose blockquote{margin:22px 0;padding:14px 18px;background:var(--soft);border-radius:12px;
+color:var(--gray)}
+.pst-prose img{max-width:100%;border-radius:12px;margin-top:18px}
+.pst-prose table{width:100%;border-collapse:collapse;margin-top:18px;font-size:15px;display:block;
+overflow-x:auto}
+.pst-prose th,.pst-prose td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left}
+.pst-end{max-width:780px;margin:clamp(44px,5vw,72px) auto clamp(64px,8vw,110px);
+padding-top:26px;border-top:1px solid var(--line)}
+.pst-tags{display:flex;flex-wrap:wrap;gap:8px}
+.pst-tags a{display:inline-flex;align-items:center;height:32px;padding:0 13px;border-radius:99px;
+background:var(--soft);font-size:13px;font-weight:600;color:var(--gray)}
+.pst-tags a:hover{background:var(--ink);color:#fff}
+.pst-back{display:inline-block;margin-top:22px;font-size:14.5px;font-weight:600;color:var(--brand-cta)}
+@media(max-width:1180px){
+  .pst-grid{grid-template-columns:minmax(0,1fr)}
+  .pst-toc,.pst-aside{display:none}
+  .pst-main{grid-column:1;max-width:780px;margin:0 auto}
+}
+"""
+CSS += POST_CSS
+
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
 # 내용이 바뀌면 URL도 바뀌게 해서 즉시 반영시킨다.
 # ── 클래스 충돌 감시 ───────────────────────────────────────────────────────
@@ -2404,21 +2477,58 @@ def _get(url, timeout=8):
         return r.read()
 
 
-def _rss_items(raw, label, limit=4):
+# 제품이 발행한 글은 제품 사이트에 쌓인다(mark 만 172편). 허브의 '이야기'가 그걸 못 보면
+# 우리가 쓴 글이 3편밖에 없는 것처럼 보인다(2026-08-23 대표 지적). 피드에서 **글만** 골라 온다.
+_FEED_ONLY = {"mark": "/insights/"}      # 슬러그 → 이 경로를 포함한 항목만 글로 본다
+
+
+def _rss_items(raw, label, limit=4, only=None):
     root = ET.fromstring(raw)
     out = []
     for it in root.iter("item"):
         t = (it.findtext("title") or "").strip()
         link = (it.findtext("link") or "").strip()
         pub = (it.findtext("pubDate") or "").strip()
+        if only and only not in link:
+            continue
         try:
             d = datetime.datetime.strptime(pub[:16], "%a, %d %b %Y").date().isoformat()
         except Exception:
             continue
-        out.append(dict(kind="post", src=label, title=t, url=link, date=d))
+        out.append(dict(kind="post", src=label, title=t, url=link, date=d,
+                        desc=(it.findtext("description") or "").strip(),
+                        cat=(it.findtext("category") or "").strip()))
         if len(out) >= limit:
             break
     return out
+
+
+OG_CACHE = "data/og_cache.json"
+
+
+def og_images(urls):
+    """외부 글의 표지 = 그 페이지의 og:image. 한 번 읽으면 캐시에 남겨 다시 안 읽는다."""
+    cache = {}
+    if os.path.exists(OG_CACHE):
+        try:
+            cache = json.load(open(OG_CACHE, encoding="utf-8"))
+        except Exception:
+            cache = {}
+    miss = [u for u in urls if u not in cache]
+    for u in miss:
+        try:
+            html = _get(u, timeout=6).decode("utf-8", "ignore")
+            m = re.search(r'<meta[^>]+property="og:image"[^>]+content="([^"]+)"', html)
+            cache[u] = m.group(1) if m else ""
+        except Exception:
+            cache[u] = ""
+    if miss:
+        try:
+            json.dump(cache, open(OG_CACHE, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        except Exception:
+            pass
+        print(f"  · 외부 글 표지 조회: {len(miss)}건(신규)")
+    return cache
 
 
 def _shop_items(raw, label, base, limit=4):
@@ -2452,7 +2562,8 @@ def fetch_stream():
         try:
             raw = _get(feed)
             base = feed.split("/")[0] + "//" + feed.split("/")[2]
-            got = _rss_items(raw, label) if feed.endswith(".xml") else _shop_items(raw, label, base)
+            got = (_rss_items(raw, label, limit=40, only=_FEED_ONLY.get(key))
+                   if feed.endswith(".xml") else _shop_items(raw, label, base))
             if got:
                 cache[key] = got
                 print(f"  · 피드 {label}: {len(got)}건")
@@ -2524,30 +2635,51 @@ for i, slug in enumerate(PORDER):
         f'<div class="more">더 읽기 →</div></a>' for x in rel)
     tagh = "".join(f'<a class="an-tag" href="{STORY_BASE}/tag/{TAG_BY_LABEL[t]}/">{t}</a>'
                    for t in ps["tags"] if t in TAG_BY_LABEL)
-    body = f"""<article class="an-post">
-  <div class="top">
-    <div class="cat">{ps['cat']}</div>
-    <h1>{ps['title']}</h1>
-    <div class="date">{fmt_date(ps['date'])} · {ps['mins']}분 읽기</div>
+    # 목차 = 본문 h2 를 그대로 뽑는다(글마다 손으로 적지 않는다).
+    _h2 = re.findall(r"<h2[^>]*>(.*?)</h2>", ps["body"], re.S)
+    _toc = ""
+    if len(_h2) >= 2:
+        _bodyh = ps["body"]
+        for n, t in enumerate(_h2):
+            _bodyh = _bodyh.replace(f">{t}</h2>", f' id="s{n}">{t}</h2>', 1)
+        ps = dict(ps, body=_bodyh)
+        _toc = ('<nav class="pst-toc"><div class="rt">목차</div>'
+                + "".join(f'<a href="#s{n}">{re.sub(r"<[^>]+>", "", t)}</a>'
+                          for n, t in enumerate(_h2)) + '</nav>')
+    _relaside = "".join(
+        f'<a href="{STORY_BASE}/{x}/"><span class="th">'
+        f'<img src="/assets/stories/{x}.png" alt="" loading="lazy"></span>'
+        f'<b>{esc(POSTS[x]["title"])}</b></a>' for x in rel)
+    _share = (f'<a href="https://twitter.com/intent/tweet?url=https://the-moment.us{STORY_BASE}/{slug}/"'
+              f' target="_blank" rel="noopener" aria-label="X에 공유">X</a>'
+              f'<a href="https://www.facebook.com/sharer/sharer.php?u=https://the-moment.us{STORY_BASE}/{slug}/"'
+              f' target="_blank" rel="noopener" aria-label="페이스북에 공유">f</a>')
+    _chips = ('<span class="pst-chip pst-chip--solid">' + esc(ps["cat"]) + '</span>'
+              + "".join(f'<span class="pst-chip">#{esc(t)}</span>' for t in ps["tags"]))
+    body = f"""<div class="pst">
+  <header class="pst-top">
+    <div class="pst-badges">{_chips}</div>
+    <h1 class="pst-h1">{esc(ps['title'])}</h1>
+    <p class="pst-sub">{esc(ps['sub'])}</p>
+  </header>
+  <div class="pst-grid">
+    {_toc}
+    <article class="pst-main">
+      <div class="pst-meta">
+        <div class="pst-by"><span class="av">M</span>
+          <span><span class="nm">모멘터스</span><br><span class="dt">{fmt_date(ps['date'])} · {ps['mins']}분 읽기</span></span></div>
+        <div class="pst-share">{_share}</div>
+      </div>
+      <div class="pst-cover"><img src="/assets/stories/{slug}.png" alt="" loading="lazy"></div>
+      <div class="pst-prose">{ps['body']}</div>
+    </article>
+    <aside class="pst-aside"><div class="rt">이어서 읽기</div>{_relaside}</aside>
   </div>
-  <div class="cover th g{(i % 3) + 1}"></div>
-</article>
-
-<div class="an-body">
-{ps['body']}
-</div>
-
-<div class="an-share">
-  <a href="https://twitter.com/intent/tweet?url=https://the-moment.us{STORY_BASE}/{slug}/" target="_blank" rel="noopener">X에 공유</a>
-  <a href="{STORY_BASE}/">← 이야기 전체</a>
-</div>
-
-{'<div class="an-tags">' + tagh + '</div>' if tagh else ''}
-
-<section class="an-rel">
-  <h2>이어서 읽기</h2>
-  <div class="g">{relh}</div>
-</section>"""
+  <div class="pst-end">
+    {'<div class="pst-tags">' + tagh + '</div>' if tagh else ''}
+    <a class="pst-back" href="{STORY_BASE}/">← 이야기 전체 보기</a>
+  </div>
+</div>"""
     os.makedirs(f"stories/{slug}", exist_ok=True)
     with open(f"stories/{slug}/index.html", "w", encoding="utf-8") as fh:
         # sub 가 짧으면(35자 미만) 제목을 앞세워 문맥을 보강한다 — 70자 미만이면 구글이 무시한다.
@@ -2563,6 +2695,17 @@ for i, x in enumerate(PORDER):
 for v in VIDEOS:
     entries.append(dict(kind="video", url=v["url"], title=v["title"], date=v["date"],
                         cat="영상", desc=v["desc"], thumb=v["thumb"], tags=[]))
+
+# 제품 사이트에 쌓인 글을 같은 목록으로 끌어온다 — 우리가 쓴 글은 여기 다 모인다.
+_TAG_BY_SRC = {sp["label"]: sp.get("tag", sp["label"]) for sp in BAR["spokes"]}
+_ext = [x for x in STREAM if x.get("kind") == "post" and x.get("url")]
+_ext.sort(key=lambda x: x["date"], reverse=True)
+_covers = og_images([x["url"] for x in _ext[:60]])
+for x in _ext:
+    entries.append(dict(kind="ext", url=x["url"], title=x["title"], date=x["date"],
+                        cat=x.get("cat") or x["src"], desc=x.get("desc", ""),
+                        thumb=_covers.get(x["url"], ""), src=x["src"],
+                        tags=[_TAG_BY_SRC.get(x["src"], x["src"])]))
 entries.sort(key=lambda e: e["date"], reverse=True)
 
 BLOG_JS = """<script>
@@ -2588,15 +2731,15 @@ BLOG_JS = """<script>
 
 
 def _story_cover(e):
-    """표지 = /assets/stories/<slug>.png. 없으면 부드러운 단색 판(비율은 항상 같다)."""
-    if e["kind"] == "video":
+    """표지 = 우리 글이면 /assets/stories/<slug>.png, 바깥 글이면 그 페이지의 og:image."""
+    if e["kind"] in ("video", "ext"):
         return e.get("thumb", "")
     return f'/assets/stories/{e["slug"]}.png'
 
 
 def _news_card(e):
-    href = e["url"] if e["kind"] == "video" else f'{STORY_BASE}/{e["slug"]}/'
-    ext = ' target="_blank" rel="noopener"' if e["kind"] == "video" else ''
+    href = e["url"] if e["kind"] in ("video", "ext") else f'{STORY_BASE}/{e["slug"]}/'
+    ext = ' target="_blank" rel="noopener"' if e["kind"] in ("video", "ext") else ''
     cov = _story_cover(e)
     th = (f'<span class="th"><img src="{cov}" alt="" loading="lazy" decoding="async"></span>'
           if cov else '<span class="th"></span>')
@@ -2606,8 +2749,8 @@ def _news_card(e):
 
 
 def _news_feature(e):
-    href = e["url"] if e["kind"] == "video" else f'{STORY_BASE}/{e["slug"]}/'
-    ext = ' target="_blank" rel="noopener"' if e["kind"] == "video" else ''
+    href = e["url"] if e["kind"] in ("video", "ext") else f'{STORY_BASE}/{e["slug"]}/'
+    ext = ' target="_blank" rel="noopener"' if e["kind"] in ("video", "ext") else ''
     cov = _story_cover(e)
     img = f'<img src="{cov}" alt="" loading="lazy" decoding="async">' if cov else ''
     return (f'<a class="nws-fcard" href="{href}"{ext} data-tags="{" ".join(e.get("tags", []))}">{img}'

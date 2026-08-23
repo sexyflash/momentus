@@ -1397,3 +1397,73 @@ padding:8px 15px;border-radius:99px;background:var(--soft);color:var(--gray)}
   .nws-feat{grid-template-columns:1fr}
   .nws-grid{grid-template-columns:1fr;gap:34px}
 }
+
+/* ═══ 글 상세 — mark.the-moment.us/insights/ 구조 실측 이식(2026-08-23) ══════
+   실측(1440): .post-grid cols 1fr/780px/240px · gap 43.2px · max-width 1560 · padding 0 56px
+   toc x=56 w=200 · main x=321 w=780 · aside x=1144 w=240
+   h1 64px/800/lh78 · sub 23.2px/lh37 · prose 16px/lh25.6 · h2 23.2px/800/mt38
+   그전 우리 글은 본문이 좁고 태그 줄이 밖으로 튀어나갔다(대표 지적). */
+.pst{max-width:1560px;margin:0 auto;padding:0 clamp(20px,4vw,56px)}
+.pst-top{max-width:780px;margin:0 auto;padding:clamp(40px,6vw,84px) 0 0}
+.pst-badges{display:flex;flex-wrap:wrap;gap:8px}
+.pst-chip{display:inline-flex;align-items:center;height:34px;padding:0 15px;border-radius:99px;
+font-size:13.5px;font-weight:600;white-space:nowrap;background:var(--soft);color:var(--gray)}
+.pst-chip--solid{background:var(--ink);color:#fff}
+.pst-h1{margin-top:20px;font-size:clamp(30px,4.4vw,64px);font-weight:800;letter-spacing:-.05em;
+line-height:1.22;color:var(--ink);text-wrap:balance}
+.pst-sub{margin-top:18px;font-size:clamp(16px,1.6vw,23px);line-height:1.6;color:var(--gray);
+letter-spacing:-.02em}
+.pst-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,780px) 240px;
+gap:0 clamp(20px,3vw,43px);margin-top:clamp(26px,3.4vw,44px)}
+.pst-toc{grid-column:1;align-self:start;position:sticky;top:64px;max-width:200px;justify-self:end}
+.pst-toc .rt{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:12px}
+.pst-toc a{display:block;padding:7px 0 7px 14px;border-left:2px solid var(--line);
+font-size:13.5px;line-height:1.5;color:var(--gray)}
+.pst-toc a:hover{color:var(--ink);border-left-color:var(--ink)}
+.pst-main{grid-column:2;min-width:0}
+.pst-aside{grid-column:3;align-self:start;position:sticky;top:64px}
+.pst-aside .rt{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:14px}
+.pst-aside a{display:flex;gap:11px;padding:9px 0;align-items:flex-start}
+.pst-aside .th{width:56px;height:42px;flex:0 0 auto;border-radius:8px;overflow:hidden;background:var(--soft)}
+.pst-aside .th img{width:100%;height:100%;object-fit:cover;display:block}
+.pst-aside b{font-size:13px;font-weight:600;line-height:1.45;color:var(--ink)}
+.pst-aside a:hover b{color:var(--brand-cta)}
+.pst-meta{display:flex;align-items:center;justify-content:space-between;gap:16px;
+padding:6px 0 22px}
+.pst-by{display:flex;align-items:center;gap:11px}
+.pst-by .av{width:38px;height:38px;border-radius:50%;background:var(--ink);color:#fff;
+display:grid;place-items:center;font-size:15px;font-weight:800}
+.pst-by .nm{font-size:14.5px;font-weight:700;color:var(--ink)}
+.pst-by .dt{font-size:13.5px;color:var(--faint)}
+.pst-share{display:flex;gap:7px}
+.pst-share a{width:34px;height:34px;border-radius:50%;background:var(--soft);
+display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--gray)}
+.pst-share a:hover{background:var(--ink);color:#fff}
+.pst-cover{width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:var(--soft)}
+.pst-cover img{width:100%;height:100%;object-fit:cover;display:block}
+.pst-prose{margin-top:clamp(26px,3vw,40px);font-size:16.5px;line-height:1.78;color:var(--ink2)}
+.pst-prose h2{margin:38px 0 0;font-size:clamp(20px,1.9vw,23px);font-weight:800;
+letter-spacing:-.035em;color:var(--ink)}
+.pst-prose h3{margin:28px 0 0;font-size:18px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.pst-prose p{margin-top:14px}
+.pst-prose ul,.pst-prose ol{margin-top:14px;padding-left:20px}
+.pst-prose li{margin-top:7px}
+.pst-prose b,.pst-prose strong{color:var(--ink);font-weight:700}
+.pst-prose blockquote{margin:22px 0;padding:14px 18px;background:var(--soft);border-radius:12px;
+color:var(--gray)}
+.pst-prose img{max-width:100%;border-radius:12px;margin-top:18px}
+.pst-prose table{width:100%;border-collapse:collapse;margin-top:18px;font-size:15px;display:block;
+overflow-x:auto}
+.pst-prose th,.pst-prose td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left}
+.pst-end{max-width:780px;margin:clamp(44px,5vw,72px) auto clamp(64px,8vw,110px);
+padding-top:26px;border-top:1px solid var(--line)}
+.pst-tags{display:flex;flex-wrap:wrap;gap:8px}
+.pst-tags a{display:inline-flex;align-items:center;height:32px;padding:0 13px;border-radius:99px;
+background:var(--soft);font-size:13px;font-weight:600;color:var(--gray)}
+.pst-tags a:hover{background:var(--ink);color:#fff}
+.pst-back{display:inline-block;margin-top:22px;font-size:14.5px;font-weight:600;color:var(--brand-cta)}
+@media(max-width:1180px){
+  .pst-grid{grid-template-columns:minmax(0,1fr)}
+  .pst-toc,.pst-aside{display:none}
+  .pst-main{grid-column:1;max-width:780px;margin:0 auto}
+}

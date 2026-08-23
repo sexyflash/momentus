@@ -39,28 +39,360 @@
    "src": "로고",
    "title": "로고 제작 비용, 글씨체 하나 때문에 30만원이 100만원 되는 진짜 이유",
    "url": "https://mark.the-moment.us/insights/logo-cost-font-customizing/",
-   "date": "2026-08-23"
-  },
-  {
-   "kind": "post",
-   "src": "로고",
-   "title": "공정을 연결하는 마감의 정수 건설·인테리어 기업 로고",
-   "url": "https://mark.the-moment.us/%EA%B1%B4%EC%84%A4-%EB%A1%9C%EA%B3%A0/ieumgyeol/",
-   "date": "2026-08-22"
-  },
-  {
-   "kind": "post",
-   "src": "로고",
-   "title": "부드럽고 정확한 취향의 기록 패션 브랜드 로고",
-   "url": "https://mark.the-moment.us/%ED%8C%A8%EC%85%98-%EB%A1%9C%EA%B3%A0/jellyrecord/",
-   "date": "2026-08-22"
+   "date": "2026-08-23",
+   "desc": "상호명 폰트 선택, 구매 라이선스, 글자 커스터마이징이 로고 제작 비용을 어떻게 바꾸는지 실무 기준으로 설명합니다.",
+   "cat": "인사이트"
   },
   {
    "kind": "post",
    "src": "로고",
    "title": "간판 디자인 전, 옆 가게 로고 5분만 비교하세요",
    "url": "https://mark.the-moment.us/insights/compare-nearby-store-logo-before-signboard-design/",
-   "date": "2026-08-21"
+   "date": "2026-08-21",
+   "desc": "간판 제작 전에 같은 상권 로고를 먼저 보는 실무 점검법. 색, 글자, 심볼이 겹치면 좋은 로고도 헷갈립니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "가게 이름 추천보다 어려운 선택: 상호명과 안 맞는 로고를 고른 이유",
+   "url": "https://mark.the-moment.us/insights/why-choose-logo-that-doesnt-match-name/",
+   "date": "2026-08-19",
+   "desc": "상호명과 로고 시안이 따로 노는 것 같을 때, 실제 현장에서 어떤 기준으로 최종안을 고르는지 디자이너 시선으로 풀었습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "금색·홍색 의료 명함, 로고만 흑백이면 왜 싸 보여질까",
+   "url": "https://mark.the-moment.us/insights/medical-business-card-color-logo-guide/",
+   "date": "2026-08-17",
+   "desc": "한의원·치과 명함 제작에서 컬러 종이와 흑백 로고가 따로 노는 이유, 풀컬러 로고로 정리하는 실무 기준.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "로고 제작 비용, 간판 말고 20mm에서 새는 돈 4가지",
+   "url": "https://mark.the-moment.us/insights/logo-cost-small-size-reprint/",
+   "date": "2026-08-15",
+   "desc": "큰 간판에선 멀쩡한 로고가 명함·네이버플레이스·카카오채널·흑백 출력에서 무너질 때 다시 드는 비용을 짚습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "박스 3천 장 찍고 색이 틀어졌다면, 로고값이 아니라 검증값을 아낀 겁니다",
+   "url": "https://mark.the-moment.us/insights/manufacturing-logo-color-proofing-cost/",
+   "date": "2026-08-13",
+   "desc": "제조업 로고 색상이 박스 배치마다 달라지는 이유와 인쇄 전 색상 보정·교정·검수 기준을 비용 관점에서 정리했습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "명함 규격 90×50mm, 로고가 인쇄하면 작아 보이는 진짜 이유",
+   "url": "https://mark.the-moment.us/insights/business-card-logo-print-readability/",
+   "date": "2026-08-11",
+   "desc": "명함에 로고를 넣기 전, 선굵기·글자·심볼이 인쇄본에서 무너지는지 바로 판단하는 실무 기준입니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "간판 제작사가 ‘AI 파일 있나요?’ 묻는 이유, 맡기기 전 4문항 점검",
+   "url": "https://mark.the-moment.us/insights/sign-logo-file-checklist-before-production/",
+   "date": "2026-08-09",
+   "desc": "간판 제작 의뢰 전 로고 파일 상태를 스스로 확인하는 4가지. AI 파일, 폰트, 색상, 가독성 문제를 미리 줄입니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "치과 로고, 상호명 옆 심볼 하나가 바꾸는 4가지 장면",
+   "url": "https://mark.the-moment.us/insights/dental-logo-symbol-renewal/",
+   "date": "2026-08-07",
+   "desc": "텍스트만 있던 치과 로고에 심볼을 더하면 간판, 지도, 예약 화면에서 환자가 다르게 읽습니다. 리뉴얼 전후 기준을 짚었습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "로고 제작 비용 30만원과 100만원, 비싸 보이는 차이는 ‘색 3개’에서 갈립니다",
+   "url": "https://mark.the-moment.us/insights/logo-design-cost-color-palette-strategy/",
+   "date": "2026-08-05",
+   "desc": "예산이 작아도 로고가 싸 보이지 않게 만드는 색 조합, 채도, 톤 선택법. 유행색보다 오래 버티는 팔레트 전략을 정리했습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "S&K로 만든 에스테틱 로고, 예쁜데 손님이 그냥 지나가는 이유",
+   "url": "https://mark.the-moment.us/insights/esthetic-logo-korean-english-font-guide/",
+   "date": "2026-08-03",
+   "desc": "에스테틱 로고를 영문 이니셜로만 만들 때 생기는 문제와 한글·영문·폰트·자간으로 피부샵 업종을 살리는 기준.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "파란 병원 로고가 안전해 보이는데도, 옆 의원으로 기억되는 이유",
+   "url": "https://mark.the-moment.us/insights/clinic-logo-color-differentiation/",
+   "date": "2026-08-01",
+   "desc": "의료원 로고 색상, 의원 로고 차별화가 필요한 순간. 파란색·초록색에서 벗어나 환자가 기억하는 병원 브랜딩 색상 잡는 법.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "네일샵 로고 시안 3개, 왜 가장 화려한 게 떨어졌을까",
+   "url": "https://mark.the-moment.us/insights/nail-shop-logo-why-colorful-rejected/",
+   "date": "2026-07-30",
+   "desc": "화려한 컬러풀 로고가 거절되고 미니멀이 선택되는 이유. 10년차 디자이너가 실제 의뢰 기준·의사결정 과정을 공개합니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "병원도 심볼이 필요할까? — 파란색 텍스트만 써온 의원이 진료과별 심볼을 넣으니 첫 환자 문의가 달라졌다",
+   "url": "https://mark.the-moment.us/insights/hospital-symbol-brand-identity/",
+   "date": "2026-07-28",
+   "desc": "의료기관은 텍스트만으로 충분하다는 관습을 깼을 때 일어나는 변화. 진료과별 추상 심볼로 전문성과 신뢰를 동시에 높이는 법.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "한의원 로고 명함에서 약재 그림이 뭉개지는 4가지 지점",
+   "url": "https://mark.the-moment.us/insights/korean-medicine-logo-business-card-small-size/",
+   "date": "2026-07-26",
+   "desc": "간판에서는 멀쩡한 한의원 로고가 명함·진료카드·스탬프에서 무너지는 이유와 작은 크기 기준을 정리했습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "IT 스타트업 로고 비용, 10만원 아끼고 런칭 전 다시 고치는 4가지",
+   "url": "https://mark.the-moment.us/insights/it-startup-logo-cost-redesign/",
+   "date": "2026-07-24",
+   "desc": "싼 로고가 웹사이트·IR덱·명함에서 무너지는 이유와 대표님이 견적 전에 확인할 기준을 정리했습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "가는 선이 무조건 고급? 헤어샵 로고 선굵기 0.05초 판단법",
+   "url": "https://mark.the-moment.us/insights/hair-salon-logo-line-weight-premium/",
+   "date": "2026-07-22",
+   "desc": "미용실 로고 선굵기 하나로 프리미엄과 캐주얼이 갈립니다. 작은 화면·간판·명함까지 버티는 헤어샵 로고 설계 기준.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "음식점 로고가 배달앱에서 뭉개지는 5가지 체크포인트",
+   "url": "https://mark.the-moment.us/insights/restaurant-logo-delivery-app-thumbnail-checklist/",
+   "date": "2026-07-20",
+   "desc": "음식점 로고 배달앱 썸네일에서 안 보이는 이유를 폰트, 색대비, 심볼, 여백, 글자 구성으로 바로 점검합니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "한의원 로고 리뉴얼, 홍색 붓글씨를 걷어내면 바뀌는 3곳",
+   "url": "https://mark.the-moment.us/insights/oriental-clinic-logo-renewal-modern-branding/",
+   "date": "2026-07-18",
+   "desc": "구식 한글서체와 홍색 로고를 모던하게 바꿨을 때 간판, 예약앱, 카톡 프로필에서 환자의 판단이 어떻게 달라지는지 짚었습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "한의원 로고 색상, 파란색·빨강만 쓰면 낡아 보이는 이유",
+   "url": "https://mark.the-moment.us/insights/korean-medicine-clinic-logo-color-strategy/",
+   "date": "2026-07-16",
+   "desc": "한의원 브랜딩 색감은 색 이름보다 톤과 채도가 좌우합니다. 전통성, 회복력, 현대적 신뢰도를 살리는 팔레트 기준을 정리했습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "미용실 로고 상호명 긴 경우, 촌스러워 보이는 3가지 이유",
+   "url": "https://mark.the-moment.us/insights/long-hair-salon-name-logo-spacing/",
+   "date": "2026-07-14",
+   "desc": "긴 미용실 이름을 로고로 만들 때 자간, 줄바꿈, 영문 표기를 어떻게 정리해야 답답해 보이지 않는지 실무 기준으로 정리했습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "옆 회사랑 같은 파란 로고라면, 고객은 로비에서 이미 헷갈립니다",
+   "url": "https://mark.the-moment.us/insights/it-startup-logo-differentiation-office-lobby/",
+   "date": "2026-07-12",
+   "desc": "IT 스타트업 로고 차별화가 필요한 이유. 파란색·기하학형 로고에서 벗어나 오피스 로비에서도 읽히는 방법을 짚습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "음식점 로고 시안 3개 중 ‘제일 세련된 안’이 탈락한 이유",
+   "url": "https://mark.the-moment.us/insights/restaurant-logo-target-age-test/",
+   "date": "2026-07-10",
+   "desc": "모던·미니멀·따뜻한 로고 시안을 타깃 나이대별로 보여줬을 때 실제 선택이 어떻게 갈리는지 실무 기준으로 정리했습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "법률사무소 로고, 검정만 쓰면 같은 층 사무실에 묻히는 이유 4가지",
+   "url": "https://mark.the-moment.us/insights/law-firm-logo-color-differentiation/",
+   "date": "2026-07-08",
+   "desc": "법무법인 로고 디자인에서 검정·회색 관습을 벗어나 신뢰는 지키고 신규 의뢰인이 헷갈리지 않는 로고 색상 선택법.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "음식점 로고, 배달앱 썸네일에서 안 보이는 5가지 이유",
+   "url": "https://mark.the-moment.us/insights/restaurant-logo-delivery-app-thumbnail/",
+   "date": "2026-07-06",
+   "desc": "간판에선 멀쩡한 음식점 로고가 배달앱 썸네일에서 뭉개지는 이유와 바로 고칠 기준을 정리했습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "제조업 로고 제작 비용, 10만원 아끼다 박스 1,000개 다시 찍는 계산",
+   "url": "https://mark.the-moment.us/insights/manufacturing-logo-cost-reprint-roi/",
+   "date": "2026-07-04",
+   "desc": "싼 로고가 왜 더 비싸지는지, 제조업 로고 제작 비용을 카탈로그·박스·색상·원본파일 ROI로 따져봅니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "병원·카페·미용실 명함, 같은 틀로 만들면 놓치는 3가지",
+   "url": "https://mark.the-moment.us/insights/business-card-design-by-industry/",
+   "date": "2026-07-03",
+   "desc": "업종별 명함 디자인은 톤보다 정보 순서가 먼저입니다. 병원·카페·미용실 명함에서 꼭 달라져야 할 구성을 짚어드립니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "로고 없어도 되는 명함 만들기, 상호·이름만 넣고 3분 PDF",
+   "url": "https://mark.the-moment.us/insights/free-business-card-maker-vector-pdf/",
+   "date": "2026-07-03",
+   "desc": "상호와 이름만으로 무료 명함을 만들고, 인쇄소가 열 수 있는 벡터 PDF까지 챙기는 실무 기준을 정리했습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "명함 템플릿, 예쁜 것보다 먼저 봐야 할 3가지",
+   "url": "https://mark.the-moment.us/insights/how-to-choose-free-business-card-template/",
+   "date": "2026-07-03",
+   "desc": "무료 명함 템플릿 고를 때 실패를 줄이는 기준. 업종별 시안에서 가독성, 정보 위계, 로고 적용까지 실무 기준으로 짚었습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "명함 인쇄 맡기기 전, 파일에서 꼭 깨지는 4곳",
+   "url": "https://mark.the-moment.us/insights/namecard-print-file-ai-vector-outline/",
+   "date": "2026-07-03",
+   "desc": "폰트 깨짐, 저해상 이미지, 재단 밀림까지. 인쇄소에 AI 벡터 파일 넘기기 전 확인할 접수 체크리스트입니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "90×50mm로 만들었는데 왜 파일은 94×54mm일까? 명함 규격 실무 가이드",
+   "url": "https://mark.the-moment.us/insights/namecard-size-bleed-safe-zone-guide/",
+   "date": "2026-07-03",
+   "desc": "명함 규격 90×50mm, 도련 2mm, 안전선까지. 재단 밀림·흰 테두리·글자 잘림을 피하는 실무 기준을 정리했습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "미용실 로고 디자인, 0.5초에 비싸 보이는 곳은 4가지가 다릅니다",
+   "url": "https://mark.the-moment.us/insights/premium-hair-salon-logo-design-tips/",
+   "date": "2026-07-02",
+   "desc": "미용실 로고 디자인과 헤어샵 로고 만드는 법. 폰트, 선굵기, 레이아웃으로 프리미엄 인상을 만드는 실무 기준 4가지.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "IT 스타트업 로고, 런칭 전 5가지 체크리스트 - 시안에서 자꾸 빠뜨리는 것들",
+   "url": "https://mark.the-moment.us/insights/startup-logo-checklist/",
+   "date": "2026-06-30",
+   "desc": "디자이너에게 받은 로고 5개 중 고르려다 놓치는 실수들. 축소 테스트부터 저작권까지, 실제 사용 환경에서 터지는 문제를 미리 피하는 체크리스트.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "손글씨 로고에서 심볼로 바꾼 떡볶이 프랜차이즈, 가맹점 문의가 달라졌다",
+   "url": "https://mark.the-moment.us/insights/franchise-logo-handwriting-to-symbol/",
+   "date": "2026-06-28",
+   "desc": "프랜차이즈 리뉴얼 사례. 낡은 손글씨에서 현대적 심볼로 전환한 후 신규 가맹점주들이 느낀 '이 브랜드는 계속 성장할 것 같다'는 신뢰도 변화",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "식품 로고는 녹색·빨강이 아니라 톤·채도·명도다 — 타깃·시즌·가격대별 팔레트 전략",
+   "url": "https://mark.the-moment.us/insights/food-logo-color-strategy-tone-saturation-brightness/",
+   "date": "2026-06-26",
+   "desc": "신선함·건강·프리미엄을 구분하는 색 논리와 파스텔 유행색 추종의 함정. 3년 뒤 구닥다리 이미지가 되는 이유는 색 선택이 아니라 톤·채도·명도 전략의 부재.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "간판에서 이름이 길수록 폰트가 흐릿해진다 — 글자 수가 결정하는 폰트 선택",
+   "url": "https://mark.the-moment.us/insights/dental-logo-font-selection-long-name/",
+   "date": "2026-06-24",
+   "desc": "치과명 글자 수·구성에 따라 폰트 선택이 달라진다. 간판·명함·앱에서도 또렷하게 읽히려면 어떤 폰트를 골라야 할까.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "환자가 보는 0.5초, 로고의 색이 신뢰를 결정한다",
+   "url": "https://mark.the-moment.us/insights/dental-logo-trust-color-psychology/",
+   "date": "2026-06-22",
+   "desc": "로고의 색은 0.125초 안에 뇌에 도달합니다. 파란색이 의료 현장에서 신뢰감을 전달하는 원리와 작은 로고도 색만으로 환자의 신뢰를 좌우하는 이유를 알아보세요.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "한의원 로고 차별화, 같은 건물 옆 한의원과 안 섞이는 4가지 기준",
+   "url": "https://mark.the-moment.us/insights/korean-medicine-clinic-logo-differentiation/",
+   "date": "2026-06-20",
+   "desc": "근처 한의원과 이름·색·상징이 비슷할 때, 환자가 헷갈리지 않는 로고 변별 포인트를 실무 기준으로 정리했습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "법률사무소 로고 시안 5개, 최종안은 왜 ‘덜 법률스러운 것’이 이겼을까",
+   "url": "https://mark.the-moment.us/insights/law-office-logo-concept-final-choice/",
+   "date": "2026-06-20",
+   "desc": "저울·기둥·이니셜·한글 워드마크를 놓고 최종 법률사무소 로고 시안을 고르는 실무 기준을 제작 비하인드로 정리했습니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
+   "title": "병원 로고 디자인, 파란 십자가 말고 기억에 남는 5가지 선택",
+   "url": "https://mark.the-moment.us/insights/hospital-logo-design-beyond-blue-cross/",
+   "date": "2026-06-19",
+   "desc": "비슷한 파란 십자 로고에서 벗어나 진료과·환자층·브랜드 톤에 맞는 병원 로고 디자인을 잡는 실무 기준입니다.",
+   "cat": "인사이트"
   }
  ]
 }
