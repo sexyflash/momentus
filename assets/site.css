@@ -148,7 +148,9 @@ main{padding-top:0}
 .free{font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;background:var(--ink);padding:3px 9px;border-radius:6px}
 .kick{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray)}
 .kick.pt{color:var(--pt);font-weight:700}
-footer.site{border-top:1px solid var(--line);margin-top:clamp(70px,10vh,120px);padding:44px var(--gut);display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px;font-size:13px}
+/* ⚠️ margin-top 을 주면 회색 섹션과 푸터 사이에 **흰 띠**가 남는다(2026-08-24 대표 지적).
+   푸터는 흰 바탕으로 바로 이어붙이고, 경계는 헤어라인 하나로만 낸다. */
+footer.site{background:var(--paper);border-top:1px solid var(--line);margin-top:0;padding:56px var(--gut) 44px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px;font-size:13px}
 @media(max-width:760px){footer.site{grid-template-columns:1fr 1fr}}
 footer.site h4{margin:0 0 12px;font-size:11px;color:var(--faint);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
 footer.site a{display:block;padding:4px 0;color:var(--gray)}footer.site a:hover{color:var(--ink)}
@@ -1171,7 +1173,9 @@ color:var(--ink);cursor:pointer;opacity:0;pointer-events:none;transition:opacity
 .kb-top:hover{border-color:var(--brand);color:var(--brand)}
 .kb-top svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.9;
 stroke-linecap:round;stroke-linejoin:round}
-.kbp footer.site{margin-top:clamp(80px,10vw,140px);background:var(--soft);border-top:0}
+.kbp /* ⚠️ 여기서 다시 회색+여백을 주면 위 회색 섹션과 사이에 흰 띠가 남는다(2026-08-24).
+   푸터는 흰 바탕 + 헤어라인 하나. 위 규칙을 덮지 마라. */
+footer.site{margin-top:0;background:var(--paper);border-top:1px solid var(--line)}
 @media(prefers-reduced-motion:reduce){
   .kb-rail,.kb-srail{scroll-behavior:auto}
   .kb-cat-list{transition:none}
@@ -1281,24 +1285,20 @@ padding:0 clamp(12px,2.1vw,30px) 0 var(--stack-pad)}
 scroll-behavior:smooth;scrollbar-width:none;scroll-padding-left:var(--stack-pad);
 margin:clamp(20px,2.4vw,32px) 0 0;padding:0 clamp(12px,2.1vw,30px) 6px var(--stack-pad)}
 .tcards::-webkit-scrollbar{display:none}
+/* 카드는 전부 같은 밝은 판 — 검정↔흰색 교차는 눈이 튄다(2026-08-24 대표 지적). */
 .tcard{flex:0 0 clamp(260px,27vw,400px);scroll-snap-align:start;position:relative;
 display:flex;flex-direction:column;aspect-ratio:4/5;border-radius:18px;overflow:hidden;
 background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);
 padding:clamp(20px,2vw,28px);transition:transform .2s var(--ease)}
 .tcard:hover{transform:translateY(-3px)}
-.tcard--ink{background:#0b0c0e;box-shadow:none}
 .tcard .k{font-size:12px;font-weight:800;letter-spacing:.04em;color:var(--brand-cta)}
-.tcard--ink .k{color:#8fc0ff}
 .tcard b{margin-top:10px;font-size:clamp(20px,1.9vw,26px);font-weight:800;letter-spacing:-.045em;
 color:var(--ink)}
-.tcard--ink b{color:#fff}
 .tcard i{margin-top:8px;font-style:normal;font-size:14.5px;line-height:1.6;color:var(--gray)}
-.tcard--ink i{color:#aeb5c0}
 .tcard .art{margin-top:auto;display:grid;place-items:center;padding-bottom:6px}
 .tcard .gl{display:grid;place-items:center;width:clamp(84px,9.5vw,124px);aspect-ratio:1}
 .tcard .gl img{width:100%;height:100%;object-fit:contain;display:block}
 .tcard .gl--tx{border-radius:28px;font-size:clamp(36px,4vw,56px);color:var(--ink);background:var(--soft)}
-.tcard--ink .gl--tx{color:#fff;background:rgba(255,255,255,.1)}
 .stg-icons{flex:1;display:flex;gap:10px;flex-wrap:wrap;align-items:center;align-content:center;
 padding:clamp(30px,3.6vw,52px) clamp(20px,2.6vw,34px)}
 /* 홈 하단 레일 — apple.com/airpods 아래쪽 '더 알아보기' 캐러셀과 같은 문법:
