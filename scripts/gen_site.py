@@ -1215,6 +1215,69 @@ stroke-linecap:round;stroke-linejoin:round}
 """
 CSS += KB_CSS
 
+AP_CSS = """
+/* ═══ 홈 — 제품이 차례로 무대에 선다 ═══════════════════════════════════════
+   2026-08-23 개편. 그전 홈은 캐러셀·최신 콘텐츠·많이 찾는 것·묶어서 보면·
+   무엇을 하려고 오셨나요 로 이어지는 '콘텐츠 허브'였다. 대표: "잡스러운 거 치우고
+   이 업체 제대로 뭔가 제품 만드는 곳이구나 느끼게 해줘야." 목록을 쌓는 대신
+   제품 하나에 화면 하나를 준다 — 이름 · 한 줄 · 행동 둘 · 큰 그림. 그게 전부다. */
+.stg-stack{display:flex;flex-direction:column;gap:12px;padding:12px 12px 0}
+.stg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stg{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;
+border-radius:var(--kb-r);overflow:hidden;background:var(--soft);padding:clamp(46px,5.4vw,82px) 24px 0}
+.stg--paper{background:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}
+.stg--ink{background:#0b0c0e;color:#fff}
+.stg--ink .stg-claim{color:#aeb5c0}
+.stg--ink .stg-art{background:none}
+.stg-eyebrow{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--brand)}
+.stg-name{font-weight:800;letter-spacing:-.05em;line-height:1.04;margin-top:8px;
+font-size:clamp(32px,4.6vw,58px)}
+.stg-row .stg-name{font-size:clamp(27px,3vw,38px)}
+.stg-claim{margin-top:12px;font-size:clamp(15px,1.35vw,20px);color:var(--gray);letter-spacing:-.02em}
+.stg-cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.stg-pill{display:inline-flex;align-items:center;height:42px;padding:0 22px;border-radius:99px;
+font-size:15px;font-weight:600;background:var(--brand-cta);color:#fff;transition:opacity .18s var(--ease)}
+.stg-pill:hover{opacity:.88}
+.stg-pill--line{background:transparent;color:var(--brand-cta);box-shadow:inset 0 0 0 1px currentColor}
+.stg--ink .stg-pill--line{color:#8fc0ff}
+.stg-art{width:100%;max-width:1040px;margin-top:clamp(28px,3.4vw,46px);aspect-ratio:16/9;
+border-radius:14px 14px 0 0;overflow:hidden;background:rgba(0,0,0,.04)}
+/* 2단 칸의 그림은 제품 og 배너(글자가 박혀 있다) — cover 로 자르면 문구가 잘린다.
+   contain 으로 통째로 보여 준다. 전면 무대 두 장만 실사진이라 cover 를 쓴다. */
+.stg-row .stg-art{aspect-ratio:16/9;max-width:560px;background:none;border-radius:12px}
+.stg-row .stg-art img{object-fit:contain}
+.stg-art img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.stg-icons{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
+margin:clamp(30px,3.6vw,46px) 0 clamp(38px,4.4vw,58px)}
+.stg-icons span{width:54px;height:54px;border-radius:15px;display:grid;place-items:center;
+font-size:23px;background:var(--soft);color:var(--ink)}
+.stg-note{padding:clamp(52px,6.5vw,92px) 24px;text-align:center;color:var(--gray);
+font-size:15px;letter-spacing:-.01em}
+.stg-note b{display:block;font-size:clamp(19px,2vw,26px);font-weight:800;color:var(--ink);
+letter-spacing:-.04em;margin-bottom:10px}
+.stg-note a{color:var(--ink);font-weight:600}
+.stg-note a:hover{color:var(--brand-cta)}
+.stg-note .sep{margin:0 8px;color:var(--faint)}
+@media(max-width:820px){.stg-row{grid-template-columns:1fr}.stg-stack{padding:8px 8px 0;gap:8px}.stg-row{gap:8px}}
+@media(prefers-reduced-motion:no-preference){
+.stg{opacity:0;transform:translateY(16px);
+transition:opacity .65s var(--ease),transform .65s var(--ease)}
+.stg.in{opacity:1;transform:none}}
+
+/* 홈 상단 바 = 스포크와 같은 공용 1단 바(패밀리룩). 검색·테마만 우측에 얹는다. */
+#mmt-bar .mmt-act{margin-left:auto;display:flex;align-items:center;gap:2px;flex:0 0 auto}
+#mmt-bar .mmt-ib{display:grid;place-items:center;width:28px;height:28px;padding:0;border:0;
+border-radius:50%;background:none;color:#cfd4dc;cursor:pointer;transition:background .18s,color .18s}
+#mmt-bar .mmt-ib:hover{background:rgba(255,255,255,.12);color:#fff}
+#mmt-bar .mmt-ib svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;
+stroke-linecap:round;stroke-linejoin:round}
+#mmt-bar .mmt-ib .moon{display:none}
+html[data-theme="dark"] #mmt-bar .mmt-ib .moon{display:block}
+html[data-theme="dark"] #mmt-bar .mmt-ib .sun{display:none}
+#mmt-bar+.kb-sr{position:fixed}
+"""
+CSS += AP_CSS
+
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
 # 내용이 바뀌면 URL도 바뀌게 해서 즉시 반영시킨다.
 CSS_VER = hashlib.md5(CSS.encode("utf-8")).hexdigest()[:8]
@@ -2714,14 +2777,95 @@ KB_JS = """<button class="kb-top" id="kbtop" aria-label="맨 위로">
 
 KB_JS = KB_JS.replace("__INDEX__", KB_INDEX).replace("__CATS__", _cat_data)
 
-land_body = kb_hero + kb_latest + kb_popular + kb_series + kb_cats
+# ---------- 홈 — 제품 무대(Apple 문법) ----------
+#   ⚠️ 옛 구성(kb_hero/kb_latest/kb_popular/kb_series/kb_cats)은 더 이상 홈에 싣지 않는다.
+#      변수 자체는 남겨 둔다 — 다른 데서 참조하거나 되돌릴 때를 위해.
+_SPOKE_HREF = {sp["slug"]: sp["href"] for sp in BAR["spokes"] if sp.get("slug")}
+# 두 번째 버튼은 '알아보기'가 아니라 **그 제품에서 하는 일**을 말한다(애플의 '구입하기' 자리).
+AP_GO = {"binbang": "빈방 알림 등록", "heyreci": "헤이레시 열기", "mark": "로고 만들어 보기",
+         "cue": "모의면접 시작하기", "theplan": "플래너 보러 가기"}
+
+
+def ap_stage(slug, tone="", eyebrow=""):
+    pr = P[slug]
+    go = _SPOKE_HREF.get(slug, "")
+    cta = f'<a class="stg-pill" href="{purl(slug)}">더 알아보기</a>'
+    if go:
+        cta += (f'<a class="stg-pill stg-pill--line" href="{go}"{_ext(go)}>'
+                f'{AP_GO.get(slug, "바로 가기")}</a>')
+    shot = pr.get("shot") or ""
+    art = (f'<div class="stg-art"><img src="{shot}" alt="{esc(pr["short"])} 화면" '
+           f'loading="lazy" decoding="async"></div>') if shot else ""
+    eye = f'<p class="stg-eyebrow">{eyebrow}</p>' if eyebrow else ""
+    cls = f" stg--{tone}" if tone else ""
+    return (f'<section class="stg{cls}">{eye}'
+            f'<h2 class="stg-name">{esc(pr["short"])}</h2>'
+            f'<p class="stg-claim">{esc(pr["tagline"])}</p>'
+            f'<div class="stg-cta">{cta}</div>{art}</section>')
+
+
+def ap_tools_stage():
+    icons = "".join(f'<span aria-hidden="true">{P[t]["icon"]}</span>' for t in TOOLS)
+    return ('<section class="stg stg--paper">'
+            '<p class="stg-eyebrow">무료</p>'
+            f'<h2 class="stg-name">브라우저 도구 {len(TOOLS)}종</h2>'
+            '<p class="stg-claim">북마크바에 끌어놓거나 크롬에 추가하면 끝. 회원가입도 결제도 없습니다.</p>'
+            '<div class="stg-cta"><a class="stg-pill" href="/products/">전부 보기</a></div>'
+            f'<div class="stg-icons">{icons}</div></section>')
+
+
+ap_body = (
+    '<div class="stg-stack">'
+    + ap_stage("binbang", "", "새로 나왔습니다")
+    + ap_stage("heyreci", "ink")
+    + '<div class="stg-row">' + ap_stage("mark", "paper") + ap_stage("cue") + '</div>'
+    + '<div class="stg-row">' + ap_stage("theplan") + ap_tools_stage() + '</div>'
+    + '</div>'
+    + '<section class="stg-note"><b>만든 것만 팝니다.</b>'
+      '모멘터스는 1인 AI 스튜디오입니다. 기획도 개발도 운영도 한 사람이 합니다.'
+      '<br><a href="/about/">소개</a><span class="sep">·</span>'
+      '<a href="/stories/">이야기</a><span class="sep">·</span>'
+      '<a href="/inquiry/">문의</a></section>')
+
+AP_JS = """<script>
+/* 무대는 스크롤을 따라 한 장씩 올라온다. 첫 장은 기다리지 않는다. */
+(function(){
+  var els=[].slice.call(document.querySelectorAll('.stg'));
+  if(!els.length) return;
+  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){
+    els.forEach(function(e){e.classList.add('in');}); return; }
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add('in'); io.unobserve(e.target);}});},
+    {rootMargin:'0px 0px -10% 0px'});
+  els.forEach(function(e){io.observe(e);});
+  els[0].classList.add('in');
+})();
+</script>"""
+
+# 홈 헤더 = 스포크와 **같은** 공용 1단 바. 영문 kb-gnb(Home/Products/Stories/Studio)는 폐기 —
+# 제품 페이지와 말이 달라 패밀리로 안 읽혔다(2026-08-23 대표 지적).
+# 검색 오버레이 마크업은 KB_HEADER 에서 그대로 가져다 쓴다(중복 정의 금지).
+_MMT_ACT = ('<div class="mmt-act">'
+            '<button class="mmt-ib" id="kbsearchbtn" aria-label="검색 열기">'
+            '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>'
+            '<button class="mmt-ib" id="kbthemebtn" aria-label="다크모드로 전환">'
+            '<svg viewBox="0 0 24 24" class="sun"><circle cx="12" cy="12" r="4"/>'
+            '<path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2'
+            'M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
+            '<svg viewBox="0 0 24 24" class="moon"><path d="M20 14.6A8.6 8.6 0 019.4 4 8.6 8.6 0 1020 14.6z"/>'
+            '</svg></button></div>')
+APEX_HEADER = (shell_bar_markup().replace("</nav>", "</nav>" + _MMT_ACT, 1)
+               + KB_HEADER[KB_HEADER.index('<div class="kb-sr"'):])
+
+land_body = ap_body
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다",
-                 "모멘터스는 강형모 1인 AI 스튜디오입니다. AI 상품사진·로고 디자인·디지털 플래너·AI 모의면접을 만들어 팔고, "
-                 "설치 없이 쓰는 무료 브라우저 도구 6종을 함께 제공합니다.",
-                 land_body, active="", extra=KB_JS,
-                 header=KB_HEADER, body_class="kbp", head_extra=KB_HEAD))
+                 "모멘터스는 1인 AI 스튜디오입니다. 펜션 빈방 알림·AI 상품사진·로고 디자인·AI 모의면접·"
+                 "디지털 플래너를 만들어 팔고, 설치 없이 쓰는 무료 브라우저 도구 6종을 함께 제공합니다.",
+                 land_body, active="", extra=KB_JS + AP_JS,
+                 header=APEX_HEADER, body_class="kbp",
+                 head_extra=KB_HEAD + '<link rel="stylesheet" href="/shell.css">'))
 
 
 # ---------- 법적 페이지 (약관·개인정보·환불) ----------
