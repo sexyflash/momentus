@@ -1199,7 +1199,7 @@ border-radius:18px;overflow:hidden;background:var(--soft)}
 .stg--ink .stg-eyebrow{color:#79828f}
 
 /* ── 전면 타일: 그림이 카드를 채우고 글이 그 위에 얹힌다 ── */
-.stg--hero{aspect-ratio:1380/756;min-height:340px}
+.stg--hero{width:100%;aspect-ratio:1380/756;min-height:340px}
 .stg--hero .stg-art{position:absolute;inset:0;aspect-ratio:auto;z-index:0}
 .stg--hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:62%;z-index:1;
 pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.62),rgba(0,0,0,.28) 42%,transparent)}
@@ -1257,3 +1257,83 @@ stroke-linecap:round;stroke-linejoin:round}
 html[data-theme="dark"] #mmt-bar .mmt-ib .moon{display:block}
 html[data-theme="dark"] #mmt-bar .mmt-ib .sun{display:none}
 #mmt-bar+.kb-sr{position:fixed}
+
+/* ═══ /about/ — toss.im/company 구조 실측 이식(2026-08-23) ══════════════════
+   토스 실측(1440): 컨테이너 x=108 w=1224 · h1 100px/700/ls-3px · 섹션 h2 40px/700
+   · 좌측 라벨 레일(●) + 우측 본문 2단 · 큰 선언 문장 80px.
+   그전 소개는 이미지 0장에 글만 빼곡했고(대표: "읽고 싶지 않은데?"),
+   마지막이 '유튜브 지켜봐 주세요' 였다 — 소개하러 온 사람에게 할 말이 아니다. */
+.abt{max-width:1224px;margin:0 auto;padding:0 24px}
+.abt-hero{padding:clamp(72px,11vw,150px) 0 clamp(56px,7vw,96px);position:relative;overflow:hidden}
+.abt-hero::before{content:"";position:absolute;right:-8%;top:-40%;width:78%;height:150%;
+border-radius:50%;z-index:0;pointer-events:none;
+background:radial-gradient(closest-side,rgba(49,130,246,.16),transparent 72%)}
+.abt-hero>*{position:relative;z-index:1}
+.abt-hero h1{font-size:clamp(38px,6.6vw,92px);font-weight:800;letter-spacing:-.055em;
+line-height:1.02;color:var(--ink)}
+.abt-hero .sub{margin-top:clamp(14px,1.8vw,26px);font-size:clamp(18px,2.3vw,32px);
+font-weight:700;letter-spacing:-.04em;color:var(--ink2);line-height:1.34}
+.abt-hero .lede{margin-top:20px;max-width:46ch;font-size:16px;line-height:1.75;color:var(--gray)}
+
+.abt-sec{border-top:1px solid var(--line);padding:clamp(44px,5.5vw,80px) 0}
+.abt-row{display:grid;grid-template-columns:1fr 1.55fr;gap:clamp(20px,4vw,56px)}
+.abt-lbl{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:600;color:var(--ink);
+align-self:start}
+.abt-lbl::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink);flex:0 0 auto}
+.abt-say{font-size:clamp(19px,1.7vw,23px);font-weight:700;letter-spacing:-.035em;
+line-height:1.5;color:var(--ink)}
+.abt-body{margin-top:14px;font-size:16px;line-height:1.78;color:var(--gray);max-width:60ch}
+.abt-body+.abt-body{margin-top:12px}
+
+/* 큰 선언 + 사진 */
+.abt-band{margin:clamp(30px,4vw,56px) auto 0;max-width:1520px;padding:0 clamp(12px,2.1vw,30px)}
+.abt-band-in{position:relative;width:100%;border-radius:18px;overflow:hidden;aspect-ratio:1380/756;
+display:flex;flex-direction:column;justify-content:flex-end;min-height:320px}
+.abt-band-in img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.abt-band-in::after{content:"";position:absolute;left:0;right:0;bottom:0;height:66%;z-index:1;
+background:linear-gradient(to top,rgba(20,16,12,.6),rgba(20,16,12,.2) 45%,transparent)}
+.abt-band-tx{position:relative;z-index:2;padding:clamp(24px,3.3vw,48px);color:#fff}
+.abt-band-tx h2{font-size:clamp(26px,4.4vw,64px);font-weight:800;letter-spacing:-.055em;line-height:1.08}
+.abt-band-tx p{margin-top:12px;font-size:clamp(14.5px,1.4vw,19px);font-weight:600;
+color:rgba(255,255,255,.86);letter-spacing:-.02em}
+
+/* 원칙 카드 */
+.abt-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.8vw,24px);margin-top:8px}
+.abt-card{background:var(--soft);border-radius:16px;padding:clamp(20px,2.2vw,28px)}
+.abt-card .n{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.abt-card h3{margin-top:10px;font-size:18px;font-weight:800;letter-spacing:-.035em;color:var(--ink)}
+.abt-card p{margin-top:9px;font-size:14.5px;line-height:1.7;color:var(--gray)}
+
+/* 연혁 */
+.abt-hist{display:flex;flex-direction:column}
+.abt-hist-it{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;
+border-bottom:1px solid var(--line)}
+.abt-hist-it:first-child{border-top:1px solid var(--line)}
+.abt-hist-it .y{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--brand-cta)}
+.abt-hist-it h4{font-size:16px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.abt-hist-it p{margin-top:4px;font-size:14px;color:var(--gray)}
+
+/* 숫자 */
+.abt-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.8vw,24px)}
+.abt-num b{display:block;font-size:clamp(26px,2.8vw,38px);font-weight:800;letter-spacing:-.05em;color:var(--ink)}
+.abt-num span{display:block;margin-top:6px;font-size:13.5px;color:var(--gray)}
+
+/* 마무리 */
+.abt-fig{margin:clamp(30px,3.6vw,52px) 0 0}
+.abt-fig img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:18px;display:block}
+.abt-fig figcaption{margin-top:12px;font-size:13.5px;color:var(--faint)}
+.abt-end{border-top:1px solid var(--line);padding:clamp(56px,7vw,104px) 0 clamp(72px,9vw,130px)}
+.abt-end h2{font-size:clamp(24px,3.2vw,44px);font-weight:800;letter-spacing:-.05em;
+line-height:1.2;color:var(--ink)}
+.abt-end p{margin-top:14px;font-size:16px;line-height:1.75;color:var(--gray);max-width:52ch}
+.abt-end .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.abt-end .b{display:inline-flex;align-items:center;height:46px;padding:0 24px;border-radius:99px;
+font-size:15px;font-weight:600;background:var(--brand-cta);color:#fff}
+.abt-end .b.line{background:transparent;color:var(--brand-cta);box-shadow:inset 0 0 0 1px currentColor}
+@media(max-width:860px){
+  .abt-band-in{aspect-ratio:4/5}
+  .abt-row{grid-template-columns:1fr;gap:14px}
+  .abt-cards{grid-template-columns:1fr}
+  .abt-nums{grid-template-columns:1fr 1fr}
+  .abt-hist-it{grid-template-columns:72px 1fr;gap:12px}
+}

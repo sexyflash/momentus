@@ -1248,7 +1248,7 @@ border-radius:18px;overflow:hidden;background:var(--soft)}
 .stg--ink .stg-eyebrow{color:#79828f}
 
 /* ── 전면 타일: 그림이 카드를 채우고 글이 그 위에 얹힌다 ── */
-.stg--hero{aspect-ratio:1380/756;min-height:340px}
+.stg--hero{width:100%;aspect-ratio:1380/756;min-height:340px}
 .stg--hero .stg-art{position:absolute;inset:0;aspect-ratio:auto;z-index:0}
 .stg--hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:62%;z-index:1;
 pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.62),rgba(0,0,0,.28) 42%,transparent)}
@@ -1309,8 +1309,130 @@ html[data-theme="dark"] #mmt-bar .mmt-ib .sun{display:none}
 """
 CSS += AP_CSS
 
+ABOUT_CSS = """
+/* ═══ /about/ — toss.im/company 구조 실측 이식(2026-08-23) ══════════════════
+   토스 실측(1440): 컨테이너 x=108 w=1224 · h1 100px/700/ls-3px · 섹션 h2 40px/700
+   · 좌측 라벨 레일(●) + 우측 본문 2단 · 큰 선언 문장 80px.
+   그전 소개는 이미지 0장에 글만 빼곡했고(대표: "읽고 싶지 않은데?"),
+   마지막이 '유튜브 지켜봐 주세요' 였다 — 소개하러 온 사람에게 할 말이 아니다. */
+.abt{max-width:1224px;margin:0 auto;padding:0 24px}
+.abt-hero{padding:clamp(72px,11vw,150px) 0 clamp(56px,7vw,96px);position:relative;overflow:hidden}
+.abt-hero::before{content:"";position:absolute;right:-8%;top:-40%;width:78%;height:150%;
+border-radius:50%;z-index:0;pointer-events:none;
+background:radial-gradient(closest-side,rgba(49,130,246,.16),transparent 72%)}
+.abt-hero>*{position:relative;z-index:1}
+.abt-hero h1{font-size:clamp(38px,6.6vw,92px);font-weight:800;letter-spacing:-.055em;
+line-height:1.02;color:var(--ink)}
+.abt-hero .sub{margin-top:clamp(14px,1.8vw,26px);font-size:clamp(18px,2.3vw,32px);
+font-weight:700;letter-spacing:-.04em;color:var(--ink2);line-height:1.34}
+.abt-hero .lede{margin-top:20px;max-width:46ch;font-size:16px;line-height:1.75;color:var(--gray)}
+
+.abt-sec{border-top:1px solid var(--line);padding:clamp(44px,5.5vw,80px) 0}
+.abt-row{display:grid;grid-template-columns:1fr 1.55fr;gap:clamp(20px,4vw,56px)}
+.abt-lbl{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:600;color:var(--ink);
+align-self:start}
+.abt-lbl::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink);flex:0 0 auto}
+.abt-say{font-size:clamp(19px,1.7vw,23px);font-weight:700;letter-spacing:-.035em;
+line-height:1.5;color:var(--ink)}
+.abt-body{margin-top:14px;font-size:16px;line-height:1.78;color:var(--gray);max-width:60ch}
+.abt-body+.abt-body{margin-top:12px}
+
+/* 큰 선언 + 사진 */
+.abt-band{margin:clamp(30px,4vw,56px) auto 0;max-width:1520px;padding:0 clamp(12px,2.1vw,30px)}
+.abt-band-in{position:relative;width:100%;border-radius:18px;overflow:hidden;aspect-ratio:1380/756;
+display:flex;flex-direction:column;justify-content:flex-end;min-height:320px}
+.abt-band-in img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.abt-band-in::after{content:"";position:absolute;left:0;right:0;bottom:0;height:66%;z-index:1;
+background:linear-gradient(to top,rgba(20,16,12,.6),rgba(20,16,12,.2) 45%,transparent)}
+.abt-band-tx{position:relative;z-index:2;padding:clamp(24px,3.3vw,48px);color:#fff}
+.abt-band-tx h2{font-size:clamp(26px,4.4vw,64px);font-weight:800;letter-spacing:-.055em;line-height:1.08}
+.abt-band-tx p{margin-top:12px;font-size:clamp(14.5px,1.4vw,19px);font-weight:600;
+color:rgba(255,255,255,.86);letter-spacing:-.02em}
+
+/* 원칙 카드 */
+.abt-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.8vw,24px);margin-top:8px}
+.abt-card{background:var(--soft);border-radius:16px;padding:clamp(20px,2.2vw,28px)}
+.abt-card .n{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.abt-card h3{margin-top:10px;font-size:18px;font-weight:800;letter-spacing:-.035em;color:var(--ink)}
+.abt-card p{margin-top:9px;font-size:14.5px;line-height:1.7;color:var(--gray)}
+
+/* 연혁 */
+.abt-hist{display:flex;flex-direction:column}
+.abt-hist-it{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;
+border-bottom:1px solid var(--line)}
+.abt-hist-it:first-child{border-top:1px solid var(--line)}
+.abt-hist-it .y{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--brand-cta)}
+.abt-hist-it h4{font-size:16px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.abt-hist-it p{margin-top:4px;font-size:14px;color:var(--gray)}
+
+/* 숫자 */
+.abt-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.8vw,24px)}
+.abt-num b{display:block;font-size:clamp(26px,2.8vw,38px);font-weight:800;letter-spacing:-.05em;color:var(--ink)}
+.abt-num span{display:block;margin-top:6px;font-size:13.5px;color:var(--gray)}
+
+/* 마무리 */
+.abt-fig{margin:clamp(30px,3.6vw,52px) 0 0}
+.abt-fig img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:18px;display:block}
+.abt-fig figcaption{margin-top:12px;font-size:13.5px;color:var(--faint)}
+.abt-end{border-top:1px solid var(--line);padding:clamp(56px,7vw,104px) 0 clamp(72px,9vw,130px)}
+.abt-end h2{font-size:clamp(24px,3.2vw,44px);font-weight:800;letter-spacing:-.05em;
+line-height:1.2;color:var(--ink)}
+.abt-end p{margin-top:14px;font-size:16px;line-height:1.75;color:var(--gray);max-width:52ch}
+.abt-end .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.abt-end .b{display:inline-flex;align-items:center;height:46px;padding:0 24px;border-radius:99px;
+font-size:15px;font-weight:600;background:var(--brand-cta);color:#fff}
+.abt-end .b.line{background:transparent;color:var(--brand-cta);box-shadow:inset 0 0 0 1px currentColor}
+@media(max-width:860px){
+  .abt-band-in{aspect-ratio:4/5}
+  .abt-row{grid-template-columns:1fr;gap:14px}
+  .abt-cards{grid-template-columns:1fr}
+  .abt-nums{grid-template-columns:1fr 1fr}
+  .abt-hist-it{grid-template-columns:72px 1fr;gap:12px}
+}
+"""
+CSS += ABOUT_CSS
+
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
 # 내용이 바뀌면 URL도 바뀌게 해서 즉시 반영시킨다.
+# ── 클래스 충돌 감시 ───────────────────────────────────────────────────────
+#   같은 클래스 이름을 서로 다른 곳에서 기본 규칙(.foo{...})으로 두 번 정의하면
+#   뒤엣것이 앞엣것을 덮어 레이아웃이 조용히 깨진다. 2026-08-23 하루에만 네 번 겪었다
+#   (.pcard → /products/ 폭 붕괴, .ap → 홈 폭 760px, .ab → 소개 문단에 100px 패딩,
+#    .pgrid → 3분할 강제). 새 컴포넌트는 **안 쓰는 접두사**로 시작하고, 그래도 겹치면
+#   여기서 잡는다. 비파괴 — 경고만 찍는다.
+def _strip_at_blocks(css):
+    """@media/@supports 안쪽은 의도된 재정의라 중복이 아니다 — 통째로 걷어낸다."""
+    out, i = [], 0
+    while i < len(css):
+        a = css.find("@", i)
+        if a < 0:
+            out.append(css[i:]); break
+        b = css.find("{", a)
+        if b < 0:
+            out.append(css[i:]); break
+        out.append(css[i:a])
+        depth, j = 1, b + 1
+        while j < len(css) and depth:
+            if css[j] == "{": depth += 1
+            elif css[j] == "}": depth -= 1
+            j += 1
+        i = j
+    return "".join(out)
+
+
+def _warn_dup_selectors(css):
+    import collections
+    seen = collections.defaultdict(list)
+    for m in re.finditer(r'(^|[}\n])\s*(\.[a-zA-Z][\w-]*)\s*\{([^}]*)\}', _strip_at_blocks(css)):
+        seen[m.group(2)].append(m.group(3).strip())
+    dups = {k: v for k, v in seen.items() if len(v) > 1 and len(set(v)) > 1}
+    for k, v in sorted(dups.items()):
+        print(f"  ⚠️ 클래스 중복 정의: {k} ({len(v)}곳) — 뒤엣것이 이깁니다")
+    return dups
+
+
+_warn_dup_selectors(CSS)
+
 CSS_VER = hashlib.md5(CSS.encode("utf-8")).hexdigest()[:8]
 
 # 본문 서체 = Pretendard(OFL-1.1) 자체 호스팅. assets/fonts/pretendard/ 는 정적 파일이라
@@ -2448,111 +2570,108 @@ with open("stories/rss.xml", "w", encoding="utf-8") as f:
 # (만들어드려요 폐기 — 요청은 유튜브 댓글에서 받는다)
 
 # ---------- about ----------
-about_body = """<div class="an-ahero">
-  <h1>AI가 사람을 이기는 지점을 찾습니다.</h1>
-  <p>모멘터스는 AI로 제품을 만드는 방법을 실험하는 스튜디오입니다. 매일 만들고, 직접 쓰고, 알게 된 걸 공개합니다.</p>
-  <a class="btn" href="/">만든 것들 보기 →</a>
+about_body = """<div class="abt">
+  <header class="abt-hero">
+    <h1>나머지는<br>저희가 합니다.</h1>
+    <p class="sub">사람이 안 해도 되는 일을 덜어냅니다.</p>
+    <p class="lede">기다리고, 찾고, 정리하는 일. 그건 기계가 더 잘합니다.
+      그 시간을 돌려드리는 게 저희가 만드는 이유입니다.</p>
+  </header>
+
+  <section class="abt-sec">
+    <div class="abt-row">
+      <div class="abt-lbl">우리가 믿는 것</div>
+      <div>
+        <p class="abt-say">사람이 할 일과 기계가 할 일은 다릅니다.</p>
+        <p class="abt-body">취소표가 나올 때까지 새로고침하는 일, 로고 시안을 백 장 넘겨 보는 일,
+          면접 예상 질문을 혼자 소리 내어 읽는 일. 하기 싫어서가 아니라, 사람이 하기엔 아까운 일입니다.</p>
+        <p class="abt-body">저희는 그런 일부터 기계에 넘깁니다. 대단한 걸 하겠다는 게 아니라,
+          저녁 시간을 일이 아니라 사람에게 쓰시게 하려는 겁니다.</p>
+      </div>
+    </div>
+  </section>
 </div>
 
-<section class="an-sec">
-  <div class="an-row">
-    <div class="an-lbl">
-      <h2>하려는 일</h2>
-      <p>AI가 사람보다 잘하는 일과 여전히 못하는 일이 매달 바뀝니다. 그 경계를 직접 만들어 보며 확인합니다.</p>
-    </div>
-    <div class="an-two">
-      <div>
-        <h3>경계를 실측합니다</h3>
-        <p>AI가 어디까지 하는지는 써봐야 압니다. 로고 공모에 AI로 참여해 사람 디자이너들과 같은 판에서 겨루고, 결과를 기록합니다. 이기기도 하고 집니다.</p>
-      </div>
-      <div>
-        <h3>스스로 고치는 팀을 만듭니다</h3>
-        <p>슬랙에 사는 AI 팀이 제품을 만들고, 버그를 찾고, 자기 코드를 고쳐서 배포합니다. 사람이 하던 일을 어디까지 넘길 수 있는지 실험합니다.</p>
-      </div>
-      <div>
-        <h3>먼저 씁니다</h3>
-        <p>여기 있는 제품은 전부 우리가 먼저 쓰려고 만든 것입니다. 매일 안 쓰게 되면 버립니다. 살아남은 것만 남아 있습니다.</p>
-      </div>
-      <div>
-        <h3>배운 걸 공개합니다</h3>
-        <p>뭐가 됐고 뭐가 안 됐는지 블로그에 씁니다. 같은 시도를 하는 사람이 같은 벽에 부딪히지 않게.</p>
-      </div>
-    </div>
+<div class="abt-band"><div class="abt-band-in">
+  <img src="/assets/about/moment.png" alt="저녁 거실에서 아이와 함께 책을 보는 모습" loading="lazy">
+  <div class="abt-band-tx">
+    <h2>저녁 7시엔<br>일이 아니라 사람이.</h2>
+    <p>모멘터스라는 이름은 그 순간에서 왔습니다.</p>
   </div>
-</section>
+</div></div>
 
-<section class="an-sec">
-  <div class="an-row">
-    <div class="an-lbl">
-      <h2>만들 때 지키는 것</h2>
-      <p>제품을 만들지 말지, 남길지 버릴지를 정하는 기준입니다.</p>
-    </div>
-    <div class="an-num">
+<div class="abt">
+  <section class="abt-sec">
+    <div class="abt-row">
+      <div class="abt-lbl">만드는 방식</div>
       <div>
-        <div class="n">01</div>
-        <h3>내가 안 쓰면 만들지 않는다.</h3>
-        <p>남이 필요할 것 같아서 만든 건 전부 실패했습니다. 내 불편에서 시작한 것만 살아남았습니다.</p>
-      </div>
-      <div>
-        <div class="n">02</div>
-        <h3>설명서가 필요하면 진 것이다.</h3>
-        <p>쓰는 법을 설명해야 하는 도구는 안 씁니다. 눌러보면 알아야 합니다.</p>
-      </div>
-      <div>
-        <div class="n">03</div>
-        <h3>공짜로 풀 수 있으면 푼다.</h3>
-        <p>돈을 받을 이유가 없는 건 그냥 드립니다. 브라우저 도구가 그렇습니다.</p>
-      </div>
-      <div>
-        <div class="n">04</div>
-        <h3>안 쓰이면 버린다.</h3>
-        <p>애착으로 남긴 제품이 사이트를 무겁게 만듭니다. 안 쓰면 지웁니다.</p>
-      </div>
-      <div>
-        <div class="n">05</div>
-        <h3>실패도 기록한다.</h3>
-        <p>안 된 이유가 다음 제품의 재료입니다. 지우지 않습니다.</p>
-      </div>
-      <div>
-        <div class="n">06</div>
-        <h3>멈추지 않는다.</h3>
-        <p>어떤 달은 만 원, 어떤 달은 이만 원. 대단하지 않지만 한 번도 쉬지 않았습니다.</p>
+        <p class="abt-say">우리가 먼저 쓰다가, 남은 것만 팝니다.</p>
+        <p class="abt-body">여기 있는 제품은 전부 저희가 쓰려고 만든 것입니다.
+          매일 안 쓰게 되면 그대로 버립니다. 살아남은 것만 남아 있습니다.</p>
       </div>
     </div>
-  </div>
-</section>
+    <div class="abt-cards" style="margin-top:34px">
+      <div class="abt-card"><div class="n">01</div>
+        <h3>내가 안 쓰면 만들지 않습니다</h3>
+        <p>남이 필요할 것 같아서 만든 건 전부 실패했습니다. 내 불편에서 시작한 것만 남았습니다.</p></div>
+      <div class="abt-card"><div class="n">02</div>
+        <h3>설명이 필요하면 진 겁니다</h3>
+        <p>쓰는 법을 설명해야 하는 도구는 안 쓰게 됩니다. 눌러 보면 알아야 합니다.</p></div>
+      <div class="abt-card"><div class="n">03</div>
+        <h3>공짜로 풀 수 있으면 풉니다</h3>
+        <p>돈을 받을 이유가 없는 건 그냥 드립니다. 브라우저 도구 6종이 그렇습니다.</p></div>
+    </div>
+  </section>
 
-<section class="an-sec">
-  <div class="an-row">
-    <div class="an-lbl">
-      <h2>만드는 사람</h2>
-      <p>디지털 제품을 오래 만들어 온 사람들입니다.</p>
-    </div>
-    <div class="an-two">
+  <section class="abt-sec">
+    <div class="abt-row">
+      <div class="abt-lbl">만드는 사람</div>
       <div>
-        <h3>남의 제품을 20년 만들었습니다</h3>
-        <p>이모션글로벌, NC소프트 재팬, 아이플래테아, 네오랩컨버전스, 엔카닷컴. 이름을 다 아실 필요는 없습니다. 그 시간에 배운 걸로 이제 우리 걸 만듭니다.</p>
-      </div>
-      <div>
-        <h3>둘이서 합니다</h3>
-        <p>제품을 만드는 사람과, 그게 굴러가게 하는 사람. 둘 다 있어야 회사가 됩니다.</p>
+        <p class="abt-say">남의 제품을 20년 만들었고, 이제 우리 걸 만듭니다.</p>
+        <p class="abt-body">이모션글로벌, NC소프트 재팬, 아이플래테아, 네오랩컨버전스, 엔카닷컴.
+          이름을 다 아실 필요는 없습니다. 그 시간에 배운 걸로 지금 이걸 만듭니다.</p>
+        <p class="abt-body">제품을 만드는 사람과, 그게 굴러가게 하는 사람. 둘이서 합니다.</p>
       </div>
     </div>
-  </div>
-</section>
+    <div class="abt-nums" style="margin-top:34px">
+      <div class="abt-num"><b>20년</b><span>제품을 만든 시간</span></div>
+      <div class="abt-num"><b>5종</b><span>파는 제품</span></div>
+      <div class="abt-num"><b>6종</b><span>그냥 드리는 도구</span></div>
+      <div class="abt-num"><b>2명</b><span>만드는 사람</span></div>
+    </div>
+    <figure class="abt-fig">
+      <img src="/assets/about/desk.png" alt="1인 스튜디오의 아침 책상" loading="lazy">
+      <figcaption>사무실은 없습니다. 책상 하나에서 기획부터 배포까지 합니다.</figcaption>
+    </figure>
+  </section>
 
-<section class="an-cta">
-  <h2>대단한 걸 만들고 있진 않습니다.<br>다만 매일 만듭니다.</h2>
-  <p class="sub">만드는 과정을 전부 공개합니다. 뭐가 됐고 뭐가 안 됐는지, 숫자까지.<br>지켜봐 주시겠어요?</p>
-  <div class="an-cta-btns">
-    <a class="btn" href="{YT_URL}" target="_blank" rel="noopener">유튜브에서 지켜보기 →</a>
-    <a class="btn ghost" href="/log/">지금까지 한 것 보기</a>
-  </div>
-  <p class="note">뭘 만들면 좋을지도 거기서 말해 주세요. 댓글이 다음 제품이 됩니다.</p>
-</section>"""
+  <section class="abt-sec">
+    <div class="abt-row">
+      <div class="abt-lbl">지나온 것</div>
+      <div class="abt-hist">
+        <div class="abt-hist-it"><span class="y">2024</span>
+          <div><h4>모멘터스를 열었습니다</h4><p>남의 제품을 만들던 20년을 접고, 우리 것을 만들기 시작했습니다.</p></div></div>
+        <div class="abt-hist-it"><span class="y">2025</span>
+          <div><h4>무료 도구를 먼저 풀었습니다</h4><p>설치 없이 쓰는 브라우저 도구 6종. 회원가입도 결제도 없습니다.</p></div></div>
+        <div class="abt-hist-it"><span class="y">2026</span>
+          <div><h4>파는 제품이 5종이 됐습니다</h4><p>상품사진 · 로고 · 모의면접 · 플래너 · 빈방 알림.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="abt-end">
+    <h2>덜어 드릴 게 있으신가요.</h2>
+    <p>지금 없는 것도 괜찮습니다. 어떤 일이 번거로우신지 알려 주시면
+      만들 수 있는 것인지 먼저 보고 답을 드립니다. 직접 읽고 직접 답합니다.</p>
+    <div class="btns">
+      <a class="b" href="/inquiry/">문의하기</a>
+      <a class="b line" href="/products/">제품 보기</a>
+    </div>
+  </section>
+</div>"""
 os.makedirs("about", exist_ok=True)
 with open("about/index.html", "w", encoding="utf-8") as f:
-    f.write(page("소개 — MOMENTUS", "모멘터스는 AI로 제품을 만드는 방법을 실험하는 1인 스튜디오입니다. 매일 만들고, 직접 쓰고, 알게 된 것을 실측과 함께 공개합니다. 무엇을 만들고 왜 만드는지 적어 두었습니다.", about_body, active="a"))
+    f.write(page("소개 — MOMENTUS", "모멘터스는 사람이 안 해도 되는 일을 덜어내는 1인 AI 스튜디오입니다. 기다리고 찾고 정리하는 일을 기계에 넘기고, 그 시간을 돌려드립니다. 무엇을 어떻게 만드는지 적어 두었습니다.", about_body, active="about"))
 
 # ---------- landing (root index.html) ----------
 # ---------- 랜딩 카드 이미지 — 남의 사이트 핫링크 제거 ----------
