@@ -856,11 +856,17 @@ color:rgba(255,255,255,.88);font-size:12.5px;font-weight:600;text-shadow:0 1px 1
 #   기존 제품 상세(.vd)는 실물 사진 10여 장을 전제로 짜여 있다. 앱은 그 자산이 없고
 #   'setup(권한 켜는 법)'이라는 다른 목적의 화면이 필요해 별도 컴포넌트로 둔다.
 CSS += """
-/* 앱 하위 페이지(setup·support) — 폭·상단 여백을 다른 페이지와 같은 토큰으로.
-   760px 고정이라 새 본문 폭(1176)과 어긋나 혼자 좁았다(2026-08-24 대표 지적).
-   읽는 글이라 본문은 780 으로 두되, 컨테이너·여백은 공용 규칙을 따른다. */
-.ap{max-width:780px;margin:0 auto;padding:var(--pg-top,96px) 24px 100px}
-.ap-kick{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--faint);text-transform:uppercase}
+/* 앱 하위 페이지(setup·support) — **인사이트 목록과 같은 골격**(2026-08-24 대표 지적).
+   컨테이너 1224 + 히어로는 .nws-head 규격(제목 --pg-h1, 그 아래 한 줄).
+   본문 단락만 읽기 폭(780)으로 잡는다 — 글이라 그 이상 넓히면 안 읽힌다. */
+.ap{max-width:1224px;margin:0 auto;padding:0 24px 110px}
+.ap-head{padding:var(--pg-top) 0 var(--pg-head-gap)}
+.ap-head h1{font-size:var(--pg-h1);font-weight:800;letter-spacing:-.045em;line-height:1.08;
+color:var(--ink)}
+.ap-head .lead{margin-top:var(--pg-sub-gap);font-size:16px;line-height:1.72;color:var(--gray);
+max-width:56ch}
+.ap-body{max-width:780px}
+.ap-kick{font-size:13.5px;font-weight:700;letter-spacing:-.01em;color:var(--brand-cta);text-transform:none}
 .ap h1{font-size:var(--pg-h1,clamp(28px,5vw,42px));font-weight:800;letter-spacing:-.045em;
 line-height:1.12;margin:10px 0 0}
 .ap .sub{font-size:17px;color:var(--gray);margin-top:14px;line-height:1.65}
@@ -926,7 +932,7 @@ align-items:center;justify-content:space-between;gap:14px}
 .ap-qa .a{font-size:14px;color:var(--ink2);line-height:1.75;padding:0 0 20px}
 .ap-help{margin-top:56px;padding:24px;border-radius:14px;background:var(--soft);font-size:14px;line-height:1.7;color:var(--ink2)}
 .ap-help a{font-weight:700;text-decoration:underline;text-underline-offset:3px}
-@media(max-width:640px){.ap{padding:var(--pg-top,80px) 18px 64px}.ap-cta a{width:100%}}
+@media(max-width:640px){.ap{padding:0 18px 80px}.ap-cta a{width:100%}}
 """
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -1868,6 +1874,29 @@ def bar_items(active=""):
     return out
 
 
+def prod_shot(sl):
+    """제품의 대표 그림 — 홈 배너·GNB 더보기·제품 목록이 **같은 것**을 쓴다.
+       ⚠️ 세 곳이 각자 다른 소스를 보고 있어 목록만 옛 og 배너였다(2026-08-24 대표 지적).
+          우선순위: 홈 배너용 컷 → 제품 shot. 여기 하나만 고치면 세 곳이 같이 바뀐다."""
+    return HOME_SHOT.get(sl) or (P.get(sl, {}).get("shot") or "")
+
+
+# ⚠️ 전부 **우리 자산으로 복사**해 둔다 — dev.heyreci.com 같은 주소는 언제 사라질지 모른다
+#   (2026-08-23 대표: "그 주소 영상은 안 없어질 것 같거든, 복사든지 일단 넣고").
+#   헤이레시 영상은 원본 28.5MB/1920px → 1600px·CRF30·무음으로 2.4MB. Workers 자산 상한이
+#   한 파일 25MiB 라 원본 그대로는 배포조차 안 된다.
+HOME_SHOT = {
+    "mark": "/assets/home/mark.webp",
+    "cue": "/assets/home/cue.png",
+    "theplan": "/assets/home/theplan.png",
+    "kontext": "/assets/home/kontext.jpg",
+    # 홈 배너는 영상이지만 목록·더보기엔 정지컷이 필요하다(영상 5초 프레임).
+    "heyreci": "/assets/home/heyreci.jpg",
+    "flipper": "/assets/flipper/hero.png",
+}
+HOME_VIDEO = {"heyreci": "/assets/home/heyreci-hero.mp4"}
+
+
 def bar_products():
     """플라이아웃·모바일 목록에 들어갈 제품.
        ⚠️ 스포크(자체 도메인)만 보면 **앱형 제품이 빠진다** — 플리퍼가 그래서 안 나왔다
@@ -2541,6 +2570,9 @@ def shell_bar_markup(host="", act_extra=""):
         ext = ' target="_blank" rel="noopener"' if sp.get("external") else ""
         parts.append(f'<a class="mmt-it" href="{sp["href"]}"{ext}{cur}>'
                      f'{sp["label"]}{_NEWB.get(sp.get("slug"), "")}</a>')
+    # 트리거 = **목록으로 가는 링크**다(호버하면 패널, 누르면 /products/).
+    #   '더보기'라고 쓰니 어디로 가는지 안 보였다(2026-08-24 대표 지적).
+    _plabel = next((l["label"] for l in BAR["links"] if l["key"] == "products"), "제품 전체")
     parts.append("__DROP__")
     parts.append('<span class="mmt-sep" aria-hidden="true"></span>')
     for it in bar_items():
@@ -2556,7 +2588,7 @@ def shell_bar_markup(host="", act_extra=""):
         cur = ' aria-current="page"' if host and _host_of(sp["href"]) == host else ""
         # 랜딩 배너와 **같은 그림**을 쓴다 — 메뉴와 본문이 다른 그림이면 다른 것으로 읽힌다
         # (2026-08-24 대표 지적). 헤이레시는 배너가 영상이라 첫 프레임을 떠서 넣었다.
-        shot = _FLY_SHOT.get(sl) or pr.get("shot") or ""
+        shot = prod_shot(sl)
         th = (f'<span class="th"><img src="https://the-moment.us{shot}" alt="" loading="lazy"></span>'
               if shot.startswith("/") else
               (f'<span class="th"><img src="{shot}" alt="" loading="lazy"></span>'
@@ -2575,10 +2607,7 @@ def shell_bar_markup(host="", act_extra=""):
         f'<a class="mmt-fly-it" href="https://the-moment.us/tools/{t}/">{_tth(t)}'
         f'<span class="tx"><b>{P[t]["short"]}</b></span></a>' for t in TOOLS)
     fly = ('<div class="mmt-fly"><div class="mmt-fly-in">'
-           f'<div><p class="mmt-fly-h">제품</p>'
-           f'<a class="mmt-fly-it mmt-fly-all" href="https://the-moment.us/products/">'
-           f'<span class="th">▦</span><span class="tx"><b>전체 제품 보기</b></span></a>'
-           f'{"".join(prods)}</div>'
+           f'<div><p class="mmt-fly-h">제품</p>{"".join(prods)}</div>'
            f'<div><p class="mmt-fly-h">무료 도구</p><div class="mmt-fly-grid">{tools}</div></div>'
            '</div><div class="mmt-fly-foot">'
            '<a href="https://the-moment.us/products/">전체 제품 보기 →</a></div></div>')
@@ -2608,7 +2637,7 @@ def shell_bar_markup(host="", act_extra=""):
             f'<nav class="mmt-nav" aria-label="모멘터스">'
             + "".join(parts).replace("__DROP__",
                 '<span class="mmt-drop">'
-                '<a class="mmt-it mmt-trg" href="https://the-moment.us/products/">더보기</a>'
+                f'<a class="mmt-it mmt-trg" href="https://the-moment.us/products/">{_plabel}</a>'
                 + fly + '</span>')
             + '</nav>'
             f'{act}{pick}'
@@ -3969,18 +3998,6 @@ AP_GO = {"binbang": "빈방 알림 등록", "heyreci": "헤이레시 열기", "m
 
 # 홈 타일은 **글자가 없는 사진**을 쓴다. og 배너를 깔면 우리 제목과 겹친다.
 #   더플랜은 notes 쇼룸(히어로 슬라이드) 이미지를 그대로 가져다 쓴다(2026-08-23 대표 지시).
-# ⚠️ 전부 **우리 자산으로 복사**해 둔다 — dev.heyreci.com 같은 주소는 언제 사라질지 모른다
-#   (2026-08-23 대표: "그 주소 영상은 안 없어질 것 같거든, 복사든지 일단 넣고").
-#   헤이레시 영상은 원본 28.5MB/1920px → 1600px·CRF30·무음으로 2.4MB. Workers 자산 상한이
-#   한 파일 25MiB 라 원본 그대로는 배포조차 안 된다.
-HOME_SHOT = {
-    "mark": "/assets/home/mark.webp",
-    "cue": "/assets/home/cue.png",
-    "theplan": "/assets/home/theplan.png",
-    "kontext": "/assets/home/kontext.jpg",
-    "flipper": "/assets/flipper/hero.png",
-}
-HOME_VIDEO = {"heyreci": "/assets/home/heyreci-hero.mp4"}
 
 
 def ap_stage(slug, tone="", badge=""):
@@ -4977,10 +4994,12 @@ for _slug, A in APP_PRODUCTS.items():
                   for q, a in S["trouble"])
 
     _body = f"""<div class="ap">
-  <div class="ap-kick">{A['name']} 설정</div>
-  <h1>접근성 권한 켜는 법</h1>
-  <div class="lead">{S['lead']}</div>
-
+  <header class="ap-head">
+    <div class="ap-kick">{A['name']} 설정</div>
+    <h1>접근성 권한 켜는 법</h1>
+    <div class="lead">{S['lead']}</div>
+  </header>
+  <div class="ap-body">
   <div class="ap-tabs" role="tablist">{_tabs}</div>
   {_panes}
 
@@ -4990,6 +5009,7 @@ for _slug, A in APP_PRODUCTS.items():
   <div class="ap-help">여기까지 해도 안 되면 <a href="mailto:{EMAIL}">{EMAIL}</a>로
   쓰시는 기기 이름과 안드로이드 버전을 알려주세요. 확인해서 답변드리겠습니다.<br>
   <a href="{_base}/">{A['name']} 제품 페이지로 돌아가기</a></div>
+  </div>
 </div>"""
     os.makedirs(f"{_base.strip('/')}/setup", exist_ok=True)
     with open(f"{_base.strip('/')}/setup/index.html", "w", encoding="utf-8") as fh:
@@ -5024,10 +5044,12 @@ for _slug, A in APP_PRODUCTS.items():
                                 f'기기별 설정 방법</a>을 먼저 확인해 주세요.')
 
     _body = f"""<div class="ap">
-  <div class="ap-kick">{A['name']} 지원</div>
-  <h1>도움이 필요하신가요</h1>
-  <div class="lead">{_lead}</div>
-
+  <header class="ap-head">
+    <div class="ap-kick">{A['name']} 지원</div>
+    <h1>도움이 필요하신가요</h1>
+    <div class="lead">{_lead}</div>
+  </header>
+  <div class="ap-body">
   {_selfcheck}
 
   <h2>문의</h2>
@@ -5043,6 +5065,7 @@ for _slug, A in APP_PRODUCTS.items():
   <a href="/legal/terms/" style="text-decoration:underline">이용약관</a></div>
 
   <div class="ap-help"><a href="{_base}/">{A['name']} 제품 페이지로 돌아가기</a></div>
+</div>
 </div>"""
     os.makedirs(f"{_base.strip('/')}/support", exist_ok=True)
     with open(f"{_base.strip('/')}/support/index.html", "w", encoding="utf-8") as fh:
@@ -5088,19 +5111,20 @@ def _prod_card(s_):
     pr = P[s_]
     free = bool(pr.get("free"))
     price = _PRICE_TAG.get(s_) or ("무료" if free else "")
-    shot = pr.get("shot") or ""
+    shot = prod_shot(s_)
     _lg = " logo" if pr.get("logo") and shot and pr["logo"] in shot else ""
     th = (f'<div class="th{_lg}"><img src="{shot}" alt="" loading="lazy" decoding="async"></div>'
           if shot else
           f'<div class="th ic" style="--c:{pr.get("color", "#0b0c0e")}" aria-hidden="true">{pr["icon"]}</div>')
+    # ⚠️ 태그를 조건부로 붙일 때 삼항을 **return 전체**에 걸면 안 된다 — 태그 없는 제품이
+    #    통째로 사라진다(2026-08-24 실사고: 유료 4종이 목록에서 빠졌다). 조각만 조건부로.
+    tag = f'<div class="mt{" free" if free else ""}">{esc(price)}</div>' if price else ""
     return (f'<a class="prh-row" href="{purl(s_)}">{th}'
             f'<div class="bd">'
             f'<div class="nm">{pr["short"]}</div>'
             f'<div class="tg">{pr["tag"]}</div>'
             f'<div class="ds">{pr["tagline"]}</div>'
-            f'</div>'
-            f'{chr(60)}div class="mt{" free" if free else ""}">{esc(price)}</div></a>'
-            if price else f'</a>')
+            f'</div>{tag}</a>')
 
 def _prod_group(t, sub, items):
     rows = "".join(_prod_card(x) for x in items if x in P)

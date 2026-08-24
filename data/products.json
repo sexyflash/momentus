@@ -63,7 +63,7 @@
     "links": [
       {
         "key": "products",
-        "label": "제품",
+        "label": "제품 전체",
         "href": "/products/"
       },
       {
