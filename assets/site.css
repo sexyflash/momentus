@@ -829,7 +829,16 @@ color:rgba(255,255,255,.88);font-size:12.5px;font-weight:600;text-shadow:0 1px 1
 color:var(--ink)}
 .ap-head .lead{margin-top:var(--pg-sub-gap);font-size:16px;line-height:1.72;color:var(--gray);
 max-width:56ch}
-.ap-body{max-width:780px}
+/* 본문도 컨테이너를 따라 넓어진다 — 폭만 넓히고 안쪽을 780 에 묶으면 아무것도 안 바뀐다
+   (2026-08-24 대표 지적). 순수 텍스트 단락만 읽기 폭으로 잡고, 표·탭·단계·그림은 다 쓴다. */
+.ap-body{max-width:none}
+.ap-body > .hint,.ap-body > p{max-width:70ch}
+.ap-steps li{max-width:none}
+.ap-steps .d{max-width:76ch}
+.ap-pane{max-width:none}
+.ap-qa{max-width:none}
+/* 단계 그림은 넓어진 폭을 실제로 쓴다 */
+.ap-steps img,.ap-pane img{max-width:100%}
 .ap-kick{font-size:13.5px;font-weight:700;letter-spacing:-.01em;color:var(--brand-cta);text-transform:none}
 .ap h1{font-size:var(--pg-h1,clamp(28px,5vw,42px));font-weight:800;letter-spacing:-.045em;
 line-height:1.12;margin:10px 0 0}

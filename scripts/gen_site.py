@@ -865,7 +865,16 @@ CSS += """
 color:var(--ink)}
 .ap-head .lead{margin-top:var(--pg-sub-gap);font-size:16px;line-height:1.72;color:var(--gray);
 max-width:56ch}
-.ap-body{max-width:780px}
+/* 본문도 컨테이너를 따라 넓어진다 — 폭만 넓히고 안쪽을 780 에 묶으면 아무것도 안 바뀐다
+   (2026-08-24 대표 지적). 순수 텍스트 단락만 읽기 폭으로 잡고, 표·탭·단계·그림은 다 쓴다. */
+.ap-body{max-width:none}
+.ap-body > .hint,.ap-body > p{max-width:70ch}
+.ap-steps li{max-width:none}
+.ap-steps .d{max-width:76ch}
+.ap-pane{max-width:none}
+.ap-qa{max-width:none}
+/* 단계 그림은 넓어진 폭을 실제로 쓴다 */
+.ap-steps img,.ap-pane img{max-width:100%}
 .ap-kick{font-size:13.5px;font-weight:700;letter-spacing:-.01em;color:var(--brand-cta);text-transform:none}
 .ap h1{font-size:var(--pg-h1,clamp(28px,5vw,42px));font-weight:800;letter-spacing:-.045em;
 line-height:1.12;margin:10px 0 0}
@@ -2071,7 +2080,9 @@ document.documentElement.dataset.theme=t;}catch(e){}})();
 #      아직 못 받아서 빈 값이다. 값이 들어오면 그 줄 하나만 채우면 전부 켜진다.
 #   바깥으로 나가는 클릭(제품 사이트·스토어)을 outbound 이벤트로 남긴다 —
 #   "어느 배너에서 어디로 갔나"를 봐야 랜딩이 일을 하는지 알 수 있다.
-GA_ID = ""          # 예: "G-XXXXXXXXXX"
+# MOMENTUS 계정(405789423) · the-moment.us 속성(551281263) · apex 스트림(15491123505)
+#   ⚠️ **apex 전용**이다. 마크(G-0MZD2HR8Y3)·큐(G-QSHEQZ8V9C) 것을 여기 넣지 마라 — 섞인다.
+GA_ID = "G-1T66ZV28MB"
 
 ANALYTICS = ("" if not GA_ID else f"""<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
 <script>
