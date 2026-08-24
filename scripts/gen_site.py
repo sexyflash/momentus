@@ -47,6 +47,9 @@ border-bottom:1px solid var(--line);transition:background .14s}
 .prh-row:hover{background:var(--soft)}
 .prh-row .th{width:172px;aspect-ratio:16/10;flex:0 0 auto;border-radius:12px;
 overflow:hidden;background:var(--soft2)}
+/* 로고 썸네일은 자르지 않는다 — cover 로 자르면 로고가 잘려 무슨 서비스인지 안 읽힌다. */
+.prh-row .th.logo{background:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}
+.prh-row .th.logo img{object-fit:contain;padding:14px}
 .prh-row .th img{width:100%;height:100%;object-fit:cover;display:block;
 transition:transform .45s var(--ease)}
 .prh-row:hover .th img{transform:scale(1.04)}
@@ -63,8 +66,7 @@ color:var(--c,var(--ink));font-size:40px;line-height:1}
 padding:6px 12px;border-radius:99px;background:var(--soft2);color:var(--ink2);white-space:nowrap}
 .prh-row:hover .mt{background:var(--paper)}
 .prh-row .mt.free{background:rgba(18,183,106,.12);color:#0b8f52}
-.prh-foot{margin:44px 0 110px;padding-top:22px;border-top:1px solid var(--line);
-font-size:14px;color:var(--gray)}
+.prh-foot{margin:44px 0 110px;font-size:14px;color:var(--gray)}
 .prh-foot a{text-decoration:underline;text-underline-offset:3px}
 @media(max-width:640px){
   .prh-row{gap:14px;padding:15px 2px}
@@ -854,9 +856,13 @@ color:rgba(255,255,255,.88);font-size:12.5px;font-weight:600;text-shadow:0 1px 1
 #   기존 제품 상세(.vd)는 실물 사진 10여 장을 전제로 짜여 있다. 앱은 그 자산이 없고
 #   'setup(권한 켜는 법)'이라는 다른 목적의 화면이 필요해 별도 컴포넌트로 둔다.
 CSS += """
-.ap{max-width:760px;margin:0 auto;padding:96px 20px 80px}
+/* 앱 하위 페이지(setup·support) — 폭·상단 여백을 다른 페이지와 같은 토큰으로.
+   760px 고정이라 새 본문 폭(1176)과 어긋나 혼자 좁았다(2026-08-24 대표 지적).
+   읽는 글이라 본문은 780 으로 두되, 컨테이너·여백은 공용 규칙을 따른다. */
+.ap{max-width:780px;margin:0 auto;padding:var(--pg-top,96px) 24px 100px}
 .ap-kick{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--faint);text-transform:uppercase}
-.ap h1{font-size:clamp(28px,5vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1.2;margin:10px 0 0}
+.ap h1{font-size:var(--pg-h1,clamp(28px,5vw,42px));font-weight:800;letter-spacing:-.045em;
+line-height:1.12;margin:10px 0 0}
 .ap .sub{font-size:17px;color:var(--gray);margin-top:14px;line-height:1.65}
 .ap .lead{font-size:16px;color:var(--ink2);line-height:1.75;margin-top:26px}
 .ap .lead b{font-weight:700;color:var(--ink)}
@@ -920,7 +926,7 @@ align-items:center;justify-content:space-between;gap:14px}
 .ap-qa .a{font-size:14px;color:var(--ink2);line-height:1.75;padding:0 0 20px}
 .ap-help{margin-top:56px;padding:24px;border-radius:14px;background:var(--soft);font-size:14px;line-height:1.7;color:var(--ink2)}
 .ap-help a{font-weight:700;text-decoration:underline;text-underline-offset:3px}
-@media(max-width:640px){.ap{padding:80px 18px 64px}.ap-cta a{width:100%}}
+@media(max-width:640px){.ap{padding:var(--pg-top,80px) 18px 64px}.ap-cta a{width:100%}}
 """
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -1290,6 +1296,10 @@ transition:transform .6s var(--ease)}
 .stg-bd{margin-top:auto;display:grid;grid-template-columns:1fr auto;align-items:end;gap:18px 26px;
 padding:clamp(20px,2.4vw,30px) clamp(20px,2.6vw,34px) clamp(24px,2.8vw,34px)}
 .stg-eyebrow{font-size:12.5px;font-weight:600;letter-spacing:-.01em;color:var(--faint)}
+/* 기기 배지 — 이름 앞에 띠로 두른다. */
+.stg-eyebrow .dev{display:inline-block;margin-right:9px;padding:4px 10px;border-radius:99px;
+font-size:11.5px;font-weight:800;letter-spacing:-.01em;background:rgba(255,255,255,.9);
+color:#0b0c0e;vertical-align:1px}
 .stg-eyebrow em{font-style:normal;margin-left:8px;padding:3px 8px;border-radius:99px;
 font-size:10px;font-weight:800;letter-spacing:.07em;color:#fff;background:var(--brand-cta);
 vertical-align:2px}
@@ -2026,6 +2036,41 @@ if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.dataset.theme=t;}catch(e){}})();
 </script>"""
 
+# ── 애널리틱스 ─────────────────────────────────────────────────────────
+#   2026-08-24. apex 에만 없었다(마크 G-0MZD2HR8Y3 · 큐 G-QSHEQZ8V9C 는 이미 붙어 있음).
+#   ⚠️ GA_ID 는 **apex 전용 속성**이어야 한다 — 다른 사이트 것을 재사용하면 데이터가 섞인다.
+#      아직 못 받아서 빈 값이다. 값이 들어오면 그 줄 하나만 채우면 전부 켜진다.
+#   바깥으로 나가는 클릭(제품 사이트·스토어)을 outbound 이벤트로 남긴다 —
+#   "어느 배너에서 어디로 갔나"를 봐야 랜딩이 일을 하는지 알 수 있다.
+GA_ID = ""          # 예: "G-XXXXXXXXXX"
+
+ANALYTICS = ("" if not GA_ID else f"""<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}
+gtag('js',new Date());gtag('config','{GA_ID}');
+</script>""") + """<script>
+/* 바깥 클릭 추적 — GA 가 없어도 죽지 않는다(gtag 있을 때만 보낸다). */
+(function(){
+  addEventListener('click',function(e){
+    var a=e.target.closest('a[href]'); if(!a) return;
+    var h=a.getAttribute('href')||'';
+    if(!/^https?:/.test(h)) return;
+    var host=''; try{ host=new URL(h,location.href).hostname }catch(x){ return }
+    if(host===location.hostname) return;
+    var kind = /play[.]google[.]com/.test(h) ? 'store'
+             : /the-moment[.]us|heyreci[.]com/.test(host) ? 'product' : 'external';
+    // 어느 자리에서 눌렀는지 — 배너·더보기·목록을 구분해야 쓸모가 있다.
+    var where = a.closest('.stg') ? 'banner'
+              : a.closest('.mmt-fly') ? 'nav-more'
+              : a.closest('.prh-row') ? 'product-list'
+              : a.closest('#mmt-bar') ? 'nav' : 'body';
+    if(window.gtag) gtag('event','outbound',{link_domain:host,link_url:h,
+      link_kind:kind,link_where:where,link_text:(a.innerText||'').trim().slice(0,60)});
+  },{capture:true});
+})();
+</script>"""
+
+
 TOP_BTN = ('<button class="kb-top" id="kbtop" aria-label="맨 위로">'
            '<svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>')
 
@@ -2057,6 +2102,7 @@ def page(title, desc, body, active="", extra="", header=None, body_class="kbp", 
 <link rel="stylesheet" href="/shell.css">
 <script type="application/ld+json">{JSONLD}</script>
 {THEME_BOOT}
+{ANALYTICS}
 <script defer src="/assets/apex.js?v={CSS_VER}"></script>
 {head_extra}</head>
 <body{_bc}>
@@ -2333,6 +2379,12 @@ font-size:9px;font-weight:800;letter-spacing:.05em;background:#0071e3;color:#fff
 #mmt-bar .mmt-fly-grid .mmt-fly-it .th{width:26px;height:26px;border-radius:7px;background:#fff;padding:4px}
 #mmt-bar .mmt-fly-grid .mmt-fly-it .th img{object-fit:contain}
 #mmt-bar .mmt-fly-grid .mmt-fly-it b{font-size:13px;font-weight:500;color:#cfd4dc}
+/* 더보기는 호버로 열리지만 **눌러서도 갈 수 있다** — 그걸 모르는 사람을 위해 맨 위에 둔다. */
+#mmt-bar .mmt-fly-all{margin-bottom:4px}
+#mmt-bar .mmt-fly-all .th{background:rgba(255,255,255,.14);font-size:15px}
+#mmt-bar[data-v=apex] .mmt-fly-all .th{background:rgba(0,0,0,.06)}
+#mmt-bar .mmt-fly-all b{color:#8fc0ff}
+#mmt-bar[data-v=apex] .mmt-fly-all b{color:#0071e3}
 #mmt-bar .mmt-fly-foot{padding:6px 22px 14px}
 #mmt-bar .mmt-fly-foot a{font-size:12.5px;font-weight:600;color:#8fc0ff;text-decoration:none}
 #mmt-bar .mmt-fly-foot a:hover{text-decoration:underline}
@@ -2458,8 +2510,10 @@ _FLY_SHOT = {          # 랜딩 배너와 같은 그림(정본은 HOME_SHOT — 
     "kontext": "/assets/home/kontext.jpg",
     "heyreci": "/assets/home/heyreci.jpg",
     "binbang": "https://bb.the-moment.us/assets/hero.jpg",
+    "flipper": "/assets/flipper/hero.png",
 }
-_NEWB = {"binbang": '<em class="nb">NEW</em>'}   # 바·플라이아웃에서 새 제품 표시
+_NEWB = {"binbang": '<em class="nb">NEW</em>',
+         "flipper": '<em class="nb">NEW</em>'}   # 바·플라이아웃에서 새 제품 표시
 def shell_bar_markup(host="", act_extra=""):
     """제품 HTML의 <body> 바로 뒤에 박는 공용 1단 바. host 를 주면 그 제품에 활성 표시.
 
@@ -2478,7 +2532,10 @@ def shell_bar_markup(host="", act_extra=""):
     # 규칙: 바에 이름을 꺼내는 건 **이 패밀리 바를 달고 있는 사이트**(플래너·로고·모의면접·빈방).
     #   헤이레시·컨텍스트처럼 따로 개발돼 그냥 점프하는 서비스는 '더보기' 안에 둔다
     #   — 눌렀을 때 돌아올 길(패밀리 바)이 있느냐로 가른다(2026-08-24 대표 정리).
-    tops = [sp for sp in bar_products() if not sp.get("external")]
+    #   ⚠️ 앱형(자체 사이트 없음)도 바에서 뺀다 — 눌러도 돌아올 패밀리 바가 없는 건 마찬가지다.
+    _app = {sl for sl, pr in P.items() if pr.get("type") == "app"}
+    tops = [sp for sp in bar_products()
+            if not sp.get("external") and sp.get("slug") not in _app]
     for sp in tops:
         cur = ' aria-current="page"' if host and _host_of(sp["href"]) == host else ""
         ext = ' target="_blank" rel="noopener"' if sp.get("external") else ""
@@ -2518,7 +2575,10 @@ def shell_bar_markup(host="", act_extra=""):
         f'<a class="mmt-fly-it" href="https://the-moment.us/tools/{t}/">{_tth(t)}'
         f'<span class="tx"><b>{P[t]["short"]}</b></span></a>' for t in TOOLS)
     fly = ('<div class="mmt-fly"><div class="mmt-fly-in">'
-           f'<div><p class="mmt-fly-h">제품</p>{"".join(prods)}</div>'
+           f'<div><p class="mmt-fly-h">제품</p>'
+           f'<a class="mmt-fly-it mmt-fly-all" href="https://the-moment.us/products/">'
+           f'<span class="th">▦</span><span class="tx"><b>전체 제품 보기</b></span></a>'
+           f'{"".join(prods)}</div>'
            f'<div><p class="mmt-fly-h">무료 도구</p><div class="mmt-fly-grid">{tools}</div></div>'
            '</div><div class="mmt-fly-foot">'
            '<a href="https://the-moment.us/products/">전체 제품 보기 →</a></div></div>')
@@ -2765,7 +2825,11 @@ def app_landing(slug, p):
     feats = p.get("feats") or []
     rows = ""
     for i, (t, d) in enumerate(feats[:3]):
-        img = [f"{a}/scene-webtoon.png", f"{a}/scene-news.png", f"{a}/scene-recipe.png"][i]
+        # ⚠️ 갤러리와 **겹치지 않는** 전용 컷을 쓴다 — 같은 사진이 한 페이지에 두 번 나오면
+        #    스크롤이 되감기는 느낌이 든다(2026-08-24 대표 지적).
+        # 있는 자산만 쓴다 — 새로 만들지 않는다(2026-08-24 대표 지시).
+        #   갤러리 7컷과 겹치지 않는 것: 볼륨키 접사 + 원본 목업 2장.
+        img = [f"{a}/feat-thumb.png", f"{a}/fold8ultra.jpg", f"{a}/fold8.jpg"][i]
         flip = " fl-row--flip" if i % 2 else ""
         rows += (f'<section class="fl-sec"><div class="fl-row{flip}">'
                  f'<div class="fl-row-tx"><span class="fl-num">{i + 1:02d}</span>'
@@ -3946,6 +4010,8 @@ def ap_stage(slug, tone="", badge=""):
     else:
         art = ""
     bdg = f'<em>{badge}</em>' if badge else ""
+    # 기기 배지 — "내 폰 얘기구나"가 이름보다 먼저 읽혀야 한다(2026-08-24 대표 지시).
+    dev = f'<b class="dev">{esc(pr["device"])}</b>' if pr.get("device") else ""
     cls = "".join(f" stg--{t}" for t in tone.split()) if tone else ""
     # 배너 전체를 누를 수 있게 — 카드처럼 보이는데 안 눌리면 손이 헛돈다(2026-08-24 대표 지적).
     #   버튼이 둘이면 제품 페이지로, 하나면 그 버튼과 같은 곳으로 보낸다.
@@ -3955,7 +4021,7 @@ def ap_stage(slug, tone="", badge=""):
            f'aria-label="{esc(pr["short"])} 자세히 보기"></a>')
     return (f'<section class="stg{cls}">{art}{hit}<div class="stg-bd"><div>'
 
-            f'<p class="stg-eyebrow">{esc(pr.get("tag", ""))}{bdg}</p>'
+            f'<p class="stg-eyebrow">{dev}{esc(pr.get("tag", ""))}{bdg}</p>'
             f'<h2 class="stg-name">{esc(pr["short"])}</h2>'
             f'<p class="stg-claim">{esc(pr["tagline"])}</p></div>'
             f'<div class="stg-cta">{cta}</div></div></section>')
@@ -5011,15 +5077,20 @@ PROD_GROUPS = [
       "pinterest-grab", "her"]),
 ]
 
+# ⚠️ '유료' 태그를 달지 않는다(2026-08-24 대표 지적). 그 말은 아무것도 안 알려준다 —
+#   큐·더플랜은 구독이고 플리퍼도 구독이고 헤이레시는 사실상 쇼핑몰인데 전부 '유료'가 됐다.
+#   게다가 경고처럼 읽힌다. **알릴 가치가 있는 건 공짜라는 사실뿐**이라 그것만 남긴다.
+#   태그가 없으면 = 돈을 낸다. 얼마인지는 제품 페이지가 말한다.
 _PRICE_TAG = {"binbang": "무료 있음", "flipper": "무료 체험", "kontext": "무료 체험"}
 
 
 def _prod_card(s_):
     pr = P[s_]
     free = bool(pr.get("free"))
-    price = _PRICE_TAG.get(s_) or ("무료" if free else "유료")
+    price = _PRICE_TAG.get(s_) or ("무료" if free else "")
     shot = pr.get("shot") or ""
-    th = (f'<div class="th"><img src="{shot}" alt="" loading="lazy" decoding="async"></div>'
+    _lg = " logo" if pr.get("logo") and shot and pr["logo"] in shot else ""
+    th = (f'<div class="th{_lg}"><img src="{shot}" alt="" loading="lazy" decoding="async"></div>'
           if shot else
           f'<div class="th ic" style="--c:{pr.get("color", "#0b0c0e")}" aria-hidden="true">{pr["icon"]}</div>')
     return (f'<a class="prh-row" href="{purl(s_)}">{th}'
@@ -5028,7 +5099,8 @@ def _prod_card(s_):
             f'<div class="tg">{pr["tag"]}</div>'
             f'<div class="ds">{pr["tagline"]}</div>'
             f'</div>'
-            f'<div class="mt{" free" if free else ""}">{esc(price)}</div></a>')
+            f'{chr(60)}div class="mt{" free" if free else ""}">{esc(price)}</div></a>'
+            if price else f'</a>')
 
 def _prod_group(t, sub, items):
     rows = "".join(_prod_card(x) for x in items if x in P)
@@ -5040,12 +5112,11 @@ _pg = "".join(_prod_group(t, sub, items) for t, sub, items in PROD_GROUPS)
 # '제품 vs 도구'라는 우리만 아는 구분을 강요하게 됐다(2026-08-23 대표 지적). 같은 목록의 마지막 칸.
 
 products_body = f"""<div class="prh">
-  <div class="tls-head">
-    <div class="k">PRODUCTS</div>
-    <h1>필요한 순간에 꺼내 쓰는 것들</h1>
+  <header class="nws-head">
+    <h1>제품</h1>
     <p>1인 AI 스튜디오가 직접 만들어 직접 팝니다. 결제하면 바로 시작되는 것부터,
-      설치 없이 그냥 쓰는 무료 도구까지 여기 다 있습니다.</p>
-  </div>
+      설치 없이 그냥 쓰는 것까지 여기 다 있습니다.</p>
+  </header>
   {_pg}
   <p class="prh-foot">찾으시는 게 없거나 만들었으면 하는 게 있으면
     <a href="/inquiry/">문의해 주세요</a>. 직접 읽고 답합니다.</p>

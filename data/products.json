@@ -476,7 +476,8 @@
         ]
       ],
       "tagline2": "쿠팡 상품 페이지에서 옵션별 가격과 재고를 한 번에 펼쳐 봅니다. 옵션을 하나씩 눌러 확인하지 않아도 됩니다.",
-      "logo": "/assets/home/logo/coupang.png"
+      "logo": "/assets/home/logo/coupang.png",
+      "shot": "https://the-moment.us/assets/home/logo/coupang.png"
     },
     "insta-rank": {
       "name": "인스타 인기순 정렬",
@@ -561,7 +562,8 @@
         ]
       ],
       "tagline2": "인스타그램 프로필의 게시물을 좋아요 많은 순서로 다시 세웁니다. 그 계정이 뭘로 떴는지 스크롤 없이 봅니다.",
-      "logo": "/assets/home/logo/instagram.png"
+      "logo": "/assets/home/logo/instagram.png",
+      "shot": "https://the-moment.us/assets/home/logo/instagram.png"
     },
     "youtube-rank": {
       "name": "유튜브 인기순 정렬",
@@ -646,7 +648,8 @@
         ]
       ],
       "tagline2": "유튜브 채널의 영상을 조회수 순서로 다시 세웁니다. 최신순 말고 실제로 많이 본 순서로 봅니다.",
-      "logo": "/assets/home/logo/youtube.png"
+      "logo": "/assets/home/logo/youtube.png",
+      "shot": "https://the-moment.us/assets/home/logo/youtube.png"
     },
     "pinterest-grab": {
       "name": "핀터레스트 원본 추출",
@@ -731,7 +734,8 @@
         ]
       ],
       "tagline2": "핀터레스트에서 저화질 썸네일 대신 원본 이미지를 찾아 엽니다. 저장한 이미지가 흐릿해지는 일이 없습니다.",
-      "logo": "/assets/home/logo/pinterest.png"
+      "logo": "/assets/home/logo/pinterest.png",
+      "shot": "https://the-moment.us/assets/home/logo/pinterest.png"
     },
     "chatpage": {
       "name": "ChatPage",
@@ -820,7 +824,8 @@
         ]
       ],
       "tagline2": "보고 있는 유튜브·웹페이지를 3초 만에 요약해 주는 크롬 확장입니다. 긴 영상을 처음부터 볼지 말지 먼저 정합니다.",
-      "logo": "/assets/home/logo/chrome.png"
+      "logo": "/assets/home/logo/chrome.png",
+      "shot": "https://the-moment.us/assets/home/logo/chrome.png"
     },
     "her": {
       "name": "her · 음성 입력",
@@ -913,7 +918,8 @@
         ]
       ],
       "tagline2": "타이핑 대신 말로 입력하는 크롬 확장입니다. 긴 프롬프트를 손으로 치지 않고 말해서 넣습니다.",
-      "logo": "/assets/home/logo/openai.png"
+      "logo": "/assets/home/logo/openai.png",
+      "shot": "https://the-moment.us/assets/home/logo/openai.png"
     },
     "binbang": {
       "name": "빈방 · 취소표 알림",
@@ -1261,7 +1267,7 @@
           "앱 버전 — Flipper 앱의 <b>오른쪽 위 톱니바퀴 → 앱 정보</b>에서 보실 수 있습니다"
         ]
       },
-      "shot": "https://the-moment.us/assets/flipper/fold8.jpg",
+      "shot": "https://the-moment.us/assets/flipper/hero.png",
       "how": [
         [
           "설치하고 권한 켜기",
@@ -1289,7 +1295,8 @@
           "무엇을 수집하나요?",
           "아무것도 수집하지 않습니다. 계정 가입도, 광고·분석 SDK도 없습니다."
         ]
-      ]
+      ],
+      "device": "삼성 갤럭시 폴드8 필수앱"
     }
   },
   "links": {
