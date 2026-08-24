@@ -939,8 +939,9 @@ font-size:14px;line-height:1.65;color:var(--ink2)}
    그대로 재발한다. 행을 공유시키면 줄 수가 몇이든 스스로 맞는다.
    ⚠️ row-gap 은 0 이어야 한다 — 카드 *안쪽* 행 사이까지 벌어진다. 줄 간격은 li 의
    margin-bottom 이 만든다. 카드 padding 은 전부 같아야 정렬이 유지된다(subgrid 특성). */
-.ap-steps{--g:clamp(14px,1.8vw,24px);list-style:none;margin:26px 0 0;padding:0;counter-reset:s;
-display:grid;grid-template-columns:repeat(3,1fr);column-gap:var(--g);row-gap:0}
+.ap-steps{--g:clamp(14px,1.8vw,24px);--min:320px;list-style:none;margin:26px 0 0;padding:0;
+counter-reset:s;display:grid;column-gap:var(--g);row-gap:0;
+grid-template-columns:repeat(auto-fit,minmax(min(var(--min),100%),1fr))}
 .ap-steps li{counter-increment:s;grid-row:span 4;display:grid;grid-template-rows:subgrid;
 border:0;background:var(--soft);border-radius:16px;padding:clamp(16px,1.8vw,22px);
 margin-bottom:var(--g);min-width:0}
@@ -950,11 +951,14 @@ background:var(--ink);color:#fff;font-size:12.5px;font-weight:700;
 display:flex;align-items:center;justify-content:center;margin-bottom:12px}
 .ap-steps .t{align-self:start;font-size:15.5px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
 .ap-steps .d{align-self:start;font-size:14px;color:var(--gray);margin-top:6px;line-height:1.65}
-/* 눕혀 찍은 태블릿·리더기 화면(교보 SAM 1600×1200)은 3열에 넣으면 285px 로 줄어
-   메뉴 글씨가 안 읽힌다(2026-08-24 실측). 그 탭만 2열로 벌린다. */
-.ap-steps.landscape{grid-template-columns:repeat(2,1fr)}
-@media(max-width:900px){.ap-steps,.ap-steps.landscape{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.ap-steps,.ap-steps.landscape{grid-template-columns:1fr}}
+/* ⚠️ 열 수를 숫자로 박지 마라(3열·2열). 화면이 넓어지면 그림이 쓸데없이 커지고
+   좁아지면 글씨가 안 읽힌다. 대신 **읽히는 최소 폭**만 정하고 열 수는 브라우저가 센다
+   (2026-08-24 대표 지적: "적절히 크기에 맞춰서 하면 되지 반응형으로").
+   그래서 데스크톱·태블릿·모바일에 따로 규칙을 둘 필요가 없다 — min() 이 폭을 넘지
+   않게 잡아 주므로 320px 화면에서도 가로 스크롤이 안 생긴다.
+   눕혀 찍은 화면(교보 SAM 1600×1200)은 세로 폰과 같은 260px 로 두면 메뉴 글씨가
+   안 보인다 — 가로가 긴 만큼 최소 폭을 키운다. 판정은 PNG 헤더(가로>세로). */
+.ap-steps.landscape{--min:440px}
 /* 단계·경고 안의 링크는 본문과 같은 회색이라 링크인 줄 모른다. 밑줄과 굵기로 분리한다. */
 .ap-steps .d a,.ap .note a,.ap .ask a{font-weight:700;color:var(--ink);text-decoration:underline;
 text-underline-offset:3px}
@@ -2446,6 +2450,11 @@ text-decoration:none;color:#cfd4dc}
 background:rgba(255,255,255,.08);display:grid;place-items:center;font-size:13px;color:#e6e9ee}
 #mmt-bar .mmt-fly-it .th img{width:100%;height:100%;object-fit:cover;display:block}
 #mmt-bar .mmt-fly-it .tx{min-width:0}
+/* ⚠️ 그리드 칸은 기본이 min-width:auto 라 **내용보다 작아지지 않는다**. 판 폭을 아무리
+   줄여도 안쪽이 그대로 삐져나온다(2026-08-24: 판을 좁혔더니 넘침이 12px→57px 로 늘었다).
+   폭을 줄이려면 칸이 줄어들 수 있게 min-width:0 을 먼저 풀어 줘야 한다. */
+#mmt-bar .mmt-fly-in>*,#mmt-bar .mmt-fly-grid>*,#mmt-bar .mmt-fly-it{min-width:0}
+#mmt-bar .mmt-fly-it b,#mmt-bar .mmt-fly-it i{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #mmt-bar .mmt-fly-it b{font-size:13.5px;font-weight:600;letter-spacing:-.02em;color:#fff;
 white-space:nowrap}
 #mmt-bar .mmt-fly-it b .nb{font-style:normal;margin-left:6px;padding:1px 6px;border-radius:99px;
@@ -2466,6 +2475,12 @@ font-size:9px;font-weight:800;letter-spacing:.05em;background:#0071e3;color:#fff
 #mmt-bar .mmt-fly-foot{padding:6px 22px 14px}
 #mmt-bar .mmt-fly-foot a{font-size:12.5px;font-weight:600;color:#8fc0ff;text-decoration:none}
 #mmt-bar .mmt-fly-foot a:hover{text-decoration:underline}
+/* ⚠️ 더보기 판은 *버튼*을 기준으로 가운데 정렬된다. 그 버튼이 바 오른쪽에 있어서
+   `calc(100vw - 24px)` 만으로는 오른쪽이 화면 밖으로 나간다 — 821~905px 구간에서
+   가로 스크롤이 1~12px 생겼다(2026-08-24 실측, 전 페이지 공통).
+   버튼 오른쪽에 남는 공간이 판의 절반보다 좁아지는 구간에서 판을 좁힌다. */
+@media(max-width:1000px){#mmt-bar .mmt-fly,#mmt-bar[data-v=apex] .mmt-fly{
+width:min(600px,calc(100vw - 24px))}}
 @media(max-width:820px){#mmt-bar .mmt-fly{display:none}}
 @media(prefers-reduced-motion:reduce){#mmt-bar .mmt-fly{transition:none}}"""
 
