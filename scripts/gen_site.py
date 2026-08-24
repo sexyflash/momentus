@@ -2966,7 +2966,7 @@ for i, slug in enumerate(PORDER):
     <aside class="pst-aside"><div class="rt">이어서 읽기</div>{_relaside}</aside>
   <div class="pst-end">
     {'<div class="pst-tags">' + tagh + '</div>' if tagh else ''}
-    <div class="pst-backwrap"><a class="pst-back" href="{STORY_BASE}/">이야기 전체 보기</a></div>
+    <div class="pst-backwrap"><a class="pst-back" href="{STORY_BASE}/">인사이트 전체 보기</a></div>
   </div>
   </div>
 </div>"""
@@ -2974,7 +2974,7 @@ for i, slug in enumerate(PORDER):
     with open(f"stories/{slug}/index.html", "w", encoding="utf-8") as fh:
         # sub 가 짧으면(35자 미만) 제목을 앞세워 문맥을 보강한다 — 70자 미만이면 구글이 무시한다.
         _sd = ps["sub"] if len(ps["sub"]) >= 70 else _re_desc(f"{ps['sub']} {ps['title']} — 모멘터스가 제품을 만들며 알게 된 것을 실측과 함께 적은 글입니다.")
-        fh.write(page(f"{ps['title']} — MOMENTUS 이야기", _sd, body, active="story"))
+        fh.write(page(f"{ps['title']} — MOMENTUS 인사이트", _sd, body, active="story"))
 
 # 스트림 = 글 + 영상(유튜브). 같은 시간축, 같은 카드. (PLATFORM_TOPOLOGY §10 '한 스트림')
 entries = []
@@ -3088,24 +3088,24 @@ def stories_page(title, sub, sel_label="", items=None, chips=True):
 LSUB = ("만든 것, 안 된 것, 배운 것을 그대로 적습니다. 자랑이 아니라 실측입니다.")
 os.makedirs("stories", exist_ok=True)
 with open("stories/index.html", "w", encoding="utf-8") as f:
-    f.write(page("이야기 — MOMENTUS", "AI로 제품을 만들며 알게 된 것들을 적습니다. 잘된 자랑이 아니라 실측 데이터와 실패 기록입니다. 로고 공모 524회 참가 결과, 에이전트를 만들며 세 번 버린 것 같은 이야기가 있습니다.",
-                 stories_page("이야기", LSUB), active="story", extra=BLOG_JS))
+    f.write(page("인사이트 — MOMENTUS", "AI로 제품을 만들며 알게 된 것들을 적습니다. 잘된 자랑이 아니라 실측 데이터와 실패 기록입니다. 로고 공모 524회 참가 결과, 에이전트를 만들며 세 번 버린 것 같은 이야기가 있습니다.",
+                 stories_page("인사이트", LSUB), active="story", extra=BLOG_JS))
 
 # 태그별 정적 페이지 — 제품 2단 바의 '이야기'가 여기로 온다. 매니페스트에서 자동 생성.
 for key, lab in STORY_TAGS:
     sel = [e for e in entries if lab in e.get("tags", [])]
     os.makedirs(f"stories/tag/{key}", exist_ok=True)
-    body = stories_page(f"{lab} 이야기",
+    body = stories_page(f"{lab} 인사이트",
                         f"‘{lab}’ 태그가 붙은 글 {len(sel)}편. <a href=\"{STORY_BASE}/\">전체 보기 →</a>",
                         items=sel, chips=False)
     # 글이 0편인 태그는 색인시키지 않는다 — thin content 는 사이트 품질 신호를 깎는다.
     # 페이지 자체는 남긴다(링크가 죽으면 안 된다). 글이 붙으면 다음 빌드에 자동으로 색인 복귀.
     _nx = '<meta name="robots" content="noindex,follow">\n' if not sel else ""
     with open(f"stories/tag/{key}/index.html", "w", encoding="utf-8") as fh:
-        fh.write(page(f"{lab} 이야기 — MOMENTUS",
-                      _re_desc(f"‘{lab}’ 태그가 붙은 모멘터스 이야기 {len(sel)}편. "
+        fh.write(page(f"{lab} 인사이트 — MOMENTUS",
+                      _re_desc(f"‘{lab}’ 태그가 붙은 모멘터스 인사이트 {len(sel)}편. "
                                f"제품을 만들며 실제로 겪은 것과 실측 데이터를 적습니다.")
-                      if sel else _re_desc(f"‘{lab}’ 태그의 모멘터스 이야기입니다. 아직 이 태그로 발행한 글이 없습니다. "
+                      if sel else _re_desc(f"‘{lab}’ 태그의 모멘터스 인사이트입니다. 아직 이 태그로 발행한 글이 없습니다. "
                                f"전체 이야기에서 실측 데이터와 실패 기록을 보실 수 있습니다."),
                       body, active="story", head_extra=_nx))
 
