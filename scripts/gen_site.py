@@ -876,6 +876,20 @@ max-width:56ch}
 /* 단계 그림은 넓어진 폭을 실제로 쓴다 */
 .ap-steps img,.ap-pane img{max-width:100%}
 .ap-kick{font-size:13.5px;font-weight:700;letter-spacing:-.01em;color:var(--brand-cta);text-transform:none}
+/* 설정·지원 같은 **곁가지 페이지**는 돌아갈 길이 바닥에만 있으면 없는 것과 같다
+   (2026-08-24 대표 지적: "네비가 없는데 이거 어떻게 할꺼야?").
+   GNB 는 제품 이름을 안 들고 있어서 Flipper 로 돌아갈 수 없다 — 여기가 유일한 길이다. */
+.ap-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:7px;
+font-size:13.5px;font-weight:600;letter-spacing:-.01em;color:var(--gray)}
+.ap-crumb a{color:var(--gray);text-decoration:none;border-radius:6px}
+.ap-crumb a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.ap-crumb .sep{color:var(--line2,#c8c8cc);font-weight:400}
+.ap-crumb .now{color:var(--brand-cta);font-weight:700}
+/* 뒤로 가는 링크를 본문 끝에도 한 번 더 — 다 읽고 나서 위로 올릴 필요가 없게. */
+.ap-back{margin-top:34px;display:inline-flex;align-items:center;gap:8px;
+font-size:14.5px;font-weight:700;color:var(--ink);text-decoration:none;
+border:1px solid var(--line);border-radius:999px;padding:11px 18px}
+.ap-back:hover{border-color:var(--ink2);background:var(--soft)}
 .ap h1{font-size:var(--pg-h1,clamp(28px,5vw,42px));font-weight:800;letter-spacing:-.045em;
 line-height:1.12;margin:10px 0 0}
 .ap .sub{font-size:17px;color:var(--gray);margin-top:14px;line-height:1.65}
@@ -936,8 +950,11 @@ background:var(--ink);color:#fff;font-size:12.5px;font-weight:700;
 display:flex;align-items:center;justify-content:center;margin-bottom:12px}
 .ap-steps .t{align-self:start;font-size:15.5px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
 .ap-steps .d{align-self:start;font-size:14px;color:var(--gray);margin-top:6px;line-height:1.65}
-@media(max-width:900px){.ap-steps{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.ap-steps{grid-template-columns:1fr}}
+/* 눕혀 찍은 태블릿·리더기 화면(교보 SAM 1600×1200)은 3열에 넣으면 285px 로 줄어
+   메뉴 글씨가 안 읽힌다(2026-08-24 실측). 그 탭만 2열로 벌린다. */
+.ap-steps.landscape{grid-template-columns:repeat(2,1fr)}
+@media(max-width:900px){.ap-steps,.ap-steps.landscape{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.ap-steps,.ap-steps.landscape{grid-template-columns:1fr}}
 /* 단계·경고 안의 링크는 본문과 같은 회색이라 링크인 줄 모른다. 밑줄과 굵기로 분리한다. */
 .ap-steps .d a,.ap .note a,.ap .ask a{font-weight:700;color:var(--ink);text-decoration:underline;
 text-underline-offset:3px}
@@ -951,8 +968,7 @@ text-underline-offset:3px}
 border-radius:12px;border:1px solid var(--line);background:var(--paper)}
 /* 가로로 찍힌 태블릿·리더기 화면(교보 SAM 1600×1200 등)은 세로 폰 기준 220px 로 묶으면
    220×165 로 쪼그라들어 메뉴 글씨가 안 읽힌다. 생성기가 PNG 헤더를 읽어 가로가 길면 .wide 를 붙인다. */
-.ap-steps .shot.wide{max-width:420px}
-@media(max-width:640px){.ap-steps .shot.wide{max-width:100%}}
+/* .wide 는 이제 '이 탭을 2열로 벌려라' 는 신호로만 쓴다 — 폭 제한은 카드가 한다. */
 .ap-qa{margin-top:24px;border-top:1px solid var(--line)}
 .ap-qa details{border-bottom:1px solid var(--line)}
 .ap-qa summary{padding:18px 0;font-size:15px;font-weight:700;cursor:pointer;list-style:none;display:flex;
@@ -5014,21 +5030,27 @@ for _slug, A in APP_PRODUCTS.items():
                     for i, dv in enumerate(S["devices"]))
     _panes = ""
     for i, dv in enumerate(S["devices"]):
-        _steps = ""
+        _steps, _land = "", False
         for t, d, shot in dv["steps"]:
             # shot 이 비어 있으면(실기기 촬영 대기) 그림 없이 글로만 안내한다.
-            _img = (f'<img {_shot_attrs(shot)} src="{shot}" alt="{t} 화면" loading="lazy">'
-                    if shot else "")
+            _at = _shot_attrs(shot) if shot else ""
+            if "wide" in _at:
+                _land = True          # 눕혀 찍은 화면이 섞인 탭 → 2열로 벌린다
+            _img = f'<img {_at} src="{shot}" alt="{t} 화면" loading="lazy">' if shot else ""
             _steps += f'<li><div><div class="t">{t}</div><div class="d">{d}</div>{_img}</div></li>'
         _note = f'<div class="note">{dv["note"]}</div>' if dv.get("note") else ""
         _panes += (f'<div class="ap-dev" data-k="{dv["key"]}"{"" if i == 0 else " hidden"}>'
-                   f'{_note}<ol class="ap-steps">{_steps}</ol></div>')
+                   f'{_note}<ol class="ap-steps{" landscape" if _land else ""}">{_steps}</ol></div>')
     _qa = "".join(f"<details><summary>{q}</summary><div class=\"a\">{a}</div></details>"
                   for q, a in S["trouble"])
 
     _body = f"""<div class="ap">
   <header class="ap-head">
-    <div class="ap-kick">{A['name']} 설정</div>
+    <nav class="ap-crumb" aria-label="위치">
+      <a href="/products/">제품</a><span class="sep">›</span>
+      <a href="{_base}/">{A['name']}</a><span class="sep">›</span>
+      <span class="now" aria-current="page">설정</span>
+    </nav>
     <h1>접근성 권한 켜는 법</h1>
     <div class="lead">{S['lead']}</div>
   </header>
@@ -5040,8 +5062,8 @@ for _slug, A in APP_PRODUCTS.items():
   <div class="ap-qa">{_qa}</div>
 
   <div class="ap-help">여기까지 해도 안 되면 <a href="mailto:{EMAIL}">{EMAIL}</a>로
-  쓰시는 기기 이름과 안드로이드 버전을 알려주세요. 확인해서 답변드리겠습니다.<br>
-  <a href="{_base}/">{A['name']} 제품 페이지로 돌아가기</a></div>
+  쓰시는 기기 이름과 안드로이드 버전을 알려주세요. 확인해서 답변드리겠습니다.</div>
+  <a class="ap-back" href="{_base}/">← {A['name']} 제품 페이지</a>
   </div>
 </div>"""
     os.makedirs(f"{_base.strip('/')}/setup", exist_ok=True)
@@ -5078,7 +5100,11 @@ for _slug, A in APP_PRODUCTS.items():
 
     _body = f"""<div class="ap">
   <header class="ap-head">
-    <div class="ap-kick">{A['name']} 지원</div>
+    <nav class="ap-crumb" aria-label="위치">
+      <a href="/products/">제품</a><span class="sep">›</span>
+      <a href="{_base}/">{A['name']}</a><span class="sep">›</span>
+      <span class="now" aria-current="page">지원</span>
+    </nav>
     <h1>도움이 필요하신가요</h1>
     <div class="lead">{_lead}</div>
   </header>
@@ -5097,7 +5123,8 @@ for _slug, A in APP_PRODUCTS.items():
   <div class="hint"><a href="/legal/privacy/" style="text-decoration:underline">개인정보처리방침</a> ·
   <a href="/legal/terms/" style="text-decoration:underline">이용약관</a></div>
 
-  <div class="ap-help"><a href="{_base}/">{A['name']} 제품 페이지로 돌아가기</a></div>
+  <a class="ap-back" href="{_base}/">← {A['name']} 제품 페이지</a>
+  <a class="ap-back" href="{_base}/setup/" style="margin-left:10px">권한 켜는 법 →</a>
 </div>
 </div>"""
     os.makedirs(f"{_base.strip('/')}/support", exist_ok=True)
