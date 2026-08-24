@@ -1303,10 +1303,10 @@
     "_note": "앱 바이너리·스토어 등록정보에 박히는 영구 주소(/l/<키>). ⚠️ 키는 절대 바꾸지 마라 — 이미 배포된 앱은 재빌드가 안 된다. 바꾸는 건 target 뿐이다. ⚠️ 반드시 302(임시)로 발행한다. 301은 브라우저·스토어 크롤러가 영구 캐시해서, 나중에 target을 바꿔도 기존 설치본이 옛 주소로 계속 간다 = 이 층을 만든 의미가 사라진다.",
     "_catchall": "/",
     "map": {
-      "flipper": "/apps/flipper/",
-      "flipper/setup": "/apps/flipper/setup/",
-      "flipper/support": "/apps/flipper/support/",
-      "flipper/get": "/apps/flipper/",
+      "flipper": "/products/flipper/",
+      "flipper/setup": "/products/flipper/setup/",
+      "flipper/support": "/products/flipper/support/",
+      "flipper/get": "https://play.google.com/store/apps/details?id=us.themoment.flipper&hl=ko",
       "privacy": "/legal/privacy/",
       "terms": "/legal/terms/",
       "refund": "/legal/refund/"

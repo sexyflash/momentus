@@ -1,10 +1,10 @@
 {
   "_note": "생성물(scripts/gen_site.py). data/products.json 의 links 를 고쳐라.",
   "map": {
-    "flipper": "/apps/flipper/",
-    "flipper/setup": "/apps/flipper/setup/",
-    "flipper/support": "/apps/flipper/support/",
-    "flipper/get": "/apps/flipper/",
+    "flipper": "/products/flipper/",
+    "flipper/setup": "/products/flipper/setup/",
+    "flipper/support": "/products/flipper/support/",
+    "flipper/get": "https://play.google.com/store/apps/details?id=us.themoment.flipper&hl=ko",
     "privacy": "/legal/privacy/",
     "terms": "/legal/terms/",
     "refund": "/legal/refund/"

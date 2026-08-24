@@ -932,12 +932,14 @@ display:flex;align-items:center;justify-content:center;margin-bottom:12px}
 /* 단계·경고 안의 링크는 본문과 같은 회색이라 링크인 줄 모른다. 밑줄과 굵기로 분리한다. */
 .ap-steps .d a,.ap .note a,.ap .ask a{font-weight:700;color:var(--ink);text-decoration:underline;
 text-underline-offset:3px}
-/* 실기기 폰 스크린샷 — 세로로 매우 길다(840×2326 등). 폭을 묶지 않으면 한 단계가 화면을 다 먹는다. */
-/* 실기기 폰 스크린샷 — 세로로 매우 길다(840×2326 등). 카드 안에서 위쪽만 보여 준다.
-   전체를 다 깔면 카드 하나가 화면을 다 먹는다. */
-.ap-steps .shot{margin-top:14px;width:100%;height:auto;max-height:340px;object-fit:cover;
-object-position:top;border-radius:12px;border:1px solid var(--line);background:var(--paper)}
-@media(max-width:640px){.ap-steps .shot{max-width:172px}}
+/* 실기기 폰 스크린샷 — 세로로 매우 길다(840×2326 등).
+   ⚠️ **자르지 마라.** max-height + object-fit:cover 로 위쪽만 남겼더니 각 단계가 보여줘야 할
+   바로 그 부분이 잘렸다(2026-08-24 실사고: 2번의 '접근성 설정 열기' 안내창이 화면 아래쪽에
+   뜨는데 위만 남아 1번과 똑같아 보였고, 3번은 목록이 중간에서 끊겼다).
+   세로로 긴 게 문제였던 건 1열이던 시절 얘기다 — 3열이면 폭이 이미 1/3 이라 통째로 깔아도 된다.
+   설정 안내 그림은 '무엇을 눌러야 하는지'가 전부라, 짧게 만드는 것보다 다 보이는 게 우선이다. */
+.ap-steps .shot{margin-top:14px;width:100%;height:auto;
+border-radius:12px;border:1px solid var(--line);background:var(--paper)}
 /* 가로로 찍힌 태블릿·리더기 화면(교보 SAM 1600×1200 등)은 세로 폰 기준 220px 로 묶으면
    220×165 로 쪼그라들어 메뉴 글씨가 안 읽힌다. 생성기가 PNG 헤더를 읽어 가로가 길면 .wide 를 붙인다. */
 .ap-steps .shot.wide{max-width:420px}
