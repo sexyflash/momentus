@@ -35,8 +35,23 @@ box-shadow:inset 0 0 0 1px rgba(0,0,0,.18);font-weight:600}
 #mmt-bar[data-v=apex] .mmt-cta:hover{background:rgba(0,0,0,.05);color:#000}
 #mmt-bar[data-v=apex] .mmt-ib{color:rgba(0,0,0,.7)}
 #mmt-bar[data-v=apex] .mmt-ib:hover{background:rgba(0,0,0,.06);color:#000}
+/* 본진(apex)에서는 이게 **주 내비**다 — 남의 사이트 위에 얹히는 게 아니니 작을 이유가 없다
+   (2026-08-24 대표 지적). 패널을 넓히고 썸네일·글자를 한 단계 키운다.
+   제품 사이트(spoke)는 그대로 작게 — 거긴 패밀리 메뉴다. */
 #mmt-bar[data-v=apex] .mmt-fly{background:#fff;border:1px solid rgba(0,0,0,.09);
-box-shadow:0 24px 48px -22px rgba(0,0,0,.24)}
+box-shadow:0 28px 56px -24px rgba(0,0,0,.26);width:min(880px,calc(100vw - 24px));border-radius:20px}
+#mmt-bar[data-v=apex] .mmt-fly-in{grid-template-columns:1.15fr .85fr;gap:10px 30px;padding:22px 22px 8px}
+#mmt-bar[data-v=apex] .mmt-fly-h{font-size:12px;margin:0 0 10px}
+#mmt-bar[data-v=apex] .mmt-fly-it{gap:14px;padding:9px 10px;border-radius:13px}
+#mmt-bar[data-v=apex] .mmt-fly-it .th{width:84px;height:53px;border-radius:10px}
+#mmt-bar[data-v=apex] .mmt-fly-it b{font-size:16px;font-weight:700}
+#mmt-bar[data-v=apex] .mmt-fly-it i{display:block;font-style:normal;font-size:12.5px;color:#6b7280;
+margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mmt-bar[data-v=apex] .mmt-fly-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 8px}
+#mmt-bar[data-v=apex] .mmt-fly-grid .mmt-fly-it .th{width:38px;height:38px;border-radius:10px;padding:6px}
+#mmt-bar[data-v=apex] .mmt-fly-grid .mmt-fly-it b{font-size:13.5px;font-weight:600}
+#mmt-bar[data-v=apex] .mmt-fly-grid .mmt-fly-it i{display:none}
+#mmt-bar[data-v=apex] .mmt-fly-foot{padding:8px 30px 18px}
 #mmt-bar[data-v=apex] .mmt-fly-h{color:#86868b}
 #mmt-bar[data-v=apex] .mmt-fly-it{color:#111}
 #mmt-bar[data-v=apex] .mmt-fly-it:hover{background:rgba(0,0,0,.05)}
