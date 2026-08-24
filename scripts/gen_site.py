@@ -5175,12 +5175,25 @@ with open("_redirects", "w", encoding="utf-8") as f:
     # /apps/ → /products/ (2026-08-24 승격). ⚠️ **설치된 앱 안에 /apps/flipper/setup/ 이
     #   박혀 있다** — 앱이 업데이트되기 전까지 이 301 이 유일한 연결이다. 지우지 마라.
     #   앱이 새 주소로 나가면 BACKLOG.md 의 항목을 지우고 이 줄도 뺄 수 있다.
+    # ⚠️ 리다이렉트보다 **실제 파일이 먼저 이긴다**. 승격 뒤 apps/<slug>/ 산출물이 남아 있어
+    #   301 이 통째로 무시됐다(2026-08-24 실측: /apps/flipper/setup/ → 제품 페이지로 감).
+    #   생성기가 더 이상 안 만드니, 남아 있으면 지운다.
+    import shutil as _sh2
     for _s in APP_PRODUCTS:
-        f.write(f"/apps/{_s}/setup/* /products/{_s}/setup/ 301\n")
-        f.write(f"/apps/{_s}/setup /products/{_s}/setup/ 301\n")
-        f.write(f"/apps/{_s}/support/* /products/{_s}/support/ 301\n")
-        f.write(f"/apps/{_s}/support /products/{_s}/support/ 301\n")
-        f.write(f"/apps/{_s}/* /products/{_s}/ 301\n")
+        if os.path.isdir(f"apps/{_s}"):
+            _sh2.rmtree(f"apps/{_s}")
+            print(f"  · 옛 apps/{_s}/ 제거 — 301 이 가려지고 있었다")
+    for _s in APP_PRODUCTS:
+        # ⚠️ `/x/*` 는 **빈 문자열을 안 잡는다** — `/apps/flipper/setup/` 가 이 규칙을 비켜가
+        #   아래 `/apps/flipper/*` 에 걸려 제품 페이지로 갔다(2026-08-24 실측).
+        #   앱이 여는 바로 그 주소라 치명적이었다. 슬래시로 끝나는 정확 경로를 따로 적는다.
+        for _sub in ("setup", "support"):
+            f.write(f"/apps/{_s}/{_sub}/ /products/{_s}/{_sub}/ 301\n")
+            f.write(f"/apps/{_s}/{_sub} /products/{_s}/{_sub}/ 301\n")
+            f.write(f"/apps/{_s}/{_sub}/* /products/{_s}/{_sub}/ 301\n")
+        # ⚠️ 넓은 `/apps/<slug>/*` 을 두면 위의 setup·support 규칙을 삼킨다(2026-08-24 실측:
+        #   순서를 앞세워도 CF 가 이걸 먼저 잡았다). 하위 경로는 각각 적고, 와일드카드는 안 쓴다.
+        f.write(f"/apps/{_s}/ /products/{_s}/ 301\n")
         f.write(f"/apps/{_s} /products/{_s}/ 301\n")
     f.write("/apps/ /products/ 301\n")
     f.write("/apps /products/ 301\n")
