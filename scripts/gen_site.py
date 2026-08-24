@@ -2011,7 +2011,7 @@ FOOTER = f"""<footer class="site">
   <div><h4>무료 도구</h4>{_FT_TOOLS}</div>
   <!-- 🚫 문의하기를 mailto 로 되돌리지 마라 — 2026-08-07. mailto 는 기록이 아무 데도 안 남아
        봇도 못 보고 이력도 없었다. 창구는 /inquiry/ 하나다(단일 원장 inquiries). -->
-  <div><h4>모멘터스</h4><a href="/stories/">인사이트</a><a href="/about/">소개</a><a href="/inquiry/">문의하기</a><a href="/how-to-pay/">결제 안내</a><a href="/legal/terms/">이용약관</a><a href="/legal/privacy/">개인정보처리방침</a><a href="/legal/refund/">환불 규정</a></div>
+  <div><h4>모멘터스</h4><a href="/insights/">인사이트</a><a href="/about/">소개</a><a href="/inquiry/">문의하기</a><a href="/how-to-pay/">결제 안내</a><a href="/legal/terms/">이용약관</a><a href="/legal/privacy/">개인정보처리방침</a><a href="/legal/refund/">환불 규정</a></div>
   <div class="biz">
     <span>{BIZ['name']}</span><span>대표 {BIZ['ceo']}</span><span>사업자등록번호 {BIZ['reg']}</span><span>통신판매업신고 {BIZ['mail_order']}</span>
     <span>{BIZ['addr']}</span><span>{BIZ['tel']}</span><span>{BIZ['email']}</span><span>개인정보보호책임자 {BIZ['privacy_officer']}</span>
@@ -2476,7 +2476,7 @@ font-size:9px;font-weight:800;letter-spacing:.05em;background:#0071e3;color:#fff
 #mmt-bar .mmt-fly-foot a{font-size:12.5px;font-weight:600;color:#8fc0ff;text-decoration:none}
 #mmt-bar .mmt-fly-foot a:hover{text-decoration:underline}
 /* ⚠️ 더보기 판은 *버튼*을 기준으로 가운데 정렬된다. 그 버튼이 바 오른쪽에 있어서
-   `calc(100vw - 24px)` 만으로는 오른쪽이 화면 밖으로 나간다 — 821~905px 구간에서
+   calc(100vw - 24px) 만으로는 오른쪽이 화면 밖으로 나간다 — 821~905px 구간에서
    가로 스크롤이 1~12px 생겼다(2026-08-24 실측, 전 페이지 공통).
    버튼 오른쪽에 남는 공간이 판의 절반보다 좁아지는 구간에서 판을 좁힌다. */
 @media(max-width:1000px){#mmt-bar .mmt-fly,#mmt-bar[data-v=apex] .mmt-fly{
@@ -2493,6 +2493,36 @@ width:min(600px,calc(100vw - 24px))}}
 #   같은 규격을 받게 한다(마크 .post-*, 큐 .dg-*). 이름 통일은 그다음 단계.
 #   반영: sync_shell.py 가 제품 스타일시트의 MMT 블록에 함께 밀어 넣는다.
 SHELL_POST_CSS = """
+/* ── 인사이트 목록 = 전 사이트 한 벌 ────────────────────────────────
+   같은 글이 본진과 마크에 둘 다 보이는데 카드가 서로 달랐다(2026-08-24 대표 지적).
+   ⚠️ 각 저장소에서 카드 CSS 를 다시 쓰지 마라 — 그 순간 다시 두 벌이 된다.
+   마크는 마크업만 들고 있고 모양은 전부 여기서 온다. */
+.nws-feat{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2.2vw,32px)}
+.nws-fcard{position:relative;display:block;border-radius:28px;overflow:hidden;
+aspect-ratio:1200/700;background:var(--soft)}
+.nws-fcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+transition:transform .6s var(--ease)}
+.nws-fcard:hover img{transform:scale(1.03)}
+.nws-fcard::after{content:"";position:absolute;left:0;right:0;bottom:0;height:66%;
+background:linear-gradient(to top,rgba(16,14,12,.66),rgba(16,14,12,.2) 46%,transparent)}
+.nws-fcard .tx{position:absolute;left:0;right:0;bottom:0;z-index:2;
+padding:clamp(20px,2.6vw,34px);color:#fff}
+.nws-fcard .m{font-size:13px;font-weight:600;color:rgba(255,255,255,.78)}
+.nws-fcard h2{margin-top:9px;font-size:clamp(18px,1.9vw,25px);font-weight:800;
+letter-spacing:-.04em;line-height:1.35}
+.nws-sec{margin-top:clamp(56px,7vw,104px)}
+.nws-sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+padding-bottom:14px;border-bottom:1px solid var(--line)}
+.nws-sec-h h2{font-size:clamp(20px,2vw,28px);font-weight:800;letter-spacing:-.04em;color:var(--ink)}
+.nws-row{display:grid;grid-template-columns:1fr 2.6fr;gap:clamp(20px,3.4vw,48px);
+padding-top:clamp(26px,3.4vw,44px)}
+.nws-rail{display:flex;align-items:center;gap:9px;font-size:14.5px;font-weight:600;
+color:var(--ink);align-self:start}
+.nws-rail::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink);flex:0 0 auto}
+.nws-empty{padding:40px 0;color:var(--faint);font-size:15px}
+@media(max-width:960px){.nws-grid,.dg-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.nws-grid,.dg-grid{grid-template-columns:1fr;gap:34px}}
+
 /* ── 글 페이지 공통 간격·크기 (목록 = 상세) ─────────────────────────────
    2026-08-24 대표: "목록은 상단 여백이 있는데 상세로 가면 굉장히 좁다.
    목록에 있는 간격 규칙이 상세에도 적용됐으면 좋겠다."
@@ -3196,7 +3226,10 @@ def _get(url, timeout=8):
 
 # 제품이 발행한 글은 제품 사이트에 쌓인다(mark 만 172편). 허브의 '이야기'가 그걸 못 보면
 # 우리가 쓴 글이 3편밖에 없는 것처럼 보인다(2026-08-23 대표 지적). 피드에서 **글만** 골라 온다.
-_FEED_ONLY = {"mark": "/insights/"}      # 슬러그 → 이 경로를 포함한 항목만 글로 본다
+# ⚠️ 채널 링크(<link>https://…/insights</link>)까지 글로 세면 목록에 껍데기가 섞인다.
+#   경로에 슬러그가 붙은 항목만 글로 본다. 큐는 목록이 /insights 인데 **글은 /playbook/** 이다
+#   (36편이 그 주소로 색인돼 있어 안 옮긴다) — 사이트마다 다르므로 여기서 각각 지정한다.
+_FEED_ONLY = {"mark": "/insights/", "cue": "/playbook/"}
 
 
 def _rss_items(raw, label, limit=4, only=None):
@@ -3277,6 +3310,24 @@ def fetch_stream():
             cache = {}
     for sp in BAR["spokes"]:
         feed, key, label = sp.get("feed"), sp["slug"], sp["label"]
+        # RSS 가 없는 사이트는 매니페스트에 글을 적어 둔다(컨텍스트). 대신 **조용히 낡지 않게**
+        # 목록 페이지를 세어 개수가 다르면 시끄럽게 알린다. 손목록의 유일한 위험이 그거다.
+        if sp.get("posts"):
+            man = [dict(kind="post", src=label, title=x["title"], url=x["url"],
+                        date=x["date"], desc=x.get("desc", ""), cat="")
+                   for x in sp["posts"]]
+            cache[key] = man
+            print(f"  · 목록 {label}: {len(man)}건(매니페스트)")
+            idx = sp.get("posts_index")
+            if idx:
+                try:
+                    live = len(set(re.findall(rb'href="(/blog/[a-z0-9-]{5,})"', _get(idx))))
+                    if live and live != len(man):
+                        print(f"  ⚠️ {label} 글이 {live}편인데 매니페스트엔 {len(man)}편 — "
+                              f"data/products.json 의 posts 를 갱신하라")
+                except Exception as e:
+                    print(f"  · {label} 신선도 확인 건너뜀({e})")
+            continue
         if not feed:
             continue
         try:
@@ -3327,9 +3378,11 @@ document.getElementById('cbox').hidden=true;document.getElementById('cdone').hid
 </script>"""
 
 # ---------- 이야기 렌더 — 글 페이지 · 인덱스 · 태그별 정적 페이지 · RSS ----------
-#   URL 은 /stories/ (영문 = SEO), 화면 라벨은 '이야기' (한글 = voice).
-#   apex IA 문서 §A 원칙: "URL은 SEO용(검색어), 화면 라벨은 갤러리 voice. 둘을 분리한다."
-STORY_BASE = "/stories"
+#   URL 은 /insights/ — **전 사이트 공통**(2026-08-24 통일). 마크·큐·플래너가 다 이 주소다.
+#   옛 /stories/ 는 _redirects 가 301 로 받는다(글 3편이 이미 색인됨).
+#   ⚠️ 소스 폴더 content/stories/ 와 그림 /assets/stories/ 는 그대로 둔다 —
+#     URL 이 아니라 내부 경로라 옮겨도 얻는 게 없고 링크만 깨진다.
+STORY_BASE = "/insights"
 
 
 def story_card(e, i=0):
@@ -3398,8 +3451,8 @@ for i, slug in enumerate(PORDER):
   </div>
   </div>
 </div>"""
-    os.makedirs(f"stories/{slug}", exist_ok=True)
-    with open(f"stories/{slug}/index.html", "w", encoding="utf-8") as fh:
+    os.makedirs(f"insights/{slug}", exist_ok=True)
+    with open(f"insights/{slug}/index.html", "w", encoding="utf-8") as fh:
         # sub 가 짧으면(35자 미만) 제목을 앞세워 문맥을 보강한다 — 70자 미만이면 구글이 무시한다.
         _sd = ps["sub"] if len(ps["sub"]) >= 70 else _re_desc(f"{ps['sub']} {ps['title']} — 모멘터스가 제품을 만들며 알게 된 것을 실측과 함께 적은 글입니다.")
         fh.write(page(f"{ps['title']} — MOMENTUS 인사이트", _sd, body, active="story"))
@@ -3514,22 +3567,22 @@ def stories_page(title, sub, sel_label="", items=None, chips=True):
 
 
 LSUB = ("만든 것, 안 된 것, 배운 것을 그대로 적습니다. 자랑이 아니라 실측입니다.")
-os.makedirs("stories", exist_ok=True)
-with open("stories/index.html", "w", encoding="utf-8") as f:
+os.makedirs("insights", exist_ok=True)
+with open("insights/index.html", "w", encoding="utf-8") as f:
     f.write(page("인사이트 — MOMENTUS", "AI로 제품을 만들며 알게 된 것들을 적습니다. 잘된 자랑이 아니라 실측 데이터와 실패 기록입니다. 로고 공모 524회 참가 결과, 에이전트를 만들며 세 번 버린 것 같은 이야기가 있습니다.",
                  stories_page("인사이트", LSUB), active="story", extra=BLOG_JS))
 
 # 태그별 정적 페이지 — 제품 2단 바의 '이야기'가 여기로 온다. 매니페스트에서 자동 생성.
 for key, lab in STORY_TAGS:
     sel = [e for e in entries if lab in e.get("tags", [])]
-    os.makedirs(f"stories/tag/{key}", exist_ok=True)
+    os.makedirs(f"insights/tag/{key}", exist_ok=True)
     body = stories_page(f"{lab} 인사이트",
                         f"‘{lab}’ 태그가 붙은 글 {len(sel)}편. <a href=\"{STORY_BASE}/\">전체 보기 →</a>",
                         items=sel, chips=False)
     # 글이 0편인 태그는 색인시키지 않는다 — thin content 는 사이트 품질 신호를 깎는다.
     # 페이지 자체는 남긴다(링크가 죽으면 안 된다). 글이 붙으면 다음 빌드에 자동으로 색인 복귀.
     _nx = '<meta name="robots" content="noindex,follow">\n' if not sel else ""
-    with open(f"stories/tag/{key}/index.html", "w", encoding="utf-8") as fh:
+    with open(f"insights/tag/{key}/index.html", "w", encoding="utf-8") as fh:
         fh.write(page(f"{lab} 인사이트 — MOMENTUS",
                       _re_desc(f"‘{lab}’ 태그가 붙은 모멘터스 인사이트 {len(sel)}편. "
                                f"제품을 만들며 실제로 겪은 것과 실측 데이터를 적습니다.")
@@ -3543,9 +3596,9 @@ _items = "".join(
     f"<link>https://the-moment.us{STORY_BASE}/{s}/</link>"
     f"<guid>https://the-moment.us{STORY_BASE}/{s}/</guid>"
     f"<description>{POSTS[s]['sub']}</description></item>" for s in PORDER)
-with open("stories/rss.xml", "w", encoding="utf-8") as f:
+with open("insights/rss.xml", "w", encoding="utf-8") as f:
     f.write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel>'
-            "<title>MOMENTUS 이야기</title><link>https://the-moment.us/stories/</link>"
+            "<title>MOMENTUS 인사이트</title><link>https://the-moment.us/insights/</link>"
             "<description>AI로 제품을 만들며 알게 된 것들.</description>"
             f"{_items}</channel></rss>\n")
 
@@ -4121,7 +4174,7 @@ def ap_index_section():
             '<div class="idx-r">'
             '<a class="idx-go" href="/about/"><b>소개 보기</b>'
             '<i>어떤 기준으로 만들고 무엇을 안 만드는지</i></a>'
-            '<a class="idx-go" href="/stories/"><b>인사이트 읽기</b>'
+            '<a class="idx-go" href="/insights/"><b>인사이트 읽기</b>'
             '<i>만들며 알게 된 것을 실측과 함께</i></a>'
             '<a class="idx-go" href="/inquiry/"><b>문의하기</b>'
             '<i>덜어 드릴 게 있으면 직접 읽고 답합니다</i></a>'
@@ -5235,6 +5288,14 @@ with open("_redirects", "w", encoding="utf-8") as f:
         f.write(f"/products/{s} /tools/{s}/ 301\n")
     # /tools/ 허브 폐지(2026-08-23) — 목록은 /products/ 안으로 흡수. 개별 도구 페이지는 그대로.
     f.write("/tools/ /products/ 301\n")
+    # 인사이트 주소 통일(2026-08-24). 옛 /stories/ 는 글 3편이 색인돼 있어 끊으면 안 된다.
+    # ⚠️ 넓은 규칙 하나로 뭉치지 마라 — `/stories/*` 는 **빈 문자열을 안 잡아** 목록이 샌다.
+    f.write("/stories/ /insights/ 301\n")
+    f.write("/stories /insights/ 301\n")
+    f.write("/stories/:slug/ /insights/:slug/ 301\n")
+    f.write("/stories/:slug /insights/:slug/ 301\n")
+    f.write("/stories/tag/:k/ /insights/tag/:k/ 301\n")
+    f.write("/stories/tag/:k /insights/tag/:k/ 301\n")
     f.write("/tools /products/ 301\n")
     # /apps/ → /products/ (2026-08-24 승격). ⚠️ **설치된 앱 안에 /apps/flipper/setup/ 이
     #   박혀 있다** — 앱이 업데이트되기 전까지 이 301 이 유일한 연결이다. 지우지 마라.
@@ -5247,6 +5308,10 @@ with open("_redirects", "w", encoding="utf-8") as f:
         if os.path.isdir(f"apps/{_s}"):
             _sh2.rmtree(f"apps/{_s}")
             print(f"  · 옛 apps/{_s}/ 제거 — 301 이 가려지고 있었다")
+    # 인사이트로 옮긴 뒤 남은 옛 stories/ 산출물 — 같은 함정(파일이 301 을 이긴다).
+    if os.path.isdir("stories"):
+        _sh2.rmtree("stories")
+        print("  · 옛 stories/ 제거 — 301 이 가려지고 있었다")
     for _s in APP_PRODUCTS:
         # ⚠️ `/x/*` 는 **빈 문자열을 안 잡는다** — `/apps/flipper/setup/` 가 이 규칙을 비켜가
         #   아래 `/apps/flipper/*` 에 걸려 제품 페이지로 갔다(2026-08-24 실측).
@@ -5264,11 +5329,11 @@ with open("_redirects", "w", encoding="utf-8") as f:
     # 블로그가 /log/ → /stories/ 로 승격(2026-07-27). 기존 링크·검색 결과 보존.
     for s in PORDER:
         # 슬래시로 끝나는 정확 경로도 따로 적는다 — `/log/x/*` 는 뒤가 빈 `/log/x/` 를 안 잡는다(실측).
-        f.write(f"/log/{s}/ /stories/{s}/ 301\n")
-        f.write(f"/log/{s} /stories/{s}/ 301\n")
+        f.write(f"/log/{s}/ /insights/{s}/ 301\n")
+        f.write(f"/log/{s} /insights/{s}/ 301\n")
     # ⚠️ 와일드카드 /log/* 는 두지 않는다 — 실측에서 그게 개별 글 규칙을 덮어 전부 목록으로 보냈다.
-    f.write("/log/ /stories/ 301\n")
-    f.write("/log /stories/ 301\n")
+    f.write("/log/ /insights/ 301\n")
+    f.write("/log /insights/ 301\n")
     # 레거시 /apps/<슬러그>/ 회수(2026-08-01). 저장소를 비우고 외장 보관으로 옮긴 옛 앱 랜딩들.
     #   퀵팡이 이 중 유일하게 외부 유입이 살아 있다(1만+). 드래그 버튼 payload가
     #   /tools/quickpang/ 와 바이트 동일(14,796자)임을 실측 확인하고 넘긴다.
@@ -5308,8 +5373,8 @@ urls = ["", "about/", "tools/", "inquiry/", "how-to-pay/",
         "legal/privacy/", "legal/terms/", "legal/refund/"] \
     + [purl(s).lstrip("/") for s in ORDER] \
     + [f"products/{s}/{sub}" for s in APP_PRODUCTS for sub in ("setup/", "support/")] \
-    + ["stories/"] + [f"stories/{s}/" for s in PORDER] \
-    + [f"stories/tag/{k}/" for k, lab in STORY_TAGS
+    + ["insights/"] + [f"insights/{s}/" for s in PORDER] \
+    + [f"insights/tag/{k}/" for k, lab in STORY_TAGS
        if any(lab in e.get("tags", []) for e in entries)]   # 빈 태그는 sitemap 에서 뺀다
 # ⚠️ /l/<키>는 sitemap 에 넣지 않는다 — 내용 없는 이정표(302)라 색인 대상이 아니다.
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -5519,7 +5584,7 @@ def _schema_for(rel, url, html, img):
                 "description": desc, "applicationCategory": "UtilitiesApplication",
                 "operatingSystem": a.get("platform") or "Android",
                 "image": img, "publisher": _PUB}
-    elif seg[:1] == ["stories"] and len(seg) == 2 and seg[1] != "tag":   # 이야기 글
+    elif seg[:1] == ["insights"] and len(seg) == 2 and seg[1] != "tag":  # 인사이트 글
         node = {"@type": "BlogPosting", "headline": h1 or desc, "description": desc,
                 "image": img, "url": url, "inLanguage": "ko",
                 "author": {"@type": "Person", "name": "강형모"}, "publisher": _PUB,
@@ -5527,11 +5592,11 @@ def _schema_for(rel, url, html, img):
         d = _date_of(html)
         if d:
             node["datePublished"] = node["dateModified"] = d
-    elif seg[0] == "stories":                                     # 이야기 인덱스·태그
+    elif seg[0] == "insights":                                    # 인사이트 인덱스·태그
         node = {"@type": "CollectionPage", "name": h1 or "이야기", "description": desc,
                 "url": url, "publisher": _PUB,
                 "mainEntity": {"@type": "ItemList",
-                               "itemListElement": _links(html, "/stories/")}}
+                               "itemListElement": _links(html, "/insights/")}}
     elif seg[0] == "about":
         node = {"@type": "AboutPage", "name": h1 or "소개", "description": desc,
                 "url": url, "publisher": _PUB, "mainEntity": _PUB}
@@ -5586,7 +5651,7 @@ for _p in _glob.glob("**/*.html", recursive=True):
     _cand = next((s for s in reversed(_seg)
                   if os.path.exists(os.path.join("og", f"{s}.png"))), None)
     if _cand is None and _seg:
-        _cand = {"stories": "stories", "about": "about", "tools": "tools"}.get(_seg[0])
+        _cand = {"insights": "insights", "about": "about", "tools": "tools"}.get(_seg[0])
     _img = f"https://the-moment.us/og/{_cand or 'default'}.png"
 
     _tags = (f'<link rel="canonical" href="{_url}">\n'
@@ -5622,5 +5687,5 @@ print(f"  index.html, assets/site.css, shell.js, sitemap.xml, robots.txt, llms.t
 print(f"  canonical/og:url/og:image 주입: {_canon_n}개 · JSON-LD 유형별 주입: {_ld_n}개")
 print("  tools/: index + " + ", ".join(TOOLS))
 print("  products/: " + ", ".join(SPOKES))
-print("  stories/: index + " + ", ".join(PORDER) + " + tag/" + ",".join(k for k,_ in STORY_TAGS))
+print("  insights/: index + " + ", ".join(PORDER) + " + tag/" + ",".join(k for k,_ in STORY_TAGS))
 print("  lab/, about/")

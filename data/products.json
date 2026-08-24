@@ -31,7 +31,7 @@
         "sub": "cue — 입으로 답하고 AI가 짚어줍니다",
         "href": "https://cue.the-moment.us",
         "tag": "큐",
-        "feed": null
+        "feed": "https://cue.the-moment.us/rss.xml"
       },
       {
         "label": "빈방",
@@ -57,7 +57,29 @@
         "href": "https://kontext.the-moment.us",
         "tag": "컨텍스트",
         "feed": null,
-        "external": true
+        "external": true,
+        "posts_note": "컨텍스트는 RSS 가 없어 여기 적는다. 늘거나 줄면 빌드가 경고한다 (_check_posts_fresh). RSS 가 생기면 이 배열을 지우고 feed 를 채워라.",
+        "posts_index": "https://kontext.the-moment.us/blog",
+        "posts": [
+          {
+            "title": "Why Every AI Conversation Starts From Zero",
+            "date": "2026-02-20",
+            "url": "https://kontext.the-moment.us/blog/why-every-ai-conversation-starts-from-zero",
+            "desc": "You have to re-explain yourself every time you open a chat window. The context management problem is not a flaw — it's a design choice. We think it's the wrong one."
+          },
+          {
+            "title": "Buttons Beat Chat",
+            "date": "2026-02-12",
+            "url": "https://kontext.the-moment.us/blog/buttons-beat-chat",
+            "desc": "Chat is the dominant interface for AI in 2026. We think that's a mistake. Here's why named, reusable actions beat freeform text boxes for serious work."
+          },
+          {
+            "title": "What We Mean by Context Packet",
+            "date": "2026-02-05",
+            "url": "https://kontext.the-moment.us/blog/what-is-a-context-packet",
+            "desc": "A Context Packet is not a document, not a prompt, and not a chat history. It's something new — structured for AI consumption from the start."
+          }
+        ]
       }
     ],
     "links": [
@@ -69,7 +91,7 @@
       {
         "key": "story",
         "label": "인사이트",
-        "href": "/stories/"
+        "href": "/insights/"
       },
       {
         "key": "about",

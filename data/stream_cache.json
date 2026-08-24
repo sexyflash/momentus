@@ -394,5 +394,315 @@
    "desc": "비슷한 파란 십자 로고에서 벗어나 진료과·환자층·브랜드 톤에 맞는 병원 로고 디자인을 잡는 실무 기준입니다.",
    "cat": "인사이트"
   }
+ ],
+ "cue": [
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접 후 채용공고 삭제 — 합격자가 정해졌다는 뜻은 아닙니다",
+   "url": "https://cue.the-moment.us/playbook/interview-job-posting-closed",
+   "date": "2026-08-25",
+   "desc": "면접 결과를 기다리는데 채용공고가 사라지면 누군가 이미 뽑힌 것처럼 보입니다. 원티드 기업 화면에서는 공고 마감 뒤에도 지원서를 검토하고 응답할 수 있으니, 공고 상태를 내 결과로 읽지 마세요.",
+   "cat": "결과 기다리는 중"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접 탈락 후 같은 회사 다른 직무 지원 — 지원서 말고 두 공고부터 비교하세요",
+   "url": "https://cue.the-moment.us/playbook/different-role-after-interview-rejection",
+   "date": "2026-08-23",
+   "desc": "같은 회사에서 떨어지면 다른 직무도 이미 끝난 것처럼 느껴집니다. 채용관리 화면은 후보자를 공고별 전형 단계에서 다루므로, 준비되면 지난 공고와 새 공고의 주요업무부터 비교하세요.",
+   "cat": "다시 준비"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "블라인드 면접 자기소개 — 학교명은 빼세요. 면접관이 원래 못 받는 정보입니다",
+   "url": "https://cue.the-moment.us/playbook/blind-interview-self-introduction",
+   "date": "2026-08-22",
+   "desc": "블라인드 면접관은 지원자의 학교명 같은 신상정보를 덜 아는 상태로 평가하도록 설계됩니다. 면접 직전에는 답을 더 외우지 말고, 자기소개에서 기관이 금지한 고유명사부터 걷어내세요.",
+   "cat": "코앞이에요"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접에서 말할 성과가 없을 때 — ‘아무 일도 없었다’도 성과입니다",
+   "url": "https://cue.the-moment.us/playbook/quiet-work-interview-achievement",
+   "date": "2026-08-21",
+   "desc": "매출을 올리거나 상을 받은 일만 면접 성과가 되는 건 아닙니다. 위험 신호를 먼저 발견해 문제가 커지지 않게 한 일은 행동 근거만 복원하면 평가할 수 있는 성과가 됩니다.",
+   "cat": "아직 면접 전"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "채용 시장 동향 — 공고 재등장 268건, 신규 채용 268건은 아닙니다",
+   "url": "https://cue.the-moment.us/playbook/reopened-job-postings-market-trend",
+   "date": "2026-08-20",
+   "desc": "국내 테크 10개사 공고에서 이번 주 재등장 268건이 잡혔습니다. 공고가 다시 보이는 횟수와 새로 생긴 일자리 수는 다른 숫자이므로, 지원 목록부터 신규·재등장으로 나눠야 합니다.",
+   "cat": "아직 면접 전"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "당근 백엔드 면접 질문 — Go보다 먼저, 지원 팀의 ‘고객’을 보세요",
+   "url": "https://cue.the-moment.us/playbook/daangn-backend-interview-questions",
+   "date": "2026-08-19",
+   "desc": "당근 백엔드 공고는 팀마다 고객과 실패 비용이 다릅니다. 기술 목록을 외우기 전에 지원 팀이 무엇을 지키는지 찾고, 공고에서 예상질문과 답변 기준을 만드는 법을 짚습니다.",
+   "cat": "아직 면접 전"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접 후 감사 메일 — 못한 답까지 붙이면 감사가 아니라 재면접입니다",
+   "url": "https://cue.the-moment.us/playbook/post-interview-thank-you-email",
+   "date": "2026-08-18",
+   "desc": "면접이 끝난 뒤 떠오른 답까지 감사 메일에 붙이고 싶나요. 평가 기준을 갖춘 면접은 퇴실 뒤 평가표와 면접위원 논의로 넘어가므로, 메일은 답변 보충이 아니라 사실 오류를 바로잡을 때만 쓰세요.",
+   "cat": "끝나고 나서"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "탈락한 회사 재지원 — 새 지원서보다 ‘지난번과 달라진 한 줄’이 먼저입니다",
+   "url": "https://cue.the-moment.us/playbook/reapply-after-rejection",
+   "date": "2026-08-17",
+   "desc": "탈락한 회사에 다시 지원하면 처음 보는 지원서처럼 읽힐 거라 기대하지 마세요. 재지원 여부를 파악하는 회사는 지난 탈락과 끊긴 백지가 아니라 그 뒤 무엇이 달라졌는지까지 비교할 수 있으므로, 준비되면 새 증거 한 줄부터 만드세요.",
+   "cat": "다시 준비"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "취업 번아웃 — 매일 넣은 지원서는 채용팀에 출석부로 보이지 않습니다",
+   "url": "https://cue.the-moment.us/playbook/job-search-burnout",
+   "date": "2026-08-16",
+   "desc": "매일 지원을 멈추면 게으른 사람으로 보일까 겁나지만, 채용팀은 당신의 지원일수를 출석부처럼 평가하지 않습니다. 오늘은 쉬고, 준비되면 다음 지원서에서 ‘왜 이 직무인지’ 한 줄만 되찾으세요.",
+   "cat": "다시 준비"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접 지각할 것 같을 때 — 사과문 말고, 도착 시각부터 보내세요",
+   "url": "https://cue.the-moment.us/playbook/late-for-interview",
+   "date": "2026-08-15",
+   "desc": "면접에 늦을 것 같다면 긴 사과문보다 회사명·지원 직무·이름·도착 예정 시각을 먼저 알리세요. 연락은 지각을 지우지 못하지만, 채용담당자가 빈 면접 칸을 ‘불참’이 아니라 ‘조정 가능한 일정’으로 다루게 합니다.",
+   "cat": "코앞이에요"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "경력직 면접 퇴사 사유 — 면접관은 과거보다 ‘여기서도 나갈지’를 봅니다",
+   "url": "https://cue.the-moment.us/playbook/career-interview-reason-for-leaving",
+   "date": "2026-08-14",
+   "desc": "퇴사 사유는 전 회사를 얼마나 점잖게 말하는지 보는 예의 문제가 아닙니다. 뽑는 쪽은 그 이유를 새 회사에서도 반복될 ‘이탈 조건’으로 바꿔 보고, 지원동기와 맞는지 확인합니다.",
+   "cat": "아직 면접 전"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접 탈락 멘탈 — ‘결정적 실수’ 하나를 찾지 마세요. 회사도 하나로 정하지 않았을 수 있습니다",
+   "url": "https://cue.the-moment.us/playbook/interview-rejection-mental-reset",
+   "date": "2026-08-13",
+   "desc": "면접에서 떨어지면 결정적 실수 하나를 찾아 답변 전체를 뜯고 싶어집니다. 하지만 여러 면접위원의 평점을 합쳐 결정하는 채용에서는 단일 탈락 사유가 애초에 없을 수 있으니, 오늘은 분석을 멈추고 준비되는 날 사실과 추측부터 나누세요.",
+   "cat": "다시 준비"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "프로덕트 디자이너 면접 질문 — 버린 시안이 최종 화면보다 쓸모 있습니다",
+   "url": "https://cue.the-moment.us/playbook/product-designer-interview-questions",
+   "date": "2026-08-12",
+   "desc": "프로덕트 디자이너 경력직 면접은 포트폴리오 감상회가 아닙니다. 최종 화면에서 사라진 대안·제약·검증을 복원해야 당신의 판단과 기여가 보입니다.",
+   "cat": "아직 면접 전"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접 결과 언제 나오나요 — 법에도 ‘면접 후 며칠’은 없습니다",
+   "url": "https://cue.the-moment.us/playbook/interview-result-delay",
+   "date": "2026-08-11",
+   "desc": "면접 결과가 늦으면 방금 망친 답부터 떠오릅니다. 채용절차법의 통보 기준점은 면접일이 아니라 채용대상자 확정일이므로, 침묵을 점수로 읽지 말고 회사가 약속한 결과 예정일만 확인하세요.",
+   "cat": "결과 기다리는 중"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접 탈락 피드백 — ‘자신감 부족’을 성격 고치라는 말로 읽지 마세요",
+   "url": "https://cue.the-moment.us/playbook/interview-rejection-feedback",
+   "date": "2026-08-10",
+   "desc": "‘자신감 부족’이라는 면접 탈락 피드백은 당신의 성격 진단서가 아닙니다. 구조화된 피드백은 평가표의 상대적 약점 항목과 면접관 코멘트를 압축하므로, 준비되면 형용사 하나를 실제 답변 장면으로 되돌리세요.",
+   "cat": "다시 준비"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접 탈락 후 공고 재등록 — 회사의 후회가 아니라 ‘복사’ 버튼일 수 있습니다",
+   "url": "https://cue.the-moment.us/playbook/job-reposted-after-rejection",
+   "date": "2026-08-09",
+   "desc": "탈락 뒤 같은 공고가 새 날짜로 다시 뜨면, 나를 뽑느니 빈자리로 두겠다는 말처럼 보입니다. 하지만 기업은 기존 공고를 복사해 상세내용은 그대로 두고 시작일만 바꿀 수 있으니, 재등록부터 재지원 신호로 읽지는 마세요.",
+   "cat": "다시 준비"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "최종 면접 탈락 이유 — 잘한 답보다, 못 지운 의심이 남습니다",
+   "url": "https://cue.the-moment.us/playbook/final-rejection-risk",
+   "date": "2026-08-06",
+   "desc": "최종까지 갔는데 떨어지면 답변 전체를 갈아엎고 싶어집니다. 구조화 면접에서는 한 평가 항목의 강점이 다른 항목의 미해결 의심을 대신 지우지 못하니, 준비가 되면 가장 오래 이어진 꼬리질문만 다시 보세요.",
+   "cat": "다시 준비"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접관 표정이 안 좋았다고요? — 합격 신호는 얼굴에 안 나옵니다",
+   "url": "https://cue.the-moment.us/playbook/interviewer-face-signal",
+   "date": "2026-08-04",
+   "desc": "웃지 않던 면접관과 짧은 마지막 인사 때문에 합격 신호를 검색하고 있나요. 체계화된 면접은 현장에서 사실을 기록하고 끝난 뒤 평가하므로, 오늘 밤에는 표정 대신 평가표에 남았을 행동 증거 한 줄만 적으세요.",
+   "cat": "끝나고 나서"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "취업 포기하고 싶을 때 — 탈락 횟수는 당신의 능력 점수가 아닙니다",
+   "url": "https://cue.the-moment.us/playbook/giveup",
+   "date": "2026-08-03",
+   "desc": "탈락 횟수는 당신의 능력 점수가 아닙니다. 고용24 공식 숫자와 뽑는 쪽의 마지막 결정을 통해 왜 취업 포기를 고민하게 된 시간을 당신 탓만으로 읽으면 안 되는지 짚습니다.",
+   "cat": "다시 준비"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접 준비 언제부터? 일정 없을 때는 답변 말고 최근 결정 하나를 적으세요",
+   "url": "https://cue.the-moment.us/playbook/when-to-start-interview-prep",
+   "date": "2026-08-03",
+   "desc": "면접 일정이 없다면 예상 질문부터 외울 필요는 없습니다. 지금은 나중에 면접 평가표의 근거가 될 최근 결정 하나만 네 줄로 남기세요.",
+   "cat": "아직 면접 전"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접 답변 방법 — 길게 잘 말하면 다른 평가 기회가 사라집니다",
+   "url": "https://cue.the-moment.us/playbook/aim",
+   "date": "2026-07-13",
+   "desc": "면접 답변을 길게 할수록 점수가 늘지는 않습니다. 정해진 질문표를 끝내야 하는 면접관의 화면과, 증거 하나를 건넨 뒤 멈추는 연습법을 짚습니다.",
+   "cat": "준비 중"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접 자기소개는 요약문이 아닙니다 — 면접관이 물을 증거 하나를 심으세요",
+   "url": "https://cue.the-moment.us/playbook/self-intro",
+   "date": "2026-07-12",
+   "desc": "면접 자기소개에 경력 전체를 넣지 마세요. 면접관은 방금 들은 사례와 평가 항목을 대조해 후속 질문을 고릅니다. 가장 강한 증거 하나로 첫 질문을 데려오는 법을 짚습니다.",
+   "cat": "준비 중"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "압박 면접 꼬리질문 — 침착함보다 평가표의 빈칸을 먼저 채우세요",
+   "url": "https://cue.the-moment.us/playbook/pressure",
+   "date": "2026-07-10",
+   "desc": "압박 면접에서 같은 자리를 거듭 묻는 이유는 면접관의 평가표에 행동 근거가 비었기 때문입니다. 질문 끝의 빈칸을 읽고 한 증거로 답하는 법을 짚습니다.",
+   "cat": "준비 중"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접 성과 어필 — 숫자보다 ‘내가 바꾼 것’이 평가표에 남습니다",
+   "url": "https://cue.the-moment.us/playbook/numbers",
+   "date": "2026-07-09",
+   "desc": "큰 성과 숫자를 말해도 개인 기여가 확인되지 않으면 팀 실적으로 남습니다. 면접 평가표가 점수를 붙일 수 있게 숫자의 정의·개입·한계를 한 장으로 준비하세요.",
+   "cat": "준비 중"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "대기업 면접 특징 — 회사마다 다른 건 질문이 아니라 평가표의 칸입니다",
+   "url": "https://cue.the-moment.us/playbook/company-diff",
+   "date": "2026-07-08",
+   "desc": "대기업 면접은 라운드마다 평가 역할이 나뉩니다. 회사 슬로건을 외우는 대신 채용 안내에서 평가 칸을 찾고, 같은 경험의 증거를 직무·문화·종합 면접에 다르게 배치하는 법을 짚습니다.",
+   "cat": "아직 면접 전"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접 전날 준비 — 예상질문 더 보지 말고, 채용공고 한 줄에 증거를 붙이세요",
+   "url": "https://cue.the-moment.us/playbook/night-before",
+   "date": "2026-07-07",
+   "desc": "면접 전날에는 답변 수를 늘리지 마세요. 채용공고와 이력서를 맞대 가장 비어 있는 직무요건 하나를 찾고, 면접관 평가표에 남을 행동 증거 한 장으로 끝내는 법입니다.",
+   "cat": "코앞이에요"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "PM 경력직 면접 질문 유형 — 답 5개 말고, 프로젝트별 증거 5칸을 준비하세요",
+   "url": "https://cue.the-moment.us/playbook/pm-experienced-interview-question-types",
+   "date": "2026-07-06",
+   "desc": "PM 경력직 면접의 다섯 질문 유형은 다섯 개의 모범답안을 요구하지 않습니다. 면접관 평가 화면에 옮겨질 문제·근거·결정·기여·검증을 프로젝트별로 채우는 법을 짚습니다.",
+   "cat": "준비 중"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "개발자 이직 면접 준비 방법 — 기술 이름 말고, 왜 골랐는지 적으세요",
+   "url": "https://cue.the-moment.us/playbook/developer-job-change-interview-prep",
+   "date": "2026-07-05",
+   "desc": "경력기술서의 기술 이름은 답이 아니라 꼬리질문의 시작입니다. 개발자 기술 면접의 평가 화면이 돌아가는 방식에 맞춰, 프로젝트 하나를 의사결정 검증표로 바꾸는 준비법을 짚습니다.",
+   "cat": "아직 면접 전"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "데이터 분석가 면접 예상질문 — SQL 정답만 맞히면 평가표 두 칸이 빕니다",
+   "url": "https://cue.the-moment.us/playbook/data-analyst-interview-questions",
+   "date": "2026-07-04",
+   "desc": "데이터 분석가 면접에서는 한 숫자를 계산·정의·결정으로 나눠 봅니다. 예상질문을 외우기보다 실제 프로젝트 하나로 평가표 세 칸을 채우는 법.",
+   "cat": "준비 중"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접에서 두괄식으로 답하는 법: 3초 안에 결론 던지기",
+   "url": "https://cue.the-moment.us/playbook/interview-conclusion-first-answers",
+   "date": "2026-07-03",
+   "desc": "면접에서 두괄식으로 답하는 법을 실제 예시로 정리했습니다. 배경부터 늘어놓다 시간 날리는 습관을 고치는 PREP 구조와 연습법.",
+   "cat": "준비 중"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "경력 기술 면접 STAR 기법 — 이야기가 아니라 평가표에 증거를 남기세요",
+   "url": "https://cue.the-moment.us/playbook/experienced-interview-star-method",
+   "date": "2026-07-02",
+   "desc": "STAR를 S·T·A·R 순서 암기에서 끝내지 마세요. 경력 기술 면접의 평가표와 꼬리질문이 실제로 확인하는 증거부터 거꾸로 설계하는 법을 짚습니다.",
+   "cat": "준비 중"
+  }
+ ],
+ "kontext": [
+  {
+   "kind": "post",
+   "src": "컨텍스트",
+   "title": "Why Every AI Conversation Starts From Zero",
+   "url": "https://kontext.the-moment.us/blog/why-every-ai-conversation-starts-from-zero",
+   "date": "2026-02-20",
+   "desc": "You have to re-explain yourself every time you open a chat window. The context management problem is not a flaw — it's a design choice. We think it's the wrong one.",
+   "cat": ""
+  },
+  {
+   "kind": "post",
+   "src": "컨텍스트",
+   "title": "Buttons Beat Chat",
+   "url": "https://kontext.the-moment.us/blog/buttons-beat-chat",
+   "date": "2026-02-12",
+   "desc": "Chat is the dominant interface for AI in 2026. We think that's a mistake. Here's why named, reusable actions beat freeform text boxes for serious work.",
+   "cat": ""
+  },
+  {
+   "kind": "post",
+   "src": "컨텍스트",
+   "title": "What We Mean by Context Packet",
+   "url": "https://kontext.the-moment.us/blog/what-is-a-context-packet",
+   "date": "2026-02-05",
+   "desc": "A Context Packet is not a document, not a prompt, and not a chat history. It's something new — structured for AI consumption from the start.",
+   "cat": ""
+  }
  ]
 }

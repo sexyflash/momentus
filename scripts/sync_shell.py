@@ -49,10 +49,33 @@ HTML_RE = re.compile(r"<!-- MMT:BEGIN.*?<!-- MMT:END -->", re.S)
 LEGAL_RE = re.compile(r"<!-- MMT:LEGAL:BEGIN.*?<!-- MMT:LEGAL:END -->", re.S)
 
 
+#   ⚠️ .js 대상은 셸을 **템플릿 리터럴 안에** 담는다(notes/web/src/shop_ui.js, cue/src/index.js).
+#     그래서 셸 안의 백틱 하나가 리터럴을 끊어 **빌드를 통째로 죽인다**.
+#     2026-08-24 실사고: CSS 주석에 쓴 `calc(...)` 백틱 때문에 notes 배포가
+#     "Expected ; but found calc" 로 실패했다. 원본만 고치면 다음에 또 들어온다.
+#     순수 문자 검사라 자연어 판단이 아니다(룰 #1 무관). 걸리면 넣지 않고 멈춘다 —
+#     깨진 셸을 밀어 넣는 것보다 안 넣는 게 낫다.
+_JS_FORBIDDEN = ("`", "${")
+
+
+def guard_js(path, block):
+    """js 파일에 넣기 전, 템플릿 리터럴을 깨뜨릴 문자가 있는지 본다."""
+    if not path.endswith(".js"):
+        return True
+    bad = [c for c in _JS_FORBIDDEN if c in block]
+    if bad:
+        print(f"  ⛔ {path}: 셸에 {bad} 가 있어 넣지 않는다 "
+              f"(템플릿 리터럴이 깨진다). gen_site.py 의 셸 블록에서 지워라.")
+        return False
+    return True
+
+
 def put(path, block, pattern, anchor_re, anchor_fmt, count=1):
     """마커가 있으면 교체, 없으면 앵커 뒤에 삽입."""
     if not os.path.exists(path):
         print(f"  ⚠️ 없음: {path}")
+        return False
+    if not guard_js(path, block):
         return False
     s = open(path, encoding="utf-8").read()
     if pattern.search(s):
