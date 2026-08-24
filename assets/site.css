@@ -878,18 +878,29 @@ font-family:inherit;font-size:14px;font-weight:600;color:var(--gray);cursor:poin
 /* setup 의 기기별 경고 + support 의 자가진단 머리말이 같이 쓴다(.ap 안이면 어디서든). */
 .ap .note{margin-top:22px;padding:15px 17px;border-radius:12px;background:#fff8f4;border:1px solid #ffd9c9;
 font-size:14px;line-height:1.65;color:var(--ink2)}
-.ap-steps{list-style:none;margin:24px 0 0;padding:0;counter-reset:s}
-.ap-steps li{counter-increment:s;display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
-.ap-steps li::before{content:counter(s);flex:0 0 28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;
-font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
-.ap-steps .t{font-size:15px;font-weight:700}
-.ap-steps .d{font-size:14px;color:var(--gray);margin-top:5px;line-height:1.65}
+/* ── 설정 단계 = **3열 카드 그리드** ────────────────────────────────────
+   세로 한 줄로 쌓으니 스크린샷 하나에 화면 한 판을 쓰고 오른쪽이 통째로 비었다
+   (2026-08-24 대표 지적). 단계는 "훑고 따라 하는" 것이라 나란히 보이는 게 맞다.
+   ⚠️ 숫자는 CSS counter 로 매긴다 — 그리드로 바꿔도 순서가 안 깨진다. */
+.ap-steps{list-style:none;margin:26px 0 0;padding:0;counter-reset:s;
+display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.8vw,24px)}
+.ap-steps li{counter-increment:s;display:flex;flex-direction:column;padding:0;border:0;
+background:var(--soft);border-radius:16px;padding:clamp(16px,1.8vw,22px);min-width:0}
+.ap-steps li::before{content:counter(s);flex:0 0 auto;width:26px;height:26px;border-radius:50%;
+background:var(--ink);color:#fff;font-size:12.5px;font-weight:700;
+display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.ap-steps .t{font-size:15.5px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.ap-steps .d{font-size:14px;color:var(--gray);margin-top:6px;line-height:1.65}
+@media(max-width:900px){.ap-steps{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.ap-steps{grid-template-columns:1fr}}
 /* 단계·경고 안의 링크는 본문과 같은 회색이라 링크인 줄 모른다. 밑줄과 굵기로 분리한다. */
 .ap-steps .d a,.ap .note a,.ap .ask a{font-weight:700;color:var(--ink);text-decoration:underline;
 text-underline-offset:3px}
 /* 실기기 폰 스크린샷 — 세로로 매우 길다(840×2326 등). 폭을 묶지 않으면 한 단계가 화면을 다 먹는다. */
-.ap-steps .shot{margin-top:12px;width:100%;max-width:220px;height:auto;border-radius:10px;border:1px solid var(--line);
-background:var(--soft)}
+/* 실기기 폰 스크린샷 — 세로로 매우 길다(840×2326 등). 카드 안에서 위쪽만 보여 준다.
+   전체를 다 깔면 카드 하나가 화면을 다 먹는다. */
+.ap-steps .shot{margin-top:14px;width:100%;height:auto;max-height:340px;object-fit:cover;
+object-position:top;border-radius:12px;border:1px solid var(--line);background:var(--paper)}
 @media(max-width:640px){.ap-steps .shot{max-width:172px}}
 /* 가로로 찍힌 태블릿·리더기 화면(교보 SAM 1600×1200 등)은 세로 폰 기준 220px 로 묶으면
    220×165 로 쪼그라들어 메뉴 글씨가 안 읽힌다. 생성기가 PNG 헤더를 읽어 가로가 길면 .wide 를 붙인다. */
