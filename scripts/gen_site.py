@@ -1650,6 +1650,90 @@ border-radius:50%;background:var(--faint)}
 """
 CSS += INQP_CSS
 
+FLIP_CSS = """
+/* ═══ 제품 랜딩(앱형) — toss.im/service/teenagers 구조 실측 이식(2026-08-24) ═════
+   실측(1440): 컨테이너 x108 w1224 · 히어로 = 작은 라벨 + 좌측 큰 제목 + 우측 문단 +
+   전면 라운드 이미지 · 이후 번호 섹션(01,02..) 이 좌우 번갈아, 가운데 제목 + 카드 3장.
+   ⚠️ 폭·간격은 공용 토큰(--pg-top 등)을 그대로 본다 — 다른 페이지와 리듬이 같아야 한다. */
+.fl{max-width:1224px;margin:0 auto;padding:0 24px}
+.fl-hero{padding:var(--pg-top) 0 0}
+.fl-kick{font-size:14px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+.fl-hero-in{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(20px,4vw,64px);
+align-items:end;margin-top:14px}
+.fl-hero h1{font-size:clamp(32px,4.8vw,60px);font-weight:800;letter-spacing:-.055em;
+line-height:1.14;color:var(--ink)}
+.fl-hero .lede{font-size:16px;line-height:1.75;color:var(--gray)}
+.fl-shot{margin-top:clamp(26px,3.4vw,44px);border-radius:24px;overflow:hidden;
+background:var(--soft);aspect-ratio:16/9}
+.fl-shot img,.fl-shot video{width:100%;height:100%;object-fit:cover;display:block}
+.fl-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:clamp(20px,2.6vw,30px)}
+.fl-btn{display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 26px;
+border-radius:99px;background:var(--ink);color:#fff;font-size:16px;font-weight:700;
+letter-spacing:-.02em}
+.fl-btn:hover{opacity:.86}
+.fl-btn--line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.fl-btn--line:hover{background:var(--soft);opacity:1}
+.fl-note{margin-top:12px;font-size:13.5px;color:var(--faint)}
+
+/* 번호 섹션 — 좌우 번갈아 */
+.fl-sec{padding:clamp(56px,8vw,120px) 0 0}
+.fl-row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:center}
+.fl-row--flip .fl-row-tx{order:2}
+.fl-num{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:28px;
+padding:0 11px;border-radius:99px;background:var(--soft);
+font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--gray)}
+.fl-row h2{margin-top:16px;font-size:clamp(24px,3vw,40px);font-weight:800;letter-spacing:-.05em;
+line-height:1.16;color:var(--ink)}
+.fl-row p{margin-top:16px;font-size:16.5px;line-height:1.75;color:var(--gray);max-width:44ch}
+.fl-art{border-radius:20px;overflow:hidden;background:var(--soft);aspect-ratio:4/3}
+.fl-art img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* 가운데 제목 + 카드 3장 */
+.fl-mid{text-align:center;padding:clamp(56px,8vw,120px) 0 0}
+.fl-mid h2{margin-top:14px;font-size:clamp(24px,3vw,40px);font-weight:800;letter-spacing:-.05em;
+line-height:1.2;color:var(--ink)}
+.fl-mid p{margin:14px auto 0;font-size:16.5px;line-height:1.75;color:var(--gray);max-width:46ch}
+.fl-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,20px);
+margin-top:clamp(26px,3.4vw,44px)}
+.fl-card{background:var(--soft);border-radius:20px;overflow:hidden;text-align:left}
+.fl-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block}
+.fl-card .cap{padding:16px 18px 20px}
+.fl-card b{display:block;font-size:15.5px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.fl-card i{display:block;font-style:normal;font-size:13.5px;color:var(--gray);margin-top:5px}
+
+/* 연출 갤러리 — 어디서든 넘어간다 */
+.fl-gal{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.4vw,18px);
+margin-top:clamp(26px,3.4vw,44px)}
+.fl-gal a,.fl-gal figure{margin:0;border-radius:18px;overflow:hidden;background:var(--soft);
+position:relative}
+.fl-gal img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;
+transition:transform .5s var(--ease)}
+.fl-gal figure:hover img{transform:scale(1.04)}
+.fl-gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 16px 14px;
+font-size:13.5px;font-weight:700;color:#fff;letter-spacing:-.02em;
+background:linear-gradient(to top,rgba(0,0,0,.6),transparent)}
+@media(max-width:900px){.fl-gal{grid-template-columns:1fr 1fr}}
+
+/* 사양표 */
+.fl-spec{margin-top:clamp(26px,3.4vw,44px);width:100%;border-collapse:collapse;
+max-width:760px;margin-left:auto;margin-right:auto;text-align:left}
+.fl-spec th,.fl-spec td{border-bottom:1px solid var(--line);padding:15px 4px;font-size:15px;
+vertical-align:top}
+.fl-spec th{width:34%;font-weight:600;color:var(--gray)}
+.fl-spec td{color:var(--ink);font-family:var(--mono);font-size:14px}
+.fl-end{padding:clamp(56px,8vw,120px) 0 clamp(72px,9vw,130px);text-align:center}
+.fl-end h2{font-size:clamp(26px,3.4vw,46px);font-weight:800;letter-spacing:-.055em;
+line-height:1.14;color:var(--ink)}
+.fl-end .fl-cta{justify-content:center}
+@media(max-width:860px){
+  .fl-hero-in{grid-template-columns:1fr;gap:16px;align-items:start}
+  .fl-row{grid-template-columns:1fr;gap:20px}
+  .fl-row--flip .fl-row-tx{order:0}
+  .fl-cards{grid-template-columns:1fr}
+}
+"""
+CSS += FLIP_CSS
+
 # CSS 캐시 버스팅 — Cloudflare가 /assets/site.css를 max-age=14400(4시간) 캐시한다.
 # 내용이 바뀌면 URL도 바뀌게 해서 즉시 반영시킨다.
 # ── 클래스 충돌 감시 ───────────────────────────────────────────────────────
@@ -2588,6 +2672,85 @@ DOCK_JS = """<script>
 })();
 </script>"""
 
+# ── 앱형 제품 랜딩(toss.im/service/teenagers 구조) ────────────────────────
+#   가격은 쓰지 않는다 — 설치 하나에만 집중하고 가격은 스토어가 보여준다(2026-08-24 대표 지시).
+FLIP_SCENES = [
+    ("scene-instagram", "인스타그램"), ("scene-webtoon", "웹툰"),
+    ("scene-news", "뉴스"), ("scene-ebook", "전자책"),
+    ("scene-article", "긴 글"), ("scene-pdf", "PDF"),
+    ("scene-recipe", "레시피"), ("screen-main", "설정"),
+]
+
+
+def app_landing(slug, p):
+    a = f"/assets/{slug}"
+    store = p.get("store") or ""
+    btn = (f'<a class="fl-btn" href="{store}" target="_blank" rel="noopener">'
+           f'Google Play에서 받기</a>' if store else
+           f'<a class="fl-btn" href="{purl(slug)}setup/">권한 켜는 법 보기</a>')
+    sub = (f'<a class="fl-btn fl-btn--line" href="{purl(slug)}setup/">권한 켜는 법</a>')
+    feats = p.get("feats") or []
+    rows = ""
+    for i, (t, d) in enumerate(feats[:3]):
+        img = [f"{a}/fold8ultra.jpg", f"{a}/scene-webtoon.png", f"{a}/screen-main.jpg"][i]
+        flip = " fl-row--flip" if i % 2 else ""
+        rows += (f'<section class="fl-sec"><div class="fl-row{flip}">'
+                 f'<div class="fl-row-tx"><span class="fl-num">{i + 1:02d}</span>'
+                 f'<h2>{t}</h2><p>{d}</p></div>'
+                 f'<div class="fl-art"><img src="{img}" alt="" loading="lazy"></div>'
+                 f'</div></section>')
+    gal = "".join(
+        f'<figure><img src="{a}/{f}.{"jpg" if f.startswith("screen") else "png"}" '
+        f'alt="{esc(lab)} 화면에서 볼륨키로 넘기는 모습" loading="lazy">'
+        f'<figcaption>{esc(lab)}</figcaption></figure>' for f, lab in FLIP_SCENES)
+    cards = "".join(
+        f'<div class="fl-card"><img src="{a}/{f}" alt="" loading="lazy">'
+        f'<div class="cap"><b>{t}</b><i>{d}</i></div></div>'
+        for f, t, d in [
+            ("screen-main.jpg", "어두운 화면", "밤에 누워 읽어도 눈이 부시지 않습니다."),
+            ("screen-main-light.jpg", "밝은 화면", "낮에도 그대로 잘 보입니다."),
+            ("screen-settings.jpg", "내 손에 맞게", "넘기는 거리와 느낌을 고를 수 있습니다."),
+        ])
+    spec = "".join(f"<tr><th>{k}</th><td>{v}</td></tr>" for k, v in (p.get("spec") or []))
+    extra = feats[3] if len(feats) > 3 else None
+    return f"""<div class="fl">
+  <header class="fl-hero">
+    <p class="fl-kick">{esc(p["name"])}</p>
+    <div class="fl-hero-in">
+      <h1>{esc(p["tagline"])}</h1>
+      <p class="lede">{p.get("lead", "")}</p>
+    </div>
+    <div class="fl-cta">{btn}{sub}</div>
+    <p class="fl-note">{esc(p.get("ctasub") or p.get("platform", ""))}</p>
+    <div class="fl-shot"><img src="{a}/fold8.jpg" alt="{esc(p["name"])}" loading="eager"></div>
+  </header>
+  {rows}
+  <section class="fl-mid">
+    <span class="fl-num">04</span>
+    <h2>읽는 화면이면<br>어디서든 넘어갑니다.</h2>
+    <p>웹툰도 릴스도 기사도, 스크롤로 읽는 화면이면 볼륨키만 누르면 됩니다.</p>
+    <div class="fl-gal">{gal}</div>
+  </section>
+  <section class="fl-mid">
+    <span class="fl-num">05</span>
+    <h2>내 손에 맞게 맞춥니다.</h2>
+    <p>넘기는 거리는 5단계, 느낌도 고를 수 있습니다. 밝은 화면과 어두운 화면 모두 지원합니다.</p>
+    <div class="fl-cards">{cards}</div>
+  </section>
+  {'<section class="fl-mid"><span class="fl-num">06</span><h2>' + esc(extra[0]) +
+   '</h2><p>' + extra[1] + '</p></section>' if extra else ''}
+  <section class="fl-mid">
+    <span class="fl-num">07</span><h2>제품 사양</h2>
+    <table class="fl-spec">{spec}</table>
+  </section>
+  <section class="fl-end">
+    <h2>{esc(p.get("desire") or p["tagline"])}</h2>
+    <div class="fl-cta">{btn}{sub}</div>
+    <p class="fl-note">{esc(p.get("ctasub") or "")}</p>
+  </section>
+</div>"""
+
+
 # ---------- 제품 상세 = vinylc 구조 (풀블리드 히어로 → 이미지 리듬 → CTA → Next) ----------
 M = "https://www.vinylc.com/upload/module/"
 G = "https://www.vinylc.com/upload/goods/"
@@ -2716,6 +2879,10 @@ for idx, slug in enumerate(ORDER):
     # 무료 도구는 /tools/<slug>/ (본 도메인 경로 = 미끼의 유입 권위), 유료 스포크는 /products/<slug>/.
     _dir = purl(slug).strip("/")
     os.makedirs(_dir, exist_ok=True)
+    # 앱형 제품(type=app)은 **자체 랜딩**을 쓴다 — 스토어로 보내는 게 목적이라 웹 제품과
+    #   화면 구성이 다르다(2026-08-24). 본문만 갈아 끼우고 나머지 배선은 그대로.
+    if p.get("type") == "app":
+        body = app_landing(slug, p)
     with open(f"{_dir}/index.html", "w", encoding="utf-8") as fh:
         # description 은 70~120자여야 검색결과에서 제 몫을 한다(docs/SEO_GEO.md §3).
         # tagline 만 쓰면 10~29자라 구글이 무시하고 본문에서 임의 발췌한다(2026-08-07 실측).
@@ -3640,10 +3807,11 @@ with open("assets/apex.js", "w", encoding="utf-8") as f:
 #   ⚠️ 옛 구성(kb_hero/kb_latest/kb_popular/kb_series/kb_cats)은 더 이상 홈에 싣지 않는다.
 #      변수 자체는 남겨 둔다 — 다른 데서 참조하거나 되돌릴 때를 위해.
 _SPOKE_HREF = {sp["slug"]: sp["href"] for sp in BAR["spokes"] if sp.get("slug")}
+_SPOKE_HREF["flipper"] = P["flipper"]["store"]   # 앱은 스토어로 바로 보낸다
 # 두 번째 버튼은 '알아보기'가 아니라 **그 제품에서 하는 일**을 말한다(애플의 '구입하기' 자리).
 AP_GO = {"binbang": "빈방 알림 등록", "heyreci": "헤이레시 열기", "mark": "로고 만들어 보기",
          "cue": "모의면접 시작하기", "theplan": "플래너 보러 가기",
-         "kontext": "컨텍스트 열기"}
+         "kontext": "컨텍스트 열기", "flipper": "Google Play에서 받기"}
 
 
 # 홈 타일은 **글자가 없는 사진**을 쓴다. og 배너를 깔면 우리 제목과 겹친다.
@@ -3657,6 +3825,7 @@ HOME_SHOT = {
     "cue": "/assets/home/cue.png",
     "theplan": "/assets/home/theplan.png",
     "kontext": "/assets/home/kontext.jpg",
+    "flipper": "/assets/flipper/scene-webtoon.png",
 }
 HOME_VIDEO = {"heyreci": "/assets/home/heyreci-hero.mp4"}
 
@@ -3754,6 +3923,7 @@ def ap_tools_stage():
 ap_body = (
     '<div class="stg-stack">'
     + ap_stage("binbang", "hero", "NEW")
+    + ap_stage("flipper", "hero", "NEW")
     + ap_stage("heyreci", "hero ink")
     + ap_stage("mark", "hero")
     + ap_stage("cue", "hero")
@@ -4571,9 +4741,14 @@ def _shot_attrs(shot):
     return f'class="{cls}"{dim}'
 
 
-for _slug, A in APPS.items():
+# ⚠️ 정본은 products 다(2026-08-24 승격). 여기서는 **setup/support 두 장만** 만든다 —
+#   소개 1장은 제품 상세(/products/<slug>/)가 그린다. 경로도 /products/ 로 옮겼고
+#   옛 /apps/<slug>/* 는 _redirects 가 301 로 넘긴다(앱 안에 박힌 링크 보호).
+APP_PRODUCTS = {k: v for k, v in P.items() if v.get("type") == "app"}
+
+for _slug, A in APP_PRODUCTS.items():
     _live = A.get("status") == "live" and A.get("store")
-    _base = f"/apps/{_slug}"
+    _base = f"/products/{_slug}"
 
     # ── 1) 제품 소개 ────────────────────────────────────────────
     _feats = "".join(f'<div><div class="t">{t}</div><div class="d">{d}</div></div>'
@@ -4611,10 +4786,7 @@ for _slug, A in APPS.items():
   <div class="ap-help">권한을 못 켜고 계신가요? <a href="{_base}/setup/">기기별 설정 방법</a>을 보세요.
   그래도 안 되면 <a href="mailto:{EMAIL}">{EMAIL}</a>로 알려주시면 답변드리겠습니다.</div>
 </div>"""
-    os.makedirs(_base.strip("/"), exist_ok=True)
-    with open(f"{_base.strip('/')}/index.html", "w", encoding="utf-8") as fh:
-        fh.write(page(f"{A['full']} — MOMENTUS",
-                      _re_desc(f"{A['desire']} {A.get('lead') or ''}"), _body, active=""))
+    # (소개 1장은 제품 상세 /products/<slug>/ 가 그린다 — 여기선 안 쓴다)
 
     # ── 2) 접근성 권한 켜는 법 ──────────────────────────────────
     S = A["setup"]
@@ -4724,17 +4896,25 @@ if os.path.exists("tools/index.html"):
 #   무료 도구엔 /tools/ 허브가 있는데 유료 제품엔 모아 보는 자리가 없었다(2026-08-23 실측: /products/ 404).
 #   그래서 GNB '전체 제품'이 갈 데가 없고, 제품이 늘어도 걸 자리가 없었다.
 #   ⚠️ 그룹은 "무엇을 파느냐"가 아니라 "언제 쓰느냐"로 나눈다 — 제품이 늘어도 칸이 안 늘어난다.
+# ⚠️ 무료/유료로 나누지 않는다 — 손님은 "지금 뭘 하려는가"를 먼저 찾지 "돈을 내나"를
+#   먼저 찾지 않는다(2026-08-24). 과금은 카드 오른쪽 태그로만 표시한다.
 PROD_GROUPS = [
-    ("사업을 시작할 때", "가게를 열고 브랜드를 세울 때 필요한 것", ["heyreci", "mark"]),
-    ("일과 성장", "일하는 나를 준비시키는 것", ["cue", "theplan"]),
-    ("일상을 편하게", "기다리고 챙기는 일을 대신 맡기는 것", ["binbang"]),
+    ("사업을 시작할 때", "가게를 열고 브랜드를 세울 때 필요한 것",
+     ["heyreci", "mark"]),
+    ("일과 성장", "일하는 나를 준비시키는 것",
+     ["cue", "theplan", "kontext", "chatpage"]),
+    ("일상을 편하게", "기다리고 챙기는 일을 대신 맡기는 것",
+     ["binbang", "flipper", "quickpang", "insta-rank", "youtube-rank",
+      "pinterest-grab", "her"]),
 ]
+
+_PRICE_TAG = {"binbang": "무료 있음", "flipper": "무료 체험", "kontext": "무료 체험"}
+
 
 def _prod_card(s_):
     pr = P[s_]
     free = bool(pr.get("free"))
-    # 과금 표기는 실제 형태 그대로 — 빈방만 무료 주기가 따로 있다.
-    price = "무료" if free else ("무료 있음" if s_ == "binbang" else "유료")
+    price = _PRICE_TAG.get(s_) or ("무료" if free else "유료")
     shot = pr.get("shot") or ""
     th = (f'<div class="th"><img src="{shot}" alt="" loading="lazy" decoding="async"></div>'
           if shot else
@@ -4745,7 +4925,7 @@ def _prod_card(s_):
             f'<div class="tg">{pr["tag"]}</div>'
             f'<div class="ds">{pr["tagline"]}</div>'
             f'</div>'
-            f'<div class="mt{" free" if free else ""}">{price}</div></a>')
+            f'<div class="mt{" free" if free else ""}">{esc(price)}</div></a>')
 
 def _prod_group(t, sub, items):
     rows = "".join(_prod_card(x) for x in items if x in P)
@@ -4755,9 +4935,6 @@ def _prod_group(t, sub, items):
 _pg = "".join(_prod_group(t, sub, items) for t, sub, items in PROD_GROUPS)
 # 무료 도구도 결국 우리가 만들어 내놓은 것이다 — 별도 페이지로 갈라 두니 사용자에게
 # '제품 vs 도구'라는 우리만 아는 구분을 강요하게 됐다(2026-08-23 대표 지적). 같은 목록의 마지막 칸.
-_pg += _prod_group("지금 바로, 무료로",
-                   "북마크바에 끌어놓거나 크롬에 추가하면 끝. 회원가입도 결제도 없습니다",
-                   TOOLS)
 
 products_body = f"""<div class="prh">
   <div class="tls-head">
@@ -4786,6 +4963,18 @@ with open("_redirects", "w", encoding="utf-8") as f:
     # /tools/ 허브 폐지(2026-08-23) — 목록은 /products/ 안으로 흡수. 개별 도구 페이지는 그대로.
     f.write("/tools/ /products/ 301\n")
     f.write("/tools /products/ 301\n")
+    # /apps/ → /products/ (2026-08-24 승격). ⚠️ **설치된 앱 안에 /apps/flipper/setup/ 이
+    #   박혀 있다** — 앱이 업데이트되기 전까지 이 301 이 유일한 연결이다. 지우지 마라.
+    #   앱이 새 주소로 나가면 BACKLOG.md 의 항목을 지우고 이 줄도 뺄 수 있다.
+    for _s in APP_PRODUCTS:
+        f.write(f"/apps/{_s}/setup/* /products/{_s}/setup/ 301\n")
+        f.write(f"/apps/{_s}/setup /products/{_s}/setup/ 301\n")
+        f.write(f"/apps/{_s}/support/* /products/{_s}/support/ 301\n")
+        f.write(f"/apps/{_s}/support /products/{_s}/support/ 301\n")
+        f.write(f"/apps/{_s}/* /products/{_s}/ 301\n")
+        f.write(f"/apps/{_s} /products/{_s}/ 301\n")
+    f.write("/apps/ /products/ 301\n")
+    f.write("/apps /products/ 301\n")
     # 블로그가 /log/ → /stories/ 로 승격(2026-07-27). 기존 링크·검색 결과 보존.
     for s in PORDER:
         # 슬래시로 끝나는 정확 경로도 따로 적는다 — `/log/x/*` 는 뒤가 빈 `/log/x/` 를 안 잡는다(실측).
@@ -4832,7 +5021,7 @@ if LINKS.get("map"):
 urls = ["", "about/", "tools/", "inquiry/", "how-to-pay/",
         "legal/privacy/", "legal/terms/", "legal/refund/"] \
     + [purl(s).lstrip("/") for s in ORDER] \
-    + [f"apps/{s}/{sub}" for s in APPS for sub in ("", "setup/", "support/")] \
+    + [f"products/{s}/{sub}" for s in APP_PRODUCTS for sub in ("setup/", "support/")] \
     + ["stories/"] + [f"stories/{s}/" for s in PORDER] \
     + [f"stories/tag/{k}/" for k, lab in STORY_TAGS
        if any(lab in e.get("tags", []) for e in entries)]   # 빈 태그는 sitemap 에서 뺀다

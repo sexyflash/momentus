@@ -13,6 +13,14 @@
 /products/her /tools/her/ 301
 /tools/ /products/ 301
 /tools /products/ 301
+/apps/flipper/setup/* /products/flipper/setup/ 301
+/apps/flipper/setup /products/flipper/setup/ 301
+/apps/flipper/support/* /products/flipper/support/ 301
+/apps/flipper/support /products/flipper/support/ 301
+/apps/flipper/* /products/flipper/ 301
+/apps/flipper /products/flipper/ 301
+/apps/ /products/ 301
+/apps /products/ 301
 /log/loud-ai-contest/ /stories/loud-ai-contest/ 301
 /log/loud-ai-contest /stories/loud-ai-contest/ 301
 /log/ai-agent-lessons/ /stories/ai-agent-lessons/ 301

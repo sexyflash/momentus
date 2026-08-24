@@ -120,6 +120,7 @@
     "cue",
     "binbang",
     "kontext",
+    "flipper",
     "quickpang",
     "insta-rank",
     "youtube-rank",
@@ -1031,34 +1032,27 @@
           "베타로 열려 있고 무료로 시작할 수 있습니다."
         ]
       ]
-    }
-  },
-  "links": {
-    "_note": "앱 바이너리·스토어 등록정보에 박히는 영구 주소(/l/<키>). ⚠️ 키는 절대 바꾸지 마라 — 이미 배포된 앱은 재빌드가 안 된다. 바꾸는 건 target 뿐이다. ⚠️ 반드시 302(임시)로 발행한다. 301은 브라우저·스토어 크롤러가 영구 캐시해서, 나중에 target을 바꿔도 기존 설치본이 옛 주소로 계속 간다 = 이 층을 만든 의미가 사라진다.",
-    "_catchall": "/",
-    "map": {
-      "flipper": "/apps/flipper/",
-      "flipper/setup": "/apps/flipper/setup/",
-      "flipper/support": "/apps/flipper/support/",
-      "flipper/get": "/apps/flipper/",
-      "privacy": "/legal/privacy/",
-      "terms": "/legal/terms/",
-      "refund": "/legal/refund/"
-    }
-  },
-  "apps": {
-    "_note": "스토어에서 설치하는 네이티브 앱. 무료 도구(/tools/)도 유료 스포크(/products/)도 아닌 3번째 축 = /apps/<slug>/. 판단 근거 docs/PLATFORM_TOPOLOGY.md §0 — 결제·계정·데이터가 우리 도메인에 없으면(스토어가 처리) apex 경로. 각 앱은 소개·setup(권한 설정)·support 3장을 갖는다. 앱에는 /l/<키>만 박는다.",
+    },
     "flipper": {
       "name": "Flipper",
-      "full": "Flipper — 볼륨키 페이지 넘김",
+      "short": "플리퍼",
+      "free": false,
+      "color": "#7C3AED",
+      "icon": "⇅",
+      "tag": "볼륨키 페이지 넘김 · 폴더블",
       "tagline": "화면을 만지지 않고 페이지를 넘깁니다.",
+      "desire": "누워서·한 손으로 읽을 때 화면 만지기 번거로우시죠?",
+      "type": "app",
+      "hook": "누워서·한 손으로 읽을 때 화면 만지기 번거로우시죠?",
+      "cat": "앱",
+      "cta": "store",
+      "url": "https://play.google.com/store/apps/details?id=us.themoment.flipper&hl=ko",
+      "ctatext": "Google Play에서 받기",
+      "ctasub": "Android 9 이상 · 3일 무료 체험",
+      "store": "https://play.google.com/store/apps/details?id=us.themoment.flipper&hl=ko",
       "pkg": "us.themoment.flipper",
       "platform": "Android 9 (API 28) 이상",
-      "status": "closed-test",
-      "store": null,
-      "icon": "⇅",
-      "color": "#0E1013",
-      "desire": "누워서·한 손으로 읽을 때 화면 만지기 번거로우시죠?",
+      "status": "live",
       "lead": "<b>볼륨 버튼만 누르면 페이지가 넘어갑니다.</b> 전자책·웹페이지·PDF를 읽을 때 화면에 손을 뻗지 않아도 됩니다. 한 손으로 들고 읽을 때, 누워서 읽을 때, 젖은 손으로 레시피를 볼 때.",
       "feats": [
         [
@@ -1098,10 +1092,6 @@
         [
           "체험",
           "3일 무료 (결제수단 등록 없음)"
-        ],
-        [
-          "가격",
-          "월 ₩3,900 · 연 ₩14,900 · 평생 ₩19,900"
         ]
       ],
       "setup": {
@@ -1270,7 +1260,52 @@
           "어떤 앱에서 안 넘어가는지",
           "앱 버전 — Flipper 앱의 <b>오른쪽 위 톱니바퀴 → 앱 정보</b>에서 보실 수 있습니다"
         ]
-      }
+      },
+      "shot": "https://the-moment.us/assets/flipper/fold8.jpg",
+      "how": [
+        [
+          "설치하고 권한 켜기",
+          "Google Play에서 받은 뒤 접근성 권한을 한 번 켭니다."
+        ],
+        [
+          "볼륨키를 넘기기로",
+          "앱에서 첫 카드를 ‘넘기기’로 둡니다. 볼륨 올리기 두 번이면 언제든 소리로 돌아옵니다."
+        ],
+        [
+          "그냥 읽기",
+          "웹툰·릴스·기사·PDF 어디서든 볼륨키만 누르면 넘어갑니다."
+        ]
+      ],
+      "faq": [
+        [
+          "어떤 앱에서 되나요?",
+          "웹툰·릴스·기사·PDF·전자책 등 스크롤로 읽는 화면이면 대체로 동작합니다."
+        ],
+        [
+          "볼륨 조절은 못 하나요?",
+          "볼륨 올리기 버튼을 두 번 누르면 원래 소리 조절로 돌아옵니다."
+        ],
+        [
+          "무엇을 수집하나요?",
+          "아무것도 수집하지 않습니다. 계정 가입도, 광고·분석 SDK도 없습니다."
+        ]
+      ]
     }
+  },
+  "links": {
+    "_note": "앱 바이너리·스토어 등록정보에 박히는 영구 주소(/l/<키>). ⚠️ 키는 절대 바꾸지 마라 — 이미 배포된 앱은 재빌드가 안 된다. 바꾸는 건 target 뿐이다. ⚠️ 반드시 302(임시)로 발행한다. 301은 브라우저·스토어 크롤러가 영구 캐시해서, 나중에 target을 바꿔도 기존 설치본이 옛 주소로 계속 간다 = 이 층을 만든 의미가 사라진다.",
+    "_catchall": "/",
+    "map": {
+      "flipper": "/apps/flipper/",
+      "flipper/setup": "/apps/flipper/setup/",
+      "flipper/support": "/apps/flipper/support/",
+      "flipper/get": "/apps/flipper/",
+      "privacy": "/legal/privacy/",
+      "terms": "/legal/terms/",
+      "refund": "/legal/refund/"
+    }
+  },
+  "apps": {
+    "_note": "스토어에서 설치하는 네이티브 앱. 무료 도구(/tools/)도 유료 스포크(/products/)도 아닌 3번째 축 = /apps/<slug>/. 판단 근거 docs/PLATFORM_TOPOLOGY.md §0 — 결제·계정·데이터가 우리 도메인에 없으면(스토어가 처리) apex 경로. 각 앱은 소개·setup(권한 설정)·support 3장을 갖는다. 앱에는 /l/<키>만 박는다. ⚠️ flipper 는 2026-08-24 products 로 승격했다(정본=products.flipper). /apps/flipper/* 는 301."
   }
 }

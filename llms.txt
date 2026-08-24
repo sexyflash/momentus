@@ -11,6 +11,7 @@
 - [큐 · AI 모의면접](https://cue.the-moment.us): 면접장에서 얼어붙지 않게 잡아 줍니다.
 - [빈방 · 취소표 알림](https://bb.the-moment.us): 다 찬 숙소도 취소는 나옵니다.
 - [컨텍스트](https://kontext.the-moment.us): 생각을 정리하고, 그 상태로 AI에게 넘깁니다.
+- [Flipper](https://play.google.com/store/apps/details?id=us.themoment.flipper&hl=ko): 화면을 만지지 않고 페이지를 넘깁니다.
 
 ## 무료 브라우저 도구
 - [퀵팡 · 쿠팡 퀵보기](https://the-moment.us/tools/quickpang/): 클릭 없이 옵션·재고 확인.
