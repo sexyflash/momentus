@@ -1259,6 +1259,10 @@ border-radius:18px;overflow:hidden;background:var(--soft)}
 .stg--hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:62%;z-index:1;
 pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.62),rgba(0,0,0,.28) 42%,transparent)}
 .stg--hero .stg-bd{position:relative;z-index:2;padding:clamp(24px,3.3vw,48px)}
+/* 배너 전면 클릭 판 — 글·버튼보다 아래(z1)에 깔려 버튼 클릭을 안 가로챈다. */
+.stg-hit{position:absolute;inset:0;z-index:1}
+.stg-bd,.stg-cta{position:relative;z-index:2}
+.stg:hover{cursor:pointer}
 .stg--hero .stg-name{color:#fff;font-size:clamp(34px,5.6vw,80px);letter-spacing:-.055em}
 .stg--hero .stg-claim{color:rgba(255,255,255,.88);font-size:clamp(15px,1.5vw,21px);font-weight:600}
 .stg--hero .stg-eyebrow{color:rgba(255,255,255,.72)}
@@ -1701,62 +1705,23 @@ margin-top:clamp(26px,3.4vw,44px)}
 .fl-card b{display:block;font-size:15.5px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
 .fl-card i{display:block;font-style:normal;font-size:13.5px;color:var(--gray);margin-top:5px}
 
-/* 연출 갤러리 — 어디서든 넘어간다 */
-.fl-gal{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.4vw,18px);
-margin-top:clamp(26px,3.4vw,44px)}
-.fl-gal a,.fl-gal figure{margin:0;border-radius:18px;overflow:hidden;background:var(--soft);
-position:relative}
-.fl-gal img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;
-transition:transform .5s var(--ease)}
-.fl-gal figure:hover img{transform:scale(1.04)}
-.fl-gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 16px 14px;
-font-size:13.5px;font-weight:700;color:#fff;letter-spacing:-.02em;
-background:linear-gradient(to top,rgba(0,0,0,.6),transparent)}
-@media(max-width:900px){.fl-gal{grid-template-columns:1fr 1fr}}
-
-/* ── 볼륨키를 누르면 페이지가 올라간다 — 말로 설명하는 대신 보여준다 ──
-   기기 틀 안에서 콘텐츠 띠가 위로 밀리고, 그 순간 볼륨키가 눌린다.
-   ⚠️ 감속 모션 선호면 멈춘다. */
-.fl-demo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:center;
-padding:clamp(56px,8vw,120px) 0 0}
-.fl-phone{position:relative;width:min(280px,80%);margin:0 auto;aspect-ratio:9/19.5;
-border-radius:34px;background:#0b0c0e;padding:9px;box-shadow:0 30px 60px -30px rgba(0,0,0,.5)}
-.fl-phone .scr{position:relative;width:100%;height:100%;border-radius:26px;overflow:hidden;
-background:var(--paper)}
-.fl-phone .strip{position:absolute;inset:0;display:flex;flex-direction:column}
-.fl-phone .strip span{flex:0 0 50%;display:grid;place-items:center;font-size:44px;font-weight:800;
-letter-spacing:-.05em;color:var(--ink2);background:var(--soft)}
-.fl-phone .strip span:nth-child(even){background:var(--soft2)}
-/* 볼륨키 */
-.fl-phone .vk{position:absolute;right:-4px;top:24%;width:4px;height:64px;border-radius:3px;
-background:#2b2f36}
-.fl-phone .vk::after{content:"";position:absolute;inset:-9px -13px;border-radius:10px;
-background:var(--brand-cta);opacity:0}
-@media(prefers-reduced-motion:no-preference){
-  .fl-phone .strip{animation:flstrip 3.2s cubic-bezier(.7,0,.2,1) infinite}
-  .fl-phone .vk::after{animation:flkey 3.2s ease infinite}
-}
-@keyframes flstrip{
-  0%,26%{transform:translateY(0)}
-  34%,58%{transform:translateY(-50%)}
-  66%,92%{transform:translateY(-100%)}
-  100%{transform:translateY(-100%)}
-}
-@keyframes flkey{0%,22%{opacity:0}26%,30%{opacity:.55}34%,54%{opacity:0}
-58%,62%{opacity:.55}66%,100%{opacity:0}}
-.fl-demo-tx h2{font-size:clamp(24px,3vw,40px);font-weight:800;letter-spacing:-.05em;
-line-height:1.16;color:var(--ink);margin-top:16px}
-.fl-demo-tx p{margin-top:16px;font-size:16.5px;line-height:1.75;color:var(--gray);max-width:44ch}
-@media(max-width:860px){.fl-demo{grid-template-columns:1fr;gap:26px}}
-
-/* 설정 카드 — 스크린샷을 기기 틀에 끼운다(맨 이미지로 두면 화면인지 사진인지 모른다) */
-.fl-card{background:var(--soft);border-radius:20px;overflow:hidden;text-align:left;
-padding:clamp(22px,2.6vw,32px) clamp(18px,2vw,24px) 0}
-.fl-card .fr{width:min(210px,84%);margin:0 auto;border-radius:26px;background:#0b0c0e;padding:7px;
-box-shadow:0 22px 44px -24px rgba(0,0,0,.5)}
-.fl-card .fr img{width:100%;aspect-ratio:1248/1972;object-fit:cover;object-position:top;
-border-radius:20px;display:block}
-.fl-card .cap{padding:20px 2px 22px}
+/* ── 연출 = 애플 macbook-air 식 **큰 장면 블록** ─────────────────────────
+   실측(apple.com/macbook-air): 미디어 블록 696~980px · 라운드 28px · 한 화면에 하나,
+   글은 그림 아래 넉넉한 여백. 작은 격자로 늘어놓지 않는다(2026-08-24 대표 지적).
+   ⚠️ 8번째로 앱 화면을 끼워 두었다가 "덩그러니" 소리를 들었다 — 연출만 넣는다. */
+.fl-scenes{display:flex;flex-direction:column;gap:clamp(40px,6vw,96px);
+margin-top:clamp(30px,4vw,56px);text-align:left}
+.fl-scene{display:grid;grid-template-columns:1fr;gap:0}
+.fl-scene figure{margin:0;border-radius:28px;overflow:hidden;background:var(--soft)}
+.fl-scene img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+.fl-scene .tx{padding:clamp(18px,2.2vw,28px) 4px 0;max-width:52ch}
+.fl-scene b{display:block;font-size:clamp(19px,1.9vw,25px);font-weight:800;letter-spacing:-.04em;
+color:var(--ink)}
+.fl-scene p{margin-top:10px;font-size:16px;line-height:1.72;color:var(--gray)}
+/* 두 장씩 나란히 — 좁은 장면은 짝으로 묶어 리듬을 만든다(애플도 이 둘을 섞는다) */
+.fl-duo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,1.8vw,24px)}
+.fl-duo .fl-scene img{aspect-ratio:4/3}
+@media(max-width:860px){.fl-duo{grid-template-columns:1fr;gap:clamp(28px,5vw,44px)}}
 
 /* 사양표 */
 .fl-spec{margin-top:clamp(26px,3.4vw,44px);width:100%;border-collapse:collapse;
@@ -1850,8 +1815,18 @@ def bar_items(active=""):
 
 
 def bar_products():
-    """플라이아웃·모바일 목록에 들어갈 제품 = 바 스포크(숨김 제외)."""
-    return [sp for sp in BAR["spokes"] if not sp.get("hidden")]
+    """플라이아웃·모바일 목록에 들어갈 제품.
+       ⚠️ 스포크(자체 도메인)만 보면 **앱형 제품이 빠진다** — 플리퍼가 그래서 안 나왔다
+          (2026-08-24). 자체 도메인이 없는 제품은 our 경로를 href 로 만들어 함께 싣는다."""
+    out = [sp for sp in BAR["spokes"] if not sp.get("hidden")]
+    have = {sp.get("slug") for sp in out}
+    for sl, pr in P.items():
+        if sl in have or pr.get("type") != "app":
+            continue
+        out.append({"slug": sl, "label": pr["short"],
+                    "href": "https://the-moment.us" + purl(sl),
+                    "sub": pr.get("tagline", "")})
+    return out
 
 
 def bar_html(active=""):
@@ -2719,10 +2694,20 @@ DOCK_JS = """<script>
 # ── 앱형 제품 랜딩(toss.im/service/teenagers 구조) ────────────────────────
 #   가격은 쓰지 않는다 — 설치 하나에만 집중하고 가격은 스토어가 보여준다(2026-08-24 대표 지시).
 FLIP_SCENES = [
-    ("scene-instagram", "인스타그램"), ("scene-webtoon", "웹툰"),
-    ("scene-news", "뉴스"), ("scene-ebook", "전자책"),
-    ("scene-article", "긴 글"), ("scene-pdf", "PDF"),
-    ("scene-recipe", "레시피"), ("screen-main", "설정"),
+    ("scene-webtoon", "누워서 웹툰을 볼 때",
+     "손을 뻗지 않아도 다음 화면이 옵니다. 엄지가 볼륨키에 닿아 있으면 그걸로 끝입니다."),
+    ("scene-instagram", "카페에서 피드를 넘길 때",
+     "한 손엔 잔, 한 손엔 폰. 화면을 문지르지 않아도 됩니다."),
+    ("scene-news", "출근길 지하철에서",
+     "손잡이를 잡은 채로 기사를 끝까지 읽습니다."),
+    ("scene-ebook", "비 오는 오후, 소파에서",
+     "담요 밖으로 손을 내밀 필요가 없습니다. 전자책 한 권이 볼륨키 두 개로 넘어갑니다."),
+    ("scene-recipe", "젖은 손으로 레시피를 볼 때",
+     "화면을 만지면 자국이 남습니다. 볼륨키는 물기와 상관없습니다."),
+    ("scene-pdf", "책상에서 문서를 훑을 때",
+     "노트북 옆에 세워 두고 볼륨키로 페이지를 넘깁니다."),
+    ("scene-article", "공원 벤치에서 긴 글을",
+     "스크롤이 긴 글일수록 물리 버튼이 편합니다."),
 ]
 
 
@@ -2736,17 +2721,23 @@ def app_landing(slug, p):
     feats = p.get("feats") or []
     rows = ""
     for i, (t, d) in enumerate(feats[:3]):
-        img = [f"{a}/fold8ultra.jpg", f"{a}/scene-webtoon.png", f"{a}/screen-main.jpg"][i]
+        img = [f"{a}/scene-webtoon.png", f"{a}/scene-news.png", f"{a}/scene-recipe.png"][i]
         flip = " fl-row--flip" if i % 2 else ""
         rows += (f'<section class="fl-sec"><div class="fl-row{flip}">'
                  f'<div class="fl-row-tx"><span class="fl-num">{i + 1:02d}</span>'
                  f'<h2>{t}</h2><p>{d}</p></div>'
                  f'<div class="fl-art"><img src="{img}" alt="" loading="lazy"></div>'
                  f'</div></section>')
-    gal = "".join(
-        f'<figure><img src="{a}/{f}.{"jpg" if f.startswith("screen") else "png"}" '
-        f'alt="{esc(lab)} 화면에서 볼륨키로 넘기는 모습" loading="lazy">'
-        f'<figcaption>{esc(lab)}</figcaption></figure>' for f, lab in FLIP_SCENES)
+    def _scene(f, t, d):
+        return (f'<div class="fl-scene"><figure><img src="{a}/{f}.png" '
+                f'alt="{esc(t)}" loading="lazy"></figure>'
+                f'<div class="tx"><b>{esc(t)}</b><p>{esc(d)}</p></div></div>')
+
+    gal = ("".join(_scene(*x) for x in FLIP_SCENES[:1])
+           + '<div class="fl-duo">' + "".join(_scene(*x) for x in FLIP_SCENES[1:3]) + '</div>'
+           + "".join(_scene(*x) for x in FLIP_SCENES[3:4])
+           + '<div class="fl-duo">' + "".join(_scene(*x) for x in FLIP_SCENES[4:6]) + '</div>'
+           + "".join(_scene(*x) for x in FLIP_SCENES[6:7]))
     cards = "".join(
         f'<div class="fl-card"><span class="fr"><img src="{a}/{f}" alt="" loading="lazy"></span>'
         f'<div class="cap"><b>{t}</b><i>{d}</i></div></div>'
@@ -2766,7 +2757,7 @@ def app_landing(slug, p):
     </div>
     <div class="fl-cta">{btn}{sub}</div>
     <p class="fl-note">{esc(p.get("ctasub") or p.get("platform", ""))}</p>
-    <div class="fl-shot"><img src="{a}/fold8.jpg" alt="{esc(p["name"])}" loading="eager"></div>
+    <div class="fl-shot"><img src="{a}/hero.png" alt="{esc(p["name"])}" loading="eager"></div>
   </header>
   {rows}
   <section class="fl-demo">
@@ -2783,7 +2774,7 @@ def app_landing(slug, p):
     <span class="fl-num">05</span>
     <h2>읽는 화면이면<br>어디서든 넘어갑니다.</h2>
     <p>웹툰도 릴스도 기사도, 스크롤로 읽는 화면이면 볼륨키만 누르면 됩니다.</p>
-    <div class="fl-gal">{gal}</div>
+    <div class="fl-scenes">{gal}</div>
   </section>
   <section class="fl-mid">
     <span class="fl-num">06</span>
@@ -3879,7 +3870,7 @@ HOME_SHOT = {
     "cue": "/assets/home/cue.png",
     "theplan": "/assets/home/theplan.png",
     "kontext": "/assets/home/kontext.jpg",
-    "flipper": "/assets/flipper/scene-webtoon.png",
+    "flipper": "/assets/flipper/hero.png",
 }
 HOME_VIDEO = {"heyreci": "/assets/home/heyreci-hero.mp4"}
 
@@ -3888,11 +3879,18 @@ def ap_stage(slug, tone="", badge=""):
     """제품 카드 = 그림(꽉 참) → 업종 한 줄 → 이름 → 한 줄 → 버튼 둘(우하단).
        애플 제품 카드(apple.com/airpods)의 배치 그대로."""
     pr = P[slug]
+    p_type = pr.get("type")
     go = _SPOKE_HREF.get(slug, "")
     # 버튼은 하나다. '더 알아보기'와 '열기'는 결국 같은 말이라 둘을 나란히 두면 고민만 는다
     # (2026-08-23 대표: "여기는 메뉴가 두 개가 아니잖아"). 바로 그 제품에서 할 일 하나만 둔다.
-    cta = (f'<a class="stg-pill" href="{go}"{_ext(go)}>{AP_GO.get(slug, "바로 가기")}</a>'
-           if go else f'<a class="stg-pill" href="{purl(slug)}">더 알아보기</a>')
+    # 앱형은 '더 알아보기'(제품 페이지)와 '받기'(스토어) 둘 다 필요하다 — 설치 전에 볼 게 있다.
+    if p_type == "app":
+        cta = (f'<a class="stg-pill" href="{purl(slug)}">더 알아보기</a>'
+               f'<a class="stg-pill stg-pill--line" href="{go}"{_ext(go)}>'
+               f'{AP_GO.get(slug, "바로 가기")}</a>')
+    else:
+        cta = (f'<a class="stg-pill" href="{go}"{_ext(go)}>{AP_GO.get(slug, "바로 가기")}</a>'
+               if go else f'<a class="stg-pill" href="{purl(slug)}">더 알아보기</a>')
     vid = HOME_VIDEO.get(slug)
     shot = HOME_SHOT.get(slug) or pr.get("shot") or ""
     if vid:
@@ -3905,7 +3903,14 @@ def ap_stage(slug, tone="", badge=""):
         art = ""
     bdg = f'<em>{badge}</em>' if badge else ""
     cls = "".join(f" stg--{t}" for t in tone.split()) if tone else ""
-    return (f'<section class="stg{cls}">{art}<div class="stg-bd"><div>'
+    # 배너 전체를 누를 수 있게 — 카드처럼 보이는데 안 눌리면 손이 헛돈다(2026-08-24 대표 지적).
+    #   버튼이 둘이면 제품 페이지로, 하나면 그 버튼과 같은 곳으로 보낸다.
+    _whole = purl(slug) if p_type == "app" else (go or purl(slug))
+    _wext = _ext(_whole) if "//" in _whole else ""
+    hit = (f'<a class="stg-hit" href="{_whole}"{_wext} '
+           f'aria-label="{esc(pr["short"])} 자세히 보기"></a>')
+    return (f'<section class="stg{cls}">{art}{hit}<div class="stg-bd"><div>'
+
             f'<p class="stg-eyebrow">{esc(pr.get("tag", ""))}{bdg}</p>'
             f'<h2 class="stg-name">{esc(pr["short"])}</h2>'
             f'<p class="stg-claim">{esc(pr["tagline"])}</p></div>'

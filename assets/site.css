@@ -1210,6 +1210,10 @@ border-radius:18px;overflow:hidden;background:var(--soft)}
 .stg--hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:62%;z-index:1;
 pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.62),rgba(0,0,0,.28) 42%,transparent)}
 .stg--hero .stg-bd{position:relative;z-index:2;padding:clamp(24px,3.3vw,48px)}
+/* 배너 전면 클릭 판 — 글·버튼보다 아래(z1)에 깔려 버튼 클릭을 안 가로챈다. */
+.stg-hit{position:absolute;inset:0;z-index:1}
+.stg-bd,.stg-cta{position:relative;z-index:2}
+.stg:hover{cursor:pointer}
 .stg--hero .stg-name{color:#fff;font-size:clamp(34px,5.6vw,80px);letter-spacing:-.055em}
 .stg--hero .stg-claim{color:rgba(255,255,255,.88);font-size:clamp(15px,1.5vw,21px);font-weight:600}
 .stg--hero .stg-eyebrow{color:rgba(255,255,255,.72)}
@@ -1637,62 +1641,23 @@ margin-top:clamp(26px,3.4vw,44px)}
 .fl-card b{display:block;font-size:15.5px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
 .fl-card i{display:block;font-style:normal;font-size:13.5px;color:var(--gray);margin-top:5px}
 
-/* 연출 갤러리 — 어디서든 넘어간다 */
-.fl-gal{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.4vw,18px);
-margin-top:clamp(26px,3.4vw,44px)}
-.fl-gal a,.fl-gal figure{margin:0;border-radius:18px;overflow:hidden;background:var(--soft);
-position:relative}
-.fl-gal img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;
-transition:transform .5s var(--ease)}
-.fl-gal figure:hover img{transform:scale(1.04)}
-.fl-gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 16px 14px;
-font-size:13.5px;font-weight:700;color:#fff;letter-spacing:-.02em;
-background:linear-gradient(to top,rgba(0,0,0,.6),transparent)}
-@media(max-width:900px){.fl-gal{grid-template-columns:1fr 1fr}}
-
-/* ── 볼륨키를 누르면 페이지가 올라간다 — 말로 설명하는 대신 보여준다 ──
-   기기 틀 안에서 콘텐츠 띠가 위로 밀리고, 그 순간 볼륨키가 눌린다.
-   ⚠️ 감속 모션 선호면 멈춘다. */
-.fl-demo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:center;
-padding:clamp(56px,8vw,120px) 0 0}
-.fl-phone{position:relative;width:min(280px,80%);margin:0 auto;aspect-ratio:9/19.5;
-border-radius:34px;background:#0b0c0e;padding:9px;box-shadow:0 30px 60px -30px rgba(0,0,0,.5)}
-.fl-phone .scr{position:relative;width:100%;height:100%;border-radius:26px;overflow:hidden;
-background:var(--paper)}
-.fl-phone .strip{position:absolute;inset:0;display:flex;flex-direction:column}
-.fl-phone .strip span{flex:0 0 50%;display:grid;place-items:center;font-size:44px;font-weight:800;
-letter-spacing:-.05em;color:var(--ink2);background:var(--soft)}
-.fl-phone .strip span:nth-child(even){background:var(--soft2)}
-/* 볼륨키 */
-.fl-phone .vk{position:absolute;right:-4px;top:24%;width:4px;height:64px;border-radius:3px;
-background:#2b2f36}
-.fl-phone .vk::after{content:"";position:absolute;inset:-9px -13px;border-radius:10px;
-background:var(--brand-cta);opacity:0}
-@media(prefers-reduced-motion:no-preference){
-  .fl-phone .strip{animation:flstrip 3.2s cubic-bezier(.7,0,.2,1) infinite}
-  .fl-phone .vk::after{animation:flkey 3.2s ease infinite}
-}
-@keyframes flstrip{
-  0%,26%{transform:translateY(0)}
-  34%,58%{transform:translateY(-50%)}
-  66%,92%{transform:translateY(-100%)}
-  100%{transform:translateY(-100%)}
-}
-@keyframes flkey{0%,22%{opacity:0}26%,30%{opacity:.55}34%,54%{opacity:0}
-58%,62%{opacity:.55}66%,100%{opacity:0}}
-.fl-demo-tx h2{font-size:clamp(24px,3vw,40px);font-weight:800;letter-spacing:-.05em;
-line-height:1.16;color:var(--ink);margin-top:16px}
-.fl-demo-tx p{margin-top:16px;font-size:16.5px;line-height:1.75;color:var(--gray);max-width:44ch}
-@media(max-width:860px){.fl-demo{grid-template-columns:1fr;gap:26px}}
-
-/* 설정 카드 — 스크린샷을 기기 틀에 끼운다(맨 이미지로 두면 화면인지 사진인지 모른다) */
-.fl-card{background:var(--soft);border-radius:20px;overflow:hidden;text-align:left;
-padding:clamp(22px,2.6vw,32px) clamp(18px,2vw,24px) 0}
-.fl-card .fr{width:min(210px,84%);margin:0 auto;border-radius:26px;background:#0b0c0e;padding:7px;
-box-shadow:0 22px 44px -24px rgba(0,0,0,.5)}
-.fl-card .fr img{width:100%;aspect-ratio:1248/1972;object-fit:cover;object-position:top;
-border-radius:20px;display:block}
-.fl-card .cap{padding:20px 2px 22px}
+/* ── 연출 = 애플 macbook-air 식 **큰 장면 블록** ─────────────────────────
+   실측(apple.com/macbook-air): 미디어 블록 696~980px · 라운드 28px · 한 화면에 하나,
+   글은 그림 아래 넉넉한 여백. 작은 격자로 늘어놓지 않는다(2026-08-24 대표 지적).
+   ⚠️ 8번째로 앱 화면을 끼워 두었다가 "덩그러니" 소리를 들었다 — 연출만 넣는다. */
+.fl-scenes{display:flex;flex-direction:column;gap:clamp(40px,6vw,96px);
+margin-top:clamp(30px,4vw,56px);text-align:left}
+.fl-scene{display:grid;grid-template-columns:1fr;gap:0}
+.fl-scene figure{margin:0;border-radius:28px;overflow:hidden;background:var(--soft)}
+.fl-scene img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+.fl-scene .tx{padding:clamp(18px,2.2vw,28px) 4px 0;max-width:52ch}
+.fl-scene b{display:block;font-size:clamp(19px,1.9vw,25px);font-weight:800;letter-spacing:-.04em;
+color:var(--ink)}
+.fl-scene p{margin-top:10px;font-size:16px;line-height:1.72;color:var(--gray)}
+/* 두 장씩 나란히 — 좁은 장면은 짝으로 묶어 리듬을 만든다(애플도 이 둘을 섞는다) */
+.fl-duo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,1.8vw,24px)}
+.fl-duo .fl-scene img{aspect-ratio:4/3}
+@media(max-width:860px){.fl-duo{grid-template-columns:1fr;gap:clamp(28px,5vw,44px)}}
 
 /* 사양표 */
 .fl-spec{margin-top:clamp(26px,3.4vw,44px);width:100%;border-collapse:collapse;
