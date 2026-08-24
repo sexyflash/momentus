@@ -1714,6 +1714,50 @@ font-size:13.5px;font-weight:700;color:#fff;letter-spacing:-.02em;
 background:linear-gradient(to top,rgba(0,0,0,.6),transparent)}
 @media(max-width:900px){.fl-gal{grid-template-columns:1fr 1fr}}
 
+/* ── 볼륨키를 누르면 페이지가 올라간다 — 말로 설명하는 대신 보여준다 ──
+   기기 틀 안에서 콘텐츠 띠가 위로 밀리고, 그 순간 볼륨키가 눌린다.
+   ⚠️ 감속 모션 선호면 멈춘다. */
+.fl-demo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:center;
+padding:clamp(56px,8vw,120px) 0 0}
+.fl-phone{position:relative;width:min(280px,80%);margin:0 auto;aspect-ratio:9/19.5;
+border-radius:34px;background:#0b0c0e;padding:9px;box-shadow:0 30px 60px -30px rgba(0,0,0,.5)}
+.fl-phone .scr{position:relative;width:100%;height:100%;border-radius:26px;overflow:hidden;
+background:var(--paper)}
+.fl-phone .strip{position:absolute;inset:0;display:flex;flex-direction:column}
+.fl-phone .strip span{flex:0 0 50%;display:grid;place-items:center;font-size:44px;font-weight:800;
+letter-spacing:-.05em;color:var(--ink2);background:var(--soft)}
+.fl-phone .strip span:nth-child(even){background:var(--soft2)}
+/* 볼륨키 */
+.fl-phone .vk{position:absolute;right:-4px;top:24%;width:4px;height:64px;border-radius:3px;
+background:#2b2f36}
+.fl-phone .vk::after{content:"";position:absolute;inset:-9px -13px;border-radius:10px;
+background:var(--brand-cta);opacity:0}
+@media(prefers-reduced-motion:no-preference){
+  .fl-phone .strip{animation:flstrip 3.2s cubic-bezier(.7,0,.2,1) infinite}
+  .fl-phone .vk::after{animation:flkey 3.2s ease infinite}
+}
+@keyframes flstrip{
+  0%,26%{transform:translateY(0)}
+  34%,58%{transform:translateY(-50%)}
+  66%,92%{transform:translateY(-100%)}
+  100%{transform:translateY(-100%)}
+}
+@keyframes flkey{0%,22%{opacity:0}26%,30%{opacity:.55}34%,54%{opacity:0}
+58%,62%{opacity:.55}66%,100%{opacity:0}}
+.fl-demo-tx h2{font-size:clamp(24px,3vw,40px);font-weight:800;letter-spacing:-.05em;
+line-height:1.16;color:var(--ink);margin-top:16px}
+.fl-demo-tx p{margin-top:16px;font-size:16.5px;line-height:1.75;color:var(--gray);max-width:44ch}
+@media(max-width:860px){.fl-demo{grid-template-columns:1fr;gap:26px}}
+
+/* 설정 카드 — 스크린샷을 기기 틀에 끼운다(맨 이미지로 두면 화면인지 사진인지 모른다) */
+.fl-card{background:var(--soft);border-radius:20px;overflow:hidden;text-align:left;
+padding:clamp(22px,2.6vw,32px) clamp(18px,2vw,24px) 0}
+.fl-card .fr{width:min(210px,84%);margin:0 auto;border-radius:26px;background:#0b0c0e;padding:7px;
+box-shadow:0 22px 44px -24px rgba(0,0,0,.5)}
+.fl-card .fr img{width:100%;aspect-ratio:1248/1972;object-fit:cover;object-position:top;
+border-radius:20px;display:block}
+.fl-card .cap{padding:20px 2px 22px}
+
 /* 사양표 */
 .fl-spec{margin-top:clamp(26px,3.4vw,44px);width:100%;border-collapse:collapse;
 max-width:760px;margin-left:auto;margin-right:auto;text-align:left}
@@ -2704,7 +2748,7 @@ def app_landing(slug, p):
         f'alt="{esc(lab)} 화면에서 볼륨키로 넘기는 모습" loading="lazy">'
         f'<figcaption>{esc(lab)}</figcaption></figure>' for f, lab in FLIP_SCENES)
     cards = "".join(
-        f'<div class="fl-card"><img src="{a}/{f}" alt="" loading="lazy">'
+        f'<div class="fl-card"><span class="fr"><img src="{a}/{f}" alt="" loading="lazy"></span>'
         f'<div class="cap"><b>{t}</b><i>{d}</i></div></div>'
         for f, t, d in [
             ("screen-main.jpg", "어두운 화면", "밤에 누워 읽어도 눈이 부시지 않습니다."),
@@ -2725,22 +2769,32 @@ def app_landing(slug, p):
     <div class="fl-shot"><img src="{a}/fold8.jpg" alt="{esc(p["name"])}" loading="eager"></div>
   </header>
   {rows}
+  <section class="fl-demo">
+    <div class="fl-phone" aria-hidden="true">
+      <div class="scr"><div class="strip"><span>1</span><span>2</span><span>3</span></div></div>
+      <span class="vk"></span>
+    </div>
+    <div class="fl-demo-tx"><span class="fl-num">04</span>
+      <h2>누르면<br>다음 화면.</h2>
+      <p>볼륨 아래 버튼을 누르면 한 화면씩 내려가고, 위 버튼을 누르면 되돌아옵니다.
+        넘기는 거리는 화면 높이의 15~75%까지 다섯 단계로 고를 수 있습니다.</p></div>
+  </section>
   <section class="fl-mid">
-    <span class="fl-num">04</span>
+    <span class="fl-num">05</span>
     <h2>읽는 화면이면<br>어디서든 넘어갑니다.</h2>
     <p>웹툰도 릴스도 기사도, 스크롤로 읽는 화면이면 볼륨키만 누르면 됩니다.</p>
     <div class="fl-gal">{gal}</div>
   </section>
   <section class="fl-mid">
-    <span class="fl-num">05</span>
+    <span class="fl-num">06</span>
     <h2>내 손에 맞게 맞춥니다.</h2>
     <p>넘기는 거리는 5단계, 느낌도 고를 수 있습니다. 밝은 화면과 어두운 화면 모두 지원합니다.</p>
     <div class="fl-cards">{cards}</div>
   </section>
-  {'<section class="fl-mid"><span class="fl-num">06</span><h2>' + esc(extra[0]) +
+  {'<section class="fl-mid"><span class="fl-num">07</span><h2>' + esc(extra[0]) +
    '</h2><p>' + extra[1] + '</p></section>' if extra else ''}
   <section class="fl-mid">
-    <span class="fl-num">07</span><h2>제품 사양</h2>
+    <span class="fl-num">08</span><h2>제품 사양</h2>
     <table class="fl-spec">{spec}</table>
   </section>
   <section class="fl-end">
