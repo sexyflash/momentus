@@ -1,6 +1,6 @@
 /* MMT:BEGIN — 모멘터스 공용 셸(생성물). 손으로 고치지 말 것.
    정본: momentus/scripts/gen_site.py · 반영: momentus/scripts/sync_shell.py */
-:root{--mmt-gut:clamp(20px, 4vw, 56px);--mmt-maxw:1320px;--mmt-wm-font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Helvetica Neue","Segoe UI",sans-serif;--mmt-wm-fw:800;--mmt-wm-ls:-.035em;--mmt-wm-sm:16px;--mmt-wm-md:19px;--mmt-wm-lg:24px;--mmt-ink:#0b0c0e;--mmt-faint:#9aa0a8;--mmt-soft:#f4f5f7;--mmt-bar-h:44px;--mmt-bar2-h:64px;--mmt-fs-logo:22px;--mmt-fs-nav:14px;--mmt-fw-nav:600;--mmt-nav-gap:26px;--mmt-fs-cta:14px;--mmt-cta-pad:9px 18px;--mmt-cta-r:999px;--mmt-fs-base:16px;--mmt-lh-base:1.6;--mmt-ls-base:-0.015em;--mmt-fs-lead:18px;--mmt-lh-lead:1.65;--mmt-fs-sm:14px;--mmt-fs-h3:19px;--mmt-fs-h2:clamp(26px, 2.6vw, 34px);--mmt-lh-head:1.28;--mmt-ls-head:-0.035em;}
+:root{--mmt-gut:clamp(20px, 4vw, 56px);--mmt-maxw:1224px;--mmt-wm-font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Helvetica Neue","Segoe UI",sans-serif;--mmt-wm-fw:800;--mmt-wm-ls:-.035em;--mmt-wm-sm:16px;--mmt-wm-md:19px;--mmt-wm-lg:24px;--mmt-ink:#0b0c0e;--mmt-faint:#9aa0a8;--mmt-soft:#f4f5f7;--mmt-bar-h:44px;--mmt-bar2-h:64px;--mmt-fs-logo:22px;--mmt-fs-nav:14px;--mmt-fw-nav:600;--mmt-nav-gap:26px;--mmt-fs-cta:14px;--mmt-cta-pad:9px 18px;--mmt-cta-r:999px;--mmt-fs-base:16px;--mmt-lh-base:1.6;--mmt-ls-base:-0.015em;--mmt-fs-lead:18px;--mmt-lh-lead:1.65;--mmt-fs-sm:14px;--mmt-fs-h3:19px;--mmt-fs-h2:clamp(26px, 2.6vw, 34px);--mmt-lh-head:1.28;--mmt-ls-head:-0.035em;}
 /* 2026-08-23 재교정 — **검정으로 되돌린다.**
    밝게 바꿨더니 제품 사이트(마크·큐)의 흰 헤더와 위아래로 겹쳐 어느 게 무슨 메뉴인지
    구분이 안 됐다(대표: "색깔도 위아래가 비슷하니 이게 무슨 메뉴인지 모르겠고").
@@ -15,15 +15,19 @@ letter-spacing:normal;line-height:normal}
 /* 애플 글로벌 내비 실측(2026-08-23, 1440 뷰포트): .globalnav-content max-width 1024px,
    좌우 padding 22px, 바 높이 44px. 뷰포트 끝에 붙이면 넓은 화면에서 왼쪽만 붙고
    오른쪽이 휑해진다 — 가운데로 모으고 그 안에서 좌측 정렬한다. */
+/* ⚠️ **폭·시작선은 apex 든 제품이든 같아야 한다**(2026-08-26 대표 지적:
+   "일반과 결제 페이지 로고 위치가 떨어지니까 보기가 싫어").
+   종전엔 max-width 가 [data-v=apex] 에만 걸려 있어서, 제품 사이트에서는 이 띠만
+   전체폭 좌측 28px 에 붙고 그 아래 제품 헤더(1224px 가운데)와 248px 어긋났다.
+   색(검정/밝음)은 계속 갈라도 되지만 **자리는 갈리면 안 된다.** */
 #mmt-bar .mmt-in{display:flex;align-items:center;height:100%;gap:16px;
-padding:0 clamp(16px,2.2vw,28px)}
+max-width:1224px;margin:0 auto;padding:0 24px}
 /* 랜딩(apex)엔 아래에 제품 헤더가 없다 — 검정일 이유가 없고 가운데로 모은다.
    검정·좌측은 **제품 사이트**용이다: 그 아래 흰 제품 헤더가 오니 물러나 있어야 한다.
    (2026-08-23 대표: "검은색으로 하는 건 제품 페이지 들어갔을 때만") */
 #mmt-bar[data-v=apex]{background:rgba(250,250,252,.86);color:rgba(0,0,0,.78);
 backdrop-filter:saturate(1.8) blur(20px);-webkit-backdrop-filter:saturate(1.8) blur(20px);
 border-bottom:1px solid rgba(0,0,0,.07)}
-#mmt-bar[data-v=apex] .mmt-in{max-width:1224px;margin:0 auto;padding:0 24px}
 #mmt-bar[data-v=apex] .mmt-wm{color:#111}
 #mmt-bar[data-v=apex] .mmt-nav{margin:0 auto}
 #mmt-bar[data-v=apex] a.mmt-it{color:rgba(0,0,0,.78)}

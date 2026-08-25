@@ -2325,7 +2325,7 @@ with open("assets/site.css", "w", encoding="utf-8") as f:
 #      → 이제 마크업·CSS 를 제품 소스에 박는다(런타임 보정 0). 정본은 여기, 반영은 sync_shell.py.
 SHELL_TOKENS = {
     "--mmt-gut": "clamp(20px, 4vw, 56px)",
-    "--mmt-maxw": "1320px",
+    "--mmt-maxw": "1224px",
     # 워드마크 — 자리마다 크기·자간이 달랐다(바 15/-.03em, 푸터 18/기본, apex 헤더 또 다름).
     # 로고가 없을수록 워드마크가 로고 역할을 하니 규격을 한 곳에서 정한다(2026-08-23).
     "--mmt-wm-font": '"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,'
@@ -2373,15 +2373,19 @@ letter-spacing:normal;line-height:normal}
 /* 애플 글로벌 내비 실측(2026-08-23, 1440 뷰포트): .globalnav-content max-width 1024px,
    좌우 padding 22px, 바 높이 44px. 뷰포트 끝에 붙이면 넓은 화면에서 왼쪽만 붙고
    오른쪽이 휑해진다 — 가운데로 모으고 그 안에서 좌측 정렬한다. */
+/* ⚠️ **폭·시작선은 apex 든 제품이든 같아야 한다**(2026-08-26 대표 지적:
+   "일반과 결제 페이지 로고 위치가 떨어지니까 보기가 싫어").
+   종전엔 max-width 가 [data-v=apex] 에만 걸려 있어서, 제품 사이트에서는 이 띠만
+   전체폭 좌측 28px 에 붙고 그 아래 제품 헤더(1224px 가운데)와 248px 어긋났다.
+   색(검정/밝음)은 계속 갈라도 되지만 **자리는 갈리면 안 된다.** */
 #mmt-bar .mmt-in{display:flex;align-items:center;height:100%;gap:16px;
-padding:0 clamp(16px,2.2vw,28px)}
+max-width:1224px;margin:0 auto;padding:0 24px}
 /* 랜딩(apex)엔 아래에 제품 헤더가 없다 — 검정일 이유가 없고 가운데로 모은다.
    검정·좌측은 **제품 사이트**용이다: 그 아래 흰 제품 헤더가 오니 물러나 있어야 한다.
    (2026-08-23 대표: "검은색으로 하는 건 제품 페이지 들어갔을 때만") */
 #mmt-bar[data-v=apex]{background:rgba(250,250,252,.86);color:rgba(0,0,0,.78);
 backdrop-filter:saturate(1.8) blur(20px);-webkit-backdrop-filter:saturate(1.8) blur(20px);
 border-bottom:1px solid rgba(0,0,0,.07)}
-#mmt-bar[data-v=apex] .mmt-in{max-width:1224px;margin:0 auto;padding:0 24px}
 #mmt-bar[data-v=apex] .mmt-wm{color:#111}
 #mmt-bar[data-v=apex] .mmt-nav{margin:0 auto}
 #mmt-bar[data-v=apex] a.mmt-it{color:rgba(0,0,0,.78)}
@@ -2899,7 +2903,7 @@ SHELL_JS = """/* MOMENTUS shell.js — 1단 브랜드 바. 생성물(scripts/gen
     //   제품은 반드시 var(--mmt-*, 자기값) 폴백 형태로 쓴다 → 이 파일이 못 떠도 원래 모습 유지(fail-open).
     var TOKENS = {
       "--mmt-gut": "clamp(20px, 4vw, 56px)",   // 로고 좌표(거터) — 세 사이트 동일해야 로고가 한 줄에 선다
-      "--mmt-maxw": "1320px",                  // 2단 바 컨테이너 최대폭
+      "--mmt-maxw": "1224px",                  // 2단 바 컨테이너 최대폭 — 공용 바(.mmt-in)와 **같은 값**이어야 한다
       "--mmt-bar2-h": "64px",                  // 2단 제품 바 높이
       "--mmt-fs-logo": "22px",
       "--mmt-fs-nav": "14px",
