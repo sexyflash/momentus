@@ -1505,7 +1505,10 @@ aspect-ratio:1200/700;background:var(--soft)}
 transition:transform .6s var(--ease)}
 .nws-fcard:hover img{transform:scale(1.03)}
 .nws-fcard::after{content:"";position:absolute;left:0;right:0;bottom:0;height:66%;
-background:linear-gradient(to top,rgba(16,14,12,.66),rgba(16,14,12,.2) 46%,transparent)}
+background:linear-gradient(to top,rgba(16,14,12,.88),rgba(16,14,12,.5) 40%,
+rgba(16,14,12,.12) 72%,transparent)}
+/* ⚠️ 스크림을 약하게 두지 마라 — 마크 표지는 큰 색글자가 박힌 배너라 .66 으로는
+   제목이 안 읽혔다(2026-08-25 실측). 본진 표지처럼 차분한 그림엔 손해가 없다. */
 .nws-fcard .tx{position:absolute;left:0;right:0;bottom:0;z-index:2;
 padding:clamp(20px,2.6vw,34px);color:#fff}
 .nws-fcard .m{font-size:13px;font-weight:600;color:rgba(255,255,255,.78)}

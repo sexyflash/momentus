@@ -1560,7 +1560,10 @@ aspect-ratio:1200/700;background:var(--soft)}
 transition:transform .6s var(--ease)}
 .nws-fcard:hover img{transform:scale(1.03)}
 .nws-fcard::after{content:"";position:absolute;left:0;right:0;bottom:0;height:66%;
-background:linear-gradient(to top,rgba(16,14,12,.66),rgba(16,14,12,.2) 46%,transparent)}
+background:linear-gradient(to top,rgba(16,14,12,.88),rgba(16,14,12,.5) 40%,
+rgba(16,14,12,.12) 72%,transparent)}
+/* ⚠️ 스크림을 약하게 두지 마라 — 마크 표지는 큰 색글자가 박힌 배너라 .66 으로는
+   제목이 안 읽혔다(2026-08-25 실측). 본진 표지처럼 차분한 그림엔 손해가 없다. */
 .nws-fcard .tx{position:absolute;left:0;right:0;bottom:0;z-index:2;
 padding:clamp(20px,2.6vw,34px);color:#fff}
 .nws-fcard .m{font-size:13px;font-weight:600;color:rgba(255,255,255,.78)}
@@ -1605,6 +1608,27 @@ padding:8px 15px;border-radius:99px;background:var(--soft);color:var(--gray)}
 }
 """
 CSS += NEWS_CSS
+
+# 인사이트 목록 규칙 중 **스포크와 공유할 것**만 추린다. 값은 NEWS_CSS 하나가 원본이고
+# 여기서는 고르기만 한다 — 복사본을 만들지 않는다(2026-08-25).
+_NWS_SHARE = ('.nws', '.nws-head', '.nws-feat', '.nws-fcard',
+              '.nws-sec', '.nws-sec-h', '.nws-row', '.nws-rail', '.nws-empty')
+
+
+def _pick_rules(css, roots):
+    out = []
+    for m in re.finditer(r'(?m)^(\.[a-zA-Z][\w -]*(?:::?[a-zA-Z-]+)?(?:\s+[.a-zA-Z][\w-]*)?)\{([^}]*)\}', css):
+        sel = m.group(1).strip()
+        base = sel.split(':')[0].split(' ')[0]
+        if base in roots:
+            out.append(m.group(0))
+    for m in re.finditer(r'@media[^{]*\{(?:[^{}]*\{[^}]*\})+[^{}]*\}', css):
+        if any(r + '{' in m.group(0) or r + ',' in m.group(0) or r + ' ' in m.group(0) for r in roots):
+            out.append(m.group(0))
+    return "\n".join(out)
+
+
+NEWS_SHARED = _pick_rules(NEWS_CSS, _NWS_SHARE)
 
 POST_CSS = """
 /* ═══ 글 상세 — mark.the-moment.us/insights/ 구조 실측 이식(2026-08-23) ══════
@@ -2495,33 +2519,10 @@ width:min(600px,calc(100vw - 24px))}}
 SHELL_POST_CSS = """
 /* ── 인사이트 목록 = 전 사이트 한 벌 ────────────────────────────────
    같은 글이 본진과 마크에 둘 다 보이는데 카드가 서로 달랐다(2026-08-24 대표 지적).
-   ⚠️ 각 저장소에서 카드 CSS 를 다시 쓰지 마라 — 그 순간 다시 두 벌이 된다.
-   마크는 마크업만 들고 있고 모양은 전부 여기서 온다. */
-.nws-feat{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2.2vw,32px)}
-.nws-fcard{position:relative;display:block;border-radius:28px;overflow:hidden;
-aspect-ratio:1200/700;background:var(--soft)}
-.nws-fcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-transition:transform .6s var(--ease)}
-.nws-fcard:hover img{transform:scale(1.03)}
-.nws-fcard::after{content:"";position:absolute;left:0;right:0;bottom:0;height:66%;
-background:linear-gradient(to top,rgba(16,14,12,.66),rgba(16,14,12,.2) 46%,transparent)}
-.nws-fcard .tx{position:absolute;left:0;right:0;bottom:0;z-index:2;
-padding:clamp(20px,2.6vw,34px);color:#fff}
-.nws-fcard .m{font-size:13px;font-weight:600;color:rgba(255,255,255,.78)}
-.nws-fcard h2{margin-top:9px;font-size:clamp(18px,1.9vw,25px);font-weight:800;
-letter-spacing:-.04em;line-height:1.35}
-.nws-sec{margin-top:clamp(56px,7vw,104px)}
-.nws-sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
-padding-bottom:14px;border-bottom:1px solid var(--line)}
-.nws-sec-h h2{font-size:clamp(20px,2vw,28px);font-weight:800;letter-spacing:-.04em;color:var(--ink)}
-.nws-row{display:grid;grid-template-columns:1fr 2.6fr;gap:clamp(20px,3.4vw,48px);
-padding-top:clamp(26px,3.4vw,44px)}
-.nws-rail{display:flex;align-items:center;gap:9px;font-size:14.5px;font-weight:600;
-color:var(--ink);align-self:start}
-.nws-rail::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink);flex:0 0 auto}
-.nws-empty{padding:40px 0;color:var(--faint);font-size:15px}
-@media(max-width:960px){.nws-grid,.dg-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:640px){.nws-grid,.dg-grid{grid-template-columns:1fr;gap:34px}}
+   ⚠️ 여기에 값을 **복붙하지 마라**. 원본은 NEWS_CSS 하나다 — 사본을 두면
+     한쪽만 고쳐져서 다시 두 벌이 된다(스크림 밝기가 그렇게 갈릴 뻔했다).
+     아래 {NEWS_SHARED} 자리에 그 원본이 그대로 들어간다. */
+{NEWS_SHARED}
 
 /* ── 글 페이지 공통 간격·크기 (목록 = 상세) ─────────────────────────────
    2026-08-24 대표: "목록은 상단 여백이 있는데 상세로 가면 굉장히 좁다.
@@ -2583,7 +2584,9 @@ def shell_css_block():
     toks = "".join(f"{k}:{v};" for k, v in SHELL_TOKENS.items())
     return ("/* MMT:BEGIN — 모멘터스 공용 셸(생성물). 손으로 고치지 말 것.\n"
             "   정본: momentus/scripts/gen_site.py · 반영: momentus/scripts/sync_shell.py */\n"
-            f":root{{{toks}}}\n{SHELL_BAR_CSS}\n{SHELL_POST_CSS}\n/* MMT:END */")
+            f":root{{{toks}}}\n{SHELL_BAR_CSS}\n"
+            + SHELL_POST_CSS.replace("{NEWS_SHARED}", NEWS_SHARED)
+            + "\n/* MMT:END */")
 
 
 # ── 법적 표기(전자상거래 6종) — **여기가 정본이다.** ────────────────────────────
