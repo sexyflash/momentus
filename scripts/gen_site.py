@@ -2061,6 +2061,11 @@ BIZ = dict(
     privacy_officer="강형모",
     updated="2026. 07. 28",
 )
+# 🔴 전화번호는 통신판매업 표시사항이라 **뺄 수 없다.** 대신 번호가 나오는 자리마다
+#    "전화 상담은 안 한다"를 **번호와 한 덩어리로, 굵게** 붙인다(2026-08-26 대표 지시).
+#    번호만 덩그러니 있으면 전화가 오고, 안 받으면 그게 더 나쁜 경험이 된다.
+#    ⚠️ 번호가 보이는 모든 페이지에 적용한다 — 여기 한 곳만 고치면 생성물 전체가 따라온다.
+BIZ["tel_html"] = f"<b>전화 상담({BIZ['tel']})은 운영하지 않습니다</b>"
 
 # 푸터 제품·도구 목록도 매니페스트 파생 — 하드코딩 목록은 2026-07-27 폐기(새 제품 = 한 줄).
 _FT_SPOKES = "".join(f'<a href="{purl(s)}">{P[s]["name"]}</a>' for s in SPOKES)
@@ -2075,7 +2080,7 @@ FOOTER = f"""<footer class="site">
   <div><h4>모멘터스</h4><a href="/insights/">인사이트</a><a href="/about/">소개</a><a href="/inquiry/">문의하기</a><a href="/how-to-pay/">결제 안내</a><a href="/legal/terms/">이용약관</a><a href="/legal/privacy/">개인정보처리방침</a><a href="/legal/refund/">환불 규정</a></div>
   <div class="biz">
     <span>{BIZ['name']}</span><span>대표 {BIZ['ceo']}</span><span>사업자등록번호 {BIZ['reg']}</span><span>통신판매업신고 {BIZ['mail_order']}</span>
-    <span>{BIZ['addr']}</span><span>{BIZ['tel']}</span><span>{BIZ['email']}</span><span>개인정보보호책임자 {BIZ['privacy_officer']}</span>
+    <span>{BIZ['addr']}</span><span>{BIZ['tel_html']}</span><span>{BIZ['email']}</span><span>개인정보보호책임자 {BIZ['privacy_officer']}</span>
     <span>고객 문의는 이메일로만 받습니다. 이메일로 주시면 가장 빠르게 도와드릴 수 있습니다.</span>
   </div>
   <div class="legal"><span>© 2026 모멘터스</span><span>the-moment.us</span></div>
@@ -2645,7 +2650,7 @@ def shell_legal_html(sep="<br>"):
         #    [email protected] 로 바뀌어 **로봇이 못 읽었다**(2026-08-08 실측). 법적 고지의
         #    연락처이고 GEO(AI 답변) 대상이라 읽혀야 한다. 대시보드를 끄지 않고 이 주석으로 푼다
         #    — 설정에 기대면 나중에 누가 켜도 모른다. 코드가 스스로 보장하게 둔다.
-        f"{BIZ['addr']} · {BIZ['tel']} · <!--email_off-->{BIZ['email']}<!--/email_off-->",
+        f"{BIZ['addr']} · {BIZ['tel_html']} · <!--email_off-->{BIZ['email']}<!--/email_off-->",
         "고객 문의는 이메일로만 받습니다. 이메일로 주시면 가장 빠르게 도와드릴 수 있습니다.",
         ('<a href="https://the-moment.us/legal/terms/" target="_blank" rel="noopener">이용약관</a> · '
          '<a href="https://the-moment.us/legal/privacy/" target="_blank" rel="noopener">개인정보처리방침</a> · '
