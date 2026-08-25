@@ -138,26 +138,49 @@
 ## E. 검증 명령 (뭘 하든 마지막에)
 
 ```bash
-# 전 사이트 패밀리바·목록·넘침 한 번에
 cd ~/Projects/momentus && ~/slack-bot/.venv/bin/python - <<'EOF'
 from playwright.sync_api import sync_playwright
 import time
-T=[("본진","https://the-moment.us/insights/"),("마크","https://mark.the-moment.us/insights/"),
-   ("큐","https://cue.the-moment.us/insights"),("플래너","https://notes.the-moment.us/insights/"),
-   ("컨텍스트","https://kontext.the-moment.us/insights"),("빈방","https://bb.the-moment.us/")]
+# (이름, URL, 글 카드 셀렉터 | None=인사이트 없는 사이트)
+#   ⚠️ 사이트마다 카드 클래스가 다르다. .nws-card 만 세면 플래너(.pcard)·컨텍스트(Tailwind)가
+#      글이 있는데도 0 으로 찍혀 "죽어도 지금과 같은 0" 이 된다 — 그래서 사이트별로 못 박는다.
+T=[("본진","https://the-moment.us/insights/",".nws-card"),
+   ("마크","https://mark.the-moment.us/insights/",".nws-card"),
+   ("큐","https://cue.the-moment.us/insights",".dg-card"),
+   ("플래너","https://notes.the-moment.us/insights/","a.pcard"),
+   ("컨텍스트","https://kontext.the-moment.us/insights",'a[href^="/blog/"]'),
+   ("빈방","https://bb.the-moment.us/",None)]
 with sync_playwright() as pw:
     b=pw.chromium.launch(); p=b.new_context(viewport={'width':1440,'height':1000},
         extra_http_headers={'Cache-Control':'no-cache'}).new_page()
-    for n,u in T:
-        r=p.goto(u+('?z=%d'%time.time()), wait_until='networkidle'); p.wait_for_timeout(1200)
-        d=p.evaluate("""()=>({bar:!!document.querySelector('#mmt-bar'),
-          card:document.querySelectorAll('.nws-card').length,
-          ovf:document.documentElement.scrollWidth-document.documentElement.clientWidth,
-          broken:[...document.querySelectorAll('img')].filter(i=>i.complete&&!i.naturalWidth).length})""")
-        print(f"{n:8} {r.status} bar={d['bar']} card={d['card']:>3} 넘침={d['ovf']} 깨짐={d['broken']}")
+    bad=0
+    for n,u,sel in T:
+        try:
+            r=p.goto(u+('?z=%d'%time.time()), wait_until='networkidle'); p.wait_for_timeout(1200)
+            d=p.evaluate("""(sel)=>({bar:!!document.querySelector('#mmt-bar'),
+              card: sel? document.querySelectorAll(sel).length : -1,
+              ovf:document.documentElement.scrollWidth-document.documentElement.clientWidth,
+              broken:[...document.querySelectorAll('img')].filter(i=>i.complete&&!i.naturalWidth).length})""", sel)
+            c = "—" if d['card']<0 else str(d['card'])
+            flag = ""
+            if d['ovf']>0 or d['broken']>0 or r.status!=200: flag=" ← 확인"; bad+=1
+            if sel and d['card']==0: flag=" ← 글 0건! 목록이 비었다"; bad+=1
+            print(f"{n:6} {r.status} bar={str(d['bar']):5} card={c:>3} 넘침={d['ovf']} 깨짐={d['broken']}{flag}")
+        except Exception as e:
+            print(f"{n:6} ERROR {str(e)[:70]}"); bad+=1
     b.close()
+    print(f"\n{'문제 없음' if not bad else f'확인 필요 {bad}건'}")
 EOF
 ```
 
 **⚠️ 확인은 반드시 `Cache-Control: no-cache` + 고유 쿼리로.** 클라우드플레어가 301 과 HTML 을
 캐시해서, 고친 게 안 고쳐진 것처럼 보이는 사고가 이 작업에서만 세 번 났다.
+
+**⚠️ 2026-08-25 고침 — 종전 스크립트는 세 사이트를 못 재고 있었다.** `.nws-card` 하나만 세서
+**플래너(`a.pcard`)와 컨텍스트(Tailwind, 고정 클래스 없음)가 글이 있는데도 `card=0`** 으로 찍혔다.
+즉 *그 목록이 통째로 죽어도 지금과 똑같은 0* 이라 **검사가 아니라 장식**이었다.
+→ 사이트별 셀렉터를 표에 못 박고, 셀렉터가 있는데 0 이면 **"글 0건!"** 로 잡는다.
+인사이트가 없는 사이트(빈방)는 `None` 으로 두어 `—` 로 찍는다 — 0 과 구분되어야 한다.
+**새 사이트를 추가하면 그 사이트의 카드 셀렉터도 같이 넣어라.** 안 넣으면 조용히 0 이다.
+
+**8/25 실측**: 본진 75 · 마크 96 · 큐 37 · 플래너 1 · 컨텍스트 3 · 빈방 — · 넘침 0 · 깨짐 0.
