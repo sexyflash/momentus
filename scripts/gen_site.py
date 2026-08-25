@@ -84,7 +84,8 @@ padding:6px 12px;border-radius:99px;background:var(--soft2);color:var(--ink2);wh
 *{box-sizing:border-box}
 body{margin:0;word-break:keep-all;overflow-wrap:break-word;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}h1,h2,h3,h4,p{margin:0;font-weight:400}img{display:block;max-width:100%}
-.gnb{position:fixed;inset:0 0 auto;z-index:100;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--gut);background:rgba(255,255,255,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+/* .gnb 의 gap·padding 은 아래 '브랜드 바' 절이 정한다(크롬 층 전용 여백) — 여기 적지 마라 */
+.gnb{position:fixed;inset:0 0 auto;z-index:100;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .gnb .wm{font-size:20px;font-weight:800;letter-spacing:-.02em}
 .gnb .lk{display:flex;align-items:center;gap:26px;height:56px}
 .gnb .lk>a,.gnb .hasdrop>a{font-size:14px;color:var(--gray);font-weight:500}
@@ -518,9 +519,6 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
 .vc-item.big{grid-column:1 / -1}
 .vc-item[hidden]{display:none}
 
-.vc-thumb--g{background:linear-gradient(135deg,#e8eefc,#f6f7fb)}
-.vc-thumb--g.g2{background:linear-gradient(135deg,#e9f6ee,#f6faf7)}
-.vc-thumb--g.g3{background:linear-gradient(135deg,#fdeee6,#fbf7f4)}
 
 .vc-item a{display:block}
 .vc-thumb{width:100%;aspect-ratio:1;overflow:hidden;background:#F4F4F4}
@@ -1790,11 +1788,6 @@ line-height:1.2;color:var(--ink)}
 .fl-mid p{margin:14px auto 0;font-size:16.5px;line-height:1.75;color:var(--gray);max-width:46ch}
 .fl-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,20px);
 margin-top:clamp(26px,3.4vw,44px)}
-.fl-card{background:var(--soft);border-radius:20px;overflow:hidden;text-align:left}
-.fl-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block}
-.fl-card .cap{padding:16px 18px 20px}
-.fl-card b{display:block;font-size:15.5px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
-.fl-card i{display:block;font-style:normal;font-size:13.5px;color:var(--gray);margin-top:5px}
 
 /* ── 연출 = 애플 macbook-air 식 **큰 장면 블록** ─────────────────────────
    실측(apple.com/macbook-air): 미디어 블록 696~980px · 라운드 28px · 한 화면에 하나,
@@ -1857,6 +1850,8 @@ padding:7px;box-shadow:0 22px 44px -24px rgba(0,0,0,.5)}
 .fl-card .fr img{width:100%;aspect-ratio:1248/1972;object-fit:cover;object-position:top;
 border-radius:20px;display:block}
 .fl-card .cap{padding:20px 2px 22px}
+.fl-card b{display:block;font-size:15.5px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.fl-card i{display:block;font-style:normal;font-size:13.5px;color:var(--gray);margin-top:5px}
 
 /* 사양표 */
 .fl-spec{margin-top:clamp(26px,3.4vw,44px);width:100%;border-collapse:collapse;
@@ -1906,14 +1901,56 @@ def _strip_at_blocks(css):
     return "".join(out)
 
 
+def _decl_props(block):
+    """선언 블록에서 프로퍼티 이름만 뽑는다. 괄호 안 세미콜론·콜론(url·gradient)은 건너뛴다."""
+    props, buf, depth = [], [], 0
+    for ch in block:
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth = max(0, depth - 1)
+        if ch == ";" and depth == 0:
+            props.append("".join(buf)); buf = []
+        else:
+            buf.append(ch)
+    props.append("".join(buf))
+    out = []
+    for d in props:
+        name = d.split(":", 1)[0].strip().lower()
+        if name:
+            out.append(name)
+    return out
+
+
 def _warn_dup_selectors(css):
+    """같은 클래스가 두 번 나오는 것만으로는 경고하지 않는다 — **같은 프로퍼티가 겹칠 때만**.
+
+    왜 좁혔나 (2026-08-25): 종전엔 '같은 선택자가 2곳'이면 전부 경고해서, 프로퍼티가 하나도
+    안 겹치는 의도된 분할(.gnb 는 크롬 층 여백을 따로 두고, .ap-qa 는 max-width 만 따로 준다)까지
+    매 빌드마다 울렸다. 경고가 상시로 켜져 있으면 그건 신호가 아니라 배경 소음이 되고,
+    **진짜 충돌이 섞여 들어와도 안 보인다.**
+
+    잡아야 할 것은 '앞엣것을 고쳐도 안 먹는' 상태다 = 같은 프로퍼티를 뒤에서 다시 선언한 경우.
+    값이 같아도 경고한다 — 앞을 고치면 여전히 안 먹으므로 함정은 똑같다.
+    순수 문자열 파싱이라 자연어 판단이 아니다(룰 #1 무관). 비파괴 — 경고만 찍는다.
+    """
     import collections
     seen = collections.defaultdict(list)
     for m in re.finditer(r'(^|[}\n])\s*(\.[a-zA-Z][\w-]*)\s*\{([^}]*)\}', _strip_at_blocks(css)):
         seen[m.group(2)].append(m.group(3).strip())
-    dups = {k: v for k, v in seen.items() if len(v) > 1 and len(set(v)) > 1}
-    for k, v in sorted(dups.items()):
-        print(f"  ⚠️ 클래스 중복 정의: {k} ({len(v)}곳) — 뒤엣것이 이깁니다")
+    dups = {}
+    for k, blocks in sorted(seen.items()):
+        if len(blocks) < 2:
+            continue
+        counts = collections.Counter()
+        for b in blocks:
+            counts.update(set(_decl_props(b)))
+        clash = sorted(p for p, n in counts.items() if n > 1)
+        if not clash:
+            continue                      # 프로퍼티가 안 겹친다 = 의도된 분할. 조용히 넘어간다
+        dups[k] = blocks
+        head = ", ".join(clash[:4]) + (" 외 %d개" % (len(clash) - 4) if len(clash) > 4 else "")
+        print(f"  ⚠️ 클래스 중복 정의: {k} ({len(blocks)}곳) — 겹치는 프로퍼티: {head}. 앞엣것을 고쳐도 안 먹습니다")
     return dups
 
 
