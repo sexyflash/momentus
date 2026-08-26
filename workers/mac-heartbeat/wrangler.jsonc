@@ -1,0 +1,46 @@
+{
+  "name": "mac-heartbeat",
+  "main": "index.js",
+  "compatibility_date": "2026-07-13",
+
+  // 수동 확인용 주소(GET / → 지금 상태 JSON). 상태값 말고는 아무것도 안 내보낸다.
+  "workers_dev": true,
+
+  // 감시를 Cloudflare 에 두는 이유: **맥 밖이어야 하기 때문이다.**
+  // 2026-08-26 사고 때 맥의 로그인 세션이 통째로 죽어서 슬랙봇·launchd·로컬 워치독이
+  // 전부 같이 죽었다. 맥 위의 어떤 감시도 그 사고를 못 알린다.
+  //
+  // 💰 과금: 크론 96회/일 + 하트비트 144회/일 = 240 요청/일.
+  //    Workers 무료 한도 100,000회/일 의 0.24%. KV 쓰기 144/일(무료 1,000/일).
+  //    🚫 주기를 분 단위로 낮추지 마라. 탐지가 15분에서 1분으로 빨라지는 대가로
+  //       KV 쓰기 한도(1,000/일)가 먼저 터진다.
+  //
+  // ⚠️ 크론이 비어 있는 이유 (2026-08-26): Workers **무료 플랜은 계정당 크론 5개**인데
+  //    이미 5개가 차 있다(momentus-supabase-watchdog / nightwork-review /
+  //    nightwork-review-production / planner-factory / teamai-keepalive).
+  //    그래서 지금은 momentus-supabase-watchdog 의 매시 크론이 이 워커의
+  //    `/?run=1` 을 대신 쳐 준다 → 탐지 지연 최대 60분.
+  //    슬롯이 비면 아래 한 줄을 되살려라 → 탐지 15분.
+  //      "crons": ["*/15 * * * *"]
+  "triggers": {
+    "crons": []
+  },
+
+  "kv_namespaces": [
+    { "binding": "HEARTBEAT", "id": "910ef28ceb15451fbcfff8259db72cfa" }
+  ],
+
+  "vars": {
+    // 마지막 신호가 이 분수보다 오래되면 죽은 것으로 본다.
+    // 맥은 10분마다 신호를 보낸다 → 2회 연속 놓쳐야 걸린다(일시적 네트워크 끊김엔 안 걸림).
+    "STALE_MIN": 25,
+    // 사망 알림에 멘션할 사람 — 채널 메시지는 폰 푸시가 안 뜰 수 있지만 멘션은 뜬다.
+    "OWNER_USER_ID": "U04TFS0MKK5"
+  },
+
+  // 시크릿(= wrangler secret put 으로 넣는다. 이 파일에 값 박지 마라):
+  //   BEAT_SECRET      맥만 아는 공유 비밀. 없으면 /beat 가 전부 403.
+  //   SLACK_BOT_TOKEN  xoxb-...  ops(조은정 CD) 봇 토큰
+  //   SLACK_CHANNEL    C0B4CQDHZCL (#운영실)
+  "observability": { "enabled": true }
+}

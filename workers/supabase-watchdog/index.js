@@ -24,6 +24,16 @@ const TIMEOUT_MS = 10_000;
 export default {
   async scheduled(_event, env, ctx) {
     ctx.waitUntil(runCheck(env));
+    // 곁다리 태우기 — 맥미니 생존 감시견(mac-heartbeat)에는 **자기 크론이 없다.**
+    // Workers 무료 플랜이 계정당 크론 5개인데 이미 5개가 차 있어서(2026-08-26),
+    // 이미 도는 이 크론이 그 워커의 검사를 대신 눌러 준다. 요청 1회/시간뿐이다.
+    // 🔒 반드시 격리한다 — 저쪽이 어떻게 실패하든 Supabase 감시는 그대로 돌아야 한다.
+    if (env.HEARTBEAT_TICK_URL) {
+      ctx.waitUntil(
+        fetch(env.HEARTBEAT_TICK_URL, { signal: AbortSignal.timeout(TIMEOUT_MS) })
+          .catch(() => {}),
+      );
+    }
   },
 
   // 수동 확인용. GET /  → 지금 상태를 JSON 으로.  GET /?test=1 → 슬랙 배선 점검 1통.
