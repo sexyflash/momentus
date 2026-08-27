@@ -1650,21 +1650,8 @@ line-height:1.22;color:var(--ink);text-wrap:balance}
 /* 부제는 제목 바로 밑이 아니라 **표지 아래**에 — 큰 글씨가 연달아 두 덩이면 안 읽힌다. */
 .pst-sub{margin-top:22px;font-size:clamp(16px,1.35vw,19px);line-height:1.72;color:var(--gray);
 letter-spacing:-.02em;padding-left:16px;border-left:3px solid var(--line)}
-.pst-grid{display:grid;grid-template-columns:200px minmax(0,1176px) 200px;
-gap:0 32px;align-items:start;max-width:1688px;margin:0 auto;padding:0 24px;justify-content:center}
-.pst-toc{grid-column:1;grid-row:2;align-self:start;position:sticky;top:64px}
-.pst-toc .rt{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:12px}
-.pst-toc a{display:block;padding:7px 0 7px 14px;border-left:2px solid var(--line);
-font-size:13.5px;line-height:1.5;color:var(--gray)}
-.pst-toc a:hover{color:var(--ink);border-left-color:var(--ink)}
-.pst-main{grid-column:2;grid-row:2;min-width:0;padding-top:var(--pg-head-gap)}
-.pst-aside{grid-column:3;grid-row:2;align-self:start;position:sticky;top:64px}
-.pst-aside .rt{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:14px}
-.pst-aside a{display:flex;gap:11px;padding:9px 0;align-items:flex-start}
-.pst-aside .th{width:56px;height:42px;flex:0 0 auto;border-radius:8px;overflow:hidden;background:var(--soft)}
-.pst-aside .th img{width:100%;height:100%;object-fit:cover;display:block}
-.pst-aside b{font-size:13px;font-weight:600;line-height:1.45;color:var(--ink)}
-.pst-aside a:hover b{color:var(--brand-cta)}
+/* 🚫 그리드·목차·이어서읽기 규칙을 여기 다시 적지 마라 — 정본은 SHELL_POST_CSS 의
+   '글 상세 레이아웃' 한 곳이고, shell.css 가 이 파일보다 뒤에 실린다(2026-08-27 통합). */
 /* 지은이·날짜·공유는 글을 다 읽은 뒤에 온다. 읽기 전에 필요한 정보가 아니다. */
 .pst-meta{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
 margin-top:clamp(34px,4vw,54px);padding-top:22px;border-top:1px solid var(--line)}
@@ -1705,12 +1692,7 @@ font-size:13.5px;font-weight:600;color:var(--gray)}
 .pst-back{display:inline-flex;align-items:center;height:50px;padding:0 30px;border-radius:99px;
 background:var(--ink);color:#fff;font-size:15.5px;font-weight:700;letter-spacing:-.02em}
 .pst-back:hover{opacity:.86}
-/* 레일을 본문 바깥에 세울 자리(1640+48)가 없으면 접는다 — 본문 폭은 그대로 1176. */
-@media(max-width:1700px){
-  .pst-grid{grid-template-columns:minmax(0,1176px)}
-  .pst-toc,.pst-aside{display:none}
-  .pst-top,.pst-main,.pst-end{grid-column:1}
-}
+@media(max-width:1120px){.pst-end{grid-column:1}}
 """
 CSS += POST_CSS
 
@@ -2065,7 +2047,9 @@ BIZ = dict(
 #    "전화 상담은 안 한다"를 **번호와 한 덩어리로, 굵게** 붙인다(2026-08-26 대표 지시).
 #    번호만 덩그러니 있으면 전화가 오고, 안 받으면 그게 더 나쁜 경험이 된다.
 #    ⚠️ 번호가 보이는 모든 페이지에 적용한다 — 여기 한 곳만 고치면 생성물 전체가 따라온다.
-BIZ["tel_html"] = f"<b>전화 상담({BIZ['tel']})은 운영하지 않습니다</b>"
+# 굵게 제거(2026-08-27 대표 지시). pay(notes/web/src/pay_app.js BIZ.telHtml)와 같은 문장이어야
+# 한다 — PG 심사에서 두 사이트 표시가 다르면 잡힌다. 바꿀 땐 반드시 양쪽 다.
+BIZ["tel_html"] = f"전화 상담({BIZ['tel']})은 운영하지 않습니다"
 
 # 푸터 제품·도구 목록도 매니페스트 파생 — 하드코딩 목록은 2026-07-27 폐기(새 제품 = 한 줄).
 _FT_SPOKES = "".join(f'<a href="{purl(s)}">{P[s]["name"]}</a>' for s in SPOKES)
@@ -2618,11 +2602,78 @@ letter-spacing:-.035em;margin-top:var(--art-h2-mt)}
 .post-top{padding-top:var(--pg-top) !important}
 .post-h1{font-size:var(--pg-h1-post) !important}
 .post-sub{margin-top:var(--pg-sub-gap) !important}
-.post-grid{margin-top:var(--pg-head-gap) !important}
 .nws-grid,.dg-grid{display:grid;grid-template-columns:repeat(3,1fr);
 gap:clamp(34px,4.6vw,64px) clamp(18px,2.6vw,36px)}
 @media(max-width:960px){.nws-grid,.dg-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.nws-grid,.dg-grid{grid-template-columns:1fr;gap:34px}}
+
+/* ── 글 상세 레이아웃 = 전 사이트 한 벌 (2026-08-27 대표 지시) ──────────────────
+   왼쪽에 목차, 가운데 본문, **오른쪽 레일은 폐기**. 다 읽은 사람에게 주는
+   '이어서 읽기'는 글 끝 카드로 내린다(토스 /business/tosspay 의 '더 읽어보기' 자리).
+   왜 여기냐 — 실측(2026-08-27) 세 제품이 다 달랐다:
+     큐 200/712/gap32 · 본진 200/1176/gap32 · 마크 240/maxw/gap56.
+     같은 인사이트 목록에서 들어갔는데 글마다 화면이 달랐다.
+   ⚠️ 제품 저장소에 이 값을 다시 적지 마라 — 적는 순간 또 세 벌이 된다.
+     제품 CSS 가 이 블록보다 **뒤에** 실리므로, 제품 쪽 같은 규칙은 지워야 이게 이긴다.
+   ⚠️ 목차↔본문 간격은 고정값이 아니라 화면에 따라 벌어진다(32px 고정이 붙어 보인 원인). */
+:root{--art-rail:200px;--art-gap:clamp(40px,5vw,88px);--art-col:760px;--art-shell:1560px;--art-toc-top:80px}
+.art-grid,.pst-grid,.post-grid{display:grid;
+grid-template-columns:minmax(180px,1fr) minmax(0,var(--art-col)) minmax(180px,1fr);
+column-gap:var(--art-gap);align-items:start;max-width:var(--art-shell);margin:0 auto;
+padding-inline:24px;justify-content:center}
+.art-top,.pst-top,.post-top{grid-column:2;grid-row:1;padding:var(--pg-top) 0 0}
+.art-main,.pst-main,.post-main{grid-column:2;grid-row:2;min-width:0;margin-top:var(--pg-head-gap)}
+/* 오른쪽 레일은 안 쓴다 — 마크업이 남아 있어도 화면에서 사라지게 둔다(제품별 철거 시차 흡수). */
+.art-aside,.pst-aside,.post-aside{display:none}
+.art-toc,.pst-toc,.post-toc{grid-column:1;grid-row:2;width:var(--art-rail);justify-self:end;
+align-self:start;position:sticky;top:var(--art-toc-top);margin-top:var(--pg-head-gap)}
+.art-toc .rail-title,.pst-toc .rt,.post-toc .rail-title{font-size:12px;font-weight:800;
+letter-spacing:.04em;color:var(--dim,var(--mmt-faint,#9aa0a8));margin:0 0 12px}
+.art-toc ul,.pst-toc ul,.post-toc ul{list-style:none;margin:0;padding:0;border:0}
+/* 두 줄까지만 — 긴 제목이 세 줄씩 감기면 본문 옆에 회색 문단이 하나 더 붙은 꼴이 된다. */
+.art-toc li a,.pst-toc a,.post-toc li a{display:-webkit-box;-webkit-line-clamp:2;
+-webkit-box-orient:vertical;overflow:hidden;padding:7px 0 7px 14px;
+border-left:2px solid var(--line,#e7e8ec);font-size:13.5px;line-height:1.5;
+color:var(--gray,var(--ink-2,#4e5968));text-decoration:none;margin:0}
+.art-toc li a:hover,.pst-toc a:hover,.post-toc li a:hover{color:var(--ink,var(--mmt-ink,#0b0c0e));
+border-left-color:var(--ink,var(--mmt-ink,#0b0c0e))}
+.art-toc li a.on,.pst-toc a.on,.post-toc li a.on{color:var(--ink,var(--mmt-ink,#0b0c0e));
+font-weight:700;border-left-color:var(--acc,var(--brand-cta,var(--pt,#3182f6)))}
+/* 좁은 화면에선 레일이 사라진다 — 예전엔 그대로 없어져 모바일은 목차를 아예 못 봤다. 접힘으로 산다. */
+.art-toc-m{display:none;margin:22px 0 0;border:1px solid var(--line,#e7e8ec);
+border-radius:14px;background:var(--soft,var(--mmt-soft,#f4f5f7))}
+.art-toc-m>summary{list-style:none;cursor:pointer;padding:13px 16px;font-size:14px;
+font-weight:800;color:var(--ink,var(--mmt-ink,#0b0c0e))}
+.art-toc-m>summary::-webkit-details-marker{display:none}
+.art-toc-m>summary::after{content:"+";float:right;color:var(--dim,var(--mmt-faint,#9aa0a8));font-weight:700}
+.art-toc-m[open]>summary::after{content:"-"}
+.art-toc-m ul{list-style:none;margin:0;padding:0 16px 14px}
+.art-toc-m li a{display:block;padding:8px 0;font-size:14.5px;line-height:1.5;
+color:var(--gray,var(--ink-2,#4e5968));text-decoration:none}
+/* 이어서 읽기 — 글 끝 카드 3장. 카드 규격은 목록 카드와 같은 자를 쓴다.
+   ⚠️ 카드 안 요소의 margin 은 **네 방향을 다 적는다**. 한쪽만 적으면 제품이 이미 쓰는 같은 이름
+     (마크의 .cat = margin-bottom clamp(40,6vw,76))이 새어 들어와 카드가 세로로 벌어진다(2026-08-27 실측). */
+.art-next{margin:44px 0 0;padding-top:28px;border-top:1px solid var(--line,#e7e8ec)}
+.art-next-t{font-size:15px;font-weight:800;letter-spacing:-.02em;
+color:var(--ink,var(--mmt-ink,#0b0c0e));margin:0 0 20px}
+.art-next-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0 clamp(18px,2.4vw,36px)}
+.art-next-card{display:block;text-decoration:none}
+.art-next-card .th{display:block;width:100%;aspect-ratio:1200/630;border-radius:16px;
+overflow:hidden;background:var(--soft,var(--mmt-soft,#f4f5f7));margin:0}
+.art-next-card .th img{width:100%;height:100%;object-fit:cover;display:block;
+transition:transform .55s cubic-bezier(.2,.7,.3,1)}
+.art-next-card:hover .th img{transform:scale(1.04)}
+.art-next-card .cat{margin:12px 0 0;font-size:13px;color:var(--dim,var(--mmt-faint,#9aa0a8))}
+.art-next-card h3{margin:8px 0 0;font-size:16px;font-weight:700;letter-spacing:-.03em;
+line-height:1.45;color:var(--ink,var(--mmt-ink,#0b0c0e));display:-webkit-box;
+-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media(max-width:1120px){
+.art-grid,.pst-grid,.post-grid{grid-template-columns:minmax(0,var(--art-col))}
+.art-top,.pst-top,.post-top,.art-main,.pst-main,.post-main{grid-column:1}
+.art-toc,.pst-toc,.post-toc{display:none}
+.art-main>.art-toc-m,.pst-main>.art-toc-m,.post-main>.art-toc-m{display:block}}
+@media(max-width:860px){.art-next-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.art-next-grid{grid-template-columns:1fr;gap:26px}}
 """
 
 def shell_css_block():
@@ -3459,23 +3510,34 @@ for i, slug in enumerate(PORDER):
                    for t in ps["tags"] if t in TAG_BY_LABEL)
     # 목차 = 본문 h2 를 그대로 뽑는다(글마다 손으로 적지 않는다).
     _h2 = re.findall(r"<h2[^>]*>(.*?)</h2>", ps["body"], re.S)
-    _toc = ""
+    _toc = _tocm = ""
     if len(_h2) >= 2:
         _bodyh = ps["body"]
         for n, t in enumerate(_h2):
             _bodyh = _bodyh.replace(f">{t}</h2>", f' id="s{n}">{t}</h2>', 1)
         ps = dict(ps, body=_bodyh)
+        _items = [(n, re.sub(r"<[^>]+>", "", t)) for n, t in enumerate(_h2)]
         _toc = ('<nav class="pst-toc"><div class="rt">목차</div>'
-                + "".join(f'<a href="#s{n}">{re.sub(r"<[^>]+>", "", t)}</a>'
-                          for n, t in enumerate(_h2)) + '</nav>')
-    _relaside = "".join(
-        f'<a href="{STORY_BASE}/{x}/"><span class="th">'
-        f'<img src="/assets/stories/{x}.png" alt="" loading="lazy"></span>'
-        f'<b>{esc(POSTS[x]["title"])}</b></a>' for x in rel)
+                + "".join(f'<a href="#s{n}">{t}</a>' for n, t in _items) + '</nav>')
+        # 좁은 화면에선 레일이 사라진다 — 그대로 없어지면 모바일은 목차를 아예 못 본다.
+        _tocm = ('<details class="art-toc-m"><summary>목차</summary><ul>'
+                 + "".join(f'<li><a href="#s{n}">{t}</a></li>' for n, t in _items)
+                 + '</ul></details>')
+    # '이어서 읽기'는 오른쪽 레일이 아니라 **글 끝**이다(2026-08-27 통합, 토스 '더 읽어보기' 자리).
+    #   레일에선 썸네일이 56×42px 이라 사실상 안 보였고, 아직 읽는 중인 사람 옆구리에 붙어 있었다.
+    _relcards = "".join(
+        f'<a class="art-next-card" href="{STORY_BASE}/{x}/">'
+        f'<span class="th"><img src="/assets/stories/{x}.png" alt="" loading="lazy"></span>'
+        f'<div class="cat">{esc(POSTS[x]["cat"])}</div>'
+        f'<h3>{esc(POSTS[x]["title"])}</h3></a>' for x in rel[:3])
+    _next = (f'<section class="art-next"><h2 class="art-next-t">이어서 읽기</h2>'
+             f'<div class="art-next-grid">{_relcards}</div></section>') if _relcards else ""
     _share = (f'<a href="https://twitter.com/intent/tweet?url=https://the-moment.us{STORY_BASE}/{slug}/"'
               f' target="_blank" rel="noopener" aria-label="X에 공유">X</a>'
               f'<a href="https://www.facebook.com/sharer/sharer.php?u=https://the-moment.us{STORY_BASE}/{slug}/"'
               f' target="_blank" rel="noopener" aria-label="페이스북에 공유">f</a>')
+    # 목차 현재 위치 표시 — 전 사이트 같은 동작(큐 ART_SPY 와 같은 코드).
+    _spy = ('<script>(function(){var ls=[].slice.call(document.querySelectorAll(".pst-toc a"));if(!ls.length||!window.IntersectionObserver)return;var secs=ls.map(function(a){return document.getElementById(a.getAttribute("href").slice(1))});var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var i=secs.indexOf(e.target);if(i<0)return;ls.forEach(function(a,j){a.classList.toggle("on",j===i)})})},{rootMargin:"-88px 0px -68% 0px"});secs.forEach(function(x){x&&io.observe(x)})})();</script>')
     body = f"""<div class="pst">
   <div class="pst-grid">
   <header class="pst-top">
@@ -3486,20 +3548,21 @@ for i, slug in enumerate(PORDER):
     <article class="pst-main">
       <div class="pst-cover"><img src="/assets/stories/{slug}.png" alt="" loading="lazy"></div>
       <p class="pst-sub">{esc(ps['sub'])}</p>
+      {_tocm}
       <div class="pst-prose">{ps['body']}</div>
       <div class="pst-meta">
         <div class="pst-by"><span class="av">M</span>
           <span><span class="nm">모멘터스</span><br><span class="dt">{fmt_date(ps['date'])} · {ps['mins']}분 읽기</span></span></div>
         <div class="pst-share">{_share}</div>
       </div>
+      {_next}
     </article>
-    <aside class="pst-aside"><div class="rt">이어서 읽기</div>{_relaside}</aside>
   <div class="pst-end">
     {'<div class="pst-tags">' + tagh + '</div>' if tagh else ''}
     <div class="pst-backwrap"><a class="pst-back" href="{STORY_BASE}/">인사이트 전체 보기</a></div>
   </div>
   </div>
-</div>"""
+</div>{_spy}"""
     os.makedirs(f"insights/{slug}", exist_ok=True)
     with open(f"insights/{slug}/index.html", "w", encoding="utf-8") as fh:
         # sub 가 짧으면(35자 미만) 제목을 앞세워 문맥을 보강한다 — 70자 미만이면 구글이 무시한다.
