@@ -1304,6 +1304,7 @@ AP_CSS = """
    ⚠️ 종전엔 카드를 뷰포트에 거의 붙이고(12px) 글을 그림 아래 띠에 뒀다 — 둘 다 애플과 다르다. */
 /* 배너·레일이 같은 좌변에서 시작하도록 여백을 한 변수로 묶는다. */
 :root{--stack-pad:max(clamp(12px,2.1vw,30px),calc((100vw - 1520px)/2 + clamp(12px,2.1vw,30px)))}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .stg-stack{display:flex;flex-direction:column;gap:clamp(12px,2.1vw,30px);
 max-width:1520px;margin:0 auto;padding:clamp(12px,2.1vw,30px) clamp(12px,2.1vw,30px) 0}
 .stg-row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2.1vw,30px)}
@@ -3175,6 +3176,17 @@ for idx, slug in enumerate(ORDER):
                  else p["ctasub"] if p["cta"] == "ext"
                  else "계정 없음 · 결제 없음 · 1클릭 제거")
 
+    # ── 제품 안쪽으로 가는 문맥 링크(deeplinks) ─────────────────────────────
+    # 왜 (2026-08-28, cue GSC 실측): 형제 사이트 약 860페이지가 이미 cue 를 링크하고 있었는데
+    #   **전부 홈으로만** 갔다. 홈은 이미 크롤됐고, 깊은 페이지로 가는 경로가 없어
+    #   609장이 "발견됨 - 크롤 안 됨"에 갇혀 있었다. 링크 수가 아니라 **어디로 가느냐**가 문제였다.
+    # 🚫 링크를 남발하지 마라 — 제품이 실제로 제공하는 것만, 문맥에 맞게. 상호링크 스팸은 신호를 깎는다.
+    _dl = p.get("deeplinks") or []
+    deeplinks = ("" if not _dl else
+        '<div class="vd-sec"><div class="vd-note"><p><b>안에 뭐가 있나</b></p><p>'
+        + " · ".join(f'<a href="{esc(u)}">{esc(t)}</a>' for t, u in _dl)
+        + '</p></div></div>')
+
     body = f"""<div class="vd">
   <div class="vd-hero">
     <img src="{r(0)}" alt="{p['name']}">
@@ -3236,6 +3248,7 @@ for idx, slug in enumerate(ORDER):
 </div>
 
 <div class="vd-dock">
+  {deeplinks}
   <div class="vd-guide" id="vdguide">
     <div class="inner">{guide}</div>
   </div>
@@ -4336,6 +4349,10 @@ def ap_tools_stage():
 
 
 ap_body = (
+    # h1 은 페이지당 정확히 1개다(SEO_GEO.md §3). 제품 카드는 h2 라 최상위 제목이 없었다.
+    # 히어로 스택 디자인을 건드리지 않으려고 sr-only 로 둔다 — 화면에 안 보일 뿐
+    # DOM 에 실재하는 우리 자신에 대한 설명이다(숨긴 키워드가 아니다).
+    '<h1 class="sr-only">모멘터스 — 작게 만들어 빨리 내놓는 제품들</h1>'
     '<div class="stg-stack">'
     + ap_stage("binbang", "hero", "NEW")
     + ap_stage("flipper", "hero", "NEW")
@@ -5489,9 +5506,24 @@ urls = ["", "about/", "tools/", "inquiry/", "how-to-pay/",
     + [f"insights/tag/{k}/" for k, lab in STORY_TAGS
        if any(lab in e.get("tags", []) for e in entries)]   # 빈 태그는 sitemap 에서 뺀다
 # ⚠️ /l/<키>는 sitemap 에 넣지 않는다 — 내용 없는 이정표(302)라 색인 대상이 아니다.
+# lastmod — §16-3. **내용에서 나온 날짜만** 쓴다.
+# 🚫 빌드 시각을 넣지 마라. 매일 05:45 재빌드가 32개 전부 "오늘 바뀜"으로 만들고,
+#    그러면 크롤러가 이 사이트의 lastmod 를 통째로 믿지 않게 된다.
+# 글은 POSTS 의 date 가 진짜 날짜다. 나머지(제품·법적 문서)는 날짜 출처가 없으므로 안 넣는다 —
+# 없는 게 거짓말보다 낫다.
+_lastmod = {}
+for _s in PORDER:
+    _d = POSTS[_s].get("updated") or POSTS[_s].get("date") or ""
+    if re.match(r"^\d{4}-\d{2}-\d{2}$", str(_d)):
+        _lastmod[f"insights/{_s}/"] = str(_d)
+_newest = max(_lastmod.values(), default="")
+if _newest:
+    _lastmod["insights/"] = _newest      # 목록의 갱신일 = 가장 최근 글
+
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for u in urls:
-    sm += f"  <url><loc>https://the-moment.us/{u}</loc></url>\n"
+    _lm = _lastmod.get(u)
+    sm += f"  <url><loc>https://the-moment.us/{u}</loc>" + (f"<lastmod>{_lm}</lastmod>" if _lm else "") + "</url>\n"
 sm += "</urlset>\n"
 with open("sitemap.xml", "w", encoding="utf-8") as f:
     f.write(sm)
@@ -5522,6 +5554,14 @@ User-agent: PerplexityBot
 Allow: /
 
 User-agent: Google-Extended
+Allow: /
+
+# 네이버·다음 — * 로도 통과하지만 명시한다.
+# 2026-08-29 실측: cue 검색 유입의 47%가 네이버였고 구글은 0이었다. 국내 서비스의 주력이다.
+User-agent: Yeti
+Allow: /
+
+User-agent: Daum
 Allow: /
 
 Sitemap: https://the-moment.us/sitemap.xml
@@ -5766,11 +5806,16 @@ for _p in _glob.glob("**/*.html", recursive=True):
         _cand = {"insights": "insights", "about": "about", "tools": "tools"}.get(_seg[0])
     _img = f"https://the-moment.us/og/{_cand or 'default'}.png"
 
+    # §7 — RSS 는 **선언까지** 해야 한다. 피드(insights/rss.xml)가 있어도
+    # <link rel="alternate"> 가 없으면 리더·수집기가 못 찾는다(2026-08-28 전 페이지 누락).
     _tags = (f'<link rel="canonical" href="{_url}">\n'
+             f'<link rel="alternate" type="application/rss+xml" '
+             f'title="모멘터스 — 인사이트" href="https://the-moment.us/insights/rss.xml">\n'
              f'<meta property="og:url" content="{_url}">\n'
              f'<meta property="og:image" content="{_img}">\n'
              f'<meta name="twitter:image" content="{_img}">')
     _s2 = _re.sub(r'\n?<link rel="canonical"[^>]*>'
+                  r'|\n?<link rel="alternate"[^>]*application/rss\+xml[^>]*>'
                   r'|\n?<meta property="og:url"[^>]*>'
                   r'|\n?<meta property="og:image"[^>]*>'
                   r'|\n?<meta name="twitter:image"[^>]*>', "", _s)

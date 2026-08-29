@@ -20,4 +20,12 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
+# 네이버·다음 — * 로도 통과하지만 명시한다.
+# 2026-08-29 실측: cue 검색 유입의 47%가 네이버였고 구글은 0이었다. 국내 서비스의 주력이다.
+User-agent: Yeti
+Allow: /
+
+User-agent: Daum
+Allow: /
+
 Sitemap: https://the-moment.us/sitemap.xml
