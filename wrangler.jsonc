@@ -2,13 +2,18 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "momentus",
   "compatibility_date": "2026-07-13",
+  // 네이버 소유확인 전용 워커. `run_worker_first` 로 /naver* 에서만 돈다 — 나머지 경로의
+  // 서빙 동작(html_handling·not_found_handling·_redirects)은 예전 그대로다. worker/naver.js 참조.
+  "main": "worker/naver.js",
   "assets": {
     "directory": "./",
     // /products/ → /products/index.html 매핑에 필요.
     // 주의: /apps/legal.html 같은 .html 직링크는 308로 /apps/legal 에 보내진다.
     // 크롬 웹스토어가 참조하는 URL이라 배포 후 반드시 최종 200을 실측할 것.
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    "binding": "ASSETS",
+    "run_worker_first": ["/naver*"]
   },
   // custom_domain은 아직 못 쓴다 — the-moment.us에 GitHub Pages A 레코드가 남아 있어
   // CF가 409(code 100117: externally managed DNS records)를 낸다.
