@@ -5520,6 +5520,50 @@ _newest = max(_lastmod.values(), default="")
 if _newest:
     _lastmod["insights/"] = _newest      # 목록의 갱신일 = 가장 최근 글
 
+# ── 제품 페이지의 lastmod — **원본 데이터가 바뀐 날**을 기록해서 쓴다 (2026-08-29)
+#
+# 왜 필요한가: apex 사이트맵이 2026-07-02 에 한 번 읽히고 58일간 방치됐다. 재제출로 풀었지만
+#   재방문 신호가 없으면 또 방치된다. 그런데 32장 중 lastmod 가 붙은 건 글 4장뿐이었다.
+#
+# 🔴 왜 "생성된 HTML"이 아니라 "원본 데이터"를 해시하나:
+#   셸(푸터·나브·CSS)은 여러 저장소가 공유하고 자주 바뀐다. 출력 HTML 을 해시하면
+#   푸터 한 줄 고칠 때마다 **32장 전부가 "오늘 바뀜"**이 된다. 그게 §16-3 이 금지하는 거짓 신선도다.
+#   제품 페이지의 내용은 products.json 의 그 제품 항목에서 나온다 — 그것만 본다.
+#
+# 🔴 첫 실행에 오늘 날짜를 박지 않는다:
+#   기록이 없는 URL 은 **해시만 저장하고 lastmod 는 안 붙인다.** 없는 게 거짓말보다 낫다.
+#   다음에 실제로 바뀌면 그때부터 진짜 날짜가 붙는다. 과거를 지어내지 않고 미래를 정확하게 만든다.
+_LM_STATE = "data/page_lastmod.json"
+try:
+    with open(_LM_STATE, encoding="utf-8") as _f:
+        _lm_state = json.load(_f)
+except Exception:
+    _lm_state = {}
+_today = datetime.date.today().isoformat()
+_lm_changed = 0
+for _slug in ORDER:
+    # ⚠️ URL 은 반드시 purl() 에서 가져온다 — 위 `urls` 도 같은 함수를 쓴다.
+    #    여기서 문자열을 따로 조립하면 한 글자만 달라도 조용히 하나도 안 맞는다.
+    _u = purl(_slug).lstrip("/")
+    if _u not in urls:
+        continue
+    _h = hashlib.sha1(json.dumps(P[_slug], sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()[:16]
+    _prev = _lm_state.get(_u)
+    if _prev is None:
+        _lm_state[_u] = {"h": _h}                       # 첫 관측 — 날짜는 안 붙인다
+    elif _prev.get("h") != _h:
+        _lm_state[_u] = {"h": _h, "d": _today}          # 실제로 바뀐 날
+        _lm_changed += 1
+    if _lm_state[_u].get("d"):
+        _lastmod[_u] = _lm_state[_u]["d"]
+try:
+    with open(_LM_STATE, "w", encoding="utf-8") as _f:
+        json.dump(_lm_state, _f, ensure_ascii=False, indent=1, sort_keys=True)
+except Exception as _e:
+    print(f"  🟠 page_lastmod 저장 실패: {_e}")
+if _lm_changed:
+    print(f"  lastmod: 제품 {_lm_changed}장이 오늘 바뀐 것으로 기록됨")
+
 sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for u in urls:
     _lm = _lastmod.get(u)
