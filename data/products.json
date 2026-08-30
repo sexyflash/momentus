@@ -1,1340 +1,1439 @@
 {
-  "_note": "모멘터스 제품 매니페스트 — 지그의 진실의 원천. 새 제품 = 여기 한 줄 추가 → /services 그리드·footer·sitemap·귀환갈고리 자동 반영. scripts/gen_site.py 가 이 파일을 읽는다. 손으로 HTML 고치지 말 것.",
-  "_schema": {
-    "desire": "방문자 주어 욕망 한줄카피(v2)",
-    "free": "무료여부",
-    "type": "bookmarklet|extension|service",
-    "hook": "귀환 갈고리(무료 도구에만)"
-  },
-  "_bar_note": "1단 바(브랜드 바) 정본. 여기 한 줄 = 전 사이트 바·푸터·shell.js 동시 반영. label=기능어(한글) / sub=호버 부제(브랜드명 포함) / tag=블로그 태그 / feed=랜딩 스트림 수집 URL(없으면 null) / hidden=바에 아직 안 올림. hero_shots=랜딩 히어로에 쓰는 제품 실물 이미지(우리 자산만). products[].shot=랜딩 카드 이미지(우리 자산). 없으면 아이콘 카드.",
-  "bar": {
-    "spokes": [
-      {
-        "slug": "theplan",
-        "label": "플래너",
-        "sub": "notes — 내 손에 맞게 조립하는 디지털 플래너",
-        "href": "https://notes.the-moment.us",
-        "tag": "플래너",
-        "feed": "https://notes.the-moment.us/api/shop"
-      },
-      {
-        "slug": "mark",
-        "label": "로고",
-        "sub": "mark — 내 업종 로고를 먼저 보고 고릅니다",
-        "href": "https://mark.the-moment.us",
-        "tag": "마크",
-        "feed": "https://mark.the-moment.us/rss.xml"
-      },
-      {
-        "slug": "cue",
-        "label": "모의면접",
-        "sub": "cue — 입으로 답하고 AI가 짚어줍니다",
-        "href": "https://cue.the-moment.us",
-        "tag": "큐",
-        "feed": "https://cue.the-moment.us/rss.xml"
-      },
-      {
-        "label": "빈방",
-        "href": "https://bb.the-moment.us",
-        "sub": "빈방 — 취소표가 나오면 바로 알려드립니다",
-        "slug": "binbang",
-        "tag": "빈방",
-        "feed": null
-      },
-      {
-        "slug": "heyreci",
-        "label": "상품사진",
-        "sub": "heyreci.com으로 이동",
-        "href": "https://heyreci.com",
-        "tag": "헤이레시",
-        "feed": null,
-        "external": true
-      },
-      {
-        "slug": "kontext",
-        "label": "컨텍스트",
-        "sub": "Kontext — 매번 설명하지 않아도 AI가 내 상황을 압니다",
-        "href": "https://kontext.the-moment.us",
-        "tag": "컨텍스트",
-        "feed": null,
-        "external": true,
-        "posts_note": "컨텍스트는 RSS 가 없어 여기 적는다. 늘거나 줄면 빌드가 경고한다 (_check_posts_fresh). RSS 가 생기면 이 배열을 지우고 feed 를 채워라.",
-        "posts_index": "https://kontext.the-moment.us/blog",
-        "posts": [
-          {
-            "title": "Why Every AI Conversation Starts From Zero",
-            "date": "2026-02-20",
-            "url": "https://kontext.the-moment.us/blog/why-every-ai-conversation-starts-from-zero",
-            "desc": "You have to re-explain yourself every time you open a chat window. The context management problem is not a flaw — it's a design choice. We think it's the wrong one."
-          },
-          {
-            "title": "Buttons Beat Chat",
-            "date": "2026-02-12",
-            "url": "https://kontext.the-moment.us/blog/buttons-beat-chat",
-            "desc": "Chat is the dominant interface for AI in 2026. We think that's a mistake. Here's why named, reusable actions beat freeform text boxes for serious work."
-          },
-          {
-            "title": "What We Mean by Context Packet",
-            "date": "2026-02-05",
-            "url": "https://kontext.the-moment.us/blog/what-is-a-context-packet",
-            "desc": "A Context Packet is not a document, not a prompt, and not a chat history. It's something new — structured for AI consumption from the start."
-          }
-        ]
-      }
-    ],
-    "links": [
-      {
-        "key": "products",
-        "label": "제품 전체",
-        "href": "/products/"
-      },
-      {
-        "key": "story",
-        "label": "인사이트",
-        "href": "/insights/"
-      },
-      {
-        "key": "about",
-        "label": "소개",
-        "href": "/about/"
-      }
-    ],
-    "hero_shots": [
-      {
-        "src": "https://notes.the-moment.us/img/wizard/wz_9abd2186-233/draft_user_cover.png",
-        "alt": "VOID 플래너 커버",
-        "label": "플래너",
-        "fit": "contain",
-        "bg": "#f7f6f1",
-        "title": "VOID",
-        "sub": "여백이 일하는 플래너. 링크로 넘나드는 목차, 구글 캘린더 연동.",
-        "cta": "플래너 보러 가기",
-        "href": "https://notes.the-moment.us/p/void"
-      },
-      {
-        "src": "https://mark.the-moment.us/og-default.png",
-        "alt": "업종별 로고 시안",
-        "label": "로고",
-        "fit": "cover",
-        "bg": "#fff",
-        "title": "업종을 아는 로고",
-        "sub": "같은 업종만 깊이 판 시안 1,193건. 간판·명함에 얹어 보고 고릅니다.",
-        "cta": "업종별 시안 보기",
-        "href": "https://mark.the-moment.us"
-      },
-      {
-        "src": "https://cue.the-moment.us/og.png",
-        "alt": "AI 모의면접 화면",
-        "label": "모의면접",
-        "fit": "contain",
-        "bg": "#fff",
-        "title": "읽지 말고, 소리 내어",
-        "sub": "면접은 눈으로 아는 게 아니라 입으로 아는 겁니다. 회원가입 없이 지금.",
-        "cta": "한 판 해보기",
-        "href": "https://cue.the-moment.us"
-      }
+ "_note": "모멘터스 제품 매니페스트 — 지그의 진실의 원천. 새 제품 = 여기 한 줄 추가 → /services 그리드·footer·sitemap·귀환갈고리 자동 반영. scripts/gen_site.py 가 이 파일을 읽는다. 손으로 HTML 고치지 말 것.",
+ "_schema": {
+  "desire": "방문자 주어 욕망 한줄카피(v2)",
+  "free": "무료여부",
+  "type": "bookmarklet|extension|service",
+  "hook": "귀환 갈고리(무료 도구에만)"
+ },
+ "_bar_note": "1단 바(브랜드 바) 정본. 여기 한 줄 = 전 사이트 바·푸터·shell.js 동시 반영. label=기능어(한글) / sub=호버 부제(브랜드명 포함) / tag=블로그 태그 / feed=랜딩 스트림 수집 URL(없으면 null) / hidden=바에 아직 안 올림. hero_shots=랜딩 히어로에 쓰는 제품 실물 이미지(우리 자산만). products[].shot=랜딩 카드 이미지(우리 자산). 없으면 아이콘 카드.",
+ "bar": {
+  "spokes": [
+   {
+    "slug": "theplan",
+    "label": "플래너",
+    "sub": "notes — 내 손에 맞게 조립하는 디지털 플래너",
+    "href": "https://notes.the-moment.us",
+    "tag": "플래너",
+    "feed": "https://notes.the-moment.us/api/shop"
+   },
+   {
+    "slug": "mark",
+    "label": "로고",
+    "sub": "mark — 내 업종 로고를 먼저 보고 고릅니다",
+    "href": "https://mark.the-moment.us",
+    "tag": "마크",
+    "feed": "https://mark.the-moment.us/rss.xml"
+   },
+   {
+    "slug": "cue",
+    "label": "모의면접",
+    "sub": "cue — 입으로 답하고 AI가 짚어줍니다",
+    "href": "https://cue.the-moment.us",
+    "tag": "큐",
+    "feed": "https://cue.the-moment.us/rss.xml"
+   },
+   {
+    "label": "빈방",
+    "href": "https://bb.the-moment.us",
+    "sub": "빈방 — 취소표가 나오면 바로 알려드립니다",
+    "slug": "binbang",
+    "tag": "빈방",
+    "feed": null
+   },
+   {
+    "slug": "teamai",
+    "label": "AI친구",
+    "sub": "팀AI — 매일 이야기하는 AI 친구들",
+    "href": "https://teamai.the-moment.us",
+    "tag": "팀AI",
+    "feed": null
+   },
+   {
+    "slug": "heyreci",
+    "label": "상품사진",
+    "sub": "heyreci.com으로 이동",
+    "href": "https://heyreci.com",
+    "tag": "헤이레시",
+    "feed": null,
+    "external": true
+   },
+   {
+    "slug": "kontext",
+    "label": "컨텍스트",
+    "sub": "Kontext — 매번 설명하지 않아도 AI가 내 상황을 압니다",
+    "href": "https://kontext.the-moment.us",
+    "tag": "컨텍스트",
+    "feed": null,
+    "external": true,
+    "posts_note": "컨텍스트는 RSS 가 없어 여기 적는다. 늘거나 줄면 빌드가 경고한다 (_check_posts_fresh). RSS 가 생기면 이 배열을 지우고 feed 를 채워라.",
+    "posts_index": "https://kontext.the-moment.us/blog",
+    "posts": [
+     {
+      "title": "Why Every AI Conversation Starts From Zero",
+      "date": "2026-02-20",
+      "url": "https://kontext.the-moment.us/blog/why-every-ai-conversation-starts-from-zero",
+      "desc": "You have to re-explain yourself every time you open a chat window. The context management problem is not a flaw — it's a design choice. We think it's the wrong one."
+     },
+     {
+      "title": "Buttons Beat Chat",
+      "date": "2026-02-12",
+      "url": "https://kontext.the-moment.us/blog/buttons-beat-chat",
+      "desc": "Chat is the dominant interface for AI in 2026. We think that's a mistake. Here's why named, reusable actions beat freeform text boxes for serious work."
+     },
+     {
+      "title": "What We Mean by Context Packet",
+      "date": "2026-02-05",
+      "url": "https://kontext.the-moment.us/blog/what-is-a-context-packet",
+      "desc": "A Context Packet is not a document, not a prompt, and not a chat history. It's something new — structured for AI consumption from the start."
+     }
     ]
-  },
-  "order": [
-    "heyreci",
-    "mark",
-    "theplan",
-    "cue",
-    "binbang",
-    "kontext",
-    "flipper",
-    "quickpang",
-    "insta-rank",
-    "youtube-rank",
-    "pinterest-grab",
-    "chatpage",
-    "her"
+   }
   ],
-  "products": {
-    "heyreci": {
-      "name": "헤이레시 · AI 상품사진",
-      "short": "헤이레시",
-      "desire": "촬영비 없이 판매용 상품컷, 만들고 싶으시죠?",
-      "free": false,
-      "type": "service",
-      "hook": null,
-      "cat": "sell",
-      "color": "#3182f6",
-      "icon": "◆",
-      "tag": "AI 상품사진 · 쇼핑몰 셀러",
-      "tagline": "폰으로 찍어도 판매용 컷이 됩니다.",
-      "lead": "<b>촬영비 0원으로 카탈로그를 만듭니다.</b> 폰으로 찍은 상품 사진을 올리면 30초 만에 배경·조명·모델이 붙은 판매용 컷이 됩니다. 이미지 도구 40종.",
-      "feats": [
-        [
-          "촬영 없이 상품컷",
-          "스튜디오도, 모델도, 조명도 없이. 폰 사진 한 장이면 시작합니다."
-        ],
-        [
-          "배경·모델·상세페이지까지",
-          "누끼부터 연출컷, 모델 착용컷, 상세페이지 이미지까지 한 곳에서."
-        ],
-        [
-          "프롬프트 없이도",
-          "복잡한 설정 없이 올리고, 누르고, 끝. 판매용 결과물에 학습된 모델입니다."
-        ]
-      ],
-      "how": [
-        [
-          "상품 사진 올리기",
-          "폰으로 찍은 사진 그대로 올립니다."
-        ],
-        [
-          "도구 고르기",
-          "배경 지우기·연출컷·모델컷 중에서."
-        ],
-        [
-          "30초 뒤 다운로드",
-          "바로 쓸 수 있는 판매용 이미지가 나옵니다."
-        ]
-      ],
-      "cta": "ext",
-      "url": "https://heyreci.com",
-      "ctatext": "heyreci.com에서 써보기 →",
-      "ctasub": "AI 상품사진 · 크레딧 충전제",
-      "shot": "https://heyreci.com/og-default.png",
-      "faq": [
-        [
-          "헤이레시는 무료인가요?",
-          "크레딧 충전제로 운영합니다. 사진 한 장을 만들 때마다 크레딧이 차감되는 방식이고, 월 정기결제가 아닙니다. 가격과 크레딧 구성은 heyreci.com 에서 확인하실 수 있습니다."
-        ],
-        [
-          "스튜디오 촬영 없이 정말 판매용 컷이 나오나요?",
-          "폰으로 찍은 상품 사진을 올리면 AI가 배경과 조명을 바꿔 판매용 컷으로 만듭니다. 배경 교체, 모델 착용컷, 상세페이지까지 한 곳에서 처리합니다. 결과가 나오기까지 약 30초 걸립니다."
-        ],
-        [
-          "프롬프트를 쓸 줄 알아야 하나요?",
-          "몰라도 됩니다. 도구를 고르는 방식이라 원하는 결과를 목록에서 선택하면 됩니다. 프롬프트를 직접 넣고 싶은 분은 넣으셔도 됩니다."
-        ],
-        [
-          "어디서 쓰나요?",
-          "heyreci.com 에서 바로 씁니다. 설치할 것이 없고 브라우저만 있으면 됩니다."
-        ]
-      ]
-    },
-    "mark": {
-      "name": "마크 · 로고 디자인",
-      "short": "마크",
-      "desire": "내 업종 로고, 맡기기 전에 시안부터 보고 싶으시죠?",
-      "free": false,
-      "type": "service",
-      "hook": null,
-      "cat": "brand",
-      "color": "#0E1013",
-      "icon": "✕",
-      "tag": "로고 디자인 · 자영업 사장님",
-      "tagline": "내 업종 로고를 먼저 보고 고릅니다.",
-      "lead": "<b>디자이너를 만나기 전에, 시안부터 봅니다.</b> 같은 업종만 깊이 판 로고 시안 600여 개. 간판과 명함에 얹은 모습까지 보고, 마음에 들면 그때 맡기세요.",
-      "feats": [
-        [
-          "내 업종 시안부터",
-          "병원·카페·한의원·법무… 업종별로 이미 그려둔 시안을 먼저 봅니다."
-        ],
-        [
-          "간판·명함에 얹어서",
-          "로고만 덩그러니 말고, 실제 간판과 명함에 올린 모습으로 확인합니다."
-        ],
-        [
-          "무료 명함부터",
-          "로고가 없어도 3분이면 명함. 상호와 이름만 넣으면 됩니다."
-        ]
-      ],
-      "how": [
-        [
-          "취향 고르기",
-          "마음에 드는 시안을 고르면 어울리는 방향을 추천합니다."
-        ],
-        [
-          "내 업종 시안 보기",
-          "같은 업종 로고를 가장 많이 만들어 봤습니다."
-        ],
-        [
-          "마음에 들면 제작",
-          "시안을 고르고 의뢰하면 끝까지 다듬어 드립니다."
-        ]
-      ],
-      "cta": "ext",
-      "url": "https://mark.the-moment.us",
-      "ctatext": "업종별 시안 보기 →",
-      "ctasub": "로고 · 간판 · 명함 · 무료 명함 제작",
-      "shot": "https://mark.the-moment.us/og-default.png",
-      "faq": [
-        [
-          "마크는 어떻게 로고를 만드나요?",
-          "먼저 취향을 고르고, 내 업종의 시안을 봅니다. 마음에 드는 것이 있으면 그때 제작합니다. 빈 화면에서 시작하지 않고 내 업종에 이미 어울리는 시안부터 보는 순서입니다."
-        ],
-        [
-          "로고만 나오나요, 간판·명함도 되나요?",
-          "로고를 간판과 명함에 얹은 모습까지 함께 봅니다. 로고 파일만 받고 나서 어디에 어떻게 쓸지 다시 고민하지 않아도 됩니다."
-        ],
-        [
-          "무료로 해볼 수 있나요?",
-          "무료 명함 제작부터 시작하실 수 있습니다. 업종별 시안을 보는 것도 무료입니다."
-        ],
-        [
-          "어디서 쓰나요?",
-          "mark.the-moment.us 에서 바로 씁니다."
-        ]
-      ]
-    },
-    "theplan": {
-      "name": "더플랜 · 디지털 플래너",
-      "short": "더플랜",
-      "desire": "내 손에 맞는 플래너, 골라서 쓰고 싶으시죠?",
-      "free": false,
-      "type": "service",
-      "hook": null,
-      "cat": "me",
-      "color": "#5A5A5A",
-      "icon": "▤",
-      "tag": "디지털 플래너 · 굿노트 · 아이패드",
-      "tagline": "내 손에 맞는 플래너를 골라서 씁니다.",
-      "lead": "<b>남의 플래너에 나를 맞추지 마세요.</b> 스타일과 구성, 시작 요일까지 고른 대로 조립해 PDF로 드립니다. 굿노트·아이패드에서 바로.",
-      "feats": [
-        [
-          "고른 대로 조립",
-          "스타일 50종 × 구성 4종. 위클리·데일리·올인원·만년 중에서."
-        ],
-        [
-          "시작 요일까지",
-          "월요일 시작이든 일요일 시작이든. 다크 모드도 고를 수 있습니다."
-        ],
-        [
-          "무료 킷으로 먼저",
-          "손에 맞는지 써보고 사세요. 안 맞으면 안 사도 됩니다."
-        ]
-      ],
-      "how": [
-        [
-          "스타일 고르기",
-          "마음에 드는 커버와 속지 스타일을 고릅니다."
-        ],
-        [
-          "구성 고르기",
-          "위클리·데일리·올인원·만년 중에서."
-        ],
-        [
-          "PDF 받기",
-          "고른 대로 조립해서 보내 드립니다."
-        ]
-      ],
-      "cta": "ext",
-      "url": "https://notes.the-moment.us",
-      "ctatext": "플래너 고르러 가기 →",
-      "ctasub": "굿노트 · 아이패드 · PDF",
-      "shot": "https://notes.the-moment.us/img/wizard/wz_9abd2186-233/draft_user_cover.png",
-      "faq": [
-        [
-          "더플랜은 어떤 형태로 받나요?",
-          "하이퍼링크가 걸린 PDF 로 드립니다. 아이패드·안드로이드 태블릿의 굿노트·노타빌리티·삼성노트 같은 필기 앱에서 씁니다. 목차를 누르면 해당 페이지로 이동합니다."
-        ],
-        [
-          "시작 요일이나 구성을 바꿀 수 있나요?",
-          "고른 대로 조립됩니다. 스타일과 구성을 선택하고 시작 요일까지 지정한 뒤 PDF 를 받습니다."
-        ],
-        [
-          "무료로 써볼 수 있나요?",
-          "무료 킷으로 먼저 써보실 수 있습니다. 손에 맞는지 확인한 뒤 결정하시면 됩니다."
-        ],
-        [
-          "결제하면 어떻게 받나요?",
-          "결제 후 이메일로 다운로드 링크를 보내드립니다. 구매내역 페이지에서 언제든 다시 받으실 수 있습니다."
-        ]
-      ]
-    },
-    "cue": {
-      "name": "큐 · AI 모의면접",
-      "short": "큐",
-      "desire": "면접, 실전처럼 입으로 연습하고 싶으시죠?",
-      "free": false,
-      "type": "service",
-      "hook": null,
-      "cat": "me",
-      "color": "#0E1013",
-      "icon": "◎",
-      "tag": "AI 모의면접 · 경력직 이직",
-      "tagline": "면접장에서 얼어붙지 않게 잡아 줍니다.",
-      "lead": "<b>눈으로 읽으면 다 아는 것 같습니다. 입으로 뱉어봐야 압니다.</b> 실제 면접처럼 소리 내어 답하고, 동문서답하면 AI가 짚어 줍니다. 회원가입 없이 지금 바로.",
-      "feats": [
-        [
-          "읽지 말고, 말하세요",
-          "화면을 읽는 순간 연습이 아닙니다. 빈손으로 입을 여는 훈련."
-        ],
-        [
-          "동문서답을 짚어 줍니다",
-          "점수를 매기지 않습니다. 질문에 답했는지만 봅니다."
-        ],
-        [
-          "D-day 준비",
-          "면접 날짜를 넣으면 그날까지 뭘 해야 하는지 잡아 줍니다."
-        ]
-      ],
-      "how": [
-        [
-          "직군·회사 넣기",
-          "어떤 회사, 어떤 자리인지만 알려주세요."
-        ],
-        [
-          "소리 내어 답하기",
-          "실제 면접처럼 말로 답합니다."
-        ],
-        [
-          "짚어주는 대로 다시",
-          "동문서답한 부분을 다시 연습합니다."
-        ]
-      ],
-      "cta": "ext",
-      "url": "https://cue.the-moment.us",
-      "ctatext": "한 판 해보기 →",
-      "ctasub": "회원가입 없음 · 지금 바로",
-      "shot": "https://cue.the-moment.us/og.png",
-      "faq": [
-        [
-          "큐는 무료인가요?",
-          "회원가입 없이 지금 바로 모의면접을 시작할 수 있습니다. 직군과 회사만 알려주면 질문이 만들어집니다."
-        ],
-        [
-          "왜 소리 내어 답해야 하나요?",
-          "화면을 읽는 순간 연습이 아니기 때문입니다. 눈으로 읽으면 다 아는 것 같지만 입으로 뱉어봐야 압니다. 큐는 빈손으로 입을 여는 훈련을 시킵니다."
-        ],
-        [
-          "점수를 매겨 주나요?",
-          "점수를 매기지 않습니다. 질문에 실제로 답했는지만 봅니다. 동문서답한 부분을 짚어 주면 그 부분만 다시 연습합니다."
-        ],
-        [
-          "어디서 쓰나요?",
-          "cue.the-moment.us 에서 바로 씁니다. 설치할 것이 없습니다."
-        ]
-      ]
-    },
-    "quickpang": {
-      "name": "퀵팡 · 쿠팡 퀵보기",
-      "short": "퀵팡",
-      "desire": "쿠팡 옵션·재고, 클릭 없이 그 자리에서 보고 싶으시죠?",
-      "free": true,
-      "type": "bookmarklet",
-      "hook": {
-        "label": "the-moment.us · 다른 무료 도구 보기 →",
-        "url": "https://the-moment.us/#tools"
-      },
-      "cat": "sell",
-      "color": "var(--coup)",
-      "icon": "⚡",
-      "tag": "커머스 · 북마크릿 · 1만+ 사용",
-      "tagline": "클릭 없이 옵션·재고 확인.",
-      "lead": "<b>쿠팡 검색 결과에서 상품을 열지 않고, 옵션과 품절 여부를 그 자리에서 봅니다.</b> 소싱·시장조사할 때 탭 지옥에서 해방. 1만 명이 이 도구로 모멘터스를 알게 됐어요.",
-      "feats": [
-        [
-          "검색 결과에 버튼 장착",
-          "목록의 각 상품에 '옵션·재고 보기' 버튼이 생깁니다. 누르면 그 자리에서 펼쳐져요."
-        ],
-        [
-          "재고 상태 색 구분",
-          "구매 가능한 옵션은 초록, 품절은 회색 취소선. n/m 구매가능 카운트까지."
-        ],
-        [
-          "전체 조회",
-          "우하단 '전체 조회' 버튼으로 목록 전체를 순차 조회. 요청 간격은 자동 조절."
-        ]
-      ],
-      "spec": [
-        [
-          "종류",
-          "북마크릿 (설치 없음)"
-        ],
-        [
-          "어디서",
-          "coupang.com 검색 결과"
-        ],
-        [
-          "설치",
-          "버튼을 북마크바로 드래그"
-        ],
-        [
-          "가격",
-          "무료"
-        ],
-        [
-          "실적",
-          "사용자 1만+"
-        ]
-      ],
-      "how": [
-        [
-          "버튼을 북마크바로 드래그",
-          "아래 버튼을 북마크바에 끌어놓기."
-        ],
-        [
-          "쿠팡 검색 결과에서 클릭",
-          "상품 목록 페이지에서 북마크 클릭."
-        ],
-        [
-          "옵션·재고 보기",
-          "상품별 버튼 또는 '전체 조회'로 재고를 그 자리에서."
-        ]
-      ],
-      "cta": "drag",
-      "bm": "quickpang",
-      "faq": [
-        [
-          "퀵팡은 무료인가요?",
-          "무료입니다. 북마크릿이라 설치나 계정이 필요 없고, 버튼을 북마크바로 한 번 끌어다 놓으면 끝입니다."
-        ],
-        [
-          "어떻게 쓰나요?",
-          "버튼을 북마크바로 드래그한 뒤, 쿠팡 검색 결과 화면에서 그 북마크를 클릭합니다. 상품을 열지 않고 그 자리에서 옵션과 재고를 봅니다."
-        ],
-        [
-          "재고는 어떻게 표시되나요?",
-          "재고 상태를 색으로 구분해 보여줍니다. 전체 조회도 됩니다. 소싱이나 시장조사를 할 때 탭을 여러 개 열지 않아도 됩니다."
-        ],
-        [
-          "개인정보를 수집하나요?",
-          "북마크릿은 브라우저 안에서만 동작합니다. 계정을 만들 필요가 없습니다."
-        ]
-      ],
-      "tagline2": "쿠팡 상품 페이지에서 옵션별 가격과 재고를 한 번에 펼쳐 봅니다. 옵션을 하나씩 눌러 확인하지 않아도 됩니다.",
-      "logo": "/assets/home/logo/coupang.png",
-      "shot": "https://the-moment.us/assets/home/logo/coupang.png"
-    },
-    "insta-rank": {
-      "name": "인스타 인기순 정렬",
-      "short": "인스타 인기순 정렬",
-      "desire": "이 계정, 뭐가 제일 잘 됐는지 궁금하시죠?",
-      "free": true,
-      "type": "bookmarklet",
-      "hook": {
-        "label": "the-moment.us · 다른 무료 도구 보기 →",
-        "url": "https://the-moment.us/#tools"
-      },
-      "cat": "research",
-      "color": "var(--ig)",
-      "icon": "◲",
-      "tag": "리서치 · 북마크릿",
-      "tagline": "이 계정, 뭐가 제일 잘 됐나?",
-      "lead": "<b>피드를 좋아요순으로 다시 깝니다.</b> 알고리즘이 섞어놓은 순서 말고, 사람들이 실제로 가장 많이 멈춘 게시물부터. 레퍼런스·벤치마킹의 기준이 달라져요.",
-      "feats": [
-        [
-          "수집 개수 지정",
-          "10~2,000개까지 원하는 만큼 수집해서 정렬합니다. 자동 스크롤로 알아서 모아요."
-        ],
-        [
-          "순위·좋아요·댓글 표시",
-          "각 게시물에 #순위와 ❤·💬 수가 뱃지로 붙습니다. 릴스·캐러셀·영상 아이콘 구분."
-        ],
-        [
-          "원복 버튼",
-          "보고 나면 '원복' 한 번으로 원래 피드로. 페이지를 망가뜨리지 않아요."
-        ]
-      ],
-      "spec": [
-        [
-          "종류",
-          "북마크릿 (설치 없음)"
-        ],
-        [
-          "어디서",
-          "instagram.com 계정·해시태그·탐색"
-        ],
-        [
-          "설치",
-          "버튼을 북마크바로 드래그"
-        ],
-        [
-          "가격",
-          "무료"
-        ]
-      ],
-      "how": [
-        [
-          "버튼을 북마크바로 드래그",
-          "아래 버튼을 브라우저 북마크바에 끌어놓으면 끝. 설치·로그인 없음."
-        ],
-        [
-          "인스타그램에서 클릭",
-          "보고 싶은 계정/해시태그 페이지에서 북마크 클릭."
-        ],
-        [
-          "개수 입력 → ❤ 정렬",
-          "최대 개수 입력하고 정렬 버튼. 좋아요순으로 다시 깔립니다."
-        ]
-      ],
-      "cta": "drag",
-      "bm": "insta-rank",
-      "faq": [
-        [
-          "인스타 인기순 정렬은 무료인가요?",
-          "무료입니다. 북마크릿이라 설치나 로그인이 필요 없습니다."
-        ],
-        [
-          "어떻게 쓰나요?",
-          "버튼을 북마크바로 드래그한 뒤 인스타그램에서 클릭합니다. 수집할 개수를 입력하면 좋아요 순으로 정렬해 보여줍니다."
-        ],
-        [
-          "무엇을 보여주나요?",
-          "순위와 좋아요, 댓글 수를 함께 표시합니다. 이 계정에서 무엇이 제일 잘 됐는지 한눈에 봅니다."
-        ],
-        [
-          "원래 화면으로 되돌릴 수 있나요?",
-          "원복 버튼이 있습니다. 누르면 원래 화면으로 돌아갑니다."
-        ]
-      ],
-      "tagline2": "인스타그램 프로필의 게시물을 좋아요 많은 순서로 다시 세웁니다. 그 계정이 뭘로 떴는지 스크롤 없이 봅니다.",
-      "logo": "/assets/home/logo/instagram.png",
-      "shot": "https://the-moment.us/assets/home/logo/instagram.png"
-    },
-    "youtube-rank": {
-      "name": "유튜브 인기순 정렬",
-      "short": "유튜브 인기순 정렬",
-      "desire": "이 채널 진짜 대표작이 뭔지 보고 싶으시죠?",
-      "free": true,
-      "type": "bookmarklet",
-      "hook": {
-        "label": "the-moment.us · 다른 무료 도구 보기 →",
-        "url": "https://the-moment.us/#tools"
-      },
-      "cat": "research",
-      "color": "var(--yt)",
-      "icon": "▶",
-      "tag": "리서치 · 북마크릿",
-      "tagline": "가장 많이 재생된 순서로.",
-      "lead": "<b>검색 결과·채널·쇼츠를 조회수순으로 다시 정렬합니다.</b> 이 채널의 진짜 대표작이 뭔지, 이 주제에서 뭐가 통했는지 한눈에.",
-      "feats": [
-        [
-          "검색·채널·쇼츠 전부",
-          "페이지 유형을 자동 감지해 일반 그리드·검색 리스트·쇼츠까지 정렬합니다."
-        ],
-        [
-          "조회수·길이·채널 표시",
-          "#순위와 정확한 조회수, 영상 길이, 채널명이 함께 표시됩니다."
-        ],
-        [
-          "오버레이 방식",
-          "원본 페이지 위에 겹쳐 보여주고, 닫기 한 번으로 원래대로."
-        ]
-      ],
-      "spec": [
-        [
-          "종류",
-          "북마크릿 (설치 없음)"
-        ],
-        [
-          "어디서",
-          "youtube.com 검색·채널·쇼츠"
-        ],
-        [
-          "설치",
-          "버튼을 북마크바로 드래그"
-        ],
-        [
-          "가격",
-          "무료"
-        ]
-      ],
-      "how": [
-        [
-          "버튼을 북마크바로 드래그",
-          "아래 버튼을 북마크바에 끌어놓기."
-        ],
-        [
-          "유튜브에서 클릭",
-          "검색 결과나 채널 페이지에서 북마크 클릭."
-        ],
-        [
-          "개수 입력 → 정렬",
-          "수집 개수 입력 후 '조회수순 정렬'. 대표작부터 봅니다."
-        ]
-      ],
-      "cta": "drag",
-      "bm": "youtube-rank",
-      "faq": [
-        [
-          "유튜브 인기순 정렬은 무료인가요?",
-          "무료입니다. 북마크릿이라 설치나 로그인이 필요 없습니다."
-        ],
-        [
-          "어디에서 동작하나요?",
-          "검색 결과, 채널 페이지, 쇼츠 전부에서 동작합니다. 버튼을 북마크바로 드래그한 뒤 유튜브에서 클릭하고 개수를 입력하면 됩니다."
-        ],
-        [
-          "무엇을 보여주나요?",
-          "조회수와 영상 길이, 채널명을 함께 표시하고 가장 많이 재생된 순서로 정렬합니다."
-        ],
-        [
-          "원래 화면이 바뀌나요?",
-          "오버레이 방식이라 유튜브 화면 위에 덧씌워 보여줍니다."
-        ]
-      ],
-      "tagline2": "유튜브 채널의 영상을 조회수 순서로 다시 세웁니다. 최신순 말고 실제로 많이 본 순서로 봅니다.",
-      "logo": "/assets/home/logo/youtube.png",
-      "shot": "https://the-moment.us/assets/home/logo/youtube.png"
-    },
-    "pinterest-grab": {
-      "name": "핀터레스트 원본 추출",
-      "short": "핀터레스트 원본 추출",
-      "desire": "핀터레스트, 원본 화질로 긁어오고 싶으시죠?",
-      "free": true,
-      "type": "bookmarklet",
-      "hook": {
-        "label": "the-moment.us · 다른 무료 도구 보기 →",
-        "url": "https://the-moment.us/#tools"
-      },
-      "cat": "research",
-      "color": "var(--pin)",
-      "icon": "⚲",
-      "tag": "리서치 · 북마크릿",
-      "tagline": "저해상 썸네일 말고, 원본을.",
-      "lead": "<b>핀을 클릭해 고르면, 원본 화질 이미지 URL을 한 번에 복사합니다.</b> 무드보드·레퍼런스 수집이 우클릭 노가다에서 클릭 몇 번으로.",
-      "feats": [
-        [
-          "클릭해서 담기",
-          "핀을 클릭하면 선택 표시가 붙고 사이드바에 모입니다. 다시 클릭하면 해제."
-        ],
-        [
-          "originals 화질",
-          "핀터레스트의 축소본이 아니라 /originals/ 원본 URL로 변환해 줍니다."
-        ],
-        [
-          "일괄 복사",
-          "모은 이미지 URL 전체를 클립보드로 한 번에."
-        ]
-      ],
-      "spec": [
-        [
-          "종류",
-          "북마크릿 (설치 없음)"
-        ],
-        [
-          "어디서",
-          "pinterest.com 검색·보드"
-        ],
-        [
-          "설치",
-          "버튼을 북마크바로 드래그"
-        ],
-        [
-          "가격",
-          "무료"
-        ]
-      ],
-      "how": [
-        [
-          "버튼을 북마크바로 드래그",
-          "아래 버튼을 북마크바에 끌어놓기."
-        ],
-        [
-          "핀터레스트에서 클릭",
-          "수집기가 켜지면 원하는 핀들을 클릭해 담기."
-        ],
-        [
-          "복사",
-          "'복사' 버튼 한 번 — 원본 URL 목록이 클립보드에."
-        ]
-      ],
-      "cta": "drag",
-      "bm": "pinterest-grab",
-      "faq": [
-        [
-          "핀터레스트 원본 추출은 무료인가요?",
-          "무료입니다. 북마크릿이라 설치나 로그인이 필요 없습니다."
-        ],
-        [
-          "어떤 화질로 받나요?",
-          "저해상 썸네일이 아니라 originals 화질의 원본을 가져옵니다."
-        ],
-        [
-          "어떻게 쓰나요?",
-          "버튼을 북마크바로 드래그한 뒤 핀터레스트에서 클릭합니다. 원하는 이미지를 클릭해 담고 한 번에 복사합니다."
-        ],
-        [
-          "여러 장을 한 번에 되나요?",
-          "일괄 복사를 지원합니다. 클릭해서 담은 것들을 한 번에 가져갑니다."
-        ]
-      ],
-      "tagline2": "핀터레스트에서 저화질 썸네일 대신 원본 이미지를 찾아 엽니다. 저장한 이미지가 흐릿해지는 일이 없습니다.",
-      "logo": "/assets/home/logo/pinterest.png",
-      "shot": "https://the-moment.us/assets/home/logo/pinterest.png"
-    },
-    "chatpage": {
-      "name": "ChatPage",
-      "short": "ChatPage",
-      "desire": "긴 유튜브, 다 안 보고 요약만 보고 싶으시죠?",
-      "free": true,
-      "type": "extension",
-      "hook": {
-        "label": "the-moment.us · 다른 무료 도구 보기 →",
-        "url": "https://the-moment.us/#tools"
-      },
-      "cat": "fast study",
-      "color": "#111",
-      "icon": "✎",
-      "tag": "생산성 · 크롬 확장 · 사용자 4,000명",
-      "tagline": "아무리 긴 유튜브도, 3초 요약.",
-      "lead": "<b>긴 영상을 다 볼 필요 없어요.</b> 버튼 한 번이면 유튜브 영상이 ChatGPT·Claude·Gemini로 넘어가 요약됩니다. 무제한, 무료.",
-      "feats": [
-        [
-          "모든 프리미엄 AI 지원",
-          "ChatGPT, Claude, Gemini — 쓰던 AI 그대로. 계정만 있으면 추가 비용 없음."
-        ],
-        [
-          "길이 무제한",
-          "아무리 긴 영상도 자막을 통째로 넘겨 요약합니다."
-        ],
-        [
-          "스토어 별점 4.8",
-          "4,000명이 쓰고 있습니다. 평가 52개 · v2.9.7."
-        ]
-      ],
-      "spec": [
-        [
-          "종류",
-          "크롬 확장"
-        ],
-        [
-          "어디서",
-          "youtube.com"
-        ],
-        [
-          "설치",
-          "크롬 웹스토어에서 1클릭"
-        ],
-        [
-          "가격",
-          "무료"
-        ],
-        [
-          "버전",
-          "v2.9.7 · 별점 4.8 (평가 52개)"
-        ]
-      ],
-      "how": [
-        [
-          "크롬에 추가",
-          "크롬 웹스토어에서 ChatPage 설치."
-        ],
-        [
-          "유튜브에서 버튼 클릭",
-          "영상 페이지에 생긴 요약 버튼을 누르기."
-        ],
-        [
-          "AI가 요약",
-          "쓰던 AI가 3초 만에 정리."
-        ]
-      ],
-      "cta": "store",
-      "store": "https://chromewebstore.google.com/detail/chatpage-youtube-summary/mcecffeookkllgkbflcdlbicolmfgifj",
-      "faq": [
-        [
-          "ChatPage 는 무료인가요?",
-          "무료입니다. 크롬 웹스토어에서 확장을 추가하면 바로 씁니다. 스토어 별점은 4.8 입니다."
-        ],
-        [
-          "영상 길이 제한이 있나요?",
-          "길이 제한이 없습니다. 아무리 긴 유튜브 영상이라도 요약합니다."
-        ],
-        [
-          "어떤 AI 를 쓰나요?",
-          "프리미엄 AI 를 모두 지원합니다. 쓰던 AI 를 그대로 연결해 쓰시면 됩니다."
-        ],
-        [
-          "어떻게 쓰나요?",
-          "크롬에 추가한 뒤 유튜브에서 버튼을 클릭하면 AI 가 요약합니다."
-        ]
-      ],
-      "tagline2": "보고 있는 유튜브·웹페이지를 3초 만에 요약해 주는 크롬 확장입니다. 긴 영상을 처음부터 볼지 말지 먼저 정합니다.",
-      "logo": "/assets/home/logo/chrome.png",
-      "shot": "https://the-moment.us/assets/home/logo/chrome.png"
-    },
-    "her": {
-      "name": "her · 음성 입력",
-      "short": "her",
-      "desire": "타이핑 말고 말로 입력하고 싶으시죠?",
-      "free": true,
-      "type": "extension",
-      "hook": {
-        "label": "the-moment.us · 다른 무료 도구 보기 →",
-        "url": "https://the-moment.us/#tools"
-      },
-      "cat": "new fast",
-      "color": "var(--ok)",
-      "icon": "◉",
-      "tag": "생산성 · 크롬 확장 · NEW",
-      "tagline": "타이핑 대신, 말로.",
-      "lead": "<b>어디서든 ⌘⇧R 하나면 말이 글이 됩니다.</b> ChatGPT·Claude·Gemini·Notion — 모든 입력창에서. 음성 처리는 전부 당신 기기 안에서만.",
-      "feats": [
-        [
-          "100개 이상 언어",
-          "한국어부터 영어·일본어까지, 말하는 대로 즉시 텍스트로."
-        ],
-        [
-          "모든 입력창에서",
-          "따로 앱을 켤 필요 없이, 쓰던 사이트의 입력창 안에서 바로. Perplexity 같은 까다로운 에디터도 대응."
-        ],
-        [
-          "기기 안에서만 처리",
-          "녹음이 서버로 나가지 않습니다. 프라이버시 100%. 끝나면 클립보드 자동 복사."
-        ]
-      ],
-      "spec": [
-        [
-          "종류",
-          "크롬 확장"
-        ],
-        [
-          "어디서",
-          "모든 웹 입력창"
-        ],
-        [
-          "단축키",
-          "⌘⇧R / Ctrl⇧R"
-        ],
-        [
-          "언어",
-          "100+ (한국어)"
-        ],
-        [
-          "가격",
-          "무료"
-        ],
-        [
-          "버전",
-          "v1.0.9"
-        ]
-      ],
-      "how": [
-        [
-          "크롬에 추가",
-          "크롬 웹스토어에서 her 설치."
-        ],
-        [
-          "입력창에서 ⌘⇧R",
-          "아무 사이트 입력창에 커서를 두고 단축키."
-        ],
-        [
-          "말하면 끝",
-          "말하는 대로 글이 됩니다. 클립보드에도 자동 복사."
-        ]
-      ],
-      "cta": "store",
-      "store": "https://chromewebstore.google.com/detail/her-%EB%B0%94%EC%9D%B4%EB%B8%8C%EC%BD%94%EB%94%A9-%ED%95%84%EC%88%98%ED%85%9C/dogofkfjcibfjgniophmfkcplocfellk",
-      "faq": [
-        [
-          "her 는 무료인가요?",
-          "무료입니다. 크롬에 추가하면 바로 씁니다."
-        ],
-        [
-          "어디에서 쓸 수 있나요?",
-          "모든 입력창에서 됩니다. ChatGPT·Claude·Gemini·Notion 어디서든 입력창에 커서를 두고 단축키를 누르면 말이 글이 됩니다."
-        ],
-        [
-          "음성이 서버로 전송되나요?",
-          "음성 처리는 전부 사용자 기기 안에서만 이루어집니다."
-        ],
-        [
-          "한국어만 되나요?",
-          "100개 이상의 언어를 지원합니다."
-        ]
-      ],
-      "tagline2": "타이핑 대신 말로 입력하는 크롬 확장입니다. 긴 프롬프트를 손으로 치지 않고 말해서 넣습니다.",
-      "logo": "/assets/home/logo/openai.png",
-      "shot": "https://the-moment.us/assets/home/logo/openai.png"
-    },
-    "binbang": {
-      "name": "빈방 · 취소표 알림",
-      "short": "빈방",
-      "desire": "가고 싶은 펜션이 만실인가요?",
-      "free": false,
-      "type": "service",
-      "hook": null,
-      "cat": "me",
-      "color": "#191f28",
-      "icon": "◇",
-      "tag": "펜션·글램핑 빈방 알림",
-      "tagline": "다 찬 숙소도 취소는 나옵니다.",
-      "lead": "<b>새로고침은 이제 저희 일입니다.</b> 원하시는 날짜를 10분마다 대신 확인하고, 빈방이 나오는 순간 알려드립니다. 회원가입 없이 1분이면 등록됩니다.",
-      "feats": [
-        [
-          "10분마다 대신 확인",
-          "체크인 날까지 하루 144번. 사람이 하면 잠을 못 잡니다."
-        ],
-        [
-          "빈방이 나면 즉시",
-          "취소가 잡히는 순간 문자·알림톡으로 알려드립니다."
-        ],
-        [
-          "객실 여러 개 동시에",
-          "걸어둔 객실 중 하나만 나도 알려드려요."
-        ]
-      ],
-      "how": [
-        [
-          "숙소와 날짜 고르기",
-          "떠나요 등록 펜션·글램핑을 검색해 고릅니다."
-        ],
-        [
-          "지켜볼 객실 선택",
-          "지금 만실인 객실만 고를 수 있습니다."
-        ],
-        [
-          "기다리기",
-          "빈방이 나오면 등록한 번호로 알림이 갑니다."
-        ]
-      ],
-      "cta": "ext",
-      "url": "https://bb.the-moment.us",
-      "ctatext": "빈방 알림 등록하기",
-      "ctasub": "무료 주기부터 · 회원가입 없음",
-      "shot": "https://bb.the-moment.us/assets/hero.jpg",
-      "faq": [
-        [
-          "빈방을 반드시 찾아주나요?",
-          "취소가 나오는지는 숙소와 예약자 사정이라 저희가 보장할 수 없습니다. 저희가 파는 건 '대신 확인하는 일'입니다 — 10분 주기면 체크인 날까지 하루 144번, 사람이 하기 어려운 횟수를 대신 지켜봅니다."
-        ],
-        [
-          "빈방을 못 찾으면 환불되나요?",
-          "모니터링 시작 전에는 전액 환불됩니다. 시작 후에는 서비스가 제공된 것으로 보아 환불이 어렵습니다. 다만 시스템 오류나 예약 사이트 정책 변경으로 저희가 확인을 이어가지 못한 경우에는 먼저 안내드리고 전액 환불합니다."
-        ],
-        [
-          "알림은 어떻게 오나요?",
-          "등록하신 휴대폰 번호로 카카오 알림톡이 갑니다. 카톡이 닿지 않으면 문자로 대체 발송됩니다. 진행 상황은 알림에 담긴 링크에서 언제든 확인하실 수 있습니다."
-        ],
-        [
-          "무료로도 쓸 수 있나요?",
-          "3시간마다 확인하는 무료 주기가 있습니다(휴대폰 번호당 1건). 인기 있는 날짜는 취소가 나와도 3시간 안에 다시 나가는 경우가 많아, 꼭 잡아야 한다면 10분 주기를 권합니다."
-        ]
-      ]
-    },
-    "kontext": {
-      "name": "컨텍스트",
-      "short": "컨텍스트",
-      "free": false,
-      "color": "#5b5bd6",
-      "icon": "◈",
-      "tag": "노드로 잇는 AI 작업 공간",
-      "tagline": "생각을 정리하고, 그 상태로 AI에게 넘깁니다.",
-      "cta": "ext",
-      "shot": "https://the-moment.us/assets/home/kontext.jpg",
-      "desc": "문서를 쓰는 대신 생각을 노드로 놓고 잇습니다. 노드마다 원하는 AI 모델을 붙여 묻고 답하게 하고, 그 결과가 다시 다음 노드가 됩니다. 정리한 그대로가 AI가 읽는 자료가 됩니다.",
-      "feats": [
-        "노드로 잇는 무한 캔버스 — 멀리 보면 전체 흐름, 당겨 보면 문장 하나",
-        "노드마다 AI 모델 선택 — 물어보고 받은 답이 다음 노드가 된다",
-        "프롬프트 대신 버튼 — 확장·딥다이브·피벗을 눌러 방향만 고른다"
-      ],
-      "desire": "매번 상황을 다시 설명하는 것",
-      "type": "web",
-      "hook": "AI에게 매번 처음부터 설명하고 계신가요",
-      "cat": "AI 도구",
-      "lead": "워드·PPT 는 사람이 읽으라고 만든 문서라, AI 는 그 배치와 숨은 뜻을 잘 못 읽습니다. 컨텍스트는 생각을 노드로 놓고 잇는 무한 캔버스입니다. 노드마다 쓰고 싶은 AI 모델을 골라 붙일 수 있고, 물어본 결과가 다음 노드가 되어 그대로 이어집니다. 정리를 끝내면 그 자체가 AI 에게 넘길 자료가 됩니다.",
-      "how": [
-        [
-          "생각을 노드로 놓기",
-          "폴더도 파일명도 없습니다. 눌러서 떠오른 것부터 놓습니다."
-        ],
-        [
-          "노드에 AI 붙이기",
-          "노드마다 쓰고 싶은 모델을 골라 묻고, 답을 다음 노드로 잇습니다."
-        ],
-        [
-          "그대로 넘기기",
-          "정리된 그래프가 곧 AI 가 읽을 자료입니다. 다시 설명하지 않습니다."
-        ]
-      ],
-      "url": "https://kontext.the-moment.us",
-      "ctatext": "컨텍스트 열기",
-      "ctasub": "베타 — 무료로 시작합니다",
-      "faq": [
-        [
-          "무엇이 다른가요?",
-          "문서는 사람이 읽는 순서대로 쓰지만, 컨텍스트는 생각과 생각의 관계를 남깁니다. AI 가 그 관계를 그대로 따라 읽습니다."
-        ],
-        [
-          "어떤 AI 모델을 쓰나요?",
-          "노드마다 골라서 붙입니다. 한 캔버스 안에서 모델을 섞어 쓸 수 있습니다."
-        ],
-        [
-          "지금 쓸 수 있나요?",
-          "베타로 열려 있고 무료로 시작할 수 있습니다."
-        ]
-      ]
-    },
-    "flipper": {
-      "name": "Flipper",
-      "short": "플리퍼",
-      "free": false,
-      "color": "#7C3AED",
-      "icon": "⇅",
-      "tag": "볼륨키 페이지 넘김 · 폴더블",
-      "tagline": "화면을 만지지 않고 페이지를 넘깁니다.",
-      "desire": "누워서·한 손으로 읽을 때 화면 만지기 번거로우시죠?",
-      "type": "app",
-      "hook": "누워서·한 손으로 읽을 때 화면 만지기 번거로우시죠?",
-      "cat": "앱",
-      "cta": "store",
-      "url": "https://play.google.com/store/apps/details?id=us.themoment.flipper&hl=ko",
-      "ctatext": "Google Play에서 받기",
-      "ctasub": "Android 9 이상 · 3일 무료 체험",
-      "store": "https://play.google.com/store/apps/details?id=us.themoment.flipper&hl=ko",
-      "pkg": "us.themoment.flipper",
-      "platform": "Android 9 (API 28) 이상",
-      "status": "live",
-      "lead": "<b>볼륨 버튼만 누르면 페이지가 넘어갑니다.</b> 전자책·웹페이지·PDF를 읽을 때 화면에 손을 뻗지 않아도 됩니다. 한 손으로 들고 읽을 때, 누워서 읽을 때, 젖은 손으로 레시피를 볼 때.",
-      "feats": [
-        [
-          "손을 대지 않아도 됩니다",
-          "엄지를 화면 반대편까지 뻗을 필요가 없습니다. 대화면·폴더블에서 특히 그렇습니다."
-        ],
-        [
-          "E-ink 리더기에서 동작합니다",
-          "하이센스 등 전자잉크 기기에서 동작을 확인했습니다. 스와이프가 불편한 화면일수록 물리 버튼이 낫습니다."
-        ],
-        [
-          "읽을 때만 켭니다",
-          "볼륨키를 항상 뺏지 않습니다. <b>볼륨 올리기 버튼을 두 번</b> 누르면 원래 소리 조절로 돌아옵니다."
-        ],
-        [
-          "아무것도 수집하지 않습니다",
-          "계정 가입 없음. 광고·분석 SDK 없음. 화면에 표시된 내용을 저장하거나 밖으로 보내지 않습니다."
-        ]
-      ],
-      "spec": [
-        [
-          "종류",
-          "Android 앱 (Google Play)"
-        ],
-        [
-          "필요 사양",
-          "Android 9 (API 28) 이상"
-        ],
-        [
-          "권한",
-          "접근성 서비스"
-        ],
-        [
-          "넘김 세기",
-          "5단계 (화면 높이의 15~75%)"
-        ],
-        [
-          "체험",
-          "3일 무료 (결제수단 등록 없음)"
-        ]
-      ],
-      "setup": {
-        "lead": "Flipper는 접근성 서비스 권한이 있어야 동작합니다. 페이지를 대신 넘겨 주려면 안드로이드가 그 권한을 요구하기 때문입니다. <b>메뉴 이름과 깊이가 제조사마다 다릅니다.</b> 쓰시는 기기를 골라 주세요.",
-        "devices": [
-          {
-            "key": "samsung",
-            "label": "삼성 갤럭시 (One UI)",
-            "note": "삼성은 접근성 첫 화면에 Flipper가 <b>안 보입니다.</b> <b>‘설치된 앱’을 한 번 더 들어가야</b> 나옵니다. 여기서 가장 많이 막히십니다.",
-            "steps": [
-              [
-                "앱에서 볼륨키 카드 누르기",
-                "Flipper를 열고 볼륨키 카드를 누릅니다.",
-                "/assets/apps/flipper/setup/samsung-1-app-main.png"
-              ],
-              [
-                "접근성 설정 열기",
-                "안내가 뜨면 <b>접근성 설정 열기</b>를 누릅니다.",
-                "/assets/apps/flipper/setup/samsung-2-permission-sheet.png"
-              ],
-              [
-                "설치된 앱",
-                "접근성 화면에서 <b>설치된 앱</b>을 누릅니다. 이 단계를 건너뛰면 Flipper가 목록에 없습니다.",
-                "/assets/apps/flipper/setup/samsung-3-accessibility.png"
-              ],
-              [
-                "Flipper 찾기",
-                "목록에서 <b>Flipper</b>를 누릅니다.",
-                "/assets/apps/flipper/setup/samsung-4-installed-apps.png"
-              ],
-              [
-                "스위치 켜기",
-                "스위치를 켜고 안내창에서 <b>허용</b>을 누릅니다.",
-                "/assets/apps/flipper/setup/samsung-5-flipper-detail.png"
-              ]
-            ]
-          },
-          {
-            "key": "hisense",
-            "label": "하이센스 · E-ink 리더기",
-            "note": "하이센스는 접근성 목록의 <b>Downloaded services</b> 아래에 Flipper가 있습니다. 화면이 흑백에 가까운 것은 E-ink 기기의 특성입니다.",
-            "steps": [
-              [
-                "앱에서 볼륨키 카드 누르기",
-                "Flipper를 열고 볼륨키 카드를 누릅니다.",
-                "/assets/apps/flipper/setup/hisense-1-app-main.png"
-              ],
-              [
-                "접근성 설정 열기",
-                "안내가 뜨면 <b>접근성 설정 열기</b>를 누릅니다.",
-                "/assets/apps/flipper/setup/hisense-2-permission-sheet.png"
-              ],
-              [
-                "Flipper 찾기",
-                "<b>Downloaded services</b> 아래의 <b>Flipper</b>를 누릅니다.",
-                "/assets/apps/flipper/setup/hisense-3-accessibility-downloaded-services.png"
-              ],
-              [
-                "스위치 켜기",
-                "스위치를 켜고 <b>허용</b>을 누릅니다.",
-                "/assets/apps/flipper/setup/hisense-4-flipper-detail.png"
-              ]
-            ]
-          },
-          {
-            "key": "sam",
-            "label": "교보 SAM",
-            "note": "교보 SAM은 접근성 목록의 <b>다운로드한 앱</b> 아래에 Flipper가 있습니다. 삼성이 부르는 <b>‘설치된 앱’</b>과 이름이 다릅니다. 화면이 흑백에 가깝고 가로로 넓은 것은 E-ink 리더기의 특성입니다.",
-            "steps": [
-              [
-                "앱에서 볼륨키 카드 누르기",
-                "Flipper를 열고 볼륨키 카드를 누릅니다.",
-                "/assets/apps/flipper/setup/sam-1-app-main.png"
-              ],
-              [
-                "접근성 설정 열기",
-                "안내가 뜨면 <b>접근성 설정 열기</b>를 누릅니다.",
-                "/assets/apps/flipper/setup/sam-2-permission-sheet.png"
-              ],
-              [
-                "Flipper 찾기",
-                "<b>다운로드한 앱</b> 아래의 <b>Flipper</b>를 누릅니다.",
-                "/assets/apps/flipper/setup/sam-3-accessibility.png"
-              ],
-              [
-                "스위치 켜기",
-                "스위치를 켜고 <b>허용</b>을 누릅니다.",
-                "/assets/apps/flipper/setup/sam-4-flipper-detail.png"
-              ]
-            ]
-          },
-          {
-            "key": "other",
-            "label": "그 밖의 기기",
-            "note": "픽셀 등 그 밖의 기기는 <b>아직 저희가 실제로 확인하지 못했습니다.</b> 확인한 세 기기(삼성·교보 SAM·하이센스)가 <b>같은 자리를 서로 다른 이름으로</b> 부르고 있어서, 안 써 본 기기의 메뉴 이름을 단정해 드리지 않겠습니다. 대신 어디를 봐야 하는지 알려드립니다.",
-            "steps": [
-              [
-                "앱에서 볼륨키 카드 누르기",
-                "Flipper를 열고 볼륨키 카드를 누릅니다.",
-                null
-              ],
-              [
-                "접근성 설정 열기",
-                "안내가 뜨면 <b>접근성 설정 열기</b>를 누릅니다.",
-                null
-              ],
-              [
-                "목록에서 Flipper 찾기",
-                "접근성 화면에 <b>Flipper</b>가 바로 보이면 그걸 누르시면 됩니다. 안 보이면 <b>설치된 앱 · 다운로드한 앱 · Downloaded services</b>처럼 ‘설치한 앱을 모아 둔 항목’을 찾아 그 안으로 들어가 주세요. 저희가 확인한 세 기기가 각각 이 셋 중 하나를 씁니다.",
-                null
-              ],
-              [
-                "스위치 켜기",
-                "스위치를 켜고 <b>허용</b>을 누릅니다.",
-                null
-              ]
-            ]
-          }
-        ],
-        "trouble": [
-          [
-            "‘제한된 설정’이라며 못 켜게 합니다",
-            "Play 스토어가 아닌 경로로 APK를 설치하면 Android 13 이상에서 접근성 켜기가 막힙니다. <b>설정 → 앱 → Flipper → 오른쪽 위 ⋮ → 제한된 설정 허용</b>을 누른 뒤 다시 켜 주세요."
-          ],
-          [
-            "권한을 켰는데 페이지가 안 넘어갑니다",
-            "먼저 앱을 열어 첫 번째 카드의 <b>볼륨키</b>가 <b>‘넘기기’</b>로 되어 있는지 확인해 주세요. <b>‘소리’</b>로 되어 있으면 볼륨키는 원래대로 소리만 조절합니다. <b>볼륨 올리기 버튼을 두 번</b> 누르면 바뀝니다."
-          ],
-          [
-            "한동안 쓰다 보면 저절로 멈춥니다",
-            "배터리 절약 기능이 접근성 서비스를 정리한 경우입니다. <b>설정 → 앱 → Flipper → 배터리 → 제한 없음</b>으로 바꿔 주세요."
-          ],
-          [
-            "특정 앱에서만 안 넘어갑니다",
-            "앱마다 화면을 그리는 방식이 달라 모든 앱을 보장하지는 못합니다. 넘김 세기를 <b>‘가장 크게’</b>로 올리면 되는 경우가 많습니다."
-          ]
-        ]
-      },
-      "support": {
-        "_note": "앱 v27 부터 메인 화면 하단 '잘 안 넘어가나요? 도움받기' 가 이 페이지로 바로 온다. 그래서 도착하는 사람의 상당수가 결제 문의가 아니라 '동작 불량' 상태다. 자가진단을 맨 위에 둔다.",
-        "lead": "권한은 켰는데 <b>페이지가 안 넘어가는</b> 경우가 가장 많습니다. 아래 네 가지를 순서대로 확인해 주세요. 대부분 여기서 해결됩니다.",
-        "selfcheck": {
-          "title": "볼륨키를 눌러도 페이지가 안 넘어가나요?",
-          "steps": [
-            [
-              "볼륨키가 ‘넘기기’로 되어 있나요",
-              "가장 흔한 원인입니다. 볼륨키가 <b>‘소리’</b>로 되어 있으면 원래대로 소리만 조절합니다. 앱을 열어 <b>첫 번째 카드</b>가 <b>‘넘기기’</b>인지 확인해 주세요. <b>볼륨 올리기 버튼을 두 번</b> 누르면 바뀝니다."
-            ],
-            [
-              "접근성 권한이 켜져 있나요",
-              "권한이 꺼져 있으면 Flipper는 화면을 넘길 수 없습니다. 메뉴 이름이 기기마다 달라서 <a href=\"/apps/flipper/setup/\">기기별 설정 방법</a>에 사진으로 정리해 두었습니다."
-            ],
-            [
-              "배터리 최적화에서 빠져 있나요",
-              "한동안 잘 되다가 저절로 멈춘다면 배터리 절약 기능이 정리한 것입니다. <b>설정 → 앱 → Flipper → 배터리 → 제한 없음</b>으로 바꿔 주세요."
-            ],
-            [
-              "특정 앱에서만 안 되나요",
-              "앱마다 화면을 그리는 방식이 달라 모든 앱을 보장하지는 못합니다. 넘김 세기를 <b>‘가장 크게’</b>로 올리면 되는 경우가 많습니다. 그래도 안 되면 <b>어떤 앱인지</b> 메일에 적어 주세요."
-            ]
-          ],
-          "fallback": "여기까지 해도 안 되면 아래로 메일 주세요."
-        },
-        "ask": [
-          "기기 이름과 안드로이드 버전",
-          "어떤 앱에서 안 넘어가는지",
-          "앱 버전 — Flipper 앱의 <b>오른쪽 위 톱니바퀴 → 앱 정보</b>에서 보실 수 있습니다"
-        ]
-      },
-      "shot": "https://the-moment.us/assets/flipper/hero.png",
-      "how": [
-        [
-          "설치하고 권한 켜기",
-          "Google Play에서 받은 뒤 접근성 권한을 한 번 켭니다."
-        ],
-        [
-          "볼륨키를 넘기기로",
-          "앱에서 첫 카드를 ‘넘기기’로 둡니다. 볼륨 올리기 두 번이면 언제든 소리로 돌아옵니다."
-        ],
-        [
-          "그냥 읽기",
-          "웹툰·릴스·기사·PDF 어디서든 볼륨키만 누르면 넘어갑니다."
-        ]
-      ],
-      "faq": [
-        [
-          "어떤 앱에서 되나요?",
-          "웹툰·릴스·기사·PDF·전자책 등 스크롤로 읽는 화면이면 대체로 동작합니다."
-        ],
-        [
-          "볼륨 조절은 못 하나요?",
-          "볼륨 올리기 버튼을 두 번 누르면 원래 소리 조절로 돌아옵니다."
-        ],
-        [
-          "무엇을 수집하나요?",
-          "아무것도 수집하지 않습니다. 계정 가입도, 광고·분석 SDK도 없습니다."
-        ]
-      ],
-      "device": "삼성 갤럭시 폴드8 필수앱"
-    }
+  "links": [
+   {
+    "key": "products",
+    "label": "제품 전체",
+    "href": "/products/"
+   },
+   {
+    "key": "story",
+    "label": "인사이트",
+    "href": "/insights/"
+   },
+   {
+    "key": "about",
+    "label": "소개",
+    "href": "/about/"
+   }
+  ],
+  "hero_shots": [
+   {
+    "src": "https://the-moment.us/assets/home/teamai.jpg",
+    "alt": "팀AI — AI 친구와의 대화",
+    "label": "AI친구",
+    "fit": "cover",
+    "bg": "#0B0B0D",
+    "title": "혼자 하지 마세요",
+    "sub": "영어·여행·아이 공부·마음까지. 필요한 친구를 만나 매일 대화하세요. AI 친구 178명.",
+    "cta": "팀AI 시작하기",
+    "href": "https://teamai.the-moment.us"
+   },
+   {
+    "src": "https://notes.the-moment.us/img/wizard/wz_9abd2186-233/draft_user_cover.png",
+    "alt": "VOID 플래너 커버",
+    "label": "플래너",
+    "fit": "contain",
+    "bg": "#f7f6f1",
+    "title": "VOID",
+    "sub": "여백이 일하는 플래너. 링크로 넘나드는 목차, 구글 캘린더 연동.",
+    "cta": "플래너 보러 가기",
+    "href": "https://notes.the-moment.us/p/void"
+   },
+   {
+    "src": "https://mark.the-moment.us/og-default.png",
+    "alt": "업종별 로고 시안",
+    "label": "로고",
+    "fit": "cover",
+    "bg": "#fff",
+    "title": "업종을 아는 로고",
+    "sub": "같은 업종만 깊이 판 시안 1,193건. 간판·명함에 얹어 보고 고릅니다.",
+    "cta": "업종별 시안 보기",
+    "href": "https://mark.the-moment.us"
+   },
+   {
+    "src": "https://cue.the-moment.us/og.png",
+    "alt": "AI 모의면접 화면",
+    "label": "모의면접",
+    "fit": "contain",
+    "bg": "#fff",
+    "title": "읽지 말고, 소리 내어",
+    "sub": "면접은 눈으로 아는 게 아니라 입으로 아는 겁니다. 회원가입 없이 지금.",
+    "cta": "한 판 해보기",
+    "href": "https://cue.the-moment.us"
+   }
+  ]
+ },
+ "order": [
+  "teamai",
+  "heyreci",
+  "mark",
+  "theplan",
+  "cue",
+  "binbang",
+  "kontext",
+  "flipper",
+  "quickpang",
+  "insta-rank",
+  "youtube-rank",
+  "pinterest-grab",
+  "chatpage",
+  "her"
+ ],
+ "products": {
+  "heyreci": {
+   "name": "헤이레시 · AI 상품사진",
+   "short": "헤이레시",
+   "desire": "촬영비 없이 판매용 상품컷, 만들고 싶으시죠?",
+   "free": false,
+   "type": "service",
+   "hook": null,
+   "cat": "sell",
+   "color": "#3182f6",
+   "icon": "◆",
+   "tag": "AI 상품사진 · 쇼핑몰 셀러",
+   "tagline": "폰으로 찍어도 판매용 컷이 됩니다.",
+   "lead": "<b>촬영비 0원으로 카탈로그를 만듭니다.</b> 폰으로 찍은 상품 사진을 올리면 30초 만에 배경·조명·모델이 붙은 판매용 컷이 됩니다. 이미지 도구 40종.",
+   "feats": [
+    [
+     "촬영 없이 상품컷",
+     "스튜디오도, 모델도, 조명도 없이. 폰 사진 한 장이면 시작합니다."
+    ],
+    [
+     "배경·모델·상세페이지까지",
+     "누끼부터 연출컷, 모델 착용컷, 상세페이지 이미지까지 한 곳에서."
+    ],
+    [
+     "프롬프트 없이도",
+     "복잡한 설정 없이 올리고, 누르고, 끝. 판매용 결과물에 학습된 모델입니다."
+    ]
+   ],
+   "how": [
+    [
+     "상품 사진 올리기",
+     "폰으로 찍은 사진 그대로 올립니다."
+    ],
+    [
+     "도구 고르기",
+     "배경 지우기·연출컷·모델컷 중에서."
+    ],
+    [
+     "30초 뒤 다운로드",
+     "바로 쓸 수 있는 판매용 이미지가 나옵니다."
+    ]
+   ],
+   "cta": "ext",
+   "url": "https://heyreci.com",
+   "ctatext": "heyreci.com에서 써보기 →",
+   "ctasub": "AI 상품사진 · 크레딧 충전제",
+   "shot": "https://heyreci.com/og-default.png",
+   "faq": [
+    [
+     "헤이레시는 무료인가요?",
+     "크레딧 충전제로 운영합니다. 사진 한 장을 만들 때마다 크레딧이 차감되는 방식이고, 월 정기결제가 아닙니다. 가격과 크레딧 구성은 heyreci.com 에서 확인하실 수 있습니다."
+    ],
+    [
+     "스튜디오 촬영 없이 정말 판매용 컷이 나오나요?",
+     "폰으로 찍은 상품 사진을 올리면 AI가 배경과 조명을 바꿔 판매용 컷으로 만듭니다. 배경 교체, 모델 착용컷, 상세페이지까지 한 곳에서 처리합니다. 결과가 나오기까지 약 30초 걸립니다."
+    ],
+    [
+     "프롬프트를 쓸 줄 알아야 하나요?",
+     "몰라도 됩니다. 도구를 고르는 방식이라 원하는 결과를 목록에서 선택하면 됩니다. 프롬프트를 직접 넣고 싶은 분은 넣으셔도 됩니다."
+    ],
+    [
+     "어디서 쓰나요?",
+     "heyreci.com 에서 바로 씁니다. 설치할 것이 없고 브라우저만 있으면 됩니다."
+    ]
+   ]
   },
-  "links": {
-    "_note": "앱 바이너리·스토어 등록정보에 박히는 영구 주소(/l/<키>). ⚠️ 키는 절대 바꾸지 마라 — 이미 배포된 앱은 재빌드가 안 된다. 바꾸는 건 target 뿐이다. ⚠️ 반드시 302(임시)로 발행한다. 301은 브라우저·스토어 크롤러가 영구 캐시해서, 나중에 target을 바꿔도 기존 설치본이 옛 주소로 계속 간다 = 이 층을 만든 의미가 사라진다.",
-    "_catchall": "/",
-    "map": {
-      "flipper": "/products/flipper/",
-      "flipper/setup": "/products/flipper/setup/",
-      "flipper/support": "/products/flipper/support/",
-      "flipper/get": "https://play.google.com/store/apps/details?id=us.themoment.flipper&hl=ko",
-      "privacy": "/legal/privacy/",
-      "terms": "/legal/terms/",
-      "refund": "/legal/refund/"
-    }
+  "mark": {
+   "name": "마크 · 로고 디자인",
+   "short": "마크",
+   "desire": "내 업종 로고, 맡기기 전에 시안부터 보고 싶으시죠?",
+   "free": false,
+   "type": "service",
+   "hook": null,
+   "cat": "brand",
+   "color": "#0E1013",
+   "icon": "✕",
+   "tag": "로고 디자인 · 자영업 사장님",
+   "tagline": "내 업종 로고를 먼저 보고 고릅니다.",
+   "lead": "<b>디자이너를 만나기 전에, 시안부터 봅니다.</b> 같은 업종만 깊이 판 로고 시안 600여 개. 간판과 명함에 얹은 모습까지 보고, 마음에 들면 그때 맡기세요.",
+   "feats": [
+    [
+     "내 업종 시안부터",
+     "병원·카페·한의원·법무… 업종별로 이미 그려둔 시안을 먼저 봅니다."
+    ],
+    [
+     "간판·명함에 얹어서",
+     "로고만 덩그러니 말고, 실제 간판과 명함에 올린 모습으로 확인합니다."
+    ],
+    [
+     "무료 명함부터",
+     "로고가 없어도 3분이면 명함. 상호와 이름만 넣으면 됩니다."
+    ]
+   ],
+   "how": [
+    [
+     "취향 고르기",
+     "마음에 드는 시안을 고르면 어울리는 방향을 추천합니다."
+    ],
+    [
+     "내 업종 시안 보기",
+     "같은 업종 로고를 가장 많이 만들어 봤습니다."
+    ],
+    [
+     "마음에 들면 제작",
+     "시안을 고르고 의뢰하면 끝까지 다듬어 드립니다."
+    ]
+   ],
+   "cta": "ext",
+   "url": "https://mark.the-moment.us",
+   "ctatext": "업종별 시안 보기 →",
+   "ctasub": "로고 · 간판 · 명함 · 무료 명함 제작",
+   "shot": "https://mark.the-moment.us/og-default.png",
+   "faq": [
+    [
+     "마크는 어떻게 로고를 만드나요?",
+     "먼저 취향을 고르고, 내 업종의 시안을 봅니다. 마음에 드는 것이 있으면 그때 제작합니다. 빈 화면에서 시작하지 않고 내 업종에 이미 어울리는 시안부터 보는 순서입니다."
+    ],
+    [
+     "로고만 나오나요, 간판·명함도 되나요?",
+     "로고를 간판과 명함에 얹은 모습까지 함께 봅니다. 로고 파일만 받고 나서 어디에 어떻게 쓸지 다시 고민하지 않아도 됩니다."
+    ],
+    [
+     "무료로 해볼 수 있나요?",
+     "무료 명함 제작부터 시작하실 수 있습니다. 업종별 시안을 보는 것도 무료입니다."
+    ],
+    [
+     "어디서 쓰나요?",
+     "mark.the-moment.us 에서 바로 씁니다."
+    ]
+   ]
   },
-  "apps": {
-    "_note": "스토어에서 설치하는 네이티브 앱. 무료 도구(/tools/)도 유료 스포크(/products/)도 아닌 3번째 축 = /apps/<slug>/. 판단 근거 docs/PLATFORM_TOPOLOGY.md §0 — 결제·계정·데이터가 우리 도메인에 없으면(스토어가 처리) apex 경로. 각 앱은 소개·setup(권한 설정)·support 3장을 갖는다. 앱에는 /l/<키>만 박는다. ⚠️ flipper 는 2026-08-24 products 로 승격했다(정본=products.flipper). /apps/flipper/* 는 301."
+  "theplan": {
+   "name": "더플랜 · 디지털 플래너",
+   "short": "더플랜",
+   "desire": "내 손에 맞는 플래너, 골라서 쓰고 싶으시죠?",
+   "free": false,
+   "type": "service",
+   "hook": null,
+   "cat": "me",
+   "color": "#5A5A5A",
+   "icon": "▤",
+   "tag": "디지털 플래너 · 굿노트 · 아이패드",
+   "tagline": "내 손에 맞는 플래너를 골라서 씁니다.",
+   "lead": "<b>남의 플래너에 나를 맞추지 마세요.</b> 스타일과 구성, 시작 요일까지 고른 대로 조립해 PDF로 드립니다. 굿노트·아이패드에서 바로.",
+   "feats": [
+    [
+     "고른 대로 조립",
+     "스타일 50종 × 구성 4종. 위클리·데일리·올인원·만년 중에서."
+    ],
+    [
+     "시작 요일까지",
+     "월요일 시작이든 일요일 시작이든. 다크 모드도 고를 수 있습니다."
+    ],
+    [
+     "무료 킷으로 먼저",
+     "손에 맞는지 써보고 사세요. 안 맞으면 안 사도 됩니다."
+    ]
+   ],
+   "how": [
+    [
+     "스타일 고르기",
+     "마음에 드는 커버와 속지 스타일을 고릅니다."
+    ],
+    [
+     "구성 고르기",
+     "위클리·데일리·올인원·만년 중에서."
+    ],
+    [
+     "PDF 받기",
+     "고른 대로 조립해서 보내 드립니다."
+    ]
+   ],
+   "cta": "ext",
+   "url": "https://notes.the-moment.us",
+   "ctatext": "플래너 고르러 가기 →",
+   "ctasub": "굿노트 · 아이패드 · PDF",
+   "shot": "https://notes.the-moment.us/img/wizard/wz_9abd2186-233/draft_user_cover.png",
+   "faq": [
+    [
+     "더플랜은 어떤 형태로 받나요?",
+     "하이퍼링크가 걸린 PDF 로 드립니다. 아이패드·안드로이드 태블릿의 굿노트·노타빌리티·삼성노트 같은 필기 앱에서 씁니다. 목차를 누르면 해당 페이지로 이동합니다."
+    ],
+    [
+     "시작 요일이나 구성을 바꿀 수 있나요?",
+     "고른 대로 조립됩니다. 스타일과 구성을 선택하고 시작 요일까지 지정한 뒤 PDF 를 받습니다."
+    ],
+    [
+     "무료로 써볼 수 있나요?",
+     "무료 킷으로 먼저 써보실 수 있습니다. 손에 맞는지 확인한 뒤 결정하시면 됩니다."
+    ],
+    [
+     "결제하면 어떻게 받나요?",
+     "결제 후 이메일로 다운로드 링크를 보내드립니다. 구매내역 페이지에서 언제든 다시 받으실 수 있습니다."
+    ]
+   ]
+  },
+  "cue": {
+   "name": "큐 · AI 모의면접",
+   "short": "큐",
+   "desire": "면접, 실전처럼 입으로 연습하고 싶으시죠?",
+   "free": false,
+   "type": "service",
+   "hook": null,
+   "cat": "me",
+   "color": "#0E1013",
+   "icon": "◎",
+   "tag": "AI 모의면접 · 경력직 이직",
+   "tagline": "면접장에서 얼어붙지 않게 잡아 줍니다.",
+   "lead": "<b>눈으로 읽으면 다 아는 것 같습니다. 입으로 뱉어봐야 압니다.</b> 실제 면접처럼 소리 내어 답하고, 동문서답하면 AI가 짚어 줍니다. 회원가입 없이 지금 바로.",
+   "feats": [
+    [
+     "읽지 말고, 말하세요",
+     "화면을 읽는 순간 연습이 아닙니다. 빈손으로 입을 여는 훈련."
+    ],
+    [
+     "동문서답을 짚어 줍니다",
+     "점수를 매기지 않습니다. 질문에 답했는지만 봅니다."
+    ],
+    [
+     "D-day 준비",
+     "면접 날짜를 넣으면 그날까지 뭘 해야 하는지 잡아 줍니다."
+    ]
+   ],
+   "how": [
+    [
+     "직군·회사 넣기",
+     "어떤 회사, 어떤 자리인지만 알려주세요."
+    ],
+    [
+     "소리 내어 답하기",
+     "실제 면접처럼 말로 답합니다."
+    ],
+    [
+     "짚어주는 대로 다시",
+     "동문서답한 부분을 다시 연습합니다."
+    ]
+   ],
+   "cta": "ext",
+   "url": "https://cue.the-moment.us",
+   "ctatext": "한 판 해보기 →",
+   "ctasub": "회원가입 없음 · 지금 바로",
+   "shot": "https://cue.the-moment.us/og.png",
+   "faq": [
+    [
+     "큐는 무료인가요?",
+     "회원가입 없이 지금 바로 모의면접을 시작할 수 있습니다. 직군과 회사만 알려주면 질문이 만들어집니다."
+    ],
+    [
+     "왜 소리 내어 답해야 하나요?",
+     "화면을 읽는 순간 연습이 아니기 때문입니다. 눈으로 읽으면 다 아는 것 같지만 입으로 뱉어봐야 압니다. 큐는 빈손으로 입을 여는 훈련을 시킵니다."
+    ],
+    [
+     "점수를 매겨 주나요?",
+     "점수를 매기지 않습니다. 질문에 실제로 답했는지만 봅니다. 동문서답한 부분을 짚어 주면 그 부분만 다시 연습합니다."
+    ],
+    [
+     "어디서 쓰나요?",
+     "cue.the-moment.us 에서 바로 씁니다. 설치할 것이 없습니다."
+    ]
+   ],
+   "deeplinks": [
+    [
+     "회사별 면접 예상질문",
+     "https://cue.the-moment.us/companies"
+    ],
+    [
+     "지금 뜬 공고로 연습",
+     "https://cue.the-moment.us/jobs"
+    ],
+    [
+     "면접 인사이트",
+     "https://cue.the-moment.us/insights"
+    ],
+    [
+     "이용권",
+     "https://cue.the-moment.us/pricing"
+    ]
+   ]
+  },
+  "quickpang": {
+   "name": "퀵팡 · 쿠팡 퀵보기",
+   "short": "퀵팡",
+   "desire": "쿠팡 옵션·재고, 클릭 없이 그 자리에서 보고 싶으시죠?",
+   "free": true,
+   "type": "bookmarklet",
+   "hook": {
+    "label": "the-moment.us · 다른 무료 도구 보기 →",
+    "url": "https://the-moment.us/#tools"
+   },
+   "cat": "sell",
+   "color": "var(--coup)",
+   "icon": "⚡",
+   "tag": "커머스 · 북마크릿 · 1만+ 사용",
+   "tagline": "클릭 없이 옵션·재고 확인.",
+   "lead": "<b>쿠팡 검색 결과에서 상품을 열지 않고, 옵션과 품절 여부를 그 자리에서 봅니다.</b> 소싱·시장조사할 때 탭 지옥에서 해방. 1만 명이 이 도구로 모멘터스를 알게 됐어요.",
+   "feats": [
+    [
+     "검색 결과에 버튼 장착",
+     "목록의 각 상품에 '옵션·재고 보기' 버튼이 생깁니다. 누르면 그 자리에서 펼쳐져요."
+    ],
+    [
+     "재고 상태 색 구분",
+     "구매 가능한 옵션은 초록, 품절은 회색 취소선. n/m 구매가능 카운트까지."
+    ],
+    [
+     "전체 조회",
+     "우하단 '전체 조회' 버튼으로 목록 전체를 순차 조회. 요청 간격은 자동 조절."
+    ]
+   ],
+   "spec": [
+    [
+     "종류",
+     "북마크릿 (설치 없음)"
+    ],
+    [
+     "어디서",
+     "coupang.com 검색 결과"
+    ],
+    [
+     "설치",
+     "버튼을 북마크바로 드래그"
+    ],
+    [
+     "가격",
+     "무료"
+    ],
+    [
+     "실적",
+     "사용자 1만+"
+    ]
+   ],
+   "how": [
+    [
+     "버튼을 북마크바로 드래그",
+     "아래 버튼을 북마크바에 끌어놓기."
+    ],
+    [
+     "쿠팡 검색 결과에서 클릭",
+     "상품 목록 페이지에서 북마크 클릭."
+    ],
+    [
+     "옵션·재고 보기",
+     "상품별 버튼 또는 '전체 조회'로 재고를 그 자리에서."
+    ]
+   ],
+   "cta": "drag",
+   "bm": "quickpang",
+   "faq": [
+    [
+     "퀵팡은 무료인가요?",
+     "무료입니다. 북마크릿이라 설치나 계정이 필요 없고, 버튼을 북마크바로 한 번 끌어다 놓으면 끝입니다."
+    ],
+    [
+     "어떻게 쓰나요?",
+     "버튼을 북마크바로 드래그한 뒤, 쿠팡 검색 결과 화면에서 그 북마크를 클릭합니다. 상품을 열지 않고 그 자리에서 옵션과 재고를 봅니다."
+    ],
+    [
+     "재고는 어떻게 표시되나요?",
+     "재고 상태를 색으로 구분해 보여줍니다. 전체 조회도 됩니다. 소싱이나 시장조사를 할 때 탭을 여러 개 열지 않아도 됩니다."
+    ],
+    [
+     "개인정보를 수집하나요?",
+     "북마크릿은 브라우저 안에서만 동작합니다. 계정을 만들 필요가 없습니다."
+    ]
+   ],
+   "tagline2": "쿠팡 상품 페이지에서 옵션별 가격과 재고를 한 번에 펼쳐 봅니다. 옵션을 하나씩 눌러 확인하지 않아도 됩니다.",
+   "logo": "/assets/home/logo/coupang.png",
+   "shot": "https://the-moment.us/assets/home/logo/coupang.png"
+  },
+  "insta-rank": {
+   "name": "인스타 인기순 정렬",
+   "short": "인스타 인기순 정렬",
+   "desire": "이 계정, 뭐가 제일 잘 됐는지 궁금하시죠?",
+   "free": true,
+   "type": "bookmarklet",
+   "hook": {
+    "label": "the-moment.us · 다른 무료 도구 보기 →",
+    "url": "https://the-moment.us/#tools"
+   },
+   "cat": "research",
+   "color": "var(--ig)",
+   "icon": "◲",
+   "tag": "리서치 · 북마크릿",
+   "tagline": "이 계정, 뭐가 제일 잘 됐나?",
+   "lead": "<b>피드를 좋아요순으로 다시 깝니다.</b> 알고리즘이 섞어놓은 순서 말고, 사람들이 실제로 가장 많이 멈춘 게시물부터. 레퍼런스·벤치마킹의 기준이 달라져요.",
+   "feats": [
+    [
+     "수집 개수 지정",
+     "10~2,000개까지 원하는 만큼 수집해서 정렬합니다. 자동 스크롤로 알아서 모아요."
+    ],
+    [
+     "순위·좋아요·댓글 표시",
+     "각 게시물에 #순위와 ❤·💬 수가 뱃지로 붙습니다. 릴스·캐러셀·영상 아이콘 구분."
+    ],
+    [
+     "원복 버튼",
+     "보고 나면 '원복' 한 번으로 원래 피드로. 페이지를 망가뜨리지 않아요."
+    ]
+   ],
+   "spec": [
+    [
+     "종류",
+     "북마크릿 (설치 없음)"
+    ],
+    [
+     "어디서",
+     "instagram.com 계정·해시태그·탐색"
+    ],
+    [
+     "설치",
+     "버튼을 북마크바로 드래그"
+    ],
+    [
+     "가격",
+     "무료"
+    ]
+   ],
+   "how": [
+    [
+     "버튼을 북마크바로 드래그",
+     "아래 버튼을 브라우저 북마크바에 끌어놓으면 끝. 설치·로그인 없음."
+    ],
+    [
+     "인스타그램에서 클릭",
+     "보고 싶은 계정/해시태그 페이지에서 북마크 클릭."
+    ],
+    [
+     "개수 입력 → ❤ 정렬",
+     "최대 개수 입력하고 정렬 버튼. 좋아요순으로 다시 깔립니다."
+    ]
+   ],
+   "cta": "drag",
+   "bm": "insta-rank",
+   "faq": [
+    [
+     "인스타 인기순 정렬은 무료인가요?",
+     "무료입니다. 북마크릿이라 설치나 로그인이 필요 없습니다."
+    ],
+    [
+     "어떻게 쓰나요?",
+     "버튼을 북마크바로 드래그한 뒤 인스타그램에서 클릭합니다. 수집할 개수를 입력하면 좋아요 순으로 정렬해 보여줍니다."
+    ],
+    [
+     "무엇을 보여주나요?",
+     "순위와 좋아요, 댓글 수를 함께 표시합니다. 이 계정에서 무엇이 제일 잘 됐는지 한눈에 봅니다."
+    ],
+    [
+     "원래 화면으로 되돌릴 수 있나요?",
+     "원복 버튼이 있습니다. 누르면 원래 화면으로 돌아갑니다."
+    ]
+   ],
+   "tagline2": "인스타그램 프로필의 게시물을 좋아요 많은 순서로 다시 세웁니다. 그 계정이 뭘로 떴는지 스크롤 없이 봅니다.",
+   "logo": "/assets/home/logo/instagram.png",
+   "shot": "https://the-moment.us/assets/home/logo/instagram.png"
+  },
+  "youtube-rank": {
+   "name": "유튜브 인기순 정렬",
+   "short": "유튜브 인기순 정렬",
+   "desire": "이 채널 진짜 대표작이 뭔지 보고 싶으시죠?",
+   "free": true,
+   "type": "bookmarklet",
+   "hook": {
+    "label": "the-moment.us · 다른 무료 도구 보기 →",
+    "url": "https://the-moment.us/#tools"
+   },
+   "cat": "research",
+   "color": "var(--yt)",
+   "icon": "▶",
+   "tag": "리서치 · 북마크릿",
+   "tagline": "가장 많이 재생된 순서로.",
+   "lead": "<b>검색 결과·채널·쇼츠를 조회수순으로 다시 정렬합니다.</b> 이 채널의 진짜 대표작이 뭔지, 이 주제에서 뭐가 통했는지 한눈에.",
+   "feats": [
+    [
+     "검색·채널·쇼츠 전부",
+     "페이지 유형을 자동 감지해 일반 그리드·검색 리스트·쇼츠까지 정렬합니다."
+    ],
+    [
+     "조회수·길이·채널 표시",
+     "#순위와 정확한 조회수, 영상 길이, 채널명이 함께 표시됩니다."
+    ],
+    [
+     "오버레이 방식",
+     "원본 페이지 위에 겹쳐 보여주고, 닫기 한 번으로 원래대로."
+    ]
+   ],
+   "spec": [
+    [
+     "종류",
+     "북마크릿 (설치 없음)"
+    ],
+    [
+     "어디서",
+     "youtube.com 검색·채널·쇼츠"
+    ],
+    [
+     "설치",
+     "버튼을 북마크바로 드래그"
+    ],
+    [
+     "가격",
+     "무료"
+    ]
+   ],
+   "how": [
+    [
+     "버튼을 북마크바로 드래그",
+     "아래 버튼을 북마크바에 끌어놓기."
+    ],
+    [
+     "유튜브에서 클릭",
+     "검색 결과나 채널 페이지에서 북마크 클릭."
+    ],
+    [
+     "개수 입력 → 정렬",
+     "수집 개수 입력 후 '조회수순 정렬'. 대표작부터 봅니다."
+    ]
+   ],
+   "cta": "drag",
+   "bm": "youtube-rank",
+   "faq": [
+    [
+     "유튜브 인기순 정렬은 무료인가요?",
+     "무료입니다. 북마크릿이라 설치나 로그인이 필요 없습니다."
+    ],
+    [
+     "어디에서 동작하나요?",
+     "검색 결과, 채널 페이지, 쇼츠 전부에서 동작합니다. 버튼을 북마크바로 드래그한 뒤 유튜브에서 클릭하고 개수를 입력하면 됩니다."
+    ],
+    [
+     "무엇을 보여주나요?",
+     "조회수와 영상 길이, 채널명을 함께 표시하고 가장 많이 재생된 순서로 정렬합니다."
+    ],
+    [
+     "원래 화면이 바뀌나요?",
+     "오버레이 방식이라 유튜브 화면 위에 덧씌워 보여줍니다."
+    ]
+   ],
+   "tagline2": "유튜브 채널의 영상을 조회수 순서로 다시 세웁니다. 최신순 말고 실제로 많이 본 순서로 봅니다.",
+   "logo": "/assets/home/logo/youtube.png",
+   "shot": "https://the-moment.us/assets/home/logo/youtube.png"
+  },
+  "pinterest-grab": {
+   "name": "핀터레스트 원본 추출",
+   "short": "핀터레스트 원본 추출",
+   "desire": "핀터레스트, 원본 화질로 긁어오고 싶으시죠?",
+   "free": true,
+   "type": "bookmarklet",
+   "hook": {
+    "label": "the-moment.us · 다른 무료 도구 보기 →",
+    "url": "https://the-moment.us/#tools"
+   },
+   "cat": "research",
+   "color": "var(--pin)",
+   "icon": "⚲",
+   "tag": "리서치 · 북마크릿",
+   "tagline": "저해상 썸네일 말고, 원본을.",
+   "lead": "<b>핀을 클릭해 고르면, 원본 화질 이미지 URL을 한 번에 복사합니다.</b> 무드보드·레퍼런스 수집이 우클릭 노가다에서 클릭 몇 번으로.",
+   "feats": [
+    [
+     "클릭해서 담기",
+     "핀을 클릭하면 선택 표시가 붙고 사이드바에 모입니다. 다시 클릭하면 해제."
+    ],
+    [
+     "originals 화질",
+     "핀터레스트의 축소본이 아니라 /originals/ 원본 URL로 변환해 줍니다."
+    ],
+    [
+     "일괄 복사",
+     "모은 이미지 URL 전체를 클립보드로 한 번에."
+    ]
+   ],
+   "spec": [
+    [
+     "종류",
+     "북마크릿 (설치 없음)"
+    ],
+    [
+     "어디서",
+     "pinterest.com 검색·보드"
+    ],
+    [
+     "설치",
+     "버튼을 북마크바로 드래그"
+    ],
+    [
+     "가격",
+     "무료"
+    ]
+   ],
+   "how": [
+    [
+     "버튼을 북마크바로 드래그",
+     "아래 버튼을 북마크바에 끌어놓기."
+    ],
+    [
+     "핀터레스트에서 클릭",
+     "수집기가 켜지면 원하는 핀들을 클릭해 담기."
+    ],
+    [
+     "복사",
+     "'복사' 버튼 한 번 — 원본 URL 목록이 클립보드에."
+    ]
+   ],
+   "cta": "drag",
+   "bm": "pinterest-grab",
+   "faq": [
+    [
+     "핀터레스트 원본 추출은 무료인가요?",
+     "무료입니다. 북마크릿이라 설치나 로그인이 필요 없습니다."
+    ],
+    [
+     "어떤 화질로 받나요?",
+     "저해상 썸네일이 아니라 originals 화질의 원본을 가져옵니다."
+    ],
+    [
+     "어떻게 쓰나요?",
+     "버튼을 북마크바로 드래그한 뒤 핀터레스트에서 클릭합니다. 원하는 이미지를 클릭해 담고 한 번에 복사합니다."
+    ],
+    [
+     "여러 장을 한 번에 되나요?",
+     "일괄 복사를 지원합니다. 클릭해서 담은 것들을 한 번에 가져갑니다."
+    ]
+   ],
+   "tagline2": "핀터레스트에서 저화질 썸네일 대신 원본 이미지를 찾아 엽니다. 저장한 이미지가 흐릿해지는 일이 없습니다.",
+   "logo": "/assets/home/logo/pinterest.png",
+   "shot": "https://the-moment.us/assets/home/logo/pinterest.png"
+  },
+  "chatpage": {
+   "name": "ChatPage",
+   "short": "ChatPage",
+   "desire": "긴 유튜브, 다 안 보고 요약만 보고 싶으시죠?",
+   "free": true,
+   "type": "extension",
+   "hook": {
+    "label": "the-moment.us · 다른 무료 도구 보기 →",
+    "url": "https://the-moment.us/#tools"
+   },
+   "cat": "fast study",
+   "color": "#111",
+   "icon": "✎",
+   "tag": "생산성 · 크롬 확장 · 사용자 4,000명",
+   "tagline": "아무리 긴 유튜브도, 3초 요약.",
+   "lead": "<b>긴 영상을 다 볼 필요 없어요.</b> 버튼 한 번이면 유튜브 영상이 ChatGPT·Claude·Gemini로 넘어가 요약됩니다. 무제한, 무료.",
+   "feats": [
+    [
+     "모든 프리미엄 AI 지원",
+     "ChatGPT, Claude, Gemini — 쓰던 AI 그대로. 계정만 있으면 추가 비용 없음."
+    ],
+    [
+     "길이 무제한",
+     "아무리 긴 영상도 자막을 통째로 넘겨 요약합니다."
+    ],
+    [
+     "스토어 별점 4.8",
+     "4,000명이 쓰고 있습니다. 평가 52개 · v2.9.7."
+    ]
+   ],
+   "spec": [
+    [
+     "종류",
+     "크롬 확장"
+    ],
+    [
+     "어디서",
+     "youtube.com"
+    ],
+    [
+     "설치",
+     "크롬 웹스토어에서 1클릭"
+    ],
+    [
+     "가격",
+     "무료"
+    ],
+    [
+     "버전",
+     "v2.9.7 · 별점 4.8 (평가 52개)"
+    ]
+   ],
+   "how": [
+    [
+     "크롬에 추가",
+     "크롬 웹스토어에서 ChatPage 설치."
+    ],
+    [
+     "유튜브에서 버튼 클릭",
+     "영상 페이지에 생긴 요약 버튼을 누르기."
+    ],
+    [
+     "AI가 요약",
+     "쓰던 AI가 3초 만에 정리."
+    ]
+   ],
+   "cta": "store",
+   "store": "https://chromewebstore.google.com/detail/chatpage-youtube-summary/mcecffeookkllgkbflcdlbicolmfgifj",
+   "faq": [
+    [
+     "ChatPage 는 무료인가요?",
+     "무료입니다. 크롬 웹스토어에서 확장을 추가하면 바로 씁니다. 스토어 별점은 4.8 입니다."
+    ],
+    [
+     "영상 길이 제한이 있나요?",
+     "길이 제한이 없습니다. 아무리 긴 유튜브 영상이라도 요약합니다."
+    ],
+    [
+     "어떤 AI 를 쓰나요?",
+     "프리미엄 AI 를 모두 지원합니다. 쓰던 AI 를 그대로 연결해 쓰시면 됩니다."
+    ],
+    [
+     "어떻게 쓰나요?",
+     "크롬에 추가한 뒤 유튜브에서 버튼을 클릭하면 AI 가 요약합니다."
+    ]
+   ],
+   "tagline2": "보고 있는 유튜브·웹페이지를 3초 만에 요약해 주는 크롬 확장입니다. 긴 영상을 처음부터 볼지 말지 먼저 정합니다.",
+   "logo": "/assets/home/logo/chrome.png",
+   "shot": "https://the-moment.us/assets/home/logo/chrome.png"
+  },
+  "her": {
+   "name": "her · 음성 입력",
+   "short": "her",
+   "desire": "타이핑 말고 말로 입력하고 싶으시죠?",
+   "free": true,
+   "type": "extension",
+   "hook": {
+    "label": "the-moment.us · 다른 무료 도구 보기 →",
+    "url": "https://the-moment.us/#tools"
+   },
+   "cat": "new fast",
+   "color": "var(--ok)",
+   "icon": "◉",
+   "tag": "생산성 · 크롬 확장 · NEW",
+   "tagline": "타이핑 대신, 말로.",
+   "lead": "<b>어디서든 ⌘⇧R 하나면 말이 글이 됩니다.</b> ChatGPT·Claude·Gemini·Notion — 모든 입력창에서. 음성 처리는 전부 당신 기기 안에서만.",
+   "feats": [
+    [
+     "100개 이상 언어",
+     "한국어부터 영어·일본어까지, 말하는 대로 즉시 텍스트로."
+    ],
+    [
+     "모든 입력창에서",
+     "따로 앱을 켤 필요 없이, 쓰던 사이트의 입력창 안에서 바로. Perplexity 같은 까다로운 에디터도 대응."
+    ],
+    [
+     "기기 안에서만 처리",
+     "녹음이 서버로 나가지 않습니다. 프라이버시 100%. 끝나면 클립보드 자동 복사."
+    ]
+   ],
+   "spec": [
+    [
+     "종류",
+     "크롬 확장"
+    ],
+    [
+     "어디서",
+     "모든 웹 입력창"
+    ],
+    [
+     "단축키",
+     "⌘⇧R / Ctrl⇧R"
+    ],
+    [
+     "언어",
+     "100+ (한국어)"
+    ],
+    [
+     "가격",
+     "무료"
+    ],
+    [
+     "버전",
+     "v1.0.9"
+    ]
+   ],
+   "how": [
+    [
+     "크롬에 추가",
+     "크롬 웹스토어에서 her 설치."
+    ],
+    [
+     "입력창에서 ⌘⇧R",
+     "아무 사이트 입력창에 커서를 두고 단축키."
+    ],
+    [
+     "말하면 끝",
+     "말하는 대로 글이 됩니다. 클립보드에도 자동 복사."
+    ]
+   ],
+   "cta": "store",
+   "store": "https://chromewebstore.google.com/detail/her-%EB%B0%94%EC%9D%B4%EB%B8%8C%EC%BD%94%EB%94%A9-%ED%95%84%EC%88%98%ED%85%9C/dogofkfjcibfjgniophmfkcplocfellk",
+   "faq": [
+    [
+     "her 는 무료인가요?",
+     "무료입니다. 크롬에 추가하면 바로 씁니다."
+    ],
+    [
+     "어디에서 쓸 수 있나요?",
+     "모든 입력창에서 됩니다. ChatGPT·Claude·Gemini·Notion 어디서든 입력창에 커서를 두고 단축키를 누르면 말이 글이 됩니다."
+    ],
+    [
+     "음성이 서버로 전송되나요?",
+     "음성 처리는 전부 사용자 기기 안에서만 이루어집니다."
+    ],
+    [
+     "한국어만 되나요?",
+     "100개 이상의 언어를 지원합니다."
+    ]
+   ],
+   "tagline2": "타이핑 대신 말로 입력하는 크롬 확장입니다. 긴 프롬프트를 손으로 치지 않고 말해서 넣습니다.",
+   "logo": "/assets/home/logo/openai.png",
+   "shot": "https://the-moment.us/assets/home/logo/openai.png"
+  },
+  "binbang": {
+   "name": "빈방 · 취소표 알림",
+   "short": "빈방",
+   "desire": "가고 싶은 펜션이 만실인가요?",
+   "free": false,
+   "type": "service",
+   "hook": null,
+   "cat": "me",
+   "color": "#191f28",
+   "icon": "◇",
+   "tag": "펜션·글램핑 빈방 알림",
+   "tagline": "다 찬 숙소도 취소는 나옵니다.",
+   "lead": "<b>새로고침은 이제 저희 일입니다.</b> 원하시는 날짜를 10분마다 대신 확인하고, 빈방이 나오는 순간 알려드립니다. 회원가입 없이 1분이면 등록됩니다.",
+   "feats": [
+    [
+     "10분마다 대신 확인",
+     "체크인 날까지 하루 144번. 사람이 하면 잠을 못 잡니다."
+    ],
+    [
+     "빈방이 나면 즉시",
+     "취소가 잡히는 순간 문자·알림톡으로 알려드립니다."
+    ],
+    [
+     "객실 여러 개 동시에",
+     "걸어둔 객실 중 하나만 나도 알려드려요."
+    ]
+   ],
+   "how": [
+    [
+     "숙소와 날짜 고르기",
+     "떠나요 등록 펜션·글램핑을 검색해 고릅니다."
+    ],
+    [
+     "지켜볼 객실 선택",
+     "지금 만실인 객실만 고를 수 있습니다."
+    ],
+    [
+     "기다리기",
+     "빈방이 나오면 등록한 번호로 알림이 갑니다."
+    ]
+   ],
+   "cta": "ext",
+   "url": "https://bb.the-moment.us",
+   "ctatext": "빈방 알림 등록하기",
+   "ctasub": "무료 주기부터 · 회원가입 없음",
+   "shot": "https://bb.the-moment.us/assets/hero.jpg",
+   "faq": [
+    [
+     "빈방을 반드시 찾아주나요?",
+     "취소가 나오는지는 숙소와 예약자 사정이라 저희가 보장할 수 없습니다. 저희가 파는 건 '대신 확인하는 일'입니다 — 10분 주기면 체크인 날까지 하루 144번, 사람이 하기 어려운 횟수를 대신 지켜봅니다."
+    ],
+    [
+     "빈방을 못 찾으면 환불되나요?",
+     "모니터링 시작 전에는 전액 환불됩니다. 시작 후에는 서비스가 제공된 것으로 보아 환불이 어렵습니다. 다만 시스템 오류나 예약 사이트 정책 변경으로 저희가 확인을 이어가지 못한 경우에는 먼저 안내드리고 전액 환불합니다."
+    ],
+    [
+     "알림은 어떻게 오나요?",
+     "등록하신 휴대폰 번호로 카카오 알림톡이 갑니다. 카톡이 닿지 않으면 문자로 대체 발송됩니다. 진행 상황은 알림에 담긴 링크에서 언제든 확인하실 수 있습니다."
+    ],
+    [
+     "무료로도 쓸 수 있나요?",
+     "3시간마다 확인하는 무료 주기가 있습니다(휴대폰 번호당 1건). 인기 있는 날짜는 취소가 나와도 3시간 안에 다시 나가는 경우가 많아, 꼭 잡아야 한다면 10분 주기를 권합니다."
+    ]
+   ]
+  },
+  "kontext": {
+   "name": "컨텍스트",
+   "short": "컨텍스트",
+   "free": false,
+   "color": "#5b5bd6",
+   "icon": "◈",
+   "tag": "노드로 잇는 AI 작업 공간",
+   "tagline": "생각을 정리하고, 그 상태로 AI에게 넘깁니다.",
+   "cta": "ext",
+   "shot": "https://the-moment.us/assets/home/kontext.jpg",
+   "desc": "문서를 쓰는 대신 생각을 노드로 놓고 잇습니다. 노드마다 원하는 AI 모델을 붙여 묻고 답하게 하고, 그 결과가 다시 다음 노드가 됩니다. 정리한 그대로가 AI가 읽는 자료가 됩니다.",
+   "feats": [
+    "노드로 잇는 무한 캔버스 — 멀리 보면 전체 흐름, 당겨 보면 문장 하나",
+    "노드마다 AI 모델 선택 — 물어보고 받은 답이 다음 노드가 된다",
+    "프롬프트 대신 버튼 — 확장·딥다이브·피벗을 눌러 방향만 고른다"
+   ],
+   "desire": "매번 상황을 다시 설명하는 것",
+   "type": "web",
+   "hook": "AI에게 매번 처음부터 설명하고 계신가요",
+   "cat": "AI 도구",
+   "lead": "워드·PPT 는 사람이 읽으라고 만든 문서라, AI 는 그 배치와 숨은 뜻을 잘 못 읽습니다. 컨텍스트는 생각을 노드로 놓고 잇는 무한 캔버스입니다. 노드마다 쓰고 싶은 AI 모델을 골라 붙일 수 있고, 물어본 결과가 다음 노드가 되어 그대로 이어집니다. 정리를 끝내면 그 자체가 AI 에게 넘길 자료가 됩니다.",
+   "how": [
+    [
+     "생각을 노드로 놓기",
+     "폴더도 파일명도 없습니다. 눌러서 떠오른 것부터 놓습니다."
+    ],
+    [
+     "노드에 AI 붙이기",
+     "노드마다 쓰고 싶은 모델을 골라 묻고, 답을 다음 노드로 잇습니다."
+    ],
+    [
+     "그대로 넘기기",
+     "정리된 그래프가 곧 AI 가 읽을 자료입니다. 다시 설명하지 않습니다."
+    ]
+   ],
+   "url": "https://kontext.the-moment.us",
+   "ctatext": "컨텍스트 열기",
+   "ctasub": "베타 — 무료로 시작합니다",
+   "faq": [
+    [
+     "무엇이 다른가요?",
+     "문서는 사람이 읽는 순서대로 쓰지만, 컨텍스트는 생각과 생각의 관계를 남깁니다. AI 가 그 관계를 그대로 따라 읽습니다."
+    ],
+    [
+     "어떤 AI 모델을 쓰나요?",
+     "노드마다 골라서 붙입니다. 한 캔버스 안에서 모델을 섞어 쓸 수 있습니다."
+    ],
+    [
+     "지금 쓸 수 있나요?",
+     "베타로 열려 있고 무료로 시작할 수 있습니다."
+    ]
+   ]
+  },
+  "flipper": {
+   "name": "Flipper",
+   "short": "플리퍼",
+   "free": false,
+   "color": "#7C3AED",
+   "icon": "⇅",
+   "tag": "볼륨키 페이지 넘김 · 폴더블",
+   "tagline": "화면을 만지지 않고 페이지를 넘깁니다.",
+   "desire": "누워서·한 손으로 읽을 때 화면 만지기 번거로우시죠?",
+   "type": "app",
+   "hook": "누워서·한 손으로 읽을 때 화면 만지기 번거로우시죠?",
+   "cat": "앱",
+   "cta": "store",
+   "url": "https://play.google.com/store/apps/details?id=us.themoment.flipper&hl=ko",
+   "ctatext": "Google Play에서 받기",
+   "ctasub": "Android 9 이상 · 3일 무료 체험",
+   "store": "https://play.google.com/store/apps/details?id=us.themoment.flipper&hl=ko",
+   "pkg": "us.themoment.flipper",
+   "platform": "Android 9 (API 28) 이상",
+   "status": "live",
+   "lead": "<b>볼륨 버튼만 누르면 페이지가 넘어갑니다.</b> 전자책·웹페이지·PDF를 읽을 때 화면에 손을 뻗지 않아도 됩니다. 한 손으로 들고 읽을 때, 누워서 읽을 때, 젖은 손으로 레시피를 볼 때.",
+   "feats": [
+    [
+     "손을 대지 않아도 됩니다",
+     "엄지를 화면 반대편까지 뻗을 필요가 없습니다. 대화면·폴더블에서 특히 그렇습니다."
+    ],
+    [
+     "E-ink 리더기에서 동작합니다",
+     "하이센스 등 전자잉크 기기에서 동작을 확인했습니다. 스와이프가 불편한 화면일수록 물리 버튼이 낫습니다."
+    ],
+    [
+     "읽을 때만 켭니다",
+     "볼륨키를 항상 뺏지 않습니다. <b>볼륨 올리기 버튼을 두 번</b> 누르면 원래 소리 조절로 돌아옵니다."
+    ],
+    [
+     "아무것도 수집하지 않습니다",
+     "계정 가입 없음. 광고·분석 SDK 없음. 화면에 표시된 내용을 저장하거나 밖으로 보내지 않습니다."
+    ]
+   ],
+   "spec": [
+    [
+     "종류",
+     "Android 앱 (Google Play)"
+    ],
+    [
+     "필요 사양",
+     "Android 9 (API 28) 이상"
+    ],
+    [
+     "권한",
+     "접근성 서비스"
+    ],
+    [
+     "넘김 세기",
+     "5단계 (화면 높이의 15~75%)"
+    ],
+    [
+     "체험",
+     "3일 무료 (결제수단 등록 없음)"
+    ]
+   ],
+   "setup": {
+    "lead": "Flipper는 접근성 서비스 권한이 있어야 동작합니다. 페이지를 대신 넘겨 주려면 안드로이드가 그 권한을 요구하기 때문입니다. <b>메뉴 이름과 깊이가 제조사마다 다릅니다.</b> 쓰시는 기기를 골라 주세요.",
+    "devices": [
+     {
+      "key": "samsung",
+      "label": "삼성 갤럭시 (One UI)",
+      "note": "삼성은 접근성 첫 화면에 Flipper가 <b>안 보입니다.</b> <b>‘설치된 앱’을 한 번 더 들어가야</b> 나옵니다. 여기서 가장 많이 막히십니다.",
+      "steps": [
+       [
+        "앱에서 볼륨키 카드 누르기",
+        "Flipper를 열고 볼륨키 카드를 누릅니다.",
+        "/assets/apps/flipper/setup/samsung-1-app-main.png"
+       ],
+       [
+        "접근성 설정 열기",
+        "안내가 뜨면 <b>접근성 설정 열기</b>를 누릅니다.",
+        "/assets/apps/flipper/setup/samsung-2-permission-sheet.png"
+       ],
+       [
+        "설치된 앱",
+        "접근성 화면에서 <b>설치된 앱</b>을 누릅니다. 이 단계를 건너뛰면 Flipper가 목록에 없습니다.",
+        "/assets/apps/flipper/setup/samsung-3-accessibility.png"
+       ],
+       [
+        "Flipper 찾기",
+        "목록에서 <b>Flipper</b>를 누릅니다.",
+        "/assets/apps/flipper/setup/samsung-4-installed-apps.png"
+       ],
+       [
+        "스위치 켜기",
+        "스위치를 켜고 안내창에서 <b>허용</b>을 누릅니다.",
+        "/assets/apps/flipper/setup/samsung-5-flipper-detail.png"
+       ]
+      ]
+     },
+     {
+      "key": "hisense",
+      "label": "하이센스 · E-ink 리더기",
+      "note": "하이센스는 접근성 목록의 <b>Downloaded services</b> 아래에 Flipper가 있습니다. 화면이 흑백에 가까운 것은 E-ink 기기의 특성입니다.",
+      "steps": [
+       [
+        "앱에서 볼륨키 카드 누르기",
+        "Flipper를 열고 볼륨키 카드를 누릅니다.",
+        "/assets/apps/flipper/setup/hisense-1-app-main.png"
+       ],
+       [
+        "접근성 설정 열기",
+        "안내가 뜨면 <b>접근성 설정 열기</b>를 누릅니다.",
+        "/assets/apps/flipper/setup/hisense-2-permission-sheet.png"
+       ],
+       [
+        "Flipper 찾기",
+        "<b>Downloaded services</b> 아래의 <b>Flipper</b>를 누릅니다.",
+        "/assets/apps/flipper/setup/hisense-3-accessibility-downloaded-services.png"
+       ],
+       [
+        "스위치 켜기",
+        "스위치를 켜고 <b>허용</b>을 누릅니다.",
+        "/assets/apps/flipper/setup/hisense-4-flipper-detail.png"
+       ]
+      ]
+     },
+     {
+      "key": "sam",
+      "label": "교보 SAM",
+      "note": "교보 SAM은 접근성 목록의 <b>다운로드한 앱</b> 아래에 Flipper가 있습니다. 삼성이 부르는 <b>‘설치된 앱’</b>과 이름이 다릅니다. 화면이 흑백에 가깝고 가로로 넓은 것은 E-ink 리더기의 특성입니다.",
+      "steps": [
+       [
+        "앱에서 볼륨키 카드 누르기",
+        "Flipper를 열고 볼륨키 카드를 누릅니다.",
+        "/assets/apps/flipper/setup/sam-1-app-main.png"
+       ],
+       [
+        "접근성 설정 열기",
+        "안내가 뜨면 <b>접근성 설정 열기</b>를 누릅니다.",
+        "/assets/apps/flipper/setup/sam-2-permission-sheet.png"
+       ],
+       [
+        "Flipper 찾기",
+        "<b>다운로드한 앱</b> 아래의 <b>Flipper</b>를 누릅니다.",
+        "/assets/apps/flipper/setup/sam-3-accessibility.png"
+       ],
+       [
+        "스위치 켜기",
+        "스위치를 켜고 <b>허용</b>을 누릅니다.",
+        "/assets/apps/flipper/setup/sam-4-flipper-detail.png"
+       ]
+      ]
+     },
+     {
+      "key": "other",
+      "label": "그 밖의 기기",
+      "note": "픽셀 등 그 밖의 기기는 <b>아직 저희가 실제로 확인하지 못했습니다.</b> 확인한 세 기기(삼성·교보 SAM·하이센스)가 <b>같은 자리를 서로 다른 이름으로</b> 부르고 있어서, 안 써 본 기기의 메뉴 이름을 단정해 드리지 않겠습니다. 대신 어디를 봐야 하는지 알려드립니다.",
+      "steps": [
+       [
+        "앱에서 볼륨키 카드 누르기",
+        "Flipper를 열고 볼륨키 카드를 누릅니다.",
+        null
+       ],
+       [
+        "접근성 설정 열기",
+        "안내가 뜨면 <b>접근성 설정 열기</b>를 누릅니다.",
+        null
+       ],
+       [
+        "목록에서 Flipper 찾기",
+        "접근성 화면에 <b>Flipper</b>가 바로 보이면 그걸 누르시면 됩니다. 안 보이면 <b>설치된 앱 · 다운로드한 앱 · Downloaded services</b>처럼 ‘설치한 앱을 모아 둔 항목’을 찾아 그 안으로 들어가 주세요. 저희가 확인한 세 기기가 각각 이 셋 중 하나를 씁니다.",
+        null
+       ],
+       [
+        "스위치 켜기",
+        "스위치를 켜고 <b>허용</b>을 누릅니다.",
+        null
+       ]
+      ]
+     }
+    ],
+    "trouble": [
+     [
+      "‘제한된 설정’이라며 못 켜게 합니다",
+      "Play 스토어가 아닌 경로로 APK를 설치하면 Android 13 이상에서 접근성 켜기가 막힙니다. <b>설정 → 앱 → Flipper → 오른쪽 위 ⋮ → 제한된 설정 허용</b>을 누른 뒤 다시 켜 주세요."
+     ],
+     [
+      "권한을 켰는데 페이지가 안 넘어갑니다",
+      "먼저 앱을 열어 첫 번째 카드의 <b>볼륨키</b>가 <b>‘넘기기’</b>로 되어 있는지 확인해 주세요. <b>‘소리’</b>로 되어 있으면 볼륨키는 원래대로 소리만 조절합니다. <b>볼륨 올리기 버튼을 두 번</b> 누르면 바뀝니다."
+     ],
+     [
+      "한동안 쓰다 보면 저절로 멈춥니다",
+      "배터리 절약 기능이 접근성 서비스를 정리한 경우입니다. <b>설정 → 앱 → Flipper → 배터리 → 제한 없음</b>으로 바꿔 주세요."
+     ],
+     [
+      "특정 앱에서만 안 넘어갑니다",
+      "앱마다 화면을 그리는 방식이 달라 모든 앱을 보장하지는 못합니다. 넘김 세기를 <b>‘가장 크게’</b>로 올리면 되는 경우가 많습니다."
+     ]
+    ]
+   },
+   "support": {
+    "_note": "앱 v27 부터 메인 화면 하단 '잘 안 넘어가나요? 도움받기' 가 이 페이지로 바로 온다. 그래서 도착하는 사람의 상당수가 결제 문의가 아니라 '동작 불량' 상태다. 자가진단을 맨 위에 둔다.",
+    "lead": "권한은 켰는데 <b>페이지가 안 넘어가는</b> 경우가 가장 많습니다. 아래 네 가지를 순서대로 확인해 주세요. 대부분 여기서 해결됩니다.",
+    "selfcheck": {
+     "title": "볼륨키를 눌러도 페이지가 안 넘어가나요?",
+     "steps": [
+      [
+       "볼륨키가 ‘넘기기’로 되어 있나요",
+       "가장 흔한 원인입니다. 볼륨키가 <b>‘소리’</b>로 되어 있으면 원래대로 소리만 조절합니다. 앱을 열어 <b>첫 번째 카드</b>가 <b>‘넘기기’</b>인지 확인해 주세요. <b>볼륨 올리기 버튼을 두 번</b> 누르면 바뀝니다."
+      ],
+      [
+       "접근성 권한이 켜져 있나요",
+       "권한이 꺼져 있으면 Flipper는 화면을 넘길 수 없습니다. 메뉴 이름이 기기마다 달라서 <a href=\"/apps/flipper/setup/\">기기별 설정 방법</a>에 사진으로 정리해 두었습니다."
+      ],
+      [
+       "배터리 최적화에서 빠져 있나요",
+       "한동안 잘 되다가 저절로 멈춘다면 배터리 절약 기능이 정리한 것입니다. <b>설정 → 앱 → Flipper → 배터리 → 제한 없음</b>으로 바꿔 주세요."
+      ],
+      [
+       "특정 앱에서만 안 되나요",
+       "앱마다 화면을 그리는 방식이 달라 모든 앱을 보장하지는 못합니다. 넘김 세기를 <b>‘가장 크게’</b>로 올리면 되는 경우가 많습니다. 그래도 안 되면 <b>어떤 앱인지</b> 메일에 적어 주세요."
+      ]
+     ],
+     "fallback": "여기까지 해도 안 되면 아래로 메일 주세요."
+    },
+    "ask": [
+     "기기 이름과 안드로이드 버전",
+     "어떤 앱에서 안 넘어가는지",
+     "앱 버전 — Flipper 앱의 <b>오른쪽 위 톱니바퀴 → 앱 정보</b>에서 보실 수 있습니다"
+    ]
+   },
+   "shot": "https://the-moment.us/assets/flipper/hero.png",
+   "how": [
+    [
+     "설치하고 권한 켜기",
+     "Google Play에서 받은 뒤 접근성 권한을 한 번 켭니다."
+    ],
+    [
+     "볼륨키를 넘기기로",
+     "앱에서 첫 카드를 ‘넘기기’로 둡니다. 볼륨 올리기 두 번이면 언제든 소리로 돌아옵니다."
+    ],
+    [
+     "그냥 읽기",
+     "웹툰·릴스·기사·PDF 어디서든 볼륨키만 누르면 넘어갑니다."
+    ]
+   ],
+   "faq": [
+    [
+     "어떤 앱에서 되나요?",
+     "웹툰·릴스·기사·PDF·전자책 등 스크롤로 읽는 화면이면 대체로 동작합니다."
+    ],
+    [
+     "볼륨 조절은 못 하나요?",
+     "볼륨 올리기 버튼을 두 번 누르면 원래 소리 조절로 돌아옵니다."
+    ],
+    [
+     "무엇을 수집하나요?",
+     "아무것도 수집하지 않습니다. 계정 가입도, 광고·분석 SDK도 없습니다."
+    ]
+   ],
+   "device": "삼성 갤럭시 폴드8 필수앱"
+  },
+  "teamai": {
+   "name": "팀AI · AI 친구",
+   "short": "팀AI",
+   "desire": "매일 이야기할 사람이 필요하신가요?",
+   "free": true,
+   "type": "service",
+   "hook": null,
+   "cat": "me",
+   "color": "#8B7BF7",
+   "icon": "◈",
+   "tag": "AI 친구 · 매일 대화",
+   "tagline": "혼자 하지 마세요. 매일 이야기하는 AI 친구들.",
+   "lead": "<b>필요한 친구를 만나 매일 대화합니다.</b> 영어 회화, 여행 계획, 아이 공부, 마음 돌보기까지 — 나를 기억하는 AI 친구 178명이 기다립니다. 팀을 꾸리면 여럿이 한 자리에서 함께 이야기해요.",
+   "feats": [
+    [
+     "나를 기억하는 친구",
+     "지난 대화와 내 사정을 기억하고, 먼저 안부도 건넵니다."
+    ],
+    [
+     "필요한 만큼 전문가",
+     "여행·육아·영어·마음까지 178명. 검색과 지식으로 실전처럼 돕습니다."
+    ],
+    [
+     "팀으로 함께",
+     "친구 여럿을 한 방에 모아 서로 의견을 나누고 결론까지 냅니다."
+    ]
+   ],
+   "how": [
+    [
+     "친구 고르기",
+     "마켓에서 지금 필요한 친구를 만납니다."
+    ],
+    [
+     "매일 대화",
+     "채팅으로 묻고, 결과물도 받고, 알림도 받습니다."
+    ],
+    [
+     "팀 꾸리기",
+     "여럿을 모아 한 자리에서 같이 이야기합니다."
+    ]
+   ],
+   "cta": "ext",
+   "url": "https://teamai.the-moment.us",
+   "ctasub": "AI 친구와 매일 대화 · 무료로 시작",
+   "ctatext": "팀AI 시작하기 →",
+   "shot": "https://the-moment.us/assets/home/teamai.jpg",
+   "faq": [
+    [
+     "팀AI는 무료인가요?",
+     "무료로 시작합니다. 더 많은 대화와 친구 자리가 필요할 때 구독으로 늘릴 수 있어요."
+    ],
+    [
+     "AI 친구가 저를 기억하나요?",
+     "네. 지난 대화와 알려주신 사정을 기억하고, 다음 대화에서 이어서 말합니다. 검진 시기처럼 챙길 일은 먼저 말을 건네기도 해요."
+    ],
+    [
+     "팀 대화는 뭐가 다른가요?",
+     "친구 여럿을 한 방에 모으면 서로의 말을 듣고 이어 말합니다. 의견이 갈리면 논쟁해서 결론까지 내 드려요."
+    ]
+   ]
   }
+ },
+ "links": {
+  "_note": "앱 바이너리·스토어 등록정보에 박히는 영구 주소(/l/<키>). ⚠️ 키는 절대 바꾸지 마라 — 이미 배포된 앱은 재빌드가 안 된다. 바꾸는 건 target 뿐이다. ⚠️ 반드시 302(임시)로 발행한다. 301은 브라우저·스토어 크롤러가 영구 캐시해서, 나중에 target을 바꿔도 기존 설치본이 옛 주소로 계속 간다 = 이 층을 만든 의미가 사라진다.",
+  "_catchall": "/",
+  "map": {
+   "flipper": "/products/flipper/",
+   "flipper/setup": "/products/flipper/setup/",
+   "flipper/support": "/products/flipper/support/",
+   "flipper/get": "https://play.google.com/store/apps/details?id=us.themoment.flipper&hl=ko",
+   "privacy": "/legal/privacy/",
+   "terms": "/legal/terms/",
+   "refund": "/legal/refund/"
+  }
+ },
+ "apps": {
+  "_note": "스토어에서 설치하는 네이티브 앱. 무료 도구(/tools/)도 유료 스포크(/products/)도 아닌 3번째 축 = /apps/<slug>/. 판단 근거 docs/PLATFORM_TOPOLOGY.md §0 — 결제·계정·데이터가 우리 도메인에 없으면(스토어가 처리) apex 경로. 각 앱은 소개·setup(권한 설정)·support 3장을 갖는다. 앱에는 /l/<키>만 박는다. ⚠️ flipper 는 2026-08-24 products 로 승격했다(정본=products.flipper). /apps/flipper/* 는 301."
+ }
 }

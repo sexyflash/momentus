@@ -1988,6 +1988,7 @@ HOME_SHOT = {
     # 홈 배너는 영상이지만 목록·더보기엔 정지컷이 필요하다(영상 5초 프레임).
     "heyreci": "/assets/home/heyreci.jpg",
     "flipper": "/assets/flipper/hero.png",
+    "teamai": "/assets/home/teamai.jpg",
 }
 HOME_VIDEO = {"heyreci": "/assets/home/heyreci-hero.mp4"}
 
@@ -2735,9 +2736,11 @@ _FLY_SHOT = {          # 랜딩 배너와 같은 그림(정본은 HOME_SHOT — 
     "heyreci": "/assets/home/heyreci.jpg",
     "binbang": "https://bb.the-moment.us/assets/hero.jpg",
     "flipper": "/assets/flipper/hero.png",
+    "teamai": "/assets/home/teamai.jpg",
 }
 _NEWB = {"binbang": '<em class="nb">NEW</em>',
-         "flipper": '<em class="nb">NEW</em>'}   # 바·플라이아웃에서 새 제품 표시
+         "flipper": '<em class="nb">NEW</em>',
+         "teamai": '<em class="nb">NEW</em>'}   # 바·플라이아웃에서 새 제품 표시
 def shell_bar_markup(host="", act_extra=""):
     """제품 HTML의 <body> 바로 뒤에 박는 공용 1단 바. host 를 주면 그 제품에 활성 표시.
 
@@ -4233,7 +4236,7 @@ with open("assets/apex.js", "w", encoding="utf-8") as f:
 _SPOKE_HREF = {sp["slug"]: sp["href"] for sp in BAR["spokes"] if sp.get("slug")}
 _SPOKE_HREF["flipper"] = P["flipper"]["store"]   # 앱은 스토어로 바로 보낸다
 # 두 번째 버튼은 '알아보기'가 아니라 **그 제품에서 하는 일**을 말한다(애플의 '구입하기' 자리).
-AP_GO = {"binbang": "빈방 알림 등록", "heyreci": "헤이레시 열기", "mark": "로고 만들어 보기",
+AP_GO = {"teamai": "팀AI 시작하기", "binbang": "빈방 알림 등록", "heyreci": "헤이레시 열기", "mark": "로고 만들어 보기",
          "cue": "모의면접 시작하기", "theplan": "플래너 보러 가기",
          "kontext": "컨텍스트 열기", "flipper": "Google Play에서 받기"}
 
@@ -4354,6 +4357,7 @@ ap_body = (
     # DOM 에 실재하는 우리 자신에 대한 설명이다(숨긴 키워드가 아니다).
     '<h1 class="sr-only">모멘터스 — 작게 만들어 빨리 내놓는 제품들</h1>'
     '<div class="stg-stack">'
+    + ap_stage("teamai", "hero ink", "NEW")
     + ap_stage("binbang", "hero", "NEW")
     + ap_stage("flipper", "hero", "NEW")
     + ap_stage("heyreci", "hero ink")
