@@ -2202,6 +2202,23 @@ gtag('js',new Date());gtag('config','{GA_ID}');
       link_kind:kind,link_where:where,link_text:(a.innerText||'').trim().slice(0,60)});
   },{capture:true});
 })();
+
+/* 북마크릿 "가져감" 추적 (2026-08-30).
+   ★ 왜 필요한가 — 북마크릿은 **남의 사이트 안**에서 돈다. 인스타는 CSP 로
+     script-src·connect-src·img-src 를 전부 막아서 도구 안에서는 어떤 방법으로도
+     못 잰다(실측). 그래서 우리가 확실히 셀 수 있는 자리는 **여기, 우리 도메인**이다.
+   드래그 = 실제 설치 몸짓. 클릭 = 설치 의도(안내 alert 로 끝난다).
+   둘을 구분해 둬야 "안내를 못 읽어서 클릭만 하고 떠난" 손실이 보인다. */
+(function(){
+  function send(a,how){
+    if(!window.gtag) return;
+    gtag('event','tool_install',{tool:a.getAttribute('data-bm')||'',method:how,
+      link_where:a.closest('.dock')?'dock':'body'});
+  }
+  function pick(e){ return e.target && e.target.closest ? e.target.closest('a[data-bm]') : null }
+  addEventListener('dragstart',function(e){var a=pick(e); if(a) send(a,'drag')},{capture:true});
+  addEventListener('click',   function(e){var a=pick(e); if(a) send(a,'click')},{capture:true});
+})();
 </script>"""
 
 
@@ -2295,7 +2312,7 @@ def cta(slug, big=False):
     p = P[slug]
     cls = "btn lg cta-main drag" if (big and p["cta"] == "drag") else ("btn lg cta-main" if big else ("btn drag" if p["cta"] == "drag" else "btn"))
     if p["cta"] == "drag":
-        return f'<a class="{cls}" href="{BM[p["bm"]]}" {DRAG_ATTR}>↖ {p["short"]} — 북마크바로 드래그</a>'
+        return f'<a class="{cls}" href="{BM[p["bm"]]}" data-bm="{p["bm"]}" {DRAG_ATTR}>↖ {p["short"]} — 북마크바로 드래그</a>'
     if p["cta"] == "ext":
         return f'<a class="{cls}" href="{p["url"]}" target="_blank" rel="noopener">{p["ctatext"]}</a>'
     return f'<a class="{cls}" href="{p["store"]}" target="_blank" rel="noopener">크롬에 추가 →</a>'
@@ -3167,7 +3184,7 @@ for idx, slug in enumerate(ORDER):
     )
     if p["cta"] == "drag":
         dock_sub = "설치 없음 · 북마크바에 끌어놓기만 하면 끝"
-        dock_btn = f'<a class="go" href="{BM[p["bm"]]}" {DRAG_ATTR}>↖ 북마크바로 드래그</a>'
+        dock_btn = f'<a class="go" href="{BM[p["bm"]]}" data-bm="{p["bm"]}" {DRAG_ATTR}>↖ 북마크바로 드래그</a>'
     elif p["cta"] == "ext":
         dock_sub = p["ctasub"]
         dock_btn = f'<a class="go" href="{p["url"]}" target="_blank" rel="noopener">{p["ctatext"]}</a>'

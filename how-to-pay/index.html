@@ -51,6 +51,23 @@ gtag('js',new Date());gtag('config','G-1T66ZV28MB');
       link_kind:kind,link_where:where,link_text:(a.innerText||'').trim().slice(0,60)});
   },{capture:true});
 })();
+
+/* 북마크릿 "가져감" 추적 (2026-08-30).
+   ★ 왜 필요한가 — 북마크릿은 **남의 사이트 안**에서 돈다. 인스타는 CSP 로
+     script-src·connect-src·img-src 를 전부 막아서 도구 안에서는 어떤 방법으로도
+     못 잰다(실측). 그래서 우리가 확실히 셀 수 있는 자리는 **여기, 우리 도메인**이다.
+   드래그 = 실제 설치 몸짓. 클릭 = 설치 의도(안내 alert 로 끝난다).
+   둘을 구분해 둬야 "안내를 못 읽어서 클릭만 하고 떠난" 손실이 보인다. */
+(function(){
+  function send(a,how){
+    if(!window.gtag) return;
+    gtag('event','tool_install',{tool:a.getAttribute('data-bm')||'',method:how,
+      link_where:a.closest('.dock')?'dock':'body'});
+  }
+  function pick(e){ return e.target && e.target.closest ? e.target.closest('a[data-bm]') : null }
+  addEventListener('dragstart',function(e){var a=pick(e); if(a) send(a,'drag')},{capture:true});
+  addEventListener('click',   function(e){var a=pick(e); if(a) send(a,'click')},{capture:true});
+})();
 </script>
 <script defer src="/assets/apex.js?v=fadc59f9"></script>
 <style>

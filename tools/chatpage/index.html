@@ -51,6 +51,23 @@ gtag('js',new Date());gtag('config','G-1T66ZV28MB');
       link_kind:kind,link_where:where,link_text:(a.innerText||'').trim().slice(0,60)});
   },{capture:true});
 })();
+
+/* 북마크릿 "가져감" 추적 (2026-08-30).
+   ★ 왜 필요한가 — 북마크릿은 **남의 사이트 안**에서 돈다. 인스타는 CSP 로
+     script-src·connect-src·img-src 를 전부 막아서 도구 안에서는 어떤 방법으로도
+     못 잰다(실측). 그래서 우리가 확실히 셀 수 있는 자리는 **여기, 우리 도메인**이다.
+   드래그 = 실제 설치 몸짓. 클릭 = 설치 의도(안내 alert 로 끝난다).
+   둘을 구분해 둬야 "안내를 못 읽어서 클릭만 하고 떠난" 손실이 보인다. */
+(function(){
+  function send(a,how){
+    if(!window.gtag) return;
+    gtag('event','tool_install',{tool:a.getAttribute('data-bm')||'',method:how,
+      link_where:a.closest('.dock')?'dock':'body'});
+  }
+  function pick(e){ return e.target && e.target.closest ? e.target.closest('a[data-bm]') : null }
+  addEventListener('dragstart',function(e){var a=pick(e); if(a) send(a,'drag')},{capture:true});
+  addEventListener('click',   function(e){var a=pick(e); if(a) send(a,'click')},{capture:true});
+})();
 </script>
 <script defer src="/assets/apex.js?v=fadc59f9"></script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://the-moment.us/#org", "name": "모멘터스", "alternateName": "MOMENTUS", "url": "https://the-moment.us", "email": "hello.momentus@gmail.com"}, {"@type": "SoftwareApplication", "name": "아무리 긴 유튜브도, 3초 요약.", "description": "긴 유튜브, 다 안 보고 요약만 보고 싶으시죠? 긴 영상을 다 볼 필요 없어요. 버튼 한 번이면 유튜브 영상이 ChatGPT·Claude·Gemini로 넘어가 요약됩니다. 무제한, 무료.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "image": "https://the-moment.us/og/chatpage.png", "publisher": {"@id": "https://the-moment.us/#org"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW", "availability": "https://schema.org/InStock", "url": "https://the-moment.us/tools/chatpage/"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "홈", "item": "https://the-moment.us/"}, {"@type": "ListItem", "position": 2, "name": "tools", "item": "https://the-moment.us/tools/"}, {"@type": "ListItem", "position": 3, "name": "아무리 긴 유튜브도, 3초 요약.", "item": "https://the-moment.us/tools/chatpage/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "ChatPage 는 무료인가요?", "acceptedAnswer": {"@type": "Answer", "text": "무료입니다. 크롬 웹스토어에서 확장을 추가하면 바로 씁니다. 스토어 별점은 4.8 입니다."}}, {"@type": "Question", "name": "영상 길이 제한이 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "길이 제한이 없습니다. 아무리 긴 유튜브 영상이라도 요약합니다."}}, {"@type": "Question", "name": "어떤 AI 를 쓰나요?", "acceptedAnswer": {"@type": "Answer", "text": "프리미엄 AI 를 모두 지원합니다. 쓰던 AI 를 그대로 연결해 쓰시면 됩니다."}}, {"@type": "Question", "name": "어떻게 쓰나요?", "acceptedAnswer": {"@type": "Answer", "text": "크롬에 추가한 뒤 유튜브에서 버튼을 클릭하면 AI 가 요약합니다."}}]}]}</script>
