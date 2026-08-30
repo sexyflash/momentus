@@ -5356,6 +5356,8 @@ PROD_GROUPS = [
      ["heyreci", "mark"]),
     ("일과 성장", "일하는 나를 준비시키는 것",
      ["cue", "theplan", "kontext", "chatpage"]),
+    ("곁에 두는 사람", "매일 이야기하고, 기억하고, 먼저 챙기는 것",
+     ["teamai"]),
     ("일상을 편하게", "기다리고 챙기는 일을 대신 맡기는 것",
      ["binbang", "flipper", "quickpang", "insta-rank", "youtube-rank",
       "pinterest-grab", "her"]),
@@ -5365,7 +5367,7 @@ PROD_GROUPS = [
 #   큐·더플랜은 구독이고 플리퍼도 구독이고 헤이레시는 사실상 쇼핑몰인데 전부 '유료'가 됐다.
 #   게다가 경고처럼 읽힌다. **알릴 가치가 있는 건 공짜라는 사실뿐**이라 그것만 남긴다.
 #   태그가 없으면 = 돈을 낸다. 얼마인지는 제품 페이지가 말한다.
-_PRICE_TAG = {"binbang": "무료 있음", "flipper": "무료 체험", "kontext": "무료 체험"}
+_PRICE_TAG = {"teamai": "무료 시작", "binbang": "무료 있음", "flipper": "무료 체험", "kontext": "무료 체험"}
 
 
 def _prod_card(s_):
