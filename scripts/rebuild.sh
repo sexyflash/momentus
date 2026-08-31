@@ -47,6 +47,11 @@ python3 scripts/seo_check.py || echo "  ⚠️ SEO 점검 미달 — docs/SEO_GE
 
 if npx --yes wrangler deploy; then
   echo "✅ 배포 완료"
+  # IndexNow — **6개 사이트 전체**의 바뀐 URL 을 네이버·빙에 통지한다(구글은 안 받는다).
+  #   사이트마다 배포 방식이 달라(워커·Pages·Vercel·launchd) 각각 붙이면 갈라진다.
+  #   여기 한 곳에서 매일 훑는다. 안 바뀐 건 안 보낸다 — 전량 재전송은 스팸이다.
+  echo "───────── IndexNow"
+  node scripts/indexnow_push.mjs || echo "  🟠 IndexNow 실패 — 배포는 이미 끝났다"
   # 로컬에만 남으면 다음에 다른 곳에서 옛 상태로 배포할 수 있다 → 올려서 항상 같게 유지.
   git push -q origin main 2>/dev/null && echo "  ↑ origin 동기화 완료" || echo "  ⚠️ push 실패 — 수동 확인 필요"
 else
