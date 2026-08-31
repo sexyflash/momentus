@@ -82,10 +82,23 @@ async function main() {
   console.log('[도구별]  가져감(install) → 실행(run)\n')
   const names = Object.keys(tools).sort()
   if (!names.length) console.log('  (아직 데이터 없음)')
+  /*
+    실행을 못 재는 도구가 있다. 인스타그램은 CSP 로 script-src·connect-src·img-src 를
+    전부 막아서 도구 안에서 어떤 방법으로도 신호를 못 보낸다(2026-08-31 실측).
+    표시하지 않으면 "전환 0% = 아무도 안 쓴다" 로 오독하게 된다. 고장이 아니라 구조적 한계다.
+  */
+  const NO_RUN = { insta_rank: 'CSP 차단 — 실행 측정 불가' }
   for (const t of names) {
     const { install, run } = tools[t]
-    const rate = install ? ` · 전환 ${Math.round((run / install) * 100)}%` : ''
-    console.log(`  ${t.padEnd(18)} 가져감 ${String(install).padStart(4)}   실행 ${String(run).padStart(4)}${rate}`)
+    const note = NO_RUN[t]
+    const tail = note
+      ? `   실행    －  · ${note}`
+      : `   실행 ${String(run).padStart(4)}${install ? ` · 전환 ${Math.round((run / install) * 100)}%` : ''}`
+    console.log(`  ${t.padEnd(18)} 가져감 ${String(install).padStart(4)}${tail}`)
+  }
+  if (names.some((t) => NO_RUN[t])) {
+    console.log('\n  ※ 인스타그램은 남의 페이지 CSP 가 script·fetch·이미지를 전부 막아')
+    console.log('     도구 실행을 잴 방법이 없다. 가져감만 잡힌다 — 고장이 아니다.')
   }
   return
 }
