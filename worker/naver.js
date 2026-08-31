@@ -25,6 +25,11 @@ const NO_STORE = {
  *     유튜브·쿠팡 CSP 헤더 없음 → 전부 가능
  *   세 곳의 **공통분모가 이미지**뿐이라 픽셀로 간다. gtag.js·fetch 는 못 쓴다.
  *
+ * ★ 어느 속성으로 가나 — **무료 도구 (북마크릿)** `460766131` / `G-T8Y89D206F`
+ *   창업자 지시(2026-08-31): "앞으로 생길 북마크릿을 고려해서 1개로 통합하고
+ *   그 안에서 들어온 소스가 뭔지 본다." 도구가 늘어도 속성은 이 하나다.
+ *   (옛 이름은 `Coupang Bookmarklet` — 쿠팡 전용처럼 보여서 이름을 바꿨다.)
+ *
  * ★ 왜 GA 로 바로 안 쏘고 여기를 거치나 — **비밀키를 숨기려고.**
  *   측정 프로토콜은 api_secret 이 필요한데, 북마크릿 소스는 랜딩 페이지에 그대로 노출된다.
  *   거기 키를 박으면 누구나 우리 속성에 가짜 이벤트를 넣을 수 있다.
@@ -58,8 +63,10 @@ async function pixel(url, env, ctx) {
         },
       }],
     });
+    // 무료 도구 전용 속성(460766131 '무료 도구 (북마크릿)'). apex 가 아니다 —
+    // 도구가 몇 개로 늘어도 속성은 이 하나이고, 안에서 `tool` 로 갈린다.
     const mp = 'https://www.google-analytics.com/mp/collect'
-      + '?measurement_id=G-1T66ZV28MB&api_secret=' + encodeURIComponent(secret);
+      + '?measurement_id=G-T8Y89D206F&api_secret=' + encodeURIComponent(secret);
     // 픽셀 응답을 붙잡아 두지 않는다 — 도구가 기다릴 이유가 없다.
     ctx.waitUntil(
       fetch(mp, { method: 'POST', body }).catch(() => {})

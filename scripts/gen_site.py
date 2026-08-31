@@ -2203,16 +2203,31 @@ gtag('js',new Date());gtag('config','{GA_ID}');
   },{capture:true});
 })();
 
-/* 북마크릿 "가져감" 추적 (2026-08-30).
+/* 북마크릿 "가져감" 추적 (2026-08-30, 2026-08-31 속성 분리).
    ★ 왜 필요한가 — 북마크릿은 **남의 사이트 안**에서 돈다. 인스타는 CSP 로
      script-src·connect-src·img-src 를 전부 막아서 도구 안에서는 어떤 방법으로도
      못 잰다(실측). 그래서 우리가 확실히 셀 수 있는 자리는 **여기, 우리 도메인**이다.
    드래그 = 실제 설치 몸짓. 클릭 = 설치 의도(안내 alert 로 끝난다).
-   둘을 구분해 둬야 "안내를 못 읽어서 클릭만 하고 떠난" 손실이 보인다. */
+   둘을 구분해 둬야 "안내를 못 읽어서 클릭만 하고 떠난" 손실이 보인다.
+
+   ★ 어디로 보내나 — **무료 도구 (북마크릿)** 속성(G-T8Y89D206F) **한 곳**이다.
+     창업자 지시(2026-08-31): 도구가 몇 개로 늘어도 속성은 하나, 안에서 `tool` 로 가른다.
+     실행(tool_run, 픽셀→워커)도 같은 속성이라 **가져감→실행 전환율이 한 화면**에 있다.
+     apex 로도 보내면 같은 사건이 두 속성에 이중 계상되므로 보내지 않는다.
+   ⚠️ send_page_view:false — 이 설정은 오직 tool_install 을 실어 나르는 통로다.
+     빼면 the-moment.us 전 페이지뷰가 도구 속성에도 쌓여 숫자가 못 쓰게 된다. */
 (function(){
+  var TOOLS_ID='G-T8Y89D206F';
+  var configured=false;
+  function ready(){
+    if(configured || !window.gtag) return configured;
+    gtag('config',TOOLS_ID,{send_page_view:false});
+    configured=true; return true;
+  }
   function send(a,how){
-    if(!window.gtag) return;
-    gtag('event','tool_install',{tool:a.getAttribute('data-bm')||'',method:how,
+    if(!ready()) return;
+    gtag('event','tool_install',{send_to:TOOLS_ID,
+      tool:a.getAttribute('data-bm')||'',method:how,
       link_where:a.closest('.dock')?'dock':'body'});
   }
   function pick(e){ return e.target && e.target.closest ? e.target.closest('a[data-bm]') : null }

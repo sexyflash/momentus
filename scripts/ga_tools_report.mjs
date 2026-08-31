@@ -24,7 +24,7 @@ import os from 'node:os'
 import crypto from 'node:crypto'
 
 const RT = process.argv.includes('--realtime')
-const PROPERTY = process.env.GA_PROPERTY || '551281263'   // the-moment.us (apex)
+const PROPERTY = process.env.GA_PROPERTY || '460766131'   // 무료 도구 (북마크릿)
 const KEY = process.env.GINDEX_KEY_FILE
   || [path.join(os.homedir(), 'Projects/momentus/.gindex-sa.json'),
       path.join(os.homedir(), 'Projects/heyreci/.gindex-sa.json')].find(fs.existsSync)

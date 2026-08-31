@@ -251,3 +251,15 @@ naver.com 자체도 같이 막힌다. → **apex·mark·notes 의 서치어드�
 - **2026-09-11** — cue 2차 + E10(깊은 링크) 효과
 - **2026-09-25** — E1 최종 판정. 안 움직이면 H5(공고 비중 81%)로 전환
 - **2027-02** — E8·E18 회귀 감시: robots 의 AI 봇 5종 + `Yeti`·`Daum` 줄이 아직 살아있나
+
+## 2026-08-31 · teamai.the-moment.us 첫 SEO/GEO 정비
+
+- 상태(전): sitemap 404 · robots 는 Cloudflare content-signal 기본판(Sitemap 선언 없음) ·
+  llms.txt 404 · JSON-LD 0 · canonical 0 · GSC 제출 이력 없음. 크루 178장 SSG 는 있었음.
+- 조치: app/sitemap.ts(현역 178+핵심 5=183 URL, 은퇴 크루 제외) · app/robots.ts(AI 봇 명시) ·
+  llms.txt · JSON-LD(WebSite/CollectionPage+ItemList/WebPage+Breadcrumb — AI 캐릭터라 Person 안 씀) ·
+  canonical 전면 · h1 중복 정리. 점검기 FAIL 9→0 (--live --pages 1).
+- 남김: 랜딩 208자·크루 82자 thin(콘텐츠 작업으로 풀 것, 글자수 채우기 금지) · og:url warn.
+- 미완: **GSC sitemap 제출은 대표 손 대기.** 관찰: 색인 수를 2~4주 뒤 볼 것.
+- 배운 것: Cloudflare Pages 는 robots.txt 없으면 content-signal 판을 끼워 넣는다 —
+  Sitemap 선언이 없으니 반드시 자체 발행할 것.
