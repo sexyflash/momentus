@@ -75,8 +75,12 @@ gtag('js',new Date());gtag('config','G-1T66ZV28MB');
   }
   function send(a,how){
     if(!ready()) return;
-    gtag('event','tool_install',{send_to:TOOLS_ID,
-      tool:a.getAttribute('data-bm')||'',method:how,
+    var t=a.getAttribute('data-bm')||'';
+    /* 이벤트 이름에 도구를 박는다 — 실시간 보고서가 맞춤 측정기준을 안 받기 때문이다.
+       (창업자 2026-08-31: "툴이 실행되었다가 아니라 그 툴이 뭐냐고")
+       이름은 영문·숫자·밑줄만 되므로 하이픈을 바꾼다. tool 매개변수도 함께 보낸다. */
+    gtag('event',t.replace(/-/g,'_')+'_install',{send_to:TOOLS_ID,
+      tool:t,method:how,
       link_where:a.closest('.dock')?'dock':'body'});
   }
   function pick(e){ return e.target && e.target.closest ? e.target.closest('a[data-bm]') : null }

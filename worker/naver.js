@@ -51,10 +51,22 @@ async function pixel(url, env, ctx) {
     // cid 는 도구가 만든 익명 난수다. 없거나 이상하면 우리가 하나 만든다(집계용).
     const raw = q.get('cid') || '';
     const cid = /^\d{6,12}\.\d{9,12}$/.test(raw) ? raw : `${Date.now() % 1e9}.${Date.now()}`;
+    /*
+      ★ 이벤트 이름에 도구를 박는다 (2026-08-31 창업자 지시)
+        "툴이 실행되었다가 아니라 그 툴이 뭐냐고."
+        `tool_run` + 매개변수 방식은 **실시간 보고서에서 도구를 못 가른다** —
+        GA4 실시간 API 는 이벤트 범위 맞춤 측정기준을 아예 안 받는다(실측: not a valid dimension).
+        표준 보고서를 몇 시간 기다려야 겨우 갈린다. 그건 쓸모가 없다.
+        이름에 넣으면 **기본 "이벤트 이름별 이벤트 수" 화면에 즉시** 도구가 보인다.
+        도구가 수백 개가 될 물건이 아니라 이름 폭증 걱정도 없다(GA4 상한 500).
+      ⚠️ 이벤트 이름은 영문·숫자·밑줄만 된다. 하이픈을 밑줄로 바꾼다.
+        `tool` 매개변수도 그대로 보낸다 — 표준 보고서의 도구별 표는 이걸로 돈다.
+    */
+    const evName = tool.replace(/-/g, '_') + '_run';
     const body = JSON.stringify({
       client_id: cid,
       events: [{
-        name: 'tool_run',
+        name: evName,
         params: {
           tool,
           // 이게 없으면 GA4 가 세션을 못 묶어 표준 보고서에서 빠진다.
