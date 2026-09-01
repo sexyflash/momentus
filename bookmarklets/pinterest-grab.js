@@ -137,29 +137,24 @@
     ' display:flex;flex-direction:column;background:#fff;color:#111;border-radius:14px;overflow:hidden;',
     ' box-shadow:0 16px 48px rgba(0,0,0,.28);',
     ' font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}',
-    /* 접힌 상태 — 폭이 그때그때 달라지지 않게 고정 알약. 펼친 패널(흰색)과 한눈에
-       구분되도록 핀터레스트 레드를 쓰고, 담은 숫자를 왼쪽에 크게, 버튼을 오른쪽에 둔다. */
-    '.pnl.min{width:196px;border-radius:999px;background:#E60023;',
-    ' box-shadow:0 10px 30px rgba(230,0,35,.4)}',
+    /* 접힌 상태 — 폭이 그때그때 달라지지 않게 고정 알약. 담은 숫자를 왼쪽에 크게, 버튼은
+       오른쪽에 크게. (한때 핀터레스트 레드로 칠했다가 창업자가 물려 흰색으로 되돌렸다.) */
+    '.pnl.min{width:196px;border-radius:999px}',
     '.pnl.min .bd{display:none}',
     '.pnl.min .hd{border-bottom:0;padding:10px 12px;gap:8px}',
     '.pnl.min .tx{display:none}',
     '.pnl.min .em{font-size:20px}',
-    '.pnl.min .cnt{flex:1;text-align:left;font-size:21px;font-weight:800;color:#fff;letter-spacing:-.02em}',
-    '.pnl.min .ic{flex:0 0 32px;width:32px;height:32px;font-size:16px;border-radius:10px;',
-    ' background:rgba(255,255,255,.2);color:#fff}',
-    '.pnl.min .ic:hover{background:rgba(255,255,255,.34)}',
-    '.pnl.min .ic:disabled{background:rgba(255,255,255,.12);color:rgba(255,255,255,.45)}',
-    '.pnl.min .ic.cp{background:#fff;color:#E60023}',
-    '.pnl.min .ic.cp:hover{background:#ffe8ee}',
-    '.pnl.min .ic.cp:disabled{background:rgba(255,255,255,.18);color:rgba(255,255,255,.5)}',
+    '.pnl.min .cnt{flex:1;text-align:left;font-size:21px;font-weight:800;color:#111;letter-spacing:-.02em}',
+    '.pnl.min .ic{flex:0 0 32px;width:32px;height:32px;border-radius:10px}',
     '.hd{display:flex;align-items:center;gap:7px;padding:11px 12px;border-bottom:1px solid #eee;',
     ' cursor:grab;user-select:none}',
     '.hd.grab{cursor:grabbing}',
     '.ttl{font-weight:700;font-size:13px;white-space:nowrap;display:flex;align-items:center;gap:6px}',
     '.cnt{color:#888;font-size:12px;flex:1;white-space:nowrap;text-align:right}',
     '.ic{flex:0 0 26px;width:26px;height:26px;border:0;border-radius:8px;background:#f1f1f1;',
-    ' color:#333;font:600 14px/1 inherit;font-family:inherit;cursor:pointer;padding:0}',
+    ' color:#333;font:600 14px/1 inherit;font-family:inherit;cursor:pointer;padding:0;',
+    ' display:inline-flex;align-items:center;justify-content:center}',
+    '.ic svg{display:block}',
     '.ic:hover{background:#e3e3e3}',
     '.ic:disabled{color:#c8c8c8;cursor:not-allowed}',
     '.ic.cp{background:#ffe8f0;color:#d1004f}',
@@ -197,7 +192,11 @@
       '<div class="hd">' +
         '<span class="ttl"><span class="em">📌</span><span class="tx">이미지 수집기</span></span>' +
         '<span class="cnt">0</span>' +
-        '<button class="ic cp" title="고른 이미지 주소 복사" disabled>⧉</button>' +
+        '<button class="ic cp" title="고른 이미지 주소 복사" disabled>' +
+          '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">' +
+            '<path fill="currentColor" d="M15 1H4a2 2 0 0 0-2 2v12h2V3h11V1z"></path>' +
+            '<path fill="currentColor" d="M19 5H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"></path>' +
+          '</svg></button>' +
         '<button class="ic mini" title="접기 / 펼치기">–</button>' +
         '<button class="ic cls" title="닫기">×</button>' +
       '</div>' +
@@ -602,7 +601,8 @@
   function savePos() {
     try {
       localStorage.setItem(POS_KEY, JSON.stringify({
-        l: host.style.left, t: host.style.top, m: pnl.classList.contains('min') ? 1 : 0
+        /* 위치만 기억한다. 접힘은 기억하지 않는다 — 켤 때는 늘 펼쳐진 상태가 디폴트. */
+        l: host.style.left, t: host.style.top
       }));
     } catch (e) {}
   }
@@ -615,7 +615,6 @@
       host.style.setProperty('right', 'auto', 'important');
     }
     if (v.t) host.style.setProperty('top', v.t, 'important');
-    if (v.m) { pnl.classList.add('min'); icMini.textContent = '+'; }
   }
 
   icMini.addEventListener('click', function (e) {
