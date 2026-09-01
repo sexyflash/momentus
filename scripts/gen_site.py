@@ -178,6 +178,23 @@ main{padding-top:0}
 .btn:hover{opacity:.87}.btn.lg{font-size:15px;padding:14px 26px}
 .btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
 .btn.drag{border:2px dashed var(--pt);color:var(--pt);background:#fff5f2;cursor:grab;font-weight:800}
+/* 드래그 안내 툴팁 — 버튼 글자는 북마크 이름이 되므로(2026-09-01) 안내문을 넣을 수 없다.
+   대신 버튼 위에 떠오르는 툴팁으로 보여준다. 기본 title 은 늦게 뜨고 스타일이 안 먹는다. */
+a[data-tip]{position:relative}
+a[data-tip]::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 12px);
+  width:max-content;max-width:290px;white-space:normal;text-align:center;
+  background:#111;color:#fff;padding:10px 13px;border-radius:10px;
+  font-size:12.5px;line-height:1.55;font-weight:500;letter-spacing:-.01em;
+  box-shadow:0 10px 28px rgba(0,0,0,.24);
+  transform:translateX(-50%) translateY(5px);opacity:0;pointer-events:none;
+  transition:opacity .16s ease,transform .16s ease;z-index:120}
+a[data-tip]::before{content:"";position:absolute;left:50%;bottom:calc(100% + 6px);
+  border:6px solid transparent;border-top-color:#111;
+  transform:translateX(-50%) translateY(5px);opacity:0;pointer-events:none;
+  transition:opacity .16s ease,transform .16s ease;z-index:120}
+a[data-tip]:hover::after,a[data-tip]:hover::before,
+a[data-tip]:focus-visible::after,a[data-tip]:focus-visible::before{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (max-width:560px){a[data-tip]::after{max-width:min(290px,78vw)}}
 .btn.drag:active{cursor:grabbing}
 .free{font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;background:var(--ink);padding:3px 9px;border-radius:6px}
 .kick{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray)}
@@ -2326,7 +2343,9 @@ DRAG_MSG = "클릭이 아니라, 이 버튼을 브라우저 북마크바로 드�
 # ⚠️ 드래그하면 **버튼 글자가 그대로 북마크 이름**이 된다(2026-09-01 창업자 지적).
 #    그래서 안내문("북마크바로 드래그")을 버튼 글자에 넣으면 안 된다 — 툴팁으로 뺀다.
 #    버튼 글자 = data/products.json 의 bmname(북마크바에 남을 이름).
-DRAG_ATTR = f'title="{DRAG_MSG}" onclick="alert(\'{DRAG_MSG}\');return false"'
+# 브라우저 기본 title 툴팁은 1~2초 늦게, OS 스타일로 뜬다 — 안내가 안 보인다.
+# 그래서 data-tip 으로 우리 툴팁을 띄운다(CSS TIP_CSS). aria-label 로 접근성도 유지.
+DRAG_ATTR = f'data-tip="{DRAG_MSG}" aria-label="{DRAG_MSG}" onclick="alert(\'{DRAG_MSG}\');return false"'
 
 CATN = {"fast": "생산성", "sell": "커머스", "research": "리서치", "study": "스터디"}
 
