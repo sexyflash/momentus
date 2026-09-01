@@ -178,23 +178,60 @@ main{padding-top:0}
 .btn:hover{opacity:.87}.btn.lg{font-size:15px;padding:14px 26px}
 .btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
 .btn.drag{border:2px dashed var(--pt);color:var(--pt);background:#fff5f2;cursor:grab;font-weight:800}
-/* 드래그 안내 툴팁 — 버튼 글자는 북마크 이름이 되므로(2026-09-01) 안내문을 넣을 수 없다.
-   대신 버튼 위에 떠오르는 툴팁으로 보여준다. 기본 title 은 늦게 뜨고 스타일이 안 먹는다. */
-a[data-tip]{position:relative}
-a[data-tip]::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 12px);
-  width:max-content;max-width:290px;white-space:normal;text-align:center;
-  background:#111;color:#fff;padding:10px 13px;border-radius:10px;
-  font-size:12.5px;line-height:1.55;font-weight:500;letter-spacing:-.01em;
-  box-shadow:0 10px 28px rgba(0,0,0,.24);
-  transform:translateX(-50%) translateY(5px);opacity:0;pointer-events:none;
+/* 드래그 안내 — 글 대신 그림. 버튼 글자는 북마크 이름이 되므로 안내문을 넣을 수 없다(2026-09-01).
+   버튼 위에 작은 브라우저 그림이 떠서 "끌어다 놓으면 북마크바에 꽂힌다"를 그대로 보여준다. */
+.dragwrap{position:relative;display:inline-flex}
+.dragdemo{position:absolute;left:50%;bottom:calc(100% + 13px);width:220px;padding:9px;
+  background:#111;border-radius:14px;box-shadow:0 16px 36px rgba(0,0,0,.3);
+  transform:translateX(-50%) translateY(6px);opacity:0;pointer-events:none;
   transition:opacity .16s ease,transform .16s ease;z-index:120}
-a[data-tip]::before{content:"";position:absolute;left:50%;bottom:calc(100% + 6px);
-  border:6px solid transparent;border-top-color:#111;
-  transform:translateX(-50%) translateY(5px);opacity:0;pointer-events:none;
-  transition:opacity .16s ease,transform .16s ease;z-index:120}
-a[data-tip]:hover::after,a[data-tip]:hover::before,
-a[data-tip]:focus-visible::after,a[data-tip]:focus-visible::before{opacity:1;transform:translateX(-50%) translateY(0)}
-@media (max-width:560px){a[data-tip]::after{max-width:min(290px,78vw)}}
+.dragdemo::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);
+  border:7px solid transparent;border-top-color:#111}
+.dragdemo svg{display:block;width:100%;height:auto}
+.dd-win{fill:#fff}
+.dd-bar{fill:#eceef1}
+.dd-chip{fill:#c7ced6}
+.dd-slot{fill:none;stroke:#aab2bc;stroke-width:1.4;stroke-dasharray:3.5 3}
+.dd-land{fill:var(--pt);opacity:0}
+.dd-spark{fill:#ffd24d;opacity:0}
+.dd-fly rect{fill:var(--pt)}
+.dd-fly circle{fill:#fff}
+.dd-cur{fill:#111;stroke:#fff;stroke-width:1.2}
+.dd-fly,.dd-cur,.dd-land,.dd-spark{animation-duration:2.8s;animation-iteration-count:infinite;
+  animation-timing-function:cubic-bezier(.4,0,.2,1);animation-play-state:paused;
+  transform-box:fill-box;transform-origin:center}
+.dd-fly{animation-name:dd-fly}
+.dd-cur{animation-name:dd-cur;transform-box:view-box;transform-origin:0 0}
+.dd-land{animation-name:dd-land}
+.dd-spark{animation-name:dd-spark}
+.dragwrap:hover .dragdemo,.dragwrap:focus-within .dragdemo{opacity:1;transform:translateX(-50%) translateY(0)}
+.dragwrap:hover .dd-fly,.dragwrap:hover .dd-cur,.dragwrap:hover .dd-land,.dragwrap:hover .dd-spark,
+.dragwrap:focus-within .dd-fly,.dragwrap:focus-within .dd-cur,
+.dragwrap:focus-within .dd-land,.dragwrap:focus-within .dd-spark{animation-play-state:running}
+@keyframes dd-fly{
+  0%{transform:translate(110px,96px);opacity:0}
+  7%{transform:translate(110px,96px);opacity:1}
+  44%{transform:translate(91px,20.5px);opacity:1}
+  50%{transform:translate(91px,20.5px) scale(.62);opacity:0}
+  100%{transform:translate(110px,96px);opacity:0}}
+@keyframes dd-cur{
+  0%,7%{transform:translate(124px,101px);opacity:1}
+  44%,58%{transform:translate(105px,25px);opacity:1}
+  76%{transform:translate(124px,101px);opacity:0}
+  100%{transform:translate(124px,101px);opacity:0}}
+@keyframes dd-land{
+  0%,47%{opacity:0;transform:scale(.55)}
+  54%{opacity:1;transform:scale(1)}
+  90%{opacity:1;transform:scale(1)}
+  100%{opacity:0;transform:scale(1)}}
+@keyframes dd-spark{
+  0%,50%{opacity:0;transform:scale(.4)}
+  58%{opacity:1;transform:scale(1)}
+  74%{opacity:0;transform:scale(1.35)}
+  100%{opacity:0;transform:scale(1.35)}}
+@media (prefers-reduced-motion:reduce){.dd-fly,.dd-cur,.dd-land,.dd-spark{animation:none}
+  .dd-land{opacity:1}.dd-fly{opacity:0}}
+@media (max-width:560px){.dragdemo{width:min(220px,80vw)}}
 .btn.drag:active{cursor:grabbing}
 .free{font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;background:var(--ink);padding:3px 9px;border-radius:6px}
 .kick{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray)}
@@ -657,6 +694,8 @@ body:has(.vd){padding-bottom:88px}
   .vd-dock .id{width:100%}
   .vd-dock .acts{width:100%;justify-content:space-between}
   .vd-dock .go{flex:1;justify-content:center}
+  .vd-dock .dragwrap{flex:1}
+  .vd-dock .dragwrap .go{width:100%}
   .vd-guide.open{max-height:520px}
   .vd-guide .inner{grid-template-columns:1fr;gap:22px;padding:26px 20px 24px}
 }
@@ -2339,13 +2378,31 @@ def fetch_youtube(channel_id, limit=12):
 
 VIDEOS = fetch_youtube(YT_CHANNEL_ID)
 
-DRAG_MSG = "클릭이 아니라, 이 버튼을 브라우저 북마크바로 드래그해서 등록하세요. 등록한 뒤 해당 사이트에서 누르면 작동합니다."
+DRAG_MSG = "클릭이 아니라 북마크바로 끌어놓으세요."
 # ⚠️ 드래그하면 **버튼 글자가 그대로 북마크 이름**이 된다(2026-09-01 창업자 지적).
 #    그래서 안내문("북마크바로 드래그")을 버튼 글자에 넣으면 안 된다 — 툴팁으로 뺀다.
 #    버튼 글자 = data/products.json 의 bmname(북마크바에 남을 이름).
-# 브라우저 기본 title 툴팁은 1~2초 늦게, OS 스타일로 뜬다 — 안내가 안 보인다.
-# 그래서 data-tip 으로 우리 툴팁을 띄운다(CSS TIP_CSS). aria-label 로 접근성도 유지.
-DRAG_ATTR = f'data-tip="{DRAG_MSG}" aria-label="{DRAG_MSG}" onclick="alert(\'{DRAG_MSG}\');return false"'
+# 안내를 글로 쓰지 않는다 — 버튼 위에 뜨는 그림(DRAG_DEMO)이 "끌어놓으면 짠" 을 보여준다.
+# 버튼 글자는 곧 북마크 이름이라 안내문을 넣을 수 없고(2026-09-01), 기본 title 툴팁은
+# 1~2초 늦게 OS 스타일로 떠서 사실상 안 보였다. aria-label 로 스크린리더만 챙긴다.
+DRAG_ATTR = f'aria-label="북마크바로 끌어놓아 설치" onclick="alert(\'{DRAG_MSG}\');return false"'
+
+# 끌어놓는 동작을 그림 한 장으로. 글자 0. 버튼에 올리면 재생된다.
+DRAG_DEMO = (
+  '<span class="dragdemo" aria-hidden="true"><svg viewBox="0 0 220 132">'
+  '<rect class="dd-win" x="10" y="8" width="200" height="116" rx="12"/>'
+  '<path class="dd-bar" d="M10 20a12 12 0 0 1 12-12h176a12 12 0 0 1 12 12v14H10z"/>'
+  '<rect class="dd-chip" x="22" y="15" width="24" height="11" rx="5.5"/>'
+  '<rect class="dd-chip" x="51" y="15" width="18" height="11" rx="5.5"/>'
+  '<rect class="dd-slot" x="74" y="15" width="34" height="11" rx="5.5"/>'
+  '<rect class="dd-land" x="74" y="15" width="34" height="11" rx="5.5"/>'
+  '<g class="dd-spark"><path d="M91 2l1.7 4.4 4.4 1.7-4.4 1.7L91 14.2l-1.7-4.4L84.9 8l4.4-1.7z"/>'
+  '<circle cx="112" cy="9" r="1.8"/><circle cx="70" cy="7" r="1.4"/></g>'
+  '<g class="dd-fly"><rect x="-27" y="-10" width="54" height="20" rx="10"/>'
+  '<circle cx="-15" cy="0" r="3.2"/></g>'
+  '<g class="dd-cur"><path d="M0 0l0 14 3.6-3.5 2.4 5.2 2.6-1.2-2.4-5.1 4.9-.2z"/></g>'
+  '</svg></span>'
+)
 
 CATN = {"fast": "생산성", "sell": "커머스", "research": "리서치", "study": "스터디"}
 
@@ -2353,7 +2410,8 @@ def cta(slug, big=False):
     p = P[slug]
     cls = "btn lg cta-main drag" if (big and p["cta"] == "drag") else ("btn lg cta-main" if big else ("btn drag" if p["cta"] == "drag" else "btn"))
     if p["cta"] == "drag":
-        return f'<a class="{cls}" href="{BM[p["bm"]]}" data-bm="{p["bm"]}" {DRAG_ATTR}>{p.get("bmname", p["short"])}</a>'
+        return (f'<span class="dragwrap"><a class="{cls}" href="{BM[p["bm"]]}" '
+                f'data-bm="{p["bm"]}" {DRAG_ATTR}>{p.get("bmname", p["short"])}</a>{DRAG_DEMO}</span>')
     if p["cta"] == "ext":
         return f'<a class="{cls}" href="{p["url"]}" target="_blank" rel="noopener">{p["ctatext"]}</a>'
     return f'<a class="{cls}" href="{p["store"]}" target="_blank" rel="noopener">크롬에 추가 →</a>'
@@ -3224,8 +3282,9 @@ for idx, slug in enumerate(ORDER):
         for i, (t, d) in enumerate(p["how"])
     )
     if p["cta"] == "drag":
-        dock_sub = "설치 없음 · 북마크바에 끌어놓기만 하면 끝"
-        dock_btn = f'<a class="go" href="{BM[p["bm"]]}" data-bm="{p["bm"]}" {DRAG_ATTR}>{p.get("bmname", p["short"])}</a>'
+        dock_sub = "설치 없음 · 끌어놓기만 하면 끝"
+        dock_btn = (f'<span class="dragwrap"><a class="go" href="{BM[p["bm"]]}" '
+                    f'data-bm="{p["bm"]}" {DRAG_ATTR}>{p.get("bmname", p["short"])}</a>{DRAG_DEMO}</span>')
     elif p["cta"] == "ext":
         dock_sub = p["ctasub"]
         dock_btn = f'<a class="go" href="{p["url"]}" target="_blank" rel="noopener">{p["ctatext"]}</a>'
@@ -3233,7 +3292,7 @@ for idx, slug in enumerate(ORDER):
         dock_sub = "크롬 웹스토어에서 1클릭 · 무료"
         dock_btn = f'<a class="go" href="{p["store"]}" target="_blank" rel="noopener">크롬에 추가 →</a>'
 
-    hint_text = ("클릭 말고, 버튼을 브라우저 북마크바로 드래그해서 등록하세요" if p["cta"] == "drag"
+    hint_text = ("북마크바로 끌어놓으면 끝" if p["cta"] == "drag"
                  else p["ctasub"] if p["cta"] == "ext"
                  else "계정 없음 · 결제 없음 · 1클릭 제거")
 
