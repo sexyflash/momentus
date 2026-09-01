@@ -37,6 +37,54 @@
     if (IS_PIN && /(^|\.)pinimg\.com\//.test(u)) return cleanUrl(originalsUrl(u));
     return u;
   }
+  /* ⚠️ originals 로 올린 주소가 **실제로는 403 인 핀이 많다**(2026-09-01 실측:
+     .../originals/df/79/1a/....jpg -> 403, 같은 핀의 /1200x/ 는 200).
+     승격만 하고 끝내면 형이 받는 목록에 죽은 주소가 섞인다. 그래서 큰 것부터
+     차례로 **실제로 열리는지 확인**해 가장 큰 성공본을 쓴다.
+     확인은 fetch 가 아니라 <img> 로딩 — img-src 는 어디서나 열려 있어 CSP 에 안 막힌다. */
+  var PROBE = new Map();
+  function probe(u) {
+    if (PROBE.has(u)) return PROBE.get(u);
+    var p = new Promise(function (res) {
+      var im = new Image();
+      im.referrerPolicy = 'no-referrer';
+      im.onload = function () { res(im.naturalWidth > 1); };
+      im.onerror = function () { res(false); };
+      im.src = u;
+    });
+    PROBE.set(u, p);
+    return p;
+  }
+  function candidates(d) {
+    var out = [d.url];
+    if (IS_PIN && d.thumb && /(^|\.)pinimg\.com\//.test(d.thumb)) {
+      ['1200x', '736x', '564x'].forEach(function (sz) {
+        var u = d.thumb.replace(/\/\d+x(?:\d+)?(?:_[A-Za-z]{1,4})?\//, '/' + sz + '/');
+        if (out.indexOf(u) < 0) out.push(u);
+      });
+    }
+    if (d.thumb && out.indexOf(d.thumb) < 0) out.push(d.thumb);
+    return out;
+  }
+  function bestUrlFor(d) {
+    if (!IS_PIN) return Promise.resolve(d.url);
+    var cand = candidates(d);
+    return cand.reduce(function (chain, u) {
+      return chain.then(function (got) {
+        if (got) return got;
+        return probe(u).then(function (ok) { return ok ? u : null; });
+      });
+    }, Promise.resolve(null)).then(function (u) { return u || d.url; });
+  }
+  function resolveAll(items, onTick) {
+    var done = 0;
+    return Promise.all(items.map(function (d) {
+      return bestUrlFor(d).then(function (u) {
+        done++; if (onTick) onTick(done, items.length);
+        return u;
+      });
+    }));
+  }
   function bestUrl(img) {
     var ss = img.getAttribute('srcset') || img.getAttribute('data-srcset') || '';
     var best = '', bw = -1;
@@ -431,9 +479,14 @@
 
   /* ───────────── URL 복사 ───────────── */
   function doCopy() {
-    var urls = [];
-    SELECTED.forEach(function (d) { urls.push(d.url); });
-    if (!urls.length) return;
+    var items = [];
+    SELECTED.forEach(function (d) { items.push(d); });
+    if (!items.length) return;
+    say('가장 큰 원본 주소를 확인하는 중…');
+    resolveAll(items, function (n, t) { say('원본 확인 ' + n + ' / ' + t); })
+      .then(function (urls) { say(''); copyText(urls); });
+  }
+  function copyText(urls) {
     var text = urls.join('\n');
     navigator.clipboard.writeText(text).then(function () {
       toast(urls.length + '개 URL 복사됨');
@@ -553,12 +606,7 @@
       /* originals 승격이 항상 되는 건 아니다 — 핀에 따라 403 이 온다(실측).
          그때 손을 놓으면 그 장은 통째로 못 받는다. 큰 것 → 736x → 화면에 보이던 것 순으로
          내려가며 받는다. 주소를 복사하는 쪽은 v1 그대로 originals 를 준다. */
-      var cand = [d.url];
-      if (d.thumb && d.thumb !== d.url) {
-        var mid = d.thumb.replace(/\/\d+x(?:\d+)?(?:_[A-Za-z]{1,4})?\//, '/736x/');
-        if (cand.indexOf(mid) < 0) cand.push(mid);
-        if (cand.indexOf(d.thumb) < 0) cand.push(d.thumb);
-      }
+      var cand = candidates(d);
       return cand.reduce(function (chain, u) {
         return chain.then(function (got) { return got || grab(u); });
       }, Promise.resolve(null)).then(function (r) {
