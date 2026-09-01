@@ -640,6 +640,10 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
 .vd-duo.rev{grid-template-columns:795px 345px}
 .vd-duo img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
 .vd-pair{margin-top:100px;display:grid;grid-template-columns:1fr 1fr;gap:105px}
+/* 실제 도구 캡처(.sh)는 정사각 크롭을 하면 화면이 잘려 못 읽는다 — 가로형으로 둔다 */
+.vd-duo.sh{grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.vd-duo.sh img{aspect-ratio:1500/1080;object-fit:contain;background:#0b0c0e;border-radius:14px}
+.vd-wide.sh img{aspect-ratio:2560/900;object-fit:contain;background:#0b0c0e;border-radius:14px}
 .vd-pair img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
 
 .vd-cta{max-width:var(--vd-w);margin:0 auto;padding:120px 24px;text-align:center}
@@ -3331,7 +3335,7 @@ for idx, slug in enumerate(ORDER):
   {note(0)}
 
   <div class="vd-flow">
-    <div class="vd-duo">
+    <div class="vd-duo sh">
       <img src="{SHOTS[2]}" alt="" loading="lazy">
       <img src="{SHOTS[3]}" alt="" loading="lazy">
     </div>
@@ -3340,7 +3344,7 @@ for idx, slug in enumerate(ORDER):
   {note(1)}
 
   <div class="vd-flow">
-    <div class="vd-wide"><img src="{SHOTS[4]}" alt="" loading="lazy"></div>
+    <div class="vd-wide sh"><img src="{SHOTS[4]}" alt="" loading="lazy"></div>
   </div>
 
   {note(2)}
