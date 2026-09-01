@@ -137,11 +137,22 @@
     ' display:flex;flex-direction:column;background:#fff;color:#111;border-radius:14px;overflow:hidden;',
     ' box-shadow:0 16px 48px rgba(0,0,0,.28);',
     ' font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}',
-    /* 접으면 폭이 그때그때 달라지지 않게 고정 알약으로 */
-    '.pnl.min{width:172px;border-radius:999px}',
+    /* 접힌 상태 — 폭이 그때그때 달라지지 않게 고정 알약. 펼친 패널(흰색)과 한눈에
+       구분되도록 핀터레스트 레드를 쓰고, 담은 숫자를 왼쪽에 크게, 버튼을 오른쪽에 둔다. */
+    '.pnl.min{width:196px;border-radius:999px;background:#E60023;',
+    ' box-shadow:0 10px 30px rgba(230,0,35,.4)}',
     '.pnl.min .bd{display:none}',
-    '.pnl.min .hd{border-bottom:0;padding:8px 10px}',
+    '.pnl.min .hd{border-bottom:0;padding:10px 12px;gap:8px}',
     '.pnl.min .tx{display:none}',
+    '.pnl.min .em{font-size:20px}',
+    '.pnl.min .cnt{flex:1;text-align:left;font-size:21px;font-weight:800;color:#fff;letter-spacing:-.02em}',
+    '.pnl.min .ic{flex:0 0 32px;width:32px;height:32px;font-size:16px;border-radius:10px;',
+    ' background:rgba(255,255,255,.2);color:#fff}',
+    '.pnl.min .ic:hover{background:rgba(255,255,255,.34)}',
+    '.pnl.min .ic:disabled{background:rgba(255,255,255,.12);color:rgba(255,255,255,.45)}',
+    '.pnl.min .ic.cp{background:#fff;color:#E60023}',
+    '.pnl.min .ic.cp:hover{background:#ffe8ee}',
+    '.pnl.min .ic.cp:disabled{background:rgba(255,255,255,.18);color:rgba(255,255,255,.5)}',
     '.hd{display:flex;align-items:center;gap:7px;padding:11px 12px;border-bottom:1px solid #eee;',
     ' cursor:grab;user-select:none}',
     '.hd.grab{cursor:grabbing}',
@@ -158,7 +169,8 @@
     '.list{flex:1 1 auto;min-height:64px;max-height:44vh;overflow-y:auto;overflow-x:hidden;',
     ' padding:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;align-content:start}',
     '.list.empty{display:block;text-align:center;color:#aaa;font-size:12px;padding:24px 12px;line-height:1.6}',
-    '.th{position:relative;aspect-ratio:1;background:#f4f4f4;border-radius:8px;overflow:hidden}',
+    '.th{position:relative;aspect-ratio:1;background:#f4f4f4;border-radius:8px;overflow:hidden;',
+    ' box-shadow:inset 0 0 0 1px rgba(0,0,0,.07)}',
     '.th img{width:100%;height:100%;object-fit:cover;display:block}',
     '.rm{position:absolute;top:3px;right:3px;width:20px;height:20px;border:0;border-radius:50%;',
     ' background:rgba(0,0,0,.72);color:#fff;font:400 13px/1 inherit;font-family:inherit;cursor:pointer;padding:0}',
@@ -183,7 +195,7 @@
     '<div class="ov"></div>' +
     '<div class="pnl">' +
       '<div class="hd">' +
-        '<span class="ttl"><span class="em">🖼</span><span class="tx">이미지 수집기</span></span>' +
+        '<span class="ttl"><span class="em">📌</span><span class="tx">이미지 수집기</span></span>' +
         '<span class="cnt">0</span>' +
         '<button class="ic cp" title="고른 이미지 주소 복사" disabled>⧉</button>' +
         '<button class="ic mini" title="접기 / 펼치기">–</button>' +
