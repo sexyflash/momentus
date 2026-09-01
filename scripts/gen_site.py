@@ -2323,7 +2323,10 @@ def fetch_youtube(channel_id, limit=12):
 VIDEOS = fetch_youtube(YT_CHANNEL_ID)
 
 DRAG_MSG = "클릭이 아니라, 이 버튼을 브라우저 북마크바로 드래그해서 등록하세요. 등록한 뒤 해당 사이트에서 누르면 작동합니다."
-DRAG_ATTR = f'onclick="alert(\'{DRAG_MSG}\');return false"'
+# ⚠️ 드래그하면 **버튼 글자가 그대로 북마크 이름**이 된다(2026-09-01 창업자 지적).
+#    그래서 안내문("북마크바로 드래그")을 버튼 글자에 넣으면 안 된다 — 툴팁으로 뺀다.
+#    버튼 글자 = data/products.json 의 bmname(북마크바에 남을 이름).
+DRAG_ATTR = f'title="{DRAG_MSG}" onclick="alert(\'{DRAG_MSG}\');return false"'
 
 CATN = {"fast": "생산성", "sell": "커머스", "research": "리서치", "study": "스터디"}
 
@@ -2331,7 +2334,7 @@ def cta(slug, big=False):
     p = P[slug]
     cls = "btn lg cta-main drag" if (big and p["cta"] == "drag") else ("btn lg cta-main" if big else ("btn drag" if p["cta"] == "drag" else "btn"))
     if p["cta"] == "drag":
-        return f'<a class="{cls}" href="{BM[p["bm"]]}" data-bm="{p["bm"]}" {DRAG_ATTR}>↖ {p["short"]} — 북마크바로 드래그</a>'
+        return f'<a class="{cls}" href="{BM[p["bm"]]}" data-bm="{p["bm"]}" {DRAG_ATTR}>{p.get("bmname", p["short"])}</a>'
     if p["cta"] == "ext":
         return f'<a class="{cls}" href="{p["url"]}" target="_blank" rel="noopener">{p["ctatext"]}</a>'
     return f'<a class="{cls}" href="{p["store"]}" target="_blank" rel="noopener">크롬에 추가 →</a>'
@@ -3203,7 +3206,7 @@ for idx, slug in enumerate(ORDER):
     )
     if p["cta"] == "drag":
         dock_sub = "설치 없음 · 북마크바에 끌어놓기만 하면 끝"
-        dock_btn = f'<a class="go" href="{BM[p["bm"]]}" data-bm="{p["bm"]}" {DRAG_ATTR}>↖ 북마크바로 드래그</a>'
+        dock_btn = f'<a class="go" href="{BM[p["bm"]]}" data-bm="{p["bm"]}" {DRAG_ATTR}>{p.get("bmname", p["short"])}</a>'
     elif p["cta"] == "ext":
         dock_sub = p["ctasub"]
         dock_btn = f'<a class="go" href="{p["url"]}" target="_blank" rel="noopener">{p["ctatext"]}</a>'

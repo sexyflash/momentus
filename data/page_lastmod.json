@@ -30,16 +30,19 @@
   "h": "8cf771609952cace"
  },
  "tools/insta-rank/": {
-  "h": "0197385a0c435cc3"
+  "d": "2026-09-01",
+  "h": "b848ff1770511886"
  },
  "tools/pinterest-grab/": {
   "d": "2026-09-01",
-  "h": "7dab89b3b466dbb4"
+  "h": "dfa5dd77be484452"
  },
  "tools/quickpang/": {
-  "h": "515790a9be9ebd81"
+  "d": "2026-09-01",
+  "h": "7c3b0c9674536791"
  },
  "tools/youtube-rank/": {
-  "h": "cef7d1420263dd17"
+  "d": "2026-09-01",
+  "h": "d2de972b6975f8ff"
  }
 }

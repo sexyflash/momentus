@@ -1,21 +1,22 @@
 (function () {
   /* MOMENTUS 이미지 수집기 (pinterest-grab)
    * ────────────────────────────────────────────────────────────────
-   * 이 파일이 읽기용 원본이다. 배포본은 scripts/build_bookmarklet.py 가
-   * 이걸 퍼센트 인코딩해 assets/bookmarklets/pinterest-grab.txt 에 넣는다.
-   * .txt 를 손으로 고치지 마라 — 여기 고치고 빌드해라.
+   * 읽기용 원본. 배포본은 scripts/build_bookmarklet.py 가 퍼센트 인코딩해
+   * assets/bookmarklets/pinterest-grab.txt 에 넣는다. .txt 를 손으로 고치지 마라.
    *
-   * v2 (2026-09-01)
-   *  1) 패널을 Shadow DOM 안으로  — 남의 사이트 CSS 가 우리 그리드를 못 건드린다.
-   *     (v1 은 리스트가 겹치고 안에서 스크롤이 안 먹던 문제가 있었다)
-   *  2) 접기/펴기 + 헤더 드래그 이동 — 패널이 가린 뒤쪽 이미지를 고를 수 있다.
-   *  3) 아무 사이트에서나 동작 — 핀터레스트 전용 처리(originals 승격)는
-   *     핀터레스트에서만 켜지고, 그 밖에서는 일반 <img>/배경이미지를 고른다.
-   *  4) ZIP 로 한 번에 내려받기 — 라이브러리 없이 클라이언트에서 압축(STORE).
+   * v3 (2026-09-01)
+   *  · 표시를 "호스트 문서에 클래스 심기"에서 "우리 오버레이에 그리기"로 바꿨다.
+   *    - 남의 DOM 을 건드리지 않는다(버벅임·부작용 제거)
+   *    - 이미지의 border-radius 를 그대로 읽어 모서리가 맞는다(네모박스 문제)
+   *    - 반투명 fill 로 "정확히 잡혔다"가 보인다
+   *  · 마우스 이동 판정을 img/핀으로만 좁혔다. 배경이미지 탐색(getComputedStyle 최대 4단)은
+   *    클릭 때만 한다 — 이게 커서 움직일 때마다 돌던 게 버벅임의 주범이었다.
+   *  · DOM 이 바뀌어도 전체 img 재스캔을 매번 하지 않는다. 잡고 있던 엘리먼트가
+   *    실제로 끊겼을 때만 다시 찾는다(핀터레스트 가상 스크롤 대응).
+   *  · 헤더에 복사 아이콘 — 접은 상태에서도 바로 복사된다. 접으면 고정 폭 알약이 된다.
    *
-   * ⚠️ 호스트 엘리먼트 id 는 __loud-pc-sidebar 그대로 둔다.
-   *    공용 "귀환 갈고리" 꼬리가 이 id 를 찾아 링크를 붙인다. shadow 안에
-   *    <slot> 을 둬서 그 링크가 패널 하단에 그대로 렌더된다.
+   * ⚠️ 호스트 엘리먼트 id 는 __loud-pc-sidebar 그대로 둔다. 공용 "귀환 갈고리" 꼬리가
+   *    이 id 를 찾아 링크를 붙인다. shadow 안 <slot> 이 그 링크를 받아 렌더한다.
    */
   if (window.__loudPinCollector) { window.__loudPinCollector.destroy(); return; }
 
@@ -23,7 +24,7 @@
   var PIN_SEL = '[data-test-id="pin"]';
   var IS_PIN = /(^|\.)pinterest\.[a-z]{2,4}(\.[a-z]{2,3})?$/i.test(location.hostname);
   var POS_KEY = '__loud_pc_pos';
-  var SELECTED = new Map();   /* 정규화 URL -> {url, thumb, link, alt, el} */
+  var SELECTED = new Map();   /* 정규화 URL -> {url, thumb, link, alt, el, rad} */
   var MAX_ITEMS = 300;
   var busy = false;
 
@@ -58,6 +59,9 @@
     if (!m || /^data:/.test(m[2])) return '';
     return abs(m[2]);
   }
+  function radOf(el) {
+    try { return getComputedStyle(el).borderRadius || '0px'; } catch (e) { return '0px'; }
+  }
   function linkOf(el) {
     var a = el.closest ? el.closest('a[href]') : null;
     return a ? abs(a.getAttribute('href')) : location.href;
@@ -68,47 +72,45 @@
     return a ? abs(a.getAttribute('href')) : location.href;
   }
 
-  /* 클릭 지점에서 "무엇을 담을지" 판정. 못 고르면 null → 페이지 클릭을 안 막는다. */
+  /* 마우스가 지나갈 때마다 도는 판정 — 싸야 한다. img/핀만 본다. */
+  function hoverImg(t) {
+    if (!t || !t.closest) return null;
+    if (IS_PIN) {
+      var p = t.closest(PIN_SEL);
+      if (p) { var pi = pinImg(p); if (pi) return pi; }
+    }
+    var img = t.closest('img');
+    if (img) return img;
+    var pic = t.closest('picture');
+    return pic ? pic.querySelector('img') : null;
+  }
+
+  /* 클릭 때만 도는 판정 — 배경이미지까지 훑는다. */
   function pick(t) {
     if (!t || !t.closest) return null;
     if (IS_PIN) {
       var pin = t.closest(PIN_SEL);
       if (pin) {
         var pi = pinImg(pin);
-        if (pi) return { el: pin, url: normalize(pi.src), thumb: pi.src, link: pinLink(pin), alt: pi.alt || '' };
+        if (pi) return { el: pi, url: normalize(pi.src), thumb: pi.src, link: pinLink(pin), alt: pi.alt || '', rad: radOf(pi) };
       }
     }
     var img = t.closest('img');
-    if (!img) {
-      var pic = t.closest('picture');
-      if (pic) img = pic.querySelector('img');
-    }
+    if (!img) { var pic = t.closest('picture'); if (pic) img = pic.querySelector('img'); }
     if (img) {
       var u = normalize(bestUrl(img));
-      if (u) return { el: img, url: u, thumb: img.currentSrc || img.src || u, link: linkOf(img), alt: img.alt || '' };
+      if (u) return { el: img, url: u, thumb: img.currentSrc || img.src || u, link: linkOf(img), alt: img.alt || '', rad: radOf(img) };
     }
     var e = t, n = 0;
     while (e && n < 4) {
       var bu = bgUrl(e);
-      if (bu) return { el: e, url: normalize(bu), thumb: bu, link: linkOf(e), alt: '' };
+      if (bu) return { el: e, url: normalize(bu), thumb: bu, link: linkOf(e), alt: '', rad: radOf(e) };
       e = e.parentElement; n++;
     }
     return null;
   }
 
-  /* ───────────── 대상 표시(호스트 문서 스타일 — 최소한만) ───────────── */
-  var docStyle = document.createElement('style');
-  docStyle.setAttribute('data-loud-pc', '1');
-  docStyle.textContent = [
-    '.__loud-selected{outline:4px solid #FF0066 !important;outline-offset:-4px !important}',
-    '.__loud-hover{outline:3px dashed rgba(255,0,102,.9) !important;outline-offset:-3px !important;cursor:copy !important}',
-    PIN_SEL + '.__loud-selected::after{content:"\\2713";position:absolute;top:8px;right:8px;',
-    'width:28px;height:28px;background:#FF0066;color:#fff;font-weight:900;font-size:16px;',
-    'display:flex;align-items:center;justify-content:center;border-radius:50%;z-index:10;pointer-events:none}'
-  ].join('\n');
-  (document.head || document.documentElement).appendChild(docStyle);
-
-  /* ───────────── 패널(Shadow DOM) ───────────── */
+  /* ───────────── 패널 + 표시 오버레이(Shadow DOM) ───────────── */
   var host = document.createElement('div');
   host.id = HOST_ID;
   [['position', 'fixed'], ['top', '16px'], ['right', '16px'], ['left', 'auto'], ['bottom', 'auto'],
@@ -124,20 +126,34 @@
 
   var css = [
     '*,*::before,*::after{box-sizing:border-box}',
-    '.pnl{width:320px;max-height:calc(100vh - 40px);display:flex;flex-direction:column;',
-    ' background:#fff;color:#111;border-radius:14px;overflow:hidden;',
+    '.ov{position:fixed;left:0;top:0;width:100vw;height:100vh;pointer-events:none;z-index:1}',
+    '.mk{position:absolute;border:3px solid #FF0066;background:rgba(255,0,102,.24);display:none}',
+    '.mk.hv{border-style:dashed;border-width:2px;background:rgba(255,0,102,.10)}',
+    '.mk b{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;',
+    ' background:#FF0066;color:#fff;text-align:center;',
+    ' font:900 14px/24px -apple-system,BlinkMacSystemFont,system-ui,sans-serif}',
+    '.mk.hv b{display:none}',
+    '.pnl{position:relative;z-index:2;width:320px;max-height:calc(100vh - 40px);',
+    ' display:flex;flex-direction:column;background:#fff;color:#111;border-radius:14px;overflow:hidden;',
     ' box-shadow:0 16px 48px rgba(0,0,0,.28);',
     ' font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}',
-    '.pnl.min{width:auto}',
+    /* 접으면 폭이 그때그때 달라지지 않게 고정 알약으로 */
+    '.pnl.min{width:172px;border-radius:999px}',
     '.pnl.min .bd{display:none}',
-    '.hd{display:flex;align-items:center;gap:8px;padding:11px 12px;border-bottom:1px solid #eee;',
+    '.pnl.min .hd{border-bottom:0;padding:8px 10px}',
+    '.pnl.min .tx{display:none}',
+    '.hd{display:flex;align-items:center;gap:7px;padding:11px 12px;border-bottom:1px solid #eee;',
     ' cursor:grab;user-select:none}',
     '.hd.grab{cursor:grabbing}',
-    '.ttl{font-weight:700;font-size:13px;white-space:nowrap}',
-    '.cnt{color:#888;font-size:12px;flex:1;white-space:nowrap}',
+    '.ttl{font-weight:700;font-size:13px;white-space:nowrap;display:flex;align-items:center;gap:6px}',
+    '.cnt{color:#888;font-size:12px;flex:1;white-space:nowrap;text-align:right}',
     '.ic{flex:0 0 26px;width:26px;height:26px;border:0;border-radius:8px;background:#f1f1f1;',
-    ' color:#333;font:600 15px/1 inherit;font-family:inherit;cursor:pointer;padding:0}',
+    ' color:#333;font:600 14px/1 inherit;font-family:inherit;cursor:pointer;padding:0}',
     '.ic:hover{background:#e3e3e3}',
+    '.ic:disabled{color:#c8c8c8;cursor:not-allowed}',
+    '.ic.cp{background:#ffe8f0;color:#d1004f}',
+    '.ic.cp:hover{background:#ffd6e5}',
+    '.ic.cp:disabled{background:#f3f3f3;color:#c8c8c8}',
     '.bd{display:flex;flex-direction:column;flex:1 1 auto;min-height:0}',
     '.list{flex:1 1 auto;min-height:64px;max-height:44vh;overflow-y:auto;overflow-x:hidden;',
     ' padding:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;align-content:start}',
@@ -158,17 +174,19 @@
     '.hook{padding:0 12px 10px}',
     '.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#111;color:#fff;',
     ' padding:10px 20px;border-radius:24px;font:13px/1.4 -apple-system,system-ui,sans-serif;',
-    ' opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}',
+    ' opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap;z-index:3}',
     '.toast.on{opacity:1}'
   ].join('\n');
 
   root.innerHTML =
     '<style>' + css + '</style>' +
+    '<div class="ov"></div>' +
     '<div class="pnl">' +
       '<div class="hd">' +
-        '<span class="ttl">📌 라우드 수집기</span>' +
-        '<span class="cnt">0개</span>' +
-        '<button class="ic mini" title="접기/펼기">–</button>' +
+        '<span class="ttl"><span class="em">🖼</span><span class="tx">이미지 수집기</span></span>' +
+        '<span class="cnt">0</span>' +
+        '<button class="ic cp" title="고른 이미지 주소 복사" disabled>⧉</button>' +
+        '<button class="ic mini" title="접기 / 펼치기">–</button>' +
         '<button class="ic cls" title="닫기">×</button>' +
       '</div>' +
       '<div class="bd">' +
@@ -188,8 +206,10 @@
     '<div class="toast"></div>';
 
   var $ = function (s) { return root.querySelector(s); };
-  var pnl = $('.pnl'), hd = $('.hd'), list = $('.list'), cnt = $('.cnt'), msg = $('.msg'), toastEl = $('.toast');
+  var pnl = $('.pnl'), hd = $('.hd'), ov = $('.ov'), list = $('.list'), cnt = $('.cnt');
+  var msg = $('.msg'), toastEl = $('.toast');
   var btnCopy = $('.copy'), btnZip = $('.zip'), btnAll = $('.all'), btnClr = $('.clr');
+  var icCopy = $('.cp'), icMini = $('.mini');
 
   function toast(m) {
     toastEl.textContent = m;
@@ -199,38 +219,90 @@
   }
   function say(m) { msg.textContent = m || ''; }
 
-  /* ───────────── 선택 표시 다시 칠하기 ───────────── */
-  var paintReq = 0;
-  function paint() {
-    clearTimeout(paintReq);
-    paintReq = setTimeout(applyOverlay, 120);
+  /* ───────────── 표시 오버레이 ─────────────
+     남의 DOM 에 클래스를 심지 않는다. 우리 레이어에 사각형을 그린다. */
+  var pool = [], hoverEl = null, hoverRad = '0px', rafId = 0;
+
+  function markNode(i) {
+    if (!pool[i]) {
+      var d = document.createElement('div');
+      d.className = 'mk';
+      d.innerHTML = '<b>✓</b>';
+      ov.appendChild(d);
+      pool[i] = d;
+    }
+    return pool[i];
   }
-  function applyOverlay() {
-    document.querySelectorAll('.__loud-selected').forEach(function (el) { el.classList.remove('__loud-selected'); });
+  function place(n, el, rad, isHover) {
+    var r = el.getBoundingClientRect();
+    if (r.width < 4 || r.height < 4) return false;
+    if (r.bottom < -60 || r.top > window.innerHeight + 60) return false;
+    if (r.right < -60 || r.left > window.innerWidth + 60) return false;
+    n.className = isHover ? 'mk hv' : 'mk';
+    n.style.display = 'block';
+    n.style.left = r.left + 'px';
+    n.style.top = r.top + 'px';
+    n.style.width = r.width + 'px';
+    n.style.height = r.height + 'px';
+    n.style.borderRadius = rad;
+    return true;
+  }
+  function layout() {
+    var i = 0;
+    SELECTED.forEach(function (it) {
+      if (!it.el || !it.el.isConnected) return;
+      var n = markNode(i);
+      if (place(n, it.el, it.rad || '0px', false)) i++;
+    });
+    if (hoverEl && hoverEl.isConnected) {
+      var u = normalize(bestUrl(hoverEl));
+      if (!u || !SELECTED.has(u)) {
+        var h = markNode(i);
+        if (place(h, hoverEl, hoverRad, true)) i++;
+      }
+    }
+    for (; i < pool.length; i++) pool[i].style.display = 'none';
+  }
+  function relayout() {
+    if (rafId) return;
+    rafId = requestAnimationFrame(function () { rafId = 0; layout(); });
+  }
+
+  /* DOM 이 갈아엎여 잡고 있던 엘리먼트가 끊겼을 때만 다시 찾는다(가상 스크롤 대응).
+     매번 문서 전체를 훑지 않는 게 핵심 — 그게 버벅임이었다. */
+  function resync() {
     if (!SELECTED.size) return;
-    SELECTED.forEach(function (it) { if (it.el && it.el.isConnected) it.el.classList.add('__loud-selected'); });
+    var lost = false;
+    SELECTED.forEach(function (it) { if (!it.el || !it.el.isConnected) lost = true; });
+    if (!lost) return;
+    var found = new Map();
     if (IS_PIN) {
       document.querySelectorAll(PIN_SEL).forEach(function (p) {
         var im = pinImg(p);
-        if (im && SELECTED.has(normalize(im.src))) p.classList.add('__loud-selected');
+        if (im) found.set(normalize(im.src), im);
       });
     }
     document.querySelectorAll('img').forEach(function (im) {
-      if (IS_PIN && im.closest(PIN_SEL)) return;
       var u = normalize(bestUrl(im));
-      if (u && SELECTED.has(u)) im.classList.add('__loud-selected');
+      if (u && !found.has(u)) found.set(u, im);
+    });
+    SELECTED.forEach(function (it, k) {
+      if (it.el && it.el.isConnected) return;
+      var e = found.get(k);
+      if (e) { it.el = e; it.rad = radOf(e); }
     });
   }
 
   function render() {
-    cnt.textContent = SELECTED.size + '개';
-    btnCopy.disabled = btnZip.disabled = btnClr.disabled = (SELECTED.size === 0 || busy);
+    cnt.textContent = SELECTED.size ? String(SELECTED.size) : '0';
+    var none = (SELECTED.size === 0 || busy);
+    btnCopy.disabled = btnZip.disabled = btnClr.disabled = none;
+    icCopy.disabled = none;
     list.innerHTML = '';
     if (!SELECTED.size) {
       list.classList.add('empty');
-      list.textContent = IS_PIN
-        ? '핀을 클릭해서 고르세요.'
-        : '이미지를 클릭해서 고르세요.';
+      list.textContent = IS_PIN ? '핀을 클릭해서 고르세요.' : '이미지를 클릭해서 고르세요.';
+      relayout();
       return;
     }
     list.classList.remove('empty');
@@ -248,11 +320,12 @@
       rm.addEventListener('click', function (ev) {
         ev.stopPropagation();
         SELECTED.delete(key);
-        applyOverlay(); render();
+        render();
       });
       box.appendChild(rm);
       list.appendChild(box);
     });
+    relayout();
   }
 
   function add(it) {
@@ -263,7 +336,7 @@
     return true;
   }
 
-  /* ───────────── 페이지 클릭 가로채기 ───────────── */
+  /* ───────────── 페이지 입력 가로채기 ───────────── */
   function inPanel(t) { return t === host || (t && t.getRootNode && t.getRootNode() === root); }
 
   function onClick(e) {
@@ -273,25 +346,25 @@
     e.preventDefault();
     e.stopPropagation();
     if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-    if (add(it)) { applyOverlay(); render(); }
+    if (add(it)) render();
   }
   function onDown(e) {
     if (inPanel(e.target) || e.altKey || e.metaKey || e.ctrlKey) return;
-    if (pick(e.target) && e.stopImmediatePropagation) e.stopImmediatePropagation();
+    if (hoverImg(e.target) && e.stopImmediatePropagation) e.stopImmediatePropagation();
   }
-  var hoverEl = null, hoverRaf = 0;
+  var lastTarget = null;
   function onMove(e) {
-    if (hoverRaf) return;
-    hoverRaf = requestAnimationFrame(function () {
-      hoverRaf = 0;
-      if (inPanel(e.target)) return;
-      var it = pick(e.target);
-      var el = it ? it.el : null;
-      if (el === hoverEl) return;
-      if (hoverEl) hoverEl.classList.remove('__loud-hover');
-      hoverEl = el;
-      if (hoverEl && !hoverEl.classList.contains('__loud-selected')) hoverEl.classList.add('__loud-hover');
-    });
+    if (e.target === lastTarget) return;   /* 같은 엘리먼트 위면 아무 일도 안 한다 */
+    lastTarget = e.target;
+    if (inPanel(e.target)) {
+      if (hoverEl) { hoverEl = null; relayout(); }
+      return;
+    }
+    var el = hoverImg(e.target);
+    if (el === hoverEl) return;
+    hoverEl = el;
+    hoverRad = el ? radOf(el) : '0px';
+    relayout();
   }
   function onKey(e) {
     if (e.key !== 'Escape') return;
@@ -303,20 +376,26 @@
   document.addEventListener('mousedown', onDown, true);
   document.addEventListener('mousemove', onMove, true);
   document.addEventListener('keydown', onKey, true);
+  window.addEventListener('scroll', relayout, true);
+  window.addEventListener('resize', relayout, true);
 
-  var mo = new MutationObserver(paint);
+  var moTimer = 0;
+  var mo = new MutationObserver(function () {
+    clearTimeout(moTimer);
+    moTimer = setTimeout(function () { resync(); layout(); }, 250);
+  });
   mo.observe(document.body, { childList: true, subtree: true });
 
-  /* ───────────── 화면 속 이미지 전부 담기 ───────────── */
+  /* ───────────── 전부 담기 / 비우기 ───────────── */
   btnAll.addEventListener('click', function () {
-    var before = SELECTED.size, n = 0;
+    var n = 0;
     if (IS_PIN) {
       document.querySelectorAll(PIN_SEL).forEach(function (p) {
         var im = pinImg(p);
         if (!im) return;
         var u = normalize(im.src);
         if (u && !SELECTED.has(u) && SELECTED.size < MAX_ITEMS) {
-          SELECTED.set(u, { el: p, url: u, thumb: im.src, link: pinLink(p), alt: im.alt || '' }); n++;
+          SELECTED.set(u, { el: im, url: u, thumb: im.src, link: pinLink(p), alt: im.alt || '', rad: radOf(im) }); n++;
         }
       });
     }
@@ -329,21 +408,18 @@
       if ((im.naturalWidth || 0) < 200 && r.width < 200) return;
       var u = normalize(bestUrl(im));
       if (u && !SELECTED.has(u) && SELECTED.size < MAX_ITEMS) {
-        SELECTED.set(u, { el: im, url: u, thumb: im.currentSrc || im.src || u, link: linkOf(im), alt: im.alt || '' }); n++;
+        SELECTED.set(u, { el: im, url: u, thumb: im.currentSrc || im.src || u, link: linkOf(im), alt: im.alt || '', rad: radOf(im) }); n++;
       }
     });
-    applyOverlay(); render();
-    say(n ? (n + '장 추가했습니다. (스크롤 후 다시 누르면 더 담깁니다)')
-             : '추가할 새 이미지가 없습니다.');
-    if (before === SELECTED.size && !n) toast('새로 담을 게 없습니다.');
+    render();
+    say(n ? (n + '장 추가했습니다. (스크롤 후 다시 누르면 더 담깁니다)') : '추가할 새 이미지가 없습니다.');
+    if (!n) toast('새로 담을 게 없습니다.');
   });
 
-  btnClr.addEventListener('click', function () {
-    SELECTED.clear(); applyOverlay(); render(); say('');
-  });
+  btnClr.addEventListener('click', function () { SELECTED.clear(); render(); say(''); });
 
   /* ───────────── URL 복사 ───────────── */
-  btnCopy.addEventListener('click', function () {
+  function doCopy() {
     var urls = [];
     SELECTED.forEach(function (d) { urls.push(d.url); });
     if (!urls.length) return;
@@ -359,7 +435,9 @@
       ta.remove();
       toast(ok ? (urls.length + '개 URL 복사됨') : '복사 실패');
     });
-  });
+  }
+  btnCopy.addEventListener('click', doCopy);
+  icCopy.addEventListener('click', function (e) { e.stopPropagation(); doCopy(); });
 
   /* ───────────── ZIP (라이브러리 없이 STORE 압축) ───────────── */
   var CRCT = null;
@@ -462,7 +540,7 @@
       if (idx >= items.length) return Promise.resolve();
       var i = idx++, d = items[i];
       /* originals 승격이 항상 되는 건 아니다 — 핀에 따라 403 이 온다(실측).
-         그때 손을 놓으면 그 장은 통째로 못 받는다. 큰 것 → 중간 → 화면에 보이던 것 순으로
+         그때 손을 놓으면 그 장은 통째로 못 받는다. 큰 것 → 736x → 화면에 보이던 것 순으로
          내려가며 받는다. 주소를 복사하는 쪽은 v1 그대로 originals 를 준다. */
       var cand = [d.url];
       if (d.thumb && d.thumb !== d.url) {
@@ -512,7 +590,7 @@
   function savePos() {
     try {
       localStorage.setItem(POS_KEY, JSON.stringify({
-        l: host.style.left, t: host.style.top, r: host.style.right, m: pnl.classList.contains('min') ? 1 : 0
+        l: host.style.left, t: host.style.top, m: pnl.classList.contains('min') ? 1 : 0
       }));
     } catch (e) {}
   }
@@ -525,17 +603,25 @@
       host.style.setProperty('right', 'auto', 'important');
     }
     if (v.t) host.style.setProperty('top', v.t, 'important');
-    if (v.m) pnl.classList.add('min');
+    if (v.m) { pnl.classList.add('min'); icMini.textContent = '+'; }
   }
 
-  $('.mini').addEventListener('click', function () { pnl.classList.toggle('min'); savePos(); });
-  $('.cls').addEventListener('click', function () { window.__loudPinCollector.destroy(); });
+  icMini.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var min = pnl.classList.toggle('min');
+    icMini.textContent = min ? '+' : '–';
+    savePos();
+  });
+  $('.cls').addEventListener('click', function (e) {
+    e.stopPropagation();
+    window.__loudPinCollector.destroy();
+  });
 
   var drag = null;
   hd.addEventListener('mousedown', function (e) {
     if (e.target.closest('.ic')) return;
     var r = host.getBoundingClientRect();
-    drag = { dx: e.clientX - r.left, dy: e.clientY - r.top, w: r.width, h: r.height };
+    drag = { dx: e.clientX - r.left, dy: e.clientY - r.top, w: r.width };
     hd.classList.add('grab');
     e.preventDefault();
   });
@@ -555,28 +641,26 @@
   window.addEventListener('mouseup', dragUp, true);
 
   loadPos();
-  applyOverlay();
   render();
   say(IS_PIN
-    ? '핀을 클릭해 담으세요. 패널은 제목줄을 잡고 옮길 수 있습니다.'
-    : '이 페이지의 아무 이미지나 클릭하세요. Alt+클릭은 원래 동작입니다.');
-  toast('수집기 활성화');
+    ? '핀을 클릭해 담으세요. 제목줄을 잡고 옮길 수 있습니다.'
+    : '아무 이미지나 클릭하세요. Alt+클릭은 원래 동작입니다.');
+  toast('이미지 수집기 켜짐');
 
   window.__loudPinCollector = {
     destroy: function () {
       try { mo.disconnect(); } catch (e) {}
-      clearTimeout(paintReq);
+      clearTimeout(moTimer);
+      if (rafId) cancelAnimationFrame(rafId);
       document.removeEventListener('click', onClick, true);
       document.removeEventListener('mousedown', onDown, true);
       document.removeEventListener('mousemove', onMove, true);
       document.removeEventListener('keydown', onKey, true);
+      window.removeEventListener('scroll', relayout, true);
+      window.removeEventListener('resize', relayout, true);
       window.removeEventListener('mousemove', dragMove, true);
       window.removeEventListener('mouseup', dragUp, true);
-      document.querySelectorAll('.__loud-selected,.__loud-hover').forEach(function (el) {
-        el.classList.remove('__loud-selected'); el.classList.remove('__loud-hover');
-      });
       host.remove();
-      docStyle.remove();
       delete window.__loudPinCollector;
     }
   };
