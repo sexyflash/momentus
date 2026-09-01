@@ -538,7 +538,15 @@
       "tagline2": "쿠팡 상품 페이지에서 옵션별 가격과 재고를 한 번에 펼쳐 봅니다. 옵션을 하나씩 눌러 확인하지 않아도 됩니다.",
       "logo": "/assets/home/logo/coupang.png",
       "shot": "https://the-moment.us/assets/home/logo/coupang.png",
-      "bmname": "🛒 쿠팡 퀵보기"
+      "bmname": "🛒 쿠팡 퀵보기",
+      "shots": [
+        "/assets/tools/quickpang-hero.jpg",
+        "/assets/tools/quickpang-compare.jpg",
+        "/assets/tools/quickpang-d1.jpg",
+        "/assets/tools/quickpang-d2.jpg",
+        "/assets/tools/quickpang-wide.jpg",
+        "/assets/tools/quickpang-d3.jpg"
+      ]
     },
     "insta-rank": {
       "name": "인스타 인기순 정렬",
@@ -712,7 +720,15 @@
       "tagline2": "유튜브 채널의 영상을 조회수 순서로 다시 세웁니다. 최신순 말고 실제로 많이 본 순서로 봅니다.",
       "logo": "/assets/home/logo/youtube.png",
       "shot": "https://the-moment.us/assets/home/logo/youtube.png",
-      "bmname": "🔥 유튜브 인기순"
+      "bmname": "🔥 유튜브 인기순",
+      "shots": [
+        "/assets/tools/youtube-rank-hero.jpg",
+        "/assets/tools/youtube-rank-compare.jpg",
+        "/assets/tools/youtube-rank-d1.jpg",
+        "/assets/tools/youtube-rank-d2.jpg",
+        "/assets/tools/youtube-rank-wide.jpg",
+        "/assets/tools/youtube-rank-d3.jpg"
+      ]
     },
     "pinterest-grab": {
       "name": "핀터레스트 원본 추출",
@@ -807,7 +823,15 @@
       "tagline2": "핀터레스트와 일반 웹사이트에서 원하는 이미지를 클릭해 담고, 원본 주소 복사나 ZIP 다운로드로 한 번에 가져옵니다.",
       "logo": "/assets/home/logo/pinterest.png",
       "shot": "https://the-moment.us/assets/home/logo/pinterest.png",
-      "bmname": "📌 이미지 수집기"
+      "bmname": "📌 이미지 수집기",
+      "shots": [
+        "/assets/tools/pinterest-grab-hero.jpg",
+        "/assets/tools/pinterest-grab-compare.jpg",
+        "/assets/tools/pinterest-grab-d1.jpg",
+        "/assets/tools/pinterest-grab-d2.jpg",
+        "/assets/tools/pinterest-grab-wide.jpg",
+        "/assets/tools/pinterest-grab-d3.jpg"
+      ]
     },
     "chatpage": {
       "name": "ChatPage",

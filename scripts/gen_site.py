@@ -3286,6 +3286,9 @@ for idx, slug in enumerate(ORDER):
     nxt = ORDER[(idx + 1) % len(ORDER)]
     # 제품별로 이미지 순서를 돌려 서로 달라 보이게
     r = lambda n: VIMG[(n + idx * 3) % len(VIMG)]
+    # 실제 도구 캡처 세트가 있으면 그걸 쓴다(hero/compare/d1/d2/wide/d3).
+    # 없으면 옛 vinylc 사진으로 떨어진다 — 남의 사이트 이미지라 순차 교체 대상.
+    SHOTS = p.get("shots") or []
 
     # feats 3개 → vinylc식 짧은 문단 3덩이
     f = p["feats"]
@@ -3322,18 +3325,29 @@ for idx, slug in enumerate(ORDER):
         + " · ".join(f'<a href="{esc(u)}">{esc(t)}</a>' for t, u in _dl)
         + '</p></div></div>')
 
-    body = f"""<div class="vd">
-  <div class="vd-hero">
-    <img src="{r(0)}" alt="{p['name']}">
-    <div class="cap">
-      <div class="kick">{p['tag']}</div>
-      <h1>{p['tagline']}</h1>
+    if SHOTS:
+        rhythm = f"""<div class="vd-full"><img src="{SHOTS[1]}" alt="" loading="lazy"></div>
+
+  {note(0)}
+
+  <div class="vd-flow">
+    <div class="vd-duo">
+      <img src="{SHOTS[2]}" alt="" loading="lazy">
+      <img src="{SHOTS[3]}" alt="" loading="lazy">
     </div>
   </div>
 
-  <div class="vd-note"><p>{p['lead']}</p></div>
+  {note(1)}
 
-  <div class="vd-full"><img src="{r(1)}" alt="" loading="lazy"></div>
+  <div class="vd-flow">
+    <div class="vd-wide"><img src="{SHOTS[4]}" alt="" loading="lazy"></div>
+  </div>
+
+  {note(2)}
+
+  <div class="vd-full"><img src="{SHOTS[5]}" alt="" loading="lazy"></div>"""
+    else:
+        rhythm = f"""<div class="vd-full"><img src="{r(1)}" alt="" loading="lazy"></div>
 
   {note(0)}
 
@@ -3364,7 +3378,20 @@ for idx, slug in enumerate(ORDER):
     <div class="vd-wide"><img src="{r(10)}" alt="" loading="lazy"></div>
   </div>
 
-  <div class="vd-full"><img src="{r(11)}" alt="" loading="lazy"></div>
+  <div class="vd-full"><img src="{r(11)}" alt="" loading="lazy"></div>"""
+
+    body = f"""<div class="vd">
+  <div class="vd-hero">
+    <img src="{SHOTS[0] if SHOTS else r(0)}" alt="{p['name']}">
+    <div class="cap">
+      <div class="kick">{p['tag']}</div>
+      <h1>{p['tagline']}</h1>
+    </div>
+  </div>
+
+  <div class="vd-note"><p>{p['lead']}</p></div>
+
+  {rhythm}
 
   <div class="vd-cta">
     {cta(slug, big=True)}
@@ -3374,7 +3401,7 @@ for idx, slug in enumerate(ORDER):
   {_faq_html(p)}
 
   <a class="vd-next" href="{purl(nxt)}">
-    <img src="{VIMG[(idx * 3 + 5) % len(VIMG)]}" alt="{P[nxt]['name']}" loading="lazy">
+    <img src="{(P[nxt].get('shots') or [VIMG[(idx * 3 + 5) % len(VIMG)]])[0]}" alt="{P[nxt]['name']}" loading="lazy">
     <div class="cap">
       <div class="lbl">Next Product</div>
       <div class="ttl">{P[nxt]['tagline']}</div>
