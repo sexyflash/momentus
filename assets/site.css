@@ -621,6 +621,24 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
   font-size:21px;font-weight:700;letter-spacing:-.02em;border-radius:0;transition:background .2s}
 .vd-cta .btn-buy:hover{background:#5A5A5A}
 .vd-cta .hint{margin-top:20px;font-size:15px;color:#909090;line-height:1.7}
+/* 도구 CTA — 그냥 흰 바닥에 점선 버튼 하나라 힘이 없었다(2026-09-01 대표 지적).
+   따뜻한 띠 위에 카드를 올리고, 버튼을 키우고, 설치 조건을 칩으로 못박는다. */
+.vd-cta.tool{max-width:none;width:100vw;margin-left:calc(50% - 50vw);padding:0}
+.vd-cta.tool .wrap{max-width:var(--vd-w);margin:0 auto;padding:96px 24px 104px;text-align:center;
+  background:linear-gradient(180deg,#fbf6f0 0%,#fdfbf8 62%,#fff 100%);
+  border-top:1px solid rgba(0,0,0,.05)}
+.vd-cta.tool .kick{font-size:13px;font-weight:700;letter-spacing:.04em;color:#b08968;text-transform:uppercase}
+.vd-cta.tool h3{margin:14px 0 0;font-size:clamp(26px,3.4vw,38px);font-weight:700;letter-spacing:-.03em;color:#1b1b1d}
+.vd-cta.tool .sub{margin:14px auto 0;max-width:44ch;font-size:16px;line-height:1.8;color:#6b6b70}
+.vd-cta.tool .go{margin-top:34px;display:inline-flex}
+.vd-cta.tool .btn.drag{padding:18px 34px;font-size:17px;border-radius:999px;border-width:2px;
+  background:#fff;box-shadow:0 10px 30px -12px rgba(200,90,60,.45)}
+.vd-cta.tool .btn.drag:hover{background:#fff8f4;opacity:1}
+.vd-cta.tool .chips{margin-top:26px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.vd-cta.tool .chips span{font-size:13px;color:#7a7a80;background:rgba(0,0,0,.045);
+  padding:7px 14px;border-radius:999px}
+.vd-cta.tool .hint{margin-top:18px;font-size:14px;color:#9a9aa0}
+@media(max-width:760px){.vd-cta.tool .wrap{padding:64px 20px 72px}}
 
 .vd-next{position:relative;width:100vw;margin-left:calc(50% - 50vw);height:271px;overflow:hidden;display:block}
 .vd-next img{width:100%;height:100%;object-fit:cover;display:block;
