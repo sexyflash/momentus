@@ -11,7 +11,7 @@ cd "$(dirname "$0")/.." || exit 1
 # ⚠️ 생성물 경로는 **한 곳에만** 적는다. 두 군데(diff 검사 / git add)에 따로 적었더니
 #    how-to-pay·i·inquiry 가 add 목록에서만 빠져 **생성은 되는데 커밋은 안 되는** 상태로
 #    방치됐다(2026-08-07 발견). 새 최상위 생성 경로를 만들면 여기 한 줄만 추가해라.
-GEN_PATHS="index.html stories tools products about legal apps og how-to-pay inquiry i sitemap.xml robots.txt llms.txt"
+GEN_PATHS="index.html stories insights tools products about legal apps og how-to-pay inquiry i sitemap.xml robots.txt llms.txt"
 
 echo "───────── $(date '+%Y-%m-%d %H:%M:%S') 재빌드 시작"
 
