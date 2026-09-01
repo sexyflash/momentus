@@ -2523,7 +2523,10 @@ box-shadow:inset 0 0 0 1px rgba(0,0,0,.18);font-weight:600}
    제품 사이트(spoke)는 그대로 작게 — 거긴 패밀리 메뉴다. */
 #mmt-bar[data-v=apex] .mmt-fly{background:#fff;border:1px solid rgba(0,0,0,.09);
 box-shadow:0 28px 56px -24px rgba(0,0,0,.26);width:min(880px,calc(100vw - 24px));border-radius:20px}
-#mmt-bar[data-v=apex] .mmt-fly-in{grid-template-columns:1.15fr .85fr;gap:10px 30px;padding:22px 22px 8px}
+/* 오른쪽 '무료 도구' 칸이 0.85fr 이라 '인스타 인기순 정렬' 같은 긴 라벨이 항목 상자를
+   13px 쯤 넘쳤다 -> 호버 배경이 글자보다 작아 보인다(2026-09-01 대표 지적).
+   칸을 반반으로 넓히고, 그래도 넘치면 항목이 잘라내도록 overflow 를 건다. */
+#mmt-bar[data-v=apex] .mmt-fly-in{grid-template-columns:1fr 1fr;gap:10px 26px;padding:22px 22px 8px}
 #mmt-bar[data-v=apex] .mmt-fly-h{font-size:12px;margin:0 0 10px}
 #mmt-bar[data-v=apex] .mmt-fly-it{gap:14px;padding:9px 10px;border-radius:13px}
 #mmt-bar[data-v=apex] .mmt-fly-it .th{width:84px;height:53px;border-radius:10px}
@@ -2649,6 +2652,7 @@ background:rgba(255,255,255,.08);display:grid;place-items:center;font-size:13px;
    min-width:auto 라 글자가 안 줄어들고 항목 상자를 그대로 넘친다 → 호버 배경이 글자보다
    작아 보인다(2026-09-01 대표 지적). 위 줄은 항목 자신만 풀어 줘서 안쪽이 여전히 삐져나왔다. */
 #mmt-bar .mmt-fly-it>*{min-width:0}
+#mmt-bar .mmt-fly-it{overflow:hidden}
 #mmt-bar .mmt-fly-it b,#mmt-bar .mmt-fly-it i{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #mmt-bar .mmt-fly-it b{font-size:13.5px;font-weight:600;letter-spacing:-.02em;color:#fff;
 white-space:nowrap}
