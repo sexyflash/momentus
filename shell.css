@@ -166,6 +166,10 @@ background:rgba(255,255,255,.08);display:grid;place-items:center;font-size:13px;
    줄여도 안쪽이 그대로 삐져나온다(2026-08-24: 판을 좁혔더니 넘침이 12px→57px 로 늘었다).
    폭을 줄이려면 칸이 줄어들 수 있게 min-width:0 을 먼저 풀어 줘야 한다. */
 #mmt-bar .mmt-fly-in>*,#mmt-bar .mmt-fly-grid>*,#mmt-bar .mmt-fly-it{min-width:0}
+/* ⚠️ 항목 *안쪽*(제목 b, 설명 i, 텍스트 래퍼)도 풀어 줘야 한다. flex 자식은 기본이
+   min-width:auto 라 글자가 안 줄어들고 항목 상자를 그대로 넘친다 → 호버 배경이 글자보다
+   작아 보인다(2026-09-01 대표 지적). 위 줄은 항목 자신만 풀어 줘서 안쪽이 여전히 삐져나왔다. */
+#mmt-bar .mmt-fly-it>*{min-width:0}
 #mmt-bar .mmt-fly-it b,#mmt-bar .mmt-fly-it i{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #mmt-bar .mmt-fly-it b{font-size:13.5px;font-weight:600;letter-spacing:-.02em;color:#fff;
 white-space:nowrap}
