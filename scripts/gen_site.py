@@ -179,15 +179,18 @@ main{padding-top:0}
 .btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
 .btn.drag{border:2px dashed var(--pt);color:var(--pt);background:#fff5f2;cursor:grab;font-weight:800}
 /* 드래그 안내 — 글 대신 그림. 버튼 글자는 북마크 이름이 되므로 안내문을 넣을 수 없다(2026-09-01).
-   버튼 위에 작은 브라우저 그림이 떠서 "끌어다 놓으면 북마크바에 꽂힌다"를 그대로 보여준다. */
+   버튼 위에 작은 브라우저 그림이 떠서 "끌어다 놓으면 북마크바에 꽂힌다"를 보여준다.
+   꽂히는 순간이 제일 중요한 장면이라 그때 북마크바 쪽으로 줌인한다(창업자 지시). */
 .dragwrap{position:relative;display:inline-flex}
-.dragdemo{position:absolute;left:50%;bottom:calc(100% + 13px);width:220px;padding:9px;
+.dragdemo{position:absolute;left:50%;bottom:calc(100% + 13px);width:232px;padding:9px 9px 7px;
   background:#111;border-radius:14px;box-shadow:0 16px 36px rgba(0,0,0,.3);
   transform:translateX(-50%) translateY(6px);opacity:0;pointer-events:none;
   transition:opacity .16s ease,transform .16s ease;z-index:120}
 .dragdemo::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);
   border:7px solid transparent;border-top-color:#111}
-.dragdemo svg{display:block;width:100%;height:auto}
+.dragdemo svg{display:block;width:100%;height:auto;border-radius:8px}
+.dd-cap{display:block;margin-top:7px;text-align:center;color:#c9ccd1;
+  font-size:11.5px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
 .dd-win{fill:#fff}
 .dd-bar{fill:#eceef1}
 .dd-chip{fill:#c7ced6}
@@ -197,41 +200,53 @@ main{padding-top:0}
 .dd-fly rect{fill:var(--pt)}
 .dd-fly circle{fill:#fff}
 .dd-cur{fill:#111;stroke:#fff;stroke-width:1.2}
-.dd-fly,.dd-cur,.dd-land,.dd-spark{animation-duration:2.8s;animation-iteration-count:infinite;
-  animation-timing-function:cubic-bezier(.4,0,.2,1);animation-play-state:paused;
+.dd-scene,.dd-fly,.dd-cur,.dd-land,.dd-spark{animation-duration:5s;animation-iteration-count:infinite;
+  animation-timing-function:ease-in-out;animation-play-state:paused;
   transform-box:fill-box;transform-origin:center}
 .dd-fly{animation-name:dd-fly}
 .dd-cur{animation-name:dd-cur;transform-box:view-box;transform-origin:0 0}
 .dd-land{animation-name:dd-land}
 .dd-spark{animation-name:dd-spark}
+.dd-scene{animation-name:dd-zoom;transform-box:view-box;transform-origin:91px 20.5px}
 .dragwrap:hover .dragdemo,.dragwrap:focus-within .dragdemo{opacity:1;transform:translateX(-50%) translateY(0)}
-.dragwrap:hover .dd-fly,.dragwrap:hover .dd-cur,.dragwrap:hover .dd-land,.dragwrap:hover .dd-spark,
-.dragwrap:focus-within .dd-fly,.dragwrap:focus-within .dd-cur,
+.dragwrap:hover .dd-scene,.dragwrap:hover .dd-fly,.dragwrap:hover .dd-cur,
+.dragwrap:hover .dd-land,.dragwrap:hover .dd-spark,
+.dragwrap:focus-within .dd-scene,.dragwrap:focus-within .dd-fly,.dragwrap:focus-within .dd-cur,
 .dragwrap:focus-within .dd-land,.dragwrap:focus-within .dd-spark{animation-play-state:running}
+/* 5s 한 바퀴 — 잡고(0~14%) 천천히 올라가(14~52%) 꽂히고(52~60%) 줌으로 보여준 뒤(60~88%) 되돌아간다 */
 @keyframes dd-fly{
   0%{transform:translate(110px,96px);opacity:0}
-  7%{transform:translate(110px,96px);opacity:1}
-  44%{transform:translate(91px,20.5px);opacity:1}
-  50%{transform:translate(91px,20.5px) scale(.62);opacity:0}
+  5%{transform:translate(110px,96px);opacity:1}
+  14%{transform:translate(110px,92px);opacity:1}
+  52%{transform:translate(91px,20.5px);opacity:1}
+  57%{transform:translate(91px,20.5px) scale(.66);opacity:.35}
+  60%{transform:translate(91px,20.5px) scale(.62);opacity:0}
   100%{transform:translate(110px,96px);opacity:0}}
 @keyframes dd-cur{
-  0%,7%{transform:translate(124px,101px);opacity:1}
-  44%,58%{transform:translate(105px,25px);opacity:1}
-  76%{transform:translate(124px,101px);opacity:0}
+  0%,5%{transform:translate(124px,101px);opacity:1}
+  14%{transform:translate(124px,97px);opacity:1}
+  52%,72%{transform:translate(105px,25px);opacity:1}
+  86%{transform:translate(124px,101px);opacity:0}
   100%{transform:translate(124px,101px);opacity:0}}
 @keyframes dd-land{
-  0%,47%{opacity:0;transform:scale(.55)}
-  54%{opacity:1;transform:scale(1)}
-  90%{opacity:1;transform:scale(1)}
+  0%,56%{opacity:0;transform:scale(.55)}
+  61%{opacity:1;transform:scale(1.12)}
+  65%{opacity:1;transform:scale(1)}
+  92%{opacity:1;transform:scale(1)}
   100%{opacity:0;transform:scale(1)}}
 @keyframes dd-spark{
-  0%,50%{opacity:0;transform:scale(.4)}
-  58%{opacity:1;transform:scale(1)}
-  74%{opacity:0;transform:scale(1.35)}
+  0%,58%{opacity:0;transform:scale(.4)}
+  66%{opacity:1;transform:scale(1)}
+  80%{opacity:0;transform:scale(1.35)}
   100%{opacity:0;transform:scale(1.35)}}
-@media (prefers-reduced-motion:reduce){.dd-fly,.dd-cur,.dd-land,.dd-spark{animation:none}
+@keyframes dd-zoom{
+  0%,50%{transform:scale(1)}
+  62%{transform:scale(1.75)}
+  88%{transform:scale(1.75)}
+  97%,100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.dd-scene,.dd-fly,.dd-cur,.dd-land,.dd-spark{animation:none}
   .dd-land{opacity:1}.dd-fly{opacity:0}}
-@media (max-width:560px){.dragdemo{width:min(220px,80vw)}}
+@media (max-width:560px){.dragdemo{width:min(232px,82vw)}}
 .btn.drag:active{cursor:grabbing}
 .free{font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;background:var(--ink);padding:3px 9px;border-radius:6px}
 .kick{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray)}
@@ -2389,7 +2404,7 @@ DRAG_ATTR = f'aria-label="북마크바로 끌어놓아 설치" onclick="alert(\'
 
 # 끌어놓는 동작을 그림 한 장으로. 글자 0. 버튼에 올리면 재생된다.
 DRAG_DEMO = (
-  '<span class="dragdemo" aria-hidden="true"><svg viewBox="0 0 220 132">'
+  '<span class="dragdemo" aria-hidden="true"><svg viewBox="0 0 220 132"><g class="dd-scene">'
   '<rect class="dd-win" x="10" y="8" width="200" height="116" rx="12"/>'
   '<path class="dd-bar" d="M10 20a12 12 0 0 1 12-12h176a12 12 0 0 1 12 12v14H10z"/>'
   '<rect class="dd-chip" x="22" y="15" width="24" height="11" rx="5.5"/>'
@@ -2401,7 +2416,7 @@ DRAG_DEMO = (
   '<g class="dd-fly"><rect x="-27" y="-10" width="54" height="20" rx="10"/>'
   '<circle cx="-15" cy="0" r="3.2"/></g>'
   '<g class="dd-cur"><path d="M0 0l0 14 3.6-3.5 2.4 5.2 2.6-1.2-2.4-5.1 4.9-.2z"/></g>'
-  '</svg></span>'
+  '</g></svg><span class="dd-cap">북마크바로 끌어놓기</span></span>'
 )
 
 CATN = {"fast": "생산성", "sell": "커머스", "research": "리서치", "study": "스터디"}
