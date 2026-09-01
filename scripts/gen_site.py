@@ -195,9 +195,9 @@ main{padding-top:0}
 .dd-bar{fill:#eceef1}
 .dd-chip{fill:#c7ced6}
 .dd-slot{fill:none;stroke:#aab2bc;stroke-width:1.4;stroke-dasharray:3.5 3}
-.dd-land{fill:var(--pt);opacity:0}
+.dd-land{fill:var(--dd,var(--pt));opacity:0}
 .dd-spark{fill:#ffd24d;opacity:0}
-.dd-fly rect{fill:var(--pt)}
+.dd-fly rect{fill:var(--dd,var(--pt))}
 .dd-fly circle{fill:#fff}
 .dd-cur{fill:#111;stroke:#fff;stroke-width:1.2}
 .dd-scene,.dd-fly,.dd-cur,.dd-land,.dd-spark{animation-duration:5s;animation-iteration-count:infinite;
@@ -2425,7 +2425,7 @@ def cta(slug, big=False):
     p = P[slug]
     cls = "btn lg cta-main drag" if (big and p["cta"] == "drag") else ("btn lg cta-main" if big else ("btn drag" if p["cta"] == "drag" else "btn"))
     if p["cta"] == "drag":
-        return (f'<span class="dragwrap"><a class="{cls}" href="{BM[p["bm"]]}" '
+        return (f'<span class="dragwrap" style="--dd:{p["color"]}"><a class="{cls}" href="{BM[p["bm"]]}" '
                 f'data-bm="{p["bm"]}" {DRAG_ATTR}>{p.get("bmname", p["short"])}</a>{DRAG_DEMO}</span>')
     if p["cta"] == "ext":
         return f'<a class="{cls}" href="{p["url"]}" target="_blank" rel="noopener">{p["ctatext"]}</a>'
@@ -3298,7 +3298,7 @@ for idx, slug in enumerate(ORDER):
     )
     if p["cta"] == "drag":
         dock_sub = "설치 없음 · 끌어놓기만 하면 끝"
-        dock_btn = (f'<span class="dragwrap"><a class="go" href="{BM[p["bm"]]}" '
+        dock_btn = (f'<span class="dragwrap" style="--dd:{p["color"]}"><a class="go" href="{BM[p["bm"]]}" '
                     f'data-bm="{p["bm"]}" {DRAG_ATTR}>{p.get("bmname", p["short"])}</a>{DRAG_DEMO}</span>')
     elif p["cta"] == "ext":
         dock_sub = p["ctasub"]
