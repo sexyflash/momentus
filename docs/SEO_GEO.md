@@ -998,3 +998,7 @@ JSON 으로 답하고, 코드는 그 값을 **원문 (질문, 엔진) 키와 대
 CLAUDE.md·메모리가 답변에 섞이면 "우리가 추천됐다"가 자기 자료를 읽은 결과가 된다.
 
 **한 판 실측 (2026-09-02, heyreci-1 × 4엔진).** 아래 GEO_LEDGER.md 첫 회차 참조.
+
+**알려진 한계.** `claude -p` 는 Claude Code 껍데기라 claude.ai 에서 손님이 받는 답과 같지 않다
+(전역 `~/.claude/CLAUDE.md` 도 읽는다 — 거기에 the-moment.us 주소가 인프라 규칙으로 4줄 있다).
+그래서 claude 열은 **추세**로만 읽고, 손님이 실제로 쓰는 답은 chatgpt·naver 열이 더 가깝다.
