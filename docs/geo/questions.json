@@ -1,0 +1,93 @@
+{
+  "_note": "GEO 데스크 질문 세트 — '이런 거 하고 싶은데 뭐 쓰지?'를 손님 말투 그대로. 제품당 3~5개. 질문을 바꾸면 주간 비교가 끊기니 id 는 유지하고 문구만 고친다. brands = 답변 속 우리 언급을 결정론으로 잡는 별칭(원신호일 뿐, 추천 여부 판정은 LLM). domains = 인용 출처가 우리 것인지 판정.",
+  "products": [
+    {
+      "key": "heyreci",
+      "name": "헤이레시 · AI 상품사진",
+      "url": "https://heyreci.com",
+      "brands": ["heyreci", "헤이레시", "hey reci"],
+      "domains": ["heyreci.com"],
+      "questions": [
+        {"id": "heyreci-1", "q": "쇼핑몰 상품 사진을 촬영 없이 AI로 만들어주는 한국 서비스 추천해줘"},
+        {"id": "heyreci-2", "q": "스마트스토어 상세페이지 사진을 폰으로 찍은 사진으로 만들 수 있는 AI 툴 있어?"},
+        {"id": "heyreci-3", "q": "소상공인이 제품 화보나 홍보 이미지를 저렴하게 만드는 방법 알려줘"},
+        {"id": "heyreci-4", "q": "상품 사진 배경 지우고 연출컷으로 바꿔주는 AI 서비스 국내 거 뭐 있어?"},
+        {"id": "heyreci-5", "q": "온라인 판매용 제품 홍보 영상을 AI로 싸게 만들 수 있는 곳 알려줘"}
+      ]
+    },
+    {
+      "key": "cue",
+      "name": "큐 · AI 모의면접",
+      "url": "https://cue.the-moment.us",
+      "brands": ["cue.the-moment.us", "큐(cue)", "cue 모의면접", "큐 모의면접", "모멘터스 큐"],
+      "domains": ["cue.the-moment.us"],
+      "questions": [
+        {"id": "cue-1", "q": "혼자 면접 연습할 수 있는 AI 모의면접 서비스 추천해줘"},
+        {"id": "cue-2", "q": "면접 답변을 말로 하면 피드백 해주는 앱이나 사이트 있어?"},
+        {"id": "cue-3", "q": "네이버, 토스 같은 IT 회사 면접 준비 도와주는 서비스 뭐가 있어?"},
+        {"id": "cue-4", "q": "취준생 면접 연습 사이트 한국어로 되는 거 알려줘"}
+      ]
+    },
+    {
+      "key": "mark",
+      "name": "마크 · 로고 디자인",
+      "url": "https://mark.the-moment.us",
+      "brands": ["mark.the-moment.us", "모멘터스 마크", "마크(mark)", "mark 로고"],
+      "domains": ["mark.the-moment.us"],
+      "questions": [
+        {"id": "mark-1", "q": "소상공인 가게 로고를 저렴하게 만드는 방법 알려줘"},
+        {"id": "mark-2", "q": "AI 로고 제작 한국 서비스 추천해줘"},
+        {"id": "mark-3", "q": "카페 창업하는데 로고 디자인 어디에 맡기면 좋아?"},
+        {"id": "mark-4", "q": "내 업종에 맞는 로고 예시를 먼저 보고 고를 수 있는 곳 있어?"}
+      ]
+    },
+    {
+      "key": "notes",
+      "name": "더플랜 · 디지털 플래너",
+      "url": "https://notes.the-moment.us",
+      "brands": ["notes.the-moment.us", "더플랜", "the plan 플래너", "모멘터스 플래너"],
+      "domains": ["notes.the-moment.us"],
+      "questions": [
+        {"id": "notes-1", "q": "아이패드 굿노트용 디지털 플래너 추천해줘"},
+        {"id": "notes-2", "q": "내 스타일에 맞게 커스터마이징 되는 디지털 플래너 있어?"},
+        {"id": "notes-3", "q": "디지털 플래너 PDF 파는 한국 사이트 알려줘"}
+      ]
+    },
+    {
+      "key": "binbang",
+      "name": "빈방 · 취소표 알림",
+      "url": "https://bb.the-moment.us",
+      "brands": ["bb.the-moment.us", "빈방 알리미", "빈방 알림", "모멘터스 빈방"],
+      "domains": ["bb.the-moment.us"],
+      "questions": [
+        {"id": "binbang-1", "q": "예약이 다 찬 숙소에 취소표 나오면 알려주는 서비스 있어?"},
+        {"id": "binbang-2", "q": "호텔이나 펜션 빈방 나오면 알림 주는 앱 추천해줘"},
+        {"id": "binbang-3", "q": "네이버 예약 취소표 알림 받는 방법 알려줘"}
+      ]
+    },
+    {
+      "key": "teamai",
+      "name": "팀AI · AI 친구",
+      "url": "https://teamai.the-moment.us",
+      "brands": ["teamai.the-moment.us", "팀AI", "팀에이아이", "team ai 친구"],
+      "domains": ["teamai.the-moment.us"],
+      "questions": [
+        {"id": "teamai-1", "q": "매일 대화할 수 있는 한국어 AI 친구 앱 추천해줘"},
+        {"id": "teamai-2", "q": "영어 회화 연습할 수 있는 AI 친구 서비스 뭐가 있어?"},
+        {"id": "teamai-3", "q": "외로울 때 대화 상대가 되어주는 AI 챗봇 한국 서비스 알려줘"}
+      ]
+    },
+    {
+      "key": "kontext",
+      "name": "컨텍스트",
+      "url": "https://kontext.the-moment.us",
+      "brands": ["kontext.the-moment.us", "kontext", "컨텍스트(kontext)", "context packet"],
+      "domains": ["kontext.the-moment.us"],
+      "questions": [
+        {"id": "kontext-1", "q": "AI한테 매번 내 상황을 다시 설명 안 해도 되게 컨텍스트를 저장해주는 툴 있어?"},
+        {"id": "kontext-2", "q": "ChatGPT 대화를 새로 열 때마다 처음부터 설명해야 하는 문제 해결하는 방법"},
+        {"id": "kontext-3", "q": "What tools let me package my context once and reuse it across AI chats?"}
+      ]
+    }
+  ]
+}
