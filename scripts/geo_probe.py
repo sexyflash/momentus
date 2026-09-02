@@ -320,7 +320,8 @@ def cmd_run(date: str, engines: List[str], products: Optional[List[str]], limit:
         qs = qs[:limit]
     run = load_run(date)
     run["complete"] = False
-    _write_status({"phase": "run", "date": date, "started": _now_iso(), "finished": None})
+    _write_status({"phase": "run", "date": date, "started": _now_iso(), "finished": None,
+                   "complete": None, "failed": []})
     save_run(run)
     todo = []
     for q in qs:
@@ -334,7 +335,10 @@ def cmd_run(date: str, engines: List[str], products: Optional[List[str]], limit:
     log(f"run {date}: {len(todo)} 칸 채움 (전체 {len(qs)}문항 × {len(engines)}엔진)")
     for i, (q, e) in enumerate(todo, 1):
         log(f"  [{i}/{len(todo)}] {e} ← {q['id']}")
-        res = PROBES[e](q["q"])
+        try:
+            res = PROBES[e](q["q"])
+        except Exception as ex:  # noqa: BLE001 — 한 칸의 실패가 회차 전체를 죽이면 안 된다
+            res = {"ok": False, "error": f"{type(ex).__name__}: {ex}"[:300]}
         res.update({"q_id": q["id"], "engine": e, "product": q["product"], "question": q["q"],
                     "at": _now_iso()})
         if res.get("ok"):
@@ -476,11 +480,11 @@ def merge_judgments(run: dict, parsed: Any, allowed_keys: set) -> int:
         ent["judgment"] = {
             "mentioned": bool(j.get("mentioned")),
             "recommended": bool(j.get("recommended")),
-            "rank": j.get("rank") if isinstance(j.get("rank"), int) else None,
-            "competitors": [str(x)[:60] for x in (j.get("competitors") or []) if x][:15],
-            "criteria": [str(x)[:80] for x in (j.get("criteria") or []) if x][:12],
+            "rank": j.get("rank") if isinstance(j.get("rank"), int) and not isinstance(j.get("rank"), bool) else None,
+            "competitors": [_plain(x, 60) for x in (j.get("competitors") or []) if x][:15],
+            "criteria": [_plain(x, 80) for x in (j.get("criteria") or []) if x][:12],
             "our_description": j.get("our_description") if j.get("our_description") in ("correct", "wrong", "absent") else "absent",
-            "quote": str(j.get("quote") or "")[:300],
+            "quote": _plain(j.get("quote"), 300),
         }
         n += 1
     return n
@@ -565,7 +569,7 @@ def summarize(run: dict, cfg: dict) -> dict:
             row["recommended"] += 1
             be["recommended"] += 1
         if j.get("our_description") == "wrong":
-            wrong_desc.append(f"{k}: {j.get('quote', '')[:120]}")
+            wrong_desc.append(f"{ent.get('engine')} · \"{(ent.get('question') or '')[:40]}\" → {j.get('quote', '')[:120]}")
         for c in j.get("competitors", []):
             competitors.setdefault(pk, Counter())[c] += 1
         for c in j.get("criteria", []):
@@ -639,6 +643,11 @@ def build_actions_prompt(summary: dict, diff: dict, cfg: dict) -> str:
     return "\n".join(L)
 
 
+def _plain(s: Any, cap: int) -> str:
+    """LLM 산출 문자열을 사용자 노출용으로 — 슬랙 멘션·태그(<!channel>, <@U..>, <http|..>)를 무력화."""
+    return str(s or "").replace("<", "‹").replace(">", "›").replace("@", "＠")[:cap]
+
+
 def sanitize_actions(parsed: Any, cfg: dict) -> Optional[dict]:
     if not isinstance(parsed, dict):
         return None
@@ -650,11 +659,11 @@ def sanitize_actions(parsed: Any, cfg: dict) -> Optional[dict]:
             if not isinstance(a, dict) or not a.get("title"):
                 continue
             tgt = str(a.get("target") or "all")
-            out.append({"title": str(a["title"])[:140], "why": str(a.get("why") or "")[:200],
+            out.append({"title": _plain(a["title"], 140), "why": _plain(a.get("why"), 200),
                         "target": tgt if tgt in keys else "all"})
         return out
 
-    return {"headline": str(parsed.get("headline") or "")[:200],
+    return {"headline": _plain(parsed.get("headline"), 200),
             "bot_actions": _clean(parsed.get("bot_actions")),
             "human_actions": _clean(parsed.get("human_actions"))}
 
@@ -672,6 +681,7 @@ def cmd_actions(date: str) -> dict:
     run["summary"] = summ
     run["diff"] = diff
     run["prev_date"] = prev_date
+    run["reported"] = bool(load_run(date).get("reported"))   # 그 사이 게시됐으면 되돌리지 않는다
     save_run(run)
     if acts is None:
         log("⚠️ actions 판정 실패 — 표만 보고한다")
@@ -780,8 +790,6 @@ def cmd_weekly(engines: List[str], products: Optional[List[str]], limit: Optiona
     run = cmd_actions(date)
     cfg = load_questions()
     append_ledger(run, cfg)
-    run["reported"] = run.get("reported", False)
-    save_run(run)
     _write_status({"phase": "done", "date": date, "finished": _now_iso(), "complete": run["complete"]})
     if commit:
         git_commit_ledger(date)
