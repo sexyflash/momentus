@@ -1,33 +1,42 @@
 {
  "products/binbang/": {
-  "h": "1382208ecf5551fa"
+  "d": "2026-09-02",
+  "h": "39597a2a94e53d58"
  },
  "products/cue/": {
-  "h": "cb917e055d13e814"
+  "d": "2026-09-02",
+  "h": "809be61095bee70d"
  },
  "products/flipper/": {
   "h": "5bdefd7f504d4055"
  },
  "products/heyreci/": {
-  "h": "6b5b9b68aa6c4808"
+  "d": "2026-09-02",
+  "h": "4555270f15d769d9"
  },
  "products/kontext/": {
-  "h": "e8e3b1d96e26cb3d"
+  "d": "2026-09-02",
+  "h": "ed2f5386d4a1195f"
  },
  "products/mark/": {
-  "h": "5498e6beb044cd11"
+  "d": "2026-09-02",
+  "h": "6b0c37851844edac"
  },
  "products/teamai/": {
-  "h": "80a7f9f2b5e3c281"
+  "d": "2026-09-02",
+  "h": "e53f35b5b6559a75"
  },
  "products/theplan/": {
-  "h": "6bd2ff76dd945272"
+  "d": "2026-09-02",
+  "h": "528baca2db9adac0"
  },
  "tools/chatpage/": {
-  "h": "d94873d55abd0576"
+  "d": "2026-09-02",
+  "h": "071de39c9e3b264e"
  },
  "tools/her/": {
-  "h": "8cf771609952cace"
+  "d": "2026-09-02",
+  "h": "3d51fa93c2f20366"
  },
  "tools/insta-rank/": {
   "d": "2026-09-01",

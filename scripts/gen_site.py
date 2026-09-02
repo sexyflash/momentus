@@ -646,6 +646,21 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
 .vd-wide.sh img{aspect-ratio:2560/900;object-fit:contain;background:#0b0c0e;border-radius:14px}
 .vd-pair img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
 
+/* 영상 컷 — 소리가 핵심이라 controls 를 주고 muted 를 걸지 않는다(자동재생 없음).
+   ⚠️ 컨테이너를 영상 고유 비율과 다르게 잡으면(aspect-ratio+object-fit:cover+max-height)
+      컨트롤러가 영상 밖(레터박스 위)에 걸리고 화면 일부를 덮는다 — 2026-09-02 대표 지적.
+      가로 폭만 제한하고 height:auto 로 두면 박스가 영상과 정확히 같아진다. */
+.vd-film{width:100vw;margin-left:calc(50% - 50vw);margin-top:100px}
+.vd-film video{display:block;margin:0 auto;width:min(100%, calc(82vh * 16 / 9));height:auto;
+  background:#0b0c0e}
+.vd-film .cap{max-width:var(--vd-w);margin:0 auto;padding:16px 24px 0;font-size:14px;color:#8a8a90;
+  text-align:center}
+@media(max-width:760px){.vd-film{margin-top:64px}}
+/* ⚠️ deeplinks(.vd-sec)는 예전에 .vd-dock(position:fixed) 안에 있었다. 그래서 cue 처럼
+   딥링크가 있는 제품에서 하단 고정바가 336px 로 부풀어 본문을 덮었다(2026-09-02 대표 지적).
+   본문 흐름으로 옮겼고, 여백은 여기서 준다. */
+.vd .vd-sec{max-width:var(--vd-w);margin:0 auto;padding:0 24px 40px;text-align:center}
+.vd .vd-sec .vd-note{margin:0}
 .vd-cta{max-width:var(--vd-w);margin:0 auto;padding:120px 24px;text-align:center}
 .vd-cta .btn-buy{display:inline-flex;align-items:center;justify-content:center;
   min-width:280px;height:64px;padding:0 40px;background:#202020;color:#fff;
@@ -3355,10 +3370,20 @@ for idx, slug in enumerate(ORDER):
         + " · ".join(f'<a href="{esc(u)}">{esc(t)}</a>' for t, u in _dl)
         + '</p></div></div>')
 
+    _v = p.get("film")
+    film = "" if not _v else (
+        f'<div class="vd-film"><video src="{_v[0]}" poster="{_v[1]}" controls playsinline '
+        f'preload="metadata" aria-label="{esc(p["name"])} 소개 영상"></video>'
+        f'<div class="cap">{esc(_v[2])}</div></div>' if len(_v) > 2 else
+        f'<div class="vd-film"><video src="{_v[0]}" poster="{_v[1]}" controls playsinline '
+        f'preload="metadata" aria-label="{esc(p["name"])} 소개 영상"></video></div>')
+
     if SHOTS:
         rhythm = f"""<div class="vd-full"><img src="{SHOTS[1]}" alt="" loading="lazy"></div>
 
   {note(0)}
+
+  {film}
 
   <div class="vd-flow">
     <div class="vd-duo sh">
@@ -3441,10 +3466,12 @@ for idx, slug in enumerate(ORDER):
 
   {cta_block}
 
+  {deeplinks}
+
   {_faq_html(p)}
 
   <a class="vd-next" href="{purl(nxt)}">
-    <img src="{(P[nxt].get('shots') or [VIMG[(idx * 3 + 5) % len(VIMG)]])[0]}" alt="{P[nxt]['name']}" loading="lazy">
+    <img src="{(P[nxt].get('shots') or [P[nxt].get('shot') or VIMG[(idx * 3 + 5) % len(VIMG)]])[0]}" alt="{P[nxt]['name']}" loading="lazy">
     <div class="cap">
       <div class="lbl">Next Product</div>
       <div class="ttl">{P[nxt]['tagline']}</div>
@@ -3453,7 +3480,6 @@ for idx, slug in enumerate(ORDER):
 </div>
 
 <div class="vd-dock">
-  {deeplinks}
   <div class="vd-guide" id="vdguide">
     <div class="inner">{guide}</div>
   </div>
@@ -4453,16 +4479,14 @@ def ap_stage(slug, tone="", badge=""):
     pr = P[slug]
     p_type = pr.get("type")
     go = _SPOKE_HREF.get(slug, "")
-    # 버튼은 하나다. '더 알아보기'와 '열기'는 결국 같은 말이라 둘을 나란히 두면 고민만 는다
-    # (2026-08-23 대표: "여기는 메뉴가 두 개가 아니잖아"). 바로 그 제품에서 할 일 하나만 둔다.
-    # 앱형은 '더 알아보기'(제품 페이지)와 '받기'(스토어) 둘 다 필요하다 — 설치 전에 볼 게 있다.
-    if p_type == "app":
-        cta = (f'<a class="stg-pill" href="{purl(slug)}">더 알아보기</a>'
-               f'<a class="stg-pill stg-pill--line" href="{go}"{_ext(go)}>'
-               f'{AP_GO.get(slug, "바로 가기")}</a>')
-    else:
-        cta = (f'<a class="stg-pill" href="{go}"{_ext(go)}>{AP_GO.get(slug, "바로 가기")}</a>'
-               if go else f'<a class="stg-pill" href="{purl(slug)}">더 알아보기</a>')
+    # 버튼은 둘이다: '더 알아보기'(우리 제품 페이지) + 그 제품에서 바로 할 일(외부).
+    #   2026-08-23 에는 "메뉴가 두 개가 아니잖아"라며 하나로 줄였었다. 그땐 제품 상세 페이지가
+    #   남의 사진으로 채워진 껍데기였기 때문이다. 2026-09-02 에 8개 제품 전부 실제 캡처로
+    #   상세 페이지를 채우고 나서 대표 지시로 되살렸다 — "이제 더 알아보기가 생겼으니 다 넣어라".
+    #   ⚠️ 상세 페이지가 다시 비어 있는 제품이 생기면 그 제품은 버튼을 하나로 되돌려라.
+    _more = f'<a class="stg-pill" href="{purl(slug)}">더 알아보기</a>'
+    cta = (_more + f'<a class="stg-pill stg-pill--line" href="{go}"{_ext(go)}>'
+                   f'{AP_GO.get(slug, "바로 가기")}</a>') if go else _more
     vid = HOME_VIDEO.get(slug)
     shot = HOME_SHOT.get(slug) or pr.get("shot") or ""
     if vid:
@@ -4478,8 +4502,8 @@ def ap_stage(slug, tone="", badge=""):
     dev = f'<b class="dev">{esc(pr["device"])}</b>' if pr.get("device") else ""
     cls = "".join(f" stg--{t}" for t in tone.split()) if tone else ""
     # 배너 전체를 누를 수 있게 — 카드처럼 보이는데 안 눌리면 손이 헛돈다(2026-08-24 대표 지적).
-    #   버튼이 둘이면 제품 페이지로, 하나면 그 버튼과 같은 곳으로 보낸다.
-    _whole = purl(slug) if p_type == "app" else (go or purl(slug))
+    #   버튼이 둘이 됐으니 카드 전체는 항상 우리 제품 페이지로 보낸다(외부로 튕기지 않는다).
+    _whole = purl(slug)
     _wext = _ext(_whole) if "//" in _whole else ""
     hit = (f'<a class="stg-hit" href="{_whole}"{_wext} '
            f'aria-label="{esc(pr["short"])} 자세히 보기"></a>')

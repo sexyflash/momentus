@@ -11,7 +11,7 @@ cd "$(dirname "$0")/.." || exit 1
 # ⚠️ 생성물 경로는 **한 곳에만** 적는다. 두 군데(diff 검사 / git add)에 따로 적었더니
 #    how-to-pay·i·inquiry 가 add 목록에서만 빠져 **생성은 되는데 커밋은 안 되는** 상태로
 #    방치됐다(2026-08-07 발견). 새 최상위 생성 경로를 만들면 여기 한 줄만 추가해라.
-GEN_PATHS="index.html stories insights tools products about legal apps og how-to-pay inquiry i sitemap.xml robots.txt llms.txt"
+GEN_PATHS="index.html insights tools products about legal apps og how-to-pay inquiry i sitemap.xml robots.txt llms.txt"
 
 echo "───────── $(date '+%Y-%m-%d %H:%M:%S') 재빌드 시작"
 
@@ -37,8 +37,23 @@ fi
 # ⚠️ 생성물만 담고 소스(scripts/gen_site.py · data/products.json)를 빼면 안 된다.
 #    소스가 커밋되지 않으면 다른 세션·기기의 재빌드가 옛 소스로 생성해 **조용히 회귀**한다
 #    (2026-08-01 Flipper 교보 SAM 탭에서 발견). 생성물과 소스는 항상 같이 커밋한다.
-git add -A $GEN_PATHS assets scripts data _redirects 2>/dev/null
-git commit -q -m "chore(stream): 자동 재빌드 — 제품 피드 갱신 $(date '+%Y-%m-%d')" || echo "  (커밋할 것 없음)"
+# ⚠️ 2026-09-02 사고: GEN_PATHS 에 없는 경로(stories)가 하나 섞여 있어 `git add` 가
+#    `fatal: pathspec ... did not match` 로 **통째로 실패**했고, 그 에러를 2>/dev/null 로
+#    삼켜서 **배포는 되는데 커밋은 하나도 안 되는** 상태로 오래 방치됐다.
+#    → 존재하는 경로만 골라서 add 하고, 실패는 소리 내서 죽인다.
+ADD_PATHS=""
+for _p in $GEN_PATHS assets scripts data _redirects; do
+  [ -e "$_p" ] && ADD_PATHS="$ADD_PATHS $_p"
+done
+if ! git add -A $ADD_PATHS; then
+  echo "❌ git add 실패 — 커밋하지 않고 중단(배포도 하지 않는다)"; exit 1
+fi
+if git diff --cached --quiet; then
+  echo "  (스테이지된 변경 없음 — 커밋 건너뜀)"
+else
+  git commit -q -m "chore(stream): 자동 재빌드 — 제품 피드 갱신 $(date '+%Y-%m-%d')" \
+    || { echo "❌ 커밋 실패 — 중단"; exit 1; }
+fi
 
 # SEO/GEO 점검 — docs/SEO_GEO.md 의 집행부.
 # ⚠️ 배포를 막지 않는다(경고만). 매일 도는 자동 빌드를 SEO 결함으로 죽이면

@@ -15,10 +15,10 @@
 - [Flipper](https://play.google.com/store/apps/details?id=us.themoment.flipper&hl=ko): 화면을 만지지 않고 페이지를 넘깁니다.
 
 ## 무료 브라우저 도구
-- [퀵팡 · 쿠팡 퀵보기](https://the-moment.us/tools/quickpang/): 클릭 없이 옵션·재고 확인.
-- [인스타 인기순 정렬](https://the-moment.us/tools/insta-rank/): 이 계정, 뭐가 제일 잘 됐나?
-- [유튜브 인기순 정렬](https://the-moment.us/tools/youtube-rank/): 가장 많이 재생된 순서로.
-- [핀터레스트 원본 추출](https://the-moment.us/tools/pinterest-grab/): 저해상 썸네일 말고, 원본을.
+- [퀵팡 · 쿠팡 퀵보기](https://the-moment.us/tools/quickpang/): 열지 않고, 재고까지.
+- [인스타 인기순 정렬](https://the-moment.us/tools/insta-rank/): 뭐가 제일 잘 됐는지부터.
+- [유튜브 인기순 정렬](https://the-moment.us/tools/youtube-rank/): 찍기 전에, 이미 이긴 걸 봅니다.
+- [이미지 수집기](https://the-moment.us/tools/pinterest-grab/): 모을 땐, 원본으로.
 - [ChatPage](https://the-moment.us/tools/chatpage/): 아무리 긴 유튜브도, 3초 요약.
 - [her · 음성 입력](https://the-moment.us/tools/her/): 타이핑 대신, 말로.
 

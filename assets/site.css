@@ -615,6 +615,21 @@ footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:
 .vd-wide.sh img{aspect-ratio:2560/900;object-fit:contain;background:#0b0c0e;border-radius:14px}
 .vd-pair img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
 
+/* 영상 컷 — 소리가 핵심이라 controls 를 주고 muted 를 걸지 않는다(자동재생 없음).
+   ⚠️ 컨테이너를 영상 고유 비율과 다르게 잡으면(aspect-ratio+object-fit:cover+max-height)
+      컨트롤러가 영상 밖(레터박스 위)에 걸리고 화면 일부를 덮는다 — 2026-09-02 대표 지적.
+      가로 폭만 제한하고 height:auto 로 두면 박스가 영상과 정확히 같아진다. */
+.vd-film{width:100vw;margin-left:calc(50% - 50vw);margin-top:100px}
+.vd-film video{display:block;margin:0 auto;width:min(100%, calc(82vh * 16 / 9));height:auto;
+  background:#0b0c0e}
+.vd-film .cap{max-width:var(--vd-w);margin:0 auto;padding:16px 24px 0;font-size:14px;color:#8a8a90;
+  text-align:center}
+@media(max-width:760px){.vd-film{margin-top:64px}}
+/* ⚠️ deeplinks(.vd-sec)는 예전에 .vd-dock(position:fixed) 안에 있었다. 그래서 cue 처럼
+   딥링크가 있는 제품에서 하단 고정바가 336px 로 부풀어 본문을 덮었다(2026-09-02 대표 지적).
+   본문 흐름으로 옮겼고, 여백은 여기서 준다. */
+.vd .vd-sec{max-width:var(--vd-w);margin:0 auto;padding:0 24px 40px;text-align:center}
+.vd .vd-sec .vd-note{margin:0}
 .vd-cta{max-width:var(--vd-w);margin:0 auto;padding:120px 24px;text-align:center}
 .vd-cta .btn-buy{display:inline-flex;align-items:center;justify-content:center;
   min-width:280px;height:64px;padding:0 40px;background:#202020;color:#fff;
