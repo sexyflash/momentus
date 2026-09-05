@@ -3,7 +3,7 @@
   {
    "kind": "release",
    "src": "플래너",
-   "title": "5년 만년일기",
+   "title": "일기장",
    "url": "https://notes.the-moment.us/p/diary5y",
    "date": "2026-08-18",
    "img": "https://notes.the-moment.us/img/wizard/wz_d42614b1-8dd/draft_user_cover.png"
@@ -27,7 +27,7 @@
   {
    "kind": "release",
    "src": "플래너",
-   "title": "머니 플래너 · 만년 가계부",
+   "title": "머니 플래너 · 가계부",
    "url": "https://notes.the-moment.us/p/moneybook",
    "date": "2026-08-18",
    "img": "https://notes.the-moment.us/img/wizard/wz_bbf51bee-50b/draft_user_cover.png"
@@ -396,6 +396,15 @@
   }
  ],
  "cue": [
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "면접 탈락 후 이력서 삭제 — 포털 탈퇴 말고, 회사의 파기 안내를 보세요",
+   "url": "https://cue.the-moment.us/playbook/resume-deletion-after-interview-rejection",
+   "date": "2026-09-06",
+   "desc": "불합격 뒤 포털 계정을 지워도 이미 접수된 지원서의 파기 여부까지 확인되지는 않습니다. 채용관리도구의 불합격 처리와 제출 파일 보관은 따로 움직일 수 있으니, 회사의 보유 근거와 파기 예정일부터 확인하세요.",
+   "cat": "다시 준비"
+  },
   {
    "kind": "post",
    "src": "모의면접",
