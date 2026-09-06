@@ -6,15 +6,15 @@
   "listed": false
  },
  "apps.apple.com": {
-  "count": 22,
+  "count": 36,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "blog.naver.com": {
-  "count": 265,
+  "count": 534,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "brunch.co.kr": {
@@ -24,93 +24,117 @@
   "listed": false
  },
  "canva.com": {
-  "count": 6,
+  "count": 10,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "community.linkareer.com": {
-  "count": 10,
+  "count": 16,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "draph.art": {
-  "count": 6,
+  "count": 12,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "dtgoodnote.com": {
-  "count": 11,
+  "count": 24,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
+  "listed": false
+ },
+ "gptparkai.com": {
+  "count": 5,
+  "first": "2026-09-07",
+  "last": "2026-09-07",
   "listed": false
  },
  "haijob.co.kr": {
-  "count": 10,
+  "count": 15,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
+  "listed": false
+ },
+ "help.openai.com": {
+  "count": 5,
+  "first": "2026-09-07",
+  "last": "2026-09-07",
   "listed": false
  },
  "kmong.com": {
-  "count": 16,
+  "count": 27,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "ko.clippingmagic.com": {
-  "count": 6,
+  "count": 12,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "kokomen.kr": {
-  "count": 5,
+  "count": 11,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "korean.go.kr": {
-  "count": 5,
+  "count": 10,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
+  "listed": false
+ },
+ "m.saramin.co.kr": {
+  "count": 5,
+  "first": "2026-09-07",
+  "last": "2026-09-07",
   "listed": false
  },
  "miricanvas.com": {
-  "count": 5,
+  "count": 9,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "namu.wiki": {
-  "count": 55,
+  "count": 111,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
+  "listed": false
+ },
+ "openads.co.kr": {
+  "count": 4,
+  "first": "2026-09-07",
+  "last": "2026-09-07",
   "listed": false
  },
  "pension.tuwaagin.com": {
-  "count": 6,
+  "count": 12,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "photoroom.com": {
-  "count": 5,
+  "count": 13,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "piccopilot.com": {
-  "count": 9,
+  "count": 15,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "play.google.com": {
-  "count": 9,
+  "count": 15,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "sukbak.oppapost.com": {
@@ -120,21 +144,21 @@
   "listed": false
  },
  "sungmooncho.com": {
-  "count": 7,
+  "count": 14,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "tilnote.io": {
-  "count": 5,
+  "count": 10,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "tiro.ooo": {
-  "count": 6,
+  "count": 12,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-07",
   "listed": false
  },
  "toolify.ai": {
@@ -147,6 +171,12 @@
   "count": 6,
   "first": "2026-09-02",
   "last": "2026-09-02",
+  "listed": false
+ },
+ "velog.io": {
+  "count": 4,
+  "first": "2026-09-07",
+  "last": "2026-09-07",
   "listed": false
  }
 }
