@@ -32,6 +32,7 @@ const SITES = {
   'notes.the-moment.us': { map: '/sitemap.xml', key: SHARED },
   'heyreci.com': { map: '/sitemap.xml', key: SHARED },
   'kontext.the-moment.us': { map: '/sitemap.xml', key: SHARED },
+  'teamai.the-moment.us': { map: '/sitemap.xml', key: SHARED },   // 2026-09-08 합류(키 파일 배포 후)
 };
 
 const get = async (u) => (await fetch(u, { headers: { 'user-agent': 'momentus-indexnow/2' } })).text();
