@@ -85,3 +85,44 @@ blog.naver.com(269), namu.wiki(56), apps.apple.com(14), dtgoodnote.com(13), kmon
 
 **대표님 몫 (새로 생긴 것만)**
 • [cue] m.saramin.co.kr(이번 회차 신규 인용 도메인, 5회)에 cue 등록·제휴 제출 — new_domains에 이번에 처음 추가된 도메인이고 cue 경쟁사 '사람인 AI 모의면접'(4회 인용)이 바로 그 채널에서 나온 것으로 보임 — 외부 사이트 계정 등록·제출은 사람이 해야 함
+
+---
+
+## 2026-09-14
+
+**GEO 주간 측정 2026-09-14** — 엔진: chatgpt, claude, naver_blog, naver_web
+7개 제품 전부 추천 0건, 지난주 대비 delta도 전부 0 — 정체 원인은 인용 상위 도메인(kmong.com 16회, dtgoodnote.com 12회, draph.art/photoroom.com/canva.com 6~7회)과 criteria 문장이 우리 사이트에 없다는 것
+
+**제품별 추천됨 / 질문수**
+• 헤이레시 · AI 상품사진: 추천 0/20 · 언급 0  [claude 0/5 · chatgpt 0/5 · naver_web 0/5 · naver_blog 0/5]
+• 큐 · AI 모의면접: 추천 0/16 · 언급 0  [claude 0/4 · chatgpt 0/4 · naver_web 0/4 · naver_blog 0/4]
+• 마크 · 로고 디자인: 추천 0/16 · 언급 0  [claude 0/4 · chatgpt 0/4 · naver_web 0/4 · naver_blog 0/4]
+• 더플랜 · 디지털 플래너: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+• 빈방 · 취소표 알림: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+• 팀AI · AI 친구: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+• 컨텍스트: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+
+**대신 추천된 곳 (상위)**
+• 헤이레시 · AI 상품사진: 드랩아트(Draph Art)(3), Canva(3), 브이캣(VCAT.AI)(2), 카페24 에디봇(2), 가비아 AI 에디터(2)
+• 큐 · AI 모의면접: 사람인 AI 모의면접(4), Yoodli(4), Final Round AI(4), 잘봐요(3), 면접톡(2)
+• 마크 · 로고 디자인: 크몽(6), 미리캔버스(5), Canva(4), 숨고(3), 99designs(3)
+• 더플랜 · 디지털 플래너: GoodNotes(3), 도트플래너(2), 굿노트끄적(2), Etsy(2), Reddit(2)
+• 빈방 · 취소표 알림: 캠프링크(2), 캠핑나우(2), 빈숲(Been Forest)(1), 국립공원 예약정보(1), 국립 자연휴양림 찾기·빈자리(1)
+• 팀AI · AI 친구: Replika(3), 제타(zeta)(2), 클로바 케어콜(2), Beff(2), Character.AI(2)
+• 컨텍스트: Claude Projects(3), Pinecone(2), Weaviate(2), Milvus(2), LangChain(2)
+
+**인용된 출처 도메인 = 우리가 실려야 할 자리**
+blog.naver.com(268), namu.wiki(55), apps.apple.com(20), kmong.com(16), dtgoodnote.com(12), play.google.com(11), piccopilot.com(8), draph.art(7), photoroom.com(7), community.linkareer.com(7), canva.com(6), ko.clippingmagic.com(6)
+새로 등장: brunch.co.kr, docs.tiro.ooo, finalroundai.com, remove.bg, sukbak.oppapost.com
+
+**봇이 이어서 할 일**
+• [heyreci] heyreci.com 첫 문단/FAQ에 '촬영 없이 상품 URL만 넣으면 자동 생성' 문장 삽입 — criteria에 '상품 URL만 넣으면 자동 생성'(1), '촬영 없이'(1), '촬영 로봇'(1)이 등장하지만 heyreci 추천은 0건 — 페이지에 이 문구 자체가 없을 가능성
+• [cue] cue.the-moment.us FAQ에 '루브릭 기반 채점형', '구조화된 행동면접 연습', '세션 후 디브리핑까지 지원' 문장 추가 — cue criteria에 각 1회씩 등장한 기준 문구인데 recommended 0/16 — 경쟁사 Final Round AI(4), 사람인 AI 모의면접(4)에 밀려 언급조차 안 됨
+• [mark] mark.the-moment.us에 '무료 상업용 한글 폰트', '벡터 파일(AI·SVG·EPS)' 항목을 페이지 문장으로 명시 — mark criteria에 각 1회 등장, 경쟁사 크몽(6)·미리캔버스(5)·Canva(4)에 밀려 recommended 0/16
+• [notes] notes.the-moment.us에 '날짜형 vs 만년형' 비교 섹션 추가 — notes criteria에서 가장 많이 등장한 기준(2회)인데 페이지에 답이 없어 GoodNotes(3)·도트플래너(2)로 추천이 감
+
+**대표님 몫 (새로 생긴 것만)**
+• [heyreci] 카페24 앱스토어에 헤이레시 앱 등록 신청 — criteria '카페24 앱스토어 입점'(1), '이미 카페24 쓰는 분'(1) — 등록 자체가 안 돼 있으면 이 축의 질문에 절대 못 뽑힘, 심사 제출은 사람이 해야 함
+• [mark] kmong.com에 마크 서비스 판매자 등록 — kmong.com이 전체 인용 도메인 3위(16회), 크몽은 mark 경쟁사 언급 1위(6회) — 계정 가입·심사가 필요해 봇이 못 함
+• [notes] dtgoodnote.com에 더플랜 제품 리스팅/제휴 문의 — dtgoodnote.com이 인용 도메인 5위(12회)이자 GoodNotes(3) 생태계 허브 — 외부 사이트 제출·승인 필요
+• [binbang] sukbak.oppapost.com·pension.tuwaagin.com에 빈방 게스트 포스팅 제안 — 두 도메인 모두 이번 주 신규 인용(각 6회, new_domains 목록 포함) — 외부 블로그 컨택·발행 승인이 필요해 사람 몫
