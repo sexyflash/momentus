@@ -29,13 +29,18 @@ HOME = os.path.expanduser("~/Projects")
 # (저장소, CSS 파일들, 바 HTML 파일들, 도메인, 법적표기 파일들)
 #   법적표기 = 전자상거래 6종. 종전엔 제품 저장소가 손으로 베꼈다(notes 2곳·cue 4곳·mark 1곳).
 #   틀리면 PG 심사에서 잡히는 문장이라 손복사로 두면 안 된다 — 2026-08-08 부터 여기서 밀어 넣는다.
-#   ⬜ cue·mark 는 아직 마커가 없다. 각 저장소 푸터를 MMT:LEGAL 마커로 감싸면 목록에 넣는다.
+#   ✅ cue·mark 도 마커 적용 완료. 새 파일에 푸터가 생기면 **여기 목록에 같이 넣어라** —
+#      목록에 없으면 조용히 갈라진다(2026-09-13 cue/src/pages2.mjs 실측).
 TARGETS = [
     ("notes", ["web/src/shop_ui.js"], ["web/src/shop_ui.js"], "notes.the-moment.us",
      ["web/src/legal.js"], "<br>"),   # 구 planner-factory (2026-07-31 리네임)
     ("cue", ["public/landing.css", "public/jobs.css"],
      ["public/landing.html", "public/jobs.html", "public/privacy.html"], "cue.the-moment.us",
-     ["public/landing.html", "public/jobs.html", "public/privacy.html", "src/index.js"], " · "),  # cue 푸터는 한 줄
+     # 🔴 src/pages2.mjs 를 빠뜨렸다가 사고가 났다(2026-09-13): /about ·/faq ·/pricing ·/insights ·
+     #    **모든 글 상세**가 옛 문구에 남아 개인정보처리방침 링크가 빠져 있었다. 푸터를 든 파일은 전부 여기 적는다.
+     #    빠진 파일이 있는지는 cue 쪽 감시기가 본다 — cue/scripts/sync-footer.mjs (저장소를 훑어 마커 밖 표기를 찾는다).
+     ["public/landing.html", "public/jobs.html", "public/privacy.html", "public/spike.html",
+      "src/index.js", "src/pages2.mjs", "src/nowpage.mjs"], " · "),  # cue 푸터는 한 줄
     ("mark", ["src/styles/global.css"], ["src/layouts/Base.astro"], "mark.the-moment.us",
      ["src/components/Footer.astro"], "<br />"),
     # 빈방은 정적 HTML 2장 — 종전엔 바를 손으로 베껴 다른 제품과 어긋났다(2026-08-23).

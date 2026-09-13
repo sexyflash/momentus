@@ -399,6 +399,15 @@
   {
    "kind": "post",
    "src": "모의면접",
+   "title": "면접 공백기 질문 — 공백은 감점이 아닙니다. 질문 한 줄로 옵니다",
+   "url": "https://cue.the-moment.us/playbook/interview-career-gap-question",
+   "date": "2026-09-14",
+   "desc": "쉰 기간을 메우려고 자격증부터 결제하셨나요. 면접 평가표에는 '공백 몇 개월' 칸이 없습니다. 공백은 점수가 아니라 질문 한 줄로 넘어가고, 감점은 그 질문에 답을 못 했을 때 생깁니다.",
+   "cat": "다시 준비"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
    "title": "면접 탈락 후 이력서 삭제 — 포털 탈퇴 말고, 회사의 파기 안내를 보세요",
    "url": "https://cue.the-moment.us/playbook/resume-deletion-after-interview-rejection",
    "date": "2026-09-06",
