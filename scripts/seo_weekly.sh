@@ -10,10 +10,13 @@
 
 LOG=~/Projects/cue/crawler/data/seo_weekly.log
 CHK=~/bin/seo_check.py
+# 대상 목록은 **한 파일**이다 — observatory/sites.json. 🚫 여기에 도메인을 다시 적지 마라
+#   (2026-09-14 관측소 도입 전까지 이 줄에 5개가 박혀 있어 teamai·kontext·빈방이 빠져 있었다).
+DOMAINS=$(/usr/bin/python3 -c "import json,os;print(' '.join(s['domain'] for s in json.load(open(os.path.expanduser('~/Projects/momentus/observatory/sites.json')))['sites'] if s.get('seo') and s.get('domain')))")
 
 {
   echo "════════ $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M KST') ════════"
-  for d in the-moment.us cue.the-moment.us notes.the-moment.us mark.the-moment.us heyreci.com; do
+  for d in ${=DOMAINS}; do
     cd ~/Projects/momentus || exit 1
     out=$(/usr/bin/python3 "$CHK" --live --domain "$d" --pages 1 --orphans 2>&1)
     echo "── $d"

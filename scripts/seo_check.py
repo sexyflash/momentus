@@ -29,14 +29,35 @@ from pathlib import Path
 #    (2026-08-28). 저장소 사본으로 돌릴 때만 우연히 맞던 것이다.
 ROOT = Path.cwd()
 
-# 라이브 검사 대상. docs/SEO_GEO.md §7 의 표와 같은 목록을 유지해라.
-DOMAINS = [
+# 라이브 검사 대상 — **정본은 observatory/sites.json 하나**다(docs/OBSERVATORY.md).
+# 🚫 여기에 도메인을 손으로 적어 늘리지 마라. 목록이 두 벌이 되면 한쪽만 고쳐지고,
+#    그 차집합이 정확히 "아무도 안 보는 사이트"가 된다(2026-09-14 관측소 도입 전 3개가 그랬다).
+# 파일을 못 읽는 환경(저장소 밖 사본 등)에서는 아래 폴백을 쓴다.
+_FALLBACK_DOMAINS = [
     "https://the-moment.us",
     "https://notes.the-moment.us",
     "https://cue.the-moment.us",
     "https://mark.the-moment.us",
     "https://heyreci.com",
 ]
+
+
+def _load_domains() -> list[str]:
+    for cand in (
+        Path(__file__).resolve().parent.parent / "observatory" / "sites.json",
+        Path.home() / "Projects" / "momentus" / "observatory" / "sites.json",
+    ):
+        try:
+            sites = json.loads(cand.read_text("utf-8"))["sites"]
+        except Exception:
+            continue
+        doms = [f"https://{s['domain']}" for s in sites if s.get("seo") and s.get("domain")]
+        if doms:
+            return doms
+    return _FALLBACK_DOMAINS
+
+
+DOMAINS = _load_domains()
 
 # 검사에서 뺄 로컬 파일. 생성물이 아니거나 의도적 예외인 것만 넣어라 — 늘리지 마라.
 SKIP = re.compile(
