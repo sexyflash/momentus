@@ -1,49 +1,101 @@
 {
-  "_": "관측 대상 **단일 목록**. 🚫 두 벌로 만들지 마라 — seo_weekly.sh·collect.mjs 가 전부 이 파일을 읽는다.",
+  "_": "관측 대상 **단일 목록**. 🚫 두 벌로 만들지 마라 — collect.mjs·seo_weekly.sh·scripts/seo_check.py 가 전부 이 파일을 읽는다. 추적 사이트는 domain 이 있는 8개. domain:null 인 항목(북마크릿·ChatPage)은 지표 1~4 를 원천적으로 못 재서 '—' 로 비지만, 지표 5(유입)는 실측값이 커서 남긴다 — 빼면 제외가 아니라 유실이다. planner 는 notes 로 개명(301)돼 목록에서 뺐다.",
   "gaAccount": "1843518",
   "sites": [
     {
-      "id": "momentus", "label": "모멘터스 랜딩", "domain": "the-moment.us",
-      "ga": "551281263", "gsc": "sc-domain:the-moment.us", "seo": true, "crawl": null
+      "id": "momentus",
+      "label": "모멘터스 랜딩",
+      "domain": "the-moment.us",
+      "ga": "551281263",
+      "gsc": "sc-domain:the-moment.us",
+      "seo": true,
+      "crawl": null
     },
     {
-      "id": "cue", "label": "AI모의면접 cue", "domain": "cue.the-moment.us",
-      "ga": "544010203", "gsc": "sc-domain:the-moment.us", "seo": true,
-      "crawl": { "repo": "~/Projects/cue", "ns": "f2945f77ec0345e48c2a94a64c909493" }
+      "id": "cue",
+      "label": "AI모의면접 cue",
+      "domain": "cue.the-moment.us",
+      "ga": "544010203",
+      "gsc": "sc-domain:the-moment.us",
+      "seo": true,
+      "crawl": {
+        "repo": "~/Projects/cue",
+        "ns": "f2945f77ec0345e48c2a94a64c909493"
+      }
     },
     {
-      "id": "mark", "label": "로고제작 Mark", "domain": "mark.the-moment.us",
-      "ga": "541668714", "gsc": "sc-domain:the-moment.us", "seo": true, "crawl": null
+      "id": "mark",
+      "label": "로고제작 Mark",
+      "domain": "mark.the-moment.us",
+      "ga": "541668714",
+      "gsc": "sc-domain:the-moment.us",
+      "seo": true,
+      "crawl": null
     },
     {
-      "id": "notes", "label": "노트 플래너", "domain": "notes.the-moment.us",
-      "ga": "551977129", "gsc": "sc-domain:the-moment.us", "seo": true, "crawl": null
+      "id": "notes",
+      "label": "노트 플래너",
+      "domain": "notes.the-moment.us",
+      "ga": "551977129",
+      "gsc": "sc-domain:the-moment.us",
+      "seo": true,
+      "crawl": null
     },
     {
-      "id": "teamai", "label": "팀AI", "domain": "teamai.the-moment.us",
-      "ga": "552103172", "gsc": "sc-domain:the-moment.us", "seo": true, "crawl": null
+      "id": "teamai",
+      "label": "팀AI",
+      "domain": "teamai.the-moment.us",
+      "ga": "552103172",
+      "gsc": "sc-domain:the-moment.us",
+      "seo": true,
+      "crawl": null
     },
     {
-      "id": "kontext", "label": "Kontext", "domain": "kontext.the-moment.us",
-      "ga": "525400922", "gsc": "sc-domain:the-moment.us", "seo": true, "crawl": null
+      "id": "kontext",
+      "label": "Kontext",
+      "domain": "kontext.the-moment.us",
+      "ga": "525400922",
+      "gsc": "sc-domain:the-moment.us",
+      "seo": true,
+      "crawl": null
     },
     {
-      "id": "binbang", "label": "빈방", "domain": "bb.the-moment.us",
-      "ga": "552088876", "gsc": "sc-domain:the-moment.us", "seo": true, "crawl": null
+      "id": "binbang",
+      "label": "빈방",
+      "domain": "bb.the-moment.us",
+      "ga": "552088876",
+      "gsc": "sc-domain:the-moment.us",
+      "seo": true,
+      "crawl": null
     },
     {
-      "id": "heyreci", "label": "헤이레시", "domain": "heyreci.com",
-      "ga": "552134198", "gsc": null, "seo": true, "crawl": null,
+      "id": "heyreci",
+      "label": "헤이레시",
+      "domain": "heyreci.com",
+      "ga": "552134198",
+      "gsc": null,
+      "seo": true,
+      "crawl": null,
       "note": "GSC 속성 없음 — 서비스계정(gindex@sexyflash-mcp-2026.iam.gserviceaccount.com)을 추가하면 3·4번 칸이 채워진다"
     },
     {
-      "id": "bookmarklet", "label": "북마크릿", "domain": null,
-      "ga": "460766131", "gsc": null, "seo": false, "crawl": null,
+      "id": "bookmarklet",
+      "label": "북마크릿",
+      "domain": null,
+      "ga": "460766131",
+      "gsc": null,
+      "seo": false,
+      "crawl": null,
       "note": "자기 호스트가 없다 — 남의 페이지 위에서 도는 도구(GA4 hostName 실측: (not set) 다수). 1~4번 칸은 원천적으로 빈다"
     },
     {
-      "id": "chatpage", "label": "ChatPage", "domain": null,
-      "ga": "464251612", "gsc": null, "seo": false, "crawl": null,
+      "id": "chatpage",
+      "label": "ChatPage",
+      "domain": null,
+      "ga": "464251612",
+      "gsc": null,
+      "seo": false,
+      "crawl": null,
       "note": "크롬 확장 — 웹 호스트 없음(GA4 hostName 실측 0건). 1~4번 칸은 원천적으로 빈다"
     }
   ]
