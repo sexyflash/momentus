@@ -73,6 +73,27 @@ if (ctlImp === 0 && trtImp === 0) {
   console.log('     → 할 일: GetQueryStats 상위 질의어를 뽑아 콘텐츠 편성에 반영.');
 }
 
+// ── BWT 소유확인 감시 ────────────────────────────────────────────────
+// notes·bb 는 2026-09-14 에 BWT 에 추가했지만 IsVerified:false 다(GSC 개별 속성이 아니었다).
+// 같은 날 GSC 에는 URL 접두어 속성으로 추가해 **자동 확인**을 받아 뒀고, BWT 임포트 동의문이
+// "주기적으로 검증 상태를 재확인한다" 고 명시하므로 며칠 내 자동 승격될 수 있다.
+// 🔴 사람 기억에 맡기지 않는다 — 승격되면 알리고, 7일이 지나도 안 되면 그것도 알린다.
+const ADDED = new Date('2026-09-14T00:00:00+09:00');
+const PENDING_AT_SETUP = ['https://notes.the-moment.us/', 'https://bb.the-moment.us/'];
+const days = Math.floor((Date.now() - ADDED) / 86400000);
+const stillPending = PENDING_AT_SETUP.filter((u) => now[u] && !now[u].verified);
+if (stillPending.length === 0) {
+  console.log(`  🟢 BWT 소유확인 — notes·bb 가 승격됐다(설치 +${days}일). 빙이 GSC 를 재검증한 것이다.`);
+  console.log('     → 할 일: 없다. 이제 두 사이트도 노출·질의 데이터가 쌓인다.');
+} else if (days >= 7) {
+  console.log(`  🔴 BWT 소유확인 — ${stillPending.length}건이 ${days}일째 미검증: ${stillPending.join(' ')}`);
+  console.log('     → 빙의 GSC 자동 재검증을 기다리는 방법은 실패했다. 남은 길은 둘:');
+  console.log('       ① Cloudflare DNS 쓰기 권한(현재 wrangler 토큰은 zone:read 뿐) → TXT/CNAME 추가');
+  console.log('       ② 해당 사이트에 BingSiteAuth.xml 배포 (⚠️ 두 저장소 모두 미커밋 변경이 있다)');
+} else {
+  console.log(`  ⏳ BWT 소유확인 — notes·bb 대기중(설치 +${days}일). 7일까지는 빙의 자동 재검증을 기다린다.`);
+}
+
 // AI Performance 는 API 미확인 — 사람이 봐야 하는 자리
 console.log('\n── 손으로 볼 것 (API 미확인)');
 console.log('  AI Performance: https://www.bing.com/webmasters/aiperformance?siteUrl=https://cue.the-moment.us/');

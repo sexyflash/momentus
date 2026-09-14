@@ -14,11 +14,11 @@ out=$($NODE /Users/sexyflash/Projects/momentus/observatory/recheck.mjs 2>&1)
 echo "════════ $DAY $(TZ=Asia/Seoul date '+%H:%M') ════════" >> "$LOG"
 echo "$out" >> "$LOG"
 
-verdict=$(echo "$out" | grep -E '^  (🔴|🟢|🟡)' | head -1)
-case "$verdict" in
-  *🟡*) exit 0 ;;                       # 아직 대기 — 조용히 있는다
-  "")   exit 0 ;;
-esac
+# 🔴 '첫 줄' 이 아니라 **대기(🟡·⏳)가 아닌 첫 줄** 을 판정으로 삼는다.
+#   빙 노출은 아직 대기(🟡)인데 소유확인만 먼저 승격(🟢)되는 경우가 있다 —
+#   head -1 로 잡으면 그 승격을 영영 못 알린다.
+verdict=$(echo "$out" | grep -E '^  (🔴|🟢)' | head -1)
+[ -z "$verdict" ] && exit 0            # 전부 대기 — 조용히 있는다
 [ -f "$STAMP" ] && [ "$(cat $STAMP)" = "$verdict" ] && exit 0   # 같은 판정 반복 금지
 echo "$verdict" > "$STAMP"
 {

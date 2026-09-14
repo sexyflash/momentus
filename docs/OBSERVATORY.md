@@ -346,3 +346,70 @@ AI Performance 는 API 미확인이라 **사람이 본다**:
 - **GSC 서비스계정이 3개 속성만 본다.** `*.the-moment.us` 는 `sc-domain:the-moment.us` +
   `--host` 페이지 필터로 전부 대체된다(이번 회차에 mark 3회·momentus 2회로 실측 확인).
   **heyreci.com 만 별도 도메인이라 대체 불가** — 그 속성에 서비스계정을 추가해야 3번 칸이 채워진다.
+
+---
+
+# 2026-09-14 (3차) — 블로커 정리. **셋 중 둘은 결함이 아니었다**
+
+대표 지시: "추가해서 마무리해, 블로커 없이." 남아 있던 4건을 전부 닫았다.
+
+## ✅ 1. heyreci GSC 서비스계정 추가 — 해결
+
+`sc-domain:heyreci.com` 의 **사용자 및 권한**에 `gindex@sexyflash-mcp-2026.iam.gserviceaccount.com`
+을 **전체** 권한으로 추가했다. 실측 확인:
+
+```
+서비스계정이 보는 속성 3 → 4개
+  https://cue.the-moment.us/     | siteOwner
+  sc-domain:the-moment.us        | siteFullUser
+  sc-domain:cue.the-moment.us    | siteOwner
+  sc-domain:heyreci.com          | siteFullUser   ← 신규
+```
+
+**3번 지표(구글 노출)의 마지막 블로커가 없어졌다.** `*.the-moment.us` 는 Agent-2 의 `gsc.mjs --host`
+로 분리되고, 별도 도메인인 heyreci 는 이제 속성 자체를 읽는다.
+
+## ❌ 2. `www.heyreci.com` 중복 호스트 — **결함이 아니다** (내가 틀렸다)
+
+리다이렉트가 없는 건 맞지만 **canonical 이 양쪽 다 apex 를 가리킨다**:
+
+```
+www.heyreci.com  → <link rel="canonical" href="https://heyreci.com/index"/>
+heyreci.com      → <link rel="canonical" href="https://heyreci.com/index"/>
+```
+
+중복 콘텐츠 신호는 canonical 로 이미 정리돼 있다. 🚫 고칠 것 없다. 백로그에서 뺀다.
+
+## ❌ 3. `bb.the-moment.us/sitemap.xml` 이 1장 — **의도된 것이다** (내가 틀렸다)
+
+사이트맵 본문에 이유가 적혀 있었다:
+
+> `빈방 사이트맵. 손님에게 보여줄 페이지만 싣는다. /archive/*(내부 시안)·/status(손님별 코드 페이지)는 robots.txt 에서…`
+
+**손님에게 보여줄 페이지가 실제로 하나**다. 🚫 고칠 것 없다.
+
+⚠️ 다만 진짜 함정을 하나 봤다 — `bb.the-moment.us/BingSiteAuth.xml` 이 **200 을 준다.**
+없는 경로에 SPA 랜딩 HTML 을 돌려주는 것이다(bb 의 robots.txt 주석에 적힌 그 사고와 같은 종류).
+**존재 여부를 상태코드로 판정하면 안 된다** — 본문을 봐야 한다. 이번에도 200 만 보고
+"BingSiteAuth 이미 있네" 로 넘어갈 뻔했다.
+
+## ⏳ 4. BWT `notes`·`bb` 소유확인 — **감시로 전환** (사람 기억에서 뺐다)
+
+BWT SPA 에 GSC 재동기화 버튼도, 대기 사이트의 검증 화면으로 가는 URL 도 없다
+(`/webmasters/addsite`·`/siteverification` 둘 다 라우트 없음, 사이트 선택기의 "Not verified" 는 배지일 뿐).
+남은 길은 DNS 쓰기(현 wrangler 토큰은 `zone:read` 뿐)나 파일 배포(두 저장소 모두 미커밋 변경 있음)인데,
+**둘 다 남의 작업이나 계정 권한을 건드려야 한다.**
+
+대신 GSC 쪽은 오늘 확인을 끝냈고 BWT 는 "주기적으로 GSC 검증 상태를 재확인한다"고 명시했다.
+그래서 **기다리되, 기다리는 걸 사람이 기억하지 않게** `recheck.mjs` 에 감시를 넣었다:
+
+| 상태 | 출력 | 인박스 |
+|---|---|---|
+| 승격됨 | `🟢 BWT 소유확인 — notes·bb 가 승격됐다(설치 +N일)` | **알림 감** |
+| 7일 미만 대기 | `⏳ … 7일까지는 빙의 자동 재검증을 기다린다` | 조용 |
+| **7일 경과** | `🔴 … N일째 미검증` + 남은 두 경로(DNS 권한 / 파일 배포) 명시 | **알림 감** |
+
+🔴 **크론의 판정 선택 규칙도 같이 고쳤다.** 종전엔 `head -1` 이라 **첫 줄이 🟡(대기)면 그 뒤의
+🟢 를 영영 못 봤다** — 빙 노출은 대기인데 소유확인만 먼저 승격되는 게 정확히 그 경우다.
+지금은 **대기(🟡·⏳)가 아닌 첫 줄**을 판정으로 삼는다.
+✅ 그 분기가 실제로 인박스까지 가는 걸 눈으로 확인하고(🟡 뒤의 🟢 를 집어 12줄 추가) 원복했다.
