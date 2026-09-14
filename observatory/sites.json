@@ -73,10 +73,10 @@
       "label": "헤이레시",
       "domain": "heyreci.com",
       "ga": "552134198",
-      "gsc": null,
+      "gsc": "sc-domain:heyreci.com",
       "seo": true,
       "crawl": null,
-      "note": "GSC 속성 없음 — 서비스계정(gindex@sexyflash-mcp-2026.iam.gserviceaccount.com)을 추가하면 3·4번 칸이 채워진다"
+      "note": "GSC 속성에 서비스계정 추가 완료(2026-09-14). ⚠️ 이 속성엔 **사이트맵이 한 번도 제출된 적이 없다** — 라이브 sitemap 은 112장인데 GSC 는 0건이다"
     },
     {
       "id": "bookmarklet",

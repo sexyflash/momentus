@@ -422,12 +422,35 @@ def sitemap_locs(base: str) -> tuple[list[str], str]:
     return [], ""
 
 
+def _looks_like_spa_html(body: str) -> bool:
+    """텍스트·XML 자산 자리에 **SPA 랜딩 HTML** 이 돌아온 것인가.
+
+    🔴 2026-09-14 실측: `bb.the-moment.us` 는 **없는 경로 전부에 200 + HTML** 을 준다
+       (`/BingSiteAuth.xml`·`/definitely-not-here.txt` 도 200). 그래서 `code == 200` 으로
+       "파일이 있다"고 판정하면 **없는 llms.txt 가 ✅ 로 찍힌다** — 에러가 안 나서 아무도 모른다.
+       상태코드는 "서버가 답했다"이지 "그 파일이 있다"가 아니다.
+
+    순수 형식 판정이다(문서 첫머리 모양). 자연어 의미를 읽지 않으므로 룰 #1 대상이 아니고,
+    걸려도 🔴 경고 한 줄일 뿐 아무것도 막지 않는다.
+    """
+    head = body.lstrip()[:200].lower()
+    return head.startswith("<!doctype html") or head.startswith("<html")
+
+
 def check_site_assets(base: str) -> int:
     """§7 — robots.txt / sitemap.xml / llms.txt"""
     print(f"\n── 사이트 자산: {base}")
     fails = 0
     for path, required in (("/robots.txt", True), ("/sitemap.xml", True), ("/llms.txt", False)):
         code, body = get(base + path)
+        if code == 200 and _looks_like_spa_html(body):
+            # 200 인데 내용이 HTML 이면 **그 파일은 없는 것**이다. 200 을 존재로 읽지 마라.
+            mark = "🔴" if required else "🟠"
+            print(f"  {mark} {path} → 200 인데 본문이 SPA HTML 이다 = 파일 없음 "
+                  f"(이 사이트는 없는 경로에도 200 을 준다 — 상태코드로 존재를 판정하지 마라)")
+            if required:
+                fails += 1
+            continue
         if code == 200:
             extra = ""
             if path == "/robots.txt" and "Sitemap:" not in body:
