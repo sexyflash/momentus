@@ -1,0 +1,114 @@
+{
+  "taken_at": "2026-09-14T10:23:16+09:00",
+  "note": "BWT 계정 생성 당일 스냅샷. 48시간 뒤 이 값과 비교한다.",
+  "sites": {
+    "http://sexyflash.blogspot.com/": {
+      "traffic_rows": 0,
+      "impressions_sum": 0,
+      "clicks_sum": 0,
+      "query_count": 0,
+      "sitemaps": [],
+      "sitemap_lastcrawled": []
+    },
+    "https://bb.the-moment.us/": {
+      "traffic_rows": 0,
+      "impressions_sum": 0,
+      "clicks_sum": 0,
+      "query_count": 0,
+      "sitemaps": [],
+      "sitemap_lastcrawled": []
+    },
+    "https://cue.the-moment.us/": {
+      "traffic_rows": 0,
+      "impressions_sum": 0,
+      "clicks_sum": 0,
+      "query_count": 0,
+      "sitemaps": [
+        "https://cue.the-moment.us/sitemap.xml"
+      ],
+      "sitemap_lastcrawled": [
+        "/Date(1789347648000)/"
+      ]
+    },
+    "https://heyreci.com/": {
+      "traffic_rows": 0,
+      "impressions_sum": 0,
+      "clicks_sum": 0,
+      "query_count": 0,
+      "sitemaps": [
+        "https://heyreci.com/sitemap.xml"
+      ],
+      "sitemap_lastcrawled": [
+        "/Date(1789347980000)/"
+      ]
+    },
+    "https://kontext.the-moment.us/": {
+      "traffic_rows": 0,
+      "impressions_sum": 0,
+      "clicks_sum": 0,
+      "query_count": 0,
+      "sitemaps": [
+        "https://kontext.the-moment.us/sitemap.xml"
+      ],
+      "sitemap_lastcrawled": [
+        "/Date(1789347982000)/"
+      ]
+    },
+    "https://mark.the-moment.us/": {
+      "traffic_rows": 0,
+      "impressions_sum": 0,
+      "clicks_sum": 0,
+      "query_count": 0,
+      "sitemaps": [
+        "https://mark.the-moment.us/sitemap.xml"
+      ],
+      "sitemap_lastcrawled": [
+        "/Date(1789347979000)/"
+      ]
+    },
+    "https://notes.the-moment.us/": {
+      "traffic_rows": 0,
+      "impressions_sum": 0,
+      "clicks_sum": 0,
+      "query_count": 0,
+      "sitemaps": [
+        "https://notes.the-moment.us/sitemap.xml"
+      ],
+      "sitemap_lastcrawled": [
+        "/Date(1789347987000)/"
+      ]
+    },
+    "https://planner.the-moment.us/": {
+      "traffic_rows": 0,
+      "impressions_sum": 0,
+      "clicks_sum": 0,
+      "query_count": 0,
+      "sitemaps": [],
+      "sitemap_lastcrawled": []
+    },
+    "https://teamai.the-moment.us/": {
+      "traffic_rows": 0,
+      "impressions_sum": 0,
+      "clicks_sum": 0,
+      "query_count": 0,
+      "sitemaps": [
+        "https://teamai.the-moment.us/sitemap.xml"
+      ],
+      "sitemap_lastcrawled": [
+        "/Date(1789347983000)/"
+      ]
+    },
+    "https://the-moment.us/": {
+      "traffic_rows": 0,
+      "impressions_sum": 0,
+      "clicks_sum": 0,
+      "query_count": 0,
+      "sitemaps": [
+        "https://the-moment.us/sitemap.xml"
+      ],
+      "sitemap_lastcrawled": [
+        "/Date(1789347977000)/"
+      ]
+    }
+  }
+}
