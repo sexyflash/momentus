@@ -64,7 +64,31 @@ def build(week: str | None = None) -> str:
     p = subprocess.run(args, capture_output=True, text=True, cwd=str(HERE.parent), timeout=300)
     if p.returncode != 0:
         raise RuntimeError((p.stderr or p.stdout or "collect.mjs 실패").strip()[:300])
-    return p.stdout.strip()
+    return (p.stdout.strip() + _due_block()).strip()
+
+
+def _due_block() -> str:
+    """확인일이 지난 실험을 표 밑에 붙인다.
+
+    왜 (2026-09-15): 원장에 ⏳ 가 14건 쌓였는데 확인일 9/4·9/11 이 조용히 지나갔다.
+      상기 장치가 `seo_weekly.sh` 가 **로그에 찍는 한 줄**뿐이었고 그 로그는 아무도 안 읽는다.
+      "해봤는데 어떻게 됐나"를 안 적으면 다음 사이트에서 또 처음부터 추측한다.
+    🚫 판정을 코드가 하지 마라 — 여기서는 **때가 됐다는 사실만** 알린다(룰 #1).
+    실패하면 빈 문자열 — 표 발송을 막지 않는다(비파괴).
+    """
+    try:
+        import sys as _sys
+        _sys.path.insert(0, str(HERE.parent / "scripts"))
+        import exp_due  # type: ignore
+        items = exp_due.due()
+        if not items:
+            return ""
+        head = f"\n\n*확인일이 지난 실험 {len(items)}건* — 숫자를 재서 ✅/❌/🌫 를 원장에 적어라"
+        body = "\n".join("• " + s for s in exp_due.lines(items))
+        return f"{head}\n{body}\n_원장: docs/SEO_EXPERIMENTS.md · 판정 대기 표_"
+    except Exception as e:  # noqa: BLE001
+        print(f"[observatory] 판정 대기 표를 못 읽었다: {str(e)[:120]}", file=sys.stderr)
+        return ""
 
 
 def to_mrkdwn(text: str) -> str:

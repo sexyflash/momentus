@@ -19,6 +19,7 @@ import argparse
 import json
 import re
 import sys
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -610,51 +611,78 @@ def check_sample_pages(base: str, n: int) -> tuple[int, int]:
     return f, w
 
 
-def check_orphans(base: str, hubs: list[str] | None = None) -> int:
-    """§23 — sitemap 에 있는데 **내부 링크가 하나도 없는** 페이지를 센다.
+def check_orphans(base: str, hubs: list[str] | None = None, budget: int | None = None) -> int:
+    """§23 — sitemap 에 있는데 **홈에서 링크를 타고 못 닿는** 페이지를 센다.
 
     ⚠️ 이게 "Discovered - currently not indexed" 의 교과서적 원인이다.
        sitemap 은 **발견**만 시킨다. 크롤 우선순위는 **내부 링크**가 정한다.
-       2026-08-28 cue 실측: sitemap /job/ 495장 중 **383장(77%)이 고아**였고,
+       2026-08-28 cue 실측: sitemap /job/ 495장 중 383장(77%)이 고아였고,
        GSC 에서 609장이 "발견됨 - 크롤 안 됨"에 갇혀 있었다(색인 0개).
-       `/jobs` 허브가 목록을 전부 JS 로 그려서 봇에게는 빈 페이지였던 게 원인이다.
 
-    🚫 <script> 안의 href 를 세지 마라 — 봇은 그걸 링크로 안 본다. 그게 정확히 이 사고의 본질이다.
+    🔴 2026-09-15 — 자(尺)를 갈았다. 옛 구현은 "sitemap 의 얕은 경로 40장"을 허브로 삼아
+       거기 걸린 링크만 셌다. **두 방향으로 다 틀렸다:**
+         · 과대보고 — 경로가 `insights/<글>` 처럼 전부 깊이 1 이면 *기사*가 허브 자리를
+           차지해 진짜 허브(`/insights/`)를 한 번도 안 연다. mark 고아 **99.2% → 실제 10%대**.
+         · 과소보고 — 깊이 2 에서 링크되는 페이지를 허브가 우연히 물면 0% 로 통과한다.
+           cue `/company/*` 는 `/job/*` 가 링크한다 → **0% 로 통과했는데 실제로는 고아였다.**
+       이제 홈에서 **실제로 링크를 타고 퍼져 나가며**(BFS) 닿는 집합을 만든다. 얕은 곳부터
+       연다 — 예산을 허브에 먼저 쓰기 위해서다.
+
+    🚫 <script> 안의 href 를 세지 마라 — 봇은 그걸 링크로 안 본다. 그게 이 사고의 본질이다.
+    ⚠️ URL 은 **퍼센트 디코딩해서** 비교한다. 한글 경로는 sitemap 이 `%EB%..` 로 적고
+       HTML 은 한글 그대로 적는 일이 흔하다. 안 맞추면 멀쩡한 페이지가 전부 고아로 보인다.
     """
     urls, _ = sitemap_locs(base)
     if not urls:
         print("\n── 고아 페이지: sitemap 을 못 읽었다")
         return 0
-    # 허브 = 홈 + sitemap 의 얕은 경로(깊이 1~2). 여기서 링크가 안 나가면 고아다.
-    if hubs is None:
-        seen, hubs = set(), []
-        for u in urls:
-            p = u[len(base):].strip("/")
-            if p.count("/") <= 1 and p not in seen:
-                seen.add(p)
-                hubs.append(u)
-        hubs = hubs[:40]
 
-    linked: set[str] = set()
-    for h in hubs:
-        code, html = get(h)
+    def norm(u: str) -> str:
+        path = urllib.parse.unquote(urllib.parse.urlsplit(u).path)
+        return path.rstrip("/") or "/"
+
+    target: dict[str, str] = {}
+    for u in urls:
+        target.setdefault(norm(u), u)
+
+    # 예산 기본값 = sitemap 전수(상한 1200). 예산이 모자라면 **고아가 과대집계된다** —
+    # 덜 열어본 페이지가 링크를 들고 있을 수 있기 때문이다. 그건 자를 흐리는 것이므로
+    # 기본은 전수로 두고, 급할 때만 --budget 으로 줄인다.
+    if budget is None:
+        budget = min(len(target), 1200)
+
+    reached: set[str] = {"/"}
+    queue: list[str] = ["/"]
+    fetched = 0
+    while queue and fetched < budget:
+        queue.sort(key=lambda p: p.count("/"))          # 얕은 곳 먼저
+        path = queue.pop(0)
+        code, html = get(target.get(path) or base + urllib.parse.quote(path))
+        fetched += 1
         if code != 200:
             continue
         body = STRIP_SCRIPT.sub(" ", html)
-        for m in re.findall(r'href="(/[^"#?\s]*)"', body):
-            linked.add(base + m.rstrip("/"))
-            linked.add(base + m)
+        for href in re.findall(r'href="(/[^"#?\s]*)"', body):
+            p = urllib.parse.unquote(href).rstrip("/") or "/"
+            if p in reached:
+                continue
+            reached.add(p)
+            if p in target:          # sitemap 에 있는 것만 더 판다(바깥으로 무한 확장 방지)
+                queue.append(p)
 
-    orphans = [u for u in urls if u.rstrip("/") not in linked and u not in linked]
-    print(f"\n── 고아 페이지: {base}  (허브 {len(hubs)}장에서 링크 수집)")
-    print(f"  sitemap {len(urls)}장 · 내부 링크 도달 {len(urls) - len(orphans)}장 · 고아 {len(orphans)}장")
+    orphans = [target[p] for p in sorted(target) if p not in reached]
+    budget_hit = bool(queue)
+    print(f"\n── 고아 페이지: {base}  (홈에서 링크 추적 · {fetched}장 열어봄"
+          + (f" · 예산 {budget} 소진, 남은 {len(queue)}장 못 열었다 → 고아가 과대집계일 수 있다" if budget_hit else "")
+          + ")")
+    print(f"  sitemap {len(target)}장 · 링크로 도달 {len(target) - len(orphans)}장 · 고아 {len(orphans)}장")
     if not orphans:
         print("  ✅ 고아 0")
         return 0
-    pct = len(orphans) / len(urls) * 100
+    pct = len(orphans) / len(target) * 100
     bucket: dict[str, int] = {}
     for u in orphans:
-        seg = u[len(base):].strip("/").split("/")[0] or "(홈)"
+        seg = norm(u).strip("/").split("/")[0] or "(홈)"
         bucket[seg] = bucket.get(seg, 0) + 1
     for seg, n in sorted(bucket.items(), key=lambda x: -x[1])[:8]:
         print(f"     /{seg}: {n}장")
@@ -673,6 +701,8 @@ def main() -> int:
     ap.add_argument("--pages", type=int, metavar="N", help="§18 — sitemap 경로 유형마다 N장씩 전수 검사")
     ap.add_argument("--uniq", metavar="URL_PREFIX", help="§17 — 프로그래매틱 묶음의 고유도 측정")
     ap.add_argument("--orphans", action="store_true", help="§23 — sitemap 에 있는데 내부 링크가 없는 페이지")
+    ap.add_argument("--budget", type=int, default=None,
+                    help="§23 — 링크 추적으로 열어볼 페이지 수 상한(기본: sitemap 전수, 최대 1200). 소진되면 고아가 과대집계된다")
     args = ap.parse_args()
 
     total_fail = total_warn = 0
@@ -697,7 +727,7 @@ def main() -> int:
                 total_fail += f
                 total_warn += w
             if args.orphans:
-                total_fail += check_orphans(base)
+                total_fail += check_orphans(base, budget=args.budget)
             if args.pages:
                 f, w = check_sample_pages(base, args.pages)
                 total_fail += f
