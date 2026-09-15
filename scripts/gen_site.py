@@ -1705,6 +1705,11 @@ line-height:1.45;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;
 .nws-tabs button{border:0;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:600;
 padding:8px 15px;border-radius:99px;background:var(--soft);color:var(--gray)}
 .nws-tabs button[aria-pressed=true]{background:var(--ink);color:#fff}
+/* 태그 '진짜 링크' 한 줄 — 위 탭은 button 이라 봇이 못 따라간다(2026-09-15 고아 실측).
+   사람 눈엔 작게, 봇에겐 확실하게. 숨기지 않는다 — 숨긴 링크는 다른 문제를 만든다. */
+.nws-tagnav{margin-top:12px;font-size:13px;color:var(--gray);line-height:1.9}
+.nws-tagnav a{color:var(--gray);text-decoration:underline;text-underline-offset:3px}
+.nws-tagnav a:hover{color:var(--ink)}
 @media(max-width:960px){
   .nws-grid{grid-template-columns:1fr 1fr}
   .nws-row{grid-template-columns:1fr;gap:16px}
@@ -3224,7 +3229,12 @@ def app_landing(slug, p):
     btn = (f'<a class="fl-btn" href="{store}" target="_blank" rel="noopener">'
            f'Google Play에서 받기</a>' if store else
            f'<a class="fl-btn" href="{purl(slug)}setup/">권한 켜는 법 보기</a>')
-    sub = (f'<a class="fl-btn fl-btn--line" href="{purl(slug)}setup/">권한 켜는 법</a>')
+    # 🔴 support/ 로 가는 길이 **한 군데도 없었다**(2026-09-15 고아 실측).
+    #    스토어에 올라가기 전엔 CTA 에 '문의하기'가 있었는데, 라이브가 되자 버튼이
+    #    '스토어 + 권한 켜는 법'으로 바뀌면서 문의 페이지가 sitemap 에만 남았다.
+    #    상태에 따라 사라지는 링크를 만들지 마라 — 사람도 못 찾고 봇도 못 간다.
+    sub = (f'<a class="fl-btn fl-btn--line" href="{purl(slug)}setup/">권한 켜는 법</a>'
+           f'<a class="fl-btn fl-btn--line" href="{purl(slug)}support/">문의·도움말</a>')
     feats = p.get("feats") or []
     rows = ""
     for i, (t, d) in enumerate(feats[:3]):
@@ -3898,6 +3908,19 @@ def stories_page(title, sub, sel_label="", items=None, chips=True):
                 '<button type="button" data-f="all" aria-pressed="true">전체</button>'
                 + "".join(f'<button type="button" data-f="{lab}" aria-pressed="false">{lab}</button>'
                           for _, lab in STORY_TAGS) + '</div>')
+        # 🔴 위 탭은 **button 이다 — 봇에게는 길이 아니다**(2026-09-15 실측).
+        #    그래서 sitemap 에 올린 `/insights/tag/cue/`·`/insights/tag/kontext/` 가
+        #    "어디서도 링크되지 않는 페이지"로 잡혔다. sitemap 은 발견만 시키고
+        #    크롤 우선순위는 내부 링크가 정한다(SEO_GEO §23).
+        #    사람에게는 탭이 맞으니 **탭은 그대로 두고**, 진짜 링크 한 줄을 밑에 놓는다.
+        # ⚠️ 글이 0편인 태그는 뺀다 — sitemap 의 조건과 **같은 조건**이어야 한다.
+        #    한쪽만 고치면 다음에 또 어긋난다.
+        _tl = [(k, lab) for k, lab in STORY_TAGS
+               if any(lab in e.get("tags", []) for e in entries)]
+        if _tl:
+            tabs += ('<p class="nws-tagnav">태그로 보기: '
+                     + ' · '.join(f'<a href="{STORY_BASE}/tag/{k}/">{lab}</a>' for k, lab in _tl)
+                     + '</p>')
     feath = ('<div class="nws-feat">' + "".join(_news_feature(e) for e in feat) + '</div>') if feat else ''
     listh = "".join(_news_card(e) for e in rest)
     sec = ''
@@ -5457,7 +5480,12 @@ for _slug, A in APP_PRODUCTS.items():
   적어 두었습니다. <a href="/legal/terms/" style="text-decoration:underline">이용약관</a>도 함께 보실 수 있습니다.</div>
 
   <div class="ap-help">권한을 못 켜고 계신가요? <a href="{_base}/setup/">기기별 설정 방법</a>을 보세요.
+  자주 묻는 것은 <a href="{_base}/support/">문의·도움말</a>에 모아 두었습니다.
   그래도 안 되면 <a href="mailto:{EMAIL}">{EMAIL}</a>로 알려주시면 답변드리겠습니다.</div>
+  <!-- 🔴 support/ 링크는 **스토어에 올라간 뒤에도** 있어야 한다(2026-09-15).
+       라이브가 되면 CTA 가 '스토어 + 권한 켜는 법' 으로 바뀌면서 support/ 로 가는 길이
+       통째로 사라졌고, sitemap 에만 남아 고아가 됐다. 상태에 따라 링크가 사라지는 자리를
+       만들지 마라 — 사람도 못 찾고 봇도 못 간다. -->
 </div>"""
     # (소개 1장은 제품 상세 /products/<slug>/ 가 그린다 — 여기선 안 쓴다)
 
@@ -5741,7 +5769,11 @@ if LINKS.get("map"):
 
 # ---------- sitemap ----------
 # /i/ 는 개인 스레드라 뺀다(링크 토큰 노출 금지).
-urls = ["", "about/", "tools/", "inquiry/", "how-to-pay/",
+# 🚫 "tools/" 를 다시 넣지 마라 — 2026-08-23 에 허브를 폐지하고 **301 로 넘긴다.**
+#    리다이렉트를 sitemap 에 제출하면 크롤 예산을 버리고 사이트맵 신뢰가 깎인다
+#    (docs/SEO_EXPERIMENTS.md E4 에서 cue `/blog` 로 같은 걸 한 번 겪었다).
+#    개별 도구 `/tools/<slug>/` 는 그대로 싣는다.
+urls = ["", "about/", "inquiry/", "how-to-pay/",
         "legal/privacy/", "legal/terms/", "legal/refund/"] \
     + [purl(s).lstrip("/") for s in ORDER] \
     + [f"products/{s}/{sub}" for s in APP_PRODUCTS for sub in ("setup/", "support/")] \
