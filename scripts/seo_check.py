@@ -649,7 +649,10 @@ def check_orphans(base: str, hubs: list[str] | None = None, budget: int | None =
     # 덜 열어본 페이지가 링크를 들고 있을 수 있기 때문이다. 그건 자를 흐리는 것이므로
     # 기본은 전수로 두고, 급할 때만 --budget 으로 줄인다.
     if budget is None:
-        budget = min(len(target), 1200)
+        # sitemap 장수 그대로 쓰면 **모자란다.** 이제 sitemap 밖 허브도 열기 때문이다
+        # (heyreci `/apps/all`). 여유를 두 배로 두되 상한은 1200 — 넘으면 본문이
+        # "과대집계일 수 있다"고 스스로 밝힌다.
+        budget = min(max(len(target) * 2, 120), 1200)
 
     reached: set[str] = {"/"}
     queue: list[str] = ["/"]
