@@ -667,8 +667,12 @@ def check_orphans(base: str, hubs: list[str] | None = None, budget: int | None =
             if p in reached:
                 continue
             reached.add(p)
-            if p in target:          # sitemap 에 있는 것만 더 판다(바깥으로 무한 확장 방지)
-                queue.append(p)
+            # 🔴 sitemap 에 있는 것만 더 파면 **sitemap 밖 허브를 못 넘는다.**
+            #    heyreci `/apps/all` 이 그 자리였다 — 홈이 링크하는 전체 목록인데
+            #    sitemap 에 없어서, 거기 걸린 상세 73장이 전부 고아로 보였다(2026-09-15).
+            #    구글은 sitemap 밖 페이지도 타고 간다. 우리도 같은 규칙으로 센다.
+            #    폭주 방지는 예산 하나로 충분하다(쿼리·프래그먼트는 애초에 안 잡는다).
+            queue.append(p)
 
     orphans = [target[p] for p in sorted(target) if p not in reached]
     budget_hit = bool(queue)
