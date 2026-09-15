@@ -35,6 +35,14 @@ CSS = """/* MOMENTUS site.css — v1 */
    아래쪽 레거시 .pcard/.pgrid 규칙과 정면 충돌해 레이아웃이 깨졌다(2026-08-23).
    같은 파일 안에서 뒤에 오는 규칙이 이겨 카드가 flex 컬럼으로 뒤집히고 그리드가
    3분할 + 자체 패딩을 먹었다. 새 컴포넌트는 반드시 안 쓰는 접두사로 시작해라. */
+/* 대문 — 첫 화면에서 «뭘 만드는 집인지»가 명사로 잡혀야 한다(2026-09-16 대표 지시:
+   *"딱 읽어도 뭐가 딱 잡혀야 할 거 아니야"*). 「작은 도구」가 그 명사다. */
+.dor{padding:72px var(--gut) 8px;max-width:1224px;margin:0 auto}
+.dor h1{font-size:clamp(32px,5.4vw,60px);font-weight:800;letter-spacing:-.045em;line-height:1.08;
+     color:var(--ink);text-wrap:balance}
+.dor p{margin-top:14px;font-size:clamp(15px,1.5vw,18px);line-height:1.6;color:var(--muted);
+     max-width:34ch}
+@media(max-width:560px){.dor{padding-top:44px}}
 .prh{padding:0 var(--gut)}
 .prh-g{margin-top:52px}
 .prh-gh{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
@@ -86,7 +94,12 @@ body{margin:0;word-break:keep-all;overflow-wrap:break-word;background:var(--pape
 a{color:inherit;text-decoration:none}h1,h2,h3,h4,p{margin:0;font-weight:400}img{display:block;max-width:100%}
 /* .gnb 의 gap·padding 은 아래 '브랜드 바' 절이 정한다(크롬 층 전용 여백) — 여기 적지 마라 */
 .gnb{position:fixed;inset:0 0 auto;z-index:100;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.gnb .wm{font-size:20px;font-weight:800;letter-spacing:-.02em}
+.gnb .wm{font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1}
+/* 이름 뜻은 **헤드라인이 아니라 로고 밑에** 붙인다 — 그래야 큰 글씨가 이름을 설명하느라
+   추상적으로 안 가고 «뭘 만드는 집인지»만 말할 수 있다 (2026-09-16 대표 지시). */
+.gnb .wm b{display:block;margin-top:2px;font:400 9.5px/1 var(--sans);letter-spacing:.14em;
+     color:var(--faint);text-transform:lowercase}
+@media(max-width:560px){.gnb .wm b{display:none}}
 .gnb .lk{display:flex;align-items:center;gap:26px;height:56px}
 .gnb .lk>a,.gnb .hasdrop>a{font-size:14px;color:var(--gray);font-weight:500}
 .gnb .lk>a:hover,.gnb .hasdrop>a:hover{color:var(--ink)}.gnb .lk .on{color:var(--ink);font-weight:700}
@@ -257,7 +270,8 @@ footer.site{background:var(--paper);border-top:1px solid var(--line);margin-top:
 @media(max-width:760px){footer.site{grid-template-columns:1fr 1fr}}
 footer.site h4{margin:0 0 12px;font-size:11px;color:var(--faint);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
 footer.site a{display:block;padding:4px 0;color:var(--gray)}footer.site a:hover{color:var(--ink)}
-footer.site .brand .wm{font-family:var(--mmt-wm-font,var(--sans));font-size:var(--mmt-wm-md,19px);font-weight:var(--mmt-wm-fw,800);letter-spacing:var(--mmt-wm-ls,-.035em)}footer.site .brand p{margin-top:10px;color:var(--faint);font-size:12px;line-height:1.6}
+footer.site .brand .wm{font-family:var(--mmt-wm-font,var(--sans));font-size:var(--mmt-wm-md,19px);font-weight:var(--mmt-wm-fw,800);letter-spacing:var(--mmt-wm-ls,-.035em)}footer.site .brand .wm b{display:block;margin-top:3px;font:400 9.5px/1 var(--sans);letter-spacing:.14em;color:var(--faint);text-transform:lowercase}
+footer.site .brand p{margin-top:10px;color:var(--faint);font-size:12px;line-height:1.6}
 footer.site .legal{grid-column:1/-1;margin-top:16px;padding-top:16px;border-top:1px solid var(--line);color:var(--faint);font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .hero{padding:clamp(48px,9vh,100px) var(--gut) 0;text-align:center;display:flex;flex-direction:column;align-items:center}
 .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);display:inline-flex;gap:8px;align-items:center}
@@ -1585,6 +1599,14 @@ font-weight:700;letter-spacing:-.04em;color:var(--ink2);line-height:1.34}
 
 .abt-sec{border-top:1px solid var(--line);padding:clamp(44px,5.5vw,80px) 0}
 .abt-row{display:grid;grid-template-columns:1fr 1.55fr;gap:clamp(20px,4vw,56px)}
+/* 제품 ↔ 그 순간. 매니페스트(products.json 의 moment)에서 나온다 — 손으로 적은 목록이
+   아니다. 새 제품이 그 한 줄을 못 쓰면 여기 자리가 없다. 그게 관문이다(2026-09-16). */
+.abt-mom{margin:22px 0 0;padding:0;list-style:none;display:grid;gap:1px;background:var(--line);
+     border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.abt-mom li{display:flex;gap:14px;align-items:baseline;background:#fff;padding:13px 16px}
+.abt-mom b{flex:0 0 104px;font-weight:700;font-size:14px;color:var(--ink)}
+.abt-mom span{font-size:14px;line-height:1.5;color:var(--muted)}
+@media(max-width:560px){.abt-mom li{flex-direction:column;gap:3px}.abt-mom b{flex:none}}
 .abt-lbl{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:600;color:var(--ink);
 align-self:start}
 .abt-lbl::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink);flex:0 0 auto}
@@ -2140,7 +2162,7 @@ def bar_html(active=""):
 
 def gnb(active=""):
     return f"""<header class="gnb">
-  <a class="wm" href="/">MOMENTUS</a>
+  <a class="wm" href="/">MOMENTUS<b>the moment · us</b></a>
   <nav class="lk" aria-label="모멘터스">
     {bar_html(active)}
   </nav>
@@ -2171,7 +2193,7 @@ _FT_SPOKES = "".join(f'<a href="{purl(s)}">{P[s]["name"]}</a>' for s in SPOKES)
 _FT_TOOLS = "".join(f'<a href="{purl(s)}">{P[s]["short"]}</a>' for s in TOOLS)
 
 FOOTER = f"""<footer class="site">
-  <div class="brand"><div class="wm">MOMENTUS</div><p>쓸모 있는 것만<br>만듭니다.</p></div>
+  <div class="brand"><div class="wm">MOMENTUS<b>the moment · us</b></div><p>결정적인 순간에<br>쓰는 작은 도구.</p></div>
   <div><h4>제품</h4>{_FT_SPOKES}</div>
   <div><h4>무료 도구</h4>{_FT_TOOLS}</div>
   <!-- 🚫 문의하기를 mailto 로 되돌리지 마라 — 2026-08-07. mailto 는 기록이 아무 데도 안 남아
@@ -2227,8 +2249,10 @@ ORG = {
     "email": BIZ["email"],
     "telephone": BIZ["tel"],
     "description": (
-        "모멘터스는 기다리고·찾고·정리하는 반복 작업을 대신 처리해 주는 제품을 만드는 "
-        "대한민국 서울의 소프트웨어 제작사입니다. 숙소 취소표 알림, AI 상품사진, 업종별 로고 "
+        "모멘터스(MOMENTUS)는 결정적인 순간에 쓰는 작은 도구만 만드는 "
+        "대한민국 서울의 소프트웨어 제작사입니다. 취소표가 뜨는 순간, 면접장 문이 열리는 순간처럼 "
+        "짧게 열렸다 닫히는 자리에서 사람이 맨손이 되지 않도록 기다리고·찾고·정리하는 일을 "
+        "기계에 넘깁니다. 숙소 취소표 알림, AI 상품사진, 업종별 로고 "
         "디자인, 디지털 플래너, AI 모의면접 등 유료 제품과 설치 없이 쓰는 무료 브라우저 도구를 "
         "직접 만들어 운영합니다."
     ),
@@ -2651,7 +2675,12 @@ margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #mmt-bar .mmt-wm{flex:0 0 auto;
 font-family:var(--mmt-wm-font,"Pretendard Variable",Pretendard,-apple-system,sans-serif);
 font-size:var(--mmt-wm-sm,15px);font-weight:var(--mmt-wm-fw,800);
-letter-spacing:var(--mmt-wm-ls,-.035em);color:#fff;text-decoration:none}
+letter-spacing:var(--mmt-wm-ls,-.035em);color:#fff;text-decoration:none;line-height:1}
+/* 이름 뜻(the moment · us)은 워드마크 밑에 붙어 다닌다 — 제품 8곳 전부 같은 자리에서 나온다.
+   좁으면 감춘다(바가 한 줄이라 높이를 못 늘린다). 2026-09-16. */
+#mmt-bar .mmt-wm b{display:block;margin-top:1px;font:400 8px/1 inherit;letter-spacing:.14em;
+opacity:.55;text-transform:lowercase}
+@media(max-width:820px){#mmt-bar .mmt-wm b{display:none}}
 #mmt-bar .mmt-nav{display:flex;align-items:center;gap:2px;flex:0 0 auto}
 #mmt-bar a.mmt-it{font-size:12.5px;font-weight:600;letter-spacing:-.02em;color:#cfd4dc;
 text-decoration:none;padding:6px 11px;border-radius:99px;white-space:nowrap;position:relative}
@@ -3074,7 +3103,8 @@ def shell_bar_markup(host="", act_extra=""):
 
     return ('<!-- MMT:BEGIN — 모멘터스 공용 1단 바(생성물). 손으로 고치지 말 것. -->\n'
             '<div id="mmt-bar"><div class="mmt-in">'
-            '<a class="mmt-wm" href="https://the-moment.us">MOMENTUS</a>'
+            '<a class="mmt-wm" href="https://the-moment.us">MOMENTUS'
+            '<b>the moment · us</b></a>'
             f'<nav class="mmt-nav" aria-label="모멘터스">'
             + "".join(parts).replace("__DROP__",
                 '<span class="mmt-drop">'
@@ -3147,6 +3177,8 @@ SHELL_JS = """/* MOMENTUS shell.js — 1단 브랜드 바. 생성물(scripts/gen
       +   "padding:0 20px;overflow-x:auto;scrollbar-width:none}"
       + "@media(max-width:640px){#mmt-bar .mmt-in{padding:0 16px}}"
       + "#mmt-bar .mmt-in::-webkit-scrollbar{display:none}"
+      + "#mmt-bar .mmt-wm b{display:block;margin-top:1px;font:400 8px/1 inherit;letter-spacing:.14em;opacity:.55;text-transform:lowercase}"
+      + "@media(max-width:820px){#mmt-bar .mmt-wm b{display:none}}"
       + "#mmt-bar .mmt-wm{font-family:var(--mmt-wm-font,inherit);font-size:var(--mmt-wm-sm,15px);"
       + "font-weight:var(--mmt-wm-fw,800);letter-spacing:var(--mmt-wm-ls,-.035em);color:#111;text-decoration:none}"
       + "#mmt-bar .mmt-nav{display:flex;align-items:center;gap:4px;flex:0 0 auto}"
@@ -3172,7 +3204,7 @@ SHELL_JS = """/* MOMENTUS shell.js — 1단 브랜드 바. 생성물(scripts/gen
     document.head.appendChild(st);
 
     var host = (location.hostname || "").replace(/^www\\./, "");
-    var html = '<div class="mmt-in"><a class="mmt-wm" href="https://the-moment.us">MOMENTUS</a><nav class=\"mmt-nav\" aria-label="모멘터스">';
+    var html = '<div class="mmt-in"><a class="mmt-wm" href="https://the-moment.us">MOMENTUS<b>the moment · us</b></a><nav class=\"mmt-nav\" aria-label="모멘터스">';
     for (var i = 0; i < ITEMS.length; i++) {
       var it = ITEMS[i], a = "";
       if (it.sep) html += '<span class="mmt-sep" aria-hidden="true"></span>';
@@ -4049,10 +4081,11 @@ with open("insights/rss.xml", "w", encoding="utf-8") as f:
 # ---------- about ----------
 about_body = """<div class="abt">
   <header class="abt-hero">
-    <h1>나머지는<br>저희가 합니다.</h1>
-    <p class="sub">사람이 안 해도 되는 일을 덜어냅니다.</p>
-    <p class="lede">기다리고, 찾고, 정리하는 일. 그건 기계가 더 잘합니다.
-      그 시간을 돌려드리는 게 저희가 만드는 이유입니다.</p>
+    <h1>하루를 가르는 건<br>짧게 열렸다 닫힙니다.</h1>
+    <p class="sub">모멘터스는 결정적인 순간에 쓰는 작은 도구만 만듭니다.</p>
+    <p class="lede">취소표가 뜬 10분, 면접장 문이 열리는 3초, 이 영상을 볼지 말지 정하는 20초.
+      그때 사람은 대부분 맨손입니다. 큰 회사는 여기에 물건을 안 만듭니다 — 너무 작아서.
+      저희는 그것만 만듭니다.</p>
   </header>
 
   <section class="abt-sec">
@@ -4078,6 +4111,18 @@ about_body = """<div class="abt">
 </div></div>
 
 <div class="abt">
+  <section class="abt-sec">
+    <div class="abt-row">
+      <div class="abt-lbl">그 순간</div>
+      <div>
+        <p class="abt-say">제품마다 지키는 순간이 하나씩 있습니다.</p>
+        <p class="abt-body">어느 순간에 쓰이는지 한 줄로 못 쓰면 만들지 않습니다.
+          아래가 지금까지 쓴 줄 전부입니다.</p>
+        <ul class="abt-mom">__MOMENTS__</ul>
+      </div>
+    </div>
+  </section>
+
   <section class="abt-sec">
     <div class="abt-row">
       <div class="abt-lbl">만드는 방식</div>
@@ -4146,9 +4191,12 @@ about_body = """<div class="abt">
     </div>
   </section>
 </div>"""
+about_body = about_body.replace("__MOMENTS__", "".join(
+    f'<li><b>{P[s]["short"]}</b><span>{P[s]["moment"]}</span></li>'
+    for s in ORDER if P[s].get("moment")))
 os.makedirs("about", exist_ok=True)
 with open("about/index.html", "w", encoding="utf-8") as f:
-    f.write(page("소개 — MOMENTUS", "모멘터스는 사람이 안 해도 되는 일을 덜어내는 1인 AI 스튜디오입니다. 기다리고 찾고 정리하는 일을 기계에 넘기고, 그 시간을 돌려드립니다. 무엇을 어떻게 만드는지 적어 두었습니다.", about_body, active="about"))
+    f.write(page("소개 — MOMENTUS", "모멘터스는 결정적인 순간에 쓰는 작은 도구만 만듭니다. 취소표가 뜨는 순간, 면접장 문이 열리는 순간처럼 짧게 열렸다 닫히는 자리에서 사람이 맨손이 되지 않게 합니다. 무엇을 어떻게 만드는지 적어 두었습니다.", about_body, active="about"))
 
 # ---------- landing (root index.html) ----------
 # ---------- 랜딩 카드 이미지 — 남의 사이트 핫링크 제거 ----------
@@ -4666,7 +4714,10 @@ ap_body = (
     # h1 은 페이지당 정확히 1개다(SEO_GEO.md §3). 제품 카드는 h2 라 최상위 제목이 없었다.
     # 히어로 스택 디자인을 건드리지 않으려고 sr-only 로 둔다 — 화면에 안 보일 뿐
     # DOM 에 실재하는 우리 자신에 대한 설명이다(숨긴 키워드가 아니다).
-    '<h1 class="sr-only">모멘터스 — 작게 만들어 빨리 내놓는 제품들</h1>'
+    # ★ 대문 (2026-09-16). 예전엔 h1 이 sr-only 라 **화면엔 제목이 한 줄도 없었다** —
+    #   제품 더미만 쌓여 있어서 «여기 뭐 하는 곳이야»에 답이 없었다.
+    '<section class="dor"><h1>작은 도구가 순간을 바꿉니다.</h1>'
+    '<p>모멘터스는 결정적인 순간에 쓰는 작은 도구만 만듭니다.</p></section>'
     '<div class="stg-stack">'
     + ap_stage("teamai", "hero ink", "NEW")
     + ap_stage("binbang", "hero", "NEW")
@@ -5010,9 +5061,10 @@ AP_GO = {"binbang": "빈방 알림 등록", "heyreci": "헤이레시 열기", "m
 land_body = ap_body
 
 with open("index.html", "w", encoding="utf-8") as f:
-    f.write(page("MOMENTUS — 일하는 사람을 위한 도구를 만듭니다",
-                 "모멘터스는 1인 AI 스튜디오입니다. 펜션 빈방 알림·AI 상품사진·로고 디자인·AI 모의면접·"
-                 "디지털 플래너를 만들어 팔고, 설치 없이 쓰는 무료 브라우저 도구 6종을 함께 제공합니다.",
+    f.write(page("모멘터스(MOMENTUS) — 결정적인 순간에 쓰는 작은 도구",
+                 "모멘터스는 결정적인 순간에 쓰는 작은 도구만 만듭니다. 숙소 취소표 알림·AI 상품사진·"
+                 "로고 디자인·AI 모의면접·디지털 플래너를 만들어 팔고, 설치 없이 쓰는 무료 브라우저 "
+                 "도구 6종을 함께 제공합니다.",
                  land_body, active=""))
 
 
@@ -5728,7 +5780,7 @@ _pg = "".join(_prod_group(t, sub, items) for t, sub, items in PROD_GROUPS)
 products_body = f"""<div class="prh">
   <header class="nws-head">
     <h1>제품</h1>
-    <p>1인 AI 스튜디오가 직접 만들어 직접 팝니다. 결제하면 바로 시작되는 것부터,
+    <p>결정적인 순간에 쓰는 작은 도구만 직접 만들어 직접 팝니다. 결제하면 바로 시작되는 것부터,
       설치 없이 그냥 쓰는 것까지 여기 다 있습니다.</p>
   </header>
   {_pg}
@@ -5963,7 +6015,9 @@ tool_lines = "\n".join(
 )
 llms = f"""# 모멘터스 (MOMENTUS)
 
-> 강형모 1인 AI 스튜디오. 쓸모 있는 것만 만듭니다.
+> 모멘터스(the moment · us)는 결정적인 순간에 쓰는 작은 도구만 만듭니다.
+> 취소표가 뜨는 순간, 면접장 문이 열리는 순간처럼 짧게 열렸다 닫히는 자리에서
+> 사람이 맨손이 되지 않게 하는 것 — 그 하나만 만듭니다.
 > 사업자: {BIZ['name']} · 대표 {BIZ['ceo']} · 사업자등록번호 {BIZ['reg']} · 통신판매업신고 {BIZ['mail_order']}
 > 문의: {BIZ['email']}
 

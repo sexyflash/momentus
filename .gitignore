@@ -11,3 +11,4 @@ docs/pg-review/결제경로.html
 
 # 개인 권한 설정(기기별로 다름). 훅·스킬은 팀 공용이라 커밋한다.
 .claude/settings.local.json
+.gindex-sa.json

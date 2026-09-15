@@ -15,6 +15,8 @@
       +   "padding:0 20px;overflow-x:auto;scrollbar-width:none}"
       + "@media(max-width:640px){#mmt-bar .mmt-in{padding:0 16px}}"
       + "#mmt-bar .mmt-in::-webkit-scrollbar{display:none}"
+      + "#mmt-bar .mmt-wm b{display:block;margin-top:1px;font:400 8px/1 inherit;letter-spacing:.14em;opacity:.55;text-transform:lowercase}"
+      + "@media(max-width:820px){#mmt-bar .mmt-wm b{display:none}}"
       + "#mmt-bar .mmt-wm{font-family:var(--mmt-wm-font,inherit);font-size:var(--mmt-wm-sm,15px);"
       + "font-weight:var(--mmt-wm-fw,800);letter-spacing:var(--mmt-wm-ls,-.035em);color:#111;text-decoration:none}"
       + "#mmt-bar .mmt-nav{display:flex;align-items:center;gap:4px;flex:0 0 auto}"
@@ -40,7 +42,7 @@
     document.head.appendChild(st);
 
     var host = (location.hostname || "").replace(/^www\./, "");
-    var html = '<div class="mmt-in"><a class="mmt-wm" href="https://the-moment.us">MOMENTUS</a><nav class="mmt-nav" aria-label="모멘터스">';
+    var html = '<div class="mmt-in"><a class="mmt-wm" href="https://the-moment.us">MOMENTUS<b>the moment · us</b></a><nav class="mmt-nav" aria-label="모멘터스">';
     for (var i = 0; i < ITEMS.length; i++) {
       var it = ITEMS[i], a = "";
       if (it.sep) html += '<span class="mmt-sep" aria-hidden="true"></span>';
