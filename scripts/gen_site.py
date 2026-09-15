@@ -36,7 +36,12 @@ CSS = """/* MOMENTUS site.css — v1 */
    같은 파일 안에서 뒤에 오는 규칙이 이겨 카드가 flex 컬럼으로 뒤집히고 그리드가
    3분할 + 자체 패딩을 먹었다. 새 컴포넌트는 반드시 안 쓰는 접두사로 시작해라. */
 /* 대문 — 첫 화면에서 «뭘 만드는 집인지»가 명사로 잡혀야 한다(2026-09-16 대표 지시:
-   *"딱 읽어도 뭐가 딱 잡혀야 할 거 아니야"*). 「작은 도구」가 그 명사다. */
+   *"딱 읽어도 뭐가 딱 잡혀야 할 거 아니야"*). 그래서 큰 글씨 밑에 **무엇을 만드는지**와
+   **어느 순간인지**를 바로 붙인다.
+   ⚠️ 2026-09-16 아침 재수정 — 「작은 도구」는 **제품을 작아 보이게** 했고 「결정적인 순간」은
+      말이 뻣뻣했다(대표: *"말을 웃겨"*). 대표가 그대로 불러 준 문장으로 간다:
+      **"순간순간을 소중하게 하는 제품을 만든다."** 이름 뜻(MOMENT=순간 · US=우리)이
+      그 문장 안에 산다. 🚫 「작은 도구」·「결정적인 순간」으로 되돌리지 마라. */
 .dor{padding:72px var(--gut) 8px;max-width:1224px;margin:0 auto}
 .dor h1{font-size:clamp(32px,5.4vw,60px);font-weight:800;letter-spacing:-.045em;line-height:1.08;
      color:var(--ink);text-wrap:balance}
@@ -2193,7 +2198,7 @@ _FT_SPOKES = "".join(f'<a href="{purl(s)}">{P[s]["name"]}</a>' for s in SPOKES)
 _FT_TOOLS = "".join(f'<a href="{purl(s)}">{P[s]["short"]}</a>' for s in TOOLS)
 
 FOOTER = f"""<footer class="site">
-  <div class="brand"><div class="wm">MOMENTUS<b>the moment · us</b></div><p>결정적인 순간에<br>쓰는 작은 도구.</p></div>
+  <div class="brand"><div class="wm">MOMENTUS<b>the moment · us</b></div><p>순간순간을<br>소중하게.</p></div>
   <div><h4>제품</h4>{_FT_SPOKES}</div>
   <div><h4>무료 도구</h4>{_FT_TOOLS}</div>
   <!-- 🚫 문의하기를 mailto 로 되돌리지 마라 — 2026-08-07. mailto 는 기록이 아무 데도 안 남아
@@ -2249,10 +2254,10 @@ ORG = {
     "email": BIZ["email"],
     "telephone": BIZ["tel"],
     "description": (
-        "모멘터스(MOMENTUS)는 결정적인 순간에 쓰는 작은 도구만 만드는 "
-        "대한민국 서울의 소프트웨어 제작사입니다. 취소표가 뜨는 순간, 면접장 문이 열리는 순간처럼 "
-        "짧게 열렸다 닫히는 자리에서 사람이 맨손이 되지 않도록 기다리고·찾고·정리하는 일을 "
-        "기계에 넘깁니다. 숙소 취소표 알림, AI 상품사진, 업종별 로고 "
+        "모멘터스(MOMENTUS)는 순간순간을 소중하게 하는 제품을 만드는 "
+        "대한민국 서울의 소프트웨어 제작사입니다. 이름은 MOMENT(순간)와 US(우리)에서 왔습니다. "
+        "취소표가 뜨는 10분, 면접장 문이 열리는 3초처럼 짧게 열렸다 닫히는 자리에서 사람이 "
+        "맨손이 되지 않도록 기다리고·찾고·정리하는 일을 기계에 넘깁니다. 숙소 취소표 알림, AI 상품사진, 업종별 로고 "
         "디자인, 디지털 플래너, AI 모의면접 등 유료 제품과 설치 없이 쓰는 무료 브라우저 도구를 "
         "직접 만들어 운영합니다."
     ),
@@ -4082,7 +4087,7 @@ with open("insights/rss.xml", "w", encoding="utf-8") as f:
 about_body = """<div class="abt">
   <header class="abt-hero">
     <h1>하루를 가르는 건<br>짧게 열렸다 닫힙니다.</h1>
-    <p class="sub">모멘터스는 결정적인 순간에 쓰는 작은 도구만 만듭니다.</p>
+    <p class="sub">모멘터스는 순간순간을 소중하게 하는 제품을 만듭니다.</p>
     <p class="lede">취소표가 뜬 10분, 면접장 문이 열리는 3초, 이 영상을 볼지 말지 정하는 20초.
       그때 사람은 대부분 맨손입니다. 큰 회사는 여기에 물건을 안 만듭니다 — 너무 작아서.
       저희는 그것만 만듭니다.</p>
@@ -4106,7 +4111,7 @@ about_body = """<div class="abt">
   <img src="/assets/about/moment.png" alt="저녁 거실에서 아이와 함께 책을 보는 모습" loading="lazy">
   <div class="abt-band-tx">
     <h2>저녁 7시엔<br>일이 아니라 사람이.</h2>
-    <p>모멘터스라는 이름은 그 순간에서 왔습니다.</p>
+    <p>모멘터스 = <b>MOMENT</b>(순간) + <b>US</b>(우리).<br>이름은 그 순간에서 왔습니다.</p>
   </div>
 </div></div>
 
@@ -4196,7 +4201,7 @@ about_body = about_body.replace("__MOMENTS__", "".join(
     for s in ORDER if P[s].get("moment")))
 os.makedirs("about", exist_ok=True)
 with open("about/index.html", "w", encoding="utf-8") as f:
-    f.write(page("소개 — MOMENTUS", "모멘터스는 결정적인 순간에 쓰는 작은 도구만 만듭니다. 취소표가 뜨는 순간, 면접장 문이 열리는 순간처럼 짧게 열렸다 닫히는 자리에서 사람이 맨손이 되지 않게 합니다. 무엇을 어떻게 만드는지 적어 두었습니다.", about_body, active="about"))
+    f.write(page("소개 — MOMENTUS", "모멘터스는 순간순간을 소중하게 하는 제품을 만듭니다. 이름은 MOMENT(순간)와 US(우리)에서 왔습니다. 취소표가 뜨는 10분, 면접장 문이 열리는 3초처럼 짧게 열렸다 닫히는 자리에서 사람이 맨손이 되지 않게 합니다.", about_body, active="about"))
 
 # ---------- landing (root index.html) ----------
 # ---------- 랜딩 카드 이미지 — 남의 사이트 핫링크 제거 ----------
@@ -4716,8 +4721,9 @@ ap_body = (
     # DOM 에 실재하는 우리 자신에 대한 설명이다(숨긴 키워드가 아니다).
     # ★ 대문 (2026-09-16). 예전엔 h1 이 sr-only 라 **화면엔 제목이 한 줄도 없었다** —
     #   제품 더미만 쌓여 있어서 «여기 뭐 하는 곳이야»에 답이 없었다.
-    '<section class="dor"><h1>작은 도구가 순간을 바꿉니다.</h1>'
-    '<p>모멘터스는 결정적인 순간에 쓰는 작은 도구만 만듭니다.</p></section>'
+    '<section class="dor"><h1>순간순간을 소중하게.</h1>'
+    '<p>모멘터스(MOMENT·US)는 순간순간을 소중하게 하는 제품을 만듭니다.<br>'
+    '취소표가 뜨는 10분, 면접장 문이 열리는 3초 — 그때 맨손이지 않게.</p></section>'
     '<div class="stg-stack">'
     + ap_stage("teamai", "hero ink", "NEW")
     + ap_stage("binbang", "hero", "NEW")
@@ -5061,8 +5067,9 @@ AP_GO = {"binbang": "빈방 알림 등록", "heyreci": "헤이레시 열기", "m
 land_body = ap_body
 
 with open("index.html", "w", encoding="utf-8") as f:
-    f.write(page("모멘터스(MOMENTUS) — 결정적인 순간에 쓰는 작은 도구",
-                 "모멘터스는 결정적인 순간에 쓰는 작은 도구만 만듭니다. 숙소 취소표 알림·AI 상품사진·"
+    f.write(page("모멘터스(MOMENTUS) — 순간순간을 소중하게 하는 제품",
+                 "모멘터스는 순간순간을 소중하게 하는 제품을 만듭니다. 이름은 MOMENT(순간)와 US(우리)에서 "
+                 "왔습니다. 숙소 취소표 알림·AI 상품사진·"
                  "로고 디자인·AI 모의면접·디지털 플래너를 만들어 팔고, 설치 없이 쓰는 무료 브라우저 "
                  "도구 6종을 함께 제공합니다.",
                  land_body, active=""))
@@ -5780,7 +5787,7 @@ _pg = "".join(_prod_group(t, sub, items) for t, sub, items in PROD_GROUPS)
 products_body = f"""<div class="prh">
   <header class="nws-head">
     <h1>제품</h1>
-    <p>결정적인 순간에 쓰는 작은 도구만 직접 만들어 직접 팝니다. 결제하면 바로 시작되는 것부터,
+    <p>순간순간을 소중하게 하는 제품을 직접 만들어 직접 팝니다. 결제하면 바로 시작되는 것부터,
       설치 없이 그냥 쓰는 것까지 여기 다 있습니다.</p>
   </header>
   {_pg}
@@ -6015,8 +6022,9 @@ tool_lines = "\n".join(
 )
 llms = f"""# 모멘터스 (MOMENTUS)
 
-> 모멘터스(the moment · us)는 결정적인 순간에 쓰는 작은 도구만 만듭니다.
-> 취소표가 뜨는 순간, 면접장 문이 열리는 순간처럼 짧게 열렸다 닫히는 자리에서
+> 모멘터스(MOMENTUS)는 순간순간을 소중하게 하는 제품을 만듭니다.
+> 이름은 MOMENT(순간)와 US(우리)에서 왔습니다.
+> 취소표가 뜨는 10분, 면접장 문이 열리는 3초처럼 짧게 열렸다 닫히는 자리에서
 > 사람이 맨손이 되지 않게 하는 것 — 그 하나만 만듭니다.
 > 사업자: {BIZ['name']} · 대표 {BIZ['ceo']} · 사업자등록번호 {BIZ['reg']} · 통신판매업신고 {BIZ['mail_order']}
 > 문의: {BIZ['email']}
