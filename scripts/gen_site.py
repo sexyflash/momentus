@@ -2208,6 +2208,14 @@ FOOTER = f"""<footer class="site">
 #
 # ⚠️ 제품 목록은 **매니페스트에서 파생**한다. 여기에 손으로 적지 마라 — 옛 블록은 4개만
 #    적혀 있었고 제품이 8개로 늘어난 뒤에도 그대로였다(2026-09-15 실측).
+# 🚫 `disambiguatingDescription` 을 넣지 마라 (2026-09-15 넣었다가 대표 지적으로 제거).
+#    이름이 겹친다고 "누구누구와는 무관하다"를 적었는데 **두 가지로 틀렸다**:
+#      ① 엔티티 연결은 같이 등장하는 것끼리 엮인다 — 부정문을 적어도 *같이 나왔다*만 남는다.
+#      ② 구조화데이터는 **어필하는 자리**다. 방어 문장에 그 칸을 쓰면 손해다.
+#    실측(2026-09-15, 직접 긁음): 한컴(18필드)·Atlassian(13)·이스트소프트(8)·티맥스(7)·
+#    컬리(5)·크림(4) — **한 곳도 이 필드를 안 쓴다.** 무신사·토스·네이버·앤트로픽·라쿠텐은
+#    Organization JSON-LD 자체가 없다. 구분은 name·legalName·identifier(사업자번호)·
+#    address·sameAs 로 된다. 그게 업계 공통이고 우리도 그것만 쓴다.
 ORG = {
     "@type": "Organization",
     "@id": "https://the-moment.us/#org",
@@ -2224,24 +2232,17 @@ ORG = {
         "디자인, 디지털 플래너, AI 모의면접 등 유료 제품과 설치 없이 쓰는 무료 브라우저 도구를 "
         "직접 만들어 운영합니다."
     ),
-    # 동명 구분. 🚫 **남의 이름을 여기에 적지 마라**(2026-09-15 대표 지적으로 정정).
-    #   처음엔 "Momentus Inc.·삼소나이트·momentus.kr 와는 무관하다"고 적었는데 그건 틀렸다 —
-    #   엔티티 연결은 **같이 등장하는 것끼리 엮인다.** 기계는 "무관하다"는 부정을 잘 못 읽고
-    #   *같이 나왔다*는 사실만 가져간다. 떼어내려다 붙이는 짓이다.
-    #   게다가 남의 브랜드 정보는 우리가 관리할 수 없어 시간이 지나면 우리 마크업에
-    #   남의 옛 사실이 남는다.
-    #   ⇒ 구분은 "누가 아니다"가 아니라 **"우리가 누구다"**로 한다. 진짜 식별자는
-    #      아래 identifier(사업자등록번호)·address·legalName·url·makesOffer 다.
-    "disambiguatingDescription": (
-        "the-moment.us 도메인에서 소프트웨어 제품을 직접 만들어 운영하는 대한민국 서울 소재 "
-        f"제작사입니다(사업자등록번호 {BIZ['reg']}). 같은 이름을 쓰는 다른 분야의 회사·브랜드와는 "
-        "관련이 없습니다."
-    ),
     "identifier": {"@type": "PropertyValue", "name": "사업자등록번호", "value": BIZ["reg"]},
     "address": {"@type": "PostalAddress", "addressLocality": "서울특별시 양천구",
                 "streetAddress": BIZ["addr"], "addressCountry": "KR"},
     "areaServed": {"@type": "Country", "name": "대한민국"},
     "knowsLanguage": ["ko", "en"],
+    # 무엇을 하는 곳인가 — 한컴·Atlassian 이 쓰는 필드. 방어가 아니라 **어필**하는 자리다.
+    "knowsAbout": ["AI 상품사진 생성", "로고 디자인", "디지털 플래너", "AI 모의면접",
+                   "숙소 취소표 알림", "브라우저 확장·북마크릿 도구", "업무 자동화"],
+    "foundingDate": "2024",
+    "contactPoint": {"@type": "ContactPoint", "contactType": "customer support",
+                     "email": BIZ["email"], "areaServed": "KR", "availableLanguage": ["ko"]},
     # 같은 주체를 가리키는 **바깥 페이지**만 적는다. 제품 하나짜리 스토어 링크는 여기 아니다.
     "sameAs": ["https://play.google.com/store/apps/developer?id=Momentus+App"],
     # 제품 = 매니페스트 파생(SPOKES). 유형은 매니페스트 `type` 을 그대로 번역한다.
