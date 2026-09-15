@@ -2185,24 +2185,78 @@ FOOTER = f"""<footer class="site">
   <div class="legal"><span>© 2026 모멘터스</span><span>the-moment.us</span></div>
 </footer>"""
 
-JSONLD = json.dumps({
-    "@context": "https://schema.org",
+# ── 모멘터스 = 누구인가 (엔티티 단일 정의) ────────────────────────────────────
+#
+# 🔴 2026-09-15 — 이 블록은 **죽어 있었다.** 여기서 description·address·founder·makesOffer 를
+#    다 채워 놓고 `page()` 의 <head> 에 넣었는데, 파일 생성이 끝난 뒤 도는 후처리 루프가
+#    `<script type="application/ld+json">` 를 통째로 지우고 `_schema_for()` 결과로 갈아끼웠다.
+#    그 `_schema_for` 가 쓰는 `_ORG` 는 이름·URL·이메일 네 줄짜리 빈 껍데기였다.
+#    → 라이브에 나간 Organization 에는 **설명도 주소도 제품도 없었다**(실측).
+#    같은 것을 두 벌 적으면 한쪽만 고쳐지고 다른 쪽이 조용히 샌다 — 이제 **한 벌**이다.
+#
+# 🔴 왜 이만큼 자세히 적나 — **이름이 겹친다.** 2026-09-15 실측:
+#      · Momentus Inc. (나스닥 MNTS, 미국 우주 수송) ← "모멘터스" 검색 결과 대다수
+#      · 삼소나이트 Momentus 여행가방 컬렉션
+#      · 모먼트어스 MOMENTUS (momentus.kr) — 한국 안경 브랜드, **한국어 표기까지 같다**
+#      · bemoment.us "Momentus" — 미국 이벤트 플랫폼, **도메인 모양까지 비슷하다**
+#    브랜드명 완전일치 검색에서 우리 도메인이 **0건**이었다. 이 상태에서 설명이 비어 있으면
+#    검색·AI 가 우리를 저쪽에 합쳐 버린다. `disambiguatingDescription` 은 정확히 그 용도다.
+#
+# 🚫 `founder` 를 다시 넣지 마라(2026-09-15 대표 지시: *"이걸 만든 사람은 사실 아무도 관심이
+#    없어. 모멘터스가 뭐 하는 곳인지를 기억했으면 좋겠어"*). 게다가 법적 대표(박진이)와
+#    만든 사람이 달라서, 한쪽만 적으면 사실이 틀어진다. 식별은 **사업자등록번호**로 한다.
+#
+# ⚠️ 제품 목록은 **매니페스트에서 파생**한다. 여기에 손으로 적지 마라 — 옛 블록은 4개만
+#    적혀 있었고 제품이 8개로 늘어난 뒤에도 그대로였다(2026-09-15 실측).
+ORG = {
     "@type": "Organization",
+    "@id": "https://the-moment.us/#org",
     "name": "모멘터스",
     "alternateName": "MOMENTUS",
-    "url": "https://the-moment.us",
+    "legalName": BIZ["name"],
+    "url": "https://the-moment.us/",
+    "logo": "https://the-moment.us/og/default.png",
     "email": BIZ["email"],
     "telephone": BIZ["tel"],
-    "description": "AI로 제품을 만드는 스튜디오. AI 상품사진(헤이레시), 로고 디자인(마크), 디지털 플래너(더플랜), AI 모의면접(큐)을 만들어 팔고, 브라우저 도구 6종을 무료로 제공합니다.",
-    "address": {"@type": "PostalAddress", "addressLocality": "서울", "streetAddress": BIZ["addr"], "addressCountry": "KR"},
-    "founder": {"@type": "Person", "name": "강형모"},
+    "description": (
+        "모멘터스는 기다리고·찾고·정리하는 반복 작업을 대신 처리해 주는 제품을 만드는 "
+        "대한민국 서울의 소프트웨어 제작사입니다. 숙소 취소표 알림, AI 상품사진, 업종별 로고 "
+        "디자인, 디지털 플래너, AI 모의면접 등 유료 제품과 설치 없이 쓰는 무료 브라우저 도구를 "
+        "직접 만들어 운영합니다."
+    ),
+    # 동명 구분 — 아래 문장이 없으면 나스닥 Momentus Inc. 와 한 덩어리로 읽힌다
+    "disambiguatingDescription": (
+        "미국 우주 수송 기업 Momentus Inc.(나스닥 MNTS), 삼소나이트의 Momentus 여행가방 "
+        "컬렉션, 안경 브랜드 모먼트어스(momentus.kr)와는 관련이 없습니다. "
+        "the-moment.us 도메인에서 운영하는 대한민국 서울 소재 소프트웨어 제작사입니다."
+    ),
+    "identifier": {"@type": "PropertyValue", "name": "사업자등록번호", "value": BIZ["reg"]},
+    "address": {"@type": "PostalAddress", "addressLocality": "서울특별시 양천구",
+                "streetAddress": BIZ["addr"], "addressCountry": "KR"},
+    "areaServed": {"@type": "Country", "name": "대한민국"},
+    "knowsLanguage": ["ko", "en"],
+    # 같은 주체를 가리키는 **바깥 페이지**만 적는다. 제품 하나짜리 스토어 링크는 여기 아니다.
+    "sameAs": ["https://play.google.com/store/apps/developer?id=Momentus+App"],
+    # 제품 = 매니페스트 파생(SPOKES). 유형은 매니페스트 `type` 을 그대로 번역한다.
     "makesOffer": [
-        {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "헤이레시 — AI 상품사진 생성", "applicationCategory": "DesignApplication", "url": "https://heyreci.com"}},
-        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "마크 — 업종별 로고 디자인", "url": "https://mark.the-moment.us"}},
-        {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "더플랜 — 디지털 플래너", "url": "https://notes.the-moment.us"}},
-        {"@type": "Offer", "itemOffered": {"@type": "SoftwareApplication", "name": "큐 — AI 모의면접", "applicationCategory": "EducationalApplication", "url": "https://cue.the-moment.us"}},
+        {"@type": "Offer", "itemOffered": {
+            "@type": {"app": "MobileApplication", "product": "Product"}.get(
+                P[s_].get("type"), "SoftwareApplication"),
+            "name": P[s_]["name"],
+            "description": P[s_].get("tagline") or P[s_].get("tag") or "",
+            "url": P[s_].get("url") or ("https://the-moment.us" + purl(s_)),
+        }} for s_ in SPOKES
     ],
-}, ensure_ascii=False)
+    # 무료 도구도 같은 주체가 만든다는 걸 밝힌다 — 값이 0원이라 빼면 "안 만든 것"이 된다
+    "owns": [
+        {"@type": "SoftwareApplication", "name": P[t]["name"],
+         "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web",
+         "url": "https://the-moment.us" + purl(t),
+         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}}
+        for t in TOOLS
+    ],
+}
+JSONLD = json.dumps(ORG, ensure_ascii=False)
 
 
 def _toolfix(html):
@@ -5949,9 +6003,9 @@ import glob as _glob, re as _re
 #    그래서 제목·날짜·목록은 **생성된 HTML 에서 뽑고**, 가격은 확실한 것만 쓴다:
 #    무료 도구만 price "0", 유료 제품은 가격을 안 적는다(정본이 pay 의 sku 라 여기선 모른다).
 
-_ORG = {"@type": "Organization", "@id": "https://the-moment.us/#org",
-        "name": "모멘터스", "alternateName": "MOMENTUS",
-        "url": "https://the-moment.us", "email": BIZ["email"]}
+# 🚫 여기에 Organization 을 다시 적지 마라 — 위 `ORG` 한 벌이 단일 소스다.
+#    (2026-09-15: 이 자리에 빈 껍데기가 따로 있어서, 위에서 채운 내용이 전부 덮여 나갔다)
+_ORG = ORG
 _PUB = {"@id": "https://the-moment.us/#org"}
 
 
