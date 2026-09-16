@@ -399,6 +399,15 @@
   {
    "kind": "post",
    "src": "모의면접",
+   "title": "채용 시 마감 공고 — 마감일이 없는 게 아니라, 담당자 버튼 두 번이 마감일입니다",
+   "url": "https://cue.the-moment.us/playbook/job-posting-close-when-hired",
+   "date": "2026-09-17",
+   "desc": "마감일 칸에 ‘채용 시 마감’이 적힌 공고는 여유 있는 공고가 아닙니다. 기업 화면에서는 진행 중인 공고를 버튼과 확인 한 번으로 닫을 수 있으니, 저장해 둔 공고에는 당신이 제출일을 정해야 합니다.",
+   "cat": "아직 면접 전"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
    "title": "면접 공백기 질문 — 공백은 감점이 아닙니다. 질문 한 줄로 옵니다",
    "url": "https://cue.the-moment.us/playbook/interview-career-gap-question",
    "date": "2026-09-14",
