@@ -15,6 +15,20 @@
    *    실제로 끊겼을 때만 다시 찾는다(핀터레스트 가상 스크롤 대응).
    *  · 헤더에 복사 아이콘 — 접은 상태에서도 바로 복사된다. 접으면 고정 폭 알약이 된다.
    *
+   * v4 (2026-09-18)
+   *  · 켤 때는 **접힌 알약이 기본**. 대신 1.6초 동안 펼쳐 보였다가 접는다 —
+   *    처음 쓰는 사람은 알약만 보고 목록이 들어 있는 줄 모른다. 손을 대면 즉시 취소.
+   *  · 자리를 **픽셀 좌표로 기억하지 않는다**. "어느 끝에 · 위에서 얼마"로 기억해
+   *    창 크기가 바뀌어도 브라우저 끝에 붙어 있는다(옛 버전은 저장된 left 픽셀 때문에
+   *    창을 줄이면 화면 밖으로 나갔다). 드래그해서 놓으면 가까운 끝으로 붙는다.
+   *  · 네이버: 화면에 깔린 건 search.pstatic.net 프록시 썸네일(type=a340)이다.
+   *    실측(search.naver.com 안에서) — 프록시본은 fetch 실패·canvas 오염·340px,
+   *    src 를 풀어 https + *.pstatic.net 로 되돌리면 fetch 200(1.6MB)·canvas OK·1024px.
+   *    그래서 프록시를 만나면 안쪽 원본으로 되돌린다. 되돌린 주소가 죽어 있으면
+   *    probe()/grab() 가 프록시로 되내려간다.
+   *  · 같은 출처 iframe 안도 본다. desktop blog.naver.com 은 본문이 통째로
+   *    #mainFrame 안이라, top 문서만 보던 옛 버전은 이미지를 0장 봤다.
+   *
    * ⚠️ 호스트 엘리먼트 id 는 __loud-pc-sidebar 그대로 둔다. 공용 "귀환 갈고리" 꼬리가
    *    이 id 를 찾아 링크를 붙인다. shadow 안 <slot> 이 그 링크를 받아 렌더한다.
    */
@@ -29,13 +43,39 @@
   var busy = false;
 
   /* ───────────── URL 유틸 ───────────── */
-  function abs(u) { try { return new URL(u, location.href).href; } catch (e) { return ''; } }
+  function abs(u, base) { try { return new URL(u, base || location.href).href; } catch (e) { return ''; } }
+  function baseOf(el) {
+    try { return (el && el.ownerDocument && el.ownerDocument.baseURI) || location.href; }
+    catch (e) { return location.href; }
+  }
   function originalsUrl(s) { return s.replace(/\/\d+x(?:\d+)?(?:_[A-Za-z]{1,4})?\//, '/originals/'); }
   function cleanUrl(u) { return u.replace(/\/(?:control\d*|v\d*|[0-9a-z]+)\/originals\//, '/originals/'); }
+  /* 네이버 프록시 되돌리기.
+     search.pstatic.net/common/?src=<인코딩된 원본>&type=a340  → 안쪽 원본 주소
+     ⚠️ *.naver.net 은 인증서가 *.pstatic.net 이라 https 로 열면 브라우저가 끊는다(실측).
+        그래서 호스트도 같이 바꾼다. */
+  function naverUnproxy(u) {
+    var p; try { p = new URL(u, location.href); } catch (e) { return ''; }
+    if (!/(^|\.)pstatic\.net$/i.test(p.hostname)) return '';
+    var inner = p.searchParams.get('src');
+    if (!inner) return '';
+    var q; try { q = new URL(inner); } catch (e) { return ''; }
+    if (!/^https?:$/.test(q.protocol)) return '';
+    q.protocol = 'https:';
+    q.hostname = q.hostname.replace(/\.naver\.net$/i, '.pstatic.net');
+    return q.href;
+  }
+  /* 블로그 본문(postfiles...jpg?type=w773) 은 type 만 떼면 원본이다. */
+  function naverNoType(u) {
+    var p; try { p = new URL(u, location.href); } catch (e) { return ''; }
+    if (!/(^|\.)pstatic\.net$/i.test(p.hostname) || !p.searchParams.has('type')) return '';
+    p.searchParams.delete('type');
+    return p.href;
+  }
   function normalize(u) {
     if (!u) return '';
     if (IS_PIN && /(^|\.)pinimg\.com\//.test(u)) return cleanUrl(originalsUrl(u));
-    return u;
+    return naverUnproxy(u) || naverNoType(u) || u;
   }
   /* ⚠️ originals 로 올린 주소가 **실제로는 403 인 핀이 많다**(2026-09-01 실측:
      .../originals/df/79/1a/....jpg -> 403, 같은 핀의 /1200x/ 는 200).
@@ -56,19 +96,22 @@
     return p;
   }
   function candidates(d) {
-    var out = [d.url];
+    var out = [];
+    function push(u) { if (u && out.indexOf(u) < 0) out.push(u); }
+    push(d.url);
     if (IS_PIN && d.thumb && /(^|\.)pinimg\.com\//.test(d.thumb)) {
       ['1200x', '736x', '564x'].forEach(function (sz) {
-        var u = d.thumb.replace(/\/\d+x(?:\d+)?(?:_[A-Za-z]{1,4})?\//, '/' + sz + '/');
-        if (out.indexOf(u) < 0) out.push(u);
+        push(d.thumb.replace(/\/\d+x(?:\d+)?(?:_[A-Za-z]{1,4})?\//, '/' + sz + '/'));
       });
     }
-    if (d.thumb && out.indexOf(d.thumb) < 0) out.push(d.thumb);
+    /* 네이버는 되돌린 원본 → type 뗀 프록시 → 화면에 보이던 썸네일 순으로 내려간다. */
+    push(naverNoType(d.thumb || ''));
+    push(d.thumb);
     return out;
   }
   function bestUrlFor(d) {
-    if (!IS_PIN) return Promise.resolve(d.url);
     var cand = candidates(d);
+    if (cand.length < 2) return Promise.resolve(d.url);
     return cand.reduce(function (chain, u) {
       return chain.then(function (got) {
         if (got) return got;
@@ -98,26 +141,80 @@
     var u = best || img.currentSrc || img.getAttribute('src') ||
             img.getAttribute('data-src') || img.getAttribute('data-original') || '';
     if (/^data:/.test(u)) u = img.currentSrc || img.getAttribute('data-src') || u;
-    return abs(u);
+    return abs(u, baseOf(img));
   }
   function bgUrl(el) {
     var bg = '';
     try { bg = getComputedStyle(el).backgroundImage || ''; } catch (e) { return ''; }
     var m = bg.match(/url\((['"]?)(.+?)\1\)/);
     if (!m || /^data:/.test(m[2])) return '';
-    return abs(m[2]);
+    return abs(m[2], baseOf(el));
   }
   function radOf(el) {
     try { return getComputedStyle(el).borderRadius || '0px'; } catch (e) { return '0px'; }
   }
   function linkOf(el) {
     var a = el.closest ? el.closest('a[href]') : null;
-    return a ? abs(a.getAttribute('href')) : location.href;
+    return a ? abs(a.getAttribute('href'), baseOf(el)) : baseOf(el);
   }
   function pinImg(p) { return p.querySelector('img[src*="pinimg.com"]'); }
   function pinLink(p) {
     var a = p.querySelector('a[href^="/pin/"]');
-    return a ? abs(a.getAttribute('href')) : location.href;
+    return a ? abs(a.getAttribute('href'), baseOf(p)) : location.href;
+  }
+
+  /* ───────────── 문서 목록(같은 출처 iframe 포함) ─────────────
+     desktop blog.naver.com 은 본문이 통째로 #mainFrame 안에 있다(같은 출처).
+     top 문서만 보던 옛 버전은 거기서 이미지를 0장 봤다. 다른 출처 iframe 은
+     접근 자체가 막히므로 조용히 건너뛴다(광고 iframe 이 대부분 그렇다). */
+  function docsList() {
+    var out = [document], i = 0;
+    while (i < out.length && out.length < 12) {
+      var d = out[i++], fs;
+      try { fs = d.querySelectorAll('iframe,frame'); } catch (e) { continue; }
+      for (var k = 0; k < fs.length; k++) {
+        var cd = null;
+        try { cd = fs[k].contentDocument; } catch (e) { cd = null; }
+        if (cd && cd.body && out.indexOf(cd) < 0) out.push(cd);
+      }
+    }
+    return out;
+  }
+  /* iframe 안 엘리먼트의 사각형은 그 iframe 기준이다. 우리 오버레이는 top 기준이라
+     프레임들의 위치를 더해 줘야 표시가 제자리에 그려진다. */
+  function frameOffset(el) {
+    var x = 0, y = 0, n = 0, clip = null;
+    var w = (el && el.ownerDocument) ? el.ownerDocument.defaultView : null;
+    while (w && w !== window && n < 6) {
+      var fe = null;
+      try { fe = w.frameElement; } catch (e) { break; }
+      if (!fe) break;
+      var r = fe.getBoundingClientRect();
+      x += r.left; y += r.top;
+      /* iframe 안에서 스크롤로 밀려 나간 이미지는 프레임 밖에 그려지면 안 된다. */
+      clip = clip ? {
+        l: Math.max(clip.l + r.left, r.left), t: Math.max(clip.t + r.top, r.top),
+        rt: Math.min(clip.rt + r.left, r.right), b: Math.min(clip.b + r.top, r.bottom)
+      } : { l: r.left, t: r.top, rt: r.right, b: r.bottom };
+      w = fe.ownerDocument.defaultView; n++;
+    }
+    return { x: x, y: y, clip: clip };
+  }
+  function allImgs() {
+    var out = [];
+    docsList().forEach(function (d) {
+      var ims; try { ims = d.querySelectorAll('img'); } catch (e) { return; }
+      for (var i = 0; i < ims.length; i++) out.push(ims[i]);
+    });
+    return out;
+  }
+  function allPins() {
+    var out = [];
+    docsList().forEach(function (d) {
+      var ps; try { ps = d.querySelectorAll(PIN_SEL); } catch (e) { return; }
+      for (var i = 0; i < ps.length; i++) out.push(ps[i]);
+    });
+    return out;
   }
 
   /* 마우스가 지나갈 때마다 도는 판정 — 싸야 한다. img/핀만 본다. */
@@ -181,7 +278,8 @@
     ' background:#FF0066;color:#fff;text-align:center;',
     ' font:900 14px/24px -apple-system,BlinkMacSystemFont,system-ui,sans-serif}',
     '.mk.hv b{display:none}',
-    '.pnl{position:relative;z-index:2;width:320px;max-height:calc(100vh - 40px);',
+    '.pnl{position:relative;z-index:2;width:320px;max-width:calc(100vw - 32px);',
+    ' max-height:calc(100vh - 40px);transition:width .26s cubic-bezier(.4,0,.2,1),border-radius .26s;',
     ' display:flex;flex-direction:column;background:#fff;color:#111;border-radius:14px;overflow:hidden;',
     ' box-shadow:0 16px 48px rgba(0,0,0,.28);',
     ' font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}',
@@ -295,12 +393,16 @@
   function place(n, el, rad, isHover) {
     var r = el.getBoundingClientRect();
     if (r.width < 4 || r.height < 4) return false;
-    if (r.bottom < -60 || r.top > window.innerHeight + 60) return false;
-    if (r.right < -60 || r.left > window.innerWidth + 60) return false;
+    var o = frameOffset(el);
+    var L = r.left + o.x, T = r.top + o.y;
+    if (T + r.height < -60 || T > window.innerHeight + 60) return false;
+    if (L + r.width < -60 || L > window.innerWidth + 60) return false;
+    if (o.clip && (T + r.height < o.clip.t + 2 || T > o.clip.b - 2 ||
+                   L + r.width < o.clip.l + 2 || L > o.clip.rt - 2)) return false;
     n.className = isHover ? 'mk hv' : 'mk';
     n.style.display = 'block';
-    n.style.left = r.left + 'px';
-    n.style.top = r.top + 'px';
+    n.style.left = L + 'px';
+    n.style.top = T + 'px';
     n.style.width = r.width + 'px';
     n.style.height = r.height + 'px';
     n.style.borderRadius = rad;
@@ -326,6 +428,7 @@
     if (rafId) return;
     rafId = requestAnimationFrame(function () { rafId = 0; layout(); });
   }
+  function onResize() { applyPos(); relayout(); }
 
   /* DOM 이 갈아엎여 잡고 있던 엘리먼트가 끊겼을 때만 다시 찾는다(가상 스크롤 대응).
      매번 문서 전체를 훑지 않는 게 핵심 — 그게 버벅임이었다. */
@@ -336,12 +439,12 @@
     if (!lost) return;
     var found = new Map();
     if (IS_PIN) {
-      document.querySelectorAll(PIN_SEL).forEach(function (p) {
+      allPins().forEach(function (p) {
         var im = pinImg(p);
         if (im) found.set(normalize(im.src), im);
       });
     }
-    document.querySelectorAll('img').forEach(function (im) {
+    allImgs().forEach(function (im) {
       var u = normalize(bestUrl(im));
       if (u && !found.has(u)) found.set(u, im);
     });
@@ -405,6 +508,7 @@
     e.preventDefault();
     e.stopPropagation();
     if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+    cancelIntro();
     if (add(it)) render();
   }
   function onDown(e) {
@@ -431,25 +535,41 @@
     if (a && /^(INPUT|TEXTAREA)$/.test(a.tagName)) return;
     window.__loudPinCollector.destroy();
   }
-  document.addEventListener('click', onClick, true);
-  document.addEventListener('mousedown', onDown, true);
-  document.addEventListener('mousemove', onMove, true);
-  document.addEventListener('keydown', onKey, true);
   window.addEventListener('scroll', relayout, true);
-  window.addEventListener('resize', relayout, true);
+  window.addEventListener('resize', onResize, true);
 
   var moTimer = 0;
   var mo = new MutationObserver(function () {
     clearTimeout(moTimer);
-    moTimer = setTimeout(function () { resync(); layout(); }, 250);
+    moTimer = setTimeout(function () { bindAll(); resync(); layout(); }, 250);
   });
-  mo.observe(document.body, { childList: true, subtree: true });
+
+  /* 문서마다(= top + 같은 출처 iframe) 같은 리스너를 붙인다. 이미 붙인 문서는 건너뛴다.
+     iframe 은 우리보다 늦게 뜨기도 하므로 주기적으로 한 번 더 훑는다(비파괴·싸다). */
+  var bound = [];
+  function bindDoc(d) {
+    if (!d || bound.indexOf(d) >= 0) return;
+    bound.push(d);
+    d.addEventListener('click', onClick, true);
+    d.addEventListener('mousedown', onDown, true);
+    d.addEventListener('mousemove', onMove, true);
+    d.addEventListener('keydown', onKey, true);
+    var w = d.defaultView;
+    if (w && w !== window) {
+      w.addEventListener('scroll', relayout, true);
+      w.addEventListener('resize', onResize, true);
+    }
+    try { mo.observe(d.body, { childList: true, subtree: true }); } catch (e) {}
+  }
+  function bindAll() { docsList().forEach(bindDoc); }
+  bindAll();
+  var bindTimer = setInterval(bindAll, 1500);
 
   /* ───────────── 전부 담기 / 비우기 ───────────── */
   btnAll.addEventListener('click', function () {
     var n = 0;
     if (IS_PIN) {
-      document.querySelectorAll(PIN_SEL).forEach(function (p) {
+      allPins().forEach(function (p) {
         var im = pinImg(p);
         if (!im) return;
         var u = normalize(im.src);
@@ -458,7 +578,7 @@
         }
       });
     }
-    document.querySelectorAll('img').forEach(function (im) {
+    allImgs().forEach(function (im) {
       if (IS_PIN && im.closest(PIN_SEL)) return;
       /* 아이콘·픽셀·로고를 거르는 기준은 "실제로 받게 될 크기"(naturalWidth)다.
          화면에 작게 깔린 썸네일 그리드도 원본은 크다 — 표시 크기만 보면 다 떨어진다. */
@@ -646,30 +766,62 @@
   });
 
   /* ───────────── 접기 / 드래그 / 닫기 ───────────── */
+  /* 손을 안 댔으면 늘 브라우저 끝에 붙어 있어야 한다. 그래서 위치를 **픽셀 좌표로
+     기억하지 않는다** — "어느 끝에 · 위에서 얼마"만 기억하고, 창 크기가 바뀌면 다시 붙인다.
+     옛 버전은 드래그한 left 픽셀을 그대로 저장해서, 창을 줄이면 화면 밖으로 나갔다.
+     접힘은 기억하지 않는다 — 켤 때는 늘 접힌 알약이 디폴트. */
+  var EDGE = 16;
+  var POS = { side: 'r', ty: EDGE };
+  function applyPos() {
+    var h = host.getBoundingClientRect().height || 0;
+    var ty = Math.max(4, Math.min(window.innerHeight - Math.min(h, 72) - 4, POS.ty));
+    host.style.setProperty('top', ty + 'px', 'important');
+    if (POS.side === 'l') {
+      host.style.setProperty('left', EDGE + 'px', 'important');
+      host.style.setProperty('right', 'auto', 'important');
+    } else {
+      host.style.setProperty('right', EDGE + 'px', 'important');
+      host.style.setProperty('left', 'auto', 'important');
+    }
+  }
   function savePos() {
-    try {
-      localStorage.setItem(POS_KEY, JSON.stringify({
-        /* 위치만 기억한다. 접힘은 기억하지 않는다 — 켤 때는 늘 펼쳐진 상태가 디폴트. */
-        l: host.style.left, t: host.style.top
-      }));
-    } catch (e) {}
+    try { localStorage.setItem(POS_KEY, JSON.stringify({ side: POS.side, ty: POS.ty })); } catch (e) {}
   }
   function loadPos() {
     var v = null;
     try { v = JSON.parse(localStorage.getItem(POS_KEY) || 'null'); } catch (e) {}
+    /* 옛 형식({l,t} 픽셀)은 조용히 버린다 — 그게 화면 밖으로 나가던 원인이다. */
     if (!v) return;
-    if (v.l && v.l !== 'auto') {
-      host.style.setProperty('left', v.l, 'important');
-      host.style.setProperty('right', 'auto', 'important');
-    }
-    if (v.t) host.style.setProperty('top', v.t, 'important');
+    if (v.side === 'l' || v.side === 'r') POS.side = v.side;
+    if (typeof v.ty === 'number' && isFinite(v.ty)) POS.ty = v.ty;
+  }
+
+  /* 접힌 게 기본. 대신 켤 때 잠깐 펼쳐 보였다가 접는다 — 처음 쓰는 사람은
+     알약만 보고는 여기에 목록이 들어 있는 줄 모른다. 손을 대면 즉시 취소한다. */
+  var introTimer = 0;
+  function setMin(on) {
+    pnl.classList.toggle('min', !!on);
+    icMini.textContent = on ? '+' : '–';
+    applyPos();
+  }
+  function cancelIntro() {
+    if (!introTimer) return;
+    clearTimeout(introTimer);
+    introTimer = 0;
+  }
+  function playIntro() {
+    setMin(false);
+    introTimer = setTimeout(function () {
+      introTimer = 0;
+      setMin(true);
+      toast('여기 눌러 펼칩니다');
+    }, 1600);
   }
 
   icMini.addEventListener('click', function (e) {
     e.stopPropagation();
-    var min = pnl.classList.toggle('min');
-    icMini.textContent = min ? '+' : '–';
-    savePos();
+    cancelIntro();
+    setMin(!pnl.classList.contains('min'));
   });
   $('.cls').addEventListener('click', function (e) {
     e.stopPropagation();
@@ -679,6 +831,7 @@
   var drag = null;
   hd.addEventListener('mousedown', function (e) {
     if (e.target.closest('.ic')) return;
+    cancelIntro();
     var r = host.getBoundingClientRect();
     drag = { dx: e.clientX - r.left, dy: e.clientY - r.top, w: r.width };
     hd.classList.add('grab');
@@ -694,13 +847,22 @@
   }
   function dragUp() {
     if (!drag) return;
-    drag = null; hd.classList.remove('grab'); savePos();
+    var r = host.getBoundingClientRect();
+    /* 놓은 자리에서 가까운 쪽 끝으로 붙인다. 세로만 기억한다. */
+    POS.side = (r.left + r.width / 2) < window.innerWidth / 2 ? 'l' : 'r';
+    POS.ty = r.top;
+    drag = null; hd.classList.remove('grab');
+    applyPos();
+    savePos();
   }
   window.addEventListener('mousemove', dragMove, true);
   window.addEventListener('mouseup', dragUp, true);
 
   loadPos();
+  setMin(true);      /* 접힌 알약이 기본 */
+  applyPos();
   render();
+  playIntro();
   say(IS_PIN
     ? '핀을 클릭해 담으세요. 제목줄을 잡고 옮길 수 있습니다.'
     : '아무 이미지나 클릭하세요. Alt+클릭은 원래 동작입니다.');
@@ -710,13 +872,24 @@
     destroy: function () {
       try { mo.disconnect(); } catch (e) {}
       clearTimeout(moTimer);
+      clearTimeout(introTimer);
       if (rafId) cancelAnimationFrame(rafId);
-      document.removeEventListener('click', onClick, true);
-      document.removeEventListener('mousedown', onDown, true);
-      document.removeEventListener('mousemove', onMove, true);
-      document.removeEventListener('keydown', onKey, true);
+      clearInterval(bindTimer);
+      bound.forEach(function (d) {
+        try {
+          d.removeEventListener('click', onClick, true);
+          d.removeEventListener('mousedown', onDown, true);
+          d.removeEventListener('mousemove', onMove, true);
+          d.removeEventListener('keydown', onKey, true);
+          var w = d.defaultView;
+          if (w && w !== window) {
+            w.removeEventListener('scroll', relayout, true);
+            w.removeEventListener('resize', onResize, true);
+          }
+        } catch (e) {}
+      });
       window.removeEventListener('scroll', relayout, true);
-      window.removeEventListener('resize', relayout, true);
+      window.removeEventListener('resize', onResize, true);
       window.removeEventListener('mousemove', dragMove, true);
       window.removeEventListener('mouseup', dragUp, true);
       host.remove();
