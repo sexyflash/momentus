@@ -37,6 +37,15 @@
   {
    "kind": "post",
    "src": "로고",
+   "title": "간판으로는 문제 없는 로고, 카카오톡 채널 정사각형에서 글자가 뭉개진다",
+   "url": "https://mark.the-moment.us/insights/logo-cost-kakao-profile/",
+   "date": "2026-09-19",
+   "desc": "로고 제작비 15만원과 50만원의 실제 차이. 간판은 멀쩡한데 휴대폰 화면·정사각형 프로필에서 무너지는 로고를 만들지 않는 법.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
    "title": "로고 바꿨는데 명함 100장이 쓰레기가 됐습니다",
    "url": "https://mark.the-moment.us/insights/free-business-card-reprint-cost/",
    "date": "2026-09-14",
@@ -384,18 +393,18 @@
    "date": "2026-06-30",
    "desc": "디자이너에게 받은 로고 5개 중 고르려다 놓치는 실수들. 축소 테스트부터 저작권까지, 실제 사용 환경에서 터지는 문제를 미리 피하는 체크리스트.",
    "cat": "인사이트"
-  },
-  {
-   "kind": "post",
-   "src": "로고",
-   "title": "손글씨 로고에서 심볼로 바꾼 떡볶이 프랜차이즈, 가맹점 문의가 달라졌다",
-   "url": "https://mark.the-moment.us/insights/franchise-logo-handwriting-to-symbol/",
-   "date": "2026-06-28",
-   "desc": "프랜차이즈 리뉴얼 사례. 낡은 손글씨에서 현대적 심볼로 전환한 후 신규 가맹점주들이 느낀 '이 브랜드는 계속 성장할 것 같다'는 신뢰도 변화",
-   "cat": "인사이트"
   }
  ],
  "cue": [
+  {
+   "kind": "post",
+   "src": "모의면접",
+   "title": "희망연봉 때문에 탈락 — 다음 회사에까지 미리 깎아주진 마세요",
+   "url": "https://cue.the-moment.us/playbook/salary-expectation-after-rejection",
+   "date": "2026-09-20",
+   "desc": "탈락하자마자 희망연봉 칸부터 지우고 싶어졌나요. 회사가 처우를 정하는 범위와 처음 말한 금액이 협상의 기준점이 되는 구조를 알면, 다음에 낮출 금액보다 먼저 물을 것이 보입니다.",
+   "cat": "다시 준비"
+  },
   {
    "kind": "post",
    "src": "모의면접",
@@ -745,15 +754,6 @@
    "url": "https://cue.the-moment.us/playbook/interview-conclusion-first-answers",
    "date": "2026-07-03",
    "desc": "면접에서 두괄식으로 답하는 법을 평가표 쪽에서 정리했습니다. 첫 문장이 결론이 아닐 때 평가 항목 칸에 무엇이 안 남는지, 그리고 결론을 먼저 던지면 오히려 손해인 답은 무엇인지.",
-   "cat": "준비 중"
-  },
-  {
-   "kind": "post",
-   "src": "모의면접",
-   "title": "경력 기술 면접 STAR 기법 — 이야기가 아니라 평가표에 증거를 남기세요",
-   "url": "https://cue.the-moment.us/playbook/experienced-interview-star-method",
-   "date": "2026-07-02",
-   "desc": "STAR를 S·T·A·R 순서 암기에서 끝내지 마세요. 경력 기술 면접의 평가표와 꼬리질문이 실제로 확인하는 증거부터 거꾸로 설계하는 법을 짚습니다.",
    "cat": "준비 중"
   }
  ],
