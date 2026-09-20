@@ -1,20 +1,26 @@
 {
  "adobe.com": {
-  "count": 5,
+  "count": 11,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-21",
   "listed": false
  },
  "apps.apple.com": {
-  "count": 56,
+  "count": 76,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
+  "listed": false
+ },
+ "armes.co.kr": {
+  "count": 5,
+  "first": "2026-09-21",
+  "last": "2026-09-21",
   "listed": false
  },
  "blog.naver.com": {
-  "count": 802,
+  "count": 1079,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
   "listed": false
  },
  "brunch.co.kr": {
@@ -24,15 +30,15 @@
   "listed": false
  },
  "canva.com": {
-  "count": 16,
+  "count": 23,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
   "listed": false
  },
  "community.linkareer.com": {
-  "count": 23,
+  "count": 32,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
   "listed": false
  },
  "docs.tiro.ooo": {
@@ -42,15 +48,15 @@
   "listed": false
  },
  "draph.art": {
-  "count": 19,
+  "count": 26,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
   "listed": false
  },
  "dtgoodnote.com": {
-  "count": 36,
+  "count": 48,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
   "listed": false
  },
  "finalroundai.com": {
@@ -71,34 +77,58 @@
   "last": "2026-09-14",
   "listed": false
  },
+ "help.naver.com": {
+  "count": 5,
+  "first": "2026-09-21",
+  "last": "2026-09-21",
+  "listed": false
+ },
  "help.openai.com": {
   "count": 5,
   "first": "2026-09-07",
   "last": "2026-09-07",
   "listed": false
  },
+ "interviewtalk.kr": {
+  "count": 4,
+  "first": "2026-09-21",
+  "last": "2026-09-21",
+  "listed": false
+ },
+ "jaenung.net": {
+  "count": 10,
+  "first": "2026-09-21",
+  "last": "2026-09-21",
+  "listed": false
+ },
+ "jobda.im": {
+  "count": 4,
+  "first": "2026-09-21",
+  "last": "2026-09-21",
+  "listed": false
+ },
  "kmong.com": {
-  "count": 43,
+  "count": 59,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
   "listed": false
  },
  "ko.clippingmagic.com": {
-  "count": 18,
+  "count": 24,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
   "listed": false
  },
  "kokomen.kr": {
-  "count": 16,
+  "count": 21,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
   "listed": false
  },
  "korean.go.kr": {
-  "count": 10,
+  "count": 15,
   "first": "2026-09-02",
-  "last": "2026-09-07",
+  "last": "2026-09-21",
   "listed": false
  },
  "m.saramin.co.kr": {
@@ -114,9 +144,9 @@
   "listed": false
  },
  "namu.wiki": {
-  "count": 166,
+  "count": 202,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
   "listed": false
  },
  "openads.co.kr": {
@@ -126,15 +156,15 @@
   "listed": false
  },
  "pension.tuwaagin.com": {
-  "count": 18,
+  "count": 24,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
   "listed": false
  },
  "photoroom.com": {
-  "count": 20,
+  "count": 27,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
   "listed": false
  },
  "piccopilot.com": {
@@ -144,15 +174,21 @@
   "listed": false
  },
  "play.google.com": {
-  "count": 26,
+  "count": 34,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
   "listed": false
  },
  "remove.bg": {
-  "count": 4,
+  "count": 9,
   "first": "2026-09-14",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
+  "listed": false
+ },
+ "skyscanner.co.krhttps": {
+  "count": 9,
+  "first": "2026-09-21",
+  "last": "2026-09-21",
   "listed": false
  },
  "sukbak.oppapost.com": {
@@ -168,21 +204,21 @@
   "listed": false
  },
  "tilnote.io": {
-  "count": 16,
+  "count": 22,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
   "listed": false
  },
  "tiro.ooo": {
-  "count": 18,
+  "count": 24,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-21",
   "listed": false
  },
  "toolify.ai": {
-  "count": 5,
+  "count": 9,
   "first": "2026-09-02",
-  "last": "2026-09-02",
+  "last": "2026-09-21",
   "listed": false
  },
  "vcat.ai": {

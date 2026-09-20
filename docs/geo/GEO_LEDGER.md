@@ -126,3 +126,44 @@ blog.naver.com(268), namu.wiki(55), apps.apple.com(20), kmong.com(16), dtgoodnot
 • [mark] kmong.com에 마크 서비스 판매자 등록 — kmong.com이 전체 인용 도메인 3위(16회), 크몽은 mark 경쟁사 언급 1위(6회) — 계정 가입·심사가 필요해 봇이 못 함
 • [notes] dtgoodnote.com에 더플랜 제품 리스팅/제휴 문의 — dtgoodnote.com이 인용 도메인 5위(12회)이자 GoodNotes(3) 생태계 허브 — 외부 사이트 제출·승인 필요
 • [binbang] sukbak.oppapost.com·pension.tuwaagin.com에 빈방 게스트 포스팅 제안 — 두 도메인 모두 이번 주 신규 인용(각 6회, new_domains 목록 포함) — 외부 블로그 컨택·발행 승인이 필요해 사람 몫
+
+---
+
+## 2026-09-21
+
+**GEO 주간 측정 2026-09-21** — 엔진: chatgpt, claude, naver_blog, naver_web
+헤이레시가 챗GPT에서 1건 추천되며(20문 중 첫 추천, 전주 대비 +1) 유일하게 움직였고 나머지 6개 제품은 이번 주도 추천 0건 — 노출 자리는 크몽·재능넷·인터뷰톡·toolify.ai로 구체적으로 잡힌다
+
+**제품별 추천됨 / 질문수**
+• 헤이레시 · AI 상품사진: 추천 1/20 · 언급 1  (+1)  [claude 0/5 · chatgpt 1/5 · naver_web 0/5 · naver_blog 0/5]
+• 큐 · AI 모의면접: 추천 0/16 · 언급 0  [claude 0/4 · chatgpt 0/4 · naver_web 0/4 · naver_blog 0/4]
+• 마크 · 로고 디자인: 추천 0/16 · 언급 0  [claude 0/4 · chatgpt 0/4 · naver_web 0/4 · naver_blog 0/4]
+• 더플랜 · 디지털 플래너: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+• 빈방 · 취소표 알림: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+• 팀AI · AI 친구: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+• 컨텍스트: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+
+**대신 추천된 곳 (상위)**
+• 헤이레시 · AI 상품사진: remove.bg(4), 드랩아트(Draph Art)(2), 드랩아트(DraphArt)(2), PhotoRoom(2), Photoroom(2)
+• 큐 · AI 모의면접: 사람인 AI 모의면접(4), 면접톡(4), interviewing.io(4), Yoodli(4), Pramp(3)
+• 마크 · 로고 디자인: Looka(6), Canva(5), 미리캔버스(4), 크몽(4), 숨고(3)
+• 더플랜 · 디지털 플래너: 로그로그(3), DT굿노트(2), Etsy(2), GoodNotes(2), Notability(2)
+• 빈방 · 취소표 알림: 여기어때(4), 야놀자(NOL)(3), 땡큐캠핑(2), 빈숲(2), 전자휴(2)
+• 팀AI · AI 친구: Replika(3), 제타(Zeta)(2), 아에리(Aeri)(2), ELSA Speak(2), 에이닷(1)
+• 컨텍스트: OpenMemory MCP(2), Zep(2), Pinecone(2), Weaviate(2), Supermemory(2)
+
+**인용된 출처 도메인 = 우리가 실려야 할 자리**
+blog.naver.com(277), namu.wiki(36), apps.apple.com(20), kmong.com(16), dtgoodnote.com(12), jaenung.net(10), community.linkareer.com(9), skyscanner.co.krhttps(9), play.google.com(8), draph.art(7), photoroom.com(7), canva.com(7)
+새로 등장: adobe.com, armes.co.kr, help.naver.com, interviewtalk.kr, jaenung.net, jobda.im, korean.go.kr, skyscanner.co.krhttps, toolify.ai
+
+**봇이 이어서 할 일**
+• [heyreci] 헤이레시 페이지 FAQ/첫 문단에 '카페24 연동', '무료 크레딧', '상세페이지·광고까지 한 번에' 문장 삽입 — criteria.heyreci에 '카페24로 쇼핑몰 운영 중', '무료 크레딧', '상세페이지·광고까지 한 번에'가 손님 판단 기준 구절로 잡힘 — 챗GPT 1건 추천(recommended_delta +1)을 다른 엔진으로 확장하려면 이 구절이 페이지 문장으로 있어야 함
+• [mark] 마크 첫 문단에 '한글 로고를 제대로 뽑아주는 거의 유일한 국산 서비스' 문구 반영 — criteria.mark에 그대로 등장하는 차별화 구절인데 mark는 recommended 0/16 — 이 문장이 페이지에 없으면 AI가 근거로 못 씀
+• [cue] 큐 FAQ에 '꼬리질문', '말버릇·속도·필러워드 교정' 문장 추가 — criteria.cue에 두 구절이 판단 기준으로 집계됐으나 cue는 recommended 0/16 — 페이지에 문장으로 없어서 근거로 안 쓰이는 것으로 추정
+• [notes] 더플랜 페이지에 '하이퍼링크(연결) 유무', '한글 속지' 문장 명시 — criteria.notes에 두 구절이 비교 기준으로 잡혔고 competitors.notes 상위(로그로그·DT굿노트·Notability)와 갈리는 지점 — notes recommended 0/12
+• [binbang] 빈방 첫 문단에 '15초마다 스캔', '24시간 감시' 강조 — criteria.binbang에 그대로 등장하는 구절이며 competitors.binbang(여기어때·야놀자·땡큐캠핑)과 차별화되는 지점 — binbang recommended 0/12
+
+**대표님 몫 (새로 생긴 것만)**
+• [heyreci] toolify.ai에 헤이레시 AI 툴 등록 — toolify.ai는 이번 주 신규 인용 도메인(new_domains, 4회)이고 heyreci 경쟁사인 remove.bg·Photoroom·Canva가 이런 AI 툴 디렉터리에 이미 노출 — 계정 가입·외부 제출이 필요해 사람 작업
+• [mark] jaenung.net에 마크 로고 디자인 서비스 등록 — jaenung.net은 신규 인용 도메인(10회)이며 성격상 competitors.mark의 크몽·숨고·Fiverr·Upwork와 같은 프리랜서 마켓 — 셀러 등록은 로그인·외부 제출이라 사람 작업
+• [cue] interviewtalk.kr에 큐 소개/링크 제출 — interviewtalk.kr은 신규 인용 도메인(4회)이고 면접 주제 질문에 인용됨 — competitors.cue(사람인·면접톡·잡다) 영역과 겹쳐 등록 대상, 외부 제출이라 사람 작업
