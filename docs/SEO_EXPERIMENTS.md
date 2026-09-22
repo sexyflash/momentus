@@ -121,6 +121,23 @@
 조치: 4개 사이트맵을 자기 속성에서 재제출(S4). 즉시 **kontext·bb 는 읽혔고**(09-22)
 notes·teamai 는 여전히 `isPending` 이다. 2026-10-06 에 다시 본다.
 
+### S5 — kontext·빈방 공유 카드 복구 (구글이 안 오는 동안 실제로 도는 경로)
+
+| # | 무엇을 | 왜 | 판정 | 근거 |
+|---|---|---|---|---|
+| S5 | kontext 8장 `canonical: "./"` + og:image + JSON-LD 배포, sitemap `/blog`→`/insights` | 전 페이지 canonical 0건·og:image 0건. 카톡·슬랙에 뿌려도 썸네일이 안 떴다 | ✅ | **FAIL 25 → 0.** 로컬 `next start` 로 경로마다 canonical 이 다르게 박히는 것까지 확인 후 배포 |
+| S6 | 빈방 홈 canonical + og 8종 + twitter 4종 | canonical·og:title·og:image·twitter:card 가 **전부 없었다** | ✅ | **FAIL 8 → 0 · warn 0.** CF Pages 배포 후 라이브 실측 |
+
+**두 저장소 다 «고쳐 놓고 안 내보낸» 상태였다.** kontext 의 JSON-LD 수정(2026-09-16)은 6일째
+푸시가 안 돼 있었고(Vercel 은 git 으로 배포한다 → 라이브 0건), 빈방도 미푸시 커밋 2개를 안고 있었다.
+오늘 나간 것은 그 묵은 것까지 포함이다. **«고쳤다»와 «나갔다»는 다르다.**
+
+🚫 og 이미지를 제품 저장소에서 새로 만들지 않았다 — apex 가 굽는 `the-moment.us/og/<slug>.png`
+를 그대로 가리킨다(`scripts/gen_og.py`). 제품마다 손으로 만들면 반드시 빠뜨린다.
+
+⚠️ 이건 **구글 색인과 무관한 조치**다. 두 사이트 다 여전히 «Google 에 알려지지 않음» 이다.
+고친 것은 카톡·슬랙·네이버 공유라는 *실제로 도는* 경로다 — 지금 우리 유입의 대부분이 거기다.
+
 ### K2 — mark 변형작품 noindex (2026-07-13) → ❌ **원복하지 않는다**
 
 URL 검사 API 실측(2026-09-22, `sc-domain:mark.the-moment.us`):

@@ -61,7 +61,7 @@
       "gsc": "sc-domain:kontext.the-moment.us",
       "seo": true,
       "crawl": null,
-      "note": "2026-09-22 URL 검사: 홈이 «Google 에 알려지지 않음». 재제출 직후 사이트맵 읽힘(S4). SEO 점검 FAIL 25건(canonical·og:image·JSON-LD 전무)"
+      "note": "2026-09-22 SEO FAIL 25 → **0** (canonical `./` · og:image=apex /og/kontext.png · JSON-LD 배포 · sitemap /blog→/insights). 남은 warn 은 lang=en(영문 제품이라 오탐)·llms.txt 뿐. 홈은 아직 «Google 에 알려지지 않음» — S4 관찰 중"
     },
     {
       "id": "binbang",
@@ -71,7 +71,7 @@
       "gsc": "sc-domain:bb.the-moment.us",
       "seo": true,
       "crawl": null,
-      "note": "2026-09-22 URL 검사: 홈이 «Google 에 알려지지 않음». 재제출 직후 사이트맵 읽힘(S4). SEO 점검 FAIL 8건(canonical·og:title·og:image·twitter:card 전무)"
+      "note": "2026-09-22 SEO FAIL 8 → **0** · warn 0 (canonical + og 8종 + twitter 4종 추가, 이미지는 apex /og/binbang.png). 홈은 아직 «Google 에 알려지지 않음» — S4 관찰 중"
     },
     {
       "id": "heyreci",
