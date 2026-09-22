@@ -2683,7 +2683,7 @@ font-size:var(--mmt-wm-sm,15px);font-weight:var(--mmt-wm-fw,800);
 letter-spacing:var(--mmt-wm-ls,-.035em);color:#fff;text-decoration:none;line-height:1}
 /* 이름 뜻(the moment · us)은 워드마크 밑에 붙어 다닌다 — 제품 8곳 전부 같은 자리에서 나온다.
    좁으면 감춘다(바가 한 줄이라 높이를 못 늘린다). 2026-09-16. */
-#mmt-bar .mmt-wm b{display:block;margin-top:1px;font:400 8px/1 inherit;letter-spacing:.14em;
+#mmt-bar .mmt-wm b{display:block;margin-top:1px;font-weight:400;font-size:8px;line-height:1;letter-spacing:.14em;
 opacity:.55;text-transform:lowercase}
 @media(max-width:820px){#mmt-bar .mmt-wm b{display:none}}
 #mmt-bar .mmt-nav{display:flex;align-items:center;gap:2px;flex:0 0 auto}
@@ -3182,7 +3182,7 @@ SHELL_JS = """/* MOMENTUS shell.js — 1단 브랜드 바. 생성물(scripts/gen
       +   "padding:0 20px;overflow-x:auto;scrollbar-width:none}"
       + "@media(max-width:640px){#mmt-bar .mmt-in{padding:0 16px}}"
       + "#mmt-bar .mmt-in::-webkit-scrollbar{display:none}"
-      + "#mmt-bar .mmt-wm b{display:block;margin-top:1px;font:400 8px/1 inherit;letter-spacing:.14em;opacity:.55;text-transform:lowercase}"
+      + "#mmt-bar .mmt-wm b{display:block;margin-top:1px;font-weight:400;font-size:8px;line-height:1;letter-spacing:.14em;opacity:.55;text-transform:lowercase}"
       + "@media(max-width:820px){#mmt-bar .mmt-wm b{display:none}}"
       + "#mmt-bar .mmt-wm{font-family:var(--mmt-wm-font,inherit);font-size:var(--mmt-wm-sm,15px);"
       + "font-weight:var(--mmt-wm-fw,800);letter-spacing:var(--mmt-wm-ls,-.035em);color:#111;text-decoration:none}"
