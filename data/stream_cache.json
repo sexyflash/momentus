@@ -399,6 +399,15 @@
   {
    "kind": "post",
    "src": "모의면접",
+   "title": "경력직 면접 질문 — 연차 말고, 그 자리가 '빈 자리'인지 '새 자리'인지를 보세요",
+   "url": "https://cue.the-moment.us/playbook/experienced-hire-vacancy-or-new-role",
+   "date": "2026-09-23",
+   "desc": "경력직 면접 질문은 연차가 아니라 '그 자리가 왜 생겼는지'를 따라 갈라집니다. 누가 나가서 생긴 빈 자리인지 없던 걸 만든 새 자리인지 공고에서 가르는 법, 그리고 각각의 대표 질문과 답변 기준.",
+   "cat": "준비 중"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
    "title": "희망연봉 때문에 탈락 — 다음 회사에까지 미리 깎아주진 마세요",
    "url": "https://cue.the-moment.us/playbook/salary-expectation-after-rejection",
    "date": "2026-09-20",
@@ -745,15 +754,6 @@
    "url": "https://cue.the-moment.us/playbook/data-analyst-interview-questions",
    "date": "2026-07-04",
    "desc": "데이터 분석가 면접에서는 한 숫자를 계산·정의·결정으로 나눠 봅니다. 예상질문을 외우기보다 실제 프로젝트 하나로 평가표 세 칸을 채우는 법.",
-   "cat": "준비 중"
-  },
-  {
-   "kind": "post",
-   "src": "모의면접",
-   "title": "면접에서 두괄식으로 답하는 법 — 결론이 뒤에 있으면 평가표엔 안 적힙니다",
-   "url": "https://cue.the-moment.us/playbook/interview-conclusion-first-answers",
-   "date": "2026-07-03",
-   "desc": "면접에서 두괄식으로 답하는 법을 평가표 쪽에서 정리했습니다. 첫 문장이 결론이 아닐 때 평가 항목 칸에 무엇이 안 남는지, 그리고 결론을 먼저 던지면 오히려 손해인 답은 무엇인지.",
    "cat": "준비 중"
   }
  ],
