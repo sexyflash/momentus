@@ -20,6 +20,8 @@ sys.path.insert(0, "scripts")
 _src = open("scripts/gen_site.py", encoding="utf-8").read()
 _ns = {"__name__": "gen_site_partial", "__file__": os.path.abspath("scripts/gen_site.py")}
 exec(compile(_src, "scripts/gen_site.py", "exec"), _ns)
+import css_lint                       # 생성 CSS 의 '조용히 죽는 선언' 관문
+
 shell_css_block = _ns["shell_css_block"]
 shell_bar_markup = _ns["shell_bar_markup"]
 shell_legal_markup = _ns["shell_legal_markup"]
@@ -103,6 +105,9 @@ def put(path, block, pattern, anchor_re, anchor_fmt, count=1):
 
 def main():
     css = shell_css_block()
+    # 🔴 8곳으로 퍼지기 **직전**이 마지막 관문이다(2026-09-22 사고: 무효 선언 한 줄이
+    #    패밀리 8사이트에 6일간 나가 있었다). 브라우저는 조용히 버리므로 기계가 잡는다.
+    css_lint.assert_valid(css, "shell_css_block() → 제품 저장소 8곳")
     changed = 0
     for repo, css_files, html_files, host, legal_files, legal_sep in TARGETS:
         legal = shell_legal_markup(legal_sep)

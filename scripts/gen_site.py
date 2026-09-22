@@ -3151,8 +3151,16 @@ APEX_HEADER = (shell_bar_markup(act_extra=_MMT_ICONS)
                + SEARCH_OVERLAY)
 
 
+# 🔴 단축 속성에 inherit/initial 을 섞으면 선언이 **통째로 무효**다 — 브라우저가 조용히
+#    버려서 눈으로도 기존 검사기로도 안 잡힌다(2026-09-22: 로고 부제가 8px 대신 부모
+#    16px 로 6일간 8사이트에 나갔다). 정본을 쓰기 전에 기계가 막는다.
+import sys as _s, os as _o
+_s.path.insert(0, _o.path.dirname(_o.path.abspath(__file__)))
+import css_lint as _cl
+_shell_css = shell_css_block()
+_cl.assert_valid(_shell_css, "gen_site → shell.css")
 with open("shell.css", "w", encoding="utf-8") as f:
-    f.write(shell_css_block() + "\n")
+    f.write(_shell_css + "\n")
 
 # ---------- shell.js — (레거시) 아직 소스에 박지 않은 곳을 위한 폴백 ----------
 #   제품이 부담하는 것: <script src="https://the-moment.us/shell.js" defer></script> 한 줄.
