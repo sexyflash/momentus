@@ -1,5 +1,5 @@
 {
-  "_": "관측 대상 **단일 목록**. 🚫 두 벌로 만들지 마라 — collect.mjs·seo_weekly.sh·scripts/seo_check.py 가 전부 이 파일을 읽는다. 추적 사이트는 domain 이 있는 8개. domain:null 인 항목(북마크릿·ChatPage)은 지표 1~4 를 원천적으로 못 재서 '—' 로 비지만, 지표 5(유입)는 실측값이 커서 남긴다 — 빼면 제외가 아니라 유실이다. planner 는 notes 로 개명(301)돼 목록에서 뺐다.",
+  "_": "관측 대상 **단일 목록**. 🚫 두 벌로 만들지 마라 — collect.mjs·seo_weekly.sh·scripts/seo_check.py 가 전부 이 파일을 읽는다. 추적 사이트는 domain 이 있는 8개. domain:null 인 항목(북마크릿·ChatPage)은 지표 1~4 를 원천적으로 못 재서 '—' 로 비지만, 지표 5(유입)는 실측값이 커서 남긴다 — 빼면 제외가 아니라 유실이다. planner 는 notes 로 개명(301)돼 목록에서 뺐다. 🔴 2026-09-22: gsc 는 **사이트마다 자기 속성**이다. 그 전엔 6개가 sc-domain:the-moment.us 하나를 같이 보고 있어서 «저 노출 5회가 누구 것인가»를 가를 수 없었고, 그 탓에 mark 의 Plan B 판정(2026-08-10 예정)이 43일 연체됐다. apex(momentus)만 우산 속성을 그대로 쓴다 — 도메인 속성은 하위도메인을 포함하므로 host 필터로 가른다.",
   "gaAccount": "1843518",
   "sites": [
     {
@@ -16,7 +16,7 @@
       "label": "AI모의면접 cue",
       "domain": "cue.the-moment.us",
       "ga": "544010203",
-      "gsc": "sc-domain:the-moment.us",
+      "gsc": "sc-domain:cue.the-moment.us",
       "seo": true,
       "crawl": {
         "repo": "~/Projects/cue",
@@ -28,7 +28,7 @@
       "label": "로고제작 Mark",
       "domain": "mark.the-moment.us",
       "ga": "541668714",
-      "gsc": "sc-domain:the-moment.us",
+      "gsc": "sc-domain:mark.the-moment.us",
       "seo": true,
       "crawl": null
     },
@@ -37,7 +37,7 @@
       "label": "노트 플래너",
       "domain": "notes.the-moment.us",
       "ga": "551977129",
-      "gsc": "sc-domain:the-moment.us",
+      "gsc": "sc-domain:notes.the-moment.us",
       "seo": true,
       "crawl": null
     },
@@ -46,7 +46,7 @@
       "label": "팀AI",
       "domain": "teamai.the-moment.us",
       "ga": "552103172",
-      "gsc": "sc-domain:the-moment.us",
+      "gsc": "sc-domain:teamai.the-moment.us",
       "seo": true,
       "crawl": null
     },
@@ -55,7 +55,7 @@
       "label": "Kontext",
       "domain": "kontext.the-moment.us",
       "ga": "525400922",
-      "gsc": "sc-domain:the-moment.us",
+      "gsc": "sc-domain:kontext.the-moment.us",
       "seo": true,
       "crawl": null
     },
@@ -64,7 +64,7 @@
       "label": "빈방",
       "domain": "bb.the-moment.us",
       "ga": "552088876",
-      "gsc": "sc-domain:the-moment.us",
+      "gsc": "sc-domain:bb.the-moment.us",
       "seo": true,
       "crawl": null
     },
