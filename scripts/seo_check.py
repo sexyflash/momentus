@@ -16,6 +16,7 @@ SEO/GEO 점검기 — docs/SEO_GEO.md §3(필수 9종)·§5(초기 HTML)·§7(�
 from __future__ import annotations
 
 import argparse
+import html as _html
 import json
 import re
 import sys
@@ -234,16 +235,21 @@ def check_page(name: str, html: str) -> list[tuple[str, str]]:
 
     # 2. title
     t = TAG["title"].search(html)
+    # 🔴 2026-09-23 — **엔티티를 먼저 푼다.** 그러지 않으면 아포스트로피 하나가 `&#39;` 로 5자로
+    #    세어져 멀쩡한 제목이 길다고 잡힌다(실측: 렌더 53자 제목이 69자로 찍혔다).
+    #    구글이 자르는 기준은 화면에 보이는 글자다. 🚫 raw HTML 길이로 되돌리지 마라.
     if not t or not t.group(1).strip():
         F("<title> 없음/빈값")
-    elif len(t.group(1).strip()) > 60:
-        W(f"title {len(t.group(1).strip())}자 — 60자 넘으면 검색결과에서 잘린다")
+    else:
+        _tt = _html.unescape(t.group(1).strip())
+        if len(_tt) > 60:
+            W(f"title {len(_tt)}자 — 60자 넘으면 검색결과에서 잘린다")
 
     # 3. description
     if not TAG["desc"].search(html):
         F("meta description 없음")
     else:
-        n = len(attr_val(TAG["desc_val"].search(html)).strip())
+        n = len(_html.unescape(attr_val(TAG["desc_val"].search(html)).strip()))  # 엔티티 풀고 센다(위 주석 참조)
         if n == 0:
             F("meta description 이 빈값")
         elif n < 50:
