@@ -167,3 +167,27 @@ blog.naver.com(277), namu.wiki(36), apps.apple.com(20), kmong.com(16), dtgoodnot
 • [heyreci] toolify.ai에 헤이레시 AI 툴 등록 — toolify.ai는 이번 주 신규 인용 도메인(new_domains, 4회)이고 heyreci 경쟁사인 remove.bg·Photoroom·Canva가 이런 AI 툴 디렉터리에 이미 노출 — 계정 가입·외부 제출이 필요해 사람 작업
 • [mark] jaenung.net에 마크 로고 디자인 서비스 등록 — jaenung.net은 신규 인용 도메인(10회)이며 성격상 competitors.mark의 크몽·숨고·Fiverr·Upwork와 같은 프리랜서 마켓 — 셀러 등록은 로그인·외부 제출이라 사람 작업
 • [cue] interviewtalk.kr에 큐 소개/링크 제출 — interviewtalk.kr은 신규 인용 도메인(4회)이고 면접 주제 질문에 인용됨 — competitors.cue(사람인·면접톡·잡다) 영역과 겹쳐 등록 대상, 외부 제출이라 사람 작업
+
+---
+
+## 2026-09-28
+
+**GEO 주간 측정 2026-09-28** — 엔진: chatgpt, claude, naver_blog, naver_web (⚠️ 일부 칸 실패)
+
+**제품별 추천됨 / 질문수**
+• 헤이레시 · AI 상품사진: 추천 0/20 · 언급 0  (-1)  [claude 0/5 · chatgpt 0/5 · naver_web 0/5 · naver_blog 0/5]
+• 큐 · AI 모의면접: 추천 0/16 · 언급 0  [claude 0/4 · chatgpt 0/4 · naver_web 0/4 · naver_blog 0/4]
+• 마크 · 로고 디자인: 추천 0/16 · 언급 0  [claude 0/4 · chatgpt 0/4 · naver_web 0/4 · naver_blog 0/4]
+• 더플랜 · 디지털 플래너: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+• 빈방 · 취소표 알림: 추천 1/12 · 언급 1  (+1)  [claude 0/3 · chatgpt 0/3 · naver_web 1/3 · naver_blog 0/3]
+• 팀AI · AI 친구: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+• 컨텍스트: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+  미판정 25건
+
+**대신 추천된 곳 (상위)**
+
+**인용된 출처 도메인 = 우리가 실려야 할 자리**
+blog.naver.com(279), namu.wiki(55), kmong.com(12), play.google.com(9), apps.apple.com(8), skyscanner.co.krhttps(8), welldone-interview.co.kr(7), jaenung.net(7), sungmooncho.com(7), ko.clippingmagic.com(6), community.linkareer.com(6), kokomen.kr(6)
+새로 등장: class101.net, gongysd.com, help.openai.com, mcst.go.kr, sungmooncho.com, welldone-interview.co.kr
+
+(할 일 판정이 실패해 표만 올립니다 — 다음 회차에 다시 시도)

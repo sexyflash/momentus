@@ -6,21 +6,21 @@
   "listed": false
  },
  "apps.apple.com": {
-  "count": 76,
+  "count": 84,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "armes.co.kr": {
-  "count": 5,
+  "count": 10,
   "first": "2026-09-21",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "blog.naver.com": {
-  "count": 1079,
+  "count": 1358,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "brunch.co.kr": {
@@ -30,15 +30,21 @@
   "listed": false
  },
  "canva.com": {
-  "count": 23,
+  "count": 28,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
+  "listed": false
+ },
+ "class101.net": {
+  "count": 3,
+  "first": "2026-09-28",
+  "last": "2026-09-28",
   "listed": false
  },
  "community.linkareer.com": {
-  "count": 32,
+  "count": 38,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "docs.tiro.ooo": {
@@ -48,9 +54,9 @@
   "listed": false
  },
  "draph.art": {
-  "count": 26,
+  "count": 29,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "dtgoodnote.com": {
@@ -63,6 +69,12 @@
   "count": 6,
   "first": "2026-09-14",
   "last": "2026-09-14",
+  "listed": false
+ },
+ "gongysd.com": {
+  "count": 3,
+  "first": "2026-09-28",
+  "last": "2026-09-28",
   "listed": false
  },
  "gptparkai.com": {
@@ -84,9 +96,9 @@
   "listed": false
  },
  "help.openai.com": {
-  "count": 5,
+  "count": 10,
   "first": "2026-09-07",
-  "last": "2026-09-07",
+  "last": "2026-09-28",
   "listed": false
  },
  "interviewtalk.kr": {
@@ -96,9 +108,9 @@
   "listed": false
  },
  "jaenung.net": {
-  "count": 10,
+  "count": 17,
   "first": "2026-09-21",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "jobda.im": {
@@ -108,33 +120,39 @@
   "listed": false
  },
  "kmong.com": {
-  "count": 59,
+  "count": 71,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "ko.clippingmagic.com": {
-  "count": 24,
+  "count": 30,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "kokomen.kr": {
-  "count": 21,
+  "count": 27,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "korean.go.kr": {
-  "count": 15,
+  "count": 18,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "m.saramin.co.kr": {
   "count": 9,
   "first": "2026-09-07",
   "last": "2026-09-14",
+  "listed": false
+ },
+ "mcst.go.kr": {
+  "count": 3,
+  "first": "2026-09-28",
+  "last": "2026-09-28",
   "listed": false
  },
  "miricanvas.com": {
@@ -144,9 +162,9 @@
   "listed": false
  },
  "namu.wiki": {
-  "count": 202,
+  "count": 257,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "openads.co.kr": {
@@ -156,15 +174,15 @@
   "listed": false
  },
  "pension.tuwaagin.com": {
-  "count": 24,
+  "count": 30,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "photoroom.com": {
-  "count": 27,
+  "count": 32,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "piccopilot.com": {
@@ -174,21 +192,21 @@
   "listed": false
  },
  "play.google.com": {
-  "count": 34,
+  "count": 43,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "remove.bg": {
-  "count": 9,
+  "count": 14,
   "first": "2026-09-14",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "skyscanner.co.krhttps": {
-  "count": 9,
+  "count": 17,
   "first": "2026-09-21",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "sukbak.oppapost.com": {
@@ -198,15 +216,15 @@
   "listed": false
  },
  "sungmooncho.com": {
-  "count": 20,
+  "count": 27,
   "first": "2026-09-02",
-  "last": "2026-09-14",
+  "last": "2026-09-28",
   "listed": false
  },
  "tilnote.io": {
-  "count": 22,
+  "count": 28,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "tiro.ooo": {
@@ -216,9 +234,9 @@
   "listed": false
  },
  "toolify.ai": {
-  "count": 9,
+  "count": 13,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-09-28",
   "listed": false
  },
  "vcat.ai": {
@@ -231,6 +249,12 @@
   "count": 4,
   "first": "2026-09-07",
   "last": "2026-09-07",
+  "listed": false
+ },
+ "welldone-interview.co.kr": {
+  "count": 7,
+  "first": "2026-09-28",
+  "last": "2026-09-28",
   "listed": false
  }
 }
