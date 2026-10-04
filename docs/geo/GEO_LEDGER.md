@@ -191,3 +191,27 @@ blog.naver.com(279), namu.wiki(55), kmong.com(12), play.google.com(9), apps.appl
 새로 등장: class101.net, gongysd.com, help.openai.com, mcst.go.kr, sungmooncho.com, welldone-interview.co.kr
 
 (할 일 판정이 실패해 표만 올립니다 — 다음 회차에 다시 시도)
+
+---
+
+## 2026-10-05
+
+**GEO 주간 측정 2026-10-05** — 엔진: chatgpt, claude, naver_blog, naver_web (⚠️ 일부 칸 실패)
+
+**제품별 추천됨 / 질문수**
+• 헤이레시 · AI 상품사진: 추천 0/20 · 언급 0  [claude 0/5 · chatgpt 0/5 · naver_web 0/5 · naver_blog 0/5]
+• 큐 · AI 모의면접: 추천 0/16 · 언급 0  [claude 0/4 · chatgpt 0/4 · naver_web 0/4 · naver_blog 0/4]
+• 마크 · 로고 디자인: 추천 0/16 · 언급 0  [claude 0/4 · chatgpt 0/4 · naver_web 0/4 · naver_blog 0/4]
+• 더플랜 · 디지털 플래너: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+• 빈방 · 취소표 알림: 추천 1/12 · 언급 1  [claude 0/3 · chatgpt 0/3 · naver_web 1/3 · naver_blog 0/3]
+• 팀AI · AI 친구: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+• 컨텍스트: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+  미판정 25건
+
+**대신 추천된 곳 (상위)**
+
+**인용된 출처 도메인 = 우리가 실려야 할 자리**
+blog.naver.com(276), namu.wiki(47), kmong.com(13), apps.apple.com(9), welldone-interview.co.kr(9), wedding-fair.seoul.kr(9), jaenung.net(8), photoroom.com(7), community.linkareer.com(7), wadiz.io(7), ko.clippingmagic.com(6), summitfeed.co.kr(6)
+새로 등장: aaro.kr, ezpdf.co.kr, haijob.co.kr, openai.com, piccopilot.com, softonic.kr, summitfeed.co.kr, wadiz.io, wedding-fair.seoul.kr
+
+(할 일 판정이 실패해 표만 올립니다 — 다음 회차에 다시 시도)

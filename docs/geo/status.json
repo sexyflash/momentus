@@ -1,8 +1,8 @@
 {
  "phase": "done",
- "date": "2026-09-28",
- "started": "2026-09-28T03:00:54+09:00",
- "finished": "2026-09-28T03:20:09+09:00",
+ "date": "2026-10-05",
+ "started": "2026-10-05T03:00:01+09:00",
+ "finished": "2026-10-05T03:14:45+09:00",
  "complete": false,
  "failed": [
   "binbang-1|claude",
@@ -21,6 +21,7 @@
   "kontext-2|claude",
   "kontext-3|claude",
   "mark-1|claude",
+  "mark-1|naver_web",
   "mark-2|claude",
   "mark-3|claude",
   "mark-4|claude",
@@ -31,5 +32,5 @@
   "teamai-2|claude",
   "teamai-3|claude"
  ],
- "judge_started": "2026-09-28T03:19:34+09:00"
+ "judge_started": "2026-10-05T03:14:35+09:00"
 }
