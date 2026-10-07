@@ -37,6 +37,15 @@
   {
    "kind": "post",
    "src": "로고",
+   "title": "명함 시안 3장 중 1장을 고르다가 로고를 다시 그린 이유",
+   "url": "https://mark.the-moment.us/insights/businesscard-design-logo-redraw/",
+   "date": "2026-10-07",
+   "desc": "명함 시안 회의에서 로고가 깨지는 걸 발견하고 처음으로 돌아간 과정. 작아도 버티는 로고를 만드는 실무 기준을 공개합니다.",
+   "cat": "인사이트"
+  },
+  {
+   "kind": "post",
+   "src": "로고",
    "title": "명함 시안 3장 앞에서 카페 사장님이 고른 건 '예쁜 것'이 아니었습니다",
    "url": "https://mark.the-moment.us/insights/cafe-namecard-3-sicheon-goleun-gijun/",
    "date": "2026-09-30",
@@ -383,15 +392,6 @@
    "url": "https://mark.the-moment.us/insights/namecard-print-file-ai-vector-outline/",
    "date": "2026-07-03",
    "desc": "폰트 깨짐, 저해상 이미지, 재단 밀림까지. 인쇄소에 AI 벡터 파일 넘기기 전 확인할 접수 체크리스트입니다.",
-   "cat": "인사이트"
-  },
-  {
-   "kind": "post",
-   "src": "로고",
-   "title": "명함 사이즈 규격, 90×50mm인데 파일은 왜 94×54mm일까",
-   "url": "https://mark.the-moment.us/insights/namecard-size-bleed-safe-zone-guide/",
-   "date": "2026-07-03",
-   "desc": "명함 규격 90×50mm, 도련 2mm, 안전선까지. 재단 밀림·흰 테두리·글자 잘림을 피하는 실무 기준을 정리했습니다.",
    "cat": "인사이트"
   }
  ],
