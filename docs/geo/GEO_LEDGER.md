@@ -215,3 +215,46 @@ blog.naver.com(276), namu.wiki(47), kmong.com(13), apps.apple.com(9), welldone-i
 새로 등장: aaro.kr, ezpdf.co.kr, haijob.co.kr, openai.com, piccopilot.com, softonic.kr, summitfeed.co.kr, wadiz.io, wedding-fair.seoul.kr
 
 (할 일 판정이 실패해 표만 올립니다 — 다음 회차에 다시 시도)
+
+---
+
+## 2026-10-12
+
+**GEO 주간 측정 2026-10-12** — 엔진: chatgpt, claude, naver_blog, naver_web
+7개 제품 중 빈방만 2건 추천(+1), 나머지 6개는 80여 개 질의에서 추천 0 — 인용 도메인(blog.naver.com 276, kmong.com 18 등)과 추천 기준 구절을 페이지·글에 맞추는 것이 이번 주 과제
+
+**제품별 추천됨 / 질문수**
+• 헤이레시 · AI 상품사진: 추천 0/20 · 언급 0  [claude 0/5 · chatgpt 0/5 · naver_web 0/5 · naver_blog 0/5]
+• 큐 · AI 모의면접: 추천 0/16 · 언급 0  [claude 0/4 · chatgpt 0/4 · naver_web 0/4 · naver_blog 0/4]
+• 마크 · 로고 디자인: 추천 0/16 · 언급 0  [claude 0/4 · chatgpt 0/4 · naver_web 0/4 · naver_blog 0/4]
+• 더플랜 · 디지털 플래너: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+• 빈방 · 취소표 알림: 추천 2/12 · 언급 2  (+1)  [claude 0/3 · chatgpt 1/3 · naver_web 1/3 · naver_blog 0/3]
+• 팀AI · AI 친구: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+• 컨텍스트: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+
+**대신 추천된 곳 (상위)**
+• 헤이레시 · AI 상품사진: 크몽(5), Canva(4), 드랩아트(Draph Art)(2), MixMemo(2), Photoroom(2)
+• 큐 · AI 모의면접: Yoodli(4), Final Round AI(3), LeetCode(3), Google Interview Warmup(2), Big Interview(2)
+• 마크 · 로고 디자인: 크몽(6), Canva(4), 숨고(3), 라우드소싱(3), 미리캔버스(2)
+• 더플랜 · 디지털 플래너: Etsy(4), 네이버 스마트스토어(4), 크몽(3), 아이디어스(2), 텐바이텐(2)
+• 빈방 · 취소표 알림: 야놀자(NOL)(2), 여기어때(2), 땡큐캠핑(1), 캠핏(1), Campnab(1)
+• 팀AI · AI 친구: Replika(3), 제타(zeta)(2), Praktika(2), ELSA Speak(2), 에이닷(A.)(2)
+• 컨텍스트: Obsidian(3), Mem0(2), Notion(2), Pinecone(2), Weaviate(2)
+
+**인용된 출처 도메인 = 우리가 실려야 할 자리**
+blog.naver.com(276), namu.wiki(55), kmong.com(18), apps.apple.com(14), wedding-fair.seoul.kr(10), welldone-interview.co.kr(9), ko.clippingmagic.com(6), community.linkareer.com(6), draph.art(5), photoroom.com(5), kokomen.kr(5), tilnote.io(5)
+새로 등장: help.openai.com, interviewing.io, korean.go.kr, mcst.go.kr, openads.co.kr, remove.bg, toolify.ai
+
+**봇이 이어서 할 일**
+• [heyreci] 헤이레시 첫 문단·FAQ에 '촬영 없이 상품 사진', '무료 체험', '제품이 그대로 나오는지(라벨·로고·패키지 문구 유지)', '상업적 이용 가능'을 문장으로 명시하고 llms.txt에도 반영 — heyreci 추천 0/20, 추천 기준 구절 1위가 '무료 체험'(3회)이고 '라벨·로고·패키지 문구를 유지', '상업적 이용'도 언급됨
+• [heyreci] 헤이레시 대 Photoroom·remove.bg·Canva 비교 글 초안 작성 (배경 제거 vs 연출컷 생성) — 경쟁사 Canva 4회·Photoroom 2회·remove.bg 2회, 인용 도메인에 photoroom.com 5·remove.bg 4·canva.com 4·ko.clippingmagic.com 6
+• [cue] 큐 랜딩에 '직무별 질문', '꼬리질문', '표정·시선·음성·답변 분석', '가입 없이 무료 체험'을 FAQ·첫 문단 문장으로 추가 — cue 추천 0/16, 추천 기준 '직무별 질문' 3회 최다, '가입할 필요가 없습니다'·'꼬리질문'·'표정·시선·음성·답변 내용을 분석' 각 1회
+• [mark] 마크 페이지에 '10분이면 완성', '한글 글꼴 다수', '시안 수십 개 즉시 확인', '원본·벡터 파일 제공', '상표 등록은 별도'를 명시한 FAQ와 크몽·Canva 대비 비교 초안 작성 — mark 추천 0/16, 경쟁사 크몽 6·Canva 4·숨고 3, 추천 기준 '10분이면 끝나고 한글 글꼴이 많음'·'벡터 파일 제공 가능'·'상표 등록이 안 됨'
+• [notes] 더플랜 페이지에 '하이퍼링크', '한국 공휴일·음력', '무료 서식', '가로형/세로형', '다크모드', 'GoodNotes 호환' 스펙을 문장·FAQ로 정리 — notes 추천 0/12, 추천 기준 '하이퍼링크' 2회 최다, 경쟁사 GoodNotes·Notability 각 2회, Etsy 4회
+• [binbang] 빈방 '취소 감시·빈자리 알림' 문구를 유지한 채 '숙소 직접 전화 대기', '플랫폼 Notify me', '웹페이지 변경 감시(Visualping)' 대비 차이를 설명하는 FAQ·비교 글 초안 작성 — binbang만 추천 2건(chatgpt 1·naver_web 1, 전주 대비 +1)이고 claude·naver_blog는 0, 추천 기준에 '숙소에 직접 전화해서 대기 요청'·'웹페이지 변경 감시'가 나옴
+• [teamai] 팀AI 페이지에 '한국어 말투가 자연스러움', '기억 기능으로 대화 이어감', '캐릭터 선택·생성', '무료로 시작'을 첫 문단·FAQ에 명시 — teamai 추천 0/12, 추천 기준 구절 '한국어 말투가 가장 자연스럽습니다'·'기억 기능으로 대화를 이어 가고'·'무료로 시작' 및 경쟁사 Replika 3·제타 2
+• [kontext] 컨텍스트 페이지 첫 문단에 '이미 갖고 있는 위키를 정본으로 활용', '여러 AI가 같은 기억을 공유', '관리할 곳을 늘리지 않음', '개인정보 보호'를 문장으로 명시하고 Obsidian·Mem0·Notion 대비 비교 초안 작성 — kontext 추천 0/12, 추천 기준 구절이 위 항목들이고 경쟁사 Obsidian 3·Mem0 2·Notion 2
+
+**대표님 몫 (새로 생긴 것만)**
+• [heyreci] 크몽(kmong.com)에 헤이레시·마크 서비스 등록 또는 프로필 개설 (계정 로그인·제출) — kmong.com 18회 인용, 크몽이 heyreci 경쟁사 5회·mark 경쟁사 6회로 1위인데 외부 계정 로그인·제출은 봇이 못 함
+• [cue] 네이버 블로그(blog.naver.com)에 큐용 '직무별 AI 모의면접' 후기·가이드 글 발행 승인 및 게시 — blog.naver.com 276회로 최다 인용 도메인이며 cue 추천 0/16, 발행 승인·계정 게시는 사람이 해야 함
