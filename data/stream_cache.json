@@ -399,6 +399,15 @@
   {
    "kind": "post",
    "src": "모의면접",
+   "title": "면접 횡설수설 줄이는 법 — 긴 자기소개에서 지울 문장, 남길 문장",
+   "url": "https://cue.the-moment.us/playbook/interview-rambling-answer-edit",
+   "date": "2026-10-12",
+   "desc": "자기소개가 길어진다면 실제로 말한 답에서 반복되는 설명을 찾아보세요. 같은 사실로 줄인 전후 예시와 빈칸 순서로, 내 행동을 빼먹지 않고 답변 길이를 줄입니다.",
+   "cat": "아직 면접 전"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
    "title": "지원동기 답변 — 공고의 ‘참여’를 ‘주도’로 바꾸지 않는 법",
    "url": "https://cue.the-moment.us/playbook/interview-motivation-job-posting-scope",
    "date": "2026-10-09",
@@ -745,15 +754,6 @@
    "url": "https://cue.the-moment.us/playbook/pressure",
    "date": "2026-07-10",
    "desc": "압박 면접에서 같은 자리를 거듭 묻는 이유는 면접관의 평가표에 행동 근거가 비었기 때문입니다. 질문 끝의 빈칸을 읽고 한 증거로 답하는 법을 짚습니다.",
-   "cat": "준비 중"
-  },
-  {
-   "kind": "post",
-   "src": "모의면접",
-   "title": "면접 성과 어필 — 숫자보다 ‘내가 바꾼 것’이 평가표에 남습니다",
-   "url": "https://cue.the-moment.us/playbook/numbers",
-   "date": "2026-07-09",
-   "desc": "큰 성과 숫자를 말해도 개인 기여가 확인되지 않으면 팀 실적으로 남습니다. 면접 평가표가 점수를 붙일 수 있게 숫자의 정의·개입·한계를 한 장으로 준비하세요.",
    "cat": "준비 중"
   }
  ],
