@@ -3,9 +3,116 @@
    - 프로필 그리드의 릴스 링크는 /p/ 가 아니라 /reel/ 이다. 예전엔 /p/ 만 모아 릴스가 통째로 빠졌다.
    - 조회수는 릴스 탭(/<계정>/reels/)에만 찍힌다. 메인 그리드엔 조회수가 아예 없다(실측).
    - 릴스 탭 썸네일은 <img> 가 아니라 배경 이미지(div style) 라 거기서 주소를 꺼낸다.
-   - 칸 구조: 좋아요·댓글 = 호버 오버레이의 li 안 / 조회수 = li 밖의 숫자 span. */
+   - 칸 구조: 좋아요·댓글 = 호버 오버레이의 li 안 / 조회수 = li 밖의 숫자 span.
+   2026-10-13 둘째 판 — 탐색(/explore/) 화면:
+   - 칸에 숫자가 하나도 안 찍히고 호버해도 안 뜬다 → 화면을 긁는 방식으로는 전부 「—」였다.
+   - 대신 인스타가 페이지에 심어 둔 데이터(script application/json, 문자열 안에 또 JSON)와
+     스크롤할 때 받아오는 응답(fetch·XHR)에 게시물마다 like_count·comment_count·play_count 가 있다.
+     그걸 게시물 코드(/p/<코드>/)로 맞춰 쓰고, 없을 때만 화면 숫자로 돌아간다.
+   - 탐색 화면의 릴스 칸은 <img> 없이 <video> 라 썸네일도 데이터(image_versions2)에서 꺼낸다. */
 (function () {
   var LINK = 'a[href*="/p/"],a[href*="/reel/"]';
+  var DATA = window.__igSortData = window.__igSortData || {};
+  function num(v) {
+    return typeof v === "number" && v > 0 ? v : 0;
+  }
+  function pickThumb(o) {
+    var c = o.image_versions2 && o.image_versions2.candidates;
+    if (!c || !c.length) {
+      var cm = o.carousel_media && o.carousel_media[0];
+      c = cm && cm.image_versions2 && cm.image_versions2.candidates;
+    }
+    if (c && c.length) {
+      var best = c[0];
+      c.forEach(function (x) {
+        if (x.width >= 320 && x.width < best.width) best = x;
+      });
+      return best.url || "";
+    }
+    return o.display_uri || o.thumbnail_src || o.display_url || "";
+  }
+  function walk(o, depth) {
+    if (!o || depth > 60) return;
+    if (typeof o === "string") {
+      if (o.length > 50 && (o.charAt(0) === "{" || o.charAt(0) === "[") && o.indexOf("like_count") >= 0) {
+        try {
+          walk(JSON.parse(o), depth + 1);
+        } catch (e) {}
+      }
+      return;
+    }
+    if (typeof o !== "object") return;
+    if (Array.isArray(o)) {
+      for (var i = 0; i < o.length; i++) walk(o[i], depth + 1);
+      return;
+    }
+    var code = o.code || o.shortcode;
+    if (typeof code === "string" && ("like_count" in o || "play_count" in o || "comment_count" in o || "edge_liked_by" in o)) {
+      var prev = DATA[code] || {};
+      var likes = num(o.like_count) || num(o.edge_liked_by && o.edge_liked_by.count) || num(o.edge_media_preview_like && o.edge_media_preview_like.count);
+      var comments = num(o.comment_count) || num(o.edge_media_to_comment && o.edge_media_to_comment.count);
+      var views = num(o.play_count) || num(o.ig_play_count) || num(o.view_count) || num(o.video_play_count) || num(o.video_view_count);
+      DATA[code] = {
+        likes: likes || prev.likes || 0,
+        comments: comments || prev.comments || 0,
+        views: views || prev.views || 0,
+        thumb: prev.thumb || pickThumb(o)
+      };
+    }
+    for (var k in o) {
+      if (Object.prototype.hasOwnProperty.call(o, k)) walk(o[k], depth + 1);
+    }
+  }
+  function ingestText(t) {
+    if (!t || t.indexOf("like_count") < 0 && t.indexOf("play_count") < 0) return;
+    t = t.replace(/^for \(;;\);/, "");
+    try {
+      walk(JSON.parse(t), 0);
+      return;
+    } catch (e) {}
+    t.split("\n").forEach(function (line) {
+      try {
+        walk(JSON.parse(line), 0);
+      } catch (e) {}
+    });
+  }
+  function ingestPage() {
+    [].slice.call(document.querySelectorAll('script[type="application/json"]')).forEach(function (sc) {
+      if (sc.dataset.igIngested === "1") return;
+      sc.dataset.igIngested = "1";
+      ingestText(sc.textContent);
+    });
+  }
+  if (!window.__igSortHooked) {
+    window.__igSortHooked = true;
+    try {
+      var of = window.fetch;
+      window.fetch = function () {
+        var pr = of.apply(this, arguments);
+        pr.then(function (r) {
+          try {
+            r.clone().text().then(ingestText, function () {});
+          } catch (e) {}
+        }, function () {});
+        return pr;
+      };
+    } catch (e) {}
+    try {
+      var os = XMLHttpRequest.prototype.send;
+      XMLHttpRequest.prototype.send = function () {
+        this.addEventListener("load", function () {
+          try {
+            if (!this.responseType || this.responseType === "text") ingestText(this.responseText);
+          } catch (e) {}
+        });
+        return os.apply(this, arguments);
+      };
+    } catch (e) {}
+  }
+  function codeOf(href) {
+    var m = (href || "").match(/\/(?:p|reel)\/([^\/?]+)/);
+    return m ? m[1] : "";
+  }
   if (document.getElementById("ig-sort-float")) document.getElementById("ig-sort-float").remove();
   if (document.getElementById("ig-sort-style")) document.getElementById("ig-sort-style").remove();
   if (window.__igSortBackup) {
@@ -133,9 +240,12 @@
   }
   function captureMetadata(aTag) {
     var th = thumbOf(aTag);
+    var v = aTag.querySelector("video");
     return {
       href: aTag.getAttribute("href"),
-      src: th.src,
+      code: codeOf(aTag.getAttribute("href")),
+      src: th.src || (v && v.poster) || "",
+      video_src: v ? v.currentSrc || v.src || "" : "",
       srcset: th.srcset,
       alt: th.alt,
       carousel: !!aTag.querySelector('svg[aria-label="슬라이드"],svg[aria-label="Carousel"]'),
@@ -185,8 +295,10 @@
       }, 220);
     });
   }
-  var onReelsTab = /\/reels\/?$/.test(location.pathname);
-  var account = (location.pathname.split("/").filter(Boolean)[0] || "");
+  var segs = location.pathname.split("/").filter(Boolean);
+  var NOT_PROFILE = ["explore", "reels", "reel", "p", "tags", "locations", "stories", "direct", "accounts", "search"];
+  var account = segs.length && NOT_PROFILE.indexOf(segs[0]) < 0 ? segs[0] : "";
+  var onReelsTab = !!account && segs[1] === "reels";
   var float = document.createElement("div");
   float.id = "ig-sort-float";
   float.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:99999;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:-apple-system,sans-serif;";
@@ -207,17 +319,17 @@
   var input = float.querySelector(".ig-input");
   var btnSort = float.querySelector(".ig-btn-sort");
   var btnRestore = float.querySelector(".ig-btn-restore");
-  metricSel.value = onReelsTab ? "views" : "likes";
+  metricSel.value = account && !onReelsTab ? "likes" : "views";
   if (account) reelsLink.href = "/" + account + "/reels/";
   function setMsg(t) {
     msg.textContent = t;
   }
   function needReelsTab() {
-    return metricSel.value === "views" && !onReelsTab;
+    return metricSel.value === "views" && !!account && !onReelsTab;
   }
   function hint() {
-    reelsLink.style.display = needReelsTab() && account ? "inline-block" : "none";
-    if (needReelsTab()) setMsg("조회수는 릴스 탭에만 표시됩니다 — 릴스 탭에서 다시 눌러 주세요");
+    reelsLink.style.display = needReelsTab() ? "inline-block" : "none";
+    if (needReelsTab()) setMsg("프로필 첫 화면엔 조회수가 없습니다 — 릴스 탭에서 다시 눌러 주세요");
     else setMsg("기준·최대 갯수 정하고 정렬");
   }
   hint();
@@ -283,18 +395,27 @@
       setMsg("❌ 게시물 목록을 못 찾았습니다");
       return;
     }
+    ingestPage();
     var list = Object.keys(allCells).map(function (k) {
-      return allCells[k];
+      var d = allCells[k];
+      var x = DATA[d.code];
+      if (x) {
+        d.likes = x.likes || d.likes;
+        d.comments = x.comments || d.comments;
+        d.views = x.views || d.views;
+        if (!d.src) d.src = x.thumb || "";
+      }
+      return d;
     }).filter(function (d) {
-      return d.src && d.href;
+      return d.href && (d.src || d.video_src);
     });
     if (list.length === 0) {
       setMsg("❌ 정렬할 데이터 없음");
       return;
     }
     if (key === "views" && !list.some(function (d) { return d.views > 0; })) {
-      reelsLink.style.display = account ? "inline-block" : "none";
-      setMsg("이 화면엔 조회수가 없습니다 — 릴스 탭에서 다시 눌러 주세요");
+      reelsLink.style.display = account && !onReelsTab ? "inline-block" : "none";
+      setMsg(account && !onReelsTab ? "프로필 첫 화면엔 조회수가 없습니다 — 릴스 탭에서 다시 눌러 주세요" : "모은 게시물에 조회수 정보가 없습니다(사진만 있으면 조회수가 없습니다)");
       return;
     }
     var order = [key].concat(["views", "likes", "comments"].filter(function (k) { return k !== key; }));
@@ -311,11 +432,20 @@
       cell.href = d.href;
       cell.target = "_blank";
       cell.rel = "noopener";
-      var img = document.createElement("img");
-      img.src = d.src;
-      if (d.srcset) img.srcset = d.srcset;
-      img.alt = d.alt || "";
-      img.referrerPolicy = "no-referrer";
+      var img;
+      if (d.src) {
+        img = document.createElement("img");
+        img.src = d.src;
+        if (d.srcset) img.srcset = d.srcset;
+        img.alt = d.alt || "";
+        img.referrerPolicy = "no-referrer";
+      } else {
+        img = document.createElement("video");
+        img.src = d.video_src;
+        img.muted = true;
+        img.preload = "metadata";
+        img.style.cssText = "width:100%;height:100%;object-fit:cover;display:block;";
+      }
       cell.appendChild(img);
       if (d.carousel || d.reel || d.video) {
         var icon = document.createElement("div");
@@ -359,6 +489,7 @@
     if (maxPosts < 10) maxPosts = 10;
     if (window.__igSortBackup) restore();
     allCells = {};
+    ingestPage();
     [].slice.call(document.querySelectorAll("[data-ig-processed]")).forEach(function (a) {
       delete a.dataset.igProcessed;
     });
