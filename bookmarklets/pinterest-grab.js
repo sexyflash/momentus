@@ -464,7 +464,7 @@
     if (!SELECTED.size) {
       list.classList.add('empty');
       list.textContent = IS_PIN ? '핀을 클릭해서 고르세요.' : '이미지를 클릭해서 고르세요.';
-      relayout();
+      fitPanel();
       return;
     }
     list.classList.remove('empty');
@@ -487,6 +487,12 @@
       box.appendChild(rm);
       list.appendChild(box);
     });
+    fitPanel();
+  }
+  /* 담을수록 패널이 길어진다 — 그때마다 창 안으로 다시 맞춘다. (POS 는 아래에서 정해지므로
+     처음 render 전엔 건너뛴다.) */
+  function fitPanel() {
+    if (POS) applyPos();
     relayout();
   }
 
@@ -772,9 +778,16 @@
      접힘은 기억하지 않는다 — 켤 때는 늘 접힌 알약이 디폴트. */
   var EDGE = 16;
   var POS = { side: 'r', ty: EDGE };
+  /* 2026-10-13 — 펼친 패널이 화면 아래로 빠져나가던 사고: 알약을 아래쪽으로 끌어 둔 뒤
+     펼치면 기억한 높이(ty)에서 그대로 아래로 자라서, 창이 작으면 '전체 화면'을 해야 보였다.
+     기억은 알약 자리로만 쓰고, 실제 자리는 *지금 패널 높이*가 창 안에 들어가게 위로 당긴다.
+     크기 상한도 vh 대신 지금 창 크기(innerWidth/Height) 픽셀로 건다. */
   function applyPos() {
+    var vw = window.innerWidth, vh = window.innerHeight;
+    pnl.style.maxHeight = Math.max(120, vh - EDGE * 2) + 'px';
+    pnl.style.maxWidth = Math.max(160, vw - EDGE * 2) + 'px';
     var h = host.getBoundingClientRect().height || 0;
-    var ty = Math.max(4, Math.min(window.innerHeight - Math.min(h, 72) - 4, POS.ty));
+    var ty = Math.max(4, Math.min(vh - EDGE - h, POS.ty));
     host.style.setProperty('top', ty + 'px', 'important');
     if (POS.side === 'l') {
       host.style.setProperty('left', EDGE + 'px', 'important');
@@ -803,6 +816,7 @@
     pnl.classList.toggle('min', !!on);
     icMini.textContent = on ? '+' : '–';
     applyPos();
+    setTimeout(applyPos, 300);   /* 폭 전환(.26s)이 끝난 뒤 높이로 한 번 더 */
   }
   function cancelIntro() {
     if (!introTimer) return;
