@@ -9,6 +9,9 @@
    - 대신 인스타가 페이지에 심어 둔 데이터(script application/json, 문자열 안에 또 JSON)와
      스크롤할 때 받아오는 응답(fetch·XHR)에 게시물마다 like_count·comment_count·play_count 가 있다.
      그걸 게시물 코드(/p/<코드>/)로 맞춰 쓰고, 없을 때만 화면 숫자로 돌아간다.
+   - 셋째 판: 다른 화면에서 탐색으로 넘어오면 첫 묶음 데이터가 북마크 실행 전에 이미 지나가
+     심긴 데이터에도 응답 가로채기에도 안 잡힌다(대표 화면에서 조회수 0건). 빈 칸만
+     게시물 정보(/api/v1/media/<id>/info/)를 3개씩 천천히 물어 채운다. 429 면 즉시 멈춘다.
    - 탐색 화면의 릴스 칸은 <img> 없이 <video> 라 썸네일도 데이터(image_versions2)에서 꺼낸다. */
 (function () {
   var LINK = 'a[href*="/p/"],a[href*="/reel/"]';
@@ -371,6 +374,57 @@
       }, 600);
     });
   }
+  var B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+  function pkOf(code) {
+    var n = BigInt(0);
+    var c = code.slice(0, 11);
+    for (var i = 0; i < c.length; i++) n = n * BigInt(64) + BigInt(B64.indexOf(c.charAt(i)));
+    return n.toString();
+  }
+  function fillMissing() {
+    ingestPage();
+    var todo = Object.keys(allCells).map(function (k) {
+      return allCells[k];
+    }).filter(function (d) {
+      if (!d.code) return false;
+      var x = DATA[d.code];
+      if (!x) return true;
+      return (d.reel || d.video || d.video_src) && !x.views;
+    }).map(function (d) {
+      return d.code;
+    });
+    if (!todo.length) return Promise.resolve();
+    var done = 0;
+    var stopped = false;
+    function one(code) {
+      return fetch("/api/v1/media/" + pkOf(code) + "/info/", { headers: { "X-IG-App-ID": "936619743392459" }, credentials: "include" }).then(function (r) {
+        if (r.status === 429) stopped = true;
+        return r.ok ? r.text() : "";
+      }).then(function (t) {
+        ingestText(t);
+      }, function () {}).then(function () {
+        done++;
+        setMsg("숫자 확인중 " + done + "/" + todo.length);
+      });
+    }
+    return new Promise(function (resolve) {
+      var i = 0;
+      var active = 0;
+      function next() {
+        if (stopped || i >= todo.length) {
+          if (active === 0) resolve();
+          return;
+        }
+        var code = todo[i++];
+        active++;
+        one(code).then(function () {
+          active--;
+          setTimeout(next, 150);
+        });
+      }
+      for (var k = 0; k < 3; k++) next();
+    });
+  }
   function unmountGrid() {
     var p = window.__igSortBackup;
     if (!p) return;
@@ -495,7 +549,7 @@
     });
     btnSort.disabled = true;
     btnSort.textContent = "실행중...";
-    phase1Scan(maxPosts).then(function () {
+    phase1Scan(maxPosts).then(fillMissing).then(function () {
       buildSortedGrid();
       btnSort.disabled = false;
       if (!window.__igSortBackup) btnSort.textContent = "정렬";
