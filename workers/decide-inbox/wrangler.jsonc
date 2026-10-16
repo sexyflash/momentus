@@ -1,0 +1,17 @@
+{
+  "name": "decide-inbox",
+  "main": "index.js",
+  "compatibility_date": "2026-10-01",
+
+  // 대표 결정 페이지(*.pages.dev 정적 HTML)의 「고르고 제출」을 받는 자리 (2026-10-16, 파이온 Naver Ops 요청).
+  // 자사 도메인 금지(제3자에게 갈 수 있는 페이지) → workers.dev 주소만 쓴다.
+  //   POST /answer   {page, answers:{q1:{pick:'rec'|'alt', note}}, at}   쓰기는 공개 · 8KB 상한
+  //   GET  /answers?page=<slug>   X-Read-Key 헤더(또는 &key=) 필요 → 그 페이지의 제출 전부(최신 먼저)
+  // 읽기 키 = 워커 secret READ_KEY. 같은 값이 M1 keys.env·파이온 맥미니 with-keys 에 DECIDE_READ_KEY 로 있다.
+  //
+  // 💰 KV 쓰기는 제출 1건당 1회(무료 1,000/일). 폴링하는 쪽은 GET 만 — KV 읽기 무료 100,000/일.
+  "workers_dev": true,
+  "kv_namespaces": [
+    { "binding": "INBOX", "id": "e8ea13a5ca454492bd39fa05832839fc" }
+  ]
+}
