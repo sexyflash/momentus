@@ -3,34 +3,34 @@
   {
    "kind": "release",
    "src": "노트",
-   "title": "ABC · 영어 4선 공책",
-   "url": "https://notes.the-moment.us/p/english-note",
+   "title": "Scene · 스토리보드 공책",
+   "url": "https://notes.the-moment.us/p/storyboard-note",
    "date": "2026-10-14",
-   "img": "https://notes.the-moment.us/img/wizard/wz_de4aa694-524/draft_user_cover.png"
+   "img": "https://notes.the-moment.us/img/wizard/wz_799a4c04-a32/draft_user_cover.png"
   },
   {
    "kind": "release",
    "src": "노트",
-   "title": "Ruled · 필기 줄 공책",
-   "url": "https://notes.the-moment.us/p/ruled-note",
+   "title": "Hanja · 한자 쓰기 공책",
+   "url": "https://notes.the-moment.us/p/hanja-note",
    "date": "2026-10-14",
-   "img": "https://notes.the-moment.us/img/wizard/wz_c42b8c42-502/draft_user_cover.png"
+   "img": "https://notes.the-moment.us/img/wizard/wz_de1c7b04-ec9/draft_user_cover.png"
   },
   {
    "kind": "release",
    "src": "노트",
-   "title": "Line · 줄 공책",
-   "url": "https://notes.the-moment.us/p/line-note",
+   "title": "Math · 수학 공책",
+   "url": "https://notes.the-moment.us/p/math-note",
    "date": "2026-10-14",
-   "img": "https://notes.the-moment.us/img/wizard/wz_7b4a1857-f8f/draft_user_cover.png"
+   "img": "https://notes.the-moment.us/img/wizard/wz_90b85c94-752/draft_user_cover.png"
   },
   {
    "kind": "release",
    "src": "노트",
-   "title": "Blank · 아이디어 무지 공책",
-   "url": "https://notes.the-moment.us/p/blank-note",
+   "title": "Kana · 일본어 쓰기 공책",
+   "url": "https://notes.the-moment.us/p/japanese-note",
    "date": "2026-10-14",
-   "img": "https://notes.the-moment.us/img/wizard/wz_3060a764-d40/draft_user_cover.png"
+   "img": "https://notes.the-moment.us/img/wizard/wz_20a4776d-009/draft_user_cover.png"
   }
  ],
  "mark": [
@@ -399,6 +399,15 @@
   {
    "kind": "post",
    "src": "모의면접",
+   "title": "경력직 면접 자기소개 — 경력기술서에서 말할 경험을 고르는 법",
+   "url": "https://cue.the-moment.us/playbook/career-intro-from-work-history",
+   "date": "2026-10-19",
+   "desc": "경력기술서를 보며 자기소개를 만들면 회사 순서대로 읽게 되시나요? 같은 경력에서 이번 업무에 쓸 경험을 고르고, 현재 업무와 구분해 소개하는 예시와 작성 순서를 드립니다.",
+   "cat": "아직 면접 전"
+  },
+  {
+   "kind": "post",
+   "src": "모의면접",
    "title": "성격 장단점 예시 — 꼼꼼함이 도움이 된 때와 일을 늦춘 때",
    "url": "https://cue.the-moment.us/playbook/personality-strengths-weaknesses-answer",
    "date": "2026-10-15",
@@ -745,15 +754,6 @@
    "url": "https://cue.the-moment.us/playbook/aim",
    "date": "2026-07-13",
    "desc": "면접 답변을 길게 할수록 점수가 늘지는 않습니다. 정해진 질문표를 끝내야 하는 면접관의 화면과, 증거 하나를 건넨 뒤 멈추는 연습법을 짚습니다.",
-   "cat": "준비 중"
-  },
-  {
-   "kind": "post",
-   "src": "모의면접",
-   "title": "면접 자기소개는 요약문이 아닙니다 — 면접관이 물을 증거 하나를 심으세요",
-   "url": "https://cue.the-moment.us/playbook/self-intro",
-   "date": "2026-07-12",
-   "desc": "면접 자기소개에 경력 전체를 넣지 마세요. 면접관은 방금 들은 사례와 평가 항목을 대조해 후속 질문을 고릅니다. 가장 강한 증거 하나로 첫 질문을 데려오는 법을 짚습니다.",
    "cat": "준비 중"
   }
  ],
