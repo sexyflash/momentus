@@ -104,8 +104,11 @@ async function ranged(request, env) {
     const h = new Headers(res.headers); h.set('accept-ranges', 'bytes');
     return new Response(res.body, { status: 200, headers: h });
   }
-  const buf = await res.arrayBuffer();
-  const size = buf.byteLength;
+  // 크기를 알면 버퍼에 다 올리지 않고 흘려보낸다 — 다 받은 뒤에 보내면 첫 화면이 몇 초 늦다
+  //   (2026-10-18 실측: 3.7MB 영상 `bytes=0-` 에 첫 프레임 3~10초).
+  const len = Number(res.headers.get('content-length'));
+  const buf = len > 0 ? null : await res.arrayBuffer();
+  const size = buf ? buf.byteLength : len;
   let start, end;
   if (m[1] === '') { start = Math.max(0, size - Number(m[2])); end = size - 1; }
   else { start = Number(m[1]); end = m[2] === '' ? size - 1 : Math.min(Number(m[2]), size - 1); }
@@ -116,7 +119,22 @@ async function ranged(request, env) {
   h.set('accept-ranges', 'bytes');
   h.set('content-range', `bytes ${start}-${end}/${size}`);
   h.set('content-length', String(end - start + 1));
-  return new Response(buf.slice(start, end + 1), { status: 206, headers: h });
+  const body = buf ? buf.slice(start, end + 1)
+    : (start === 0 && end === size - 1) ? res.body : res.body.pipeThrough(slice(start, end));
+  return new Response(body, { status: 206, headers: h });
+}
+
+// 흐르는 바이트에서 [start, end] 구간만 통과시킨다.
+function slice(start, end) {
+  let pos = 0;
+  return new TransformStream({
+    transform(chunk, ctl) {
+      const a = pos, b = pos + chunk.byteLength - 1;
+      pos += chunk.byteLength;
+      if (b < start || a > end) { if (a > end) ctl.terminate(); return; }
+      ctl.enqueue(chunk.subarray(Math.max(0, start - a), Math.min(chunk.byteLength, end - a + 1)));
+    },
+  });
 }
 
 export default {
