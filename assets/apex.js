@@ -147,3 +147,23 @@
   els.forEach(function(e){io.observe(e);});
   els[0].classList.add('in');
 })();
+
+/* 영상 카드·히어로 — 정지/재생 · 처음부터 · 로드 실패 시 포스터 · 모션 감소면 재생 안 함 */
+(function(){
+  var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  [].slice.call(document.querySelectorAll('video[data-rm]')).forEach(function(v){
+    var box=v.closest('[data-vbox]')||v.parentNode;
+    function fail(){box.classList.add('v-fail'); try{v.pause();}catch(e){}}
+    v.addEventListener('error',fail);
+    if(v.error) fail();
+    if(rm){ v.removeAttribute('autoplay'); try{v.pause();}catch(e){} }
+    var t=box.querySelector('[data-v=toggle]'), r=box.querySelector('[data-v=replay]');
+    function sync(){ if(!t) return; var p=v.paused;
+      t.textContent=p?'재생':'일시정지'; t.setAttribute('aria-label',p?'영상 재생':'영상 일시정지'); }
+    v.addEventListener('play',sync); v.addEventListener('pause',sync);
+    function stop(e){e.preventDefault(); e.stopPropagation();}
+    if(t) t.addEventListener('click',function(e){stop(e); if(v.paused){var q=v.play(); if(q&&q.catch) q.catch(function(){});} else v.pause();});
+    if(r) r.addEventListener('click',function(e){stop(e); v.currentTime=0; var q=v.play(); if(q&&q.catch) q.catch(function(){});});
+    sync();
+  });
+})();

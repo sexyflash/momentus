@@ -1427,6 +1427,12 @@ display:block;transition:transform .6s var(--ease)}
 .stg-art img{width:100%;height:100%;object-fit:contain;display:block;
 transition:transform .6s var(--ease)}
 .stg--hero .stg-art img,.stg--hero .stg-art video{object-fit:cover}
+/* 16:9 통째 카드(HOME_VIDEO_FULL) — 영상 위에 글을 얹지 않고 아래에 둔다. 자르지 않는다. */
+.stg--hero.stg--full{aspect-ratio:auto;min-height:0;background:#0b0c0e;color:#fff}
+.stg--hero.stg--full::after{display:none}
+.stg--hero.stg--full .stg-art{position:relative;inset:auto;aspect-ratio:16/9;background:#0b0c0e}
+.stg--hero.stg--full .stg-art img,.stg--hero.stg--full .stg-art video{object-fit:contain}
+.stg--full:hover .stg-art img{transform:none}
 .stg:hover .stg-art img{transform:scale(1.02)}
 .stg--paper .stg-art{background:var(--soft)}
 .stg--ink .stg-art{background:none}
@@ -1835,7 +1841,20 @@ line-height:1.16;color:var(--ink)}
 .sc-fig{margin:0}
 .sc-fig img{width:100%;height:auto;display:block;border-radius:20px;background:var(--soft)}
 .sc-hero-fig{margin-top:clamp(28px,4vw,48px)}
-.sc-video{width:100%;height:auto;display:block;border-radius:20px;background:var(--soft)}
+.sc-video{width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;display:block;border-radius:20px;background:#0b0c0e}
+.sc-hero-fig .rm-still img{width:100%;height:auto;display:block;border-radius:20px}
+/* 영상 제어 — 정지/재생 · 처음부터 · 크게 보기 */
+.vc-bar{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.vc{display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:99px;border:0;cursor:pointer;
+font:inherit;font-size:14.5px;font-weight:600;color:var(--ink);background:var(--soft);box-shadow:inset 0 0 0 1px var(--line)}
+.vc:focus-visible{outline:2px solid var(--brand-cta);outline-offset:2px}
+.vc-card{position:absolute;top:14px;right:14px;z-index:3;height:34px;padding:0 13px;font-size:13px;
+color:#fff;background:rgba(0,0,0,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
+/* 로드 실패 → 포스터로 돌아간다 · 모션 감소 → 포스터만, 영상 제어는 감춘다(크게 보기는 직접 누르는 것이라 남긴다) */
+.v-fail video[data-rm]{display:none!important}
+.v-fail .rm-still,.v-fail img.rm-still{display:block!important}
+.v-fail [data-v],.v-fail .vc-big{display:none!important}
+@media (prefers-reduced-motion:reduce){[data-v]{display:none!important}}
 .sc-cap{margin-top:8px;font-size:12px;color:var(--faint)}
 .sc-sec{padding:clamp(48px,7vw,104px) 0 0}
 .sc-h{font-size:clamp(24px,3vw,40px);font-weight:800;letter-spacing:-.05em;line-height:1.25;color:var(--ink);text-align:center;margin-bottom:clamp(24px,3.2vw,44px)}

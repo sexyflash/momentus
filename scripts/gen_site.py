@@ -1476,6 +1476,12 @@ display:block;transition:transform .6s var(--ease)}
 .stg-art img{width:100%;height:100%;object-fit:contain;display:block;
 transition:transform .6s var(--ease)}
 .stg--hero .stg-art img,.stg--hero .stg-art video{object-fit:cover}
+/* 16:9 통째 카드(HOME_VIDEO_FULL) — 영상 위에 글을 얹지 않고 아래에 둔다. 자르지 않는다. */
+.stg--hero.stg--full{aspect-ratio:auto;min-height:0;background:#0b0c0e;color:#fff}
+.stg--hero.stg--full::after{display:none}
+.stg--hero.stg--full .stg-art{position:relative;inset:auto;aspect-ratio:16/9;background:#0b0c0e}
+.stg--hero.stg--full .stg-art img,.stg--hero.stg--full .stg-art video{object-fit:contain}
+.stg--full:hover .stg-art img{transform:none}
 .stg:hover .stg-art img{transform:scale(1.02)}
 .stg--paper .stg-art{background:var(--soft)}
 .stg--ink .stg-art{background:none}
@@ -1920,7 +1926,20 @@ line-height:1.16;color:var(--ink)}
 .sc-fig{margin:0}
 .sc-fig img{width:100%;height:auto;display:block;border-radius:20px;background:var(--soft)}
 .sc-hero-fig{margin-top:clamp(28px,4vw,48px)}
-.sc-video{width:100%;height:auto;display:block;border-radius:20px;background:var(--soft)}
+.sc-video{width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;display:block;border-radius:20px;background:#0b0c0e}
+.sc-hero-fig .rm-still img{width:100%;height:auto;display:block;border-radius:20px}
+/* 영상 제어 — 정지/재생 · 처음부터 · 크게 보기 */
+.vc-bar{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.vc{display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:99px;border:0;cursor:pointer;
+font:inherit;font-size:14.5px;font-weight:600;color:var(--ink);background:var(--soft);box-shadow:inset 0 0 0 1px var(--line)}
+.vc:focus-visible{outline:2px solid var(--brand-cta);outline-offset:2px}
+.vc-card{position:absolute;top:14px;right:14px;z-index:3;height:34px;padding:0 13px;font-size:13px;
+color:#fff;background:rgba(0,0,0,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
+/* 로드 실패 → 포스터로 돌아간다 · 모션 감소 → 포스터만, 영상 제어는 감춘다(크게 보기는 직접 누르는 것이라 남긴다) */
+.v-fail video[data-rm]{display:none!important}
+.v-fail .rm-still,.v-fail img.rm-still{display:block!important}
+.v-fail [data-v],.v-fail .vc-big{display:none!important}
+@media (prefers-reduced-motion:reduce){[data-v]{display:none!important}}
 .sc-cap{margin-top:8px;font-size:12px;color:var(--faint)}
 .sc-sec{padding:clamp(48px,7vw,104px) 0 0}
 .sc-h{font-size:clamp(24px,3vw,40px);font-weight:800;letter-spacing:-.05em;line-height:1.25;color:var(--ink);text-align:center;margin-bottom:clamp(24px,3.2vw,44px)}
@@ -2173,10 +2192,16 @@ HOME_SHOT = {
 HOME_VIDEO = {"heyreci": "/assets/home/heyreci-hero.mp4"}
 # 계좌 QR 스토리 영상 — **파일이 실제로 있을 때만** 켠다. 빈 영상·임시 영상을 공개하지 않는다(2026-10-18 대표 지시).
 #   파일을 assets/qrbank/story.mp4 로 넣으면 다음 빌드부터 홈 카드·상세 히어로가 영상으로 바뀐다(포스터 = 기존 연출컷).
+# 영상 카드의 포스터 — 첫 프레임이 뜨기 전·데이터 절약·모션 감소 설정·로드 실패 때 보이는 정지컷(우리 자산).
+HOME_POSTER = {"heyreci": "/assets/home/heyreci.jpg", "qrbank": "/assets/home/qrbank.jpg"}
+# 16:9 전체를 보여야 하는 영상 카드 — 화면 캡처·자막이 든 영상은 cover 로 자르면 글과 손동작이 잘린다
+#   (2026-10-18 QR Bank 세션 요청: «전체 16:9 유지, 자막/행동 크롭 금지»). 이 카드는 그림 위에 글을 얹지 않고
+#   영상(16:9 통째) 아래에 글을 둔다. 모바일 4:5 타일로 자르지도 않는다.
+HOME_VIDEO_FULL = set()
 if os.path.exists("assets/qrbank/story.mp4"):
     HOME_VIDEO["qrbank"] = "/assets/qrbank/story.mp4"
-# 영상 카드의 포스터 — 첫 프레임이 뜨기 전·데이터 절약·모션 감소 설정에서 보이는 정지컷(우리 자산).
-HOME_POSTER = {"heyreci": "/assets/home/heyreci.jpg", "qrbank": "/assets/home/qrbank.jpg"}
+    HOME_POSTER["qrbank"] = "/assets/qrbank/story-poster.jpg"   # 영상과 같은 장면의 포스터(Studio 전달본)
+    HOME_VIDEO_FULL.add("qrbank")
 
 
 def bar_products():
@@ -3517,11 +3542,22 @@ def showcase_landing(slug, p):
     # 히어로 = 스토리 영상(파일이 있을 때만) · 없으면 기존 연출컷. 영상도 포스터는 같은 연출컷이다.
     _hv = sc.get("hero_video") or ""
     _hero_pic = pic(sc["hero"], (900, 1536), sc["kick"], "(max-width:1224px) 100vw, 1176px", eager=True)
+    _hfig = ""
     if _hv and os.path.exists(_hv.lstrip("/")):
-        _poster = f"{a}/{sc['hero']}-1536.jpg"
+        _hvp = sc.get("hero_video_poster") or ""
+        _poster = _hvp if _hvp and os.path.exists(_hvp.lstrip("/")) else f"{a}/{sc['hero']}-1536.jpg"
+        _vlabel = esc(sc.get("hero_video_label") or sc["kick"])
+        # 정지컷 = 영상 포스터(같은 장면). 모션 감소 설정·영상 로드 실패 때 이게 보인다.
+        _still = (f'<img src="{_poster}" alt="{_vlabel}" width="1280" height="720" decoding="async">'
+                  if _poster == _hvp else _hero_pic)
+        # 제어 — 정지/재생 · 처음부터 · 크게 보기(영상 파일을 새 창으로. 카드에선 작은 글씨가 안 읽힌다).
         hero_media = (f'<video class="sc-video" src="{_hv}" poster="{_poster}" autoplay muted loop playsinline '
-                      f'preload="metadata" data-rm aria-label="{esc(sc.get("hero_video_label") or sc["kick"])}"></video>'
-                      f'<div class="rm-still">{_hero_pic}</div>')
+                      f'preload="metadata" data-rm aria-label="{_vlabel}"></video>'
+                      f'<div class="rm-still">{_still}</div>'
+                      f'<div class="vc-bar"><button type="button" class="vc" data-v="toggle" aria-label="영상 일시정지">일시정지</button>'
+                      f'<button type="button" class="vc" data-v="replay">처음부터 보기</button>'
+                      f'<a class="vc vc-big" href="{_hv}" target="_blank" rel="noopener">크게 보기 ↗</a></div>')
+        _hfig = " data-vbox"
         hero_note = sc.get("hero_video_note") or sc["scene_note"]
     else:
         hero_media, hero_note = _hero_pic, sc["scene_note"]
@@ -3535,7 +3571,7 @@ def showcase_landing(slug, p):
     <p class="lede">{esc(sc["lede"])}</p>
     <div class="fl-cta">{btn_at("hero")}</div>
     <p class="fl-note">{esc(sc["flow"])}</p>
-    <figure class="sc-fig sc-hero-fig">{hero_media}
+    <figure class="sc-fig sc-hero-fig"{_hfig}>{hero_media}
       <figcaption class="sc-cap">{esc(hero_note)}</figcaption></figure>
   </header>
   <section class="sc-sec"><div class="sc-scenes">{scenes}</div></section>
@@ -4782,6 +4818,10 @@ def ap_stage(slug, tone="", badge=""):
                 if _pst else "")
         art = (f'<div class="stg-art"><video src="{vid}"{_pa} autoplay muted loop playsinline '
                f'preload="metadata" aria-hidden="true" data-rm></video>{_alt}</div>')
+        if slug in HOME_VIDEO_FULL:
+            # 정지 버튼 — 자동재생이 5초를 넘으면 멈출 수단이 있어야 한다(WCAG 2.2.2). 카드 전면 링크(z1)보다 위.
+            art += ('<button type="button" class="vc vc-card" data-v="toggle" '
+                    'aria-label="영상 일시정지">일시정지</button>')
     elif shot:
         art = (f'<div class="stg-art"><img src="{shot}" alt="{esc(pr["short"])}" '
                f'loading="lazy" decoding="async"></div>')
@@ -4791,13 +4831,16 @@ def ap_stage(slug, tone="", badge=""):
     # 기기 배지 — "내 폰 얘기구나"가 이름보다 먼저 읽혀야 한다(2026-08-24 대표 지시).
     dev = f'<b class="dev">{esc(pr["device"])}</b>' if pr.get("device") else ""
     cls = "".join(f" stg--{t}" for t in tone.split()) if tone else ""
+    if vid and slug in HOME_VIDEO_FULL:
+        cls += " stg--full"
     # 배너 전체를 누를 수 있게 — 카드처럼 보이는데 안 눌리면 손이 헛돈다(2026-08-24 대표 지적).
     #   버튼이 둘이 됐으니 카드 전체는 항상 우리 제품 페이지로 보낸다(외부로 튕기지 않는다).
     _whole = purl(slug)
     _wext = _ext(_whole) if "//" in _whole else ""
     hit = (f'<a class="stg-hit" href="{_whole}"{_wext} '
            f'aria-label="{esc(pr["short"])} 자세히 보기"></a>')
-    return (f'<section class="stg{cls}">{art}{hit}<div class="stg-bd"><div>'
+    _vb = " data-vbox" if vid else ""
+    return (f'<section class="stg{cls}"{_vb}>{art}{hit}<div class="stg-bd"><div>'
 
             f'<p class="stg-eyebrow">{dev}{esc(pr.get("tag", ""))}{bdg}</p>'
             f'<h2 class="stg-name">{esc(pr["short"])}</h2>'
@@ -5203,6 +5246,27 @@ _apex_js = _strip_tags(KB_JS) + """
     {rootMargin:'0px 0px -10% 0px'});
   els.forEach(function(e){io.observe(e);});
   els[0].classList.add('in');
+})();
+"""
+_apex_js += """
+/* 영상 카드·히어로 — 정지/재생 · 처음부터 · 로드 실패 시 포스터 · 모션 감소면 재생 안 함 */
+(function(){
+  var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  [].slice.call(document.querySelectorAll('video[data-rm]')).forEach(function(v){
+    var box=v.closest('[data-vbox]')||v.parentNode;
+    function fail(){box.classList.add('v-fail'); try{v.pause();}catch(e){}}
+    v.addEventListener('error',fail);
+    if(v.error) fail();
+    if(rm){ v.removeAttribute('autoplay'); try{v.pause();}catch(e){} }
+    var t=box.querySelector('[data-v=toggle]'), r=box.querySelector('[data-v=replay]');
+    function sync(){ if(!t) return; var p=v.paused;
+      t.textContent=p?'재생':'일시정지'; t.setAttribute('aria-label',p?'영상 재생':'영상 일시정지'); }
+    v.addEventListener('play',sync); v.addEventListener('pause',sync);
+    function stop(e){e.preventDefault(); e.stopPropagation();}
+    if(t) t.addEventListener('click',function(e){stop(e); if(v.paused){var q=v.play(); if(q&&q.catch) q.catch(function(){});} else v.pause();});
+    if(r) r.addEventListener('click',function(e){stop(e); v.currentTime=0; var q=v.play(); if(q&&q.catch) q.catch(function(){});});
+    sync();
+  });
 })();
 """
 with open("assets/apex.js", "w", encoding="utf-8") as f:
