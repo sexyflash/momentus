@@ -8258,5 +8258,6 @@
   }
  },
  "prev_date": "2026-10-05",
- "reported": false
+ "reported": true,
+ "reported_at": "2026-10-12T03:25:22+09:00"
 }

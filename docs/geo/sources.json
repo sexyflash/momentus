@@ -6,15 +6,15 @@
   "listed": false
  },
  "adobe.com": {
-  "count": 11,
+  "count": 15,
   "first": "2026-09-02",
-  "last": "2026-09-21",
+  "last": "2026-10-19",
   "listed": false
  },
  "apps.apple.com": {
-  "count": 107,
+  "count": 119,
   "first": "2026-09-02",
-  "last": "2026-10-12",
+  "last": "2026-10-19",
   "listed": false
  },
  "armes.co.kr": {
@@ -24,9 +24,9 @@
   "listed": false
  },
  "blog.naver.com": {
-  "count": 1910,
+  "count": 2173,
   "first": "2026-09-02",
-  "last": "2026-10-12",
+  "last": "2026-10-19",
   "listed": false
  },
  "brunch.co.kr": {
@@ -36,9 +36,15 @@
   "listed": false
  },
  "canva.com": {
-  "count": 36,
+  "count": 39,
   "first": "2026-09-02",
-  "last": "2026-10-12",
+  "last": "2026-10-19",
+  "listed": false
+ },
+ "capcut.com": {
+  "count": 4,
+  "first": "2026-10-19",
+  "last": "2026-10-19",
   "listed": false
  },
  "class101.net": {
@@ -48,9 +54,21 @@
   "listed": false
  },
  "community.linkareer.com": {
-  "count": 51,
+  "count": 54,
   "first": "2026-09-02",
-  "last": "2026-10-12",
+  "last": "2026-10-19",
+  "listed": false
+ },
+ "data.go.kr": {
+  "count": 4,
+  "first": "2026-10-19",
+  "last": "2026-10-19",
+  "listed": false
+ },
+ "ditoday.com": {
+  "count": 3,
+  "first": "2026-10-19",
+  "last": "2026-10-19",
   "listed": false
  },
  "docs.tiro.ooo": {
@@ -60,9 +78,9 @@
   "listed": false
  },
  "draph.art": {
-  "count": 37,
+  "count": 39,
   "first": "2026-09-02",
-  "last": "2026-10-12",
+  "last": "2026-10-19",
   "listed": false
  },
  "dtgoodnote.com": {
@@ -108,15 +126,15 @@
   "listed": false
  },
  "help.openai.com": {
-  "count": 14,
+  "count": 21,
   "first": "2026-09-07",
-  "last": "2026-10-12",
+  "last": "2026-10-19",
   "listed": false
  },
  "interviewing.io": {
-  "count": 3,
+  "count": 6,
   "first": "2026-10-12",
-  "last": "2026-10-12",
+  "last": "2026-10-19",
   "listed": false
  },
  "interviewtalk.kr": {
@@ -138,9 +156,9 @@
   "listed": false
  },
  "kmong.com": {
-  "count": 102,
+  "count": 112,
   "first": "2026-09-02",
-  "last": "2026-10-12",
+  "last": "2026-10-19",
   "listed": false
  },
  "ko.clippingmagic.com": {
@@ -179,10 +197,22 @@
   "last": "2026-09-14",
   "listed": false
  },
+ "mixmemo.com": {
+  "count": 3,
+  "first": "2026-10-19",
+  "last": "2026-10-19",
+  "listed": false
+ },
+ "mwm.ai": {
+  "count": 4,
+  "first": "2026-10-19",
+  "last": "2026-10-19",
+  "listed": false
+ },
  "namu.wiki": {
-  "count": 359,
+  "count": 373,
   "first": "2026-09-02",
-  "last": "2026-10-12",
+  "last": "2026-10-19",
   "listed": false
  },
  "openads.co.kr": {
@@ -210,21 +240,21 @@
   "listed": false
  },
  "piccopilot.com": {
-  "count": 32,
+  "count": 40,
   "first": "2026-09-02",
-  "last": "2026-10-12",
+  "last": "2026-10-19",
   "listed": false
  },
  "play.google.com": {
-  "count": 48,
+  "count": 54,
   "first": "2026-09-02",
-  "last": "2026-10-05",
+  "last": "2026-10-19",
   "listed": false
  },
  "remove.bg": {
-  "count": 18,
+  "count": 30,
   "first": "2026-09-14",
-  "last": "2026-10-12",
+  "last": "2026-10-19",
   "listed": false
  },
  "skyscanner.co.krhttps": {
@@ -252,21 +282,27 @@
   "listed": false
  },
  "sungmooncho.com": {
-  "count": 35,
+  "count": 42,
   "first": "2026-09-02",
-  "last": "2026-10-12",
+  "last": "2026-10-19",
   "listed": false
  },
  "tilnote.io": {
-  "count": 38,
+  "count": 48,
   "first": "2026-09-02",
-  "last": "2026-10-12",
+  "last": "2026-10-19",
   "listed": false
  },
  "tiro.ooo": {
   "count": 24,
   "first": "2026-09-02",
   "last": "2026-09-21",
+  "listed": false
+ },
+ "tkad.co.kr": {
+  "count": 5,
+  "first": "2026-10-19",
+  "last": "2026-10-19",
   "listed": false
  },
  "toolify.ai": {
@@ -294,15 +330,33 @@
   "listed": false
  },
  "wedding-fair.seoul.kr": {
-  "count": 19,
+  "count": 25,
   "first": "2026-10-05",
-  "last": "2026-10-12",
+  "last": "2026-10-19",
   "listed": false
  },
  "welldone-interview.co.kr": {
   "count": 25,
   "first": "2026-09-28",
   "last": "2026-10-12",
+  "listed": false
+ },
+ "wikidocs.net": {
+  "count": 3,
+  "first": "2026-10-19",
+  "last": "2026-10-19",
+  "listed": false
+ },
+ "youtube.com": {
+  "count": 24,
+  "first": "2026-10-19",
+  "last": "2026-10-19",
+  "listed": false
+ },
+ "zoviz.com": {
+  "count": 3,
+  "first": "2026-10-19",
+  "last": "2026-10-19",
   "listed": false
  }
 }

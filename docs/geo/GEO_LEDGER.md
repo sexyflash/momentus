@@ -258,3 +258,46 @@ blog.naver.com(276), namu.wiki(55), kmong.com(18), apps.apple.com(14), wedding-f
 **대표님 몫 (새로 생긴 것만)**
 • [heyreci] 크몽(kmong.com)에 헤이레시·마크 서비스 등록 또는 프로필 개설 (계정 로그인·제출) — kmong.com 18회 인용, 크몽이 heyreci 경쟁사 5회·mark 경쟁사 6회로 1위인데 외부 계정 로그인·제출은 봇이 못 함
 • [cue] 네이버 블로그(blog.naver.com)에 큐용 '직무별 AI 모의면접' 후기·가이드 글 발행 승인 및 게시 — blog.naver.com 276회로 최다 인용 도메인이며 cue 추천 0/16, 발행 승인·계정 게시는 사람이 해야 함
+
+---
+
+## 2026-10-19
+
+**GEO 주간 측정 2026-10-19** — 엔진: chatgpt, claude, naver_blog, naver_web
+7개 제품 × 4개 엔진 사실상 전멸(추천 1건: 빈방 naver_web, 지난 회차 대비 -1). 인용 263건이 blog.naver.com에 몰려 있어 네이버 블로그 글과 제품 페이지 문장 보강이 최우선입니다.
+
+**제품별 추천됨 / 질문수**
+• 헤이레시 · AI 상품사진: 추천 0/20 · 언급 0  [claude 0/5 · chatgpt 0/5 · naver_web 0/5 · naver_blog 0/5]
+• 큐 · AI 모의면접: 추천 0/16 · 언급 0  [claude 0/4 · chatgpt 0/4 · naver_web 0/4 · naver_blog 0/4]
+• 마크 · 로고 디자인: 추천 0/16 · 언급 0  [claude 0/4 · chatgpt 0/4 · naver_web 0/4 · naver_blog 0/4]
+• 더플랜 · 디지털 플래너: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+• 빈방 · 취소표 알림: 추천 1/12 · 언급 1  (-1)  [claude 0/3 · chatgpt 0/3 · naver_web 1/3 · naver_blog 0/3]
+• 팀AI · AI 친구: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+• 컨텍스트: 추천 0/12 · 언급 0  [claude 0/3 · chatgpt 0/3 · naver_web 0/3 · naver_blog 0/3]
+
+**대신 추천된 곳 (상위)**
+• 헤이레시 · AI 상품사진: remove.bg(4), 드랩아트(Draph Art)(3), 미리캔버스(3), Canva(3), 브이캣(VCAT.AI)(2)
+• 큐 · AI 모의면접: Yoodli(4), ChatGPT(4), Pramp(3), Claude(3), 사람인 AI 모의면접(3)
+• 마크 · 로고 디자인: Canva(6), Looka(5), 크몽(4), 미리캔버스(3), Behance(3)
+• 더플랜 · 디지털 플래너: Etsy(4), GoodNotes(2), Noteshelf(2), 굿노트 마켓플레이스(1), 아이디어스(1)
+• 빈방 · 취소표 알림: Visualping(2), 여기어때(2), 네이버 예약(2), 캠핏(1), 땡큐캠핑(1)
+• 팀AI · AI 친구: Character.AI(3), 에이닷 (SKT)(2), ChatGPT (OpenAI)(2), Replika(2), ELSA Speak(2)
+• 컨텍스트: LangChain(2), Pinecone(2), Weaviate(2), Chroma(2), Mem0(1)
+
+**인용된 출처 도메인 = 우리가 실려야 할 자리**
+blog.naver.com(263), youtube.com(24), namu.wiki(14), apps.apple.com(12), remove.bg(12), kmong.com(10), tilnote.io(10), piccopilot.com(8), help.openai.com(7), sungmooncho.com(7), wedding-fair.seoul.kr(6), play.google.com(6)
+새로 등장: adobe.com, capcut.com, data.go.kr, ditoday.com, mixmemo.com, mwm.ai, play.google.com, tkad.co.kr, wikidocs.net, youtube.com
+
+**봇이 이어서 할 일**
+• [heyreci] 헤이레시 첫 문단·FAQ에 '촬영 없이 상품 사진 만들기', '스마트스토어·쿠팡용 대표 이미지 규격', '무료 체험', '한국어 화면'을 문장으로 명시하고 llms.txt에도 반영 — heyreci 20회 질문 중 추천 0. 추천 기준 구절이 '무료 체험'(2), '촬영 없이 상품 사진 만들기'(1), '스마트스토어·쿠팡용 대표 이미지 규격'(1)로 나왔는데 우리 페이지에 같은 문장이 있어야 함
+• [heyreci] 헤이레시 vs remove.bg·Canva·미리캔버스·포토룸 비교 글 초안 작성 ('배경 제거만 빠르게' vs '상세페이지·배너까지 한 번에') — 경쟁사 remove.bg 4회·Canva 3회·미리캔버스 3회·Photoroom 2회 언급, 인용 도메인 remove.bg 12건·canva.com 3건
+• [cue] 큐 랜딩에 '직무별 질문', '이력서 기반 맞춤 질문', '맞춤형 꼬리 질문 연습', '로그인 없이 바로 시작', '기본 기능 무료' 문구를 첫 문단과 FAQ에 문장으로 추가 — cue 16회 질문 중 추천 0. 추천 기준 구절 '직무별 질문'(2), '혼자 바로 시작'·'기본 기능 무료'·'로그인 없이'(각 1)
+• [mark] 마크 페이지에 '한글 폰트와 템플릿', '벡터(확대해도 안 깨지는 파일) 제공', '무료~월 1~2만 원 가격대', '외주 대비 저렴'을 명시한 FAQ·비교표 작성 (Canva·Looka·크몽 대비) — mark 16회 질문 중 추천 0. 경쟁사 Canva 6회·Looka 5회·크몽 4회, 기준 구절에 '벡터', '무료~월 1~2만 원', '처음부터 맡기는 것보다 훨씬 싸고'가 있음
+• [binbang] 빈방 페이지에 '빈자리 알림받기 버튼', '푸시 알림', '메일 알림' 설명을 FAQ로 추가하고 Visualping·여기어때·네이버 예약과의 차이 문단 작성 — binbang은 naver_web에서만 1건 추천이었고 지난 회차 대비 -1 하락. 기준 구절 '푸시 알림'(2), '빈자리 알림받기 버튼'(2), 경쟁사 Visualping 2·여기어때 2·네이버 예약 2
+• [notes] 더플랜 페이지에 '한국 공휴일과 월요일 시작', '날짜형과 만년형', '하이퍼링크', '화면 방향', '용량과 페이지 수', '음력과 공휴일 표기' 스펙 표와 FAQ 추가 — notes 12회 질문 중 추천 0. 추천 기준 구절이 위 스펙 항목들(각 1)로 나왔고, 경쟁사 Etsy 4회·GoodNotes 2회·Noteshelf 2회
+• [teamai] 팀AI 페이지 첫 문단에 '한국어 구어체와 감정 표현이 자연스럽다', '음성 대화', '캐릭터 선택·생성', '메모리 기능'을 문장으로 명시 — teamai 12회 질문 중 추천 0. 기준 구절 '한국어 지원'(2), '캐릭터를 직접 고르거나 만들 수 있습니다'·'메모리 기능'(각 1), 경쟁사 Character.AI 3회·Replika 2회·에이닷 2회
+• [kontext] 컨텍스트 페이지에 '기기와 세션이 바뀌어도 유지', '저장된 메모리 보기·편집·삭제 가능', '프로젝트 단위 분리', '다른 도구에서도 함께 사용' 문장 추가 — kontext 12회 질문 중 추천 0. 기준 구절이 위 항목들(각 1)이고, 경쟁사 LangChain 2회·Pinecone 2회·Weaviate 2회·Mem0 1회·ChatGPT Memory 1회
+
+**대표님 몫 (새로 생긴 것만)**
+• [heyreci] 네이버 블로그에 헤이레시 사용기·비교 글 발행 승인 및 게시 (blog.naver.com 계정 로그인 필요) — 인용 도메인 1위가 blog.naver.com(263건)이고 heyreci는 naver_blog 엔진 5회 질문 모두 추천 0이라, 계정 로그인과 발행 승인은 사람만 가능
+• [mark] 크몽(kmong.com)·Canva·미리캔버스 비교 콘텐츠 등 외부 노출 자리에 마크 등록·기고 제출 — 인용 도메인 kmong.com 10건, 경쟁사 크몽 4회·Canva 6회가 나왔고 외부 계정 로그인·제출은 사람이 해야 함
