@@ -1702,8 +1702,9 @@
     ],
     "outputs_note": "A4·A2 인쇄, 이미지 저장까지.",
     "ref_label": "이용 안내",
-    "hero_video": "/assets/qrbank/story.mp4",
-    "hero_video_poster": "/assets/qrbank/story-poster.jpg",
+    "hero_video": "/assets/qrbank/story-v5.mp4",
+    "hero_video_poster": "/assets/qrbank/story-v5-poster.jpg",
+    "hero_video_sound": true,
     "hero_video_label": "계좌 QR 사용 장면 — 손님이 QR을 찍고 은행 앱을 고르면 계좌번호가 복사되고 앱으로 넘어갑니다",
     "hero_video_note": "활용 예시 · 연출 영상"
    }

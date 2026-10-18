@@ -1843,18 +1843,26 @@ line-height:1.16;color:var(--ink)}
 .sc-hero-fig{margin-top:clamp(28px,4vw,48px)}
 .sc-video{width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;display:block;border-radius:20px;background:#0b0c0e}
 .sc-hero-fig .rm-still img{width:100%;height:auto;display:block;border-radius:20px}
-/* 영상 제어 — 정지/재생 · 처음부터 · 크게 보기 */
-.vc-bar{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.vc{display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:99px;border:0;cursor:pointer;
+/* 영상 제어 — 정지/재생 · 처음부터 · 크게 보기 · 소리.
+   ⚠️ 클래스는 vbtn, 속성은 data-vc. `.vc`(바이닐 랜딩)·`data-v`(상단 바 data-v="apex")는 이미 다른 데서 쓴다 —
+      2026-10-18 `[data-v]` 로 걸었다가 모션 감소 설정에서 **상단 바가 통째로 숨었다**. */
+.vbtn-bar{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.vbtn{display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:99px;border:0;cursor:pointer;
 font:inherit;font-size:14.5px;font-weight:600;color:var(--ink);background:var(--soft);box-shadow:inset 0 0 0 1px var(--line)}
-.vc:focus-visible{outline:2px solid var(--brand-cta);outline-offset:2px}
-.vc-card{position:absolute;top:14px;right:14px;z-index:3;height:34px;padding:0 13px;font-size:13px;
+.vbtn:focus-visible{outline:2px solid var(--brand-cta);outline-offset:2px}
+.vbtn-card{position:absolute;top:14px;right:14px;z-index:3;height:34px;padding:0 13px;font-size:13px;
 color:#fff;background:rgba(0,0,0,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
+/* 소리 켜기 — 영상 위 왼쪽 위, 손가락으로 누르기 쉬운 크기(48px). 무음일 때 눈에 띄게, 켜지면 작게 물러난다. */
+.sc-hero-fig[data-vbox]{position:relative}
+.vbtn-sound{position:absolute;top:14px;left:14px;z-index:3;height:48px;padding:0 20px;font-size:16px;font-weight:800;
+color:#fff;background:var(--brand-cta);box-shadow:0 6px 18px rgba(0,0,0,.28)}
+.vbtn-sound.on{height:38px;padding:0 14px;font-size:13.5px;font-weight:600;background:rgba(0,0,0,.55);
+box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
 /* 로드 실패 → 포스터로 돌아간다 · 모션 감소 → 포스터만, 영상 제어는 감춘다(크게 보기는 직접 누르는 것이라 남긴다) */
 .v-fail video[data-rm]{display:none!important}
 .v-fail .rm-still,.v-fail img.rm-still{display:block!important}
-.v-fail [data-v],.v-fail .vc-big{display:none!important}
-@media (prefers-reduced-motion:reduce){[data-v]{display:none!important}}
+.v-fail [data-vc],.v-fail .vbtn-big{display:none!important}
+@media (prefers-reduced-motion:reduce){[data-vbox] [data-vc]{display:none!important}}
 .sc-cap{margin-top:8px;font-size:12px;color:var(--faint)}
 .sc-sec{padding:clamp(48px,7vw,104px) 0 0}
 .sc-h{font-size:clamp(24px,3vw,40px);font-weight:800;letter-spacing:-.05em;line-height:1.25;color:var(--ink);text-align:center;margin-bottom:clamp(24px,3.2vw,44px)}

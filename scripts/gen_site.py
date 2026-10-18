@@ -1928,18 +1928,26 @@ line-height:1.16;color:var(--ink)}
 .sc-hero-fig{margin-top:clamp(28px,4vw,48px)}
 .sc-video{width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;display:block;border-radius:20px;background:#0b0c0e}
 .sc-hero-fig .rm-still img{width:100%;height:auto;display:block;border-radius:20px}
-/* 영상 제어 — 정지/재생 · 처음부터 · 크게 보기 */
-.vc-bar{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.vc{display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:99px;border:0;cursor:pointer;
+/* 영상 제어 — 정지/재생 · 처음부터 · 크게 보기 · 소리.
+   ⚠️ 클래스는 vbtn, 속성은 data-vc. `.vc`(바이닐 랜딩)·`data-v`(상단 바 data-v="apex")는 이미 다른 데서 쓴다 —
+      2026-10-18 `[data-v]` 로 걸었다가 모션 감소 설정에서 **상단 바가 통째로 숨었다**. */
+.vbtn-bar{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.vbtn{display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:99px;border:0;cursor:pointer;
 font:inherit;font-size:14.5px;font-weight:600;color:var(--ink);background:var(--soft);box-shadow:inset 0 0 0 1px var(--line)}
-.vc:focus-visible{outline:2px solid var(--brand-cta);outline-offset:2px}
-.vc-card{position:absolute;top:14px;right:14px;z-index:3;height:34px;padding:0 13px;font-size:13px;
+.vbtn:focus-visible{outline:2px solid var(--brand-cta);outline-offset:2px}
+.vbtn-card{position:absolute;top:14px;right:14px;z-index:3;height:34px;padding:0 13px;font-size:13px;
 color:#fff;background:rgba(0,0,0,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
+/* 소리 켜기 — 영상 위 왼쪽 위, 손가락으로 누르기 쉬운 크기(48px). 무음일 때 눈에 띄게, 켜지면 작게 물러난다. */
+.sc-hero-fig[data-vbox]{position:relative}
+.vbtn-sound{position:absolute;top:14px;left:14px;z-index:3;height:48px;padding:0 20px;font-size:16px;font-weight:800;
+color:#fff;background:var(--brand-cta);box-shadow:0 6px 18px rgba(0,0,0,.28)}
+.vbtn-sound.on{height:38px;padding:0 14px;font-size:13.5px;font-weight:600;background:rgba(0,0,0,.55);
+box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
 /* 로드 실패 → 포스터로 돌아간다 · 모션 감소 → 포스터만, 영상 제어는 감춘다(크게 보기는 직접 누르는 것이라 남긴다) */
 .v-fail video[data-rm]{display:none!important}
 .v-fail .rm-still,.v-fail img.rm-still{display:block!important}
-.v-fail [data-v],.v-fail .vc-big{display:none!important}
-@media (prefers-reduced-motion:reduce){[data-v]{display:none!important}}
+.v-fail [data-vc],.v-fail .vbtn-big{display:none!important}
+@media (prefers-reduced-motion:reduce){[data-vbox] [data-vc]{display:none!important}}
 .sc-cap{margin-top:8px;font-size:12px;color:var(--faint)}
 .sc-sec{padding:clamp(48px,7vw,104px) 0 0}
 .sc-h{font-size:clamp(24px,3vw,40px);font-weight:800;letter-spacing:-.05em;line-height:1.25;color:var(--ink);text-align:center;margin-bottom:clamp(24px,3.2vw,44px)}
@@ -2198,10 +2206,17 @@ HOME_POSTER = {"heyreci": "/assets/home/heyreci.jpg", "qrbank": "/assets/home/qr
 #   (2026-10-18 QR Bank 세션 요청: «전체 16:9 유지, 자막/행동 크롭 금지»). 이 카드는 그림 위에 글을 얹지 않고
 #   영상(16:9 통째) 아래에 글을 둔다. 모바일 4:5 타일로 자르지도 않는다.
 HOME_VIDEO_FULL = set()
-if os.path.exists("assets/qrbank/story.mp4"):
-    HOME_VIDEO["qrbank"] = "/assets/qrbank/story.mp4"
-    HOME_POSTER["qrbank"] = "/assets/qrbank/story-poster.jpg"   # 영상과 같은 장면의 포스터(Studio 전달본)
+# 소리 있는 영상 — 소리 켠 채 재생을 먼저 시도하고, 브라우저가 막으면 무음 자동재생 + 「소리 켜기」 버튼 +
+#   페이지 첫 탭에 소리 켜기(2026-10-18 대표: «자동으로 소리 나는 게 안 되면 최소한 자동재생이라도»).
+HOME_VIDEO_SOUND = set()
+# 5차 내레이션본(30초·소리). 파일명에 차수를 박아 캐시를 끊는다 — 같은 이름에 덮으면 옛 영상이 남는다.
+#   옛 무음본(story.mp4)은 이미 건넨 링크가 있어 지우지 않는다.
+QRBANK_VIDEO = "assets/qrbank/story-v5.mp4"
+if os.path.exists(QRBANK_VIDEO):
+    HOME_VIDEO["qrbank"] = "/" + QRBANK_VIDEO
+    HOME_POSTER["qrbank"] = "/assets/qrbank/story-v5-poster.jpg"   # 영상과 같은 장면의 포스터(Studio 전달본)
     HOME_VIDEO_FULL.add("qrbank")
+    HOME_VIDEO_SOUND.add("qrbank")
 
 
 def bar_products():
@@ -3551,12 +3566,15 @@ def showcase_landing(slug, p):
         _still = (f'<img src="{_poster}" alt="{_vlabel}" width="1280" height="720" decoding="async">'
                   if _poster == _hvp else _hero_pic)
         # 제어 — 정지/재생 · 처음부터 · 크게 보기(영상 파일을 새 창으로. 카드에선 작은 글씨가 안 읽힌다).
+        _snd = bool(sc.get("hero_video_sound"))
         hero_media = (f'<video class="sc-video" src="{_hv}" poster="{_poster}" autoplay muted loop playsinline '
-                      f'preload="metadata" data-rm aria-label="{_vlabel}"></video>'
+                      f'preload="metadata"{" data-sound" if _snd else ""} data-rm aria-label="{_vlabel}"></video>'
                       f'<div class="rm-still">{_still}</div>'
-                      f'<div class="vc-bar"><button type="button" class="vc" data-v="toggle" aria-label="영상 일시정지">일시정지</button>'
-                      f'<button type="button" class="vc" data-v="replay">처음부터 보기</button>'
-                      f'<a class="vc vc-big" href="{_hv}" target="_blank" rel="noopener">크게 보기 ↗</a></div>')
+                      + ('<button type="button" class="vbtn vbtn-sound" data-vc="sound" aria-pressed="false">🔊 소리 켜기</button>'
+                         if _snd else '') +
+                      f'<div class="vbtn-bar"><button type="button" class="vbtn" data-vc="toggle" aria-label="영상 일시정지">일시정지</button>'
+                      f'<button type="button" class="vbtn" data-vc="replay">처음부터 보기</button>'
+                      f'<a class="vbtn vbtn-big" href="{_hv}" target="_blank" rel="noopener">크게 보기 ↗</a></div>')
         _hfig = " data-vbox"
         hero_note = sc.get("hero_video_note") or sc["scene_note"]
     else:
@@ -4816,12 +4834,17 @@ def ap_stage(slug, tone="", badge=""):
         _pa = f' poster="{_pst}"' if _pst else ""
         _alt = (f'<img class="rm-still" src="{_pst}" alt="{esc(pr["short"])}" loading="lazy" decoding="async">'
                 if _pst else "")
+        _snd = slug in HOME_VIDEO_SOUND
+        # 소리 있는 영상은 보조기기에서 숨기지 않는다(소리 버튼과 짝).
+        _vattr = ' data-sound' if _snd else ' aria-hidden="true"'
         art = (f'<div class="stg-art"><video src="{vid}"{_pa} autoplay muted loop playsinline '
-               f'preload="metadata" aria-hidden="true" data-rm></video>{_alt}</div>')
+               f'preload="metadata"{_vattr} data-rm></video>{_alt}</div>')
         if slug in HOME_VIDEO_FULL:
             # 정지 버튼 — 자동재생이 5초를 넘으면 멈출 수단이 있어야 한다(WCAG 2.2.2). 카드 전면 링크(z1)보다 위.
-            art += ('<button type="button" class="vc vc-card" data-v="toggle" '
+            art += ('<button type="button" class="vbtn vbtn-card" data-vc="toggle" '
                     'aria-label="영상 일시정지">일시정지</button>')
+        if _snd:
+            art += '<button type="button" class="vbtn vbtn-sound" data-vc="sound" aria-pressed="false">🔊 소리 켜기</button>'
     elif shot:
         art = (f'<div class="stg-art"><img src="{shot}" alt="{esc(pr["short"])}" '
                f'loading="lazy" decoding="async"></div>')
@@ -5249,24 +5272,59 @@ _apex_js = _strip_tags(KB_JS) + """
 })();
 """
 _apex_js += """
-/* 영상 카드·히어로 — 정지/재생 · 처음부터 · 로드 실패 시 포스터 · 모션 감소면 재생 안 함 */
+/* 영상 카드·히어로 — 정지/재생 · 처음부터 · 로드 실패 시 포스터 · 모션 감소면 재생 안 함
+   소리 있는 영상(data-sound): ① 소리 켠 채 재생 시도 → 막히면 즉시 무음 자동재생(영상은 무조건 돈다)
+   ② 무음이면 「소리 켜기」 버튼 ③ 페이지 첫 탭·클릭·키 입력에 소리 켜기(막히면 무음으로 되돌리고 다음 동작에 재시도) */
 (function(){
   var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var sounds=[];
+  function play(v){ try{ var q=v.play(); return (q&&q.then)?q:Promise.resolve(); }catch(e){ return Promise.reject(e); } }
   [].slice.call(document.querySelectorAll('video[data-rm]')).forEach(function(v){
     var box=v.closest('[data-vbox]')||v.parentNode;
     function fail(){box.classList.add('v-fail'); try{v.pause();}catch(e){}}
     v.addEventListener('error',fail);
     if(v.error) fail();
     if(rm){ v.removeAttribute('autoplay'); try{v.pause();}catch(e){} }
-    var t=box.querySelector('[data-v=toggle]'), r=box.querySelector('[data-v=replay]');
+    var t=box.querySelector('[data-vc=toggle]'), r=box.querySelector('[data-vc=replay]'), sb=box.querySelector('[data-vc=sound]');
     function sync(){ if(!t) return; var p=v.paused;
       t.textContent=p?'재생':'일시정지'; t.setAttribute('aria-label',p?'영상 재생':'영상 일시정지'); }
-    v.addEventListener('play',sync); v.addEventListener('pause',sync);
+    function ssync(){ if(!sb) return; var m=v.muted;
+      sb.textContent=m?'🔊 소리 켜기':'🔇 소리 끄기'; sb.setAttribute('aria-pressed',m?'false':'true'); sb.classList.toggle('on',!m); }
+    v.addEventListener('play',sync); v.addEventListener('pause',sync); v.addEventListener('volumechange',ssync);
     function stop(e){e.preventDefault(); e.stopPropagation();}
-    if(t) t.addEventListener('click',function(e){stop(e); if(v.paused){var q=v.play(); if(q&&q.catch) q.catch(function(){});} else v.pause();});
-    if(r) r.addEventListener('click',function(e){stop(e); v.currentTime=0; var q=v.play(); if(q&&q.catch) q.catch(function(){});});
-    sync();
+    if(t) t.addEventListener('click',function(e){stop(e); if(v.paused){v._userPaused=false; play(v).catch(function(){});} else {v._userPaused=true; v.pause();}});
+    if(r) r.addEventListener('click',function(e){stop(e); v._userPaused=false; v.currentTime=0; play(v).catch(function(){});});
+    sync(); ssync();
+    if(!v.hasAttribute('data-sound')||rm) return;
+    // 소리 켜기 시도 — 실패(거부·일시정지)면 무음으로 되돌려 계속 돌게 한다.
+    v.trySound=function(){
+      if(box.classList.contains('v-fail')) return Promise.resolve(false);
+      v.muted=false;
+      return play(v).then(function(){
+        return new Promise(function(ok){ setTimeout(function(){ ok(!v.paused||v._userPaused); },300); });
+      },function(){ return false; }).then(function(good){
+        if(!good){ v.muted=true; if(!v._userPaused) play(v).catch(function(){}); }
+        return good;
+      });
+    };
+    if(sb) sb.addEventListener('click',function(e){stop(e);
+      if(v.muted){ v.trySound(); } else { v.muted=true; } });
+    sounds.push(v);
+    v.trySound();
   });
+  if(!sounds.length) return;
+  var EV=['click','touchend','keydown'];
+  function unlock(e){
+    if(e.target&&e.target.closest&&e.target.closest('[data-vc]')) return;   // 영상 버튼은 제 할 일만 한다
+    var todo=sounds.filter(function(v){return v.muted&&!v._soundOff;});
+    if(!todo.length) return off();
+    todo.forEach(function(v){ v.trySound().then(function(ok){ if(ok) off(); }); });
+  }
+  function off(){ EV.forEach(function(n){ document.removeEventListener(n,unlock,true); }); }
+  EV.forEach(function(n){ document.addEventListener(n,unlock,true); });
+  // 사용자가 직접 「소리 끄기」를 눌렀으면 첫 탭 자동 켜기에서 뺀다.
+  sounds.forEach(function(v){ var sb=(v.closest('[data-vbox]')||v.parentNode).querySelector('[data-vc=sound]');
+    if(sb) sb.addEventListener('click',function(){ v._soundOff=v.muted; }); });
 })();
 """
 with open("assets/apex.js", "w", encoding="utf-8") as f:

@@ -148,22 +148,57 @@
   els[0].classList.add('in');
 })();
 
-/* 영상 카드·히어로 — 정지/재생 · 처음부터 · 로드 실패 시 포스터 · 모션 감소면 재생 안 함 */
+/* 영상 카드·히어로 — 정지/재생 · 처음부터 · 로드 실패 시 포스터 · 모션 감소면 재생 안 함
+   소리 있는 영상(data-sound): ① 소리 켠 채 재생 시도 → 막히면 즉시 무음 자동재생(영상은 무조건 돈다)
+   ② 무음이면 「소리 켜기」 버튼 ③ 페이지 첫 탭·클릭·키 입력에 소리 켜기(막히면 무음으로 되돌리고 다음 동작에 재시도) */
 (function(){
   var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var sounds=[];
+  function play(v){ try{ var q=v.play(); return (q&&q.then)?q:Promise.resolve(); }catch(e){ return Promise.reject(e); } }
   [].slice.call(document.querySelectorAll('video[data-rm]')).forEach(function(v){
     var box=v.closest('[data-vbox]')||v.parentNode;
     function fail(){box.classList.add('v-fail'); try{v.pause();}catch(e){}}
     v.addEventListener('error',fail);
     if(v.error) fail();
     if(rm){ v.removeAttribute('autoplay'); try{v.pause();}catch(e){} }
-    var t=box.querySelector('[data-v=toggle]'), r=box.querySelector('[data-v=replay]');
+    var t=box.querySelector('[data-vc=toggle]'), r=box.querySelector('[data-vc=replay]'), sb=box.querySelector('[data-vc=sound]');
     function sync(){ if(!t) return; var p=v.paused;
       t.textContent=p?'재생':'일시정지'; t.setAttribute('aria-label',p?'영상 재생':'영상 일시정지'); }
-    v.addEventListener('play',sync); v.addEventListener('pause',sync);
+    function ssync(){ if(!sb) return; var m=v.muted;
+      sb.textContent=m?'🔊 소리 켜기':'🔇 소리 끄기'; sb.setAttribute('aria-pressed',m?'false':'true'); sb.classList.toggle('on',!m); }
+    v.addEventListener('play',sync); v.addEventListener('pause',sync); v.addEventListener('volumechange',ssync);
     function stop(e){e.preventDefault(); e.stopPropagation();}
-    if(t) t.addEventListener('click',function(e){stop(e); if(v.paused){var q=v.play(); if(q&&q.catch) q.catch(function(){});} else v.pause();});
-    if(r) r.addEventListener('click',function(e){stop(e); v.currentTime=0; var q=v.play(); if(q&&q.catch) q.catch(function(){});});
-    sync();
+    if(t) t.addEventListener('click',function(e){stop(e); if(v.paused){v._userPaused=false; play(v).catch(function(){});} else {v._userPaused=true; v.pause();}});
+    if(r) r.addEventListener('click',function(e){stop(e); v._userPaused=false; v.currentTime=0; play(v).catch(function(){});});
+    sync(); ssync();
+    if(!v.hasAttribute('data-sound')||rm) return;
+    // 소리 켜기 시도 — 실패(거부·일시정지)면 무음으로 되돌려 계속 돌게 한다.
+    v.trySound=function(){
+      if(box.classList.contains('v-fail')) return Promise.resolve(false);
+      v.muted=false;
+      return play(v).then(function(){
+        return new Promise(function(ok){ setTimeout(function(){ ok(!v.paused||v._userPaused); },300); });
+      },function(){ return false; }).then(function(good){
+        if(!good){ v.muted=true; if(!v._userPaused) play(v).catch(function(){}); }
+        return good;
+      });
+    };
+    if(sb) sb.addEventListener('click',function(e){stop(e);
+      if(v.muted){ v.trySound(); } else { v.muted=true; } });
+    sounds.push(v);
+    v.trySound();
   });
+  if(!sounds.length) return;
+  var EV=['click','touchend','keydown'];
+  function unlock(e){
+    if(e.target&&e.target.closest&&e.target.closest('[data-vc]')) return;   // 영상 버튼은 제 할 일만 한다
+    var todo=sounds.filter(function(v){return v.muted&&!v._soundOff;});
+    if(!todo.length) return off();
+    todo.forEach(function(v){ v.trySound().then(function(ok){ if(ok) off(); }); });
+  }
+  function off(){ EV.forEach(function(n){ document.removeEventListener(n,unlock,true); }); }
+  EV.forEach(function(n){ document.addEventListener(n,unlock,true); });
+  // 사용자가 직접 「소리 끄기」를 눌렀으면 첫 탭 자동 켜기에서 뺀다.
+  sounds.forEach(function(v){ var sb=(v.closest('[data-vbox]')||v.parentNode).querySelector('[data-vc=sound]');
+    if(sb) sb.addEventListener('click',function(){ v._soundOff=v.muted; }); });
 })();
