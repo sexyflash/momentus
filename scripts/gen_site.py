@@ -2402,7 +2402,9 @@ gtag('js',new Date());gtag('config','{GA_ID}');
               : a.closest('.mmt-fly') ? 'nav-more'
               : a.closest('.prh-row') ? 'product-list'
               : a.closest('#mmt-bar') ? 'nav' : 'body';
-    if(window.gtag) gtag('event','outbound',{link_domain:host,link_url:h,
+    /* 주소의 # 뒤는 보내지 않는다 — QR Bank 처럼 계좌·금액을 # 에 싣는 제품이 있다(2026-10-18). */
+    var hu=h.split('#')[0];
+    if(window.gtag) gtag('event','outbound',{link_domain:host,link_url:hu,
       link_kind:kind,link_where:where,link_text:(a.innerText||'').trim().slice(0,60)});
   },{capture:true});
 })();
