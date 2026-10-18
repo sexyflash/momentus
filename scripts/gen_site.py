@@ -2685,6 +2685,10 @@ box-shadow:inset 0 0 0 1px rgba(0,0,0,.18);font-weight:600}
 #mmt-bar[data-v=apex] .mmt-cta:hover{background:rgba(0,0,0,.05);color:#000}
 #mmt-bar[data-v=apex] .mmt-ib{color:rgba(0,0,0,.7)}
 #mmt-bar[data-v=apex] .mmt-ib:hover{background:rgba(0,0,0,.06);color:#000}
+/* 모바일 메뉴 버튼(.mmt-pick) — 공용 기본값은 검정 바용 흰 글자라 밝은 apex 바에선 안 보였다
+   (2026-10-18 QR Bank 점검: 흰 바탕에 흰 「모멘터스 ▾」). 전경·배경을 명시한다. 열린 목록은 검정 패널 그대로. */
+#mmt-bar[data-v=apex] .mmt-pick>summary{color:#111;background:rgba(0,0,0,.06);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+#mmt-bar[data-v=apex] .mmt-pick[open]>summary{background:#111;color:#fff;box-shadow:none}
 /* 본진(apex)에서는 이게 **주 내비**다 — 남의 사이트 위에 얹히는 게 아니니 작을 이유가 없다
    (2026-08-24 대표 지적). 패널을 넓히고 썸네일·글자를 한 단계 키운다.
    제품 사이트(spoke)는 그대로 작게 — 거긴 패밀리 메뉴다. */
