@@ -2,35 +2,35 @@
  "theplan": [
   {
    "kind": "release",
-   "src": "플래너",
+   "src": "노트",
+   "title": "ABC · 영어 4선 공책",
+   "url": "https://notes.the-moment.us/p/english-note",
+   "date": "2026-10-14",
+   "img": "https://notes.the-moment.us/img/wizard/wz_de4aa694-524/draft_user_cover.png"
+  },
+  {
+   "kind": "release",
+   "src": "노트",
+   "title": "Ruled · 필기 줄 공책",
+   "url": "https://notes.the-moment.us/p/ruled-note",
+   "date": "2026-10-14",
+   "img": "https://notes.the-moment.us/img/wizard/wz_c42b8c42-502/draft_user_cover.png"
+  },
+  {
+   "kind": "release",
+   "src": "노트",
+   "title": "Line · 줄 공책",
+   "url": "https://notes.the-moment.us/p/line-note",
+   "date": "2026-10-14",
+   "img": "https://notes.the-moment.us/img/wizard/wz_7b4a1857-f8f/draft_user_cover.png"
+  },
+  {
+   "kind": "release",
+   "src": "노트",
    "title": "Blank · 아이디어 무지 공책",
    "url": "https://notes.the-moment.us/p/blank-note",
    "date": "2026-10-14",
    "img": "https://notes.the-moment.us/img/wizard/wz_3060a764-d40/draft_user_cover.png"
-  },
-  {
-   "kind": "release",
-   "src": "플래너",
-   "title": "Memo · 회의 메모 무지 공책",
-   "url": "https://notes.the-moment.us/p/memo-note",
-   "date": "2026-10-14",
-   "img": "https://notes.the-moment.us/img/wizard/wz_24c69811-112/draft_user_cover.png"
-  },
-  {
-   "kind": "release",
-   "src": "플래너",
-   "title": "Plain · 무지 공책",
-   "url": "https://notes.the-moment.us/p/plain-note",
-   "date": "2026-10-14",
-   "img": "https://notes.the-moment.us/img/wizard/wz_c1affb23-24d/draft_user_cover.png"
-  },
-  {
-   "kind": "release",
-   "src": "플래너",
-   "title": "Word · 단어장",
-   "url": "https://notes.the-moment.us/p/word-note",
-   "date": "2026-10-14",
-   "img": "https://notes.the-moment.us/img/wizard/wz_8ceff765-c9f/draft_user_cover.png"
   }
  ],
  "mark": [
@@ -784,6 +784,17 @@
    "date": "2026-02-05",
    "desc": "A Context Packet is not a document, not a prompt, and not a chat history. It's something new — structured for AI consumption from the start.",
    "cat": ""
+  }
+ ],
+ "theplan:posts": [
+  {
+   "kind": "post",
+   "src": "노트",
+   "title": "총알배송도 하루는 걸립니다",
+   "url": "https://notes.the-moment.us/insights/one-minute-delivery/",
+   "date": "2026-08-08",
+   "desc": "주문하고 1분이면 손에 들어옵니다. 택배 상자도, 배송 조회도 없습니다. 그 1분 사이에 무슨 일이 일어나는지, 그리고 그게 왜 플래너에서 특히 중요한지 적었습니다.",
+   "cat": "인사이트"
   }
  ]
 }

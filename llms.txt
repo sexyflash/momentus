@@ -12,7 +12,7 @@
 - [팀AI · AI 친구](https://teamai.the-moment.us): 혼자 하지 마세요. 매일 이야기하는 AI 친구들.
 - [헤이레시 · AI 상품사진](https://heyreci.com): 폰으로 찍어도 판매용 컷이 됩니다.
 - [마크 · 로고 디자인](https://mark.the-moment.us): 내 업종 로고를 먼저 보고 고릅니다.
-- [더플랜 · 디지털 플래너](https://notes.the-moment.us): 내 손에 맞는 플래너를 골라서 씁니다.
+- [노트 · 디지털 플래너·공책·교재](https://notes.the-moment.us): 내 손에 맞는 플래너를 골라서 씁니다.
 - [큐 · AI 모의면접](https://cue.the-moment.us): 면접장에서 얼어붙지 않게 잡아 줍니다.
 - [빈방 · 취소표 알림](https://bb.the-moment.us): 다 찬 숙소도 취소는 나옵니다.
 - [컨텍스트](https://kontext.the-moment.us): 생각을 정리하고, 그 상태로 AI에게 넘깁니다.
