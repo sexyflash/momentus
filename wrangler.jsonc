@@ -14,7 +14,7 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page",
     "binding": "ASSETS",
-    "run_worker_first": ["/naver*", "/px.gif"]
+    "run_worker_first": ["/naver*", "/px.gif", "/assets/qrbank/story.mp4", "/assets/home/heyreci-hero.mp4"]
   },
   // custom_domain은 아직 못 쓴다 — the-moment.us에 GitHub Pages A 레코드가 남아 있어
   // CF가 409(code 100117: externally managed DNS records)를 낸다.

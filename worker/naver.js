@@ -1,4 +1,4 @@
-// apex(the-moment.us) 워커 — 두 가지만 한다: 네이버 소유확인, 북마크릿 픽셀 수집.
+// apex(the-moment.us) 워커 — 세 가지만 한다: 네이버 소유확인, 북마크릿 픽셀 수집, 영상 Range 응답.
 //
 // ⚠️ 이 워커는 wrangler.jsonc 의 `assets.run_worker_first` 에 적힌 경로에서만 실행된다.
 //    나머지 요청은 예전처럼 자산이 직접 처리한다
@@ -88,11 +88,43 @@ async function pixel(url, env, ctx) {
   return new Response(PIXEL, { headers: NO_STORE });
 }
 
+/**
+ * 영상 파일의 바이트 범위(Range) 응답.
+ * ★ 왜 — 정적 자산은 Range 를 무시하고 200 통째로 준다(2026-10-18 실측: `Range: bytes=0-99` → 200, content-range 없음).
+ *   iPhone Safari 는 영상을 Range 로만 받아서, 206 이 안 오면 재생을 못 한다(홈 카드·QR Bank 상세 히어로 영상).
+ *   자산을 그대로 받아 요청 구간만 잘라 206 으로 돌려준다. 파일이 몇 MB 라 메모리에 올려도 된다.
+ *   Range 가 없거나 형식이 다르면 원래 응답 그대로(+ accept-ranges)라 다른 브라우저 동작은 바뀌지 않는다.
+ */
+async function ranged(request, env) {
+  const res = await env.ASSETS.fetch(request);
+  if (res.status !== 200) return res;
+  const range = request.headers.get('range') || '';
+  const m = /^bytes=(\d*)-(\d*)$/.exec(range.trim());
+  if (request.method !== 'GET' || !m || (m[1] === '' && m[2] === '')) {
+    const h = new Headers(res.headers); h.set('accept-ranges', 'bytes');
+    return new Response(res.body, { status: 200, headers: h });
+  }
+  const buf = await res.arrayBuffer();
+  const size = buf.byteLength;
+  let start, end;
+  if (m[1] === '') { start = Math.max(0, size - Number(m[2])); end = size - 1; }
+  else { start = Number(m[1]); end = m[2] === '' ? size - 1 : Math.min(Number(m[2]), size - 1); }
+  if (start >= size || start > end) {
+    return new Response(null, { status: 416, headers: { 'content-range': `bytes */${size}` } });
+  }
+  const h = new Headers(res.headers);
+  h.set('accept-ranges', 'bytes');
+  h.set('content-range', `bytes ${start}-${end}/${size}`);
+  h.set('content-length', String(end - start + 1));
+  return new Response(buf.slice(start, end + 1), { status: 206, headers: h });
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
     if (url.pathname === '/px.gif') return pixel(url, env, ctx);
+    if (url.pathname.endsWith('.mp4')) return ranged(request, env);
 
     // 네이버 소유확인 — 확인 파일은 이름을 미리 알 수 없다(사이트별 난수).
     // 그런데 **내용이 이름에서 그대로 파생**된다: `naver<hex>.html` → `naver-site-verification: naver<hex>.html`.
