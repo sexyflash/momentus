@@ -4247,6 +4247,7 @@ KB_WORD = {
     "heyreci": "Product Photo", "mark": "Logo", "theplan": "Planner", "cue": "Interview",
     "quickpang": "Coupang", "insta-rank": "Instagram", "youtube-rank": "YouTube",
     "pinterest-grab": "Pinterest", "chatpage": "Summary", "her": "Voice",
+    "qrbank": "Account QR",
 }
 
 KINDN = {"release": "새 제품", "post": "글", "video": "영상", "tool": "새 도구"}

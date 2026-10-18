@@ -16,6 +16,7 @@
 - [빈방 · 취소표 알림](https://bb.the-moment.us): 다 찬 숙소도 취소는 나옵니다.
 - [컨텍스트](https://kontext.the-moment.us): 생각을 정리하고, 그 상태로 AI에게 넘깁니다.
 - [Flipper](https://play.google.com/store/apps/details?id=us.themoment.flipper&hl=ko): 화면을 만지지 않고 페이지를 넘깁니다.
+- [QR Bank · 계좌 QR](https://qr-bank-test-1018.reci-cdn.workers.dev/merchant): 계좌번호를 불러 주지 않아도 됩니다.
 
 ## 무료 브라우저 도구
 - [퀵팡 · 쿠팡 퀵보기](https://the-moment.us/tools/quickpang/): 열지 않고, 재고까지.
