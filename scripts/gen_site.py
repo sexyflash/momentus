@@ -2212,12 +2212,14 @@ HOME_VIDEO_FULL = set()
 HOME_VIDEO_SOUND = set()
 # 5차 내레이션본(30초·소리). 파일명에 차수를 박아 캐시를 끊는다 — 같은 이름에 덮으면 옛 영상이 남는다.
 #   옛 무음본(story.mp4)은 이미 건넨 링크가 있어 지우지 않는다.
+#   ⚠️ 2026-10-19 대표: 홈(랜딩) 카드에서는 영상을 뺀다 — «영상 때문에 밑이 시커멓게 되고 전체 무드가 깨진다».
+#      홈 카드는 영상 전 정지컷(HOME_SHOT qrbank.jpg)으로 돌아가고, 영상은 상세 히어로(products.json hero_video)에만 남는다.
+#      홈에 다시 넣으려면 아래 네 줄을 if 블록 안에 되살린다.
 QRBANK_VIDEO = "assets/qrbank/story-v5.mp4"
-if os.path.exists(QRBANK_VIDEO):
-    HOME_VIDEO["qrbank"] = "/" + QRBANK_VIDEO
-    HOME_POSTER["qrbank"] = "/assets/qrbank/story-v5-poster.jpg"   # 영상과 같은 장면의 포스터(Studio 전달본)
-    HOME_VIDEO_FULL.add("qrbank")
-    HOME_VIDEO_SOUND.add("qrbank")
+#   HOME_VIDEO["qrbank"] = "/" + QRBANK_VIDEO
+#   HOME_POSTER["qrbank"] = "/assets/qrbank/story-v5-poster.jpg"
+#   HOME_VIDEO_FULL.add("qrbank")
+#   HOME_VIDEO_SOUND.add("qrbank")
 
 
 def bar_products():
@@ -3111,10 +3113,9 @@ _FLY_SHOT = {          # 랜딩 배너와 같은 그림(정본은 HOME_SHOT — 
     "teamai": "/assets/home/teamai.jpg",
     "qrbank": "/assets/home/qrbank.jpg",
 }
+# 바·플라이아웃에서 새 제품 표시. 2026-10-19 대표 «NEW 너무 많다» → 빈방·플리퍼는 뗐다(계좌 QR·AI 친구만).
 _NEWB = {"qrbank": '<em class="nb">NEW</em>',
-         "binbang": '<em class="nb">NEW</em>',
-         "flipper": '<em class="nb">NEW</em>',
-         "teamai": '<em class="nb">NEW</em>'}   # 바·플라이아웃에서 새 제품 표시
+         "teamai": '<em class="nb">NEW</em>'}
 def shell_bar_markup(host="", act_extra=""):
     """제품 HTML의 <body> 바로 뒤에 박는 공용 1단 바. host 를 주면 그 제품에 활성 표시.
 
@@ -4946,8 +4947,8 @@ ap_body = (
     '<div class="stg-stack">'
     + ap_stage("qrbank", "hero", "NEW")
     + ap_stage("teamai", "hero ink", "NEW")
-    + ap_stage("binbang", "hero", "NEW")
-    + ap_stage("flipper", "hero", "NEW")
+    + ap_stage("binbang", "hero")
+    + ap_stage("flipper", "hero")
     + ap_stage("heyreci", "hero ink")
     + ap_stage("mark", "hero")
     + ap_stage("cue", "hero")
