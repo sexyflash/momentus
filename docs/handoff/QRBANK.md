@@ -1,7 +1,10 @@
 # QR Bank 편입 준비 (2026-10-18)
 
 > QR Bank 세션(M4)이 개발 중인 서비스를 모멘터스 제품 목록에 올리기 위한 준비 문서다.
-> **아직 공개하지 않았다.** `data/products.json`에는 넣지 않았다. 넣는 순간 매일 05:45 재빌드가 바로 공개한다.
+> **2026-10-18 공개.** 대표 요청으로 `data/products.json` 에 `qrbank` 를 넣고 배포했다(커밋 0290c73).
+> 서비스 CTA 는 인계 지침대로 **기존 앱 주소** `https://qr-bank-test-1018.reci-cdn.workers.dev/merchant` 를 그대로 가리킨다
+> (이미 인쇄된 QR 이 그 주소를 쓴다). 주소를 옮길 땐 옛 주소를 # 까지 보존해 넘겨야 한다.
+> 소개 이미지(assets/tools/qrbank-*.jpg)는 실제 화면 캡처이고, 예시 계좌는 000-0000-0000 / 예금주 「예시」다.
 
 ## 1. 기존 사이트 구조 (실측)
 - 저장소: `~/Projects/momentus` (GitHub `sexyflash/momentus`, apex `the-moment.us`). 정본 문서는 `docs/PRODUCT_SYSTEM.md`.
