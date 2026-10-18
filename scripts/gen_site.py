@@ -2440,7 +2440,9 @@ gtag('js',new Date());gtag('config','{GA_ID}');
               : a.closest('#mmt-bar') ? 'nav' : 'body';
     /* 주소의 # 뒤는 보내지 않는다 — QR Bank 처럼 계좌·금액을 # 에 싣는 제품이 있다(2026-10-18). */
     var hu=h.split('#')[0];
+    /* 어느 제품의 어느 CTA 인지 — data-p(제품 slug)·data-cta(자리). 값은 고정 문자열뿐(개인정보 없음). */
     if(window.gtag) gtag('event','outbound',{link_domain:host,link_url:hu,
+      product:a.getAttribute('data-p')||'',cta_slot:a.getAttribute('data-cta')||'',
       link_kind:kind,link_where:where,link_text:(a.innerText||'').trim().slice(0,60)});
   },{capture:true});
 })();
@@ -3486,7 +3488,9 @@ def showcase_landing(slug, p):
         return (f'<picture><source type="image/webp" srcset="{srcw}" sizes="{sizes}">'
                 f'<img src="{a}/{name}-{ws[0]}.jpg" srcset="{srcj}" sizes="{sizes}" alt="{esc(alt)}" {ld} decoding="async"></picture>')
 
-    btn = f'<a class="fl-btn" href="{go}" target="_blank" rel="noopener">{esc(sc["cta"])}</a>'
+    def btn_at(slot):
+        return (f'<a class="fl-btn" href="{go}" target="_blank" rel="noopener" data-p="{slug}" data-cta="{slot}">'
+                f'{esc(sc["cta"])}</a>')
     h1 = "<br>".join(esc(x) for x in sc["h1"].split("\n"))
     scenes = "".join(
         f'<figure class="sc-fig">{pic(n, (900, 1536), t, "(max-width:860px) 100vw, 50vw")}'
@@ -3508,7 +3512,7 @@ def showcase_landing(slug, p):
     <p class="fl-kick">{esc(sc["kick"])}</p>
     <h1>{h1}</h1>
     <p class="lede">{esc(sc["lede"])}</p>
-    <div class="fl-cta">{btn}</div>
+    <div class="fl-cta">{btn_at("hero")}</div>
     <p class="fl-note">{esc(sc["flow"])}</p>
     <figure class="sc-fig sc-hero-fig">{pic(sc["hero"], (900, 1536), sc["kick"], "(max-width:1224px) 100vw, 1176px", eager=True)}
       <figcaption class="sc-cap">{esc(sc["scene_note"])}</figcaption></figure>
@@ -3527,7 +3531,7 @@ def showcase_landing(slug, p):
   </section>
   <section class="fl-end">
     <h2>{h1}</h2>
-    <div class="fl-cta">{btn}</div>
+    <div class="fl-cta">{btn_at("end")}</div>
     <p class="fl-note">{esc(sc["flow"])}</p>
   </section>
   {ref}
@@ -4746,7 +4750,7 @@ def ap_stage(slug, tone="", badge=""):
     #   상세 페이지를 채우고 나서 대표 지시로 되살렸다 — "이제 더 알아보기가 생겼으니 다 넣어라".
     #   ⚠️ 상세 페이지가 다시 비어 있는 제품이 생기면 그 제품은 버튼을 하나로 되돌려라.
     _more = f'<a class="stg-pill" href="{purl(slug)}">더 알아보기</a>'
-    cta = (_more + f'<a class="stg-pill stg-pill--line" href="{go}"{_ext(go)}>'
+    cta = (_more + f'<a class="stg-pill stg-pill--line" href="{go}"{_ext(go)} data-p="{slug}" data-cta="home-card">'
                    f'{AP_GO.get(slug, "바로 가기")}</a>') if go else _more
     vid = HOME_VIDEO.get(slug)
     shot = HOME_SHOT.get(slug) or pr.get("shot") or ""

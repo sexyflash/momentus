@@ -49,7 +49,9 @@ gtag('js',new Date());gtag('config','G-1T66ZV28MB');
               : a.closest('#mmt-bar') ? 'nav' : 'body';
     /* 주소의 # 뒤는 보내지 않는다 — QR Bank 처럼 계좌·금액을 # 에 싣는 제품이 있다(2026-10-18). */
     var hu=h.split('#')[0];
+    /* 어느 제품의 어느 CTA 인지 — data-p(제품 slug)·data-cta(자리). 값은 고정 문자열뿐(개인정보 없음). */
     if(window.gtag) gtag('event','outbound',{link_domain:host,link_url:hu,
+      product:a.getAttribute('data-p')||'',cta_slot:a.getAttribute('data-cta')||'',
       link_kind:kind,link_where:where,link_text:(a.innerText||'').trim().slice(0,60)});
   },{capture:true});
 })();
