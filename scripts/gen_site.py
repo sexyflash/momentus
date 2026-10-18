@@ -1470,6 +1470,9 @@ pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.62),rgba(0,0,0
 .stg-art img,.stg-art video{width:100%;height:100%;object-fit:cover;object-position:center;
 display:block;transition:transform .6s var(--ease)}
 .stg-art video{transition:none}
+/* 모션 감소 설정이면 자동재생 영상 대신 포스터 정지컷을 보인다(영상 카드 공통) */
+.rm-still{display:none}
+@media (prefers-reduced-motion:reduce){video[data-rm]{display:none!important}.rm-still{display:block!important}}
 .stg-art img{width:100%;height:100%;object-fit:contain;display:block;
 transition:transform .6s var(--ease)}
 .stg--hero .stg-art img,.stg--hero .stg-art video{object-fit:cover}
@@ -1917,6 +1920,7 @@ line-height:1.16;color:var(--ink)}
 .sc-fig{margin:0}
 .sc-fig img{width:100%;height:auto;display:block;border-radius:20px;background:var(--soft)}
 .sc-hero-fig{margin-top:clamp(28px,4vw,48px)}
+.sc-video{width:100%;height:auto;display:block;border-radius:20px;background:var(--soft)}
 .sc-cap{margin-top:8px;font-size:12px;color:var(--faint)}
 .sc-sec{padding:clamp(48px,7vw,104px) 0 0}
 .sc-h{font-size:clamp(24px,3vw,40px);font-weight:800;letter-spacing:-.05em;line-height:1.25;color:var(--ink);text-align:center;margin-bottom:clamp(24px,3.2vw,44px)}
@@ -2167,6 +2171,12 @@ HOME_SHOT = {
     "qrbank": "/assets/home/qrbank.jpg",
 }
 HOME_VIDEO = {"heyreci": "/assets/home/heyreci-hero.mp4"}
+# 계좌 QR 스토리 영상 — **파일이 실제로 있을 때만** 켠다. 빈 영상·임시 영상을 공개하지 않는다(2026-10-18 대표 지시).
+#   파일을 assets/qrbank/story.mp4 로 넣으면 다음 빌드부터 홈 카드·상세 히어로가 영상으로 바뀐다(포스터 = 기존 연출컷).
+if os.path.exists("assets/qrbank/story.mp4"):
+    HOME_VIDEO["qrbank"] = "/assets/qrbank/story.mp4"
+# 영상 카드의 포스터 — 첫 프레임이 뜨기 전·데이터 절약·모션 감소 설정에서 보이는 정지컷(우리 자산).
+HOME_POSTER = {"heyreci": "/assets/home/heyreci.jpg", "qrbank": "/assets/home/qrbank.jpg"}
 
 
 def bar_products():
@@ -3504,6 +3514,17 @@ def showcase_landing(slug, p):
     outs = "".join(
         f'<figure class="sc-out">{pic(n, (500, 900), t, "(max-width:860px) 100vw, 33vw")}<figcaption>{esc(t)}</figcaption></figure>'
         for n, t in sc["outputs"])
+    # 히어로 = 스토리 영상(파일이 있을 때만) · 없으면 기존 연출컷. 영상도 포스터는 같은 연출컷이다.
+    _hv = sc.get("hero_video") or ""
+    _hero_pic = pic(sc["hero"], (900, 1536), sc["kick"], "(max-width:1224px) 100vw, 1176px", eager=True)
+    if _hv and os.path.exists(_hv.lstrip("/")):
+        _poster = f"{a}/{sc['hero']}-1536.jpg"
+        hero_media = (f'<video class="sc-video" src="{_hv}" poster="{_poster}" autoplay muted loop playsinline '
+                      f'preload="metadata" data-rm aria-label="{esc(sc.get("hero_video_label") or sc["kick"])}"></video>'
+                      f'<div class="rm-still">{_hero_pic}</div>')
+        hero_note = sc.get("hero_video_note") or sc["scene_note"]
+    else:
+        hero_media, hero_note = _hero_pic, sc["scene_note"]
     faq = _faq_html(p)
     ref = (f'<details class="fl-ref"><summary>{esc(sc.get("ref_label") or "이용 안내")}</summary>{faq}</details>'
            if faq else "")
@@ -3514,8 +3535,8 @@ def showcase_landing(slug, p):
     <p class="lede">{esc(sc["lede"])}</p>
     <div class="fl-cta">{btn_at("hero")}</div>
     <p class="fl-note">{esc(sc["flow"])}</p>
-    <figure class="sc-fig sc-hero-fig">{pic(sc["hero"], (900, 1536), sc["kick"], "(max-width:1224px) 100vw, 1176px", eager=True)}
-      <figcaption class="sc-cap">{esc(sc["scene_note"])}</figcaption></figure>
+    <figure class="sc-fig sc-hero-fig">{hero_media}
+      <figcaption class="sc-cap">{esc(hero_note)}</figcaption></figure>
   </header>
   <section class="sc-sec"><div class="sc-scenes">{scenes}</div></section>
   <section class="sc-sec">
@@ -4755,8 +4776,12 @@ def ap_stage(slug, tone="", badge=""):
     vid = HOME_VIDEO.get(slug)
     shot = HOME_SHOT.get(slug) or pr.get("shot") or ""
     if vid:
-        art = (f'<div class="stg-art"><video src="{vid}" autoplay muted loop playsinline '
-               f'preload="metadata" aria-hidden="true"></video></div>')
+        _pst = HOME_POSTER.get(slug, "")
+        _pa = f' poster="{_pst}"' if _pst else ""
+        _alt = (f'<img class="rm-still" src="{_pst}" alt="{esc(pr["short"])}" loading="lazy" decoding="async">'
+                if _pst else "")
+        art = (f'<div class="stg-art"><video src="{vid}"{_pa} autoplay muted loop playsinline '
+               f'preload="metadata" aria-hidden="true" data-rm></video>{_alt}</div>')
     elif shot:
         art = (f'<div class="stg-art"><img src="{shot}" alt="{esc(pr["short"])}" '
                f'loading="lazy" decoding="async"></div>')
