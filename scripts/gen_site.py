@@ -42,7 +42,8 @@ CSS = """/* MOMENTUS site.css — v1 */
       말이 뻣뻣했다(대표: *"말을 웃겨"*). 대표가 그대로 불러 준 문장으로 간다:
       **"순간순간을 소중하게 하는 제품을 만든다."** 이름 뜻(MOMENT=순간 · US=우리)이
       그 문장 안에 산다. 🚫 「작은 도구」·「결정적인 순간」으로 되돌리지 마라. */
-.dor{padding:72px var(--gut) 8px;max-width:1224px;margin:0 auto}
+.dor{padding:72px min(var(--gut),120px) 8px;max-width:1224px;margin:0 auto}
+/* --gut 은 바깥(main) 폭 기준이라 2,424px 넘는 화면에선 좌우 여백이 1224px 를 다 먹어 제목이 한 글자씩 세로로 섰다(2026-10-19, 2560 모니터). 1440 이하는 그대로, 그 이상은 1440 과 같은 폭 */
 .dor h1{font-size:clamp(32px,5.4vw,60px);font-weight:800;letter-spacing:-.045em;line-height:1.08;
      color:var(--ink);text-wrap:balance}
 .dor p{margin-top:14px;font-size:clamp(15px,1.5vw,18px);line-height:1.6;color:var(--muted);
