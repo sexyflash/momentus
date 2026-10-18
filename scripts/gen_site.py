@@ -3856,7 +3856,10 @@ POSTS = load_stories()
 # 최신순. 날짜(ISO)는 문자열 정렬로 충분하다.
 PORDER = sorted(POSTS, key=lambda s: POSTS[s].get("date", ""), reverse=True)
 # 태그 축 = 매니페스트 파생(제품) + 사람. 새 제품이 생기면 태그도 자동으로 생긴다.
-STORY_TAGS = [(s["slug"], s["tag"]) for s in BAR["spokes"] if s.get("tag")]
+# 🔴 태그 이름 = 메뉴 이름(label) 하나다(2026-10-19). 종전엔 spoke 에 tag 를 따로 적어
+#    메뉴는 '로고'인데 필터는 '마크', 메뉴는 '모의면접'인데 필터는 '큐'로 갈라졌다.
+#    이름을 두 벌 두면 반드시 어긋난다 — tag 필드를 없애고 label 에서만 파생한다.
+STORY_TAGS = [(s["slug"], s["label"]) for s in BAR["spokes"] if not s.get("hidden")]
 STORY_TAGS += [("tools", "무료 도구"), ("people", "사람")]
 TAG_BY_LABEL = {lab: key for key, lab in STORY_TAGS}
 
@@ -3982,6 +3985,18 @@ def fetch_stream():
                 except Exception as e:
                     print(f"  · {label} 신선도 확인 건너뜀({e})")
             continue
+        # 상품 피드(feed)와 글 피드(posts_feed)가 다른 제품이 있다 — notes 는 feed 가 /api/shop(상품)이라
+        # 글이 한 편도 안 들어와 '노트' 필터가 늘 비었다(2026-10-19 대표 지적). 글은 따로 받는다.
+        pf = sp.get("posts_feed")
+        if pf:
+            try:
+                skip = set(sp.get("posts_skip_cat") or [])
+                got = [x for x in _rss_items(_get(pf), label, limit=40, only="/insights/")
+                       if x.get("cat") not in skip]
+                cache[key + ":posts"] = got
+                print(f"  · 글 피드 {label}: {len(got)}건(제외 분류 {sorted(skip) or '없음'})")
+            except Exception as e:
+                print(f"  ⚠️ 글 피드 {label} 실패({e}) — 캐시 사용")
         if not feed:
             continue
         try:
@@ -4134,7 +4149,7 @@ for v in VIDEOS:
                         cat="영상", desc=v["desc"], thumb=v["thumb"], tags=[]))
 
 # 제품 사이트에 쌓인 글을 같은 목록으로 끌어온다 — 우리가 쓴 글은 여기 다 모인다.
-_TAG_BY_SRC = {sp["label"]: sp.get("tag", sp["label"]) for sp in BAR["spokes"]}
+_TAG_BY_SRC = {sp["label"]: sp["label"] for sp in BAR["spokes"]}
 _ext = [x for x in STREAM if x.get("kind") == "post" and x.get("url")]
 _ext.sort(key=lambda x: x["date"], reverse=True)
 _covers = og_images([x["url"] for x in _ext[:60]])
@@ -4144,6 +4159,16 @@ for x in _ext:
                         thumb=_covers.get(x["url"], ""), src=x["src"],
                         tags=[_TAG_BY_SRC.get(x["src"], x["src"])]))
 entries.sort(key=lambda e: e["date"], reverse=True)
+
+# 매핑 감사 — 글에 붙은 태그가 칩(메뉴 이름)에 없으면 그 글은 어떤 필터로도 안 잡힌다.
+#   조용히 빠지지 않게 빌드 로그에 크게 남긴다(2026-10-19: 이름이 두 벌이라 생긴 사고).
+_known = {lab for _, lab in STORY_TAGS}
+for e in entries:
+    _bad = [t for t in e.get("tags", []) if t not in _known]
+    if _bad:
+        print(f"  ⚠️ 인사이트 매핑 누락: 「{e['title'][:30]}」 태그 {_bad} 가 메뉴 이름에 없음 → 필터에 안 잡힌다")
+_cnt = {lab: sum(lab in e.get("tags", []) for e in entries) for _, lab in STORY_TAGS}
+print("  · 인사이트 태그별 글 수: " + " · ".join(f"{k} {v}" for k, v in _cnt.items()))
 
 BLOG_JS = """<script>
 (function(){
@@ -4204,10 +4229,13 @@ def stories_page(title, sub, sel_label="", items=None, chips=True):
     rest = [e for e in its if e not in feat]
     tabs = ""
     if chips:
+        # 글이 0편인 태그는 칩을 안 낸다 — 누르면 '해당하는 글이 없어요'만 뜨는 칩이
+        # 6개나 있었다(2026-10-19 대표: "플래너라고 필터를 걸어도 안 나와").
+        _live = [lab for _, lab in STORY_TAGS if any(lab in e.get("tags", []) for e in its)]
         tabs = ('<div class="nws-tabs" id="bltabs">'
                 '<button type="button" data-f="all" aria-pressed="true">전체</button>'
                 + "".join(f'<button type="button" data-f="{lab}" aria-pressed="false">{lab}</button>'
-                          for _, lab in STORY_TAGS) + '</div>')
+                          for lab in _live) + '</div>')
         # 🔴 위 탭은 **button 이다 — 봇에게는 길이 아니다**(2026-09-15 실측).
         #    그래서 sitemap 에 올린 `/insights/tag/cue/`·`/insights/tag/kontext/` 가
         #    "어디서도 링크되지 않는 페이지"로 잡혔다. sitemap 은 발견만 시키고
