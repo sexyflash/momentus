@@ -1422,8 +1422,8 @@ pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,.62),rgba(0,0,0
 display:block;transition:transform .6s var(--ease)}
 .stg-art video{transition:none}
 /* 모션 감소 설정이면 자동재생 영상 대신 포스터 정지컷을 보인다(영상 카드 공통) */
-.rm-still{display:none}
-@media (prefers-reduced-motion:reduce){video[data-rm]{display:none!important}.rm-still{display:block!important}}
+.rm-still,.stg-art img.rm-still{display:none}
+@media (prefers-reduced-motion:reduce){video[data-rm]{display:none!important}.rm-still,.stg-art img.rm-still{display:block!important}}
 .stg-art img{width:100%;height:100%;object-fit:contain;display:block;
 transition:transform .6s var(--ease)}
 .stg--hero .stg-art img,.stg--hero .stg-art video{object-fit:cover}
