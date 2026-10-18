@@ -1903,6 +1903,41 @@ line-height:1.16;color:var(--ink)}
 .fl-row p{margin-top:16px;font-size:16.5px;line-height:1.75;color:var(--gray);max-width:44ch}
 .fl-art{border-radius:20px;overflow:hidden;background:var(--soft);aspect-ratio:4/3}
 .fl-art img{width:100%;height:100%;object-fit:cover;display:block}
+/* 실제 화면 캡처(세로 폰·인쇄물)는 잘리면 안 된다 — 담기만 한다(쇼케이스, 2026-10-18) */
+.fl-art.fit img{object-fit:contain}
+.fl-ref{max-width:760px;margin:0 auto clamp(56px,7vw,96px);border-top:1px solid var(--line)}
+.fl-ref summary{cursor:pointer;padding:18px 4px;font-size:14px;color:var(--gray);list-style:none}
+.fl-ref summary::-webkit-details-marker{display:none}
+.fl-ref summary::after{content:' ▾'}
+.fl-ref[open] summary::after{content:' ▴'}
+.fl-ref .vd-qa{padding-top:0}
+/* 쇼케이스(layout=showcase) — 연출컷·인쇄물은 원래 비율 그대로, 화면 캡처는 위에서부터 보이고 눌러서 크게 */
+.sc-hero h1{font-size:clamp(32px,4.8vw,60px);font-weight:800;letter-spacing:-.055em;line-height:1.14;color:var(--ink);margin-top:14px}
+.sc-hero .lede{margin-top:16px;font-size:clamp(16px,1.6vw,19px);line-height:1.7;color:var(--gray)}
+.sc-fig{margin:0}
+.sc-fig img{width:100%;height:auto;display:block;border-radius:20px;background:var(--soft)}
+.sc-hero-fig{margin-top:clamp(28px,4vw,48px)}
+.sc-cap{margin-top:8px;font-size:12px;color:var(--faint)}
+.sc-sec{padding:clamp(48px,7vw,104px) 0 0}
+.sc-h{font-size:clamp(24px,3vw,40px);font-weight:800;letter-spacing:-.05em;line-height:1.25;color:var(--ink);text-align:center;margin-bottom:clamp(24px,3.2vw,44px)}
+.sc-scenes{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,28px)}
+.sc-scenes figcaption{padding:14px 2px 0}
+.sc-scenes figcaption b{display:block;font-size:clamp(18px,1.8vw,22px);font-weight:800;letter-spacing:-.04em;color:var(--ink)}
+.sc-scenes figcaption span{display:block;margin-top:6px;font-size:15px;line-height:1.6;color:var(--gray)}
+.sc-steps,.sc-outs,.sc-modes{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,28px)}
+.sc-step{margin:0}
+.sc-step a{display:block;border-radius:16px;overflow:hidden;background:var(--soft);aspect-ratio:3/4}
+.sc-step img{width:100%;height:auto;display:block}   /* 위에서부터 보이고 아래는 잘림 — 옆은 자르지 않는다 */
+.sc-step figcaption,.sc-out figcaption{margin-top:12px;font-size:16px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.sc-out{margin:0}
+.sc-out img{width:100%;height:auto;display:block;border-radius:12px;box-shadow:0 10px 30px -18px rgba(0,0,0,.35)}
+.sc-mode{padding:clamp(20px,2.4vw,30px);border-radius:18px;background:var(--soft)}
+.sc-mode b{display:block;font-size:17px;font-weight:800;letter-spacing:-.03em;color:var(--ink)}
+.sc-mode p{margin-top:8px;font-size:15px;line-height:1.6;color:var(--gray)}
+.sc-line{margin-top:clamp(18px,2.4vw,28px);text-align:center;font-size:15px;line-height:1.6;color:var(--gray)}
+@media(max-width:860px){.sc-scenes,.sc-steps,.sc-outs,.sc-modes{grid-template-columns:1fr}
+  .sc-step a{aspect-ratio:4/5}.sc-outs{grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .sc-out figcaption{font-size:13px}}
 
 /* 가운데 제목 + 카드 3장 */
 .fl-mid{text-align:center;padding:clamp(56px,8vw,120px) 0 0}
@@ -2129,6 +2164,7 @@ HOME_SHOT = {
     "heyreci": "/assets/home/heyreci.jpg",
     "flipper": "/assets/flipper/hero.png",
     "teamai": "/assets/home/teamai.jpg",
+    "qrbank": "/assets/home/qrbank.jpg",
 }
 HOME_VIDEO = {"heyreci": "/assets/home/heyreci-hero.mp4"}
 
@@ -3016,8 +3052,10 @@ _FLY_SHOT = {          # 랜딩 배너와 같은 그림(정본은 HOME_SHOT — 
     "binbang": "https://bb.the-moment.us/assets/hero.jpg",
     "flipper": "/assets/flipper/hero.png",
     "teamai": "/assets/home/teamai.jpg",
+    "qrbank": "/assets/home/qrbank.jpg",
 }
-_NEWB = {"binbang": '<em class="nb">NEW</em>',
+_NEWB = {"qrbank": '<em class="nb">NEW</em>',
+         "binbang": '<em class="nb">NEW</em>',
          "flipper": '<em class="nb">NEW</em>',
          "teamai": '<em class="nb">NEW</em>'}   # 바·플라이아웃에서 새 제품 표시
 def shell_bar_markup(host="", act_extra=""):
@@ -3426,6 +3464,72 @@ def app_landing(slug, p):
 </div>"""
 
 
+def showcase_landing(slug, p):
+    """짧은 쇼케이스형 제품 랜딩(layout=showcase). 구성·카피 원본은 products.json 의 `sc` 한 칸.
+       첫 화면(연출컷) → 활용 컷 2장 → 실제 화면 3단계 → 금액 방식 3개 → 실제 출력물 3종 → CTA → 접힌 이용 안내.
+       (2026-10-18 대표 지시 · 정본 카피 = qr-bank/marketing/LANDING-BRIEF.md)
+       ⚠️ 연출컷은 '활용 예시 · 연출 이미지'를 한 번 밝힌다 — 실제 고객 사진·후기로 보이게 하지 마라.
+       ⚠️ 이미지는 우리 자산만(/assets/<slug>/…-<폭>.webp|jpg). 인쇄물·QR 이 잘리지 않게 원래 비율로 싣는다."""
+    sc = p["sc"]
+    a = f"/assets/{slug}"
+    go = p["url"]
+
+    def pic(name, widths, alt, sizes="100vw", eager=False):
+        ws = sorted(widths)
+        srcw = ", ".join(f"{a}/{name}-{w}.webp {w}w" for w in ws)
+        srcj = ", ".join(f"{a}/{name}-{w}.jpg {w}w" for w in ws)
+        ld = 'loading="eager" fetchpriority="high"' if eager else 'loading="lazy"'
+        return (f'<picture><source type="image/webp" srcset="{srcw}" sizes="{sizes}">'
+                f'<img src="{a}/{name}-{ws[0]}.jpg" srcset="{srcj}" sizes="{sizes}" alt="{esc(alt)}" {ld} decoding="async"></picture>')
+
+    btn = f'<a class="fl-btn" href="{go}" target="_blank" rel="noopener">{esc(sc["cta"])}</a>'
+    h1 = "<br>".join(esc(x) for x in sc["h1"].split("\n"))
+    scenes = "".join(
+        f'<figure class="sc-fig">{pic(n, (900, 1536), t, "(max-width:860px) 100vw, 50vw")}'
+        f'<figcaption><b>{esc(t)}</b><span>{esc(d)}</span></figcaption></figure>'
+        for n, t, d in sc["scenes"])
+    steps = "".join(
+        f'<figure class="sc-step"><a href="{a}/{n}-1016.jpg" target="_blank" rel="noopener" aria-label="{esc(t)} 크게 보기">'
+        f'{pic(n, (600, 1016), t, "(max-width:860px) 100vw, 33vw")}</a><figcaption>{esc(t)}</figcaption></figure>'
+        for n, t in sc["steps"])
+    modes = "".join(f'<div class="sc-mode"><b>{esc(q)}</b><p>{esc(d)}</p></div>' for q, d in sc["modes"])
+    outs = "".join(
+        f'<figure class="sc-out">{pic(n, (500, 900), t, "(max-width:860px) 100vw, 33vw")}<figcaption>{esc(t)}</figcaption></figure>'
+        for n, t in sc["outputs"])
+    faq = _faq_html(p)
+    ref = (f'<details class="fl-ref"><summary>{esc(sc.get("ref_label") or "이용 안내")}</summary>{faq}</details>'
+           if faq else "")
+    return f"""<div class="fl sc">
+  <header class="fl-hero sc-hero">
+    <p class="fl-kick">{esc(sc["kick"])}</p>
+    <h1>{h1}</h1>
+    <p class="lede">{esc(sc["lede"])}</p>
+    <div class="fl-cta">{btn}</div>
+    <p class="fl-note">{esc(sc["flow"])}</p>
+    <figure class="sc-fig sc-hero-fig">{pic(sc["hero"], (900, 1536), sc["kick"], "(max-width:1224px) 100vw, 1176px", eager=True)}
+      <figcaption class="sc-cap">{esc(sc["scene_note"])}</figcaption></figure>
+  </header>
+  <section class="sc-sec"><div class="sc-scenes">{scenes}</div></section>
+  <section class="sc-sec">
+    <h2 class="sc-h">{esc(sc["steps_title"])}</h2>
+    <div class="sc-steps">{steps}</div>
+    <p class="sc-line">{esc(sc["customer"])}</p>
+  </section>
+  <section class="sc-sec"><div class="sc-modes">{modes}</div></section>
+  <section class="sc-sec">
+    <h2 class="sc-h">{esc(sc["outputs_title"])}</h2>
+    <div class="sc-outs">{outs}</div>
+    <p class="sc-line">{esc(sc["outputs_note"])}</p>
+  </section>
+  <section class="fl-end">
+    <h2>{h1}</h2>
+    <div class="fl-cta">{btn}</div>
+    <p class="fl-note">{esc(sc["flow"])}</p>
+  </section>
+  {ref}
+</div>"""
+
+
 # ---------- 제품 상세 = vinylc 구조 (풀블리드 히어로 → 이미지 리듬 → CTA → Next) ----------
 M = "https://www.vinylc.com/upload/module/"
 G = "https://www.vinylc.com/upload/goods/"
@@ -3622,6 +3726,8 @@ for idx, slug in enumerate(ORDER):
     #   화면 구성이 다르다(2026-08-24). 본문만 갈아 끼우고 나머지 배선은 그대로.
     if p.get("type") == "app":
         body = app_landing(slug, p)
+    elif p.get("layout") == "showcase":
+        body = showcase_landing(slug, p)
     with open(f"{_dir}/index.html", "w", encoding="utf-8") as fh:
         # description 은 70~120자여야 검색결과에서 제 몫을 한다(docs/SEO_GEO.md §3).
         # tagline 만 쓰면 10~29자라 구글이 무시하고 본문에서 임의 발췌한다(2026-08-07 실측).
@@ -4612,8 +4718,10 @@ with open("assets/apex.js", "w", encoding="utf-8") as f:
 #      변수 자체는 남겨 둔다 — 다른 데서 참조하거나 되돌릴 때를 위해.
 _SPOKE_HREF = {sp["slug"]: sp["href"] for sp in BAR["spokes"] if sp.get("slug")}
 _SPOKE_HREF["flipper"] = P["flipper"]["store"]   # 앱은 스토어로 바로 보낸다
+# 계좌 QR 만들기: 바의 이름은 소개(우리 도메인)로, 홈 카드의 '바로' 버튼은 만드는 화면으로 보낸다.
+_SPOKE_HREF["qrbank"] = P["qrbank"]["url"]
 # 두 번째 버튼은 '알아보기'가 아니라 **그 제품에서 하는 일**을 말한다(애플의 '구입하기' 자리).
-AP_GO = {"teamai": "팀AI 시작하기", "binbang": "빈방 알림 등록", "heyreci": "헤이레시 열기", "mark": "로고 만들어 보기",
+AP_GO = {"qrbank": "우리 가게 QR 만들기", "teamai": "팀AI 시작하기", "binbang": "빈방 알림 등록", "heyreci": "헤이레시 열기", "mark": "로고 만들어 보기",
          "cue": "모의면접 시작하기", "theplan": "플래너 보러 가기",
          "kontext": "컨텍스트 열기", "flipper": "Google Play에서 받기"}
 
@@ -4736,6 +4844,7 @@ ap_body = (
     '<p>모멘터스(MOMENT·US)는 순간순간을 소중하게 하는 제품을 만듭니다.<br>'
     '취소표가 뜨는 10분, 면접장 문이 열리는 3초 — 그때 맨손이지 않게.</p></section>'
     '<div class="stg-stack">'
+    + ap_stage("qrbank", "hero", "NEW")
     + ap_stage("teamai", "hero ink", "NEW")
     + ap_stage("binbang", "hero", "NEW")
     + ap_stage("flipper", "hero", "NEW")
@@ -5750,7 +5859,7 @@ if os.path.exists("tools/index.html"):
 #   먼저 찾지 않는다(2026-08-24). 과금은 카드 오른쪽 태그로만 표시한다.
 PROD_GROUPS = [
     ("사업을 시작할 때", "가게를 열고 브랜드를 세울 때 필요한 것",
-     ["heyreci", "mark"]),
+     ["qrbank", "heyreci", "mark"]),
     ("일과 성장", "일하는 나를 준비시키는 것",
      ["cue", "theplan", "kontext", "chatpage"]),
     ("곁에 두는 사람", "매일 이야기하고, 기억하고, 먼저 챙기는 것",
