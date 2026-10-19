@@ -3,34 +3,34 @@
   {
    "kind": "release",
    "src": "노트",
-   "title": "Scene · 스토리보드 공책",
-   "url": "https://notes.the-moment.us/p/storyboard-note",
+   "title": "Tab · 기타 타브 공책",
+   "url": "https://notes.the-moment.us/p/guitar-note",
    "date": "2026-10-14",
-   "img": "https://notes.the-moment.us/img/wizard/wz_799a4c04-a32/draft_user_cover.png"
+   "img": "https://notes.the-moment.us/img/wizard/wz_41a0244b-305/draft_user_cover.png"
   },
   {
    "kind": "release",
    "src": "노트",
-   "title": "Hanja · 한자 쓰기 공책",
-   "url": "https://notes.the-moment.us/p/hanja-note",
+   "title": "Commit · 개발자 공책",
+   "url": "https://notes.the-moment.us/p/dev-note",
    "date": "2026-10-14",
-   "img": "https://notes.the-moment.us/img/wizard/wz_de1c7b04-ec9/draft_user_cover.png"
+   "img": "https://notes.the-moment.us/img/wizard/wz_70658041-08b/draft_user_cover.png"
   },
   {
    "kind": "release",
    "src": "노트",
-   "title": "Math · 수학 공책",
-   "url": "https://notes.the-moment.us/p/math-note",
+   "title": "Frame · UX 디자이너 공책",
+   "url": "https://notes.the-moment.us/p/ux-note",
    "date": "2026-10-14",
-   "img": "https://notes.the-moment.us/img/wizard/wz_90b85c94-752/draft_user_cover.png"
+   "img": "https://notes.the-moment.us/img/wizard/wz_1473699c-7ff/draft_user_cover.png"
   },
   {
    "kind": "release",
    "src": "노트",
-   "title": "Kana · 일본어 쓰기 공책",
-   "url": "https://notes.the-moment.us/p/japanese-note",
+   "title": "Retry · 오답노트",
+   "url": "https://notes.the-moment.us/p/wrong-note",
    "date": "2026-10-14",
-   "img": "https://notes.the-moment.us/img/wizard/wz_20a4776d-009/draft_user_cover.png"
+   "img": "https://notes.the-moment.us/img/wizard/wz_e801abcf-e7b/draft_user_cover.png"
   }
  ],
  "mark": [
